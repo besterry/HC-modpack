@@ -193,6 +193,7 @@ do
 
 	local in_progress = false
 	local old_render = ISCharacterScreen.render
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISCharacterScreen:render()
 		if in_progress then
 			if old_drawText then
@@ -406,6 +407,7 @@ do
 	local cache_render_text = nil
 
 	local old_render = ISToolTipInv.render
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISToolTipInv:render()
 		if self.item ~= cache_item then
 			cache_item = self.item
@@ -464,6 +466,7 @@ do
 		local stage = 1
 		local save_th = 0
 		local old_setHeight = self.setHeight
+---@diagnostic disable-next-line: duplicate-set-field
 		self.setHeight = function(self, num, ...)
 			if stage == 1 then
 				stage = 2
@@ -475,6 +478,7 @@ do
 			return old_setHeight(self, num, ...)
 		end
 		local old_drawRectBorder = self.drawRectBorder
+---@diagnostic disable-next-line: duplicate-set-field
 		self.drawRectBorder = function(self, ...)
 			if stage == 2 then
 				local col = COLOR_WHITE; -- {r,g,b}
@@ -733,6 +737,7 @@ end)
 do
 
 	local old_wear_perform = ISWearClothing.perform
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISWearClothing:perform()
 		local data = SLOTS[self.item:getBodyLocation()]
 		if not data then
@@ -801,6 +806,7 @@ end
 --Момент снимания одежды (конец)
 do
 	local old_perform = ISUnequipAction.perform
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISUnequipAction:perform()
 		old_perform(self)
 		if instanceof(self.item,"Clothing") and SLOTS[self.item:getBodyLocation()] then
@@ -814,6 +820,7 @@ end
 do
 
 	local old_start = ISInventoryTransferAction.start
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISInventoryTransferAction:start()
 		if self.srcContainer then
 			local typ = self.srcContainer:getType()

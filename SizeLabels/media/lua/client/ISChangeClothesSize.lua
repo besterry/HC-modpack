@@ -1,102 +1,133 @@
 require "TimedActions/ISBaseTimedAction"
 ISChangeClothesSize = ISBaseTimedAction:derive("ISChangeClothesSize");
 
-function ISChangeClothesSize:isValid()
-	return self.character:getInventory():contains(self.item)
+local SM_INST = ScriptManager.instance
+
+local MATERIAL_COUNT = 2
+local THREAD_DELTA = 0.2
+
+local THREAD_NAME = 'Thread'
+
+local FABRIC_TABLE = {
+	Cotton = 'RippedSheets',
+	Denim = 'DenimStrips',
+	Leather = 'LeatherStrips'
+}
+
+local TOOLS_NAMES = {
+	'Needle',
+	'Scissors'
+}
+
+local function getDisplayName(nameStr)
+	return SM_INST:FindItem(nameStr):getDisplayName()
 end
 
-function ISChangeClothesSize:setAnimName1()
-	local anim = self.plot[#self.plot]
-	if #self.plot > 1 then
-		table.remove(self.plot)
+local function getUnavailableToolsNamesList(character)
+	local result = {}
+	for index, value in ipairs(TOOLS_NAMES) do
+		if not character:HasItem(value) then
+			local displayName = getDisplayName(value)
+			table.insert(result, displayName)
+		end
 	end
-	if anim == "Loot" then
-		self:setActionAnim(anim)
-	else
-		self:setActionAnim(CharacterActionAnims.Bandage)
-		self:setAnimVariable("BandageType", anim);
-	end
+	return result
 end
 
-
-function ISChangeClothesSize:update()
-	self.item:setJobDelta(self:getJobDelta());
-	if self.must_anim_next then
-		self.must_anim_next = false
-		self:setAnimName1();
-	end
-	local now = os.time()
-	if now - self.start_time > 6 then
-		self.start_time = now
-		self.action:stopTimedActionAnim()
-		self:setOverrideHandModels(nil, nil)
-		self.must_anim_next = true
-	end
+local function getUnavailableMaterialsTable(inventory, material)
+	local materialsArr = inventory:FindAll(material)
+	local materialsFoundInt = materialsArr:size()
+	local displayName = getDisplayName(material)
+	local remainingCount = materialsFoundInt < MATERIAL_COUNT and MATERIAL_COUNT - materialsFoundInt or 0
+	return {
+		name = displayName,
+		count = remainingCount
+	}
 end
 
-function ISChangeClothesSize:start()
-	self.start_time = os.time()
-
-  self.item:setJobType(getText("IGUI_JobType_CheckLabel"));
-  self.item:setJobDelta(0.0);
-
-	self:setAnimName1();
-	self:setOverrideHandModels(nil, nil);
+local function getThreadDeltaSum(inventory)
+	local threadsArr = inventory:FindAll(THREAD_NAME)
+	local deltaSum = 0
+	for i = 1, threadsArr:size(), 1 do
+		deltaSum = deltaSum + threadsArr:get(i-1):getDelta()
+	end
+	return deltaSum
 end
 
-function ISChangeClothesSize:stop()
-	ISBaseTimedAction.stop(self);
-	self.item:setJobDelta(0.0);
+local function renderNeedsStr(neededToolslist, neededMaterialTable, threadDeltaSum)
+	local prefix = getText('IGUI_NeedToolsAndMaterialsPrefix')
+	local resultList = {unpack(neededToolslist)}
+	local remainingMatCount = neededMaterialTable['count']
+
+	if remainingMatCount ~= 0 then
+		table.insert(resultList, neededMaterialTable['name'] .. ' ' .. remainingMatCount .. getText('IGUI_Pieces'))
+	end
+	if threadDeltaSum < THREAD_DELTA  then
+		local needDeltaPercenatges = (THREAD_DELTA - threadDeltaSum) * 100
+		table.insert(resultList, getDisplayName(THREAD_NAME) .. ' ' .. needDeltaPercenatges .. '%')
+	end
+	return prefix .. table.concat(resultList, ', ')
+end
+
+local function useConsumableItems(inventory, material)
+	for i=MATERIAL_COUNT,1,-1 do
+		inventory:Remove(material)
+	end
+	local threads 
 end
 
 function ISChangeClothesSize:perform()
-	local MATERIAL_COUNT = 2
-	local THREAD_DELTA = 0.2 -- Thread
-
 	self.item:setJobDelta(0.0);
 	ISBaseTimedAction.perform(self);
 
-	local fabric_table = {
-		Cotton = 'RippedSheets',
-		Denim = 'DenimStrips',
-		Leather = 'LeatherStrips'
-	}
+	local character = self.character
 
-	local level = self.character:getPerkLevel(Perks.Tailoring)
-	if level < 8 then
+	local tailoringLvl = character:getPerkLevel(Perks.Tailoring)
+	if tailoringLvl < 8 then
 		self.character:Say(getText('IGUI_NeedPerkLvl'))
 		return
 	end
 
-	local character = self.character
 	local item = self.item
-	local inv = character:getInventory()
-
 	local actionType = self.actionType
+	local inventory = character:getInventory()
 	local data = item:getModData()
 	local fabric = item:getFabricType() -- Cotton, Denim, Leather
-	local material = fabric_table[fabric]
+	local material = FABRIC_TABLE[fabric]
 
+	local neededToolslist = getUnavailableToolsNamesList(character)
+	local neededMaterialTable = getUnavailableMaterialsTable(inventory, material)
+	local threadDeltaSum = getThreadDeltaSum(inventory)
+
+	if #neededToolslist or neededMaterialTable['count'] or threadDeltaSum < THREAD_DELTA then
+		local needsStr = renderNeedsStr(neededToolslist, neededMaterialTable, threadDeltaSum)
+		character:Say(needsStr)
+		return
+	end
+
+	-- useConsumableItems(inventory, material)
+
+	local hasNeedle2 = character:HasItem('Needle')
+	print('hasNeedle2 ', hasNeedle2)
 	local hasNeedle = character:hasItems('Needle', 1)
 	local hasScissors = character:hasItems('Scissors', 1)
 	local hasMaterials = character:hasItems(material, MATERIAL_COUNT)
-	local thread = inv:FindAndReturn('Thread')
+	local thread = inventory:FindAndReturn('Thread')
 	local threadDelta = 0
 	local hasThread = false
 
 	if thread and thread:getDelta() >= THREAD_DELTA then
 		threadDelta = thread:getDelta()
 		hasThread = true
-	end	
+	end
 
 	if hasNeedle and hasScissors and hasMaterials and hasThread then
-		for i=MATERIAL_COUNT,1,-1 do 
-			inv:Remove(material)
+		for i=MATERIAL_COUNT,1,-1 do
+			inventory:Remove(material)
 		end
 		thread:setDelta(threadDelta - THREAD_DELTA)
 	else
-		getPlayer():Say(getText('IGUI_NeedToolsAndMaterials'))
-		--self.character:Say(getText('IGUI_NeedToolsAndMaterials'))
+		self.character:Say(getText('IGUI_NeedToolsAndMaterials'))
 		return
 	end
 
@@ -165,13 +196,57 @@ function ISChangeClothesSize:new(player, item, actionType) --print('create actio
 			o.plot = easyCopy(PLOT.Upper[skill])
 		end
 	end
-	--local bodyPart = BloodBodyPartType.UpperLeg_L
-	--o.bodyPart = bodyPart;
-	--o.anim = xxx or "LowerBody" --LowerBody UpperBody LeftLeg LeftArm
 	o.stopOnWalk = false;
 	o.stopOnRun = true;
 	o.maxTime = o.plot.time
 	o.actionType = actionType
-	print('o.actionType', o.actionType)
 	return o;
+end
+
+function ISChangeClothesSize:isValid()
+	return self.character:getInventory():contains(self.item)
+end
+
+function ISChangeClothesSize:setAnimName1()
+	local anim = self.plot[#self.plot]
+	if #self.plot > 1 then
+		table.remove(self.plot)
+	end
+	if anim == "Loot" then
+		self:setActionAnim(anim)
+	else
+		self:setActionAnim(CharacterActionAnims.Bandage)
+		self:setAnimVariable("BandageType", anim);
+	end
+end
+
+
+function ISChangeClothesSize:update()
+	self.item:setJobDelta(self:getJobDelta());
+	if self.must_anim_next then
+		self.must_anim_next = false
+		self:setAnimName1();
+	end
+	local now = os.time()
+	if now - self.start_time > 6 then
+		self.start_time = now
+		self.action:stopTimedActionAnim()
+		self:setOverrideHandModels(nil, nil)
+		self.must_anim_next = true
+	end
+end
+
+function ISChangeClothesSize:start()
+	self.start_time = os.time()
+
+  self.item:setJobType(getText("IGUI_JobType_CheckLabel"));
+  self.item:setJobDelta(0.0);
+
+	self:setAnimName1();
+	self:setOverrideHandModels(nil, nil);
+end
+
+function ISChangeClothesSize:stop()
+	ISBaseTimedAction.stop(self);
+	self.item:setJobDelta(0.0);
 end

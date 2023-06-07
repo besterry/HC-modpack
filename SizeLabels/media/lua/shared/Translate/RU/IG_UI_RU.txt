@@ -16,5 +16,7 @@ IGUI_RU = {
 	IGUI_ChangeSizeReduse = "Уменьшить размер",
 	
 	IGUI_NeedPerkLvl = "Для этого мне нужно больше опыта в шитье...",
-	IGUI_NeedToolsAndMaterials = "Нужна иголка, ножницы, нитки и материал",
+	IGUI_NeedToolsAndMaterialsPrefix = "Мне нехватает: ",
+	IGUI_Pieces = " шт.",
+	/* IGUI_Units = " ед." */
 }
