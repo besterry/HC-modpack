@@ -11,6 +11,8 @@
 --***********************************************************
 
 require "ISUI/ISPanel"
+require "ISUI/UserPanel/ISAddSHUI"
+require "ISUI/UserPanel/ISCloseZone"
 
 ISUserPanelUI = ISPanel:derive("ISUserPanelUI");
 
@@ -69,13 +71,16 @@ function ISUserPanelUI:create()
         y = y + btnHgt + 5;
     end
 
-    --self.ticketsBtn = ISButton:new(10, y, btnWid, btnHgt, getText("UI_userpanel_tickets"), self, ISUserPanelUI.onOptionMouseDown);
-    --self.ticketsBtn.internal = "TICKETS";
-    --self.ticketsBtn:initialise();
-    --self.ticketsBtn:instantiate();
-    --self.ticketsBtn.borderColor = self.buttonBorderColor;
-    --self:addChild(self.ticketsBtn);
-    --y = y + btnHgt + 5;
+    --Кнопка выдачи убежища
+    if not SafeHouse.hasSafehouse(self.player) then
+        self.createsafehouseBtn = ISButton:new(10, y, btnWid, btnHgt, getText("IGUI_CreatehouseUI_Safehouse"), self, ISUserPanelUI.onOptionMouseDown);
+        self.createsafehouseBtn.internal = "CREATESAFEHOUSE";
+        self.createsafehouseBtn:initialise();
+        self.createsafehouseBtn:instantiate();
+        self.createsafehouseBtn.borderColor = self.buttonBorderColor;
+        self:addChild(self.createsafehouseBtn);
+        y = y + btnHgt + 5;
+    end
 
     if not Faction.isAlreadyInFaction(self.player) then
         self.factionBtn.title = getText("IGUI_FactionUI_CreateFaction");
@@ -85,14 +90,6 @@ function ISUserPanelUI:create()
         end
         self.factionBtn:setWidthToTitle(self.factionBtn.width)
     end
-    
-    --self.serverOptionBtn = ISButton:new(10, y, btnWid, btnHgt, getText("IGUI_AdminPanel_SeeServerOptions"), self, ISUserPanelUI.onOptionMouseDown);
-    --self.serverOptionBtn.internal = "SERVEROPTIONS";
-    --self.serverOptionBtn:initialise();
-    --self.serverOptionBtn:instantiate();
-    --self.serverOptionBtn.borderColor = self.buttonBorderColor;
-    --self:addChild(self.serverOptionBtn);
-    --y = y + btnHgt + 5;
 
     y = 70;
 
@@ -163,6 +160,29 @@ function ISUserPanelUI:updateButtons()
 end
 
 function ISUserPanelUI:onOptionMouseDown(button, x, y)
+    
+    --Открытие окна выдачи персонального убежища
+    if button.internal == "CREATESAFEHOUSE" then
+        if ISAddSHUI.instance then
+            ISAddSHUI.instance:close();
+        end
+        if SafeHouse.hasSafehouse(self.player) then
+            self.createsafehouseBtn:setVisible(false)
+            return;
+        end
+        --проверка города
+		local x = math.floor((getPlayer():getX()) / 100)
+		local y = math.floor((getPlayer():getY()) / 100)
+		if FDSE.checkTownZones(x, y) then
+			getPlayer():Say(getText('IGUI_Close_Zone'))
+			return;
+		end
+        local ui = ISAddSHUI:new(getCore():getScreenWidth() / 2 - 210, getCore():getScreenHeight() / 2 - 200, 420, 400, getPlayer());
+        ui:initialise();
+        ui:addToUIManager();
+        self:close()
+    end
+    
     if button.internal == "SAFEHOUSEPANEL" then
         if SafeHouse.hasSafehouse(self.player) then
             local modal = ISSafehouseUI:new(getCore():getScreenWidth() / 2 - 250, getCore():getScreenHeight() / 2 - 225, 500, 450, SafeHouse.hasSafehouse(self.player), self.player);
@@ -170,6 +190,7 @@ function ISUserPanelUI:onOptionMouseDown(button, x, y)
             modal:addToUIManager();
         end
     end
+
     if button.internal == "FACTIONPANEL" then
         if ISFactionUI.instance then
             ISFactionUI.instance:close()
@@ -187,22 +208,7 @@ function ISUserPanelUI:onOptionMouseDown(button, x, y)
             modal:addToUIManager();
         end
     end
-    --if button.internal == "TICKETS" then
-    --    if ISTicketsUI.instance then
-    --        ISTicketsUI.instance:close()
-    --    end
-    --    local modal = ISTicketsUI:new(getCore():getScreenWidth() / 2 - 250, getCore():getScreenHeight() / 2 - 225, 500, 450, self.player);
-    --    modal:initialise();
-    --    modal:addToUIManager();
-    --end
-    --if button.internal == "SERVEROPTIONS" then
-    --    if ISServerOptions.instance then
-    --        ISServerOptions.instance:close()
-    --    end
-    --    local ui = ISServerOptions:new(50,50,600,600, self.player)
-    --    ui:initialise();
-    --    ui:addToUIManager();
-    --end
+
     if button.internal == "CANCEL" then
         self:close()
     end
