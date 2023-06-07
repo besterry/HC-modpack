@@ -1,0 +1,4 @@
+UI_EN = {
+    UI_CDRB_OpenRfm = "Автомобильное радио",
+    UI_CDRB_OpenRfmWithTrueMusic = "Автомобильное радио, ПКМ для кассетного плеера",
+}

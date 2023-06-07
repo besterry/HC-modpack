@@ -1,0 +1,150 @@
+module hamtogrid
+{
+	imports
+    	{
+             Base, Radio
+    	}	
+
+/************************ HAM RADIOS ***********************/
+
+	item HamRadio1Grid
+	{
+		Type			= Radio,
+		Icon			= HamRadioCivilian,
+		Weight          	= 20.0,
+		ConditionMax	= 100,
+
+		DisplayName		= Premium Technologies HAM радио подключенное к сети,
+        
+		UseDelta		= 0.010, 
+		UseWhileEquipped	= FALSE,
+		DisappearOnUse		= FALSE,
+		TwoWay			= TRUE,
+		TransmitRange		= 12000,
+		MicRange		= 5,
+		BaseVolumeRange		= 10,
+		IsPortable		= FALSE,
+		IsTelevision		= FALSE,
+		MinChannel		= 10000,
+		MaxChannel		= 500000,
+		UsesBattery		= FALSE,
+		IsHighTier		= FALSE,
+		WorldObjectSprite	= appliances_com_01_0,
+		Tooltip = батарея не требуется. Нужен источник питания.,
+	}
+	item HamRadio2Grid
+	{
+		Type			= Radio,
+		Icon			= HamRadioMilitary,
+		Weight          	= 20.0,
+		ConditionMax	= 100,
+
+		DisplayName		= US ARMY COMM. Ham радио подключенное к сети,
+        
+		UseDelta		= 0.014, 
+		UseWhileEquipped	= FALSE,
+		DisappearOnUse		= FALSE,
+		TwoWay			= TRUE,
+		TransmitRange		= 20000,
+		MicRange		= 5,
+		BaseVolumeRange		= 15,
+		IsPortable		= FALSE,
+		IsTelevision		= FALSE,
+		MinChannel		= 200,
+		MaxChannel		= 1000000,
+		UsesBattery		= FALSE,
+		IsHighTier		= TRUE,
+		WorldObjectSprite	= appliances_com_01_8,
+		Tooltip = батарея не требуется. Нужен источник питания.,
+	}
+    item HamRadioMakeShiftGrid
+    {
+        Type			= Radio,
+        Icon			= HamRadioCivilian,
+        Weight          	= 20.0,
+
+        DisplayName		= Импровизированное Ham радио подключенное к сети,
+
+        UseDelta		= 0.010,
+        UseWhileEquipped	= FALSE,
+        DisappearOnUse		= FALSE,
+        TwoWay			= TRUE,
+        TransmitRange		= 12000,
+        MicRange		= 5,
+        BaseVolumeRange		= 10,
+        IsPortable		= FALSE,
+        IsTelevision		= FALSE,
+        MinChannel		= 10000,
+        MaxChannel		= 500000,
+        UsesBattery		= FALSE,
+        IsHighTier		= FALSE,
+        WorldObjectSprite	= appliances_com_01_56,
+        Tooltip = батарея не требуется. Нужен источник питания.,
+    }
+
+
+
+/************************         ***********************/
+/************************ RECIPES ***********************/
+/************************         ***********************/
+
+
+
+/************************ GRID POWERED HAM RADIOS ***********************/
+
+    recipe Подключить Premium Technologies Ham радио к сети
+    {
+        HamRadio1,
+        ElectronicsScrap=2,
+        Radio.ElectricWire,
+        keep Screwdriver,
+
+        Result:HamRadio1Grid,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+	
+    recipe Подключить US ARMY COMM. Ham радио к сети
+    {
+        HamRadio2,
+        ElectronicsScrap=2,
+        Radio.ElectricWire,
+        keep Screwdriver,
+
+        Result:HamRadio2Grid,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+	
+    recipe Подключить Makeshift Ham радио к сети
+    {
+        HamRadioMakeShift,
+        ElectronicsScrap=2,
+        Radio.ElectricWire,
+        keep Screwdriver,
+
+        Result:HamRadioMakeShiftGrid,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+
+
+}

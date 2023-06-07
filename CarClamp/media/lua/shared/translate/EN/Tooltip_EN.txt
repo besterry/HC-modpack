@@ -1,0 +1,4 @@
+Tooltip_EN = {
+	/* Voldar: CarClamp */
+	Tooltip_CarClamp = "Use the outside car radial menu in order to block the vehicle",
+}

@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\media",
+    "\\media\\lua",
+    "\\media\\lua\\shared",
+    "\\media\\lua\\shared\\Translate",
+    "\\media\\lua\\shared\\Translate\\CH",
+    "\\media\\lua\\shared\\Translate\\CN",
+    "\\media\\lua\\shared\\Translate\\TR",
+    "\\media\\ui",
+    "\\media\\ui\\vehicles"
+  ],
+  "SelectedNode": "\\media\\lua\\shared\\Translate\\CN\\ContextMenu_CN.txt",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,0 +1,13 @@
+Tooltip_RU = {
+	-- Item tooltip
+	Tooltip_item_Jumpstarter = "Бустер подходит для небольшой зарядки аккумулятора авто",
+	Tooltip_generator_disc = "Заряжает бустер",
+	Tooltip_fuelUnit = "1 Единица топлива",
+	Tooltip_fullyCharged = "Бустер уже полностью заряжен",
+	Tooltip_chanceOfSuccess = "Шанс успеха",
+	Tooltip_chargedJumpstarter = "Бустер заряжен",
+	Tooltip_remainingUses = "Оставшее количество использований",
+	Tooltip_depBattery = "Аккумулятор должен быть заряжен на не более 10%",
+	Tooltip_attempt = "Пытаемся зарядить аккумулятор...",
+	Tooltip_jumpSAction = "Аккумулятор заряжается",
+}

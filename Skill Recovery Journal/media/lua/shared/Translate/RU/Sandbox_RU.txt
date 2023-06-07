@@ -1,0 +1,43 @@
+Sandbox_RU = {
+	Sandbox_SkillRecoveryJournal = "Личный дневник игрока",
+	Sandbox_SkillRecoveryJournalPercentage = "Процент опыта при восстановлении",
+	Sandbox_SkillRecoveryJournalPercentage_tooltip = "Какой процент опыта будет возвращен, при прочтении своего журнала, после возрождения",
+	
+
+	Sandbox_SkillRecoveryJournalTranscribeSpeed = "Множитель скорости транскрибирования восстановления навыка",
+	Sandbox_SkillRecoveryJournalTranscribeSpeed_tooltip = "Множитель скорости расшифровки журналов."
+
+	Sandbox_SkillRecoveryJournalReadTimeSpeed = "Множитель скорости чтения для восстановления навыка",
+	Sandbox_SkillRecoveryJournalReadTimeSpeed_tooltip = "Множитель скорости чтения журналов в переплете."
+
+    Sandbox_SkillRecoveryJournalRecoverProfessionAndTraitsBonuses = "Восстановление профессии и характеристик Бонусный опыт"
+    Sandbox_SkillRecoveryJournalRecoverProfessionAndTraitsBonuses_tooltip = "Начиная с более чем 1 очка в навыке, как правило, вы получаете дополнительный опыт - при выключенном значении этот опыт не записывается. Весь записанный опыт - это опыт персонажа, не имеющего стартовых навыков. Это не восстанавливает начальные уровни - только заработанный бонусный опыт."
+
+	Sandbox_SkillRecoveryJournalTranscribeTVXP = "Транскрибируйте опыт, полученный с ТВ / VHS",
+	Sandbox_SkillRecoveryJournalTranscribeTVXP_tooltip = "Включение этого параметра позволит людям транскрибировать опыт, полученный от просмотра TV / VHS. Примечание: Это означает, что игроки могут переносить просмотренный опыт между персонажами кумулятивно."
+
+	Sandbox_SkillRecoveryJournalRecoverPassiveSkills = "Восстанавливать пассивные навыки"
+	Sandbox_SkillRecoveryJournalRecoverPassiveSkills_tooltip = "Включите запись пассивных навыков."
+
+	Sandbox_SkillRecoveryJournalRecoverCombatSkills = "Восстанавливать боевые навыки"
+    Sandbox_SkillRecoveryJournalRecoverCombatSkills_tooltip = "Включите запись боевых навыков."
+
+    Sandbox_SkillRecoveryJournalRecoverFirearmSkills = "Восстановить навыки владения огнестрельным оружием"
+    Sandbox_SkillRecoveryJournalRecoverFirearmSkills_tooltip = "Включите запись навыков владения огнестрельным оружием."
+
+    Sandbox_SkillRecoveryJournalRecoverCraftingSkills = "Восстановите навыки крафта"
+    Sandbox_SkillRecoveryJournalRecoverCraftingSkills_tooltip = "Включите запись навыков крафта."
+
+    Sandbox_SkillRecoveryJournalRecoverSurvivalistSkills = "Восстановить навыки выживания"
+    Sandbox_SkillRecoveryJournalRecoverSurvivalistSkills_tooltip = "Включите запись навыков выживания."
+
+    Sandbox_SkillRecoveryJournalRecoverAgilitySkills = "Восстановить навыки ловкости"
+    Sandbox_SkillRecoveryJournalRecoverAgilitySkills_tooltip = "Включите запись навыков ловкости."
+
+	Sandbox_SkillRecoveryJournalRecoverRecipes = "Восстанавливать рецепты"
+    Sandbox_SkillRecoveryJournalRecoverRecipes_tooltip = "Отключите, чтобы журналы не могли восстанавливать / переписывать рецепты."
+
+    Sandbox_SkillRecoveryJournalUsed = "Журнал XP Используется при чтении"
+    Sandbox_SkillRecoveryJournalUsed_tooltip = "Обычно вы можете перечитывать журнал столько раз, сколько захотите - при включенном режиме каждая отдельная точка XP может быть восстановлена только один раз. Вы все еще можете добавлять в журнал, но каждая точка может быть восстановлена только один раз в каждом журнале. Примечание: во всплывающей подсказке для журнала теперь будет отображаться доля неиспользуемых точек."
+
+	}

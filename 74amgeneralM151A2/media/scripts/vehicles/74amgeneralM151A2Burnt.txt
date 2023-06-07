@@ -1,0 +1,57 @@
+module Base
+{
+	model 74amgeneralM151A2Burnt
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Burnt,
+		shader = vehicle,
+		static = TRUE,
+		scale = 1,
+	}
+	vehicle 74amgeneralM151A2Burnt
+	{
+		model
+		{
+			file = 74amgeneralM151A2Burnt,
+			scale = 0.9000,
+			offset = 0.0000 0.4889 0.0000,
+		}
+
+		spawnOffsetY = 0,
+
+		skin
+		{
+			texture = Vehicles/Vehicles_74amgeneralM151A2_Burnt_USMCgreen,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicles_74amgeneralM151A2_Burnt_NATOgreen,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicles_74amgeneralM151A2_Burnt_camoCombo,
+		}
+
+		extents = 1.6222 1.4000 3.3556,
+		mass = 600,
+		physicsChassisShape = 1.6222 1.4000 3.3556,
+		centerOfMassOffset = 0.0000 0.7000 0.0222,
+		shadowExtents = 1.6318 3.0149,
+		shadowOffset = -0.0032 0.0746,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3222 -1.6778,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.3111 1.6889,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

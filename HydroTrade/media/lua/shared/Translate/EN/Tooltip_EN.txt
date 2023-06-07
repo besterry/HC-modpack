@@ -1,0 +1,8 @@
+Tooltip_EN = {
+	Tooltip_ClaimOutSide = "It can only be claimed outside, on the ground.",	
+	Tooltip_itemworldmap1 = "World map, to open it, take it in your hand and press M",
+	Tooltip_Reset_Trip_Odometer = "Set the trip odometer to zero. <LINE> Cannot be undone.",
+	Tooltip_VehicleRecycling = "Dismantling a vehicle or a trailer with a propane torch will provide metal and electrical materials. <LINE> Higher Metalworking skill will retrieve more usable salvage.",
+    Tooltip_VehicleRecycling_Uninstall = "Uninstall:",
+    Tooltip_VehicleRecycling_Passengers = "Can't dismantle a vehicle with passengers inside.",
+}

@@ -1,0 +1,63 @@
+module Base
+{
+	template vehicle BikeDoor
+	{
+		part DoorFront
+		{
+			itemType = Base.FrontCarDoor,
+			area = SeatFront,
+
+			anim ActorOpen
+			{
+				angle = 0.0 270.0 0.0,
+			}
+
+			anim ActorClose
+			{
+				angle = 0.0 270.0 0.0,
+			}
+		}
+
+		part Door*
+		{
+			category = nodisplay,
+
+			door
+			{
+
+			}
+
+			anim Open
+			{
+				sound =,
+			}
+
+			anim Close
+			{
+				sound =,
+			}
+
+			anim Lock
+			{
+				sound =,
+			}
+
+			anim Unlock
+			{
+				sound =,
+			}
+
+			anim IsLocked
+			{
+				sound =,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+				init = Vehicles.Init.Door,
+				use = Vehicles.Use.Door,
+			}
+		}
+	}
+}

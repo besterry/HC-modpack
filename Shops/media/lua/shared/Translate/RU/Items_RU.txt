@@ -1,0 +1,14 @@
+Items_RU = {
+
+	DisplayName_Gold_Coin = "Золотая монета"
+	DisplayName_Copper_Coin = "Медная монета"
+	DisplayName_Silver_Coin = "Серебрянная монета"
+	DisplayName_Event_Coin = "Особая монета"
+	DisplayName_Survival_Pack = "Комплект выжившего"
+	DisplayName_Player_Shop = "Магазин"
+	DisplayName_Player_Shop_(Freezer) = "Магазин-холодильник"
+	DisplayName_Fishing_Pack = "Набор рыбака"
+	DisplayName_Worm_Pack = "Набор червей"
+	DisplayName_Fishing_Line_Pack = "Рыбацкий ремонтный набор"
+	
+}

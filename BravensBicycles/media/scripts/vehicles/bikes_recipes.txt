@@ -1,0 +1,194 @@
+module Base
+{
+    /************************ REGULAR BICYCLE (SCRAP) ************************/
+
+    recipe CraftScrapFrame1
+    {
+        ScrapMetal=4,
+        MetalPipe=4,
+        Wire=2,
+        SmallSheetMetal=1,
+        BlowTorch=5,
+        keep [Recipe.GetItemTypes.WeldingMask],
+
+        NoBrokenItems:true,
+        SkillRequired:MetalWelding=3,
+        NeedToBeLearn:true,
+        Time:500.0,
+        Sound:BlowTorch,
+        Result:BicycleFrameRegularScrap,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Category:Welding,
+    }
+
+    recipe CraftScrapSuspension1
+    {
+        MetalPipe=2,
+        ScrapMetal=1,
+        Wire=1,
+        BlowTorch=2,
+        keep [Recipe.GetItemTypes.WeldingMask],
+
+        NoBrokenItems:true,
+        SkillRequired:MetalWelding=3,
+        NeedToBeLearn:true,
+        Time:300.0,
+        Sound:BlowTorch,
+        Result:BicycleSuspensionRegularScrap3,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Category:Welding,
+    }
+
+    recipe CraftScrapBrakes1
+    {
+        ScrapMetal=1,
+        SmallSheetMetal=1,
+        BlowTorch=1,
+        keep [Recipe.GetItemTypes.WeldingMask],
+
+        NoBrokenItems:true,
+        SkillRequired:MetalWelding=3,
+        NeedToBeLearn:true,
+        Time:250.0,
+        Sound:BlowTorch,
+        Result:BicycleBrakesRegularScrap3,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Category:Welding,
+    }
+
+    recipe CraftScrapTire1
+    {
+        RubberBand=8,
+        Wire=4,
+        ScrapMetal=2,
+        BlowTorch=1,
+        keep [Recipe.GetItemTypes.WeldingMask],
+
+        NoBrokenItems:true,
+        SkillRequired:MetalWelding=3,
+        NeedToBeLearn:true,
+        Time:100.0,
+        Sound:BlowTorch,
+        Result:BicycleTireRegularScrap,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Category:Welding,
+    }
+
+    /************************ MOUNTAIN BICYCLE (SCRAP) ************************/
+
+    recipe CraftScrapFrame2
+    {
+        ScrapMetal=6,
+        MetalPipe=6,
+        Wire=4,
+        SmallSheetMetal=2,
+        BlowTorch=5,
+        keep [Recipe.GetItemTypes.WeldingMask],
+
+        NoBrokenItems:true,
+        SkillRequired:MetalWelding=3,
+        NeedToBeLearn:true,
+        Time:500.0,
+        Sound:BlowTorch,
+        Result:BicycleFrameMTBScrap,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Category:Welding,
+    }
+
+    recipe CraftScrapSuspension2
+    {
+        MetalPipe=4,
+        ScrapMetal=2,
+        Wire=2,
+        BlowTorch=2,
+        keep [Recipe.GetItemTypes.WeldingMask],
+
+        NoBrokenItems:true,
+        SkillRequired:MetalWelding=3,
+        NeedToBeLearn:true,
+        Time:300.0,
+        Sound:BlowTorch,
+        Result:BicycleSuspensionMTBScrap3,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Category:Welding,
+    }
+
+    recipe CraftScrapBrakes2
+    {
+        ScrapMetal=1,
+        SmallSheetMetal=1,
+        BlowTorch=1,
+        keep [Recipe.GetItemTypes.WeldingMask],
+
+        NoBrokenItems:true,
+        SkillRequired:MetalWelding=3,
+        NeedToBeLearn:true,
+        Time:250.0,
+        Sound:BlowTorch,
+        Result:BicycleBrakesMTBScrap3,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Category:Welding,
+    }
+
+    recipe CraftScrapTire2
+    {
+        RubberBand=16,
+        Wire=8,
+        ScrapMetal=3,
+        BlowTorch=1,
+        keep [Recipe.GetItemTypes.WeldingMask],
+
+        NoBrokenItems:true,
+        SkillRequired:MetalWelding=3,
+        NeedToBeLearn:true,
+        Time:100.0,
+        Sound:BlowTorch,
+        Result:BicycleTireMTBScrap,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Category:Welding,
+    }
+
+    /************************ MISC ************************/
+
+    recipe CraftScrapSeat
+    {
+        RippedSheets=4,
+        DuctTape=1,
+
+        NoBrokenItems:true,
+        SkillRequired:Tailoring=3,
+        NeedToBeLearn:true,
+        Time:100.0,
+        Sound:FixWithTape,
+        Result:BicycleSeatScrap,
+        Category:Welding,
+    }
+
+    recipe CraftBikeLock
+    {
+        Padlock=1,
+        Wire=3,
+
+        NoBrokenItems:true,
+        NeedToBeLearn:false,
+        Time:100.0,
+        Sound:BicycleChain,
+        Result:BicycleLock,
+        Category:General,
+    }
+
+    recipe CraftHeadlight
+    {
+        destroy Torch/HandTorch,
+        ScrapMetal=1,
+        Screws=2,
+
+        NoBrokenItems:false,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:true,
+        Time:100.0,
+        Sound:FixWithTape,
+        Result:BicycleHeadlight3,
+        Category:Electrical,
+    }
+}

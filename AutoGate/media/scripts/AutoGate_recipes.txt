@@ -1,0 +1,35 @@
+module AutoGate
+{
+	imports
+	{
+		Base
+	}
+
+	recipe Create Controller
+	{
+		keep Screwdriver,
+		RadioTransmitter= 1,
+		ElectronicsScrap=2,
+		Battery=1,
+		DuctTape=1,
+		Result: GateController= 1,
+		Time:60.0,
+		Category: AutoGate,
+		NeedToBeLearn: true,
+	}
+
+	recipe Create Gate Components
+	{
+		keep BlowTorch,
+		keep WeldingMask,
+		keep Screwdriver,
+		EngineParts= 6,
+		RadioReceiver=1,
+		MetalBar=2,
+		ElectricWire=1,
+		Result: GateComponents= 1,
+		Time: 140.0,
+		Category: AutoGate,
+		NeedToBeLearn: true,
+	}
+}

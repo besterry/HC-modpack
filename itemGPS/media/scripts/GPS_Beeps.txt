@@ -1,0 +1,222 @@
+module Base
+{
+sound GPS_Beep_gpsPLUG
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_gpsPLUG.ogg,
+		}
+	}
+	sound GPS_Beep_gpsUNPLUG
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_gpsUNPLUG.ogg,
+		}
+	}
+sound GPS_Beep_chargeUNPLUG
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_chargeUNPLUG.ogg,
+		}
+	}
+sound GPS_Beep_chargeOK
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_chargeOK.ogg,
+		}
+	}
+sound GPS_Beep_chargePLUG
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_chargePLUG.ogg,
+		}
+	}
+sound GPS_changePile
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_changePile.ogg,
+		}
+	}
+sound Dismantle_GPS
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Dismantle_GPS.ogg,
+		}
+	}
+sound GPS_Beep_ON
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_ON.ogg,
+		}
+	}
+sound GPS_Beep_OFF
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_OFF.ogg,
+		}
+	}
+sound GPS_Beep_hiddenDisplay
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_hiddenDisplay.ogg,
+		}
+	}
+sound GPS_Beep_low
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_low.ogg,
+		}
+	}
+  
+sound GPS_Beep_1BIS
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_1BIS.ogg,
+		}
+	}
+
+sound GPS_Beep_1
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_1.ogg,
+		}
+	}
+	sound GPS_Beep_2
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_2.ogg,
+		}
+	}
+	sound GPS_Beep_2on
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_2on.ogg,
+		}
+	}
+	sound GPS_Beep_2off
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Beep_2off.ogg,
+		}
+	}
+
+	sound GPS_Check_1
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Check_1.ogg,
+		}
+	}
+	sound GPS_Check_2
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Check_2.ogg,
+		}
+	}
+	sound GPS_Check_3
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Check_3.ogg,
+		}
+	}
+	sound GPS_Check_4
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Check_4.ogg,
+		}
+	}
+
+	sound GPS_unCheck_1
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_unCheck_1.ogg,
+		}
+	}
+	sound GPS_unCheck_2
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_unCheck_2.ogg,
+		}
+	}
+	sound GPS_unCheck_3
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_unCheck_3.ogg,
+		}
+	}
+	sound GPS_unCheck_4
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_unCheck_4.ogg,
+		}
+	}
+
+	sound GPS_Equip_1
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Equip_1.ogg,
+		}
+	}
+	sound GPS_Key_1
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPS_Key_1.ogg,
+		}
+	}
+
+
+	
+
+
+}
+

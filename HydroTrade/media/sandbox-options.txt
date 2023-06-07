@@ -1,0 +1,314 @@
+VERSION = 1,
+
+option ServerTweaker.SaveClientOptions {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = SaveClientOptions
+}
+
+option ServerTweaker.SaveAdminPower {
+  type        = boolean,
+  default     = false,
+  page        = ServerTweaker,
+  translation = SaveAdminPower
+}
+
+option ServerTweaker.AddClientCache {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = AddClientCache
+}
+
+option ServerTweaker.AllowAdminToolsForGM {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = AllowAdminToolsForGM
+}
+
+option ServerTweaker.DisallowSpawnItemsForObservers {
+  type        = boolean,
+  default     = false,
+  page        = ServerTweaker,
+  translation = DisallowSpawnItemsForObservers
+}
+
+option ServerTweaker.DisableAimOutline {
+  type        = boolean,
+  default     = false,
+  page        = ServerTweaker,
+  translation = DisableAimOutline
+}
+
+option ServerTweaker.DisableTradeWithPlayers {
+  type        = boolean,
+  default     = false,
+  page        = ServerTweaker,
+  translation = DisableTradeWithPlayers
+}
+
+option ServerTweaker.ProtectVehicleInSafehouse {
+  type        = boolean,
+  default     = false,
+  page        = ServerTweaker,
+  translation = ProtectVehicleInSafehouse
+}
+
+option ServerTweaker.ScreenBlackoutOnDeath {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = ScreenBlackoutOnDeath
+}
+
+option ServerTweaker.HighlightSafehouse {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = HighlightSafehouse
+}
+
+option ServerTweaker.TweakFirearmsSoundRadius {
+  type        = boolean,
+  default     = false,
+  page        = ServerTweaker,
+  translation = TweakFirearmsSoundRadius
+}
+
+option ServerTweaker.SetGeneralChatStreamAsDefault {
+  type        = boolean,
+  default     = false,
+  page        = ServerTweaker,
+  translation = SetGeneralChatStreamAsDefault
+}
+
+option ServerTweaker.DisplayCharacterCoordinates {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = DisplayCharacterCoordinates
+}
+
+option ServerTweaker.AddSatelliteViewToMap {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = AddSatelliteViewToMap
+}
+
+option ServerTweaker.DisplaySafehouseAreaSize {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = DisplaySafehouseAreaSize
+}
+
+option ServerTweaker.CustomSafezoneAdminTweaks {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = CustomSafezoneAdminTweaks
+}
+
+option ServerTweaker.TweakOverlayText {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = TweakOverlayText
+}
+
+option ServerTweaker.PinOverlayServerInfoText {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = PinOverlayServerInfoText
+}
+
+option ServerTweaker.HideServerOptionsFromPlayers {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = HideServerOptionsFromPlayers
+}
+
+option ServerTweaker.HideTicketsFromPlayers {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = HideTicketsFromPlayers
+}
+
+option ServerTweaker.AddSafehouseToSpawnLocations {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = AddSafehouseToSpawnLocations
+}
+
+option ServerTweaker.AdminsFreeAddToSafehouse {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = AdminsFreeAddToSafehouse
+}
+
+option ServerTweaker.TakeSafehouseLimitations {
+  type        = boolean,
+  default     = false,
+  page        = ServerTweaker,
+  translation = TakeSafehouseLimitations
+}
+
+option ServerTweaker.SafehouseAreaLimit {
+  type        = integer,
+  min         = 0,
+  max         = 10000,
+  default     = 0,
+  page        = ServerTweaker,
+  translation = SafehouseAreaLimit
+}
+
+option ServerTweaker.CheckSafehouseIntersections {
+  type        = boolean,
+  default     = true,
+  page        = ServerTweaker,
+  translation = CheckSafehouseIntersections
+}
+
+option ServerTweaker.SafehouseDeadZone {
+  type        = integer,
+  min         = 0,
+  max         = 100,
+  default     = 0,
+  page        = ServerTweaker,
+  translation = SafehouseDeadZone
+}
+
+option WaterPipes.SmartPipes
+{
+	type = boolean, default = true,
+	page = WaterPipes, translation = WaterPipes_SmartPipes,
+}
+
+option WaterPipes.SmartPipesFillMax
+{
+	type = integer, min = 3, max = 100, default = 20,
+	page = WaterPipes, translation = WaterPipes_SmartPipesFillMax,
+}
+
+option WaterPipes.SmartPipesUpdateNotWatered
+{
+	type = boolean, default = false,
+	page = WaterPipes, translation = WaterPipes_SmartPipesUpdateNotWatered,
+}
+
+option MileageExpansion.Default_Unit
+{
+    type = enum,
+    default = 2,
+	numValues = 2,
+    page = MileageExpansion,
+    translation = MileageExpansion_Default_Unit,
+}
+
+option MileageExpansion.Meter_Per_Kilometer
+{
+    type = integer,
+    min = 100,
+    max = 2000,
+    default = 1000,
+    page = MileageExpansion,
+    translation = MileageExpansion_Meter_Per_Kilometer,
+}
+
+option MileageExpansion.Kilometer_Short_Name
+{
+    type = string,
+    default = km,
+    page = MileageExpansion,
+    translation = MileageExpansion_Kilometer_Short_Name,
+}
+
+option MileageExpansion.Miles_Short_Name
+{
+    type = string,
+    default = mi,
+    page = MileageExpansion,
+    translation = MileageExpansion_Miles_Short_Name,
+}
+
+option MileageExpansion.Minimum_Starting_Odometer
+{
+    type = integer,
+    min = 0,
+    max = 999999,
+    default = 100000,
+    page = MileageExpansion,
+    translation = MileageExpansion_Minimum_Starting_Odometer,
+}
+
+option MileageExpansion.Maximum_Starting_Odometer
+{
+    type = integer,
+    min = 0,
+    max = 999999,
+    default = 300000,
+    page = MileageExpansion,
+    translation = MileageExpansion_Maximum_Starting_Odometer,
+}
+
+option VehicleRecycling.ActionTimeMultiplier
+{
+	type = integer, min = 1, max = 100, default = 1,
+	page = VehicleRecycling, translation = VehicleRecycling_ActionTimeMultiplier,
+}
+
+option VehicleRecycling.RecyclingClaimedVehicle
+{
+	type = boolean, default = false,
+	page = VehicleRecycling, translation = VehicleRecycling_RecyclingClaimedVehicle,
+}
+
+option VehicleRecycling.RecyclingClaimedSmashedCar
+{
+	type = boolean, default = true,
+	page = VehicleRecycling, translation = VehicleRecycling_RecyclingClaimedSmashedCar,
+}
+
+option VehicleRecycling.RecyclingClaimedBurntCar
+{
+	type = boolean, default = true,
+	page = VehicleRecycling, translation = VehicleRecycling_RecyclingClaimedBurntCar,
+}
+
+option VehicleRecycling.UninstallParts
+{
+	type = boolean, default = false,
+	page = VehicleRecycling, translation = VehicleRecycling_UninstallParts,
+}
+
+option VehicleRecycling.RecyclingSmashedCar
+{
+	type = boolean, default = true,
+	page = VehicleRecycling, translation = VehicleRecycling_RecyclingSmashedCar,
+}
+
+option VehicleRecycling.RecyclingBurntCar
+{
+	type = boolean, default = true,
+	page = VehicleRecycling, translation = VehicleRecycling_RecyclingBurntCar,
+}
+
+option VehicleRecycling.ExceptionListRate
+{
+    type = string, default = Base.Car1;Base.Car2,
+    page = VehicleRecycling, translation = VehicleRecycling_ExceptionListRate,
+}
+
+option VehicleRecycling.OldVersionNeededPropane
+{
+	type = boolean, default = false,
+	page = VehicleRecycling, translation = VehicleRecycling_OldVersionNeededPropane,
+}

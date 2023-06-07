@@ -1,0 +1,13 @@
+ItemName_RU = {
+   ItemName_Rotators.DoubleOldTire2 = "Valu двойная шина",
+   ItemName_Rotators.DoubleNormalTire2 = "Стандартная двойная шина",
+   ItemName_Rotators.DoubleModernTire2 = "Качественная двойная шина",
+   ItemName_Rotators.AxleOldTire2 = "Valu 4 Tire ",
+   ItemName_Rotators.AxleNormalTire2 = "Стандартная 4 шинная ось",
+   ItemName_Rotators.AxleModernTire2 = "Качественная 4 шинная ось",
+   
+   ItemName_Rotators.SemiTruckBullbar_Item2 = "W900 Кенгурятник",
+   ItemName_Rotators.SemiTruckArmorDoor_Item2 = "W900 Дверная броня",
+   ItemName_Rotators.SemiTruckArmorFront_Item2 = "W900 Передняя броня",
+   ItemName_Rotators.SemiTruckArmorRear_Item2 = "W900 Задняя броня",
+}

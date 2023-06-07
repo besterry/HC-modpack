@@ -1,0 +1,37 @@
+module Base
+{
+	template vehicle BikeWindow
+	{
+		part WindowFront
+		{
+			parent = DoorFront,
+			itemType = Base.FrontWindow,
+		}
+
+		part Window*
+		{
+			category = nodisplay,
+
+			window
+			{
+				openable = true,
+			}
+
+			anim Open
+			{
+				sound =,
+			}
+
+			anim Close
+			{
+				sound =,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+				init = Vehicles.Init.Window,
+			}
+		}
+	}
+}

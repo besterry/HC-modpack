@@ -1,0 +1,18 @@
+module PinkSlip
+{
+    imports
+    {
+        Base
+    }
+        
+    recipe Claim Vehicle
+    {
+       [Recipe.GetItemTypes.PinkSlip],
+       Result: Base.CarKey,
+       Time: 50.0,
+       OnCanPerform:Recipe.OnCanPerform.CW_ClaimVehicle,
+       OnCreate:Recipe.OnCreate.CW_ClaimVehicle,
+       RemoveResultItem:True,
+    } 
+}
+

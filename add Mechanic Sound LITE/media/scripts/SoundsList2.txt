@@ -1,0 +1,76 @@
+module Base
+{
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet3.ogg,
+			
+		}
+	}
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet4.ogg,
+		}
+	}
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet5.ogg,
+		}
+	}
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet6.ogg,
+		}
+	}
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet7.ogg,
+		}
+	}
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet8.ogg,
+		}
+	}
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet9.ogg,
+		}
+	}
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet10.ogg,
+		}
+	}
+	sound dismentle_Objet_001
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/dismentleObjet11.ogg,
+		}
+	}
+}

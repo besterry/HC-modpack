@@ -1,0 +1,17 @@
+IG_UI_RU = {
+	IGUI_VehicleName70barracuda = "'70 Plymouth Barracuda"
+	IGUI_VehicleName70cuda = "'70 Plymouth Cuda"
+	IGUI_VehicleName70barracudaAAR = "'70 Plymouth Barracuda AAR"
+
+	IGUI_VehiclePartCUDASpareTire = "запасная шина",
+	IGUI_VehiclePartCUDAFrontBumper = "Передний бампер",
+	IGUI_VehiclePartCUDARearBumper = "Задний бампер",
+
+	IGUI_VehiclePartCUDAWindshieldArmor = "Броня лобового стекла",
+	IGUI_VehiclePartCUDAWindshieldRearArmor = "Броня заднего лобового стекла",
+	IGUI_VehiclePartCUDADoorLeftArmor = "Броня передней левой двери",
+	IGUI_VehiclePartCUDADoorRightArmor = "Броня передней правой двери",
+
+	IGUI_VehiclePartCUDASpoiler = "Спойлер",
+	IGUI_VehiclePartCUDATrunk = "Багажник",
+}

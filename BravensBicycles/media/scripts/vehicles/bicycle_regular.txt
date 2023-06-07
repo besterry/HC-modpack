@@ -1,0 +1,373 @@
+module Base
+{
+	model FakeFrame
+    {
+        mesh = vehicles/BNullModel|BNullModel,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model BicycleBase
+    {
+        mesh = vehicles/Bicycle_Body|Bicycle_body,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_seat
+    {
+        mesh = vehicles/Bicycle_Body|Bicycle_seat,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_front_suspension
+    {
+        mesh = vehicles/Bicycle_Body|Bicycle_front_suspension,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_rear_suspension
+    {
+        mesh = vehicles/Bicycle_Body|Bicycle_rear_suspension,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_wheel
+    {
+        mesh = vehicles/Bicycle_Wheels|Bicycle_wheel,
+        texture = vehicles/Bicycle_wheel,
+        shader = vehiclewheel,
+        scale = 1.2,
+    }
+	model Bicycle_basket
+    {
+        mesh = vehicles/Bicycle_Body|Bicycle_basket,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_headlight
+    {
+        mesh = vehicles/Bicycle_Body|Bicycle_headlight,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	vehicle BicycleRegular
+	{
+		mechanicType = 3,
+		offRoadEfficiency = 1,
+		playerDamageProtection = 0.1,
+		template = BikeFrame,
+
+		part FakeFrame
+		{
+			model BicycleFrame
+			{
+				file = BicycleBase,
+				offset = 0.31 0.0 0.0,
+				scale = 1,
+			}
+		}
+
+		model
+		{
+			file = FakeFrame,
+			scale = 1.0000,
+			offset = -0.0500 0.0000 0.0000,
+		}
+
+		skin
+		{
+			texture = vehicles/Bicycle/Body_Black,
+		}
+
+		skin
+		{
+			texture = vehicles/Bicycle/Body_Blue,
+		}
+
+		skin
+		{
+			texture = vehicles/Bicycle/Body_Green,
+		}
+
+		skin
+		{
+			texture = vehicles/Bicycle/Body_Pink,
+		}
+
+		skin
+		{
+			texture = vehicles/Bicycle/Body_Red,
+		}
+
+		skin
+		{
+			texture = vehicles/Bicycle/Body_Yellow,
+		}
+
+		textureMask = vehicles/Bicycle_mask,
+		textureShadow = vehicles/Bicycle/Shadow,
+		textureDamage1Overlay = Vehicles/Bicycle_Blood,
+		textureDamage2Overlay = Vehicles/Bicycle_Blood,
+		textureRust = Vehicles/Bicycle_Rust,
+
+		sound
+		{
+			engine = none,
+			engineStart = none,
+			engineTurnOff = none,
+			horn = BicycleHorn,
+		}
+
+		engineForce = 1600,
+		maxSpeed = 13f,
+		gearRatioCount = 1,
+		gearRatioR = 0.3,
+		gearRatio1 = 2,
+		mass = 100,
+		extents = 0.1500 0.9600 1.9200,
+		physicsChassisShape = 0.1800 0.9600 1.9200,
+		centerOfMassOffset = 0.0000 0.1500 0.0000,
+		shadowExtents = 2.2869 2.2875,
+		shadowOffset = 0.4325 -0.0250,
+		engineLoudness = 15,
+		engineQuality = 80,
+		brakingForce = 0,
+		rollInfluence = 0,
+		steeringClamp = 0.7,
+		suspensionStiffness = 50,
+		suspensionCompression = 0,
+		suspensionDamping = 100,
+		maxSuspensionTravelCm = 16,
+		suspensionRestLength = 0.2f,
+		wheelFriction = 1.5f,
+		frontEndHealth = 30,
+		rearEndHealth = 30,
+		seats = 1,
+
+		area Engine
+		{
+			xywh = 0.3100 0.6100 0.4000 0.4000,
+		}
+
+		area SeatFront
+		{
+			xywh = 0.8200 0.0000 0.8200 0.8200,
+		}
+
+		area GasTank
+		{
+			xywh = 0.3100 0.1600 0.4000 0.4000,
+		}
+
+		area Trunk
+		{
+			xywh = 0.3100 -0.6700 1.4000 1.4000,
+		}
+
+		area TireFront
+		{
+			xywh = 0.3100 0.6000 0.4000 0.4000,
+		}
+
+		area TireRear
+		{
+			xywh = 0.3100 -0.6000 0.4000 0.4000,
+		}
+
+		wheel Front
+		{
+			front = true,
+			offset = 0.3600 -0.3000 0.5100,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel Rear
+		{
+			front = false,
+			offset = 0.3600 -0.3000 -0.6100,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.3600 -0.3000 0.5100,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.3600 -0.3000 -0.6100,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		template = BikeSeats,
+
+		part SeatFront
+		{
+			itemType = Base.BicycleSeat,
+
+			model BikeSeat
+			{
+				file = Bicycle_seat,
+				offset = 0.31 0.0 0.0,
+				scale = 1.0,
+			}
+		}
+
+		template = Engine,
+
+		part Engine
+		{
+			category = nodisplay,
+		}
+
+		template = GasTank,
+
+		part GasTank
+		{
+			specificItem = false,
+			itemType = Base.NormalGasTank3,
+			category = nodisplay,
+		}
+
+		template = Battery,
+
+		part Battery
+		{
+			category = nodisplay,
+			area = GasTank,
+		}
+
+		template = BikeSuspension,
+
+		part SuspensionFront
+		{
+			itemType = Base.BicycleSuspensionRegular,
+
+			model tire876866
+			{
+				file = Bicycle_front_suspension,
+				offset = 0.31 0.0 0.0,
+				scale = 1.0,
+			}
+		}
+
+		part SuspensionRear
+		{
+			itemType = Base.BicycleSuspensionRegular,
+
+			model tire2457959
+			{
+				file = Bicycle_rear_suspension,
+				offset = 0.31 0.0 0.0,
+				scale = 1.0,
+			}
+		}
+
+		template = BikeBrakes,
+
+		part BrakeFront
+		{
+			itemType = Base.BicycleBrakesRegular,
+		}
+
+		part BrakeRear
+		{
+			itemType = Base.BicycleBrakesRegular,
+		}
+
+		template = BikeTires,
+
+		part TireFront
+		{
+			itemType = Base.BicycleTireRegular,
+
+			model InflatedTirePlusWheel
+			{
+				file = Bicycle_Wheel,
+				offset = 0.0 0.0 0.0,
+				scale = 0.9,
+			}
+		}
+
+		part TireRear
+		{
+			itemType = Base.BicycleTireRegular,
+
+			model InflatedTirePlusWheel
+			{
+				file = Bicycle_Wheel,
+				offset = 0.0 0.0 0.0,
+				scale = 0.9,
+			}
+		}
+
+		passenger Front
+		{
+			door = DoorFront,
+			area = SeatFront,
+			showPassenger = true,
+			hasRoof = false,
+
+			position inside
+			{
+				offset = 0.3100 -0.2000 -0.1200,
+			}
+
+			position outside
+			{
+				offset = 0.3500 -0.5600 0.0100,
+			}
+		}
+
+		template = BikeDoor,
+		template = BikeWindow,
+		template = BikeBasket,
+		template = BikeTrunk,
+		template = BikeHeadlight,
+
+		part BikeBasket
+		{
+			model BicycleBasket
+			{
+				file = Bicycle_basket,
+				offset = 0.0 0.0 0.0,
+				scale = 1.0,
+			}
+		}
+
+		part Headlight
+		{
+			model BikeHeadlight
+			{
+				file = Bicycle_headlight,
+				offset = 0.0 0.0 0.0,
+				scale = 1.0,
+			}
+		}
+
+		attachment trailer
+		{
+			offset = 0.3100 -0.2700 -1.0900,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.3100 -0.2700 0.9500,
+			zoffset = 1.0000,
+		}
+	}
+}

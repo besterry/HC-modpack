@@ -1,0 +1,5 @@
+Recipe_RU = {
+	/* Voldar: CarClamp */
+	Recipe_CarClamp = "Блокировщик колёс"
+
+}

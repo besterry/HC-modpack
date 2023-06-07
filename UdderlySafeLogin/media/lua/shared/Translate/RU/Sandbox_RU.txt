@@ -1,0 +1,13 @@
+Sandbox_RU = 
+{
+	Sandbox_UdderlySafeLogin = "Безопасный вход в систему",
+	
+	Sandbox_UdderlySafeLogin_SafeTime = "Безопасное время",
+	Sandbox_UdderlySafeLogin_SafeTime_tooltip = "Безопасное время в секундах, обратите внимание, что это начинается, когда они нажимают кнопку "Начать", а не когда они могут двигаться.",
+	
+	Sandbox_UdderlySafeLogin_MovementMultiplier = "Множитель движения",
+	Sandbox_UdderlySafeLogin_MovementMultiplier_tooltip = "Множитель движения - это то, что изменяет количество времени, которое вы получаете после перемещения.",
+	
+	Sandbox_UdderlySafeLogin_UseInvisibility = "Используйте невидимость",
+	Sandbox_UdderlySafeLogin_UseInvisibility_tooltip = "Используйте невидимость вместо того, чтобы не позволять зомби ударить вас. Это не позволяет им замечать вас или следовать за вами, но может быть использовано пользователями.",
+}

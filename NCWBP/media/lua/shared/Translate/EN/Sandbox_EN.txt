@@ -1,0 +1,4 @@
+Sandbox_EN = {
+	Sandbox_NCWorkingBenchPress = "Working Bench Press",
+	Sandbox_NCWorkingBenchPress_StrengthXPMultiply = "Strength XP Multiply",
+}

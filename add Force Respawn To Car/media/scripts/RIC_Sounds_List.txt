@@ -1,0 +1,58 @@
+module Base
+{	
+	sound RIC_expulsePlayer
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/RIC_expulsePlayer_1.ogg,
+			volume = 0.3,
+		}
+	}
+	sound RIC_expulsePlayer
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/RIC_expulsePlayer_1.ogg,
+			volume = 0.3,
+		}
+	}
+	sound RIC_expulsePlayer
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/RIC_expulsePlayer_1.ogg,
+			volume = 0.3,
+		}
+	}
+	sound RIC_expulsePlayer
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/RIC_expulsePlayer_1.ogg,
+			volume = 0.3,
+		}
+	}
+	sound RIC_vehicleMove
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/RIC_vehicleMove.ogg,
+			volume = 0.3,
+		}
+	}
+	sound RIC_respawnGround
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/RIC_respawnGround.ogg,
+			volume = 0.2,
+		}
+	}
+
+}

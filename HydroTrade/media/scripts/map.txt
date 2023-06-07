@@ -1,0 +1,13 @@
+module Base
+{		
+		item worldmap1
+    {
+        Weight	=	0.1,
+        Type	=	Normal,
+        DisplayName	=	WorldMap,
+        Icon	=	Map,
+        WorldStaticModel = Map,
+		DisplayCategory = Cartography,
+		Tooltip = Tooltip_itemworldmap1,
+    }
+}

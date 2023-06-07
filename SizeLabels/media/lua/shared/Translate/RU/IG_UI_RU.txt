@@ -1,0 +1,20 @@
+IGUI_RU = { 
+	IGUI_char_CSize = "Размер",
+	IGUI_B_Spacious = "(Просторно)",
+	IGUI_B_Tight = "(Узко)",
+	IGUI_B_Fit = "(Впору)",
+	IGUI_SL_CantWear = "Не могу надеть это",
+	IGUI_CheckLabel = "Проверить бирку",
+	IGUI_JobType_CheckLabel = "Бирка",
+	IGUI_CutLabel = "Срезать бирку",
+	IGUI_JobType_CutLabel = "Отрезать",
+	
+	IGUI_NoLabel_Say1 = "Да где же она?",
+	IGUI_NoLabel_Say2 = "Не могу найти",
+	IGUI_NoLabel_Say3 = "Подстава!",
+	IGUI_ChangeSizeIncrese = "Увеличить размер",
+	IGUI_ChangeSizeReduse = "Уменьшить размер",
+	
+	IGUI_NeedPerkLvl = "Для этого мне нужно больше опыта в шитье...",
+	IGUI_NeedToolsAndMaterials = "Нужна иголка, ножницы, нитки и материал",
+}

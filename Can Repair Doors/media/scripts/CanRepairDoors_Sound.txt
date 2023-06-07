@@ -1,0 +1,51 @@
+module Base
+{
+	sound CanRepairDoors_CraftMetalKit
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/CanRepairDoors_CraftMetalKit.ogg,
+			volume = 0.4,
+		}
+	}
+
+	sound CanRepairDoors_CraftWoodKit
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/CanRepairDoors_CraftWoodKit.ogg,
+			volume = 0.4,
+		}
+	}
+
+	sound CanRepairDoors_epoxy
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/CanRepairDoors_epoxy.ogg,
+			volume = 0.4,
+		}
+	}
+	sound CanRepairDoors_metal
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/CanRepairDoors_metal.ogg,
+			volume = 0.4,
+		}
+	}
+	sound CanRepairDoors_wood
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/CanRepairDoors_wood.ogg,
+			volume = 0.4,
+		}
+	}
+	
+}

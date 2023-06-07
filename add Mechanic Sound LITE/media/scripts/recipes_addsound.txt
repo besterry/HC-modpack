@@ -1,0 +1,185 @@
+module Base
+{
+
+ recipe Dismantle Flashlight
+   {
+      destroy Torch/HandTorch,
+      keep [Recipe.GetItemTypes.Screwdriver],
+
+      Result:ElectronicsScrap,
+      Time:501,
+      OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+      OnCreate:Recipe.OnCreate.DismantleFlashlight,
+      Category:Electrical,
+      AnimNode:Disassemble,
+      Sound:dismentle_Objet_001,
+      Prop1:Screwdriver,
+      Prop2:Source=1,
+      Override:true,
+   }
+
+    /************************ Dismantle stuff ************************/
+
+    recipe Dismantle TV Remote
+    {
+       Remote,
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:Receiver,
+       Time:251,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       OnCreate:Recipe.OnCreate.Dismantle,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+    recipe Dismantle Video Game
+    {
+       VideoGame,
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:ElectronicsScrap,
+       Time:249,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+    recipe Dismantle Cordless Phone
+    {
+       CordlessPhone,
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:ElectronicsScrap,
+       Time:252,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+    recipe Dismantle Speaker
+    {
+       Speaker,
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:Amplifier,
+       Time:501,
+       OnCreate:Recipe.OnCreate.Dismantle,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+    recipe Dismantle Home Alarm
+    {
+       HomeAlarm,
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:MotionSensor,
+       Time:501,
+       OnCreate:Recipe.OnCreate.Dismantle,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+    recipe Dismantle Digital Watch
+    {
+       [Recipe.GetItemTypes.DismantleDigitalWatch],
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:ElectronicsScrap,
+       Time:251,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+    recipe Dismantle Earbuds
+    {
+       Earbuds,
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:ElectronicsScrap,
+       Time:249,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+    recipe Dismantle Headphones
+    {
+       Headphones,
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:ElectronicsScrap,
+       Time:501,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+    recipe Dismantle CD Player
+    {
+       CDplayer,
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:ElectronicsScrap=2,
+       Time:501,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+    recipe Dismantle Camera
+    {
+       [Recipe.GetItemTypes.DismantleCamera],
+       keep [Recipe.GetItemTypes.Screwdriver],
+
+       Result:ElectronicsScrap,
+       Time:501.0,
+       OnGiveXP:Recipe.OnGiveXP.DismantleElectronics,
+       Category:Electrical,
+       AnimNode:Disassemble,
+       Sound:dismentle_Objet_001,
+       Prop1:Screwdriver,
+       Prop2:CDplayer,
+       Override:true,
+    }
+
+}

@@ -1,0 +1,43 @@
+IG_UI_FR = {
+   
+IGUI_Item_DoorsRepairKitWood = "Ce kit vous servira à réparer les portes, la réparation sera plus ou moins efficace suivant votre compétence en menuiserie.",
+IGUI_Item_DoorsRepairKitMetal = "Ce kit vous servira à renforcer les portes, le renforcement sera plus ou moins efficace suivant votre compétence en menuiserie.",
+IGUI_Item_DoorsRepairKitEpoxy = "Ce kit Epoxy à séchage rapide vous servira à réparer les portes endommagées, ceci n'est pas trés efficace, il vous servira également à fabriquer les kits de renforcement pour portes, c'est mieux !",
+
+
+
+
+IGUI_CanRepairDoors_option = "Réparer la porte",
+
+IGUI_veryBadlyHealtDoor = "Sur le point de céder !!",
+IGUI_BadlyHealtDoor = "En Mauvais état !",
+IGUI_midleHealtDoor = "Ca peut encore tenir la route.",
+IGUI_maxHealtDoor = "En trés bon état.",
+IGUI_damagedRenforcedHealtDoor = "Renforcée (abîmée)",
+IGUI_renforcedHealtDoor = "Renforcée",
+
+IGUI_CRD_Impossible_reinforce = "Impossible de renforcer la porte, elle est trop abîmée !",
+IGUI_CRD_Impossible_repair = "La porte est déjà réparée !",
+IGUI_CRD_Impossible_isFullReinforced = "Cette porte est déjà renforcée !",
+
+IGUI_CRD_impossibleHealthRaised = "Il y eu un glitch, action annulée ...",
+
+IGUI_Info = "Info",
+
+IGUI_repairDoorAdmin = "|Réparer la porte (Admin)|",
+IGUI_reinforceDoorAdmin = "|Renforcer la porte (Admin)|",
+
+IGUI_CheckDoorMP = "Vérifier l'état de la porte",
+
+IGUI_RepairDoorWithKitEpoxy = "Réparer la porte avec l'époxy",
+IGUI_RepairDoorWithKitWood = "Réparer la porte avec un kit",
+IGUI_RepairDoorWithKitMetal = "Renforcer la porte avec un kit",
+
+IGUI_RepairDoorWithKitEpoxyINFO = "N'importe qui est capable d'effectuer la réparation avec cette colle, aucune compétence ne sera prise en compte pour son l'efficacité. Appliquez directement sur la zone à traiter.",
+IGUI_RepairDoorWithKitWoodINFO = "Le niveau 1 en menuiserie est requis pour effectuer la réparation, son efficacité dépendra de votre niveau en menuiserie.",
+IGUI_RepairDoorWithKitMetalINFO = "Le niveau 2 en menuiserie est requis pour effectuer le renforcement, son efficacité dépendra de votre niveau en menuiserie.",
+
+IGUI_CarpSkillNiv2Required = "Niveau 2 en menuiserie requis",
+IGUI_CarpSkillNiv1Required = "Niveau 1 en menuiserie requis",
+
+    }

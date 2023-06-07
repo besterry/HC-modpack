@@ -1,0 +1,4 @@
+DisplayName_ES = {
+	/* Voldar: CarClamp */
+	ItemName_VoldarGames.CarClamp = "Cepo de coche",	
+}

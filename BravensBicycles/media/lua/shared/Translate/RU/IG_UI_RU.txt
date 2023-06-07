@@ -1,0 +1,18 @@
+IG_UI_RU = {
+	IGUI_VehicleNameBicycleRegular = "Обычный велосипед",
+	IGUI_VehicleNameBicycleRegularScrap = "Самодельный велосипед",
+	IGUI_VehicleNameBicycleMTB = "Горный велосипед",
+	IGUI_VehicleNameBicycleMTBScrap = "Самодельный горный велосипед",
+	IGUI_VehicleNameBicycleTrailer = "Прицеп для велосипеда"
+	IGUI_VehiclePartSeatFront= "Сиденье для велосипеда",
+	IGUI_VehiclePartSuspensionFront = "Передняя подвеска для велосипеда",
+	IGUI_VehiclePartSuspensionRear = "Задняя подвеска для велосипеда",
+	IGUI_VehiclePartBrakeFront = "Передний тормоз для велосипеда",
+	IGUI_VehiclePartBrakeRear = "Задний тормоз для велосипеда",
+	IGUI_VehiclePartTireFront = "Переднее колесо для велосипеда",
+	IGUI_VehiclePartTireRear = "Заднее колесо для велосипеда",
+	IGUI_VehiclePartBikeBasket = "Корзина для велосипеда",
+	IGUI_VehiclePartTrunk = "Задний багажник для велосипеда",
+	IGUI_VehiclePartHeadlight = "Фара для велосипеда",
+	IGUI_VehiclePartCatAccessories = "Аксессуары для велосипеда",
+}

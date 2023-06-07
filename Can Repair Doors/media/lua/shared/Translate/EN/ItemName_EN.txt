@@ -1,0 +1,8 @@
+ItemName_EN = {
+
+ItemName_Base.DoorsRepairKitWood		= "Repair kit for doors",
+ItemName_Base.DoorsRepairKitMetal		= "Reinforce kit for doors",
+ItemName_Base.DoorsRepairKitEpoxy		= "Fast drying Epoxy",
+
+
+}

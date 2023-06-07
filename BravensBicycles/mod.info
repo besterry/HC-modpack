@@ -1,0 +1,8 @@
+name=Braven's Bicycles
+id=BBVehicles_h
+require=BB_Utils_h
+poster=poster.png
+icon=icon.png
+authors=BitBraven
+modversion=3.2.0
+description=This mod adds working bicycles to the game!

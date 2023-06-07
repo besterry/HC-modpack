@@ -1,0 +1,6 @@
+IG_UI_EN = {
+
+IGUI_Generator_Now_Has_Infinite_Fuel_and_Condition = "Generator Now Has Infinite Fuel and Condition",
+IGUI_Admin_Set_Infinite_Fuel = "Admin Set Infinite Fuel",
+
+    }

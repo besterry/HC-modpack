@@ -1,0 +1,18 @@
+IG_UI_EN = {
+	IGUI_VehicleNameBicycleRegular = "Regular Bicycle",
+	IGUI_VehicleNameBicycleRegularScrap = "Regular Bicycle (Scrap)",
+	IGUI_VehicleNameBicycleMTB = "MTB",
+	IGUI_VehicleNameBicycleMTBScrap = "MTB (Scrap)",
+	IGUI_VehicleNameBicycleTrailer = "Bicycle Trailer"
+	IGUI_VehiclePartSeatFront= "Saddle",
+	IGUI_VehiclePartSuspensionFront = "Front fork",
+	IGUI_VehiclePartSuspensionRear = "Rear fork",
+	IGUI_VehiclePartBrakeFront = "Front brake",
+	IGUI_VehiclePartBrakeRear = "Rear brake",
+	IGUI_VehiclePartTireFront = "Front tire",
+	IGUI_VehiclePartTireRear = "Rear tire",
+	IGUI_VehiclePartBikeBasket = "Basket",
+	IGUI_VehiclePartTrunk = "Rear rack",
+	IGUI_VehiclePartHeadlight = "Headlight",
+	IGUI_VehiclePartCatAccessories = "Accessories",
+}

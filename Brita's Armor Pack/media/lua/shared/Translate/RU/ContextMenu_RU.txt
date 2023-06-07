@@ -1,0 +1,96 @@
+ContextMenu_RU = {
+
+    ContextMenu_Visor3_OFF = "Поднять забрало",
+    ContextMenu_Visor3_ON = "Опустить забрало",
+
+    ContextMenu_Visor4_OFF = "Поднять забрало",
+    ContextMenu_Visor4_ON = "Опустить забрало",
+
+    ContextMenu_Tactical_Belt_WearBack = "Надеть сзади",
+    ContextMenu_Tactical_Belt_WearFront = "Надеть спереди",
+
+    ContextMenu_Duty_Belt_WearBack = "Надеть сзади",
+    ContextMenu_Duty_Belt_WearFront = "Надеть спереди",
+
+    ContextMenu_D3M_Loose = "Ослабить лямки",
+    ContextMenu_Bag_D3M = "Подтянуть лямки",
+    ContextMenu_D3M (Tight) = "Подтянуть лямки",
+    ContextMenu_D3M_Loose = "Ослабить лямки",
+
+    ContextMenu_Blackhawk_Loose = "Ослабить лямки",
+    ContextMenu_Bag_Blackhawk = "Подтянуть лямки",
+    ContextMenu_Blackhawk (Tight) = "Подтянуть лямки",
+    ContextMenu_Bag_Blackhawk_Loose = "Ослабить лямки",
+
+    ContextMenu_X_Vest_Loose = "Ослабить лямки",
+    ContextMenu_Bag_X_Vest = "Подтянуть лямки",
+    ContextMenu_X_Vest (Tight) = "Подтянуть лямки",
+    ContextMenu_Bag_X_Vest_Loose = "Ослабить лямки",
+
+    ContextMenu_SKS_Vest_Loose = "Ослабить лямки",
+    ContextMenu_Bag_SKS_Vest = "Подтянуть лямки",
+    ContextMenu_SKS_Vest (Tight) = "Подтянуть лямки",
+    ContextMenu_Bag_SKS_Vest_Loose = "Ослабить лямки",
+
+    ContextMenu_AK_Vest_Loose = "Ослабить лямки",
+    ContextMenu_Bag_AK_Vest = "Подтянуть лямки",
+    ContextMenu_AK_Vest (Tight) = "Подтянуть лямки",
+    ContextMenu_Bag_AK_Vest_Loose = "Ослабить лямки",
+
+    ContextMenu_Smersh_Vest_Loose = "Ослабить лямки",
+    ContextMenu_Bag_Smersh_Vest = "Подтянуть лямки",
+    ContextMenu_Smersh_Vest (Tight) = "Подтянуть лямки",
+    ContextMenu_Bag_Smersh_Vest_Loose = "Ослабить лямки",
+
+    ContextMenu_DownHoodie = "Без капюшона",
+    ContextMenu_UpHoodie = "С капюшоном",
+
+    ContextMenu_880_Visor_OFF = "Поднять забрало",
+    ContextMenu_880_Visor_ON = "Опустить забрало",
+
+    ContextMenu_Killa_880_OFF = "Поднять забрало",
+    ContextMenu_Killa_880_ON = "Опустить забрало",
+
+    ContextMenu_VPU_OFF = "Включить аудио усилитель",
+    ContextMenu_VPU_ON = "Выключить аудио усилитель",
+
+    ContextMenu_X1000_OFF = "Поднять очки",
+    ContextMenu_X1000_ON = "Опустить очки",
+
+    ContextMenu_Crewman_Goggles_OFF = "Поднять очки",
+    ContextMenu_Crewman_Goggles_ON = "Опустить очки",
+
+    ContextMenu_Hood_OFF = "Без капюшона",
+    ContextMenu_Hood_ON = "С капюшоном",
+
+    ContextMenu_Visor_OFF = "Поднять забрало",
+    ContextMenu_Visor_ON = "Опустить забрало",
+
+    ContextMenu_Visor2_OFF = "Поднять забрало",
+    ContextMenu_Visor2_ON = "Опустить забрало",
+
+    ContextMenu_Killa_Visor_OFF = "Поднять забрало",
+    ContextMenu_Killa_Visor_ON = "Опустить забрало",
+
+    ContextMenu_Glass_OFF = "Поднять очки",
+    ContextMenu_Glass_ON = "Опустить очки",
+
+    ContextMenu_PVS15_NV_OFF = "Поднять очки",
+    ContextMenu_PVS15_NV_ON = "Опустить очки",
+
+    ContextMenu_Sam_NV_OFF = "Поднять очки",
+    ContextMenu_Sam_NV_ON = "Опустить очки",
+
+    ContextMenu_PVS15_OFF = "Поднять очки",
+    ContextMenu_PVS15_ON = "Опустить очки",
+
+    ContextMenu_PVS15_Harness_OFF = "Поднять очки",
+    ContextMenu_PVS15_Harness_ON = "Опустить очки",
+
+    ContextMenu_NV18_OFF = "Поднять очки",
+    ContextMenu_NV18_ON = "Опустить очки",
+
+    ContextMenu_NV18_Harness_OFF = "Поднять очки",
+    ContextMenu_NV18_Harness_ON = "Опустить очки",
+
+}

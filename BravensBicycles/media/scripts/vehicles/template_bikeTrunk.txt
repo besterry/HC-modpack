@@ -1,0 +1,24 @@
+module Base
+{
+	template vehicle BikeTrunk
+	{
+		part Trunk
+		{
+			category = bodywork,
+			area = Trunk,
+
+			container
+			{
+				conditionAffectsCapacity = true,
+				capacity = 5,
+				test = Vehicles.ContainerAccess.TruckBed,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+	}
+}
+

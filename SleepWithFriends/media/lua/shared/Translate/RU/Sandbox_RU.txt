@@ -1,0 +1,14 @@
+Sandbox_RU = {
+	Sandbox_SleepWithFriends_RTorIG = "Тип продолжительности сна",
+	Sandbox_SleepWithFriends_RTorIG_tooltip = "Выберите, устанавливается ли продолжительность сна в минутах реального времени или в игровых часах.",
+	Sandbox_SleepWithFriends_RTorIG_option1 = "Минуты в реальном времени",
+	Sandbox_SleepWithFriends_RTorIG_option2 = "Часы в игре",
+	Sandbox_SleepWithFriends_SleepLength = "Продолжительность сна",
+	Sandbox_SleepWithFriends_SleepLength_tooltip = "Среднее время, затрачиваемое на сон при полной усталости.",
+	Sandbox_SleepWithFriends_EndurMulti = "Множитель восстановления выносливости",
+	Sandbox_SleepWithFriends_EndurMulti_tooltip = "Определяет, насколько быстро восстанавливается выносливость во время сна. 1 - это та же скорость, что и усталость, 1,5 - в полтора раза быстрее, 2 - в два раза быстрее и т.д.",
+	Sandbox_SleepWithFriends_AutoWake = "Автоматическое пробуждение включено",
+	Sandbox_SleepWithFriends_AutoWake_tooltip = "Установите, включена ли функция автопробуждения.",
+	Sandbox_SleepWithFriends_AutoWake_option1 = "Включено",
+	Sandbox_SleepWithFriends_AutoWake_option2 = "Отключено",
+}

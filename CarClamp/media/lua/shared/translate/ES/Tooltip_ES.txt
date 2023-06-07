@@ -1,0 +1,4 @@
+Tooltip_ES = {
+	/* Voldar: CarClamp */
+	Tooltip_CarClamp = "Usalo en el menu de fuera del coche para bloquear el vehiculo",
+}

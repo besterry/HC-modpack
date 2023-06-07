@@ -1,0 +1,43 @@
+IG_UI_IT = {
+
+IGUI_Item_DoorsRepairKitWood = "Questo kit servirà per riparare le porte, la riparazione sarà più o meno efficace a seconda della vostra abilità in carpenteria.",
+IGUI_Item_DoorsRepairKitMetal = "Questo kit verrà utilizzato per rinforzare le porte, il rinforzo saranno più o meno efficaci a seconda delle tue abilità di carpenteria.",
+IGUI_Item_DoorsRepairKitEpoxy = "Questo kit epossidico ad asciugatura rapida verrà utilizzato per riparare le porte danneggiate, non è molto efficace, ma verrà utilizzato anche per realizzare kit di rinforzo per porte, è meglio!",
+
+
+
+
+IGUI_CanRepairDoors_option = "Riparazione della porta",
+
+IGUI_veryBadlyHealtDoor = "Sta per cedere !!",
+IGUI_BadlyHealtDoor = "In cattive condizioni !",
+IGUI_midleHealtDoor = "Puo ancora reggere.",
+IGUI_maxHealtDoor = "In ottime condizioni.",
+IGUI_damagedRenforcedHealtDoor = "Rinforzato (danneggiato)",
+IGUI_renforcedHealtDoor = "Rinforzato ",
+
+IGUI_CRD_Impossible_reinforce = "Impossibile rinforzare la porta, è troppo danneggiata !",
+IGUI_CRD_Impossible_repair = "La porta è già riparata !",
+IGUI_CRD_Impossible_isFullReinforced = "Questa porta è già rinforzata !",
+
+IGUI_CRD_impossibleHealthRaised = "C'è stato un problema, l'azione è stata annullata...",
+
+IGUI_Info = "Info",
+
+IGUI_repairDoorAdmin = "|Ripara la porta(Admin)|",
+IGUI_reinforceDoorAdmin = "|Rinforza la porta (Admin)|",
+
+IGUI_CheckDoorMP = "Controlla le condizioni della porta",
+
+IGUI_RepairDoorWithKitEpoxy = "Riparazione della porta con kit epossidico",
+IGUI_RepairDoorWithKitWood = "Ripara la porta con un kit",
+IGUI_RepairDoorWithKitMetal = "Rinforza la porta con un kit",
+
+IGUI_RepairDoorWithKitEpoxyINFO = "Chiunque è in grado di riparare con questa colla, nessuna competenza sarà presa in considerazione per la sua efficacia. Applicare direttamente sulla zona da trattare.",
+IGUI_RepairDoorWithKitWoodINFO = "Per eseguire la riparazione è richiesto il livello 1 di carpenteria, la cui efficacia dipenderà dal vostro livello di carpenteria.",
+IGUI_RepairDoorWithKitMetalINFO = "Per eseguire il rinforzo è richiesto il livello 2 di carpenteria, la cui efficacia dipenderà dal vostro livello di carpenteria.",
+
+IGUI_CarpSkillNiv2Required = "Richiesto livello 2 di carpenteria",
+IGUI_CarpSkillNiv1Required = "Richiesto livello 1 di carpenteria",
+
+}

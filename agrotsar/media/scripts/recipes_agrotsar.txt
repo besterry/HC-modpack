@@ -1,0 +1,110 @@
+module Agrotsar
+{
+    imports
+    {
+        Base
+    }
+
+	fixing Fix Seeder Tank Welding
+	{
+	   Require : ASeederTankSmall;ASeederTankMedium;ASeederTankLarge,
+	   GlobalItem : BlowTorch=5,
+	   ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=4,
+       Fixer : SmallSheetMetal=2; MetalWelding=4,
+	}
+
+	fixing Fix Seeder Flap Welding
+	{
+	   Require : ASeederPlate,
+	   GlobalItem : BlowTorch=5,
+	   ConditionModifier : 1.2,
+
+       Fixer : SmallSheetMetal; MetalWelding=4,
+       Fixer : ScrapMetal=2; MetalWelding=4,
+	}
+
+	fixing Fix Plowshare Welding
+	{
+	   Require : APlowshare,
+	   GlobalItem : BlowTorch=5,
+	   ConditionModifier : 1.2,
+
+       Fixer : MetalBar=2; MetalWelding=4,
+	}
+
+    recipe Make ASeederTankSmall
+    {
+        SheetMetal=3,
+        Screws=5,
+        BlowTorch=8,
+        keep WeldingMask,
+
+        Result:ASeederTankSmall,
+        Category:Farming,
+        SkillRequired:MetalWelding=4,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Time:300.0,
+        NeedToBeLearn:true,
+    }
+
+    recipe Make ASeederTankMedium
+    {
+        SheetMetal=4,
+        Screws=7,
+        BlowTorch=10,
+        keep WeldingMask,
+
+        Result:ASeederTankMedium,
+        Category:Farming,
+        SkillRequired:MetalWelding=6,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Time:350.0,
+        NeedToBeLearn:true,
+    }
+
+    recipe Make ASeederTankLarge
+    {
+        SheetMetal=5,
+        Screws=9,
+        BlowTorch=12,
+        keep WeldingMask,
+
+        Result:ASeederTankLarge,
+        Category:Farming,
+        SkillRequired:MetalWelding=8,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Time:400.0,
+        NeedToBeLearn:true,
+    }
+
+    recipe Make ASeederPlate
+    {
+        SmallSheetMetal=2,
+        ScrapMetal=2,
+        BlowTorch=10,
+        keep WeldingMask,
+
+        Result:ASeederPlate,
+        Category:Farming,
+        SkillRequired:MetalWelding=8,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Time:300.0,
+        NeedToBeLearn:true,
+    }
+
+    recipe Make APlowshare
+    {
+        MetalBar=4,
+        BlowTorch=10,
+        keep WeldingMask,
+
+        Result:APlowshare,
+        Category:Farming,
+        SkillRequired:MetalWelding=8,
+        OnGiveXP:Recipe.OnGiveXP.MetalWelding25,
+        Time:300.0,
+        NeedToBeLearn:true,
+    }
+}

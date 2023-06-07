@@ -1,0 +1,9 @@
+Recipes_RU = {
+	Recipe_Unfold_Leatherdad = "Развернуть",
+	Recipe_Fold_Up_Leatherdad = "Сложить",
+	Recipe_Detach_P38_From_Dog_Tags = "Открепить",
+	Recipe_Attach_P38_To_Dog_Tags = "Прикрепить",
+	Recipe_Make_Stake = "Сделать стейк",
+	Recipe_Slice_Watermelon = "Нарезать арбуз",
+	Recipe_Slice_Bread = "Нарезать хлеб",
+}

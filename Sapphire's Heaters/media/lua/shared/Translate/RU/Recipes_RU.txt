@@ -1,0 +1,9 @@
+Recipes_RU = {
+    Recipe_Insert_Battery_into_Heater = "Вставьте батарею в обогреватель",
+	Recipe_Remove_Battery = "Извлечь аккумулятор",
+	Recipe_Craft_Small_Heater = "Создайте небольшой обогреватель",
+	Recipe_Insert_Battery_into_Portable_Outdoor_Heater = "Вставить аккумулятор в портативный наружный обогреватель",
+	Recipe_Craft_Portable_Outdoor_Heater = "Создать портативный уличный обогреватель",
+	Recipe_Craft_Electric_Heater = "Создать электрический обогреватель",
+	Recipe_ReCraft_Electric_Heater = "Восстановить электрический обогреватель",
+}

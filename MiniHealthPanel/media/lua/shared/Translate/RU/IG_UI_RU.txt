@@ -1,0 +1,6 @@
+IGUI_RU = {
+	IGUI_MiniHealth_UpdateNotes = "<CENTRE> <SIZE:medium> Исправление мини-панели здоровья <LINE> <LINE> <LEFT> <SIZE:small> - Исправлены синие части тела, вызванные дополнением Экскрементум"
+	IGUI_Always_visible = "Всегда отображать"
+	IGUI_Health_bar = "Панель здоровья"
+	IGUI_Lock_window = "Заблокировать"
+}

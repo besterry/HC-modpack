@@ -1,0 +1,68 @@
+module Base
+{
+    /************************ FRAMES ************************/
+
+    fixing Fix BikeFrame
+	{
+	   Require : BicycleFrameRegular;BicycleFrameRegularScrap;BicycleFrameMTB;BicycleFrameMTBScrap,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1,
+
+	   Fixer : SmallSheetMetal; MetalWelding=1;Mechanics=1,
+	   Fixer : ScrapMetal=2; MetalWelding=1;Mechanics=1,
+	}
+
+	/************************ SUSPENSION ************************/
+
+    fixing Fix BikeSuspension
+	{
+	   Require : BicycleSuspensionRegular3;BicycleSuspensionRegularScrap3;BicycleSuspensionMTB3;BicycleSuspensionMTBScrap3,
+	   GlobalItem : Screws=2,
+	   ConditionModifier : 1,
+
+       Fixer : MetalPipe; Mechanics=1,
+	}
+
+	/************************ BRAKES ************************/
+
+    fixing Fix BikeBrakes
+	{
+	   Require : BicycleBrakesRegular3;BicycleBrakesRegularScrap3;BicycleBrakesMTB3;BicycleBrakesMTBScrap3,
+	   GlobalItem : Screws=5,
+	   ConditionModifier : 1,
+
+       Fixer : ScrapMetal; Mechanics=1,
+	}
+
+	/************************ TIRES ************************/
+
+    fixing Fix BikeTire
+	{
+	   Require : BicycleTireRegular;BicycleTireRegularScrap;BicycleTireMTB;BicycleTireMTBScrap,
+	   ConditionModifier : 1,
+
+       Fixer : DuctTape; Mechanics=1,
+	}
+
+	/************************ SEATS ************************/
+
+    fixing Fix BikeSeat
+	{
+	   Require : BicycleSeat;BicycleSeatScrap,
+	   GlobalItem : RippedSheets=2,
+	   ConditionModifier : 1,
+
+       Fixer : DuctTape; Mechanics=1,
+	}
+
+	/************************ ACCESSORIES ************************/
+
+    fixing Fix BikeBasket
+	{
+	   Require : BicycleBasket3,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1,
+
+       Fixer : ScrapMetal; Mechanics=1,
+	}
+}

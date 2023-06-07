@@ -1,0 +1,435 @@
+module Base
+{
+    /************************ Frames ************************/
+
+    item BicycleFrameRegular
+	{
+        DisplayCategory                 =	Sports,
+        DisplayName                     =	ItemName_Base.BicycleFrameRegular,
+        Weight	                        =	4,
+        Type	                        =	Weapon,
+        MaxRange	                    =	1.9,
+        WeaponSprite	                =	BicycleFrameRegular,
+        MinAngle	                    =	0.2,
+        MinimumSwingTime	            =	6,
+        EnduranceMod	                =	6,
+        KnockBackOnNoDeath	            =	TRUE,
+        SwingAmountBeforeImpact	        =	0.04,
+        Categories	                    =	Blunt,
+        ConditionLowerChanceOneIn       =	40,
+        SplatN.umber	                =	1,
+        PushBackMod	                    =	1,
+        MaxDamage	                    =	3,
+        SubCategory	                    =	Swinging,
+        ConditionMax	                =	100,
+        MaxHitCount	                    =	3,
+        DoorDamage	                    =	20,
+        IdleAnim	                    =	Idle_Weapon2,
+        CantAttackWithLowestEndurance   =	TRUE,
+        SwingAnim	                    =	Sledgehammer,
+        MinRange                        =	0.7,
+        SwingTime	                    =	6,
+        DoorHitSound                    =   CrowbarHit,
+        HitSound                        =   AxeHit,
+        HitFloorSound                   =   AxeHit,
+        SwingSound                      =   CrowbarSwing,
+        BreakSound	                    =	MetalBarBreak,
+        MinDamage	                    =	2,
+        KnockdownMod	                =	3,
+        SplatBloodOnNoDeath	            =	FALSE,
+        Icon	                        =	Bicycle_frame,
+        RunAnim                        	=	Run_Weapon2,
+        TwoHandWeapon	                =	TRUE,
+        TreeDamage	                    =	10,
+        MetalValue                    	=	120,
+        Tooltip                         =   Tooltip_item_BicycleFrame,
+	}
+
+    item BicycleFrameRegularScrap
+	{
+        DisplayCategory	                =	Sports,
+        DisplayName	                    =	ItemName_Base.BicycleFrameRegularScrap,
+        Weight	                        =	4.5,
+        Type	                        =	Weapon,
+        MaxRange	                    =	1.9,
+        WeaponSprite	                =	BicycleFrameRegularScrap,
+        MinAngle	                    =	0.2,
+        MinimumSwingTime            	=	6,
+        EnduranceMod	                =	6,
+        KnockBackOnNoDeath	            =	TRUE,
+        SwingAmountBeforeImpact     	=	0.04,
+        Categories	                    =	Blunt,
+        ConditionLowerChanceOneIn	    =	40,
+        SplatNumber	                    =   1,
+        PushBackMod	                    =	1,
+        MaxDamage	                    =	3,
+        SubCategory                 	=	Swinging,
+        ConditionMax                	=	100,
+        MaxHitCount	                    =	3,
+        DoorDamage	                    =	20,
+        IdleAnim	                    =	Idle_Weapon2,
+        CantAttackWithLowestEndurance   =	TRUE,
+        SwingAnim	                    =	Sledgehammer,
+        MinRange	                    =	0.7,
+        SwingTime	                    =	6,
+        DoorHitSound                    =   CrowbarHit,
+        HitSound                        =   AxeHit,
+        HitFloorSound                   =   AxeHit,
+        SwingSound                      =   CrowbarSwing,
+        BreakSound                  	=	MetalBarBreak,
+        MinDamage                   	=	2,
+        KnockdownMod	                =	3,
+        SplatBloodOnNoDeath         	=	FALSE,
+        Icon	                        =	Bicycle_frame,
+        RunAnim	                        =	Run_Weapon2,
+        TwoHandWeapon               	=	TRUE,
+        TreeDamage                  	=	10,
+        MetalValue                  	=	120,
+        Tooltip                         =   Tooltip_item_BicycleFrame,
+	}
+
+    item BicycleFrameMTB
+	{
+        DisplayCategory                 =	Sports,
+        DisplayName                     =	ItemName_Base.BicycleFrameMTB,
+        Weight	                        =	6,
+        Type	                        =	Weapon,
+        MaxRange	                    =	1.9,
+        WeaponSprite	                =	BicycleFrameMTB,
+        MinAngle	                    =	0.2,
+        MinimumSwingTime	            =	6,
+        EnduranceMod	                =	6,
+        KnockBackOnNoDeath	            =	TRUE,
+        SwingAmountBeforeImpact	        =	0.04,
+        Categories	                    =	Blunt,
+        ConditionLowerChanceOneIn       =	40,
+        SplatN.umber	                =	1,
+        PushBackMod	                    =	1,
+        MaxDamage	                    =	3,
+        SubCategory	                    =	Swinging,
+        ConditionMax	                =	100,
+        MaxHitCount	                    =	3,
+        DoorDamage	                    =	20,
+        IdleAnim	                    =	Idle_Weapon2,
+        CantAttackWithLowestEndurance   =	TRUE,
+        SwingAnim	                    =	Sledgehammer,
+        MinRange                        =	0.7,
+        SwingTime	                    =	6,
+        DoorHitSound                    =   CrowbarHit,
+        HitSound                        =   AxeHit,
+        HitFloorSound                   =   AxeHit,
+        SwingSound                      =   CrowbarSwing,
+        BreakSound	                    =	MetalBarBreak,
+        MinDamage	                    =	2,
+        KnockdownMod	                =	3,
+        SplatBloodOnNoDeath	            =	FALSE,
+        Icon	                        =	Bicycle_frame,
+        RunAnim                        	=	Run_Weapon2,
+        TwoHandWeapon	                =	TRUE,
+        TreeDamage	                    =	10,
+        MetalValue                    	=	120,
+        Tooltip                         =   Tooltip_item_BicycleFrame,
+	}
+
+    item BicycleFrameMTBScrap
+	{
+        DisplayCategory	                =	Sports,
+        DisplayName	                    =	ItemName_Base.BicycleFrameMTBScrap,
+        Weight	                        =	7,
+        Type	                        =	Weapon,
+        MaxRange	                    =	1.9,
+        WeaponSprite	                =	BicycleFrameMTBScrap,
+        MinAngle	                    =	0.2,
+        MinimumSwingTime            	=	6,
+        EnduranceMod	                =	6,
+        KnockBackOnNoDeath	            =	TRUE,
+        SwingAmountBeforeImpact     	=	0.04,
+        Categories	                    =	Blunt,
+        ConditionLowerChanceOneIn	    =	40,
+        SplatNumber	                    =   1,
+        PushBackMod	                    =	1,
+        MaxDamage	                    =	3,
+        SubCategory                 	=	Swinging,
+        ConditionMax                	=	100,
+        MaxHitCount	                    =	3,
+        DoorDamage	                    =	20,
+        IdleAnim	                    =	Idle_Weapon2,
+        CantAttackWithLowestEndurance   =	TRUE,
+        SwingAnim	                    =	Sledgehammer,
+        MinRange	                    =	0.7,
+        SwingTime	                    =	6,
+        DoorHitSound                    =   CrowbarHit,
+        HitSound                        =   AxeHit,
+        HitFloorSound                   =   AxeHit,
+        SwingSound                      =   CrowbarSwing,
+        BreakSound                  	=	MetalBarBreak,
+        MinDamage                   	=	2,
+        KnockdownMod	                =	3,
+        SplatBloodOnNoDeath         	=	FALSE,
+        Icon	                        =	Bicycle_frame,
+        RunAnim	                        =	Run_Weapon2,
+        TwoHandWeapon               	=	TRUE,
+        TreeDamage                  	=	10,
+        MetalValue                  	=	120,
+        Tooltip                         =   Tooltip_item_BicycleFrame,
+	}
+    
+    /************************ Suspension ************************/
+
+    item BicycleSuspensionRegular3
+    {
+        DisplayCategory          =   VehicleMaintenance,
+        Weight	                 =	 1.0,
+        DisplayName	             =	 ItemName_Base.BicycleSuspensionRegular3,
+        Icon	                 =	 Bicycle_suspension,
+        VehicleType              =   3,
+        ChanceToSpawnDamaged     =   10,
+        SuspensionCompression    =   0,
+        SuspensionDamping        =   100,
+        ConditionMax             =   100,
+        ConditionLowerStandard   =   0.03,
+        ConditionLowerOffroad    =   0.4,
+        MechanicsItem            =   TRUE,
+    }
+
+    item BicycleSuspensionRegularScrap3
+    {
+        DisplayCategory          =   VehicleMaintenance,
+        Weight	                 =	 1.5,
+        DisplayName              =	 ItemName_Base.BicycleSuspensionRegularScrap3,
+        Icon	                 =	 Bicycle_suspension,
+        VehicleType              =   3,
+        ChanceToSpawnDamaged     =   10,
+        SuspensionCompression    =   0,
+        SuspensionDamping        =   60,
+        ConditionMax             =   50,
+        ConditionLowerStandard   =   0.06,
+        ConditionLowerOffroad    =   0.8,
+        MechanicsItem            =   TRUE,
+    }
+
+    item BicycleSuspensionMTB3
+    {
+        DisplayCategory          =   VehicleMaintenance,
+        Weight	                 =	 1.5,
+        DisplayName	             =	 ItemName_Base.BicycleSuspensionMTB3,
+        Icon	                 =	 Bicycle_suspension,
+        VehicleType              =   3,
+        ChanceToSpawnDamaged     =   10,
+        SuspensionCompression    =   0,
+        SuspensionDamping        =   100,
+        ConditionMax             =   100,
+        ConditionLowerStandard   =   0.03,
+        ConditionLowerOffroad    =   0.4,
+        MechanicsItem            =   TRUE,
+    }
+
+    item BicycleSuspensionMTBScrap3
+    {
+        DisplayCategory          =   VehicleMaintenance,
+        Weight	                 =	 2.0,
+        DisplayName              =	 ItemName_Base.BicycleSuspensionMTBScrap3,
+        Icon	                 =	 Bicycle_suspension,
+        VehicleType              =   3,
+        ChanceToSpawnDamaged     =   10,
+        SuspensionCompression    =   0,
+        SuspensionDamping        =   60,
+        ConditionMax             =   50,
+        ConditionLowerStandard   =   0.06,
+        ConditionLowerOffroad    =   0.8,
+        MechanicsItem            =   TRUE,
+    }
+
+    /************************ Brakes ************************/
+
+    item BicycleBrakesRegular3
+    {
+        DisplayCategory        =   VehicleMaintenance,
+        Weight	               =   0.5,
+        DisplayName	           =   ItemName_Base.BicycleBrakesRegular3,
+        Icon	               =   Bicycle_brake,
+        VehicleType            =   3,
+        MaxCapacity            =   35,
+        ConditionMax           =   100,
+        brakeForce             =   1,
+        ChanceToSpawnDamaged   =   10,
+        MechanicsItem          =   TRUE,
+    }
+
+    item BicycleBrakesRegularScrap3
+    {
+        DisplayCategory        =   VehicleMaintenance,
+        Weight	               =   1.0,
+        DisplayName	           =   ItemName_Base.BicycleBrakesRegularScrap3,
+        Icon	               =   Bicycle_brake,
+        VehicleType            =   3,
+        MaxCapacity            =   25,
+        ConditionMax           =   50,
+        brakeForce             =   1,
+        ChanceToSpawnDamaged   =   10,
+        MechanicsItem          =   TRUE,
+    }
+
+    item BicycleBrakesMTB3
+    {
+        DisplayCategory        =   VehicleMaintenance,
+        Weight	               =   0.5,
+        DisplayName	           =   ItemName_Base.BicycleBrakesMTB3,
+        Icon	               =   Bicycle_brake,
+        VehicleType            =   3,
+        MaxCapacity            =   35,
+        ConditionMax           =   100,
+        brakeForce             =   20,
+        ChanceToSpawnDamaged   =   10,
+        MechanicsItem          =   TRUE,
+    }
+
+    item BicycleBrakesMTBScrap3
+    {
+        DisplayCategory        =   VehicleMaintenance,
+        Weight	               =   1.0,
+        DisplayName	           =   ItemName_Base.BicycleBrakesMTBScrap3,
+        Icon	               =   Bicycle_brake,
+        VehicleType            =   3,
+        MaxCapacity            =   25,
+        ConditionMax           =   50,
+        brakeForce             =   05,
+        ChanceToSpawnDamaged   =   10,
+        MechanicsItem          =   TRUE,
+    }
+
+    /************************ Tires ************************/
+
+    item BicycleTireRegular
+    {
+        DisplayCategory          =   VehicleMaintenance,
+        Weight	                 =   1.5,
+        DisplayName	             =   ItemName_Base.BicycleTireRegular,
+        Icon	                 =   Bicycle_tire,
+        MaxCapacity              =   35,
+        ConditionMax             =   100,
+        ChanceToSpawnDamaged     =   30,
+        ConditionLowerStandard   =   0.05,
+        ConditionLowerOffroad    =   0.4,
+        WheelFriction            =   1.5f,
+        MechanicsItem            =   TRUE,
+    }
+
+    item BicycleTireRegularScrap
+    {
+        DisplayCategory          =   VehicleMaintenance,
+        Weight	                 =   2.0,
+        DisplayName	             =   ItemName_Base.BicycleTireRegularScrap,
+        Icon	                 =   Bicycle_tire,
+        MaxCapacity              =   20,
+        ConditionMax             =   50,
+        ChanceToSpawnDamaged     =   30,
+        ConditionLowerStandard   =   0.1,
+        ConditionLowerOffroad    =   0.8,
+        WheelFriction            =   1.0f,
+        MechanicsItem            =   TRUE,
+    }
+
+    item BicycleTireMTB
+    {
+        DisplayCategory          =   VehicleMaintenance,
+        Weight	                 =   2.0,
+        DisplayName	             =   ItemName_Base.BicycleTireMTB,
+        Icon	                 =   Bicycle_tire,
+        MaxCapacity              =   40,
+        ConditionMax             =   100,
+        ChanceToSpawnDamaged     =   30,
+        ConditionLowerStandard   =   0.05,
+        ConditionLowerOffroad    =   0.4,
+        WheelFriction            =   5f,
+        MechanicsItem            =   TRUE,
+    }
+
+    item BicycleTireMTBScrap
+    {
+        DisplayCategory          =   VehicleMaintenance,
+        Weight	                 =   2.5,
+        DisplayName	             =   ItemName_Base.BicycleTireMTBScrap,
+        Icon	                 =   Bicycle_tire,
+        MaxCapacity              =   20,
+        ConditionMax             =   50,
+        ChanceToSpawnDamaged     =   30,
+        ConditionLowerStandard   =   0.1,
+        ConditionLowerOffroad    =   0.8,
+        WheelFriction            =   4f,
+        MechanicsItem            =   TRUE,
+    }
+
+    /************************ Seats ************************/
+
+    item BicycleSeat
+    {
+        DisplayCategory        =   VehicleMaintenance,
+        Weight	               =   1.0,
+        DisplayName	           =   ItemName_Base.BicycleSeat,
+        Icon	               =   Bicycle_seat,
+        VehicleType            =   3,
+        ChanceToSpawnDamaged   =   10,
+        ConditionMax           =   100,
+        MechanicsItem          =   TRUE,
+    }
+
+    item BicycleSeatScrap
+    {
+        DisplayCategory        =   VehicleMaintenance,
+        Weight	               =   1.5,
+        DisplayName	           =   ItemName_Base.BicycleSeatScrap,
+        Icon	               =   Bicycle_seat,
+        VehicleType            =   3,
+        ChanceToSpawnDamaged   =   10,
+        ConditionMax           =   50,
+        MechanicsItem          =   TRUE,
+    }
+
+    /************************ Accessories ************************/
+
+    item BicycleBasket3
+    {
+        DisplayCategory   =   VehicleMaintenance,
+        Weight	          =   1.0,
+        DisplayName	      =   ItemName_Base.BicycleBasket3,
+        Icon	          =   Bicycle_basket,
+        MaxCapacity       =   3,
+        ConditionMax      =   100,
+        MechanicsItem     =   TRUE,
+        Tooltip           =   Tooltip_item_BicycleBasket,
+    }
+
+    item BicycleHeadlight3
+    {
+        DisplayCategory   =   VehicleMaintenance,
+        Weight	          =   1.0,
+        Type		      =   Normal,
+        DisplayName	      =   ItemName_Base.BicycleHeadlight,
+        Icon	          =   Bicycle_headlight,
+        ConditionMax      =   100,
+        MechanicsItem     =   TRUE,
+    }
+
+    /************************ Misc ************************/
+
+    item BicycleLock
+    {
+        DisplayCategory   =   VehicleMaintenance,
+        Weight	          =   1.0,
+        DisplayName	      =   ItemName_Base.BicycleLock,
+        Icon	          =   Bicycle_lock,
+        ConditionMax      =   100,
+        Tooltip           =   Tooltip_item_BicycleLock,
+    }
+
+    item BicycleLockKey
+    {
+        DisplayCategory   =   VehicleMaintenance,
+        Weight	          =   0.0,
+        Type	          =   Key,
+        DisplayName       =   ItemName_Base.BicycleLockKey,
+        Icon	          =   KeyPadlock1,
+        Tooltip           =   Tooltip_item_BicycleLockKey,
+    }
+}

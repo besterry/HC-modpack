@@ -1,0 +1,117 @@
+module Base
+{
+
+	model Vehicles_WheelOlds
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheelolds,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelRoyale1
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_royale1,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelRoyale2
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_royale2,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelRoyale3
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_royale3,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelRoyale4
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_royale4,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelRoyale5
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_royale5,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelPoncho
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheelponcho,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelPoncho2
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheelponcho2,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelPoncho3
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheelponcho3,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_WheelPoncho4
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheelponcho4,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_Wheelpickup88
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheel_pickup88,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_Wheelpickup76
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheel_pickup76,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_Wheelsub88
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheel_sub88,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_Wheelpickup88Cop
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheel_pickup88_cop,
+		shader = vehiclewheel,
+	}
+
+
+	model Vehicles_Wheelpickup73
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheel_pickup73,
+		shader = vehiclewheel,
+	}
+
+	model Vehicles_Wheelvette
+	{
+		mesh = Vehicles_Wheel,
+		texture = Vehicles/vehicle_wheel_vette,
+		shader = vehiclewheel,
+	}
+
+}

@@ -1,0 +1,12 @@
+Tooltip_EN = {
+	Tooltip_item_runflats = "Universal military tires that will never pop but will lose traction when condition is low.",
+	Tooltip_item_M151A2runflats = "M151A2 military tires that will almost never pop but will lose traction when condition is low.",
+	Tooltip_item_M151A2Tarp1 = "Cosmetic item, it may cover your head but it will not protect you from the elements.",
+	Tooltip_item_M151A2Bumper1 = "Attach it to the front of M151A2 to protect the hood and engine.",
+	Tooltip_item_M151A2Windshield2 = "You can use scalpel to cut regular heavy duty windshields to make replacement M151A2 windshield.",
+	Tooltip_item_M151A2sideWindow2 = "You can use metal sheets to make replacement M151A2 armored viewports.",
+	Tooltip_item_M151A2Door2 = "Protects player from zombies, just don't forget to install viewports too, requires cab armor as a base for installation.",
+	Tooltip_item_M151A2Barrier1 = "Cosmetic item, metal trunk barrier for M151A2 trunk (may include a 50cal).",
+	Tooltip_item_M151A2WindshieldArmor1 = "Attach it to the front of M151A2 to protect the windshield.",
+	Tooltip_item_M151A2CabArmor1 = "Cosmetic item, base for other armor components.",
+}

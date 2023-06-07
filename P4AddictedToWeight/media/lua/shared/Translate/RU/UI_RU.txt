@@ -1,0 +1,6 @@
+UI_RU = {
+	UI_P4AddictedToWeight_Options_ShowHumanIcon_Name = "Показать значок человека",
+	UI_P4AddictedToWeight_Options_ShowHumanIcon_Tooltip = "Установите флажок, если вы хотите показать значок человека.",
+	UI_P4AddictedToWeight_Options_WeightChangeNotification_Name = "”ведомление об изменении веса",
+	UI_P4AddictedToWeight_Options_WeightChangeNotification_Tooltip = "”становите флажок, если вы хотите получать уведомлени€ с помощью звука при изменении веса.",
+}

@@ -1,0 +1,8 @@
+Sandbox_RU = {
+    Sandbox_RateTable = "Рейтинг убийств игроков",
+    Sandbox_T15KKillboard_MaxPlayerPerPage = "Максимум игроков в таблице",
+    Sandbox_T15KKillboard_Server_Tick_Rate = "Частота отправки данных игроком (1 - 10 минут, 2 - 1 час, 3 - день )",
+    Sandbox_T15KKillboard_Player_Tick_Rate = "Частота обновления таблицы у игрока (1 - 10 минут, 2 - 1 час, 3 - день )",
+    Sandbox_T15KKillboard_Min_Kills = "Минимальное кол-во убийств",
+    Sandbox_T15KKillboard_Enable_PVP = "Включить раздел PVP",
+}

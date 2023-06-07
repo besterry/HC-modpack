@@ -1,0 +1,41 @@
+IG_UI_EN = {
+   
+IGUI_Item_DoorsRepairKitWood = "This kit will be used to repair the doors, the repair will be more or less effective depending on your skill in carpentry.",
+IGUI_Item_DoorsRepairKitMetal = "This kit will be used to reinforce doors, the reinforcement will be more or less effective depending on your carpentry skills.",
+IGUI_Item_DoorsRepairKitEpoxy = "This quick-drying Epoxy kit will be used to repair damaged doors, this is not effective, you will also use it to craft the reinforcement kits for doors, it's better!",
+
+
+IGUI_CanRepairDoors_option = "Repair Door",
+
+IGUI_veryBadlyHealtDoor = "Won't last very long !!",
+IGUI_BadlyHealtDoor = "in bad condition !",
+IGUI_midleHealtDoor = "can still hold out.",
+IGUI_maxHealtDoor = "in good condition.",
+IGUI_damagedRenforcedHealtDoor = "Reinforced (damaged)",
+IGUI_renforcedHealtDoor = "Reinforced",
+
+IGUI_CRD_Impossible_reinforce = "Impossible to reinforce the door, it is too damaged !",
+IGUI_CRD_Impossible_repair = "The door is already repaired !",
+IGUI_CRD_Impossible_isFullReinforced = "This door is already reinforced !",
+
+IGUI_CRD_impossibleHealthRaised = "There was a glitch, action is canceled...",
+
+IGUI_Info = "Info",
+
+IGUI_repairDoorAdmin = "|Repair door (Admin)|",
+IGUI_reinforceDoorAdmin = "|Reinforce door (Admin)|",
+
+IGUI_CheckDoorMP = "Check door condition",
+
+IGUI_RepairDoorWithKitEpoxy = "Repair door with epoxy",
+IGUI_RepairDoorWithKitWood = "Repair door with kit",
+IGUI_RepairDoorWithKitMetal = "Reinforce door with kit",
+
+IGUI_RepairDoorWithKitEpoxyINFO = "Anyone is able to perform the repair with this glue, no skills will be taken into account for its effectiveness. Apply directly to the area to be treated.",
+IGUI_RepairDoorWithKitWoodINFO = "Level 1 carpentry is required to perform the repair, its effectiveness will depend on your carpentry level.",
+IGUI_RepairDoorWithKitMetalINFO = "Level 2 carpentry is required to perform the reinforce, its effectiveness will depend on your carpentry level.",
+
+IGUI_CarpSkillNiv2Required = "Level 2 carpentry required",
+IGUI_CarpSkillNiv1Required = "Level 1 carpentry required",
+
+    }

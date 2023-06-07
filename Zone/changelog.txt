@@ -1,0 +1,30 @@
+-------------------
+
+v.1.02
+2022-03-15
+
+Исправлена ошибка из-за которой PVP-зоны неправильно сохранялись.
+
+Fixed a bug that caused PVP-zones to be saved incorrectly.
+
+-------------------
+
+v.1.01
+2022-03-04
+
+Исправлена ошибка из-за которой игра зависали при создании огромной PVP-зоны при помощи телепорта.
+Исправлена ошибка "PvpZoneList of non-table".
+Добавлена возможность создавать PVE-зону внутри PVP-зоны.
+
+Fixed bug that caused the game to freeze when creating a huge PVP zone using teleport.
+Fixed bug "PvpZoneList of non-table".
+Added possibility to create PVE zone inside PVP zone.
+
+-------------------
+
+v.1.0
+2023-02-26
+
+Релиз
+
+Release

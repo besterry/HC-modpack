@@ -1,0 +1,13 @@
+IGUI_EN = {
+  IGUI_T15KKillboard_Name = "Name",
+  IGUI_T15KKillboard_Kills = "Kills",
+  IGUI_T15KKillboard_Rank_Title = "TOP",
+  IGUI_T15KKillboard_Updated = "Updated ~",
+  IGUI_T15KKillboard_Less_Hour = "less than an hour ago",
+  IGUI_T15KKillboard_Hours = "hours ago",
+  IGUI_T15KKillboard_Days = "days ago",
+  IGUI_T15KKillboard_Empty = "No data",
+  IGUI_T15KKillboard_Delete = "Delete",
+  IGUI_T15KKillboard_Confirm = "Are you sure you want to remove this player?",
+  IGUI_T15KKillboard_Clear = "Are you sure you want to clear the table?",
+}

@@ -1,0 +1,13 @@
+IG_UI_ES = {
+IGUI_VehicleName74amgeneralM151A2 = "'74 AM General M151A2 MUTT",
+IGUI_VehicleName74amgeneralM151A2Burnt = "'74 AM General M151A2 MUTT Quemado",
+
+IGUI_VehiclePartM151A2Tarp = "Tapa trasera blanda",
+IGUI_VehiclePartM151A2WindshieldArmor = "Armadura de parabrisas",
+IGUI_VehiclePartM151A2CabArmor = "Armadura de la cabina",
+IGUI_VehiclePartM151A2BarrierLeft = "Blindaje de la cabina izquierda",
+IGUI_VehiclePartM151A2BarrierRight = "Blindaje de la cabina derecha",
+IGUI_VehiclePartM151A2Bumper = "Parachoques",
+IGUI_VehiclePartM151A2SpareTire = "Neumatico de repuesto",
+IGUI_VehiclePartM151A2Trunk = "Almacenamiento del maletero",
+}

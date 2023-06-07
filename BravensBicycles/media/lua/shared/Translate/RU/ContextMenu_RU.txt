@@ -1,0 +1,6 @@
+ContextMenu_RU = {
+    ContextMenu_Pick_Up_Bicycle = "Подобрать велосипед",
+    ContextMenu_BicycleLock = "Установить велосипедный замок",
+    ContextMenu_BicycleUnlock = "Снять велосипедный замок",
+    ContextMenu_Lift_Bicycle = "Поднять велосипед",
+}

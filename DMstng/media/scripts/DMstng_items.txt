@@ -1,0 +1,124 @@
+module Base
+{
+
+    item DeathMustangDoor3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Armored Mustang Door,
+            Icon	=	DeathMustangDoor,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = DeathMustangDoor_WorldItem,
+        }
+
+    item DeathMustangWheel3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Armored Mustang Wheel,
+            Icon	=	DeathMustangWheel,
+        	MaxCapacity = 35,
+        	ChanceToSpawnDamaged = 0,
+        	WheelFriction = 1.6,
+        	ConditionLowerStandard = 0.08,
+        	ConditionLowerOffroad = 0.10,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = DeathMustangWheel_WorldItem,
+        }
+
+    item DeathMustangFrontWindow3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Armored Mustang Front Window,
+            Icon	=	DeathMustangFrontWindow,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = DeathMustangFrontWindow_WorldItem,
+        }
+
+    item DeathMustangRearWindow3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Armored Mustang Rear Window,
+            Icon	=	DeathMustangRearWindow,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = DeathMustangRearWindow_WorldItem,
+        }
+
+    item DeathMustangHood3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Armored Mustang Hood,
+            Icon	=	DeathMustangHood,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = DeathMustangHood_WorldItem,
+        }
+
+    item DeathMustangRearWindshield3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Armored Mustang Rear Windshield,
+            Icon	=	DeathMustangRearWindow,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = DeathMustangRearWindshield_WorldItem,
+        }
+
+	 item DMstngContainer
+    {
+        Weight    =    30,
+        Type    =    Normal,
+        Icon	=	DeathMustangSpace,
+        MaxCapacity    =    50,
+        DisplayName    =    Rear Space,
+        ConditionMax = 100,
+    }
+
+    item DeathMustangSeat3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Armored Mustang Seat,
+            Icon	=	DeathMustangSeat,
+        	MaxCapacity = 40,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = DeathMustangSeat_WorldItem,
+        }
+
+    item DeathMustangWindshield3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Armored Mustang Windshield,
+            Icon	=	DeathMustangWindshield,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = DeathMustangWindshield_WorldItem,
+        }
+
+}

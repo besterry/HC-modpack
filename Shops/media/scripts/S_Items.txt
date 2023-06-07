@@ -1,0 +1,120 @@
+module Base {
+
+    		
+    item GoldCoin
+	{
+		Weight	=	0,
+		Type	=	Normal,
+		DisplayName	=	Gold Coin,
+		Icon	=	GoldCoin,
+		WorldStaticModel = GoldCoin,
+		Tooltip = Tooltip_GoldCoin,
+	}
+
+	model GoldCoin 
+	{
+		mesh = WorldItems/Button,
+		texture = Item_GoldCoin,
+		scale = 1,
+	}
+
+	item CopperCoin
+	{
+		Weight	=	0,
+		Type	=	Normal,
+		DisplayName	=	Copper Coin,
+		Icon	=	CopperCoin,
+		WorldStaticModel = CopperCoin,
+		Tooltip = Tooltip_CopperCoin,
+	}
+
+	model CopperCoin 
+	{
+		mesh = WorldItems/Button,
+		texture = Item_CopperCoin,
+		scale = 1,
+	}
+	
+	item SilverCoin
+	{
+		Weight	=	0,
+		Type	=	Normal,
+		DisplayName	=	Silver Coin,
+		Icon	=	SilverCoin,
+		WorldStaticModel = SilverCoin,
+		Tooltip = Tooltip_SilverCoin,
+	}
+
+	model SilverCoin 
+	{
+		mesh = WorldItems/Button,
+		texture = Item_SilverCoin,
+		scale = 1,
+	}
+
+	item EventCoin
+	{
+		Weight	=	0,
+		Type	=	Normal,
+		DisplayName	=	Event Coin,
+		Icon	=	EventCoin,
+		WorldStaticModel = EventCoin,
+	}
+
+	model EventCoin 
+	{
+		mesh = WorldItems/Button,
+		texture = Item_EventCoin,
+		scale = 1,
+	}
+
+	item SurvivalPack
+	{
+		Weight	=	0.01,
+		Type	=	Normal,
+		DisplayName	= Survival Pack,
+		Icon	=	Present4,
+	}
+
+	item FishingPack
+	{
+		Weight	=	0.9,
+		Type	=	Normal,
+		DisplayName	= Fishing Pack,
+		Icon	=	fishing,
+	}
+	
+	item FishingLinePack
+	{
+		Weight	=	0.15,
+		Type	=	Normal,
+		DisplayName	= Fishing Line Pack,
+		Icon	=	fishline,
+	}
+	item WormPack
+	{
+		Weight	=	0.1,
+		Type	=	Normal,
+		DisplayName	= Worm Pack,
+		Icon	=	worm,
+	}
+
+	item PlayerShop
+	{
+		Weight	=	0.01,
+		Type	=	Normal,
+		DisplayName	= Player Shop,
+		Icon	=	PlayerShop,
+		Tags = PlayerShop
+	}
+
+	item PlayerShopFreezer
+	{
+		Weight	=	0.01,
+		Type	=	Normal,
+		DisplayName	= Player Shop (Freezer),
+		Icon	=	PlayerShop,
+		Tags = PlayerShopFreezer
+	}
+
+}

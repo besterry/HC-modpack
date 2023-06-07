@@ -1,0 +1,7 @@
+IGUI_EN = {
+    IGUI_NFQOL_InventoryButton_LootDrop = "На пол",
+    IGUI_NFQOL_InventoryButton_LootBooks = "Взять книги",
+    IGUI_NFQOL_InventoryButton_Dry = "Сушить",
+    IGUI_NFQOL_InventoryButton_Wash = "Стирать",
+    IGUI_NFQOL_InventoryButton_Wear = "Надеть",
+}

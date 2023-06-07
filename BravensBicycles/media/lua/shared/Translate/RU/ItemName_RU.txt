@@ -1,0 +1,36 @@
+ItemName_RU = {
+--    /******************* REGULAR BICYCLE *******************/
+    ItemName_Base.BicycleFrameRegular = "Рама для обычного велосипеда",
+    ItemName_Base.BicycleSuspensionRegular3 = "Подвеска для обычного велосипеда",
+    ItemName_Base.BicycleBrakesRegular3 = "Тормоза для обычного велосипеда",
+    ItemName_Base.BicycleTireRegular = "Колесо для обычного велосипеда",
+    ItemName_Base.BicycleSeat = "Сиденье для велосипеда",
+
+    ItemName_Base.BicycleFrameRegularScrap = "Рама для самодельного велосипеда",
+    ItemName_Base.BicycleSuspensionRegularScrap3 = "Подвеска для самодельного велосипеда",
+    ItemName_Base.BicycleBrakesRegularScrap3 = "Тормоза для самодельного велосипеда",
+    ItemName_Base.BicycleTireRegularScrap = "Колесо для самодельного велосипеда",
+    ItemName_Base.BicycleSeatScrap = "Сиденье для самодельного велосипеда",
+
+--    /******************* MOUNTAIN BICYCLE *******************/
+    ItemName_Base.BicycleFrameMTB = "Рама для горного велосипеда",
+    ItemName_Base.BicycleSuspensionMTB3 = "Подвеска для горного велосипеда",
+    ItemName_Base.BicycleBrakesMTB3 = "Тормоз для горного велосипеда",
+    ItemName_Base.BicycleTireMTB = "Шина для горного велосипеда",
+
+    ItemName_Base.BicycleFrameMTBScrap = "Рама для самодельного горного велосипеда",
+    ItemName_Base.BicycleSuspensionMTBScrap3 = "Подвеска для самодельного горного велосипеда",
+    ItemName_Base.BicycleBrakesMTBScrap3 = "Тормоз для самодельного горного велосипеда",
+    ItemName_Base.BicycleTireMTBScrap = "Колесо для самодельного горного велосипеда",
+
+--    /******************* ACCESSORIES *******************/
+    ItemName_Base.BicycleBasket3 = "Корзина для велосипеда",
+    ItemName_Base.BicycleHeadlight3 = "Фара для велосипеда",
+
+--    /******************* MISC *******************/
+    ItemName_Base.BicycleLock = "Велосипедный замок",
+    ItemName_Base.BicycleLockKey = "Ключ от велосипедного замка",
+    ItemName_Base.BicyclesMagVol1 = "Велоспорт Том. 1",
+    ItemName_Base.BicyclesMagVol2 = "Велоспорт Том. 2",
+	ItemName_Base.BicyclesMagVol3 = "Велоспорт Том. 3",
+}

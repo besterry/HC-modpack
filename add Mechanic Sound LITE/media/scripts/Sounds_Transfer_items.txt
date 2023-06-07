@@ -1,0 +1,532 @@
+module Base
+{
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		/*category = RandomSoundEvent, 
+		loop = false, 
+		is3D = true,
+		distanceMax = 500, */
+		clip
+		{
+			file = media/sound/Transfer_item_1.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_2.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_3.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_4.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_5.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_6.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_7.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_8.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd	
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_9.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_10.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_11.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_12.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_13.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_14.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_15.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_16.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_17.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_18.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_19.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_20.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_21.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_22.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_23.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_24.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_25.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_26.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_27.ogg,
+			volume = 0.3,
+		}
+	}
+	
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_28.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_29.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_30.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_31.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_32.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_33.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_34.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_35.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_36.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_37.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_38.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_39.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_40.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_41.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_42.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_43.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_44.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_45.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_46.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_47.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_48.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_49.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_50.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_51.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_52.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_53.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_snd
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_54.ogg,
+			volume = 0.3,
+		}
+	}
+
+
+	sound Transfer_item_STOP1
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_STOP1.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_STOP2
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_STOP2.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_STOP3
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_STOP3.ogg,
+			volume = 0.3,
+		}
+	}
+	sound Transfer_item_STOP4
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/Transfer_item_STOP4.ogg,
+			volume = 0.3,
+		}
+	}
+}

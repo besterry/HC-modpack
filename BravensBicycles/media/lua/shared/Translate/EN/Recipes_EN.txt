@@ -1,0 +1,15 @@
+Recipes_EN = {
+    Recipe_CraftScrapFrame1 = "Weld regular scrap frame",
+    Recipe_CraftScrapSuspension1 = "Weld regular scrap suspension",
+    Recipe_CraftScrapBrakes1 = "Weld regular scrap brakes",
+    Recipe_CraftScrapTire1 = "Mold regular scrap tire",
+
+    Recipe_CraftScrapFrame2 = "Weld MTB scrap frame",
+    Recipe_CraftScrapSuspension2 = "Weld MTB scrap suspension",
+    Recipe_CraftScrapBrakes2 = "Weld MTB scrap brakes",
+    Recipe_CraftScrapTire2 = "Mold MTB scrap tire",
+
+    Recipe_CraftScrapSeat = "Make scrap seat",
+    Recipe_CraftBikeLock = "Craft bike lock",
+    Recipe_CraftHeadlight = "Craft bike headlight",
+}

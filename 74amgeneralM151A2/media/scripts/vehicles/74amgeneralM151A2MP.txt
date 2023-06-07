@@ -1,0 +1,540 @@
+module Base
+{
+	model 74amgeneralM151A2MPBase
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Body|m151_mp_body,
+		shader = vehicle_norandom_multiuv_noreflect,
+		static = TRUE,
+		scale = 0.1,
+	}
+	model 74amgeneralM151A2interior
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Body|m151_interior,
+		texture = Vehicles/Vehicles_74amgeneralM151A2_Interior_Wheel,
+		shader = vehiclewheel,
+		scale = 0.1,
+	}
+	model 74amgeneralM151A2radio
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Body|m151_radio,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 0.1,
+	}
+	model 74amgeneralM151A2battery
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Body|TIS_CarBattery,
+		shader = vehicle_noreflect,
+		scale = 0.1,
+	}
+	model 74amgeneralM151A2gastank
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Body|m151_gastank,
+		shader = vehicle_noreflect,
+		scale = 0.1,
+	}
+	model 74amgeneralM151A2frontwheelleft
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Wheel,
+		texture = vehicles/Vehicles_74amgeneralM151A2_Interior_Wheel,
+		shader = vehiclewheel,
+		scale = 0.1,
+	}
+	model 74amgeneralM151A2frontwheelright
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Wheel,
+		texture = vehicles/Vehicles_74amgeneralM151A2_Interior_Wheel,
+		shader = vehiclewheel,
+		scale = 0.1,
+	}
+	model 74amgeneralM151A2backwheelleft
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Wheel,
+		texture = vehicles/Vehicles_74amgeneralM151A2_Interior_Wheel,
+		shader = vehiclewheel,
+		scale = 0.1,
+	}
+	model 74amgeneralM151A2backwheelright
+	{
+		mesh = vehicles/Vehicles_74amgeneralM151A2_Wheel,
+		texture = vehicles/Vehicles_74amgeneralM151A2_Interior_Wheel,
+		shader = vehiclewheel,
+		scale = 0.1,
+	}
+	vehicle 74amgeneralM151A2MP
+	{
+		mechanicType = 2,
+		offRoadEfficiency = 1.5,
+		engineRepairLevel = 4,
+		playerDamageProtection = 1.2,
+
+		model
+		{
+			file = 74amgeneralM151A2MPBase,
+			scale = 0.9000,
+			offset = 0.0000 0.4889 0.0000,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicles_74amgeneralM151A2MP_Shell_militaryPolice,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicles_74amgeneralM151A2MP_Shell_militaryPoliceBlue,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicles_74amgeneralM151A2MP_Shell_militaryPoliceUSMC,
+		}
+
+		textureRust = Vehicles/74amgeneralM151A2_rust,
+		textureMask = Vehicles/74amgeneralM151A2MP_mask,
+		textureLights = Vehicles/74amgeneralM151A2_lights,
+		textureDamage1Shell = Vehicles/74amgeneralM151A2_damage1,
+		textureDamage2Shell = Vehicles/74amgeneralM151A2_damage2,
+		textureDamage1Overlay = Vehicles/74amgeneralM151A2_blood,
+		textureDamage2Overlay = Vehicles/74amgeneralM151A2_blood,
+
+		lightbar
+		{
+			soundSiren = VehicleSiren,
+			leftCol = 0;0;1,
+			rightCol = 0;0;1,
+		}
+
+		sound
+		{
+			engine = VehicleEngineSUV,
+			engineStart = VehicleEngineSUV,
+			engineTurnOff = VehicleEngineSUV,
+			horn = VehicleHornStandard,
+			ignitionFail = VehicleIgnitionFailSUV,
+		}
+
+		extents = 1.5778 1.2889 3.0222,
+		mass = 750,
+		physicsChassisShape = 1.5778 1.2889 3.0222,
+		centerOfMassOffset = 0.0000 0.6667 0.1333,
+		shadowExtents = 1.5874 3.0371,
+		shadowOffset = -0.0032 0.1301,
+		engineForce = 3201,
+		gearRatioCount = 4,
+		gearRatioR = 13.6,
+		gearRatio1 = 12.8,
+		gearRatio2 = 9.2,
+		gearRatio3 = 6.0,
+		gearRatio4 = 3.8,
+		maxSpeed = 70f,
+		engineLoudness = 70,
+		engineQuality = 76,
+		brakingForce = 55,
+		stoppingMovementForce = 4.0f,
+		rollInfluence = 0.96f,
+		steeringIncrement = 0.04,
+		steeringClamp = 0.3,
+		suspensionStiffness = 28,
+		suspensionCompression = 4.83,
+		suspensionDamping = 3.88,
+		maxSuspensionTravelCm = 15,
+		suspensionRestLength = 0.20f,
+		wheelFriction = 1.4f,
+		frontEndHealth = 150,
+		rearEndHealth = 150,
+		seats = 4,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.6556 -0.5333 1.2444,
+			radius = 0.33f,
+			width = 0.19f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.6556 -0.5333 1.2444,
+			radius = 0.33f,
+			width = 0.19f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.6556 -0.6000 -0.8889,
+			radius = 0.33f,
+			width = 0.19f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.6556 -0.6000 -0.8889,
+			radius = 0.33f,
+			width = 0.19f,
+		}
+
+		template = PassengerSeat4,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.4000 -0.0556 -0.0778,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.1111 -0.8667 -0.1889,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = -0.4000 -0.0556 -0.0778,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0889 -0.8667 -0.1778,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		passenger RearLeft
+		{
+			showPassenger = true,
+			hasRoof = false,
+
+			position inside
+			{
+				offset = 0.2222 0.0667 -1.0889,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.1000 -0.7889 -0.8000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearLeft,
+			}
+		}
+
+		passenger RearRight
+		{
+			showPassenger = true,
+			hasRoof = false,
+
+			position inside
+			{
+				offset = -0.2222 0.0667 -1.0889,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0444 -0.7889 -0.7444,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 2.0333 0.9556 0.7778,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -0.8000 2.2444 1.8667,
+		}
+
+		area SpareTire
+		{
+			xywh = -0.3889 -2.0111 0.4222 0.4222,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.1778 0.1667 0.7778 0.7778,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.1778 0.1667 0.7778 0.7778,
+		}
+
+		area SeatRearRight
+		{
+			xywh = -1.1778 -0.5889 0.7778 0.7333,
+		}
+
+		area SeatRearLeft
+		{
+			xywh = 1.1778 -0.5889 0.7778 0.7333,
+		}
+
+		area GasTank
+		{
+			xywh = 1.0000 0.1667 0.4222 0.4222,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.1111 1.2444 0.4222 0.4222,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.1111 1.2444 0.4222 0.4222,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.1111 -0.8889 0.4222 0.4222,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.1111 -0.8889 0.4222 0.4222,
+		}
+
+		template = M151A2TrunkCompartment,
+		template = M151A2SpareTire/part/M151A2SpareTire,
+		template = M151A2Tarps/part/M151A2Tarp,
+		template = M151A2Seats,
+		template = M151A2EngineDoor/part/EngineDoor,
+		template = M151A2Windshield/part/Windshield,
+		template = M151A2WindshieldArmors/part/M151A2WindshieldArmor,
+		template = M151A2Windows,
+		template = M151A2Doors,
+		template = M151A2CabArmor/part/M151A2CabArmor,
+		template = M151A2Barriers/part/M151A2BarrierLeft,
+		template = M151A2Barriers/part/M151A2BarrierRight,
+		template = M151A2Bumpers/part/M151A2Bumper,
+		template = TireV102M151A2,
+
+		part GloveBox
+		{
+			model InteriorM151A2
+			{
+				file = 74amgeneralM151A2interior,
+				offset = 0 0 0,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = true,
+
+			container
+			{
+				capacity = 7,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = GasTank,
+		template = Muffler,
+
+		part GasTank
+		{
+			model GastankM151A2
+			{
+				file = 74amgeneralM151A2gastank,
+				offset = 0 0 0,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+
+			container
+			{
+				conditionAffectsCapacity = false,
+				capacity = 55,
+			}
+
+			table install
+			{
+				recipes = Intermediate Mechanics,
+				requireUninstalled = SeatFrontLeft,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+				requireUninstalled = SeatFrontLeft,
+			}
+		}
+
+		template = Battery,
+
+		part Battery
+		{
+			area = SeatFrontRight,
+
+			model M151A2BatteryTIS
+			{
+				file = 74amgeneralM151A2battery,
+				offset = 0 0 0,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+
+			table install
+			{
+				requireUninstalled = SeatFrontRight,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = SeatFrontRight,
+			}
+		}
+
+		template = Engine,
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		part TireFrontLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = 74amgeneralM151A2frontwheelleft,
+			}
+		}
+
+		part TireFrontRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = 74amgeneralM151A2frontwheelright,
+			}
+		}
+
+		part TireRearLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = 74amgeneralM151A2backwheelleft,
+			}
+		}
+
+		part TireRearRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = 74amgeneralM151A2backwheelright,
+			}
+		}
+
+		template = Brake,
+
+		part Brake*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+
+		part Radio*
+		{
+			itemType = Radio.HamRadio1,
+		}
+
+		part Radio
+		{
+			area = TireRearLeft,
+
+			model M151A2radio
+			{
+				file = 74amgeneralM151A2radio,
+				offset = 0 0 0,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+		}
+
+		template = Headlight,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3222 -1.5889,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.3222 1.7333,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

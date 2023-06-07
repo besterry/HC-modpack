@@ -1,0 +1,38 @@
+module Base
+{
+
+	model BicycleFrameRegular
+	{
+        mesh      =   vehicles/Bicycle_Body|Bicycle_body,
+		texture   =   vehicles/Bicycle/Body_Red,
+        scale     =   0.005,
+	}
+
+	model BicycleFrameRegularScrap
+	{
+        mesh      =   vehicles/Bicycle_Body|Bicycle_body,
+		texture   =   vehicles/Bicycle/Body_Scrap,
+        scale     =   0.005,
+	}
+
+	model BicycleFrameMTB
+	{
+        mesh      =   vehicles/Bicycle_Body|Bicycle_body,
+		texture   =   vehicles/Bicycle/Body_Red,
+        scale     =   0.005,
+	}
+
+	model BicycleFrameMTBScrap
+	{
+        mesh      =   vehicles/Bicycle_Body|Bicycle_body,
+		texture   =   vehicles/Bicycle/Body_Scrap,
+        scale     =   0.005,
+	}
+
+	model MagazineBicyclesGround
+    {
+        mesh      =   WorldItems/Magazine,
+        texture   =   WorldItems/MagazineBicycles,
+        scale     =   0.4,
+    }
+}

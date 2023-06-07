@@ -1,0 +1,4 @@
+Tooltip_EN = {
+	Tooltip_BicPen = "A 4-Colour pen, neat.",
+	Tooltip_Map_NeedBicPen = "You need a 4-Color Bic Pen",
+}

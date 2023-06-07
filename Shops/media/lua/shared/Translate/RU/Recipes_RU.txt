@@ -1,0 +1,6 @@
+Recipes_RU = {
+
+    Recipe_Build_Player_Shop = "Создайть магазин",
+    Recipe_Build_Player_Shop_Freezer = "Создайть магазин-холодильник",
+    
+}

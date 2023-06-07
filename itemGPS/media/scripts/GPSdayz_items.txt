@@ -1,0 +1,59 @@
+module Base
+{
+	item GPSdayz
+    {
+        
+
+		LightDistance	  =	0,
+		TorchCone		  =	FALSE,
+		LightStrength	  =	0.001,
+        Type			  =	Drainable,
+        Weight			  =	0.2,
+        DisappearOnUse	  =	FALSE,
+        UseDelta		  =	0.000135,
+        UsesBattery       = TRUE,
+        DisplayName		  =	GPS,
+        ActivatedItem	  =	TRUE,
+        Icon			  =	GpsDayz,
+        cantBeConsolided  = TRUE,
+        StaticModel 	  = GPSdayZ,
+        WorldStaticModel  = GPSdayZ,
+        AttachmentType 	  = Walkie,
+        ToolTip = IGUI_Item_itemGps,
+	      ReceiveGPS 	  = TRUE,
+	      WayPoint 	 	  = FALSE,
+	      primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,
+       
+    }
+	model GPSdayZ
+	{
+		mesh    = GPSdayZ,
+		texture = GPSdayZ_texture,
+		invertX = FALSE,
+		scale   = 0.007,
+
+		attachment world
+		{
+			offset = -0.6980 2.0280 2.8820,
+			rotate = 0.0000 0.0000 -86.0000,
+		}
+	}
+	
+
+	item GPScable
+    {
+        Weight				= 0.2,
+        Type    			= Normal,
+        DisplayName     	= GPS cable,
+        icon 				= GpsCable,
+        ToolTip = IGUI_Item_GpsCable,
+    } 
+	model cableGPS3d
+    {
+        mesh    = cableGPS3d,
+        texture = GPSdayZCable_texture,
+        invertX = FALSE,
+        scale   = 0.007,
+    }
+}

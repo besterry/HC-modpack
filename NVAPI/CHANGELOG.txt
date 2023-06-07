@@ -1,0 +1,8 @@
+
+03/10/2022
+* Added many sound effects
+* Added new overlay: X-ray
+* NVG is now consuming battery;
+* NVG now has a menu option informing the current charge. If you click it, the character will automatically consume any available battery in any inventory
+* when a NVG falls in the ground, it will shatter
+* A broken NVG cannot be activated. However, it can be repaired. you'll need at least lv 4 electricity plus 2 electronics scrap

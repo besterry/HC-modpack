@@ -1,0 +1,350 @@
+module Base
+{
+	model BicycleBase2
+    {
+        mesh = vehicles/Bicycle_Body_MTB|Bicycle_body,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_seat2
+    {
+        mesh = vehicles/Bicycle_Body_MTB|Bicycle_seat,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_front_suspension2
+    {
+        mesh = vehicles/Bicycle_Body_MTB|Bicycle_front_suspension,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_front_brakes
+    {
+        mesh = vehicles/Bicycle_Body_MTB|Bicycle_breaks_front,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_rear_brakes
+    {
+        mesh = vehicles/Bicycle_Body_MTB|Bicycle_breaks_rear,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	model Bicycle_wheel2
+    {
+        mesh = vehicles/Bicycle_Wheels_MTB|Bicycle_wheel,
+        texture = vehicles/Bicycle_wheel,
+        shader = vehiclewheel,
+        scale = 0.0075,
+    }
+	model Bicycle_headlight2
+    {
+        mesh = vehicles/Bicycle_Body_MTB|Bicycle_headlight,
+        shader = vehicle,
+        invertX = FALSE,
+        scale = 0.007,
+    }
+	vehicle BicycleMTBScrap
+	{
+		mechanicType = 3,
+		offRoadEfficiency = 3,
+		playerDamageProtection = 0.1,
+		template = BikeFrame,
+
+		part FakeFrame
+		{
+			model BicycleFrame
+			{
+				file = BicycleBase2,
+				offset = 0.31 0.0 0.0,
+				scale = 1,
+			}
+		}
+
+		model
+		{
+			file = FakeFrame,
+			scale = 1.0000,
+			offset = -0.0500 0.0000 0.0000,
+		}
+
+		skin
+		{
+			texture = vehicles/Bicycle/Body_Scrap,
+		}
+
+		textureMask = vehicles/Bicycle_mask,
+		textureShadow = vehicles/Bicycle/Shadow2,
+		textureDamage1Overlay = Vehicles/Bicycle_Blood,
+		textureDamage2Overlay = Vehicles/Bicycle_Blood,
+		textureRust = Vehicles/Bicycle_Rust,
+
+		sound
+		{
+			engine = none,
+			engineStart = none,
+			engineTurnOff = none,
+			horn = BicycleHorn,
+		}
+
+		engineForce = 1800,
+		maxSpeed = 15f,
+		gearRatioCount = 1,
+		gearRatioR = 0.3,
+		gearRatio1 = 4,
+		mass = 100,
+		extents = 0.1500 0.9600 1.9200,
+		physicsChassisShape = 0.1800 0.9600 1.9200,
+		centerOfMassOffset = 0.0000 0.1500 0.0000,
+		shadowExtents = 2.2869 2.2875,
+		shadowOffset = 0.4325 -0.0250,
+		engineLoudness = 15,
+		engineQuality = 80,
+		brakingForce = 0,
+		rollInfluence = 0,
+		steeringClamp = 0.7,
+		suspensionStiffness = 50,
+		suspensionCompression = 0,
+		suspensionDamping = 100,
+		maxSuspensionTravelCm = 16,
+		suspensionRestLength = 0.2f,
+		wheelFriction = 1.5f,
+		frontEndHealth = 30,
+		rearEndHealth = 30,
+		seats = 1,
+
+		area Engine
+		{
+			xywh = 0.3100 0.6100 0.4000 0.4000,
+		}
+
+		area SeatFront
+		{
+			xywh = 0.8200 0.0000 0.8200 0.8200,
+		}
+
+		area GasTank
+		{
+			xywh = 0.3100 0.1600 0.4000 0.4000,
+		}
+
+		area Trunk
+		{
+			xywh = 0.3100 -0.6700 1.4000 1.4000,
+		}
+
+		area TireFront
+		{
+			xywh = 0.3100 0.6000 0.4000 0.4000,
+		}
+
+		area TireRear
+		{
+			xywh = 0.3100 -0.6000 0.4000 0.4000,
+		}
+
+		wheel Front
+		{
+			front = true,
+			offset = 0.3600 -0.3000 0.4300,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel Rear
+		{
+			front = false,
+			offset = 0.3600 -0.3000 -0.6100,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.3600 -0.3000 0.4300,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.3600 -0.3000 -0.6100,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		template = BikeSeats,
+
+		part SeatFront
+		{
+			itemType = Base.BicycleSeatScrap,
+
+			model BikeSeat2
+			{
+				file = Bicycle_seat2,
+				offset = 0.31 0.0 0.0,
+				scale = 1.0,
+			}
+		}
+
+		template = Engine,
+
+		part Engine
+		{
+			category = nodisplay,
+		}
+
+		template = GasTank,
+
+		part GasTank
+		{
+			specificItem = false,
+			itemType = Base.NormalGasTank3,
+			category = nodisplay,
+		}
+
+		template = Battery,
+
+		part Battery
+		{
+			category = nodisplay,
+			area = GasTank,
+		}
+
+		template = BikeSuspension,
+
+		part SuspensionFront
+		{
+			itemType = Base.BicycleSuspensionMTBScrap,
+
+			model BikeSuspension2
+			{
+				file = Bicycle_front_suspension2,
+				offset = 0.31 0.0 0.0,
+				scale = 1.0,
+			}
+		}
+
+		part SuspensionRear
+		{
+			itemType = Base.BicycleSuspensionMTBScrap,
+		}
+
+		template = BikeBrakes,
+
+		part BrakeFront
+		{
+			itemType = Base.BicycleBrakesMTBScrap,
+
+			model BikeBrakes2A
+			{
+				file = Bicycle_front_brakes,
+			}
+		}
+
+		part BrakeRear
+		{
+			itemType = Base.BicycleBrakesMTBScrap,
+
+			model BikeBrakes2B
+			{
+				file = Bicycle_rear_brakes,
+			}
+		}
+
+		template = BikeTires,
+
+		part TireFront
+		{
+			itemType = Base.BicycleTireMTBScrap,
+
+			model BikeWheel2
+			{
+				file = Bicycle_Wheel2,
+				offset = -0.05 0.0 0.0,
+				scale = 0.9,
+			}
+		}
+
+		part TireRear
+		{
+			itemType = Base.BicycleTireMTBScrap,
+
+			model BikeWheel2
+			{
+				file = Bicycle_Wheel2,
+				offset = -0.05 0.0 0.0,
+				scale = 0.9,
+			}
+		}
+
+		part TireFrontRight
+		{
+			itemType = Base.BicycleTireMTBScrap,
+		}
+
+		part TireRearRight
+		{
+			itemType = Base.BicycleTireMTBScrap,
+		}
+
+		passenger Front
+		{
+			door = DoorFront,
+			area = SeatFront,
+			showPassenger = true,
+			hasRoof = false,
+
+			position inside
+			{
+				offset = 0.3100 -0.2000 -0.2100,
+			}
+
+			position outside
+			{
+				offset = 0.0500 -0.5600 0.0100,
+				area = SeatFront,
+			}
+		}
+
+		template = BikeDoor,
+		template = BikeWindow,
+		template = BikeHeadlight,
+
+		part Headlight
+		{
+			model BikeHeadlight2
+			{
+				file = Bicycle_headlight2,
+				offset = 0.31 0.0 0.0,
+				scale = 1.0,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		attachment trailer
+		{
+			offset = 0.3100 -0.2700 -1.0900,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.3100 -0.2700 0.9500,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

@@ -1,0 +1,8 @@
+Sandbox_EN = {
+    Sandbox_RateTable = "Player Kill Rating",
+    Sandbox_T15KKillboard_MaxPlayerPerPage = "Maximum of players in the rating",
+    Sandbox_T15KKillboard_Server_Tick_Rate = "Frequency of sending data by the player (1 - 10 minutes, 2 - 1 hour, 3 - a day)",
+    Sandbox_T15KKillboard_Player_Tick_Rate = "Frequency of refreshing the table at the player (1 - 10 minutes, 2 - 1 hour, 3 - a day)",
+    Sandbox_T15KKillboard_Min_Kills = "Minimal number of kills",
+    Sandbox_T15KKillboard_Enable_PVP = "Enable PVP list",
+}

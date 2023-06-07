@@ -1,0 +1,12 @@
+UI_EN = {
+    UI_optionscreen_binding_NoctisFalco = "NoctisFalco's Hotkeys",
+    UI_optionscreen_binding_NFLootAll = "Loot All (Ctrl + )",
+    UI_optionscreen_binding_NFLootDrop = "Drop Loot (Ctrl + )",
+    UI_optionscreen_binding_NFEnterVehicle = "Enter Vehicle",
+
+    UI_optionscreen_binding_NFSpeed0 = "Pause",
+    UI_optionscreen_binding_NFSpeed1 = "Speed 1",
+    UI_optionscreen_binding_NFSpeed2 = "Speed 2",
+    UI_optionscreen_binding_NFSpeed3 = "Speed 3",
+    UI_optionscreen_binding_NFSpeed4 = "Speed 4",
+}

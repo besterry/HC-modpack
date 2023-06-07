@@ -1,0 +1,8 @@
+name=True Music_v.2.15
+poster=poster.png
+id=truemusic_h
+description=
+versionMin=41.78
+require=tsarslib_h
+pack=tsarcraft_music
+tiledef=tsarcraft_music 222

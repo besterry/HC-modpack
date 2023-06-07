@@ -1,0 +1,17 @@
+name=Better Radio Mod
+poster=poster.png
+
+description=This mod allows you to connect your ham radio to a wall outlet. That way you can keep on your radio for communication (works with MP Radio Patch).
+
+description=Requirements: Lvl.1 in electrical aswell as 2 electronic scrap, 1 electronic wire and you need a screwdriver to craft it.
+
+description=To convert to use grid power you need to have a ham radio in inventory. 
+description=convert it and then place it somewhere with power (Power grid or generator both work).
+
+description=Works with all three versions (civilian, military and makeshift) of the ham radio!
+
+description=It is advised to remove the battery first before connecting to grid. Currently the mod doesn't check if there is a battery and it would be lost otherwise.
+
+description=A small tip for those having trouble finding ham radios: Every emegency vehicle (firetruck, police car, ambulance) has a ham radio built in. Just open the hood and uninstall the radio. A screwdriver is needed for this.
+
+id=BetterRadioMod_h

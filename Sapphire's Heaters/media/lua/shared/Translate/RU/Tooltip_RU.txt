@@ -1,0 +1,9 @@
+ContextMenu_RU = {
+    Tooltip_SmallHeater = "Небольшой обогреватель, работающий от автомобильных аккумуляторов.",
+    Tooltip_OutdoorHeater = "Наружный обогреватель, работающий от автомобильных аккумуляторов.",
+    Tooltip_ElectricHeater = "Нагреватель, работающий от генераторов.",
+    Tooltip_HeaterCircuit = "Компонент, используемый в нагревателях.",
+    Tooltip_ElectriciansIssue1 = "Обучает как создавать маленькие обогреватели",
+    Tooltip_ElectriciansIssue2 = "Обучает как создавать уличные обогреватели",
+    Tooltip_ElectriciansIssue3 = "Обучает как создавать электрические обогреватели",
+}

@@ -1,0 +1,11 @@
+module Base
+{
+	recipe Refill Empty Lighter
+    {
+       EmptyLighter=1,
+       PetrolCan=1,
+       Result:Lighter,
+       Time:50.0,
+       Category:Survivalist,
+    }
+}

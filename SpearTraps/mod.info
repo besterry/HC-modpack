@@ -1,0 +1,6 @@
+name=Spear Traps (v0.0.8)
+id=SpearTraps_h
+description=Adds spear traps to the game
+poster=poster.png
+pack=spear_traps_01
+tiledef=spear_traps_01 100

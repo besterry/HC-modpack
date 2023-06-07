@@ -1,0 +1,5 @@
+Recipe_IT = {
+
+Recipe_makeDoorsRepairKitWood = "Crea un kit di riparazione porte ",
+Recipe_makeDoorsReinforceKitMetal = "Crea un kit di rinforzo porte",
+}

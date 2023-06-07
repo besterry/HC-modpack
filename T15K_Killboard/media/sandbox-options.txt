@@ -1,0 +1,21 @@
+VERSION = 1,
+
+option T15KKillboardTable.PlayersPerPage = {
+	type = integer, min = 5, max = 100, default = 30,
+    page = RateTable, translation = T15KKillboard_MaxPlayerPerPage,
+}
+
+option T15KKillboardTable.MinKills = {
+	type = integer, default = 100, min = 0, max = 1000,
+    page = RateTable, translation = T15KKillboard_Min_Kills,
+}
+
+option T15KKillboardTable.ServerTickRate = {
+	type = integer, default = 1, min = 1, max = 3,
+    page = RateTable, translation = T15KKillboard_Server_Tick_Rate,
+}
+
+option T15KKillboardTable.PlayerTickRate = {
+	type = integer, default = 1, min = 1, max = 3,
+    page = RateTable, translation = T15KKillboard_Player_Tick_Rate,
+}

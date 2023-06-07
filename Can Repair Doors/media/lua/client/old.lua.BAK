@@ -1,0 +1,77 @@
+
+local Square_noDestroyeDoor
+local function attackHook()
+	--getPlayer():Say("attackHook")
+	local player = getPlayer()
+	local currentGS = player:getCurrentSquare()
+	local z = player:getZ()
+	--------------------------------------------------
+	for x=currentGS:getX()-1,currentGS:getX()+1 do
+		for y=currentGS:getY()-1,currentGS:getY()+1 do    		
+		----------------------------------------------		
+			local sq = getSquare(x, y, z);
+    		for i=0, sq:getObjects():size() -1 do
+    		    local obj = sq:getObjects():get(i);
+    		    if instanceof(obj, "IsoDoor") then
+    		        Healt_noDestroyeDoor = obj:getHealth()
+    		        --print(Healt_noDestroyeDoor)
+    		    end
+    		end
+		end
+	end	
+end
+--Hook.Attack.Add(attackHook)
+
+local function PlayerAttackFinished()
+	--getPlayer():Say("PlayerAttackFinished")
+	local player = getPlayer()
+	local currentGS = player:getCurrentSquare()
+	local z = player:getZ()
+	--------------------------------------------------
+	for x=currentGS:getX()-1,currentGS:getX()+1 do
+		for y=currentGS:getY()-1,currentGS:getY()+1 do    		
+		----------------------------------------------		
+			local sq = getSquare(x, y, z);
+    		for i=0, sq:getObjects():size() -1 do
+    		    local obj = sq:getObjects():get(i);
+    		    if instanceof(obj, "IsoDoor") then
+    		        obj:setHealth(Healt_noDestroyeDoor);
+    		        --local maxHealth = obj:getHealth()
+    		        --print(maxHealth)
+    		    end
+    		end
+		end
+	end	
+end
+--Events.OnPlayerAttackFinished.Add(PlayerAttackFinished)
+
+
+
+
+
+
+--
+--
+--local function handleKeyPressed(_keyPressed)
+--	if isGamePaused() then return end
+--	if _keyPressed == getCore():getKey("Melee") then
+--		getPlayer():Say("melee")
+--	end
+--end
+--
+--Events.OnKeyPressed.Add(handleKeyPressed);
+--
+--
+--local function PlayerAttack()
+--	getPlayer():Say("PlayerAttack")
+--end
+--Events.OnPlayerAttack.Add(PlayerAttack)
+
+	--if currentGS ~= Square_noDestroyeDoor then Square_noDestroyeDoor = currentGS else getPlayer():Say("square = old square") return end
+
+--getFaces();
+
+--local function attack()
+--	getPlayer():Say("attack")
+--end
+--Events.Attack.Add(attack);

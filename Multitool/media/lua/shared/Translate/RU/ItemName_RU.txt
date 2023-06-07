@@ -1,0 +1,7 @@
+ItemName_RU = {
+    ItemName_Base.P38 = "Консервный нож Р38",
+    ItemName_Base.SAK = "Швейцарский армейский нож",
+    ItemName_Base.Multitool = "Мультитул",
+    ItemName_Base.Leatherdad = "Мультитул Leatherdad",	
+    ItemName_Base.P38DT = "Консервный нож Р38DT",
+}

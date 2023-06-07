@@ -1,0 +1,34 @@
+module AutoGate
+{
+	imports
+	{
+		Base
+	}
+
+	item GateController
+	{
+		Weight = 0.2,
+		Type = Normal,
+		DisplayName = Gate Controller,
+		Icon = RemoteCrafted
+	}
+
+	item GateComponents
+	{
+		Weight = 5.5,
+		Type = Normal,
+		DisplayName = Gate Components,
+		Icon = ElectronicsScrap
+	}
+
+	item AutoGateMag
+	{
+		Weight = 0.1,
+		Type = Literature,
+		DisplayName = All about Automatic Gates,
+		Icon = auto_gate,
+		TeachedRecipes = Create Controller;Create Gate Components,
+		ReplaceOnUse = AutoGateMag,
+		StaticModel = Magazine
+	}
+}

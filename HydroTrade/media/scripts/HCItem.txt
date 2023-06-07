@@ -1,0 +1,338 @@
+module Base
+{
+    /************************Normal************************/
+	
+	item RubberTree
+    {
+        Weight	=	80,
+        Type	=	Normal,
+        DisplayName	=	Rubber Tree,
+        Icon	=	rubberTree,
+        WorldStaticModel = rubberTree,
+    }
+	
+	item bowllatex
+	{
+		DisplayName	=	Bowl of latex,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 1.5,
+		Icon = latex,
+		WorldStaticModel = latex,
+	}
+	
+	item bigquarry
+	{
+		DisplayName	=	Big quarry,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 2000,
+		Icon = quarry,
+		WorldStaticModel = quarry,
+	}
+	
+	item AssemblyMachine
+	{
+		DisplayName	=	Assembly Machine,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 2000,
+		Icon = assemblyMachine,
+		WorldStaticModel = assemblyMachine,
+	}
+	
+	item CleanerMachine
+	{
+		DisplayName	=	Cleaner Machine,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 2000,
+		Icon = Cleaner,
+		WorldStaticModel = Cleaner,
+	}
+
+	item Foundry
+	{
+		DisplayName	=	Foundry,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 2000,
+		Icon = foundry,
+		WorldStaticModel = foundry,
+	}
+	
+	item Glasspanel
+	{
+		DisplayName	=	Glass panel,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 5,
+		Icon = glass,
+		WorldStaticModel = glass,
+	}
+
+	item Latexrecycling
+	{
+		DisplayName	=	Latex recycling,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 2000,
+		Icon = LatexMeh,
+		WorldStaticModel = LatexMeh,
+	}
+
+	item latexfabric
+	{
+		DisplayName	=	Latex fabric,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 3,
+		Icon = latexRoll2,
+		WorldStaticModel = latexRoll2,
+	}	
+	
+	item Oilbarrel
+	{
+		DisplayName	=	Oil barrel,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 20,
+		Icon = OIL,
+		WorldStaticModel = OIL,
+	}	
+	
+	item toxicbarrel
+	{
+		DisplayName	=	Toxic barrel,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 10,
+		Icon = toxicbarrel,
+		WorldStaticModel = toxicbarrel,
+	}	
+	
+	item Oilrecycling
+	{
+		DisplayName	=	Oil recycling,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 2000,
+		Icon = oilR,
+		WorldStaticModel = oilR,
+	}	
+		
+	item Oilwell
+	{
+		DisplayName	=	Oil well,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 2000,
+		Icon = oilWell,
+		WorldStaticModel = oilWell,
+	}	
+	
+	item Looseplastic
+	{
+		DisplayName	=	Loose plastic,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 1,
+		Icon = plastik,
+		WorldStaticModel = plastik,
+	}	
+	
+	item crudetinore
+	{
+		DisplayName	=	Сrude tin ore,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 6,
+		Icon = tinore,
+		WorldStaticModel = tinore,
+	}
+	
+	item cleartin
+	{
+		DisplayName	=	Clean tin ore,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 2,
+		Icon = ktin,
+		WorldStaticModel = ktin,
+	}
+	
+	item highqualitytin
+	{
+		DisplayName	=	High quality tin,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 1,
+		Icon = tinn,
+		WorldStaticModel = tinn,
+	}
+	
+	item Compressor
+	{
+		DisplayName	=	Compressor,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 150,
+		Icon = compressor,
+		WorldStaticModel = compressor,
+	}	
+		
+	item chassis
+	{
+		DisplayName	=	Chassis,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 150,
+		Icon = chassis,
+		WorldStaticModel = chassis,
+	}	
+	
+	/*Опыт строительства*/
+	item ConstructionGuide
+	{
+		DisplayName	=	Construction guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт Кулинарии*/
+	item CookingGuide
+	{
+		DisplayName	=	Cooking guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт Фермерства*/
+	item FarmingGuide
+	{
+		DisplayName	=	Farming guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт первой помощи*/
+	item DoctorGuide
+	{
+		DisplayName	=	Doctor guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт Электрики*/
+	item ElectricityGuide
+	{
+		DisplayName	=	Electricity guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт Газосварка*/
+	item MetalWeldingGuide
+	{
+		DisplayName	=	MetalWelding guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт автомеханика*/
+	item MechanicsGuide
+	{
+		DisplayName	=	Mechanics guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт шитьё*/
+	item TailoringGuide
+	{
+		DisplayName	=	Tailoring guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт звероловство*/
+	item TrappingGuide
+	{
+		DisplayName	=	Trapping guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт рыболовство*/
+	item FishingGuide
+	{
+		DisplayName	=	Fishing guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Опыт собирательсво*/
+	item PlantScavengingGuide
+	{
+		DisplayName	=	PlantScavenging guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+	
+	/*Плашка*/
+	item CutThreads
+	{
+		DisplayName	=	Cut Threads,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.2,
+		Icon = CutThreads,
+		WorldStaticModel = CutThreads,
+		Tooltip = Tooltip_itemCutThreads,
+	}
+
+}

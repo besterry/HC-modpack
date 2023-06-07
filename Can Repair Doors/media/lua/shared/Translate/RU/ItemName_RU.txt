@@ -1,0 +1,8 @@
+ItemName_RU = {
+
+ItemName_Base.DoorsRepairKitWood		= "Ремонтный комплект для дверей",
+ItemName_Base.DoorsRepairKitMetal		= "Комплект усиления для дверей",
+ItemName_Base.DoorsRepairKitEpoxy		= "Быстросохнущая эпоксидная смола",
+
+
+}

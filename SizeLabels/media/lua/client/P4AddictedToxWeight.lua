@@ -1,0 +1,1 @@
+STAR_MODS.SizeLabels.P4AddictedToWeightCompatibility()

@@ -1,0 +1,96 @@
+module Base
+{
+	template vehicle BikeSuspension
+	{
+		part SuspensionFront
+		{
+			category = suspension,
+			area = TireFront,
+			repairMechanic = true,
+
+			table install
+			{
+				requireUninstalled = BrakeFront,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = BrakeFront,
+			}
+		}
+
+		part SuspensionFrontRight
+		{
+			category = nodisplay,
+			area = TireFrontRight,
+		}
+
+		part SuspensionRear
+		{
+			category = suspension,
+			area = TireRear,
+			repairMechanic = true,
+
+			table install
+			{
+				requireUninstalled = BrakeRear,
+			}
+            
+			table uninstall
+			{
+				requireUninstalled = BrakeRear,
+			}
+		}
+
+		part SuspensionRearRight
+		{
+			category = nodisplay,
+			area = TireRear,
+		}
+
+		part Suspension*
+		{
+			itemType = Base.NormalSuspension,
+
+			table install
+			{
+				items
+				{
+					1
+					{
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 300,
+				test = Vehicles.InstallTest.Default,
+			}
+
+			table uninstall
+			{
+				items
+				{
+					1
+					{
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 300,
+				test = Vehicles.UninstallTest.Default,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+				update = Vehicles.Update.Suspension,
+			}
+		}
+	}
+}

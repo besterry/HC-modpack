@@ -1,0 +1,4 @@
+IGUI_RU = {
+    IGUI_AdminPanel_PvpZone = "гНМЮ c PVP",
+    IGUI_ForcePvpZone_Title = "гнмю наъгюрекэмнцн PVP",
+}

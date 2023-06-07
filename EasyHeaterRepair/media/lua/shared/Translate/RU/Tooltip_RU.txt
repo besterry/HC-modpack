@@ -1,0 +1,3 @@
+Tooltip_RU = {
+	Tooltip_EHR_NewCondition = "Новое состояние"
+}

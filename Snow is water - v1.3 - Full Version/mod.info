@@ -1,0 +1,12 @@
+name=Snow is water - Full Version
+poster=poster.png
+id=snowiswaterbeta_h
+description= Snow is still water, so Rain Collectors/Metal Barrels will be filled when snowing just at a slower rate. 
+description= This version adds droppable items such as Pots, buckets and mugs to a system, allowing them to be filled up.
+description= Added support for ModOptions. To read the full details, see the changelog for this Workshop's item
+url=
+icon=logo.png
+modVersion=1.3.2
+authors=Buhorl
+tags=Realistic,Multiplayer
+versionMin=41.65

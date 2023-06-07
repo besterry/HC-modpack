@@ -1,0 +1,9 @@
+ContextMenu_RU = {
+
+    ContextMenu_[NV]_Brightness = "[NV] Яркость",
+    ContextMenu_[NV]_Charge = "[NV] Зарядка",
+
+    ContextMenu_[NV]_Repair = "[NV] Починить",
+    ContextMenu_[NV]_Filter = "[NV] Фильтр",
+
+}

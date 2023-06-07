@@ -1,0 +1,10 @@
+IGUI_RU = {
+	IGUI_VehicleNameisoContainer1 = "_test",
+	IGUI_VehicleNameisoContainer2 = "Контейнер",
+	IGUI_VehicleNameisoContainer3tanker = "Контейнер-цистерна",
+	
+	IGUI_VehicleNameisoContainer4 = "Контейнер 2х дверный",
+	IGUI_VehicleNameisoContainer5 = "Разбитый контейнер",
+
+	IGUI_VehiclePartTrunk2 = "Контейнер 2",
+}

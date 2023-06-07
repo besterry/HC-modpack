@@ -1,0 +1,6 @@
+name=addForceRespawnToCar
+id=addForceRespawnToCar_h
+poster=poster.png
+description=if your character has disconnected inside vehicle, your character is forced to respawning inside this vehicle, even if vehicle have change to position.
+
+

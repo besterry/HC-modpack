@@ -1,0 +1,234 @@
+module increasewalkierange
+{
+	imports
+    	{
+             Base, Radio
+    	}	
+
+/************************ WALKIETALKIES ***********************/
+
+	item WalkieTalkie1Antenna
+	{
+	    DisplayCategory = Communications,
+		Type			= Radio,
+		Icon			= WalkieTalkieBudget,
+		Weight          	= 2.5,
+
+		DisplayName		= Toys-R-Mine рация с антенной,
+        
+		UseDelta		= 0.007, 
+		UseWhileEquipped	= FALSE,
+		DisappearOnUse		= FALSE,
+		TwoWay			= TRUE,
+		TransmitRange		= 6000,
+		MicRange		= 5,
+		BaseVolumeRange		= 8,
+		IsPortable		= TRUE,
+		IsTelevision		= FALSE,
+		MinChannel		= 25000,
+		MaxChannel		= 300000,
+		UsesBattery		= TRUE,
+		IsHighTier		= FALSE,
+		WorldObjectSprite	= appliances_com_01_16,
+		Tooltip = Имеет увеличенный радиус действия за счет прикрепленной антенны.,
+		StaticModel = WalkieTalkieToy,
+		AttachmentType = Walkie,
+	}
+	item WalkieTalkie2Antenna
+	{
+	    DisplayCategory = Communications,
+		Type			= Radio,
+		Icon			= WalkieTalkieCivilian,
+		Weight          	= 2.5,
+
+		DisplayName		= ValuTech рация с антенной,
+        
+		UseDelta		= 0.008, 
+		UseWhileEquipped	= FALSE,
+		DisappearOnUse		= FALSE,
+		TwoWay			= TRUE,
+		TransmitRange		= 6000,
+		MicRange		= 5,
+		BaseVolumeRange		= 10,
+		IsPortable		= TRUE,
+		IsTelevision		= FALSE,
+		MinChannel		= 25000,
+		MaxChannel		= 300000,
+		UsesBattery		= TRUE,
+		IsHighTier		= FALSE,
+		WorldObjectSprite	= appliances_com_01_24,
+		Tooltip = Имеет увеличенный радиус действия за счет прикрепленной антенны.,
+        StaticModel = WalkieTalkieValue,
+        AttachmentType = Walkie,
+	}
+	item WalkieTalkie3Antenna
+	{
+	    DisplayCategory = Communications,
+		Type			= Radio,
+		Icon			= WalkieTalkieCivilian2,
+		Weight          	= 2.5,
+
+		DisplayName		= Premium Tech. Рация с антенной,
+        
+		UseDelta		= 0.009, 
+		UseWhileEquipped	= FALSE,
+		DisappearOnUse		= FALSE,
+		TwoWay			= TRUE,
+		TransmitRange		= 6000,
+		MicRange		= 5,
+		BaseVolumeRange		= 12,
+		IsPortable		= TRUE,
+		IsTelevision		= FALSE,
+		MinChannel		= 25000,
+		MaxChannel		= 300000,
+		UsesBattery		= TRUE,
+		IsHighTier		= FALSE,
+		WorldObjectSprite	= appliances_com_01_32,
+		Tooltip = Имеет увеличенный радиус действия за счет прикрепленной антенны..,
+        StaticModel = WalkieTalkiePremium,
+        AttachmentType = Walkie,
+	}
+	item WalkieTalkieMakeShiftAntenna
+	{
+	    DisplayCategory = Communications,
+		Type			= Radio,
+		Icon			= WalkieTalkieBudget,
+		Weight          	= 2.5,
+
+		DisplayName		= Makeshift Рация с антенной,
+
+		UseDelta		= 0.007,
+		UseWhileEquipped	= FALSE,
+		DisappearOnUse		= FALSE,
+		TwoWay			= TRUE,
+		TransmitRange		= 6000,
+		MicRange		= 5,
+		BaseVolumeRange		= 8,
+		IsPortable		= TRUE,
+		IsTelevision		= FALSE,
+		MinChannel		= 25000,
+		MaxChannel		= 300000,
+		UsesBattery		= TRUE,
+		IsHighTier		= FALSE,
+		WorldObjectSprite	= appliances_com_01_64,
+		Tooltip = Имеет увеличенный радиус действия за счет прикрепленной антенны.,
+        StaticModel = WalkieTalkieMakeshift,
+        AttachmentType = Walkie,
+	}
+
+/************************         ***********************/
+/************************ RECIPES ***********************/
+/************************         ***********************/
+
+/************************ WALKIETALKIES ***********************/
+
+    recipe Прикрепить антенну к рации Toys-R-Mine
+    {
+        WalkieTalkie1,
+	Radio.RadioReceiver,
+        Radio.RadioTransmitter,
+        keep Screwdriver,
+
+        Result:WalkieTalkie1Antenna,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+
+    recipe Прикрепить антенну к рации ValuTech
+    {
+        WalkieTalkie2,
+	Radio.RadioReceiver,
+        Radio.RadioTransmitter,
+        keep Screwdriver,
+
+        Result:WalkieTalkie2Antenna,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+	
+    recipe Прикрепить антенну к рации Premium Tech
+    {
+        WalkieTalkie3,
+	Radio.RadioReceiver,
+        Radio.RadioTransmitter,
+        keep Screwdriver,
+
+        Result:WalkieTalkie3Antenna,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+
+    recipe Прикрепить антенну к рации Makeshift Walkie
+    {
+        WalkieTalkieMakeShift,
+	Radio.RadioReceiver,
+        Radio.RadioTransmitter,
+        keep Screwdriver,
+
+        Result:WalkieTalkieMakeShiftAntenna,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+
+
+/************************ CRAFT RADIO PARTS ***********************/
+
+    recipe Создать радиоприёмник
+    {
+        ElectronicsScrap=1,
+        Radio.ElectricWire,
+        keep Screwdriver,
+
+        Result:Radio.RadioReceiver,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+
+    recipe Создать радиопередатчик
+    {
+        ElectronicsScrap=1,
+        Radio.ElectricWire,
+        keep Screwdriver,
+
+        Result:Radio.RadioTransmitter,
+        SkillRequired:Electricity=1,
+        NeedToBeLearn:false,
+        Time:100.0,
+        OnGiveXP:RadioCraft_OnGiveXP,
+        Category:Electrical,
+        AnimNode:Disassemble,
+        Prop1:Screwdriver,
+		Prop2:CDplayer,
+    }
+
+}

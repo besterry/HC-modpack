@@ -1,0 +1,20 @@
+module VoldarGames
+{
+	imports
+	{
+		Base
+	}
+	
+	item CarClamp
+	{
+		Type				=	Normal,
+		DisplayCategory		= 	Tool,
+        Weight				=	0.5,
+		UseWhileEquipped	=	TRUE,
+		DisplayName			=	CarClamp,
+		Icon				=	CarClamp,
+		ToolTip				=	Tooltip_CarClamp,
+		StaticModel			= 	Hacksaw,
+		WorldStaticModel	= 	HacksawGround,
+	}
+}

@@ -1,0 +1,125 @@
+module Base
+{
+	template vehicle BikeTires
+	{
+        part TireFront
+		{
+            category = tire,
+			area = TireFront,
+			wheel = Front,
+
+			table install
+			{
+				requireInstalled = SuspensionFront,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = BrakeFront;
+			}
+		}
+
+		part TireRear
+		{
+            category = tire,
+			area = TireRear,
+			wheel = Rear,
+
+			table install
+			{
+				requireInstalled = SuspensionRear,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = BrakeRear;
+			}
+		}
+
+		part TireFrontRight
+		{
+			category = nodisplay,
+			
+			model InflatedTirePlusWheel
+			{
+				file = Bicycle_Wheel,
+				offset = 0.0 0.0 0.0,
+				scale = 0.0,
+			}
+
+			area = TireFrontRight,
+			wheel = FrontRight,
+		}
+
+		part TireRearRight
+		{
+			category = nodisplay,
+
+			model InflatedTirePlusWheel
+			{
+				file = Bicycle_Wheel,
+				offset = 0.0 0.0 0.0,
+				scale = 0.0,
+			}
+
+			area = TireRearRight,
+			wheel = RearRight,
+		}
+
+		part Tire*
+		{
+			specificItem = false,
+			itemType = Base.BicycleTireRegular,
+
+			table install
+			{
+				items
+				{
+					1
+					{
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 400,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicles.InstallComplete.Tire,
+			}
+
+			table uninstall
+			{
+				items
+				{
+					1
+					{
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 400,
+				test = Vehicles.UninstallTest.Default,
+				complete = Vehicles.UninstallComplete.Tire,
+			}
+            
+			lua
+			{
+				create = Vehicles.Create.Tire,
+				init = Vehicles.Init.Tire,
+				checkOperate = Vehicles.CheckOperate.Tire,
+				update = Vehicles.Update.Tire,
+			}
+
+			container
+			{
+				capacity = 35,
+				contentType = Air,
+			}
+		}
+    }
+}

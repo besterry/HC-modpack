@@ -1,0 +1,44 @@
+module Base
+{
+	recipe Insert Battery Into GPS
+   	{
+    destroy GPSdayz,
+    destroy Battery,
+    Result:GPSdayz,
+    /*RemoveResultItem:true,*/
+    Time:110,
+    OnTest:TestGPSBatteryInsert,
+    OnCreate:CreateGPSBatteryInsert,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+	Prop2:GPSdayZ,
+   	}
+
+  	recipe Remove Battery From GPS
+   	{
+    keep GPSdayz,
+    Result:Battery,
+    Time:110,
+    OnTest:Recipe.OnTest.TorchBatteryRemoval,
+    OnCreate:GPSBatteryRemoval,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+	Prop2:GPSdayZ,
+   	}
+
+    recipe Dismantle GPS
+    {
+    destroy GPSdayz,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:500.0,
+    OnCreate:DismantleGPS,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+	Prop2:GPSdayZ,
+    }
+}

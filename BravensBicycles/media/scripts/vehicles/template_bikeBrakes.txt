@@ -1,0 +1,82 @@
+module Base
+{
+	template vehicle BikeBrakes
+	{
+		part BrakeFront
+		{
+			area = TireFront,
+
+			table install
+			{
+				requireInstalled = SuspensionFront;TireFront,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = TireFront,
+			}
+		}
+
+		part BrakeRear
+		{
+			area = TireRear,
+            
+			table install
+			{
+				requireInstalled = SuspensionRear;TireRear,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = TireRear,
+			}
+		}
+
+		part Brake*
+		{
+			category = brakes,
+			itemType = Base.NormalBrake,
+			repairMechanic = true,
+
+			table install
+			{
+				items
+				{
+					1
+					{
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 300,
+				test = Vehicles.InstallTest.Default,
+			}
+
+			table uninstall
+			{
+				items
+				{
+					1
+					{
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 300,
+				test = Vehicles.UninstallTest.Default,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Brake,
+				update = Vehicles.Update.Brakes,
+			}
+		}
+	}
+}

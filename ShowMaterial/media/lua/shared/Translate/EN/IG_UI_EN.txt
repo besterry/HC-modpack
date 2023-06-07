@@ -1,0 +1,6 @@
+IGUI_EN = {
+	IGUI_SM_Fabric = "Fabric: ",
+	IGUI_SM_Cotton = "Cotton",
+	IGUI_SM_Denim = "Denim",
+	IGUI_SM_Leather = "Leather",
+}

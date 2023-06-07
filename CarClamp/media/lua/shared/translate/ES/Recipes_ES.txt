@@ -1,0 +1,5 @@
+Recipe_ES = {
+	/* Voldar: CarClamp */
+	Recipe_CarClamp = "Cepo de Coche"
+
+}

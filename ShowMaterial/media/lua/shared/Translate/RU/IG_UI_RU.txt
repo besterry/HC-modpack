@@ -1,0 +1,6 @@
+IGUI_RU = {
+	IGUI_SM_Fabric = "Ткань: ",
+	IGUI_SM_Cotton = "Хлопок",
+	IGUI_SM_Denim = "Джинсовая",
+	IGUI_SM_Leather = "Кожа",
+}

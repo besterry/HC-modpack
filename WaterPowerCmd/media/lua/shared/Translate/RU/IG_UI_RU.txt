@@ -1,0 +1,12 @@
+IG_UI_EN = {
+	IGUI_WPCmd_Water = "Вода",
+	IGUI_WPCmd_Power = "Электричество",
+
+	IGUI_WPCmd_TurnedOn = "был включен",
+	IGUI_WPCmd_TurnedOff = "был отключен",
+
+    IGUI_WPCmd_On = "вкл",
+    IGUI_WPCmd_Off = "выкл",
+    IGUI_WPCmd_ModName = "Регуляторы подачи воды и мощности",
+    IGUI_WPCmd_Toggle = "Переключить воду / питание",
+}

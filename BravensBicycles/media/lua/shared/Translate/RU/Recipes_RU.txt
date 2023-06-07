@@ -1,0 +1,15 @@
+Recipes_RU = {
+    Recipe_CraftScrapFrame1 = "»зготовить раму дл€ самодельного велосипеда",
+    Recipe_CraftScrapSuspension1 = "»зготовить подвеску дл€ самодельного велосипеда",
+    Recipe_CraftScrapBrakes1 = "»зготовить тормоза дл€ самодельного велосипеда",
+    Recipe_CraftScrapTire1 = "»зготовить колесо дл€ самодельного велосипеда",
+    
+    Recipe_CraftScrapFrame2 = "»зготовить раму дл€ самодельного горного велосипеда",
+    Recipe_CraftScrapSuspension2 = "»зготовить подвеску дл€ самодельного горного велосипеда",
+    Recipe_CraftScrapBrakes2 = »зготовить тормоза дл€ самодельного горного велосипеда",
+    Recipe_CraftScrapTire2 = "»зготовить колесо дл€ самодельного горного велосипеда",
+
+    Recipe_CraftScrapSeat = "»зготовить велосипедное сиденье",
+    Recipe_CraftBikeLock = "»зготовить велосипедный замок",
+	Recipe_CraftHeadlight = "Сделать велосипедную фару",
+}

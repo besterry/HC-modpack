@@ -1,0 +1,86 @@
+Sandbox_EN = {
+    -- Fix
+
+    -- New
+    Sandbox_ServerTweaker = "Server Tweaker",
+    Sandbox_SaveClientOptions = "Save client options",
+    Sandbox_SaveAdminPower = "Save admin powers",
+    Sandbox_AddClientCache = "Add client cache",
+    Sandbox_AllowAdminToolsForGM = "Allow admin tools for GM",
+    Sandbox_DisallowSpawnItemsForObservers = "Disallow spawn items for Observers",
+    Sandbox_DisableAimOutline = "Disable AimOutline (NOT RECOMMENDED)",
+    Sandbox_DisableTradeWithPlayers = "Disable trade with players",
+    Sandbox_ProtectVehicleInSafehouse = "Protect vehicle in safehouse",
+    Sandbox_ScreenBlackoutOnDeath = "Screen blackout on death",
+    Sandbox_HighlightSafehouse = "Highlight safehouse (client cache required)",
+    Sandbox_TweakFirearmsSoundRadius = "Increase SoundRadius to firearms",
+    Sandbox_SetGeneralChatStreamAsDefault = "Set General chat stream as default",
+    Sandbox_DisplayCharacterCoordinates = "Display character coordinates",
+    Sandbox_AddSatelliteViewToMap = "Add satellite view to map",
+    Sandbox_DisplaySafehouseAreaSize = "Display safehouse area size",
+    Sandbox_CustomSafezoneAdminTweaks = "Custom Safezone admin tweaks",
+    Sandbox_TweakOverlayText = "Tweak overlay text in right bottom corner",
+    Sandbox_PinOverlayServerInfoText = "Pin overlay server info text",
+    Sandbox_HideServerOptionsFromPlayers = "Hide server options from players",
+    Sandbox_HideTicketsFromPlayers = "Hide tickets from players",
+    Sandbox_AddSafehouseToSpawnLocations = "Add Safehouse to spawn locations",
+    Sandbox_AdminsFreeAddToSafehouse = "No limits for GM to add players to Safehouse",
+    Sandbox_TakeSafehouseLimitations = "Take Safehouse limitations",
+    Sandbox_SafehouseAreaLimit = "Safehouse area limit",
+    Sandbox_CheckSafehouseIntersections = "Check Safehouse intersections",
+    Sandbox_SafehouseDeadZone = "Safehouse dead zone",
+	Sandbox_WaterPipes = "Drip Irrigation Mod",
+	Sandbox_WaterPipes_SmartPipes = "Enable pre-fill and optimal water levels (aka Smart pipes).",
+	Sandbox_WaterPipes_SmartPipesFillMax = "SmartPipes: Maximum amount of water added per watering cycle.",
+	Sandbox_WaterPipes_SmartPipesUpdateNotWatered = "SmartPipes: Update "last watered" counter even when no water was used.",
+	
+	Sandbox_MileageExpansion = "Mileage Expansion",
+
+    Sandbox_MileageExpansion_Default_Unit = "Default Unit",
+    Sandbox_MileageExpansion_Default_Unit_tooltip = "Default Unit newly created vehicle starts with.",
+    Sandbox_MileageExpansion_Default_Unit_option1 = "Miles",
+    Sandbox_MileageExpansion_Default_Unit_option2 = "Kilometers",
+
+    Sandbox_MileageExpansion_Meter_Per_Kilometer = "Meter per Kilometer",
+    Sandbox_MileageExpansion_Meter_Per_Kilometer_tooltip = "Set the amount of meter is in a kilometer. <LINE> Lower value mean 1 kilometer take less time to travel. <LINE> Higher value means 1 kilometer takes more time to travel.",
+
+    Sandbox_MileageExpansion_Kilometer_Short_Name = "Kilometer Short Name",
+    Sandbox_MileageExpansion_Kilometer_Short_Name_tooltip = "Set a custom short name for Kilometers. Default: km",
+
+    Sandbox_MileageExpansion_Miles_Short_Name = "Miles Short Name",
+    Sandbox_MileageExpansion_Miles_Short_Name_tooltip = "Set a custom short name for Miles. Default: mi",
+
+    Sandbox_MileageExpansion_Minimum_Starting_Odometer = "Minimum Starting Odometer",
+    Sandbox_MileageExpansion_Minimum_Starting_Odometer_tooltip = "This is the minimum amount of kilometers used to randomize a vehicle starting odometer value. <LINE> The engine condition will affect the final value only.",
+
+    Sandbox_MileageExpansion_Maximum_Starting_Odometer = "Maximum Starting Odometer",
+    Sandbox_MileageExpansion_Maximum_Starting_Odometer_tooltip = "This is the maximum amount of kilometers used to randomize a vehicle starting odometer value. <LINE> The engine condition will affect the final value only.",
+	
+	Sandbox_VehicleRecycling = "Vehicle Recycling",
+
+	Sandbox_VehicleRecycling_UninstallParts = "Parts Must Be Uninstalled Before Dismantling",
+    Sandbox_VehicleRecycling_UninstallParts_tooltip = "The following parts must be uninstalled before dismantling: hood, trunk lid, doors, windows, seats.",
+    
+	Sandbox_VehicleRecycling_RecyclingClaimedVehicle = "Disassemble claimed - normal car",
+    Sandbox_VehicleRecycling_RecyclingClaimedVehicle_tooltip = "If the setting is enabled, it means that you can dismantle a privatised vehicle.<br>Mod for Valhala Aegis vehicles",
+	
+	Sandbox_VehicleRecycling_RecyclingClaimedSmashedCar = "Disassemble claimed - smashed car",
+    Sandbox_VehicleRecycling_RecyclingClaimedSmashedCar_tooltip = "With this setting enabled it will be possible to dismantle a squashed machine.<br>All machines that have Smashed in their name. For example Base.SUVSmashedFront.",
+	
+	Sandbox_VehicleRecycling_RecyclingClaimedBurntCar = "Disassemble claimed - burnt car",
+    Sandbox_VehicleRecycling_RecyclingClaimedBurntCar_tooltip = "With this setting enabled it will be possible to dismantle a squashed machine.<br>All machines that have Smashed in their name. For example Base.VanBurnt.",
+	
+	Sandbox_VehicleRecycling_RecyclingSmashedCar = "Disassemble broken(Smashed) cars without removing parts",
+	Sandbox_VehicleRecycling_RecyclingSmashedCar_tooltip = "By enabling this setting you give you the ability to smashed machines.<br>The setting only works with machines whose ID has the text Smashed.<br>For example: Base.SUVSmashedFront",
+	
+	Sandbox_VehicleRecycling_RecyclingBurntCar = "Disassemble burnt out (Burnt) cars without removing parts",
+	Sandbox_VehicleRecycling_RecyclingBurntCar_tooltip = "By enabling this setting you give you the opportunity to unbuild burnt machines.<br>The setting only works with machines whose IDs contain the text Burnt.<br>For example: Base.VanBurnt",
+	
+	Sandbox_VehicleRecycling_ExceptionListRate = "List of exempted machines from which parts do not need to be removed",
+	Sandbox_VehicleRecycling_ExceptionListRate_tooltip = "Exception for machines which do not need to remove parts.<br>This setting is needed for machines which have parts which cannot be removed.<br>Write the machine ID in full, through ; .<br>For example: Base.CarPolice;Base.CarPolice2;Base.CarPolice3",
+	
+	Sandbox_VehicleRecycling_OldVersionNeededPropane = "Use an older version of the propane requirement",
+	Sandbox_VehicleRecycling_OldVersionNeededPropane_tooltip = "After turning on this setting propane requirements will increase by 10 times.<br>This setting is necessary for those who play with mods that return the capacity of the burner and propane tanks as it was in the old patches.<br>For example «Propane Tank Fix»",
+	
+	Sandbox_VehicleRecycling_ActionTimeMultiplier = "Disassembly time multiplier",
+}

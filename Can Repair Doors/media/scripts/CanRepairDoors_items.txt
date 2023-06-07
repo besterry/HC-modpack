@@ -1,0 +1,36 @@
+module Base
+{
+	item DoorsRepairKitWood
+    {  
+        Weight			  =	2,
+        DisplayName		  =	Doors Repair Kit,
+        Icon			  =	DoorsRepairIconWood,
+        WorldStaticModel  = CampingTentKit_Ground,
+        ToolTip = IGUI_Item_DoorsRepairKitWood,  
+    }
+
+    item DoorsRepairKitMetal
+    {  
+        Weight			  =	3,
+        DisplayName		  =	Doors Reinforce Kit,
+        Icon			  =	DoorsRepairIconMetal,
+        WorldStaticModel  = ScrapMetal,
+        ToolTip = IGUI_Item_DoorsRepairKitMetal,  
+    }
+
+    item DoorsRepairKitEpoxy
+    {  
+        Weight			  =	0.5,
+        DisplayName		  =	Quick Doors repair Kit,
+        Icon			  =	DoorsRepairIconEpoxy,
+        StaticModel  	  = DoorsRepair_epoxy3d,
+        WorldStaticModel  = DoorsRepair_epoxy3d,
+        ToolTip = IGUI_Item_DoorsRepairKitEpoxy,  
+    }
+    model DoorsRepair_epoxy3d
+	{
+		mesh    = DoorsRepair_epoxy3d,
+		texture = DoorsRepairEpoxy_texture,
+		scale = 0.1,
+	}
+}

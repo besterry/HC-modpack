@@ -1,0 +1,4 @@
+IGUI_EN = {
+    IGUI_AdminPanel_PvpZone = "PVP Zone",
+    IGUI_ForcePvpZone_Title = "COMPULSORY PVP ZONE",
+}

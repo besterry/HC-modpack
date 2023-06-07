@@ -1,0 +1,1 @@
+Events.OnGameBoot.Add(function() print("Skill Recovery Journal: ver:2.0.6_MAR-21_HOT_FIX") end)

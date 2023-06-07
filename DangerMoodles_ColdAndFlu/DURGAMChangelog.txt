@@ -1,0 +1,19 @@
+--------------------
+-- Danger Moodles --
+--------------------
+--------------------
+- Coded by OgreLeg -
+---Durance Gaming---
+--------------------
+
+
+Version 1.2
+*Rebuilt to work in build 40 and build 41
+
+Version 1.1
+*Moodle Keychain added
+*Moodle Keychain can be used to customize mod options
+
+Version 1.0
+*Mod created
+

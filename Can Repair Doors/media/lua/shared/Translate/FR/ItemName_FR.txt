@@ -1,0 +1,7 @@
+ItemName_FR = {
+
+ItemName_Base.DoorsRepairKitWood		= "Kit de réparation pour porte",
+ItemName_Base.DoorsRepairKitMetal		= "Kit de renforcement pour porte",
+ItemName_Base.DoorsRepairKitEpoxy		= "Colle Epoxy séchage rapide",
+
+}

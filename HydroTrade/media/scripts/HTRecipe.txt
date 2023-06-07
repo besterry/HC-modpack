@@ -1,0 +1,1078 @@
+module Hydrocraft
+{
+    imports
+    {
+        Base, farming, Engineer, Survivalist
+
+    }
+	
+/************************RECIPES************************/
+
+recipe Cultivate blackmold
+    {
+    	SkillRequired:Doctor=2,
+		MushroomGeneric1/MushroomGeneric2/MushroomGeneric3/MushroomGeneric4/MushroomGeneric5/MushroomGeneric6/MushroomGeneric7,
+		HCPetridish=3,
+    	Result:HCPetriaspergillus=3,
+    	Time:50,
+    	Category:Health,
+    	OnGiveXP:HCDoctor_OnGiveXP,
+    }
+	
+recipe Cultivate liveyeast
+    {
+    	SkillRequired:Doctor=2,
+		BreadDough/HCCornBread/HCPumpkinbread/HCCannedgovermentbreadopen,
+		HCPetridish=3,
+    	Result:HCPetriyeast=3,
+    	Time:50,
+    	Category:Health,
+    	OnGiveXP:HCDoctor_OnGiveXP,
+    }
+
+recipe ReCraft GunPowder
+    {
+    	HCGunPowder=10,
+    	CanBeDoneFromFloor:true,
+    	Result:GunPowder,
+    	Time:15,
+    	Category:Engineer,
+    }
+
+recipe ReCraft GunPowder2
+    {
+    	GunPowder=220,
+		HCJar,
+    	CanBeDoneFromFloor:true,
+    	Result:HCGunPowder,
+    	Time:15,
+    	Category:Engineer,
+    }
+	
+recipe Refill Empty Lighter
+    {
+       HCLighterempty=1,
+       PetrolCan=1,
+       Result:Lighter,
+       Time:50.0,
+       Category:Survivalist,
+    }
+	
+recipe Refill Empty Lighter2
+    {
+       HCLighterempty=1,
+       LargePetrolCanFull=1,
+       Result:Lighter,
+       Time:50.0,
+       Category:Survivalist,
+    }
+	
+recipe Make Bullet38Box
+    {
+        keep HCFunnel,
+        HCGunPowder=20,
+        HCBulletcasings=1,
+        HCBullettips=1,
+        Result:Bullets38Box,
+        Time:100,
+        Category:Engineer,
+        OngiveXP:HCHunger_OnGiveXP,
+    }
+	
+recipe Make Bullet45Box
+    {
+        keep HCFunnel,
+        HCGunPowder=10,
+        HCBulletcasings=1,
+        HCBullettips=1,
+        Result:Bullets45Box,
+        Time:100,
+        Category:Engineer,
+        OngiveXP:HCHunger_OnGiveXP,
+    }
+	
+recipe Make Bullet44Box
+    {
+        keep HCFunnel,
+        HCGunPowder=4,
+        HCBulletcasings=1,
+        HCBullettips=1,
+        Result:Bullets44Box,
+        Time:100,
+        Category:Engineer,
+        OngiveXP:HCHunger_OnGiveXP,
+    }
+	
+recipe Make 556Box
+    {
+        keep HCFunnel,
+        HCGunPowder=20,
+        HCBulletcasings=1,
+        HCBullettips=1,
+        Result:556Box,
+        Time:100,
+        Category:Engineer,
+        OngiveXP:HCHunger_OnGiveXP,
+    }
+	
+recipe Make SugarBox
+	{
+        SheetPaper2=10,
+        Result:HCSugarempty,
+        Time:100,
+        Category:farming,
+    }
+
+recipe Make LemonMixMore
+	{
+        HCBarrelLemon,
+		WhiskeyEmpty=15,
+        Result:HCLemonmixer=15,
+        Time:1500,
+        Category:farming,
+    }
+	
+recipe Make Citricacid
+	{
+        HCBarrelLemon,
+		Sugar,
+		EmptyJar=5,
+        Result:HCCitricacid=5,
+        Time:1000,
+        Category:farming,
+    }
+	
+recipe Make bale of hay
+	{
+        HCStrawbale,
+        Result:Moveables.vegetation_farm_01_8,
+        Time:100,
+        Category:farming,
+    }
+
+recipe Make Strawbale
+	{
+        Moveables.vegetation_farm_01_8,
+        Result:HCStrawbale,
+        Time:100,
+        Category:farming,
+    }
+	
+fixing Fix Car Seat sewing
+    {
+        Require : NormalCarSeat1;NormalCarSeat2;NormalCarSeat3,
+        GlobalItem : Needle,
+        ConditionModifier : 1.2,
+
+        Fixer : Thread=5; Mechanics=4,
+    }
+	
+recipe Make Valu Tire Standard
+	{
+        HCRubbersheet=2,
+		HCSteelsheetlarge,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:OldTire1,
+        Time:100,
+        Category:Engineer,
+    }
+	
+recipe Make Valu Tire Heavy
+	{
+        HCRubbersheet=3,
+		HCSteelsheetlarge=2,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:OldTire2,
+        Time:100,
+        Category:Engineer,
+    }
+
+recipe Make Valu Tire Elite
+	{
+        HCRubbersheet=4,
+		HCSteelsheetlarge=3,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:OldTire3,
+        Time:100,
+        Category:Engineer,
+    }	
+	
+recipe Make Modern Tire Standard
+	{
+        HCRubbersheet=6,
+		HCSteelsheetlarge=3,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:ModernTire1,
+        Time:100,
+        Category:Engineer,
+    }	
+	
+recipe Make Modern Tire Heavy
+	{
+        HCRubbersheet=8,
+		HCSteelsheetlarge=4,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:ModernTire2,
+        Time:100,
+        Category:Engineer,
+    }	
+
+recipe Make Modern Tire Elite
+	{
+        HCRubbersheet=10,
+		HCSteelsheetlarge=5,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:ModernTire3,
+        Time:100,
+        Category:Engineer,
+    }	
+
+recipe Make Normal Tire Standard
+	{
+        HCRubbersheet=2,
+		HCSteelsheetlarge=1,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:NormalTire1,
+        Time:100,
+        Category:Engineer,
+    }	
+
+recipe Make Normal Tire Heavy
+	{
+        HCRubbersheet=2,
+		HCSteelsheetlarge=5,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:NormalTire2,
+        Time:100,
+        Category:Engineer,
+    }	
+
+recipe Make Normal Tire Elite
+	{
+        HCRubbersheet=3,
+		HCSteelsheetlarge=5,
+		HCNutnbolt = 8,
+		keep HCBlastfurnace2/HCFurnace2,
+        CanBeDoneFromFloor:true,
+        Result:NormalTire3,
+        Time:100,
+        Category:Engineer,
+    }		
+	
+recipe Make Cork
+	{
+        HCBark,
+		keep HCIndustrialpress,
+        CanBeDoneFromFloor:true,
+        Result:HCCork=2,
+        Time:100,
+        Category:Engineer,
+    }	
+
+recipe Make bicycle basket
+	{
+        MetalBar=5,
+		keep HCFurnace2,
+        Result:BicycleBasket3,
+        CanBeDoneFromFloor:true,
+        Time:250,
+        Category:Engineer,
+    }	
+
+recipe Put potato in bag
+	{
+        Potato=12,
+		EmptySandbag,
+		keep HCWorkgloves,
+        Result:SackProduce_Potato,
+        Time:100,
+        Category:farming,
+    }	
+	
+recipe pour gasoline
+	{
+        LargePetrolCanFull=8,
+		EmptyPetrolCan,
+		keep HCFunnel,
+        Result:PetrolCan,
+        Time:100,
+        Category:Engineer,
+    }
+
+recipe pour gasoline
+	{
+        PetrolCan=25,
+		LargePetrolCan,
+		keep HCFunnel,
+        Result:LargePetrolCanFull,
+        Time:100,
+        Category:Engineer,
+    }	
+	
+recipe Bottle Milk
+    {
+    HCWoodenbucketmilk,
+    HCMilkjugempty/HCMilkjugchocolateempty,
+    Result:HCMilkjug,
+    Time:15.0,
+    Category:Ranching,
+    OnCreate:recipe_hcwoodenbucket,
+    OnGiveXP:HCCooking_OnGiveXP,
+    }
+	
+recipe Pasteurization of milk
+    {
+    HCWoodenbucketheatedmilk,
+    HCUHTmilkempty,
+    Result:HCUHTmilk,
+    Time:25.0,
+    Category:Ranching,
+    OnCreate:recipe_hcwoodenbucket,
+    OnGiveXP:HCCooking_OnGiveXP,
+    }
+	
+recipe Pasteurization of milk
+    {
+    HCWoodenbucketheatedmilk,
+    HCPlasticcanempty,
+    Result:HCPlasticcanmilk,
+    Time:40.0,
+    Category:Ranching,
+    OnCreate:recipe_hcwoodenbucket,
+    OnGiveXP:HCCooking_OnGiveXP,
+    }
+	
+recipe Disassemble box
+    {
+    HCCardboardbox,
+    Result:SheetPaper2=10,
+    Time:10.0,
+    Category:Ranching,
+    }
+	
+recipe Fill flask with water
+    {
+    	HCGlassflask,
+		WaterBottleFull=1,
+        keep HCLab2,
+        CanBeDoneFromFloor:true,
+    	Result:HCGlasswaterbottle,
+    	Time:20,
+        OnCreate:recipe_hcgetplasticcan,
+    	Category:Chemistry,
+    }
+	
+recipe Disassemble body armor
+	{
+        Vest_BulletArmy/Armor_Defender/Sheriff_Vest/Sheriff_Vest_Full/Vest_BulletCivilian/Vest_BulletPolice/Armor_6B13,		
+		keep Multitool,
+        Result:HCSteelboard=2,
+        Time:100,
+        Category:Engineer,
+    }	
+	
+recipe Erase records
+	{
+        SkillRecoveryJournal,
+		keep Eraser,
+        Result:SkillRecoveryJournal,
+        Time:100,
+        Category:Engineer,
+    }	
+	
+recipe Disassemble wheelbarrow
+	{
+        HCWheelbarrow,
+		keep Screwdriver,
+		keep Wrench,
+		keep HCPliers,
+        Result:HCSteelsheet=1,
+		OnCreate:recipe_hcdismantlewagon,
+        Time:3500,
+        Category:Engineer,
+    }
+	
+recipe Disassemble wheelbarrow
+	{
+        HCForklift,
+		keep Screwdriver,
+		keep Wrench,
+		keep HCPliers,
+        Result:HCSteelsheet=1,
+		OnCreate:recipe_hcdismantForklift,
+        Time:3500,
+        Category:Engineer,
+    }
+	
+recipe Disassemble Wheelchair
+	{
+        HCWheelchair,
+		keep Screwdriver,
+		keep Wrench,
+		keep HCPliers,
+        Result:MetalBar=4,
+        Time:1000,
+        Category:Engineer,
+    }
+	
+recipe Disinfect
+	{
+        Cologne/Perfume,
+		RippedSheets,
+        Result:AlcoholRippedSheets,
+        Time:50,
+        Category:Survivalist,
+    }
+
+recipe Disassemble Electrolyzer
+	{
+        HCElectrolyzer,
+		keep Screwdriver,
+        Result:ElectronicsScrap=16,
+        Time:500,
+        Category:Engineer,
+    }
+	
+recipe Make bucket of paint
+	{
+        SheetMetal=2,
+		keep HCFurnace2,
+        Result:PaintbucketEmpty,
+        Time:120,
+        Category:Engineer,
+    }	
+	
+recipe Make rope
+	{
+        Twine=10,
+		keep HCTailoringbench2,
+		CanBeDoneFromFloor:true,
+        Result:Rope,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HCTailoring_OnGiveXP,
+    }	
+	
+recipe Make Wire
+	{
+        ScrapMetal=10,
+		keep HCPliers,
+		keep HCRollingmillsmall,
+        Result:Wire,
+        Time:50,
+        Category:Engineer,
+    }	
+	
+recipe Make Mead
+	{
+        HCBarrelhoney,
+		WhiskeyEmpty=20,
+		keep HCFunnel/HCGlassfunnel,
+        Result:HCMead=20,
+        Time:120,
+        Category:Survivalist,
+    }	
+	
+recipe Make barrel vinegar
+	{
+        HCApplecider=3,
+		Yeast=2,
+		HCWoodenbarrel,
+        Result:HCBarrelvinegar,
+        Time:120,
+        Category:Survivalist,
+    }	
+	
+recipe Make barrel vinegar
+	{
+        HCBarrelLemon,
+		Yeast=2,
+		HCWoodenbarrel,
+        Result:HCBarrelvinegar,
+        Time:50,
+        Category:Survivalist,
+    }	
+
+recipe Empty welding set
+	{
+        destroy HCWeldingset,
+		keep Wrench,
+        Result:HCWeldingsetempty,
+        Time:20,
+        Category:Engineer,
+    }	
+	
+recipe Grind bone
+	{
+        HCBoartusk/HCDeerantlers/HCGoathorn,
+		keep HCMacerator,
+		PetrolCan/LargePetrolCanFull,
+        Result:HCBonepowder=20,
+        Time:50,
+        Category:Survivalist,
+    }
+
+recipe Remove Battery Drill
+	{
+        destroy HCMiningdrillpowered,
+		keep Screwdriver,
+        Result:HCMiningdrill,
+        Time:50,
+        Category:Survivalist,
+    }		
+	
+item Kosmotsars
+	{
+		Weight			= 4.5,
+		Type			= Normal,
+		DisplayName		= Kosmotsars,
+		icon			= Kosmotsars,
+		DisplayCategory	= Literature,
+	}
+
+recipe Unpack Kosmotsars
+	{
+        destroy Kosmotsars,
+        Result:HCBookcover,
+        Time:50,
+		OnCreate:recipe_htunpackkosmotsars,
+        Category:Literature,
+    }		
+	
+item Survivorpack
+	{
+		Weight			= 10,
+		Type			= Normal,
+		DisplayName		= Survivor pack,
+		icon			= Survivorpack,
+		DisplayCategory	= Survivalist,
+	}
+	
+recipe Unpack Survivorpack
+	{
+        destroy Survivorpack,
+        Result:HCCardboardbox,
+        Time:50,
+		OnCreate:recipe_htunpacksurvivorpack,
+        Category:Survivalist,
+    }	
+	
+item Policepack
+	{
+		Weight			= 10,
+		Type			= Normal,
+		DisplayName		= Police pack,
+		icon			= Policepack,
+		DisplayCategory	= Survivalist,
+	}
+	
+recipe Unpack Policepack
+	{
+        destroy Policepack,
+        Result:HCCardboardbox,
+        Time:50,
+		OnCreate:recipe_htunpackpolicepack,
+        Category:Survivalist,
+    }	
+	
+item Militarypack
+	{
+		Weight			= 10,
+		Type			= Normal,
+		DisplayName		= Military pack,
+		icon			= Militarypack,
+		DisplayCategory	= Survivalist,
+	}
+	
+recipe Unpack Militarypack
+	{
+        destroy Militarypack,
+        Result:HCCardboardbox,
+        Time:50,
+		OnCreate:recipe_htunpackmilitarypack,
+        Category:Survivalist,
+    }	
+	
+item Sniperpack
+	{
+		Weight			= 10,
+		Type			= Normal,
+		DisplayName		= Sniper pack,
+		icon			= Sniperpack,
+		DisplayCategory	= Survivalist,
+	}
+	
+recipe Unpack Sniperpack
+	{
+        destroy Sniperpack,
+        Result:HCCardboardbox,
+        Time:50,
+		OnCreate:recipe_htunpacksniperpack,
+        Category:Survivalist,
+    }	
+	
+item Stormtrooperpack
+	{
+		Weight			= 10,
+		Type			= Normal,
+		DisplayName		= Stormtrooper pack,
+		icon			= Stormtrooperpack,
+		DisplayCategory	= Survivalist,
+	}
+	
+recipe Unpack Stormtrooperpack
+	{
+        destroy Stormtrooperpack,
+        Result:HCCardboardbox,
+        Time:50,
+		OnCreate:recipe_htunpackstormtrooperpack,
+        Category:Survivalist,
+    }
+	
+item Swatpack
+	{
+		Weight			= 10,
+		Type			= Normal,
+		DisplayName		= Swat pack,
+		icon			= Swatpack,
+		DisplayCategory	= Survivalist,
+	}
+	
+recipe Unpack Swatpack
+	{
+        destroy Swatpack,
+        Result:HCCardboardbox,
+        Time:50,
+		OnCreate:recipe_htunpackswatpack,
+        Category:Survivalist,
+    }
+	
+	/*Сбор латекса*/
+	recipe Collect rubber
+	{
+        destroy Bowl,
+		keep RubberTree,
+		keep HCRubberglove/Gloves_Surgical/HCGardengloves,
+		keep HCCombatknife/HCKnifeiron/KitchenKnife/HuntingKnife/Multitool/Leatherdad,
+        Result:bowllatex,
+		CanBeDoneFromFloor:true,
+        Time:5000,
+        Category:Survivalist,
+		OnGiveXP:HTFarming_OnGiveXP,
+    }
+	
+	/*Переработка латекса*/
+	recipe Recycle rubber
+	{
+        destroy bowllatex=10,
+		SkillRequired:Farming=4,
+		PetrolCan/LargePetrolCanFull,
+		keep Latexrecycling,
+		keep HCRubberglove/Gloves_Surgical/HCGardengloves,
+        Result:latexfabric,
+		CanBeDoneFromFloor:true,
+        Time:1000,
+        Category:Survivalist,
+		OnCreate:recipe_htgiveBowl,
+		OnGiveXP:HTFarming_OnGiveXP,
+    }
+	
+	/*Качка нефти*/
+	recipe Pump oil
+	{
+        destroy HCBarrelmetalempty,
+		keep Oilwell,
+		keep HCWorkgloves,		
+		keep HCCrank,
+        Result:Oilbarrel,
+		CanBeDoneFromFloor:true,
+        Time:5000,
+        Category:Survivalist,
+    }
+	
+	/*Переработка нефти*/
+	recipe Recycle oil
+	{
+        destroy Oilbarrel,
+		keep Oilrecycling,
+		keep HCWorkgloves,
+		PetrolCan/LargePetrolCanFull,
+        Result:Looseplastic=10,
+		CanBeDoneFromFloor:true,
+		OnCreate:recipe_htgivetoxicbarrel,		
+        Time:1000,
+        Category:Survivalist,
+    }
+	
+	/*Переработка нефти в бензин маленькая канистра*/
+	recipe Recycle oil to gas
+	{
+        destroy Oilbarrel,
+		destroy EmptyPetrolCan=3,
+		keep Oilrecycling,
+		keep HCWorkgloves,
+        Result:PetrolCan=3,
+		CanBeDoneFromFloor:true,
+		OnCreate:recipe_htgivetoxicbarrel,		
+        Time:1000,
+        Category:Survivalist,
+    }
+	
+	/*Переработка нефти в бензин большая канистра*/
+	recipe Recycle oil to gas
+	{
+        destroy Oilbarrel,
+		destroy LargePetrolCan,
+		keep Oilrecycling,
+		keep HCWorkgloves,
+        Result:LargePetrolCanFull,
+		CanBeDoneFromFloor:true,
+		OnCreate:recipe_htgivetoxicbarrel,		
+        Time:1000,
+        Category:Survivalist,
+    }
+	
+	/*Опустошить большую канистру*/
+	recipe Pour out canister
+	{
+		destroy LargePetrolCanFull,
+        Result:LargePetrolCan,
+		CanBeDoneFromFloor:true,		
+        Time:200,
+        Category:Survivalist,
+    }	
+	
+	/*Опустошить маленькую канистру*/
+	recipe Pour out canister
+	{
+		destroy PetrolCan,
+        Result:EmptyPetrolCan,
+		CanBeDoneFromFloor:true,		
+        Time:200,
+        Category:Survivalist,
+    }	
+	
+	/*Опустошить бочку*/
+	recipe Drain barrel
+	{
+        destroy toxicbarrel,
+		keep HCWorkgloves,
+        Result:HCBarrelmetalempty,
+		CanBeDoneFromFloor:true,
+        Time:200,
+        Category:Survivalist,
+    }
+	
+	/*Добыча олова киркой*/
+	recipe mine tin with a pickaxe
+	{
+		keep PickAxe,
+		keep bigquarry,
+		keep HCWorkgloves,
+        Result:crudetinore,
+		CanBeDoneFromFloor:true,
+        Time:7500,
+		OnCreate:htdigbigquarry,
+        Category:Stoneworking,
+    }
+	
+	/*Добыча олова буром*/
+	recipe mine tin with a Miningdrill
+	{
+		HCMiningdrillpowered,
+		keep bigquarry,
+		keep HCWorkgloves,
+        Result:crudetinore,
+		CanBeDoneFromFloor:true,
+        Time:1500,
+		OnCreate:htdigbigquarry,
+        Category:Stoneworking,
+    }
+	
+	/*Очистка олова*/
+	recipe Cleaning tin ore
+	{
+		crudetinore,
+		keep CleanerMachine,
+		keep HCWorkgloves,
+		PetrolCan/LargePetrolCanFull,
+        Result:cleartin,
+		CanBeDoneFromFloor:true,
+        Time:1000,
+        Category:Survivalist,
+    }
+	
+	/*Переплавка олова*/
+	recipe Smelt tin
+	{
+		cleartin,
+		keep Foundry,
+		keep HCWorkgloves,
+		PetrolCan/LargePetrolCanFull,
+        Result:highqualitytin,
+		CanBeDoneFromFloor:true,
+        Time:1000,
+        Category:Survivalist,
+    }
+	
+	/*Создание стеклопакета*/
+	recipe Make Fiberglass
+	{
+		highqualitytin=2,
+		Looseplastic=30,		
+		keep Foundry,		
+		keep HCWorkgloves,
+		PetrolCan/LargePetrolCanFull,		
+        Result:Glasspanel,
+		CanBeDoneFromFloor:true,
+        Time:2500,
+        Category:Survivalist,
+    }
+	
+	/*Сделать биокостюм*/
+	recipe Make biosuit
+	{
+		Glasspanel=2,
+		HCRubbercement=5,
+		HCAirfilter,
+		HCOxygentank,
+		latexfabric=10,		
+		keep AssemblyMachine,		
+		keep HCWorkgloves,
+		PetrolCan/LargePetrolCanFull,		
+        Result:HazmatSuit,
+		CanBeDoneFromFloor:true,
+        Time:10000,
+        Category:Survivalist,
+    }
+	
+	/*Сделать пустой баллон*/
+	recipe Make empty oxygen tank
+	{		
+		SheetMetal=2,
+		highqualitytin=10,
+		keep HCPliers,
+		keep AssemblyMachine,		
+		keep HCWorkgloves,
+		PetrolCan/LargePetrolCanFull,		
+        Result:HCOxygentankempty,
+		CanBeDoneFromFloor:true,
+        Time:2000,
+        Category:Survivalist,
+    }
+	
+	/*Наполнить баллон кислородом*/
+	recipe Fill balloon with oxygen
+	{		
+		HCOxygentankempty,
+		keep PipeWrench,
+		keep HCLab2,		
+		keep HCWorkgloves,		
+        Result:HCOxygentank,
+		CanBeDoneFromFloor:true,
+        Time:3000,
+        Category:Survivalist,
+    }
+	
+	/*Плашка*/
+	recipe Make CutThreads
+	{		
+		MetalBar,
+		HCSteelingot,
+		keep HCSmithyhammersteel/HCSmithyhammertitanium,
+		keep Tongs,
+		keep HCFile,
+		keep HCAnvil2/HCAnvilmold2,		
+		keep HCWorkgloves,		
+        Result:CutThreads,
+		CanBeDoneFromFloor:true,
+        Time:100,
+        Category:Survivalist,
+    }
+	
+	/*Смена резьбы болта*/
+	recipe Change bolt thread to left
+	{		
+		HCBolt,
+		keep CutThreads,		
+		keep HCWorkgloves,		
+        Result:Screws,
+		CanBeDoneFromFloor:true,
+        Time:100,
+        Category:Survivalist,
+    }
+	
+	/*Смена резьбы болта*/
+	recipe Change bolt thread to right
+	{		
+		Screws,
+		keep CutThreads,		
+		keep HCWorkgloves,		
+        Result:HCBolt,
+		CanBeDoneFromFloor:true,
+        Time:100,
+        Category:Survivalist,
+    }
+	
+	/*Добыча железа в большом карьере*/
+	recipe Mine iron
+	{
+		keep PickAxe,
+		keep bigquarry,
+		keep HCWorkgloves,
+        Result:HCIronore,	
+		CanBeDoneFromFloor:true,
+        Time:250,
+        Category:Stoneworking,
+		OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+	/*Добыча угля в большом карьере*/
+	recipe Mine Coal
+    {
+        keep bigquarry,
+        keep PickAxe,
+        CanBeDoneFromFloor:true,
+        Result:HCCoal,
+        Time:250,
+        Category:Stoneworking,
+        OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+	/*Обучение*/
+	recipe Learn
+    {
+        ConstructionGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTConstructionGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        CookingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTCookingGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        FarmingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTFarmingGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        DoctorGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTDoctorGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        ElectricityGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTElectricityGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        MetalWeldingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTMetalWeldingGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        MechanicsGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTMechanicsGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        TailoringGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTTailoringGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        TrappingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTTrappingGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        FishingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTFishingGuide_OnGiveXP,
+    }
+	
+	/*Обучение*/
+	recipe Learn
+    {
+        PlantScavengingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTPlantScavengingGuide_OnGiveXP,
+    }
+	
+}	

@@ -1,0 +1,23 @@
+module Base
+{
+	template vehicle BikeFrame
+	{
+		part FakeFrame
+		{
+			area = TireFrontRight,
+		}
+
+		part FakeFrame*
+		{
+			category = nodisplay,
+			itemType = Base.NormalBrake,
+
+			lua
+			{
+				create = Vehicles.Create.Brake,
+				update = Vehicles.Update.Brakes,
+			}
+		}
+	}
+}
+

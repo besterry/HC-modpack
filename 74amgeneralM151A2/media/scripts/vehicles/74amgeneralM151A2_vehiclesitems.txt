@@ -1,0 +1,289 @@
+module Base
+{
+
+	/*******************Legacy Tires ************************/  
+
+	item V100Tire2
+    {
+        Weight	=	15.0,
+        Type	=	Normal,
+        DisplayName	=	RunFlat Tire,
+        Icon	=	runflatTire,
+        MaxCapacity = 35,
+        ChanceToSpawnDamaged = 50,
+        WheelFriction = 1.6,
+        ConditionMax = 100,
+        ConditionLowerStandard = 0.10,
+        ConditionLowerOffroad = 0.12,
+        MechanicsItem = TRUE,
+	   WorldStaticModel = RunFlatWI,
+	   Tooltip = Tooltip_item_runflats,
+    }
+
+	/************************ Tires ************************/  
+
+	item V102Tire2
+    {
+	   DisplayCategory = VehicleMaintenance,
+        Weight	=	15.0,
+        Type	=	Normal,
+        DisplayName	=	M151A2 RunFlat Tire,
+        Icon	=	runflatTireM151A2,
+        MaxCapacity = 35,
+        ChanceToSpawnDamaged = 50,
+        WheelFriction = 1.6,
+        ConditionMax = 100,
+        ConditionLowerStandard = 0.10,
+        ConditionLowerOffroad = 0.12,
+        MechanicsItem = TRUE,
+	   WorldStaticModel = m151_tireWI,
+	   Tooltip = Tooltip_item_M151A2runflats,
+    }
+
+	/************************ Trunks ************************/
+
+	item M151A2Trunk2
+    {
+	   DisplayCategory = VehicleMaintenance,
+        Weight	=	25.0,
+        Type	=	Normal,
+        DisplayName	=	Trunk,
+        Icon	=	na,
+        MaxCapacity = 65,
+        ConditionAffectsCapacity = false,
+        ConditionMax = 100,
+        ChanceToSpawnDamaged = 20,
+        MechanicsItem = TRUE,
+    }
+
+	item M151A2Extra2
+    {
+        Weight	=	1.00,
+        Type	=	Normal,
+        DisplayName	=	Extra,
+        Icon	=	na,
+        MaxCapacity = 1,
+        ConditionAffectsCapacity = false,
+        ConditionMax = 100,
+        ChanceToSpawnDamaged = 0,
+        MechanicsItem = TRUE,
+    }
+
+    /************************ Hood ************************/
+
+    item M151A2EngineDoor2
+    {
+	   DisplayCategory = VehicleMaintenance,
+        Weight	=	15.0,
+        Type	=	Normal,
+        DisplayName	=	M151A2 Hood,
+        Icon	=	hoodM151A2,
+        ChanceToSpawnDamaged = 25,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_hoodWI,
+    }
+
+     /************************ Butt stuff ************************/
+
+	item M151A2Tarp1_Item
+      {
+	   DisplayCategory = VehicleMaintenance,
+        Weight	=	13.0,
+        Type	=	Normal,
+        DisplayName	=	M151A2 Soft Back Cover,
+        Icon	=	tarpM151A2,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_tarpWI,
+	   Tooltip = Tooltip_item_M151A2Tarp1,
+      }
+
+    /************************ Seats ************************/
+
+     item M151A2CarSeatFront2
+     {
+	   DisplayCategory = VehicleMaintenance,
+         Weight	=	11.0,
+         Type	=	Normal,
+         DisplayName	=	M151A2 Front Seat,
+         Icon	=	seat_frontM151A2,
+         MaxCapacity = 10,
+         ChanceToSpawnDamaged = 20,
+         ConditionMax = 100,
+         MechanicsItem = TRUE,
+         WorldStaticModel = m151_seat_frontWI,
+     }
+
+     item M151A2CarSeatRear2
+     {
+       DisplayCategory = VehicleMaintenance,
+         Weight =   9.0,
+         Type   =   Normal,
+         DisplayName    =   M151A2 Rear Seat,
+         Icon   =   seat_rearM151A2,
+         MaxCapacity = 10,
+         ChanceToSpawnDamaged = 20,
+         ConditionMax = 100,
+         MechanicsItem = TRUE,
+         WorldStaticModel = m151_seat_rearWI,
+     }
+
+     /************************ Bumpers ************************/
+
+	item M151A2Bumper1_Item
+      {
+	   DisplayCategory = VehicleMaintenance,
+        Weight	=	5.0,
+        Type	=	Normal,
+        DisplayName	=	M151A2 Bumper,
+        Icon	=	bumperM151A2,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_bumperWI,
+	   Tooltip = Tooltip_item_M151A2Bumper1,
+      }
+
+      item M998Bullbar1_Item
+      {
+    DisplayCategory = VehicleMaintenance,
+        Weight  =   10.0,
+        Type    =   Normal,
+        DisplayName =   M998 Small Bullbar,
+        Icon    =   smallbull,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = M998SmallBullbarWI,
+    Tooltip = Tooltip_item_M998Bullbar1,
+      }
+
+     /************************ Interiors ************************/
+
+	item M151A2DefaultInterior2
+      {
+	   DisplayCategory = VehicleMaintenance,
+          Weight	=	1.0,
+          Type	=	Normal,
+          DisplayName	=	M151A2 Interior,
+          Icon	=	na,
+          ConditionMax = 100,
+          MechanicsItem = TRUE,
+      }
+
+     /************************ Windows ************************/
+
+	item M151A2Windshield2
+    {
+	   DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	M151A2 Windshield,
+        Icon	=	windM151A2,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_windshieldWI,
+	   Tooltip = Tooltip_item_M151A2Windshield2,
+    }
+
+    item M151A2SideWindow2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight  =   4.0,
+        Type    =   Normal,
+        DisplayName =   M151A2 Armored Side Viewport,
+        Icon    =   wind_sideM151A2,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_windowWI,
+       Tooltip = Tooltip_item_M151A2sideWindow2,
+    }
+
+    /************************ Doors ************************/
+
+    item M151A2LeftDoor2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight  = 19.75,
+        Type  = Normal,
+        DisplayName = M151A2 Armored Left Door,
+        Icon  = door_leftM151A2,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_door_leftWI,
+       Tooltip = Tooltip_item_M151A2Door2,
+    }
+
+    item M151A2RightDoor2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight  = 20.00,
+        Type  = Normal,
+        DisplayName = M151A2 Armored Right Door,
+        Icon  = door_rightM151A2,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_door_rightWI,
+       Tooltip = Tooltip_item_M151A2Door2,
+    }
+
+    /************************ Armor ************************/
+
+    item M151A2WindshieldArmor1_Item
+    {
+    DisplayCategory = VehicleMaintenance,
+        Weight  =   15.0,
+        Type    =   Normal,
+        DisplayName =   M151A2 Windshield Armor ,
+        Icon    =   wind_aM151A2,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_windshield_aWI,
+        Tooltip = Tooltip_item_M151A2WindshieldArmor1,
+    }
+
+    item M151A2CabArmor1_Item
+    {
+    DisplayCategory = VehicleMaintenance,
+        Weight  =   30.0,
+        Type    =   Normal,
+        DisplayName =   M151A2 Cab Armor,
+        Icon    =   armor_baseM151A2,
+        ChanceToSpawnDamaged = 15,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_armor_baseWI,
+        Tooltip = Tooltip_item_M151A2CabArmor1,
+    }
+
+    /************************ Barriers ************************/
+
+    item M151A2BarrierLeft1_Item
+      {
+    DisplayCategory = VehicleMaintenance,
+        Weight  =   10.0,
+        Type    =   Normal,
+        DisplayName =   M151A2 Armor Barrier Left,
+        Icon    =   armor_barrierM151A2,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_armor_barrierWI,
+    Tooltip = Tooltip_item_M151A2Barrier1,
+      }
+
+    item M151A2BarrierRight1_Item
+      {
+    DisplayCategory = VehicleMaintenance,
+        Weight  =   10.0,
+        Type    =   Normal,
+        DisplayName =   M151A2 Armor Barrier Right,
+        Icon    =   armor_barrierM151A2,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = m151_armor_barrierWI,
+    Tooltip = Tooltip_item_M151A2Barrier1,
+      }
+
+}

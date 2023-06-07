@@ -1,0 +1,6 @@
+IG_UI_RU = {
+   
+IGUI_Generator_Now_Has_Infinite_Fuel_and_Condition = "Генератор теперь имеет бесконечное количество топлива и состояние",
+IGUI_Admin_Set_Infinite_Fuel = "[Админ]бесконечное топливо/состояние",
+
+    }

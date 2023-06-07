@@ -1,0 +1,41 @@
+module Base
+{
+    item BicyclesMagVol1
+    {
+        DisplayCategory    =   SkillBook,
+        Weight	           =   0.1,
+        Type	           =   Literature,
+        DisplayName	       =   ItemName_Base.BicyclesMagVol1,
+        Icon	           =   MagazineBicycles,
+        TeachedRecipes     =   CraftScrapSeat;CraftBikeLock;CraftHeadlight,
+        ReplaceOnUse       =   BicyclesMagVol1,
+        StaticModel        =   Magazine,
+        WorldStaticModel   =   MagazineBicyclesGround,
+    }
+
+    item BicyclesMagVol2
+    {
+        DisplayCategory    =   SkillBook,
+        Weight	           =   0.1,
+        Type	           =   Literature,
+        DisplayName	       =   ItemName_Base.BicyclesMagVol2,
+        Icon	           =   MagazineBicycles,
+        TeachedRecipes     =   CraftScrapFrame1;CraftScrapSuspension1;CraftScrapBrakes1;CraftScrapTire1,
+        ReplaceOnUse       =   BicyclesMagVol2,
+        StaticModel        =   Magazine,
+        WorldStaticModel   =   MagazineBicyclesGround,
+    }
+
+    item BicyclesMagVol3
+    {
+        DisplayCategory    =   SkillBook,
+        Weight	           =   0.1,
+        Type	           =   Literature,
+        DisplayName	       =   ItemName_Base.BicyclesMagVol3,
+        Icon	           =   MagazineBicycles,
+        TeachedRecipes     =   CraftScrapFrame2;CraftScrapSuspension2;CraftScrapBrakes2;CraftScrapTire2,
+        ReplaceOnUse       =   BicyclesMagVol3,
+        StaticModel        =   Magazine,
+        WorldStaticModel   =   MagazineBicyclesGround,
+    }
+}

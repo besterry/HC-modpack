@@ -1,0 +1,17 @@
+rLib_RU =
+{
+	UI_rLib_VehicleOverlayEditor = "Редактор наложения",
+	UI_rLib_VehicleOverlayEditor_default = "по умолчанию",
+	UI_rLib_VehicleOverlayEditor_custom = "индивидуальный заказ",
+	UI_rLib_VehicleOverlayEditor_VehicleAdd = "Добавить конфигурацию транспортного средства",
+	UI_rLib_VehicleOverlayEditor_VehicleDel = "Удалить",
+	UI_rLib_VehicleOverlayEditor_VehiclePrefixNew = "Введите префикс текстур транспортных средств\n\n Имя файла базовой текстуры:\nmedia/ui/vehicles/mechanic overlay/[PREFIX]base.png\n",
+	UI_rLib_VehicleOverlayEditor_PartTextureAdd = "Добавить конфигурацию текстуры",
+	UI_rLib_VehicleOverlayEditor_PartTextureDel = "Удалить",
+	UI_rLib_VehicleOverlayEditor_PartSpotAdd = "Добавить конфигурацию точки доступа",
+	UI_rLib_VehicleOverlayEditor_PartSpotDel = "Удалить",
+	UI_rLib_VehicleOverlayEditor_Generate = "Копировать в буфер обмена",
+	UI_rLib_VehicleOverlayEditor_WarningPrefixInUse = "ПРЕДУПРЕЖДЕНИЕ: префикс текстур '% 1' уже используется\n\n%2",
+	UI_rLib_VehicleOverlayEditor_ErrorTextureNameEmpty = "ОШИБКА: Имя файла текстуры не может быть пустым",
+	UI_rLib_VehicleOverlayEditor_ErrorTextureNameInvalid = "ОШИБКА: Текстура не существует или не может быть загружена\n\n%1"
+}

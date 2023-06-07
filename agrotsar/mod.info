@@ -1,0 +1,7 @@
+name=Agrotsar Farming Company_v.1.0
+poster=poster.png
+id=agrotsar_h
+versionMin=41.65
+description=Man I Love Farming
+description=
+require=tsarslib_h

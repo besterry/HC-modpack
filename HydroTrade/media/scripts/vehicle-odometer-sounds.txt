@@ -1,0 +1,11 @@
+module Base {
+
+    sound ResetTripOdometer
+    {
+        category = Effect, 
+        loop = false, 
+        is3D = true,
+        clip { file = media/sound/ResetTripOdometer.ogg, distanceMax = 10, volume = 1 }
+    },
+
+}

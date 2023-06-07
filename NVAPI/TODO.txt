@@ -1,0 +1,5 @@
+
+[ ] improve recipe display list from menu to show only the missing materials or perks
+[ ] add custom timed action while repairing
+[ ] make the API easier to integrate with legacy mods
+[ ] make the API more configurable

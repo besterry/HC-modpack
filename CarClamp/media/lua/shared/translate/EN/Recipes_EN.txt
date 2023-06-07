@@ -1,0 +1,5 @@
+Recipe_EN = {
+	/* Voldar: CarClamp */
+	Recipe_CarClamp = "Car Clamp"
+
+}

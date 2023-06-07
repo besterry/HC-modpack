@@ -1,0 +1,43 @@
+module Base
+{
+	template vehicle M151A2TrunkCompartment
+	{
+		part M151A2Trunk
+		{
+			category = bodywork,
+			area = TruckBed,
+			itemType = Base.M151A2Trunk,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+			container
+			{
+				conditionAffectsCapacity = false,
+				test = M151A2.ContainerAccess.Trunk,
+			}
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		part TruckBed
+		{
+			category = nodisplay,
+			area = TruckBed,
+			itemType = Base.M151A2Extra,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+			container
+			{
+				conditionAffectsCapacity = false,
+				test = M151A2.ContainerAccess.Trunk,
+			}
+			lua
+			{
+			}
+		}
+
+	}
+
+}
+

@@ -1,0 +1,11 @@
+id=NRK_NeedLightToRead_h
+name=NRK Need Light To Read
+description= <LANG:RU> Никакого чтения в темноте! Чтобы читать - нужен свет. <LINE> 
+description= <LANG:EN> No reading in the dark! To read, you need light. <LINE> 
+
+modversion=1.2
+pzversion=40,41
+tags=Literature,Realistic
+authors=Narrnika
+
+poster=nrk_needlighttoread_screen.png

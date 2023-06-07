@@ -1,0 +1,31 @@
+module Base
+{
+	sound BicycleRide
+	{
+        category = Vehicle, loop = true, is3D = true,
+        clip { file = media/sound/bicycle_ride.wav, distanceMax = 20, volume = 0.2f, }
+	}
+
+	sound BicycleHorn
+	{
+        category = Vehicle, loop = true, is3D = true,
+        clip { file = media/sound/bicycle_horn.wav, distanceMax = 10, volume = 0.5, }
+	}
+
+	sound BicycleChain
+	{
+        category = Vehicle, loop = false, is3D = true,
+        clip { file = media/sound/bicycle_chain.wav, distanceMax = 10, volume = 0.5, }
+	}
+
+	sound BikeHandle
+	{
+        category = Vehicle, loop = false, is3D = true,
+        clip { file = media/sound/bicycle_handle.wav, distanceMax = 10, volume = 0.8, }
+	}
+
+	sound none
+	{
+		
+	}
+}

@@ -1,0 +1,14 @@
+IGUI_RU = {
+  IGUI_T15KKillboard_Loading = "Загрузка...",
+  IGUI_T15KKillboard_Name = "Имя",
+  IGUI_T15KKillboard_Kills = "Убийств",
+  IGUI_T15KKillboard_Rank_Title = "ТОП",
+  IGUI_T15KKillboard_Updated = "Обновлено ~",
+  IGUI_T15KKillboard_Less_Hour = "меньше часа назад",
+  IGUI_T15KKillboard_Hours = "час(ов) назад",
+  IGUI_T15KKillboard_Days = "дня(ей) назад",
+  IGUI_T15KKillboard_Empty = "Нет данных",
+  IGUI_T15KKillboard_Delete = "Удалить",
+  IGUI_T15KKillboard_Confirm = "Вы уверены, что хотите удалить этого игрока?",
+  IGUI_T15KKillboard_Clear = "Вы уверены, что хотите очистить таблицу?",
+}

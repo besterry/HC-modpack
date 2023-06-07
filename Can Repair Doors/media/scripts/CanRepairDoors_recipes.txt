@@ -1,0 +1,41 @@
+module Base
+{
+
+    recipe makeDoorsRepairKitWood
+    {   
+
+    SkillRequired:Woodwork=1,
+    Woodglue=2,
+    Plank=2,
+    ScrapMetal=1,
+    Nails=8,
+    keep GardenSaw,
+    keep Hammer/BallPeenHammer,
+    Result:DoorsRepairKitWood,
+    Time:1370.0,
+    Category:Carpentry,
+    Sound:CanRepairDoors_CraftWoodKit,
+    OnGiveXP:Recipe.OnGiveXP.None,
+    }
+
+    recipe makeDoorsReinforceKitMetal
+    {   
+
+    SkillRequired:MetalWelding=3,
+    WeldingRods=7,
+    ScrapMetal=2,
+    SheetMetal=1,
+    Screws=8,
+    BlowTorch=5,
+    DoorsRepairKitEpoxy,
+    keep Lighter/Matches,
+    keep Screwdriver,
+    keep WeldingMask,
+    Result:DoorsRepairKitMetal,
+    Time:1315.0,
+    Category:Welding,
+    Sound:CanRepairDoors_CraftMetalKit,
+    OnGiveXP:Recipe.OnGiveXP.None,
+    }
+
+}

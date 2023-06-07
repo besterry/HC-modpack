@@ -1,0 +1,17 @@
+module Base
+{
+
+	recipe Recycle Plastic Bag
+    {
+		keep Scissors,
+		Plasticbag=1,
+		
+		Result:Garbagebag,
+		Sound:PZ_ClothesRipping,
+		Time:50.0,
+		Category:Survivalist,
+    }
+	
+}
+
+

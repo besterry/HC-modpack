@@ -1,0 +1,57 @@
+module Base
+{
+
+		model DeathMustangDoor_WorldItem
+	{
+		mesh = WorldItems/DeathMstangDoor_WorldItem,
+		texture = Vehicles/Vehicle_DeathMustang,
+		scale = 0.4,
+	}
+
+		model DeathMustangWheel_WorldItem
+	{
+		mesh = WorldItems/DeathMstangWheel_WorldItem,
+		texture = Vehicles/Vehicle_DeathMustang_wheel,
+		scale = 0.4,
+	}
+
+		model DeathMustangFrontWindow_WorldItem
+	{
+		mesh = WorldItems/DeathMstangFrontWindow_WorldItem,
+		texture = Vehicles/Vehicle_DeathMustang,
+		scale = 0.4,
+	}
+
+		model DeathMustangRearWindow_WorldItem
+	{
+		mesh = WorldItems/DeathMstangRearWindow_WorldItem,
+		texture = Vehicles/Vehicle_DeathMustang,
+		scale = 0.4,
+	}
+		model DeathMustangHood_WorldItem
+	{
+		mesh = WorldItems/DeathMstangHood_WorldItem,
+		texture = Vehicles/Vehicle_DeathMustang,
+		scale = 0.4,
+	}
+
+		model DeathMustangSeat_WorldItem
+	{
+		mesh = WorldItems/DeathMstangSeat_WorldItem,
+		texture = Vehicles/Vehicle_DeathMustang,
+		scale = 0.4,
+	}
+		model DeathMustangWindshield_WorldItem
+	{
+		mesh = WorldItems/DeathMstangWindshield_WorldItem,
+		texture = Vehicles/Vehicle_DeathMustang,
+		scale = 0.4,
+	}
+		model DeathMustangRearWindshield_WorldItem
+	{
+		mesh = WorldItems/DeathMstangRearWindshield_WorldItem,
+		texture = Vehicles/Vehicle_DeathMustang,
+		scale = 0.4,
+	}
+
+}

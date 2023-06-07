@@ -1,0 +1,8 @@
+name=Smoker
+poster=SmokerPoster.png
+description=EXTENDED VERSION - The mod completely changes the mechanics of cigarettes - the cigarettes will be inside the pack! Do not delete the mod in the save, otherwise you will not be able to load it. After uninstalling the mod, you will need to create a new world. Unfortunately, I don't know how to solve this problem yet. Attention! New game recommended. If you installed the mod to an existing save, then all vanilla cigarettes in your save will disappear. Further in the game, they will, as before, appear in dead zombies and in the game world.
+id=Smoker_h
+url=
+modversion=1.75
+pzversion=41.78
+versionMin = 41.53

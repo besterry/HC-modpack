@@ -1,0 +1,4 @@
+name=Fix Survivor Kills MP
+id=FixSurvivorKillsMP_h
+description=This mod adds back the Survivor Kills to the character stats panel and also makes it work in Multiplayer so that when you kill a player, your survivor kills gets incremented.
+poster=poster.png

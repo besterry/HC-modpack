@@ -1,0 +1,6 @@
+Tooltip_RU = {
+	Tooltip_item_BicycleFrame = "Выкиньте на пол, чтобы создать велосипед (НЕ В ПОМЕЩЕНИИ)",
+	Tooltip_item_BicycleBasket = "Устанавливается на велосипеды для доп. хранения вещей",
+	Tooltip_item_BicycleLock = "Используется для блокировки велосипеда",
+	Tooltip_item_BicycleLockKey = "Используется для отпирания замка велосипеда",
+}

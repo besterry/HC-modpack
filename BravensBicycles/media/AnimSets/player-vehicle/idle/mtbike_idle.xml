@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animNode>
+	<m_Name>mtbike_idle</m_Name>
+	<m_AnimName>The_MTBike_Idle</m_AnimName>
+	<m_SpeedScale>1</m_SpeedScale>
+	<m_Looped>true</m_Looped>
+	<m_BlendTime>0.0</m_BlendTime>
+	<m_Conditions>
+		<m_Name>BikeType</m_Name>
+		<m_Type>STRING</m_Type>
+		<m_StringValue>BikeMTB</m_StringValue>
+	</m_Conditions>
+</animNode>

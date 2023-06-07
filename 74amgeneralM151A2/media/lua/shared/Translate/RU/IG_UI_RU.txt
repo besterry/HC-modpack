@@ -1,0 +1,14 @@
+IG_UI_RU = {
+	IGUI_VehicleName74amgeneralM151A2 = "'74 AM General M151A2 MUTT",
+	IGUI_VehicleName74amgeneralM151A2MP = "'74 AM General M151A2 Military Police",
+	IGUI_VehicleName74amgeneralM151A2Burnt = "'74 AM General M151A2 MUTT Burnt",
+
+	IGUI_VehiclePartM151A2Tarp = "Легкая задняя крышка",
+	IGUI_VehiclePartM151A2WindshieldArmor = "Броня лобового стекла",
+	IGUI_VehiclePartM151A2CabArmor = "Броня кабины",
+	IGUI_VehiclePartM151A2BarrierLeft = "Левая броня кабины",
+	IGUI_VehiclePartM151A2BarrierRight = "Правая броня кабины",
+	IGUI_VehiclePartM151A2Bumper = "Бампер",
+	IGUI_VehiclePartM151A2SpareTire = "Запасная шина",
+	IGUI_VehiclePartM151A2Trunk = "Багажник",
+}

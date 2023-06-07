@@ -1,0 +1,20 @@
+IGUI_EN = {
+	IGUI_char_CSize = "Size",	
+	IGUI_B_Spacious = "(Spacious)",
+	IGUI_B_Tight = "(Tight)",
+	IGUI_B_Fit = "(Fit)",
+	IGUI_SL_CantWear = "Can't wear it",
+	IGUI_CheckLabel = "Check Label",
+	IGUI_JobType_CheckLabel = "Label",
+	IGUI_CutLabel = "Cut Label",
+	IGUI_JobType_CutLabel = "Cut",
+	
+	IGUI_NoLabel_Say1 = "Where is it?",
+	IGUI_NoLabel_Say2 = "Can't find it",
+	IGUI_NoLabel_Say3 = "Shit!",
+	
+	IGUI_ChangeSizeIncrese = "Increase size",
+	IGUI_ChangeSizeReduse = "Reduce Size",
+	IGUI_NeedPerkLvl = "I need more sewing experience for this...",
+	IGUI_NeedToolsAndMaterials = "Need a needle, scissors, thread and material",
+}
