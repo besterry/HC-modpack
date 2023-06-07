@@ -56,15 +56,19 @@ end
 
 local function renderNeedsStr(neededToolslist, neededMaterialTable, threadDeltaSum)
 	local prefix = getText('IGUI_NeedToolsAndMaterialsPrefix')
-	local resultList = {unpack(neededToolslist)}
+---@diagnostic disable-next-line: deprecated
+	local resultList = {unpack(neededToolslist)} -- Копируем список, чтобы случайно не мутировать его. Это best practice
 	local remainingMatCount = neededMaterialTable['count']
 
 	if remainingMatCount ~= 0 then
 		table.insert(resultList, neededMaterialTable['name'] .. ' ' .. remainingMatCount .. getText('IGUI_Pieces'))
 	end
 	if threadDeltaSum < THREAD_DELTA  then
-		local needDeltaPercenatges = (THREAD_DELTA - threadDeltaSum) * 100
-		table.insert(resultList, getDisplayName(THREAD_NAME) .. ' ' .. needDeltaPercenatges .. '%')
+		local needDeltaPercenatges = (THREAD_DELTA - threadDeltaSum) * 100 -- NOTE: Считаем нить в процентах, это понятнее пользователю
+		-- local renderNeedPercenatges = ('%.2g'):format(needDeltaPercenatges) -- NOTE: Оставляем только 2 знака после запятой
+		local renderNeedPercenatges = math.floor(needDeltaPercenatges + 0.5) -- NOTE: округляем до целого процента
+		renderNeedPercenatges = renderNeedPercenatges == 0 and 1 or renderNeedPercenatges -- NOTE: Если округлилось до 0, показываем 1
+		table.insert(resultList, getDisplayName(THREAD_NAME) .. ' ' .. renderNeedPercenatges .. '%')
 	end
 	return prefix .. table.concat(resultList, ', ')
 end
@@ -73,7 +77,27 @@ local function useConsumableItems(inventory, material)
 	for i=MATERIAL_COUNT,1,-1 do
 		inventory:Remove(material)
 	end
-	local threads 
+	local deltaRemains = THREAD_DELTA
+	local threadsArr = inventory:FindAll(THREAD_NAME)
+	for i = 1, threadsArr:size(), 1 do
+		local thisThread = threadsArr:get(i-1) 
+		local thisDelta = thisThread:getDelta()
+		if thisDelta < deltaRemains then
+			deltaRemains = deltaRemains - thisDelta
+			thisDelta = 0
+			thisThread:setDelta(thisDelta)
+		else
+			thisDelta = thisDelta - deltaRemains
+			thisThread:setDelta(thisDelta)
+			deltaRemains = 0
+		end
+		if thisDelta == 0 then
+			inventory:Remove(thisThread) -- NOTE: удаляем пустую катушку
+			-- NOTE: В игре есть баг с математикой, если отнимать от 1 по 0.2, то рано или поздно возникают цифры далеко после запятой. 
+			-- Так что часто в катушке остаётся немного нитки. Но с этим видимо ничего не поделать. Это происходит не только с нитками. 
+			-- На работоспособность это не влияет
+		end
+	end
 end
 
 function ISChangeClothesSize:perform()
@@ -99,37 +123,13 @@ function ISChangeClothesSize:perform()
 	local neededMaterialTable = getUnavailableMaterialsTable(inventory, material)
 	local threadDeltaSum = getThreadDeltaSum(inventory)
 
-	if #neededToolslist or neededMaterialTable['count'] or threadDeltaSum < THREAD_DELTA then
+	if #neededToolslist ~= 0 or neededMaterialTable['count'] ~= 0 or threadDeltaSum < THREAD_DELTA then
 		local needsStr = renderNeedsStr(neededToolslist, neededMaterialTable, threadDeltaSum)
 		character:Say(needsStr)
 		return
 	end
 
-	-- useConsumableItems(inventory, material)
-
-	local hasNeedle2 = character:HasItem('Needle')
-	print('hasNeedle2 ', hasNeedle2)
-	local hasNeedle = character:hasItems('Needle', 1)
-	local hasScissors = character:hasItems('Scissors', 1)
-	local hasMaterials = character:hasItems(material, MATERIAL_COUNT)
-	local thread = inventory:FindAndReturn('Thread')
-	local threadDelta = 0
-	local hasThread = false
-
-	if thread and thread:getDelta() >= THREAD_DELTA then
-		threadDelta = thread:getDelta()
-		hasThread = true
-	end
-
-	if hasNeedle and hasScissors and hasMaterials and hasThread then
-		for i=MATERIAL_COUNT,1,-1 do
-			inventory:Remove(material)
-		end
-		thread:setDelta(threadDelta - THREAD_DELTA)
-	else
-		self.character:Say(getText('IGUI_NeedToolsAndMaterials'))
-		return
-	end
+	useConsumableItems(inventory, material)
 
 	if actionType == '+' then
 		data.sz = data.sz + 1
