@@ -272,10 +272,10 @@ end
 local function addTooltip(option, title)
 	local texture = getTexture("Item_Needle")
 	local toolTip = ISToolTip:new();
-    toolTip:initialise();
-    option.toolTip = toolTip;
-    toolTip:setName(title);
-    toolTip.description = getText("IGUI_Description")
+	toolTip:initialise();
+	option.toolTip = toolTip;
+	toolTip:setName(title);
+	toolTip.description = getText("IGUI_Description")
 	toolTip.texture = texture -- HACK: у тултипа есть интерфейс setTexture, но он не работает. Записываем напрямую в переменную инстанса
 end
 
