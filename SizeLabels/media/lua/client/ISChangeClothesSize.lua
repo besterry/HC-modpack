@@ -5,6 +5,7 @@ local SM_INST = ScriptManager.instance
 
 local MATERIAL_COUNT = 2
 local THREAD_DELTA = 0.2
+local CONDITION_DAMAGE = 2
 
 local THREAD_NAME = 'Thread'
 
@@ -18,6 +19,16 @@ local TOOLS_NAMES = {
 	'Needle',
 	'Scissors'
 }
+
+local FAIL_CHANCES = {}
+FAIL_CHANCES[3] = 90
+FAIL_CHANCES[4] = 80
+FAIL_CHANCES[5] = 70
+FAIL_CHANCES[6] = 60
+FAIL_CHANCES[7] = 55
+FAIL_CHANCES[8] = 50
+FAIL_CHANCES[9] = 45
+FAIL_CHANCES[10] = 40
 
 local function getDisplayName(nameStr)
 	return SM_INST:FindItem(nameStr):getDisplayName()
@@ -100,18 +111,19 @@ local function useConsumableItems(inventory, material)
 	end
 end
 
+
+
 function ISChangeClothesSize:perform()
 	self.item:setJobDelta(0.0);
 	ISBaseTimedAction.perform(self);
 
 	local character = self.character
-
-	local tailoringLvl = character:getPerkLevel(Perks.Tailoring)
-	if tailoringLvl < 8 then
-		self.character:Say(getText('IGUI_NeedPerkLvl'))
+	local failureChance = self.failureChance
+	if failureChance == nil then
+		character:Say(getText('IGUI_NeedPerkLvl'))
+		character:getEmitter():stopSound(self.sewingSound);
 		return
 	end
-
 	local item = self.item
 	local actionType = self.actionType
 	local inventory = character:getInventory()
@@ -126,17 +138,30 @@ function ISChangeClothesSize:perform()
 	if #neededToolslist ~= 0 or neededMaterialTable['count'] ~= 0 or threadDeltaSum < THREAD_DELTA then
 		local needsStr = renderNeedsStr(neededToolslist, neededMaterialTable, threadDeltaSum)
 		character:Say(needsStr)
+		character:getEmitter():stopSound(self.sewingSound);
 		return
 	end
 
 	useConsumableItems(inventory, material)
-
-	if actionType == '+' then
-		data.sz = data.sz + 1
+	local isFail = failureChance > ZombRand(0, 101);
+	local newExp = 0
+	if isFail then
+		character:getEmitter():stopSound(self.sewingSound);
+		character:getEmitter():playSound("ClothesRipping");
+		local condition = item:getCondition()
+		item:setCondition(condition - CONDITION_DAMAGE)
+		newExp = ZombRand(1, 3)
+	else
+		if actionType == '+' then
+			data.sz = data.sz + 1
+		end
+		if actionType == '-' then
+			data.sz = data.sz - 1
+		end
+		character:getEmitter():stopSound(self.sewingSound);
+		newExp = ZombRand(3, 6)
 	end
-	if actionType == '-' then
-		data.sz = data.sz - 1
-	end
+	character:getXp():AddXP(Perks.Tailoring, newExp);
 end
 
 local fix_speed = 0.35
@@ -181,10 +206,16 @@ function ISChangeClothesSize:new(player, item, actionType) --print('create actio
 	self.__index = self;
 	o.character = player;
 	o.item = item
-	local skill = player:getPerkLevel(Perks.Tailoring) + 1 --1..4
+	o.tailoringLvl = player:getPerkLevel(Perks.Tailoring)
+	
+	o.failureChance = FAIL_CHANCES[o.tailoringLvl]
+	o.sewingSound = player:getEmitter():playSound("SewingScissors");
+	
+	local skill = o.tailoringLvl + 1
 	if skill > 4 then
 		skill = 4
 	end
+
 	if not item:isEquipped() then
 		o.plot = easyCopy(PLOT.Inv[skill])
 	else
@@ -237,10 +268,12 @@ function ISChangeClothesSize:update()
 end
 
 function ISChangeClothesSize:start()
+
+
 	self.start_time = os.time()
 
-  self.item:setJobType(getText("IGUI_JobType_CheckLabel"));
-  self.item:setJobDelta(0.0);
+	self.item:setJobType(getText("IGUI_JobType_CheckLabel"));
+	self.item:setJobDelta(0.0);
 
 	self:setAnimName1();
 	self:setOverrideHandModels(nil, nil);

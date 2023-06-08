@@ -21,5 +21,6 @@ IGUI_EN = {
 	IGUI_NeedToolsAndMaterialsPrefix = "I don't have: ",
 	IGUI_Pieces = " pcs.",
 	
-	IGUI_Description = "You will need: a needle, scissors, thread and the material from which the thing is sewn"
+	IGUI_Description = "You will need: a needle, scissors, thread and the material from which the thing is sewn. <BR> " ..
+					   "<RGB:0.0,0.5,1.0>The higher your sewing skill, the more chances of success. <BR>"
 }
