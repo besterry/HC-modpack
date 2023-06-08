@@ -13,11 +13,13 @@ IGUI_RU = {
 	IGUI_NoLabel_Say2 = "Не могу найти",
 	IGUI_NoLabel_Say3 = "Подстава!",
 	
+	IGUI_ChangeSize = "Перешить",
 	IGUI_ChangeSizeIncrese = "Увеличить размер",
 	IGUI_ChangeSizeReduse = "Уменьшить размер",
-	IGUI_NeedToolsAndMaterialsPrefix = "Мне нехватает: ",
+
+	IGUI_NeedPerkLvl = "Для этого мне нужно больше опыта в шитье...",
+	IGUI_NeedToolsAndMaterialsPrefix = "Мне не хватает: ",
 	IGUI_Pieces = " шт.",
 	
-	IGUI_ChangeSize = "Перешить",
-	IGUI_Description = "Вам понадобится: игла, ножницы, нить и материал из которого сшита вещь"
+	IGUI_Description = "Вам понадобятся: игла, ножницы, нить и материал из которого сшита вещь"
 }

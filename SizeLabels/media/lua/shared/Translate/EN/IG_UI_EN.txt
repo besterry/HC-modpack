@@ -13,8 +13,13 @@ IGUI_EN = {
 	IGUI_NoLabel_Say2 = "Can't find it",
 	IGUI_NoLabel_Say3 = "Shit!",
 	
+	IGUI_ChangeSize = "Change size",
 	IGUI_ChangeSizeIncrese = "Increase size",
 	IGUI_ChangeSizeReduse = "Reduce Size",
+
 	IGUI_NeedPerkLvl = "I need more sewing experience for this...",
-	IGUI_NeedToolsAndMaterials = "Need a needle, scissors, thread and material",
+	IGUI_NeedToolsAndMaterialsPrefix = "I don't have: ",
+	IGUI_Pieces = " pcs.",
+	
+	IGUI_Description = "You will need: a needle, scissors, thread and the material from which the thing is sewn"
 }
