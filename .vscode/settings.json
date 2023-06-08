@@ -28,6 +28,9 @@
         "getPlayer",
         "ISWearClothing",
         "ISClothingExtraAction",
-        "copyTable"
+        "copyTable",
+        "ISToolTip",
+        "ISContextMenu",
+        "getTexture"
     ]
 }

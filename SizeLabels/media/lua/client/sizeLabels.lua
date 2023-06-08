@@ -3,7 +3,6 @@ STAR_MODS.SizeLabels = STAR_MODS.SizeLabels or {}
 
 --require "XpSystem/ISUI/ISCharacterScreen"
 
-
 --Fixed for female (65 is normal)
 local function getWeightFixed(player)
 	local w = player:getNutrition():getWeight()
@@ -270,6 +269,16 @@ local function OnChangeSize(player, items, actionType)
 	end
 end
 
+local function addTooltip(option, title)
+	local texture = getTexture("Item_Needle")
+	local toolTip = ISToolTip:new();
+    toolTip:initialise();
+    option.toolTip = toolTip;
+    toolTip:setName(title);
+    toolTip.description = getText("IGUI_Description")
+	toolTip.texture = texture -- HACK: у тултипа есть интерфейс setTexture, но он не работает. Записываем напрямую в переменную инстанса
+end
+
 local invContextMenu1 = function(_player, context, worldobjects, test)
 	local playerObj = getSpecificPlayer(_player);
 	
@@ -342,11 +351,21 @@ local invContextMenu1 = function(_player, context, worldobjects, test)
 		context:addOption(getText("IGUI_CheckLabel"), playerObj, OnCheckLabel, items)
 	end
 
-	if #item_can_increased > 0 then
-		context:addOption(getText("IGUI_ChangeSizeIncrese"), playerObj, OnChangeSize, item_can_increased, '+')
-	end
-	if #item_can_reduced > 0 then
-		context:addOption(getText("IGUI_ChangeSizeReduse"), playerObj, OnChangeSize, item_can_reduced, '-')
+	if #item_can_increased > 0 or #item_can_reduced > 0 then
+		local changeSizeOption = context:addOption(getText("IGUI_ChangeSize"), worldobjects, nil);
+		local subMenu = ISContextMenu:getNew(context);
+		context:addSubMenu(changeSizeOption, subMenu);
+
+		if #item_can_increased > 0 then
+			local title = getText("IGUI_ChangeSizeIncrese")
+			local option = subMenu:addOption(title, playerObj, OnChangeSize, item_can_increased, '+')
+			addTooltip(option, title)
+		end
+		if #item_can_reduced > 0 then
+			local title = getText("IGUI_ChangeSizeReduse")
+			local option = subMenu:addOption(title, playerObj, OnChangeSize, item_can_reduced, '-')
+			addTooltip(option, title)
+		end
 	end
 
 	--print("num cut items ",#cut_items)
