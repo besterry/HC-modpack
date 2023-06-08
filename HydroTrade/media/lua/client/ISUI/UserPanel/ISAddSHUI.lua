@@ -1,23 +1,20 @@
---[[---------------------------------------------
--------------------------------------------------ISAddSHUI
+-------------------------------------------------
+-------------------------------------------------
 --
 -- ISAddSHUI
 --
--- eris
---
 -------------------------------------------------
---]]---------------------------------------------
+-------------------------------------------------
 require "ISUI/ISPanel"
 require "ISUI/ISLayoutManager"
 require "ISUI/UserPanel/ISUserPanelUI_New"
---require "ISUI/UserPanel/ISCloseZone"
---ISAddSHUI = ISCloseZone:derive("ISAddSHUI")
 -------------------------------------------------
 -------------------------------------------------
 ISAddSHUI = ISPanel:derive("ISAddSHUI");
 ISAddSHUI.instance = nil;
 MaxSizeSH = 625;
 -------------------------------------------------
+--Подсветка зоны при создании привата
 -------------------------------------------------
 function ISAddSHUI:highlightZone(_x1, _x2, _y1, _y2, _fullHighlight)
 	local r = (self.notIntersecting and 0.4) or 1;
@@ -81,6 +78,7 @@ function ISAddSHUI:highlightZone(_x1, _x2, _y1, _y2, _fullHighlight)
 	end;
 end
 -------------------------------------------------
+--Создание убежища
 -------------------------------------------------
 local function setSafehouseData(_title, _owner, _x, _y, _w, _h)
 	local playerObj = getSpecificPlayer(0);
@@ -91,6 +89,7 @@ local function setSafehouseData(_title, _owner, _x, _y, _w, _h)
 	safeObj:syncSafehouse();
 end
 -------------------------------------------------
+--Проверка пересечения с другими убежищами
 -------------------------------------------------
 function ISAddSHUI:checkIfIntersectingAnotherZone()
 	self.notIntersecting = true;
@@ -111,6 +110,29 @@ function ISAddSHUI:checkIfIntersectingAnotherZone()
     end
 end
 -------------------------------------------------
+--Проверка на запрещенные комнаты
+-------------------------------------------------
+--restaurant,laundry,grocery,farmstorage,storage,bar,warehouse,storageunit,mechanic,clothingstore,jayschicken_dining,bakery,zippeestore,
+function ISAddSHUI:checkIfIntersectingAnotherZone()
+	self.notIntersecting = true;
+	for xVal = self.X1-3, self.X2+3 do
+		for yVal = self.Y1-3, self.Y2+3 do
+			local sqObj = getCell():getOrCreateGridSquare(xVal,yVal,0);
+			if sqObj then
+				if rooms:get(sqObj):getName() == "zippeestore" then
+					self.notIntersecting = false;
+				end;
+			end;
+		end;
+	end;
+	if self.notIntersecting then
+        self.ok.tooltip = nil; -- Очищаем tooltip
+    else
+        self.ok.tooltip = getText("IGUI_CreateSH_Intersecting");
+    end
+end
+-------------------------------------------------
+--Обновление кнопки "Создать убежище"
 -------------------------------------------------
 function ISAddSHUI:updateButtons()
 	self.ok.enable = self.size > 1
@@ -119,7 +141,9 @@ function ISAddSHUI:updateButtons()
 					and self.notIntersecting
 					--and self.character:getAccessLevel() == "Admin";
 end
-
+-------------------------------------------------
+--Отрисовка окна создания убежища
+-------------------------------------------------
 function ISAddSHUI:prerender()
 	local z = 10;
 	local splitPoint = self.width / 2;
@@ -192,7 +216,9 @@ function ISAddSHUI:prerender()
 	self:checkIfIntersectingAnotherZone();
 	self:updateButtons();
 end
-
+-------------------------------------------------
+--Инициализация окна создания убежища
+-------------------------------------------------
 function ISAddSHUI:initialise()
 	ISPanel.initialise(self);
 	--if self.character:getAccessLevel() ~= "Admin" then self:close(); return; end;
@@ -239,6 +265,9 @@ function ISAddSHUI:initialise()
 	self:addChild(self.claimOptions);
 end
 
+-------------------------------------------------
+--Переопределение начальной точки
+-------------------------------------------------
 function ISAddSHUI:redefineStartingPoint()
 	local character = self.character;
 	self.startingX = character:getX();
@@ -249,26 +278,33 @@ function ISAddSHUI:redefineStartingPoint()
 	self.Y2 = character:getY();
 end
 
+-------------------------------------------------
+--Опции при нажатии чекбоксе "Подсветить"
+-------------------------------------------------
 function ISAddSHUI:onClickClaimOptions(_clickedOption, _ticked)
 	if _clickedOption == 1 then
 		self.fullHighlight = _ticked;
 	end;
 end
 
+-------------------------------------------------
+--События при нажатии кнопок в окне создания убежища
+-------------------------------------------------
 function ISAddSHUI:onClick(button)
 	if button.internal == "OK" then
 		self.creatingZone = false;		
 		local setX = math.floor(math.min(self.X1, self.X2));
 		local setY = math.floor(math.min(self.Y1, self.Y2));
 		local setW = math.floor(math.abs(self.X1 - self.X2) + 1);
-		local setH = math.floor(math.abs(self.Y1 - self.Y2) + 1);
-		--проверка города
+		local setH = math.floor(math.abs(self.Y1 - self.Y2) + 1);		
+		--Проверка города
 		local x = math.floor((getPlayer():getX()) / 100)
 		local y = math.floor((getPlayer():getY()) / 100)
 		if FDSE.checkTownZones(x, y) then
 			getPlayer():Say(getText('IGUI_Close_Zone'))
 			return;
 		end
+
 		--Проверка на максимальный размер привата
 		if self.size > MaxSizeSH then
 			getPlayer():Say(getText('IGUI_Big_Size_SH'))
@@ -278,12 +314,9 @@ function ISAddSHUI:onClick(button)
 			self:removeFromUIManager()
 			setSafehouseData(self.titleEntry:getInternalText(), self.character:getUsername(), setX, setY, setW, setH)
 			return;
-		end
-		
+		end		
 	end
-	-- if button.internal == "STARTINGPOINT" then
-	-- 	self:redefineStartingPoint();
-	-- end;
+
 	if button.internal == "CANCEL" then
 		self.creatingZone = false;
 		self:setVisible(false);
@@ -292,6 +325,7 @@ function ISAddSHUI:onClick(button)
 	end;
 end
 -------------------------------------------------
+--Создания окна "Создание убежища"
 -------------------------------------------------
 function ISAddSHUI:new(x, y, width, height, character)
 	local o = {}

@@ -1,57 +1,43 @@
 --
--- Created by IntelliJ IDEA.
--- User: RJ
--- Date: 21/09/16
--- Time: 10:19
--- To change this template use File | Settings | File Templates.
+-- User: FD
+-- Date: 8/06/23
+-- Time: 6:00
 --
-
---***********************************************************
---**                    ROBERT JOHNSON                     **
---***********************************************************
 
 require "ISUI/ISPanel"
 require "ISUI/UserPanel/ISAddSHUI"
 require "ISUI/UserPanel/ISCloseZone"
-
 ISUserPanelUI = ISPanel:derive("ISUserPanelUI");
 
+-------------------------------------------------
+-- Определение шрифтов
+-------------------------------------------------
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
 local FONT_HGT_MEDIUM = getTextManager():getFontHeight(UIFont.Medium)
 local FONT_HGT_LARGE = getTextManager():getFontHeight(UIFont.Large)
-
---************************************************************************--
---** ISPanel:initialise
---**
---************************************************************************--
 
 function ISUserPanelUI:initialise()
     ISPanel.initialise(self);
     self:create();
 end
 
-
-function ISUserPanelUI:setVisible(visible)
-    --    self.parent:setVisible(visible);
+function ISUserPanelUI:setVisible(visible)    
     self.javaObject:setVisible(visible);
 end
 
 function ISUserPanelUI:render()
     local z = 20;
-
     self:drawText(getText("UI_mainscreen_userpanel"), self.width/2 - (getTextManager():MeasureStringX(UIFont.Medium, getText("UI_mainscreen_userpanel")) / 2), z, 1,1,1,1, UIFont.Medium);
     z = z + 30;
-
     self:updateButtons();
-
 end
 
 function ISUserPanelUI:create()
-    local btnWid = 150
-    local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2)
-    local padBottom = 10
+    local btnWid = 150 --Ширина кнопок
+    local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2) --Высота кнопок    
+    local padBottom = 10 --Нижний отступ кнопки
 
-    local y = 70;
+    local y = 70; --Отступ вниз
 
     self.factionBtn = ISButton:new(10, y, btnWid, btnHgt, getText("UI_userpanel_factionpanel"), self, ISUserPanelUI.onOptionMouseDown);
     self.factionBtn.internal = "FACTIONPANEL";
@@ -61,6 +47,7 @@ function ISUserPanelUI:create()
     self:addChild(self.factionBtn);
     y = y + btnHgt + 5;
 
+    --Если убежище существует
     if SafeHouse.hasSafehouse(self.player) then
         self.safehouseBtn = ISButton:new(10, y, btnWid, btnHgt, getText("IGUI_SafehouseUI_Safehouse"), self, ISUserPanelUI.onOptionMouseDown);
         self.safehouseBtn.internal = "SAFEHOUSEPANEL";
@@ -82,6 +69,7 @@ function ISUserPanelUI:create()
         y = y + btnHgt + 5;
     end
 
+    --Если нет фракции
     if not Faction.isAlreadyInFaction(self.player) then
         self.factionBtn.title = getText("IGUI_FactionUI_CreateFaction");
         if not Faction.canCreateFaction(self.player) then
@@ -166,17 +154,19 @@ function ISUserPanelUI:onOptionMouseDown(button, x, y)
         if ISAddSHUI.instance then
             ISAddSHUI.instance:close();
         end
+        --Проверка отображения кнопки, если убежище уже есть
         if SafeHouse.hasSafehouse(self.player) then
             self.createsafehouseBtn:setVisible(false)
             return;
         end
-        --проверка города
+        --Проверка на запретную зону
 		local x = math.floor((getPlayer():getX()) / 100)
 		local y = math.floor((getPlayer():getY()) / 100)
 		if FDSE.checkTownZones(x, y) then
 			getPlayer():Say(getText('IGUI_Close_Zone'))
 			return;
 		end
+        --Открытие окна создания убежища, закрытие окна
         local ui = ISAddSHUI:new(getCore():getScreenWidth() / 2 - 210, getCore():getScreenHeight() / 2 - 200, 420, 400, getPlayer());
         ui:initialise();
         ui:addToUIManager();
