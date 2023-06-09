@@ -3,7 +3,6 @@ STAR_MODS.SizeLabels = STAR_MODS.SizeLabels or {}
 
 --require "XpSystem/ISUI/ISCharacterScreen"
 
-
 --Fixed for female (65 is normal)
 local function getWeightFixed(player)
 	local w = player:getNutrition():getWeight()
@@ -193,6 +192,7 @@ do
 
 	local in_progress = false
 	local old_render = ISCharacterScreen.render
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISCharacterScreen:render()
 		if in_progress then
 			if old_drawText then
@@ -269,6 +269,16 @@ local function OnChangeSize(player, items, actionType)
 	end
 end
 
+local function addTooltip(option, title)
+	local texture = getTexture("Item_Needle")
+	local toolTip = ISToolTip:new();
+	toolTip:initialise();
+	option.toolTip = toolTip;
+	toolTip:setName(title);
+	toolTip.description = getText("IGUI_Description")
+	toolTip.texture = texture -- HACK: у тултипа есть интерфейс setTexture, но он не работает. Записываем напрямую в переменную инстанса
+end
+
 local invContextMenu1 = function(_player, context, worldobjects, test)
 	local playerObj = getSpecificPlayer(_player);
 	
@@ -306,7 +316,8 @@ local invContextMenu1 = function(_player, context, worldobjects, test)
 	local function setChangeSize(item)
 		if instanceof(item,"Clothing") and SLOTS[item:getBodyLocation()] then
 			local sz = item:getModData().sz
-			if sz then
+			local condition = item:getCondition()
+			if sz and condition > 0 then
 				if sz >= 1 and sz < 8 then
 					table.insert(item_can_increased, item)
 				end
@@ -341,11 +352,21 @@ local invContextMenu1 = function(_player, context, worldobjects, test)
 		context:addOption(getText("IGUI_CheckLabel"), playerObj, OnCheckLabel, items)
 	end
 
-	if #item_can_increased > 0 then
-		context:addOption(getText("IGUI_ChangeSizeIncrese"), playerObj, OnChangeSize, item_can_increased, '+')
-	end
-	if #item_can_reduced > 0 then
-		context:addOption(getText("IGUI_ChangeSizeReduse"), playerObj, OnChangeSize, item_can_reduced, '-')
+	if #item_can_increased > 0 or #item_can_reduced > 0 then
+		local changeSizeOption = context:addOption(getText("IGUI_ChangeSize"), worldobjects, nil);
+		local subMenu = ISContextMenu:getNew(context);
+		context:addSubMenu(changeSizeOption, subMenu);
+
+		if #item_can_increased > 0 then
+			local title = getText("IGUI_ChangeSizeIncrese")
+			local option = subMenu:addOption(title, playerObj, OnChangeSize, item_can_increased, '+')
+			addTooltip(option, title)
+		end
+		if #item_can_reduced > 0 then
+			local title = getText("IGUI_ChangeSizeReduse")
+			local option = subMenu:addOption(title, playerObj, OnChangeSize, item_can_reduced, '-')
+			addTooltip(option, title)
+		end
 	end
 
 	--print("num cut items ",#cut_items)
@@ -406,6 +427,7 @@ do
 	local cache_render_text = nil
 
 	local old_render = ISToolTipInv.render
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISToolTipInv:render()
 		if self.item ~= cache_item then
 			cache_item = self.item
@@ -464,6 +486,7 @@ do
 		local stage = 1
 		local save_th = 0
 		local old_setHeight = self.setHeight
+---@diagnostic disable-next-line: duplicate-set-field
 		self.setHeight = function(self, num, ...)
 			if stage == 1 then
 				stage = 2
@@ -475,6 +498,7 @@ do
 			return old_setHeight(self, num, ...)
 		end
 		local old_drawRectBorder = self.drawRectBorder
+---@diagnostic disable-next-line: duplicate-set-field
 		self.drawRectBorder = function(self, ...)
 			if stage == 2 then
 				local col = COLOR_WHITE; -- {r,g,b}
@@ -733,6 +757,7 @@ end)
 do
 
 	local old_wear_perform = ISWearClothing.perform
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISWearClothing:perform()
 		local data = SLOTS[self.item:getBodyLocation()]
 		if not data then
@@ -801,6 +826,7 @@ end
 --Момент снимания одежды (конец)
 do
 	local old_perform = ISUnequipAction.perform
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISUnequipAction:perform()
 		old_perform(self)
 		if instanceof(self.item,"Clothing") and SLOTS[self.item:getBodyLocation()] then
@@ -814,6 +840,7 @@ end
 do
 
 	local old_start = ISInventoryTransferAction.start
+---@diagnostic disable-next-line: duplicate-set-field
 	function ISInventoryTransferAction:start()
 		if self.srcContainer then
 			local typ = self.srcContainer:getType()
