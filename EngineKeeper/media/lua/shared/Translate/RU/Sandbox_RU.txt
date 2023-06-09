@@ -1,5 +1,7 @@
 Sandbox_RU = {
-    Sandbox_EngineKeeper = "Мод Хранитель двигателя",
+    Sandbox_ECT = "Защита двигателя",
+    Sandbox_ECT_tooltip = "Используйте -1, чтобы сохранить выбор ModOption",
+    Sandbox_EngineKeeper = "Защита двигателей авто",
     Sandbox_EngineKeeper_ECT = "Пороговое значение состояния двигателя",
     Sandbox_EngineKeeper_ECT_help = "Используйте -1, чтобы сохранить выбор ModOptions",
 }

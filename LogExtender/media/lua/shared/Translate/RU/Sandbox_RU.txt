@@ -1,5 +1,5 @@
 Sandbox_RU = {
-    Sandbox_LogExtender = "LogExtender",
+    Sandbox_LogExtender = "Расширеные логи",
     Sandbox_PlayerConnected = "PlayerConnected",
     Sandbox_PlayerLevelup = "PlayerLevelup",
     Sandbox_PlayerTick = "PlayerTick",
