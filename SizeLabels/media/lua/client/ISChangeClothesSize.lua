@@ -1,111 +1,167 @@
 require "TimedActions/ISBaseTimedAction"
 ISChangeClothesSize = ISBaseTimedAction:derive("ISChangeClothesSize");
 
-function ISChangeClothesSize:isValid()
-	return self.character:getInventory():contains(self.item)
+local SM_INST = ScriptManager.instance
+
+local MATERIAL_COUNT = 2
+local THREAD_DELTA = 0.2
+local CONDITION_DAMAGE = 2
+
+local THREAD_NAME = 'Thread'
+
+local FABRIC_TABLE = {
+	Cotton = 'RippedSheets',
+	Denim = 'DenimStrips',
+	Leather = 'LeatherStrips'
+}
+
+local TOOLS_NAMES = {
+	'Needle',
+	'Scissors'
+}
+
+local FAIL_CHANCES = {}
+FAIL_CHANCES[3] = 90
+FAIL_CHANCES[4] = 80
+FAIL_CHANCES[5] = 70
+FAIL_CHANCES[6] = 60
+FAIL_CHANCES[7] = 55
+FAIL_CHANCES[8] = 50
+FAIL_CHANCES[9] = 45
+FAIL_CHANCES[10] = 40
+
+local function getDisplayName(nameStr)
+	return SM_INST:FindItem(nameStr):getDisplayName()
 end
 
-function ISChangeClothesSize:setAnimName1()
-	local anim = self.plot[#self.plot]
-	if #self.plot > 1 then
-		table.remove(self.plot)
+local function getUnavailableToolsNamesList(character)
+	local result = {}
+	for index, value in ipairs(TOOLS_NAMES) do
+		if not character:HasItem(value) then
+			local displayName = getDisplayName(value)
+			table.insert(result, displayName)
+		end
 	end
-	if anim == "Loot" then
-		self:setActionAnim(anim)
-	else
-		self:setActionAnim(CharacterActionAnims.Bandage)
-		self:setAnimVariable("BandageType", anim);
+	return result
+end
+
+local function getUnavailableMaterialsTable(inventory, material)
+	local materialsArr = inventory:FindAll(material)
+	local materialsFoundInt = materialsArr:size()
+	local displayName = getDisplayName(material)
+	local remainingCount = materialsFoundInt < MATERIAL_COUNT and MATERIAL_COUNT - materialsFoundInt or 0
+	return {
+		name = displayName,
+		count = remainingCount
+	}
+end
+
+local function getThreadDeltaSum(inventory)
+	local threadsArr = inventory:FindAll(THREAD_NAME)
+	local deltaSum = 0
+	for i = 1, threadsArr:size(), 1 do
+		deltaSum = deltaSum + threadsArr:get(i-1):getDelta()
+	end
+	return deltaSum
+end
+
+local function renderNeedsStr(neededToolslist, neededMaterialTable, threadDeltaSum)
+	local prefix = getText('IGUI_NeedToolsAndMaterialsPrefix')
+---@diagnostic disable-next-line: deprecated
+	local resultList = {unpack(neededToolslist)} -- Копируем список, чтобы случайно не мутировать его. Это best practice
+	local remainingMatCount = neededMaterialTable['count']
+
+	if remainingMatCount ~= 0 then
+		table.insert(resultList, neededMaterialTable['name'] .. ' ' .. remainingMatCount .. getText('IGUI_Pieces'))
+	end
+	if threadDeltaSum < THREAD_DELTA  then
+		local needDeltaPercenatges = (THREAD_DELTA - threadDeltaSum) * 100 -- NOTE: Считаем нить в процентах, это понятнее пользователю
+		-- local renderNeedPercenatges = ('%.2g'):format(needDeltaPercenatges) -- NOTE: Оставляем только 2 знака после запятой
+		local renderNeedPercenatges = math.floor(needDeltaPercenatges + 0.5) -- NOTE: округляем до целого процента
+		renderNeedPercenatges = renderNeedPercenatges == 0 and 1 or renderNeedPercenatges -- NOTE: Если округлилось до 0, показываем 1
+		table.insert(resultList, getDisplayName(THREAD_NAME) .. ' ' .. renderNeedPercenatges .. '%')
+	end
+	return prefix .. table.concat(resultList, ', ')
+end
+
+local function useConsumableItems(inventory, material)
+	for i=MATERIAL_COUNT,1,-1 do
+		inventory:Remove(material)
+	end
+	local deltaRemains = THREAD_DELTA
+	local threadsArr = inventory:FindAll(THREAD_NAME)
+	for i = 1, threadsArr:size(), 1 do
+		local thisThread = threadsArr:get(i-1) 
+		local thisDelta = thisThread:getDelta()
+		if thisDelta < deltaRemains then
+			deltaRemains = deltaRemains - thisDelta
+			thisDelta = 0
+			thisThread:setDelta(thisDelta)
+		else
+			thisDelta = thisDelta - deltaRemains
+			thisThread:setDelta(thisDelta)
+			deltaRemains = 0
+		end
+		if thisDelta == 0 then
+			inventory:Remove(thisThread) -- NOTE: удаляем пустую катушку
+			-- NOTE: В игре есть баг с математикой, если отнимать от 1 по 0.2, то рано или поздно возникают цифры далеко после запятой. 
+			-- Так что часто в катушке остаётся немного нитки. Но с этим видимо ничего не поделать. Это происходит не только с нитками. 
+			-- На работоспособность это не влияет
+		end
 	end
 end
 
 
-function ISChangeClothesSize:update()
-	self.item:setJobDelta(self:getJobDelta());
-	if self.must_anim_next then
-		self.must_anim_next = false
-		self:setAnimName1();
-	end
-	local now = os.time()
-	if now - self.start_time > 6 then
-		self.start_time = now
-		self.action:stopTimedActionAnim()
-		self:setOverrideHandModels(nil, nil)
-		self.must_anim_next = true
-	end
-end
-
-function ISChangeClothesSize:start()
-	self.start_time = os.time()
-
-  self.item:setJobType(getText("IGUI_JobType_CheckLabel"));
-  self.item:setJobDelta(0.0);
-
-	self:setAnimName1();
-	self:setOverrideHandModels(nil, nil);
-end
-
-function ISChangeClothesSize:stop()
-	ISBaseTimedAction.stop(self);
-	self.item:setJobDelta(0.0);
-end
 
 function ISChangeClothesSize:perform()
-	local MATERIAL_COUNT = 2
-	local THREAD_DELTA = 0.2 -- Thread
-
 	self.item:setJobDelta(0.0);
 	ISBaseTimedAction.perform(self);
 
-	local fabric_table = {
-		Cotton = 'RippedSheets',
-		Denim = 'DenimStrips',
-		Leather = 'LeatherStrips'
-	}
-
-	local level = self.character:getPerkLevel(Perks.Tailoring)
-	if level < 8 then
-		self.character:Say(getText('IGUI_NeedPerkLvl'))
+	local character = self.character
+	local failureChance = self.failureChance
+	if failureChance == nil then
+		character:Say(getText('IGUI_NeedPerkLvl'))
+		character:getEmitter():stopSound(self.sewingSound);
 		return
 	end
-
-	local character = self.character
 	local item = self.item
-	local inv = character:getInventory()
-
 	local actionType = self.actionType
+	local inventory = character:getInventory()
 	local data = item:getModData()
 	local fabric = item:getFabricType() -- Cotton, Denim, Leather
-	local material = fabric_table[fabric]
+	local material = FABRIC_TABLE[fabric]
 
-	local hasNeedle = character:hasItems('Needle', 1)
-	local hasScissors = character:hasItems('Scissors', 1)
-	local hasMaterials = character:hasItems(material, MATERIAL_COUNT)
-	local thread = inv:FindAndReturn('Thread')
-	local threadDelta = 0
-	local hasThread = false
+	local neededToolslist = getUnavailableToolsNamesList(character)
+	local neededMaterialTable = getUnavailableMaterialsTable(inventory, material)
+	local threadDeltaSum = getThreadDeltaSum(inventory)
 
-	if thread and thread:getDelta() >= THREAD_DELTA then
-		threadDelta = thread:getDelta()
-		hasThread = true
-	end	
-
-	if hasNeedle and hasScissors and hasMaterials and hasThread then
-		for i=MATERIAL_COUNT,1,-1 do 
-			inv:Remove(material)
-		end
-		thread:setDelta(threadDelta - THREAD_DELTA)
-	else
-		getPlayer():Say(getText('IGUI_NeedToolsAndMaterials'))
-		--self.character:Say(getText('IGUI_NeedToolsAndMaterials'))
+	if #neededToolslist ~= 0 or neededMaterialTable['count'] ~= 0 or threadDeltaSum < THREAD_DELTA then
+		local needsStr = renderNeedsStr(neededToolslist, neededMaterialTable, threadDeltaSum)
+		character:Say(needsStr)
+		character:getEmitter():stopSound(self.sewingSound);
 		return
 	end
 
-	if actionType == '+' then
-		data.sz = data.sz + 1
+	useConsumableItems(inventory, material)
+	local isFail = failureChance > ZombRand(0, 101);
+	local newExp = 0
+	if isFail then
+		character:getEmitter():stopSound(self.sewingSound);
+		character:getEmitter():playSound("ClothesRipping");
+		local condition = item:getCondition()
+		item:setCondition(condition - CONDITION_DAMAGE)
+		newExp = ZombRand(1, 3)
+	else
+		if actionType == '+' then
+			data.sz = data.sz + 1
+		end
+		if actionType == '-' then
+			data.sz = data.sz - 1
+		end
+		character:getEmitter():stopSound(self.sewingSound);
+		newExp = ZombRand(3, 6)
 	end
-	if actionType == '-' then
-		data.sz = data.sz - 1
-	end
+	character:getXp():AddXP(Perks.Tailoring, newExp);
 end
 
 local fix_speed = 0.35
@@ -150,10 +206,16 @@ function ISChangeClothesSize:new(player, item, actionType) --print('create actio
 	self.__index = self;
 	o.character = player;
 	o.item = item
-	local skill = player:getPerkLevel(Perks.Tailoring) + 1 --1..4
+	o.tailoringLvl = player:getPerkLevel(Perks.Tailoring)
+	
+	o.failureChance = FAIL_CHANCES[o.tailoringLvl]
+	o.sewingSound = player:getEmitter():playSound("SewingScissors");
+	
+	local skill = o.tailoringLvl + 1
 	if skill > 4 then
 		skill = 4
 	end
+
 	if not item:isEquipped() then
 		o.plot = easyCopy(PLOT.Inv[skill])
 	else
@@ -165,13 +227,59 @@ function ISChangeClothesSize:new(player, item, actionType) --print('create actio
 			o.plot = easyCopy(PLOT.Upper[skill])
 		end
 	end
-	--local bodyPart = BloodBodyPartType.UpperLeg_L
-	--o.bodyPart = bodyPart;
-	--o.anim = xxx or "LowerBody" --LowerBody UpperBody LeftLeg LeftArm
 	o.stopOnWalk = false;
 	o.stopOnRun = true;
 	o.maxTime = o.plot.time
 	o.actionType = actionType
-	print('o.actionType', o.actionType)
 	return o;
+end
+
+function ISChangeClothesSize:isValid()
+	return self.character:getInventory():contains(self.item)
+end
+
+function ISChangeClothesSize:setAnimName1()
+	local anim = self.plot[#self.plot]
+	if #self.plot > 1 then
+		table.remove(self.plot)
+	end
+	if anim == "Loot" then
+		self:setActionAnim(anim)
+	else
+		self:setActionAnim(CharacterActionAnims.Bandage)
+		self:setAnimVariable("BandageType", anim);
+	end
+end
+
+
+function ISChangeClothesSize:update()
+	self.item:setJobDelta(self:getJobDelta());
+	if self.must_anim_next then
+		self.must_anim_next = false
+		self:setAnimName1();
+	end
+	local now = os.time()
+	if now - self.start_time > 6 then
+		self.start_time = now
+		self.action:stopTimedActionAnim()
+		self:setOverrideHandModels(nil, nil)
+		self.must_anim_next = true
+	end
+end
+
+function ISChangeClothesSize:start()
+
+
+	self.start_time = os.time()
+
+	self.item:setJobType(getText("IGUI_JobType_CheckLabel"));
+	self.item:setJobDelta(0.0);
+
+	self:setAnimName1();
+	self:setOverrideHandModels(nil, nil);
+end
+
+function ISChangeClothesSize:stop()
+	ISBaseTimedAction.stop(self);
+	self.item:setJobDelta(0.0);
 end
