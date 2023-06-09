@@ -1,4 +1,5 @@
 Sandbox_RU = {
+	Sandbox_MoarCanOpeners = "Открывалки для консерв",
     Sandbox_MoarCanOpeners_InjurePlayer = "Шанс получить травму",
     Sandbox_MoarCanOpeners_InjurePlayer_tooltip = "Шанс получить травму (левой или правой руки) при использовании оружия или камня в качестве открывашки.",
     Sandbox_MoarCanOpeners_PoisonResult = "Шанс получить отравление",

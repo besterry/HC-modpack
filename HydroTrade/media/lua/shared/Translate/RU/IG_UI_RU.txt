@@ -1,5 +1,6 @@
 IGUI_RU =
 {
+	IGUI_Sandbox_CarWanna = "Выдача авто с билета",
 	IGUI_ItemCat_CarWanna = "Авто",
 	IGUI_ItemCat_Crafting = "Крафт",
 	IGUI_ltemCat_Crafting = "Крафт",	

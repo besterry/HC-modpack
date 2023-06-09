@@ -1,13 +1,13 @@
 Sandbox_RU = 
 {
-	Sandbox_UdderlySafeLogin = "Ѕезопасный вход в систему",
+	Sandbox_UdderlySafeLogin = "Ѕезопасный вход в игру",
 	
 	Sandbox_UdderlySafeLogin_SafeTime = "Ѕезопасное врем€",
-	Sandbox_UdderlySafeLogin_SafeTime_tooltip = "Ѕезопасное врем€ в секундах, обратите внимание, что это начинаетс€, когда они нажимают кнопку "Ќачать", а не когда они могут двигатьс€.",
+	Sandbox_UdderlySafeLogin_SafeTime_tooltip = "Ѕезопасное врем€ в секундах, обратите внимание, что это начинаетс€, когда игрок нажимает кнопку "Ќачать", а не когда они могут двигатьс€.",
 	
 	Sandbox_UdderlySafeLogin_MovementMultiplier = "ћножитель движени€",
-	Sandbox_UdderlySafeLogin_MovementMultiplier_tooltip = "ћножитель движени€ - это то, что измен€ет количество времени, которое вы получаете после перемещени€.",
+	Sandbox_UdderlySafeLogin_MovementMultiplier_tooltip = "ѕри движении врем€ защиты уменьшаетс€ с этим множителем.",
 	
-	Sandbox_UdderlySafeLogin_UseInvisibility = "»спользуйте невидимость",
-	Sandbox_UdderlySafeLogin_UseInvisibility_tooltip = "»спользуйте невидимость вместо того, чтобы не позвол€ть зомби ударить вас. Ёто не позвол€ет им замечать вас или следовать за вами, но может быть использовано пользовател€ми.",
+	Sandbox_UdderlySafeLogin_UseInvisibility = "Ќевидимость при подключении",
+	Sandbox_UdderlySafeLogin_UseInvisibility_tooltip = "»спользовать невидимость вместо защиты от удара зомби. Ёто не позвол€ет им замечать вас или следовать за вами, но может быть использовано другими игроками.",
 }
