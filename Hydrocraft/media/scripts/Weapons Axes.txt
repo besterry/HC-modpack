@@ -532,7 +532,7 @@ recipe Craft Sawblade Axe
 	{
 	   	HCSawcircularblade,
 	   	HCAxehandle,
-	   	DuctTape=2,
+	   	DuctTape/Scotchtape/HCElectrictape,
 	   	Result:HCSawbladeaxe,
 	   	Time:150.0,
        		Category:Smithing,
