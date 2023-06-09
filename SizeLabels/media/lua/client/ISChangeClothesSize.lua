@@ -96,12 +96,11 @@ local function useConsumableItems(inventory, material)
 		if thisDelta < deltaRemains then
 			deltaRemains = deltaRemains - thisDelta
 			thisDelta = 0
-			thisThread:setDelta(thisDelta)
 		else
 			thisDelta = thisDelta - deltaRemains
-			thisThread:setDelta(thisDelta)
 			deltaRemains = 0
 		end
+			thisThread:setDelta(thisDelta)
 		if thisDelta == 0 then
 			inventory:Remove(thisThread) -- NOTE: удаляем пустую катушку
 			-- NOTE: В игре есть баг с математикой, если отнимать от 1 по 0.2, то рано или поздно возникают цифры далеко после запятой. 
@@ -121,7 +120,7 @@ function ISChangeClothesSize:perform()
 	local failureChance = self.failureChance
 	if failureChance == nil then
 		character:Say(getText('IGUI_NeedPerkLvl'))
-		character:getEmitter():stopSound(self.sewingSound);
+		character:stopOrTriggerSound(self.sewingSound)
 		return
 	end
 	local item = self.item
@@ -138,7 +137,7 @@ function ISChangeClothesSize:perform()
 	if #neededToolslist ~= 0 or neededMaterialTable['count'] ~= 0 or threadDeltaSum < THREAD_DELTA then
 		local needsStr = renderNeedsStr(neededToolslist, neededMaterialTable, threadDeltaSum)
 		character:Say(needsStr)
-		character:getEmitter():stopSound(self.sewingSound);
+		character:stopOrTriggerSound(self.sewingSound)
 		return
 	end
 
@@ -146,11 +145,11 @@ function ISChangeClothesSize:perform()
 	local isFail = failureChance > ZombRand(0, 101);
 	local newExp = 0
 	if isFail then
-		character:getEmitter():stopSound(self.sewingSound);
-		character:getEmitter():playSound("ClothesRipping");
+		character:playSound("ClothesRipping")
 		local condition = item:getCondition()
 		item:setCondition(condition - CONDITION_DAMAGE)
 		newExp = ZombRand(1, 3)
+		character:Say(getText("IGUI_Failure"))
 	else
 		if actionType == '+' then
 			data.sz = data.sz + 1
@@ -158,9 +157,11 @@ function ISChangeClothesSize:perform()
 		if actionType == '-' then
 			data.sz = data.sz - 1
 		end
-		character:getEmitter():stopSound(self.sewingSound);
 		newExp = ZombRand(3, 6)
+		local newSize = STAR_MODS.SizeLabels.CSIZE[data.sz]
+		character:Say(getText("IGUI_Success") .. newSize)
 	end
+	character:stopOrTriggerSound(self.sewingSound)
 	character:getXp():AddXP(Perks.Tailoring, newExp);
 end
 
@@ -209,7 +210,7 @@ function ISChangeClothesSize:new(player, item, actionType) --print('create actio
 	o.tailoringLvl = player:getPerkLevel(Perks.Tailoring)
 	
 	o.failureChance = FAIL_CHANCES[o.tailoringLvl]
-	o.sewingSound = player:getEmitter():playSound("SewingScissors");
+	o.sewingSound = o.character:playSound("SewingScissors")
 	
 	local skill = o.tailoringLvl + 1
 	if skill > 4 then
