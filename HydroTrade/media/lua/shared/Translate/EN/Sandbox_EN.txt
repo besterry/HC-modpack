@@ -83,4 +83,10 @@ Sandbox_EN = {
 	Sandbox_VehicleRecycling_OldVersionNeededPropane_tooltip = "After turning on this setting propane requirements will increase by 10 times.<br>This setting is necessary for those who play with mods that return the capacity of the burner and propane tanks as it was in the old patches.<br>For example «Propane Tank Fix»",
 	
 	Sandbox_VehicleRecycling_ActionTimeMultiplier = "Disassembly time multiplier",
+	
+	Sandbox_SafeHouse_CloseRoom_Base = "SafeHouse bans for players
+    Sandbox_SafeHouse_CloseRoom = "List of forbidden rooms",
+    Sandbox_SafeHouse_CloseRoom_tooltip = "Room names separated by ; no spaces. <LINE> Full list of rooms pzwiki.net/wiki/Room_definitions",
+    Sandbox_SafeHouse_CloseZone = "List of forbidden locations",
+    Sandbox_SafeHouse_CloseZone_tooltip = "Coordinates of forbidden locations to create a safe house, each coordinate is separated by /, separated by ; no spaces. <LINE> 117/144/9/39 are louisville coordinates, these are 4 Cell coordinates (without two zeros): 11700,14400 ,900,3900 <LINE> So the first angle is 11700.900.0 the second angle is 14400.3900.0 - together they form the square of prohibition",
 }

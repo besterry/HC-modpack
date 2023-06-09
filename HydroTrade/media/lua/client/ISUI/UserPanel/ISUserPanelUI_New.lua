@@ -18,6 +18,7 @@ local FONT_HGT_LARGE = getTextManager():getFontHeight(UIFont.Large)
 
 function ISUserPanelUI:initialise()
     ISPanel.initialise(self);
+    sandboxZones = luautils.split(SandboxVars.SafeHouseClose["CloseZone"], ";")
     self:create();
 end
 

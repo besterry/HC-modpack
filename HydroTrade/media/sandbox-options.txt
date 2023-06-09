@@ -312,3 +312,22 @@ option VehicleRecycling.OldVersionNeededPropane
 	type = boolean, default = false,
 	page = VehicleRecycling, translation = VehicleRecycling_OldVersionNeededPropane,
 }
+
+option SafeHouseClose.CloseRoom
+{
+   type = string, 
+   default = aesthetic;aestheticstorage;all;armyhanger;armystorage;armysurplus;artstore;bakery;bakerykitchen;bandkitchen;bandlivingroom;bandmerch;barkitchen;bar;barstorage;batfactory;bathroom;batstorage;batteryfactory;batterystorage;bedroom;beergarden;bookstore;bowlingalley;breakroom;brewery;brewerystorage;burgerkitchen;burgerstorage;butcher;cabinetfactory;cabinetshipping;cafeteria;cafeteriakitchen;camerastore;cafekitchen;cafe;campingstorage;camping;candystore;candystorage;carsupply;chinesekitchen;chineserestaurant;classroom;closet;clothingstorage;clothingstore;construction;conveniencestore;cornerstore;cornerstorestorage;daycare;deepfrykitchen;dentiststorage;departmentstorage;departmentstore;dinnerkitchen;dining;dogfoodfactory;dogfoodshipping;dogfoodstorage;donutdining;donutkitchen;donutkitchenstorage;electronicstorage;electronicstore;empty;factory;factorystorage;farmstorage;firestoorage;fishchipskitchen;fishingstorage;fossoil;fryshipping;furniturestorage;furniturestore;garagestorage;gardenstore;gasstorage;gasstore;generalstorestorage;generalstore;giftstorage;giftstore;gigamartkitchen;gigamart;grocery;grocerystorage;grocery;gunstorestorage;gunstore;gym;hall;hospitalstorage;housewarestore;hunting;icecreamkitchen;icecream;italiankitchen;italianrestraunt;janitor;jayschickendining;jayschickenkitchen;jewelrystorage;jewelrystore;kennels;kitchen_crepe;kitchen;kitchenwares;knifefactory;knifeshipping;knifestore;lasertag;laundry;leatherclothesstore;library;liquorstore;livingroom;lobby;loggingfactory;loggingtruck;mechanic;medicalstorage;medical;metalshipping;metalshop;mexicankitchen;motelbedroom;motelroomoccupied;motelroom;motelroomoccupied;movierental;musicstore;newspaperprint;newspapershipping;newspaperstorage;office;officestorage;optometrist;paintershop;pawnshop;pawnshopcooking;pawnshopoffice;pawnshopstorage;pharmacystorage;pharmacy;photoroom;picnic;pileocrepe;pizzakitchen;pizzawhirled;plazastore1;policestorage;pool;poststorage;post;potatostorage;prisoncells;producestorage;radiofactory;radioshipping;radiostorage;restaurantkitchen;restaurant;schoolstorage;seafoodkitchen;security;sewingstore;sewingstorage;shed;shoestore;sodatruck;spiffodining;spiffoskitchen;spiffosstorage;sportstorage;sportstore;storageunit;stripclub;sushidining;sushikitchen;theatrekitchen;theatrestorage;theatre;toolstorage;toolstore;toystore;toystorestorage;warehouse;westernkitchen;whiskeybottling;wirefactory;zippeestorage;zippeestore,
+   
+   page = SafeHouse_CloseRoom_Base, 
+   translation = SafeHouse_CloseRoom,
+}
+
+
+option SafeHouseClose.CloseZone
+{
+   type = string, 
+   default = 117/144/9/39;57/68/51/56;108/122/66/71;105/110/92/106;97/105/126/131;79/84/112/118;70/74/81/85;52/56/58/61;54/57/95/97;55/59/124/125;75/78/117/120;99/102/108/112;100/105/92/97;115/119/95/102;114/118/87/89;115/117/83/89;135/140/56/59;77/90/63/72,
+   
+   page = SafeHouse_CloseRoom_Base, 
+   translation = SafeHouse_CloseZone,
+}

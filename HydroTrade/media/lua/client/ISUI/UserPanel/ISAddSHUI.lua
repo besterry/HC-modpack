@@ -93,44 +93,66 @@ end
 -------------------------------------------------
 function ISAddSHUI:checkIfIntersectingAnotherZone()
 	self.notIntersecting = true;
-	for xVal = self.X1-3, self.X2+3 do
-		for yVal = self.Y1-3, self.Y2+3 do
-			local sqObj = getCell():getOrCreateGridSquare(xVal,yVal,0);
-			if sqObj then
-				if SafeHouse.getSafeHouse(sqObj) then
-					self.notIntersecting = false;
-				end;
-			end;
-		end;
-	end;
-	if self.notIntersecting then
-        self.ok.tooltip = nil; -- Очищаем tooltip
+	local navIntersecting = false;
+
+	-- Проверка на максимальную длину по оси X и Y
+    local maxLengthX = 40
+    local maxLengthY = 40
+    local width = self.X2 - self.X1
+    local height = self.Y2 - self.Y1
+    if width >= maxLengthX or height >= maxLengthY then
+        self.notIntersecting = false
+        self.ok.tooltip = getText("IGUI_CreateSH_ExceedsMaxLength")
+        return
+    end
+
+    for xVal = self.X1-3, self.X2+3 do
+        for yVal = self.Y1-3, self.Y2+3 do
+            local zones = getWorld():getMetaGrid():getZonesAt(xVal, yVal, 0)
+            if zones then
+                for i = 0, zones:size() - 1 do
+                    local zone = zones:get(i)
+                    local zoneType = zone:getType()
+                    if zoneType == "Nav" then
+                        navIntersecting = true
+                        break
+                    end
+                end
+            end
+
+            local sqObj = getCell():getOrCreateGridSquare(xVal, yVal, 0)
+            if sqObj then
+                if SafeHouse.getSafeHouse(sqObj) then
+                    self.notIntersecting = false
+                else
+                    local building = sqObj:getBuilding()
+                    if building then
+						local rooms = building:getDef():getRooms()
+						for i = 0, rooms:size() - 1 do
+							local roomName = rooms:get(i):getName()
+							for _, forbiddenRoom in ipairs(forbiddenRooms) do
+								if roomName == forbiddenRoom then
+									self.notIntersecting = false
+									break
+								end
+							end
+						end
+					end
+                end
+            end
+        end
+    end
+
+    if navIntersecting then
+        self.notIntersecting = false
+        self.ok.tooltip = getText("IGUI_CreateSH_IntersectingNav")
+    elseif self.notIntersecting then
+        self.ok.tooltip = nil
     else
-        self.ok.tooltip = getText("IGUI_CreateSH_Intersecting");
+        self.ok.tooltip = getText("IGUI_CreateSH_Intersecting")
     end
 end
--------------------------------------------------
---Проверка на запрещенные комнаты
--------------------------------------------------
---restaurant,laundry,grocery,farmstorage,storage,bar,warehouse,storageunit,mechanic,clothingstore,jayschicken_dining,bakery,zippeestore,
-function ISAddSHUI:checkIfIntersectingAnotherZone()
-	self.notIntersecting = true;
-	for xVal = self.X1-3, self.X2+3 do
-		for yVal = self.Y1-3, self.Y2+3 do
-			local sqObj = getCell():getOrCreateGridSquare(xVal,yVal,0);
-			if sqObj then
-				if rooms:get(sqObj):getName() == "zippeestore" then
-					self.notIntersecting = false;
-				end;
-			end;
-		end;
-	end;
-	if self.notIntersecting then
-        self.ok.tooltip = nil; -- Очищаем tooltip
-    else
-        self.ok.tooltip = getText("IGUI_CreateSH_Intersecting");
-    end
-end
+
 -------------------------------------------------
 --Обновление кнопки "Создать убежище"
 -------------------------------------------------
@@ -222,7 +244,8 @@ end
 function ISAddSHUI:initialise()
 	ISPanel.initialise(self);
 	--if self.character:getAccessLevel() ~= "Admin" then self:close(); return; end;
-
+	forbiddenRooms =  luautils.split(SandboxVars.SafeHouseClose["CloseRoom"], ";")
+	sandboxZones = luautils.split(SandboxVars.SafeHouseClose["CloseZone"], ";")
 	local btnWid = 100
 	local btnHgt = 25
 	local btnHgt2 = 18
@@ -266,7 +289,7 @@ function ISAddSHUI:initialise()
 end
 
 -------------------------------------------------
---Переопределение начальной точки
+--Переопределение начальной точки координат
 -------------------------------------------------
 function ISAddSHUI:redefineStartingPoint()
 	local character = self.character;
@@ -279,7 +302,7 @@ function ISAddSHUI:redefineStartingPoint()
 end
 
 -------------------------------------------------
---Опции при нажатии чекбоксе "Подсветить"
+--Опции при включенном чекбоксе "Подсветить"
 -------------------------------------------------
 function ISAddSHUI:onClickClaimOptions(_clickedOption, _ticked)
 	if _clickedOption == 1 then
@@ -304,7 +327,6 @@ function ISAddSHUI:onClick(button)
 			getPlayer():Say(getText('IGUI_Close_Zone'))
 			return;
 		end
-
 		--Проверка на максимальный размер привата
 		if self.size > MaxSizeSH then
 			getPlayer():Say(getText('IGUI_Big_Size_SH'))

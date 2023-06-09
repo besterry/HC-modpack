@@ -96,6 +96,7 @@ IGUI_RU =
     IGUI_VehicleRecycling_VehicleIsClamedThe15karatFix = "Машина находится в привате",
 	IGUI_VRR_Not_BlowTorch = "У меня нет в инвентаре горелки",
 	IGUI_VRR_Not_BlowTorchLow = "Недостаточно пропана для разбора",
+	
 	IGUI_CreatehouseUI_Safehouse = "Создать убежище",
 	IGUI_SafeHouse_Title = "Создание убежища",
 	IGUI_SafehouseUI_Titles = "Название убежища:",
@@ -108,5 +109,17 @@ IGUI_RU =
 	IGUI_AddSafeHouses = "Создать убежище",
 	IGUI_Big_Size_SH = "Слишком большой участок",
 	IGUI_Close_Zone = "В этой зоне нельзя создать убежище",
-	IGUI_CreateSH_Intersecting = "Слишком близко к другому убежищу",
+	IGUI_CreateSH_Intersecting = "Близко к другому убежищу или общественному зданию",
+	IGUI_CreateSH_IntersectingNav = "Близко к дороге",
+	IGUI_CreateSH_IntersectingPlayers = "В выделеной зоне есть другие игроки",
+	IGUI_TimeLeft = "До удаления убежища: ",
+	IGUI_daysLeft = " дн. ",
+	IGUI_hoursLeft = " час(а) ",
+	IGUI_minLeft = " мин",
+	IGUI_servers_refresh = "Пересчитать",
+	IGUI_servers_resetime = "Продлить",
+	IGUI_CreateSH_REFRESHTIME = "Обновить текущее время",
+	IGUI_CreateSH_RESETTIME = "Сбросить таймер до максимального значения, дней: ",
+	IGUI_CreateSH_ExceedsMaxLength = "Максимальная длина стороны убежища 40 клеток",
+	
 }
