@@ -100,7 +100,7 @@ local function useConsumableItems(inventory, material)
 			thisDelta = thisDelta - deltaRemains
 			deltaRemains = 0
 		end
-			thisThread:setDelta(thisDelta)
+		thisThread:setDelta(thisDelta)
 		if thisDelta == 0 then
 			inventory:Remove(thisThread) -- NOTE: удаляем пустую катушку
 			-- NOTE: В игре есть баг с математикой, если отнимать от 1 по 0.2, то рано или поздно возникают цифры далеко после запятой. 
