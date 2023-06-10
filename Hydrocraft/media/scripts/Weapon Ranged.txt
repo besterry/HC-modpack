@@ -309,7 +309,7 @@ item HCMetalArrowhead
     item HCLongbowMag
     {
         ImpactSound =   null,
-        MaxRange    =   8,
+        MaxRange    =   12,
         WeaponSprite    =   Hydrocraft.HCLongbowDrawn,
         SoundVolume =   40,
         MinAngle    =   0.95,
@@ -381,7 +381,7 @@ item HCMetalArrowhead
 item HCCrossbow
     {
         ImpactSound =   null,
-        MaxRange    =   7,
+        MaxRange    =   15,
         WeaponSprite    =   Hydrocraft.HCCrossbow,
         SoundVolume =   40,
         MinAngle    =   0.95,
@@ -485,7 +485,7 @@ item HCCrossbow
 	item HCLongbow
     {
         ImpactSound =   null,
-        MaxRange    =   8,
+        MaxRange    =   12,
         WeaponSprite    =   Hydrocraft.HCLongbow,
         SoundVolume =   40,
         MinAngle    =   0.95,
@@ -613,6 +613,19 @@ recipe Make Arrow
     NeedToBeLearn:true,
     Result:HCArrow,
     Time:15,
+    Category:Survivalist,
+    OnGiveXP:HCWoodwork_OnGiveTinyXP,
+    }
+	
+recipe Make 5 Arrow
+    {
+    HCBlackfeathers/HCWhitefeathers/HCBrownfeathers/HCRedfeather/HCStripedfeather/HCBluejayfeather/HCDucttapefletching,
+    HCStonearrowhead/HCBonearrowhead/HCMetalArrowhead,
+	Glue/HCTar/HCRubbercement/HCSuperglue/HCHotgluegunfull/HCGluejar/Woodglue/HCWoodgluejar,
+    WoodenStick=5,
+    NeedToBeLearn:true,
+    Result:HCArrow,
+    Time:45,
     Category:Survivalist,
     OnGiveXP:HCWoodwork_OnGiveTinyXP,
     }
