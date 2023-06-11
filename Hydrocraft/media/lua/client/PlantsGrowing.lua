@@ -114,7 +114,6 @@ function recipe_NDPlantsHarvest(items, result, player)
 	end
 	
 	--Extra Item
-	-- print (plantName);
 	if plantName == "Grape" or plantName == "Grapesgreen" then
 		extraItem = "Base.GrapeLeaves";
 		extraCount = 5;
@@ -142,10 +141,8 @@ function recipe_NDPlantsHarvest(items, result, player)
 	local counter = 0;
 	while counter < prodCount do
 		if altName ~= "" then
-			-- print('altName: ', namespace..altName)
 			player:getInventory():AddItem(namespace..altName);
 		else
-			-- print('plantName: ', namespace..plantName)
 			player:getInventory():AddItem(namespace..plantName);
 		end
 		counter = counter + 1;
@@ -155,10 +152,8 @@ function recipe_NDPlantsHarvest(items, result, player)
 	local counter = 0;
 	while counter < seedCount do
 		if altSeedName ~= "" then
-			-- print('altSeedName: ', altSeedName)
 			player:getInventory():AddItem(altSeedName);
 		else
-			-- print('seeds: ', "Hydrocraft.HC"..plantName.."seeds")
 			player:getInventory():AddItem("Hydrocraft.HC"..plantName.."seeds");
 		end
 		counter = counter + 1;
@@ -168,7 +163,6 @@ function recipe_NDPlantsHarvest(items, result, player)
 	if extraItem ~= "" then
 		counter = 0;
 		while counter < extraCount do
-			print('extraItem', extraItem)
 			player:getInventory():AddItem(extraItem);
 			counter = counter + 1;
 		end
