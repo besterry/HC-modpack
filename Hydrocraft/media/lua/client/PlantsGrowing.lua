@@ -37,7 +37,7 @@ function recipe_NDPlantsHarvest(items, result, player)
 	
 	--Get Alternative Name and Alternative Seed Name if applicable
 	if plantName == "Agaveblue" then
-		altName = "AgaveblueCut";
+		altName = "Agavebluecut";
 	elseif plantName == "Artichokes" then
 		altName = "Artichoke";
 	elseif plantName == "Basil" then
@@ -60,7 +60,11 @@ function recipe_NDPlantsHarvest(items, result, player)
 	elseif plantName == "Cottonplant" then
 		altName = "Cottonraw";
 		altSeedName = "Hydrocraft.HCCottonseeds";
-	elseif plantName == "PeaPlant" then
+	elseif plantName == "Date" then
+		altName = "Dates";
+	elseif plantName == "Fig" then
+		altName = "Figs"
+	elseif plantName == "Peaplant" then
 		altName = "Peapod";
 	elseif plantName == "Jute" then
 		altName = "Jutestems";
@@ -90,7 +94,7 @@ function recipe_NDPlantsHarvest(items, result, player)
 	elseif plantName == "Grape" then
 		altName = "Grapes";
 	elseif plantName == "Tea" then
-		altName = "Hydrocraft.Teablack"
+		altName = "Teablack"
 	end
 	
 	--Main product counts
@@ -110,7 +114,6 @@ function recipe_NDPlantsHarvest(items, result, player)
 	end
 	
 	--Extra Item
-	print (plantName);
 	if plantName == "Grape" or plantName == "Grapesgreen" then
 		extraItem = "Base.GrapeLeaves";
 		extraCount = 5;
