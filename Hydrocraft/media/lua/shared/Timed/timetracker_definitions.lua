@@ -1403,6 +1403,19 @@ ItemTimeTrackerMod["HCPottedcucumberready"] = {};
 ItemTimeTrackerMod["HCPottedcucumberready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedcucumberready"]["TurnInto"] = "Hydrocraft.HCPottedcucumberdead";
 
+--HCPottedtomato
+ItemTimeTrackerMod["HCPottedtomatosmall"] = {};
+ItemTimeTrackerMod["HCPottedtomatosmall"]["Life"] = 72.0;
+ItemTimeTrackerMod["HCPottedtomatosmall"]["TurnInto"] = "Hydrocraft.HCPottedtomato";
+
+ItemTimeTrackerMod["HCPottedtomato"] = {};
+ItemTimeTrackerMod["HCPottedtomato"]["Life"] = 72.0;
+ItemTimeTrackerMod["HCPottedtomato"]["TurnInto"] = "Hydrocraft.HCPottedtomatoready";
+
+ItemTimeTrackerMod["HCPottedtomatoready"] = {};
+ItemTimeTrackerMod["HCPottedtomatoready"]["Life"] = 48.0;
+ItemTimeTrackerMod["HCPottedtomatoready"]["TurnInto"] = "Hydrocraft.HCPottedtomatodead";
+
 --HCPottedonion
 ItemTimeTrackerMod["HCPottedonionsmall"] = {};
 ItemTimeTrackerMod["HCPottedonionsmall"]["Life"] = 72.0;
