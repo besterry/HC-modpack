@@ -60,6 +60,8 @@ function recipe_NDPlantsHarvest(items, result, player)
 	elseif plantName == "Cottonplant" then
 		altName = "Cottonraw";
 		altSeedName = "Hydrocraft.HCCottonseeds";
+	elseif plantName == "Date" then
+		altName = "Dates";
 	elseif plantName == "Fig" then
 		altName = "Figs"
 	elseif plantName == "Peaplant" then
