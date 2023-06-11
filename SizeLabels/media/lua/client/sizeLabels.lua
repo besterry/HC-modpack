@@ -317,7 +317,8 @@ local invContextMenu1 = function(_player, context, worldobjects, test)
 		if instanceof(item,"Clothing") and SLOTS[item:getBodyLocation()] then
 			local sz = item:getModData().sz
 			local condition = item:getCondition()
-			if sz and condition > 0 then
+			local fabric = item:getFabricType()
+			if sz and condition > 0 and fabric ~= nil then
 				if sz >= 1 and sz < 8 then
 					table.insert(item_can_increased, item)
 				end
