@@ -873,7 +873,7 @@ module Hydrocraft
 		Type		=	Literature,
 		DisplayName	=	Archery Textbook,
 		Icon		=	HCBookarchery,
-		TeachedRecipes  =   	Make Longbow;Make Arrow;Make Crossbow;Make Bolt;Upgrade Longbow;Make Longbow Mag;Make Metal Arrowhead;Shoot Target,
+		TeachedRecipes  =   	Make Longbow;Make Arrow;Make 5 Arrow;Make Crossbow;Make 5 Bolt;Make 10 Bolt;Upgrade Longbow;Make Longbow Mag;Make Metal Arrowhead;Shoot Target,
         	ReplaceOnUse    =   	HCBookarchery,
 		DisplayCategory	=   LitR,
 	}

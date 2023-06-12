@@ -624,13 +624,13 @@ recipe Make 5 Arrow
 	Glue/HCTar/HCRubbercement/HCSuperglue/HCHotgluegunfull/HCGluejar/Woodglue/HCWoodgluejar,
     WoodenStick=5,
     NeedToBeLearn:true,
-    Result:HCArrow,
+    Result:HCArrow=5,
     Time:45,
     Category:Survivalist,
     OnGiveXP:HCWoodwork_OnGiveTinyXP,
     }
 
-recipe Make Bolt
+recipe Make 5 Bolt
     {
     HCAluminumingot,
     keep Tongs,
@@ -642,6 +642,23 @@ recipe Make Bolt
     Time:30,
     NeedToBeLearn:true,
     Time:1000,
+    Category:Smithing,
+    OnCreate:getBurned,
+    OnGiveXP:HCWelding_OnGiveXP,
+    }
+	
+recipe Make 10 Bolt
+    {
+    HCAluminumingot=2,
+    keep Tongs,
+    keep HCWorkgloves,
+    keep HCFurnace2/HCBlastfurnace2,
+    HCBowBoltMold=2,
+    CanBeDoneFromFloor:true,
+    Result:HCXbowbolt=10,
+    Time:30,
+    NeedToBeLearn:true,
+    Time:2000,
     Category:Smithing,
     OnCreate:getBurned,
     OnGiveXP:HCWelding_OnGiveXP,
