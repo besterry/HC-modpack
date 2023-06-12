@@ -1,0 +1,19 @@
+{
+    "Lua.diagnostics.globals": [
+        "ISVehicleMenu",
+        "getPlayerRadialMenu",
+        "setJoypadFocus",
+        "getTexture",
+        "sendClientCommand",
+        "ISVehicleMechanics",
+        "Events",
+        "ModData",
+        "getTimestampMs",
+        "isClient",
+        "onEnterVehicle",
+        "getVehicleById",
+        "sendServerCommand",
+        "ISTextBox",
+        "getSpecificPlayer"
+    ]
+}

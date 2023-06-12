@@ -117,4 +117,15 @@ module Base {
 		Tags = PlayerShopFreezer
 	}
 
+	item CarSellTicket
+	{
+		Type				=	Normal,
+		DisplayCategory		= 	Tool,
+        Weight				=	0.5,
+		UseWhileEquipped	=	TRUE,
+		DisplayName			=	Car Sell Ticket,
+		Icon				=	DriversLicense,
+		ToolTip				=	Tooltip_CarClamp,
+	}
+
 }
