@@ -4,6 +4,8 @@ BServer = {}
 
 local logfile = "timestamp_economy.log"
 local msg = ""
+require("CoinB")
+
 
 function BServer.OnInitGlobalModData()
     ModData.getOrCreate("CoinBalance")
@@ -41,18 +43,20 @@ function BServer.CreateAccount(player,args)
     ModData.transmit("CoinBalance")
 end
 
-function BServer.Deposit(player,args)
+function BServer.Deposit(player, args)
     local username = player:getUsername()
     local account = ModData.get("CoinBalance")[username]
     if not account then return end
-    account.coin = account.coin+args[1]
+    account.coin = account.coin + args[1]
     account.specialCoin = account.specialCoin + args[2]
 
-    msg = "Deposit: %s oldBalance: Coin: %s SpecialCoin %s newBalance: Coin: %s SpecialCoin %s"
-    msg = string.format(msg,username,account.coin-args[1],account.specialCoin-args[2],account.coin,account.specialCoin)
+    msg = "%s Deposit: Coins: %s Special: %s [oldBalance: Coin: %s SpecialCoin: %s -> newBalance: Coin: %s SpecialCoin: %s]"
+    msg = string.format(msg, username, account.coin-(account.coin - args[1]) , account.specialCoin-(account.specialCoin - args[2]) , account.coin - args[1], account.specialCoin - args[2], account.coin, account.specialCoin)
     BServer.writeLog(msg)
 
     ModData.transmit("CoinBalance")
+    SaveCoinBalancefd(username)
+    
 end
 
 function BServer.Transfer(player,args)
@@ -65,10 +69,11 @@ function BServer.Transfer(player,args)
     recipientAccount.coin = recipientAccount.coin+args[1]
     recipientAccount.specialCoin = recipientAccount.specialCoin+args[2]
 
-    msg = "Transfer: Sender %s oldBalance: Coin: %s SpecialCoin %s newBalance: Coin: %s SpecialCoin %s Recipient: %s oldBalance: Coin: %s SpecialCoin %s newBalance: Coin: %s SpecialCoin %s"
-    msg = string.format(msg,username,account.coin+args[1],account.specialCoin+args[2],account.coin,account.specialCoin,
+    msg = "Transfer: %s -> %s  Coin:%s Special:%s [Sender: %s oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s Recipient: `%s oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s]"
+    msg = string.format(msg,username,args[3],account.coin-account.coin+args[1],account.specialCoin-account.specialCoin+args[2],username,account.coin+args[1],account.specialCoin+args[2],account.coin,account.specialCoin,
     args[3],recipientAccount.coin-args[1],recipientAccount.specialCoin-args[2],recipientAccount.coin,recipientAccount.specialCoin)
     BServer.writeLog(msg)
+    SaveCoinBalancefd(username)
 
     ModData.transmit("CoinBalance")
     local noti = { 
@@ -100,9 +105,10 @@ function BServer.Withdraw(player,args)
         account.specialCoin = account.specialCoin-args[2]
     end
 
-    msg = "Withdraw: %s oldBalance: Coin: %s SpecialCoin %s newBalance: Coin: %s SpecialCoin %s"
-    msg = string.format(msg,username,account.coin+args[1],account.specialCoin+args[2],account.coin,account.specialCoin)
+    msg = "%s Withdraw: Coin %s Special %s [oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s]"
+    msg = string.format(msg,username,account.coin+args[1]-account.coin,account.specialCoin+args[2]-account.specialCoin,account.coin+args[1],account.specialCoin+args[2],account.coin,account.specialCoin)
     BServer.writeLog(msg)
+    SaveCoinBalancefd(username)
 
     ModData.transmit("CoinBalance")
 end
