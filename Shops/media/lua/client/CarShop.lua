@@ -4,12 +4,13 @@ local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 CarShop = CarShop or {};
 CarShop.Data = CarShop.Data or {};
 CarShop.ServerCommands = CarShop.ServerCommands or {}
+CarShop.updateTime = 0
+local CarUtils = CarShop.CarUtils
 
 local TICKET_NAME = CarShop.TICKET_NAME
 local MOD_NAME = CarShop.MOD_NAME
 
 local carShopEventHandler = {}
-local updateTime = 0
 
 function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, offerInfo)
     local playerId = playerObj:getPlayerNum()
@@ -41,30 +42,6 @@ function ISVehicleMenu.onSendCommandRemoveCarSellTicket(playerObj, offerInfo)
     -- print("Sending command ISVehicleMenu.onRemoveCarClamp")
     playerObj:Say("Rmove from sell...")
     sendClientCommand(playerObj, MOD_NAME, 'onRemoveFromSale', offerInfo)
-end
-
-local CarUtils = {}
-CarUtils.__index = CarUtils
-function CarUtils:init(offerInfo)
-	local o = {}
-	setmetatable(o, CarUtils)
-	print('offerInfo ', offerInfo)
-	o.username = offerInfo.username
-	o.vehicleId = offerInfo.vehicleId
-	o.vehicleIdStr = tostring(offerInfo.vehicleId)
-	return o
-end
-function CarUtils:isCarOwner()
-	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
-		return CarShop.Data.CarShop[self.vehicleIdStr].username == self.username
-	end
-	return false
-end
-function CarUtils:isCarOnSale()
-	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
-		return CarShop.Data.CarShop[self.vehicleIdStr].price ~= nil
-	end
-	return false
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
@@ -175,7 +152,7 @@ local function initGlobalModData(isNewGame)
 	ModData.request(MOD_NAME)
     CarShop.Data.CarShop = ModData.getOrCreate(MOD_NAME);
 	
-	updateTime = getTimestampMs()
+	CarShop.updateTime = getTimestampMs()
 end
 
 Events.OnInitGlobalModData.Add(initGlobalModData);
@@ -207,25 +184,45 @@ local function processCarSellTicketConstraints(vehicle, shouldPrintOutput)
 	end
 end
 
-local function onPlayerUpdate(playerObj)
-	if updateTime + 150 < getTimestampMs() then
-		local vehicle = playerObj:getVehicle()
-		if vehicle then
-			processCarSellTicketConstraints(vehicle, false)
-		end
-	end	
+-- local function onPlayerUpdate(playerObj)
+-- 	if CarShop.updateTime + 150 < getTimestampMs() then
+-- 		print(true)
+-- 		-- local vehicle = playerObj:getVehicle()
+-- 		local carUtils = CarUtils:initByPlayerObj(playerObj)
+-- 		if carUtils then
+-- 			if carUtils.vehicle then
+-- 				carUtils:processConstraints()
+-- 				-- processCarSellTicketConstraints(vehicle, false)
+-- 			end
+-- 		end
+		
+-- 	else
+-- 		print(false)
+-- 	end	
+-- end
+local lastCarUtils = nil
+local function onEnterVehicle(playerObj)
+	-- Events.OnPlayerUpdate.Add(onPlayerUpdate)
+	-- local vehicle = character:getVehicle()
+	local carUtils = CarUtils:initByPlayerObj(playerObj)
+	if carUtils then
+		lastCarUtils = carUtils
+		carUtils:processConstraints()
+	end
+	-- processCarSellTicketConstraints(vehicle, true)
 end
 
-local function onEnterVehicle(character)
-	Events.OnPlayerUpdate.Add(onPlayerUpdate)
-	local vehicle = character:getVehicle()
-	processCarSellTicketConstraints(vehicle, true)
-end
-
+-- local function onExitVehicle(playerObj)
+-- 	local carUtils = CarUtils:initByPlayerObj(playerObj)
+-- 	carUtils:stopConstraints()
+-- end
 local function onExitVehicle(character)
-	Events.OnPlayerUpdate.Remove(onPlayerUpdate)
+	if lastCarUtils then
+		lastCarUtils:stopConstraints()
+		lastCarUtils = nil
+	end
+	-- Events.OnPlayerUpdate.Remove(onPlayerUpdate)
 end
-
 Events.OnEnterVehicle.Add(onEnterVehicle)
 Events.OnExitVehicle.Add(onExitVehicle)
 

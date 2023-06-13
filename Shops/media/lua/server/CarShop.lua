@@ -2,6 +2,7 @@ if isClient() then return end
 
 CarShop = CarShop or {};
 CarShop.Data = CarShop.Data or {};
+local CarUtils = CarShop.CarUtils
 
 local TICKET_NAME = CarShop.TICKET_NAME
 local MOD_NAME = CarShop.MOD_NAME
@@ -43,33 +44,41 @@ end
 
 Events.OnInitGlobalModData.Add(initGlobalModData);
 
-local function processCarShopConstraints(vehicle)
-	if CarShop.Data.CarShop == nil then return false end
-	if CarShop.Data.CarShop == {} then return false end
-	if type(CarShop.Data.CarShop) ~= "table" then return false end
+-- local function processCarShopConstraints(vehicle)
+-- 	if CarShop.Data.CarShop == nil then return false end
+-- 	if CarShop.Data.CarShop == {} then return false end
+-- 	if type(CarShop.Data.CarShop) ~= "table" then return false end
 
-	if CarShop.Data.CarShop[tostring(GetCarShopIdByVehicle(vehicle))] then
-		print("Lock vehicle engine.")
-		vehicle:setMass(CarShop.constants.vehicleLockMass)
-		return true
-	else
-		local vehicleTowing = vehicle:getVehicleTowing()
-		if vehicleTowing and CarShop.Data.CarShop[tostring(GetCarShopIdByVehicle(vehicleTowing))] then
-			print("Lock vehicle engine.")
-			vehicle:setMass(CarShop.constants.vehicleLockMass)
-			return true
-		else
-			print("Unlock vehicle engine.")
-			vehicle:setMass(vehicle:getInitialMass())
-			vehicle:updateTotalMass()
-		end
-		return false
-	end
-end
+-- 	if CarShop.Data.CarShop[tostring(GetCarShopIdByVehicle(vehicle))] then
+-- 		print("Lock vehicle engine.")
+-- 		vehicle:setMass(CarShop.constants.vehicleLockMass)
+-- 		return true
+-- 	else
+-- 		local vehicleTowing = vehicle:getVehicleTowing()
+-- 		if vehicleTowing and CarShop.Data.CarShop[tostring(GetCarShopIdByVehicle(vehicleTowing))] then
+-- 			print("Lock vehicle engine.")
+-- 			vehicle:setMass(CarShop.constants.vehicleLockMass)
+-- 			return true
+-- 		else
+-- 			print("Unlock vehicle engine.")
+-- 			vehicle:setMass(vehicle:getInitialMass())
+-- 			vehicle:updateTotalMass()
+-- 		end
+-- 		return false
+-- 	end
+-- end
 
-function onEnterVehicle(character)
-	local vehicle = character:getVehicle()	
-	processCarShopConstraints(vehicle)
-end
-
-Events.OnEnterVehicle.Add(onEnterVehicle)
+-- function onEnterVehicle(character)
+-- 	local carUtils = CarUtils:initByPlayerObj(character)
+-- 	if carUtils then
+-- 		carUtils:processConstraints()
+-- 	end
+-- 	-- local vehicle = character:getVehicle()	
+-- 	-- processCarShopConstraints(vehicle)
+-- end
+-- local function onExitVehicle(character)
+-- 	local carUtils = CarUtils:initByPlayerObj(character)
+-- 	carUtils:stopConstraints()
+-- end
+-- Events.OnEnterVehicle.Add(onEnterVehicle)
+-- -- Events.OnExitVehicle.Add(onExitVehicle)
