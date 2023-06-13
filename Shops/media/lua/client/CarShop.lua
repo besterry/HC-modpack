@@ -1,7 +1,3 @@
--- local base_ISVehicleMenu_showRadialMenuOutside = ISVehicleMenu.showRadialMenuOutside
-require('bcUtils')
-local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
-
 CarShop = CarShop or {};
 CarShop.Data = CarShop.Data or {};
 CarShop.ServerCommands = CarShop.ServerCommands or {}
@@ -12,17 +8,6 @@ local TICKET_NAME = CarShop.TICKET_NAME
 local MOD_NAME = CarShop.MOD_NAME
 
 local carShopEventHandler = {}
-
--- NOTE: Переопределяем метод, чтоб нельзя было забрать ключи когда машина выставлена на продажу
-local base_ISVehicleDashboard_onClickKeys = ISVehicleDashboard.onClickKeys
----@diagnostic disable-next-line: duplicate-set-field
-function ISVehicleDashboard:onClickKeys()
-	local o = base_ISVehicleDashboard_onClickKeys(self)
-	if not CarShop.isAllowGetKey then
-		self.vehicle:setKeysInIgnition(true);
-	end
-	return o
-end
 
 function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, offerInfo)
 	local hasAccount = BClientGetAccount(playerObj)
@@ -49,6 +34,7 @@ function ISVehicleMenu.onPriceEntered(target, button, playerObj, offerInfo)
             playerObj:Say("Adding car for sale...") -- TODO: Переписать текст
             offerInfo.price = priceValue
             sendClientCommand(playerObj, MOD_NAME, 'onAddCarSellTicket', offerInfo)
+			ISTimedActionQueue.add(ISExitVehicle:new(playerObj))
         end
     end
 end
@@ -72,17 +58,12 @@ function ISVehicleMenu.buyCar(playerObj, carInfo)
 	end
 	local offerInfo = carInfo:getOfferInfo()
 	sendClientCommand(playerObj, MOD_NAME, 'onBuyCar', offerInfo)
-	print('account', account)
-	print(bcUtils.dump(account))
-	-- playerObj:getInventory():AddItems(TICKET_NAME, 1);
-    -- playerObj:Say("Rmove from sell...")
-    -- sendClientCommand(playerObj, MOD_NAME, 'onRemoveFromSale', offerInfo)
 end
 
+local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 ---@diagnostic disable-next-line: duplicate-set-field
 function ISVehicleMenu.showRadialMenu(playerObj)
     base_ISVehicleMenu_showRadialMenu(playerObj)
-    -- if playerObj:getVehicle() then return end
 
 	local playerIndex = playerObj:getPlayerNum()
     local username = tostring(playerObj:getUsername())
@@ -110,9 +91,6 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local vehicleIsOnSale = carInfo:isCarOnSale()
 		local playerIsCarOwner = carInfo:isCarOwner()
 
-		print('vehicleId: ', vehicleId)
-		print('vehicleIsOnSale: ', vehicleIsOnSale)
-		print('playerIsCarOwner: ', playerIsCarOwner)
 		if playerHasCarTicket and not vehicleIsOnSale then
         	menu:addSlice('Offer For Sale', getTexture('media/textures/ShopUI_Cart_Add.png'), ISVehicleMenu.onSendCommandAddCarSellTicket, playerObj, offerInfo)
 		end
@@ -124,7 +102,6 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 			menu:addSlice('Buy a car for: '..price..'$', getTexture('media/textures/ShopUI_Cart.png'), ISVehicleMenu.buyCar, playerObj, carInfo)
 		end
 
-		print('CHEAT:', vehicleIsOnSale, ISVehicleMechanics.cheat, playerObj:getAccessLevel() ~= 'None', playerObj:getAccessLevel())
 		if vehicleIsOnSale and (ISVehicleMechanics.cheat or playerObj:getAccessLevel() ~= 'None') then
 			menu:addSlice('CHEAT: Clean Car Sell Ticket ModData', getTexture('media/ui/BugIcon.png'), ISVehicleMenu.onSendCommandRemoveCarSellTicket, playerObj, offerInfo)
 		end
@@ -134,8 +111,12 @@ end
 
 
 function CarShop.ServerCommands.UpdateCarShopData(offerInfo)
-	-- print('UpdateCarShopData', bcUtils.dump(offerInfo))
     CarShop.Data.CarShop[offerInfo.vehicleId] = offerInfo;
+end
+
+function CarShop.ServerCommands.StopConstraints(offerInfo)
+	local carUtils = CarUtils:init(offerInfo)
+	carUtils:stopConstraints()
 end
 
 carShopEventHandler.OnReceiveGlobalModData = function(tableName, data)
@@ -158,16 +139,16 @@ end
 
 Events.OnReceiveGlobalModData.Add(carShopEventHandler.OnReceiveGlobalModData);
 
-local function receiveServerCommand(module, command, args)
+carShopEventHandler.receiveServerCommand = function(module, command, args)
     if module ~= MOD_NAME then return; end
     if CarShop.ServerCommands[command] then
         CarShop.ServerCommands[command](args);
     end
 end
 
-Events.OnServerCommand.Add(receiveServerCommand);
+Events.OnServerCommand.Add(carShopEventHandler.receiveServerCommand);
 
-local function initGlobalModData(isNewGame)
+carShopEventHandler.initGlobalModData = function (isNewGame)
     -- clear only if its a client, if it's single-player we dont need to clear
     if isClient() and ModData.exists(MOD_NAME) then
         -- clear the current copy for a client cause it might be outdated
@@ -180,37 +161,58 @@ local function initGlobalModData(isNewGame)
 	CarShop.updateTime = getTimestampMs()
 end
 
-Events.OnInitGlobalModData.Add(initGlobalModData);
+Events.OnInitGlobalModData.Add(carShopEventHandler.initGlobalModData);
 
-
--- local function onPlayerUpdate(playerObj)
--- 	local carUtils = CarUtils:initByPlayerObj(playerObj)
--- 	if carUtils then
--- 		if carUtils.vehicle and carUtils:isCarOnSale() then
--- 			carUtils:processConstraints()
--- 		else
--- 			carUtils:stopConstraints()
--- 			Events.OnPlayerUpdate.Remove(onPlayerUpdate)
--- 		end
--- 	end
--- end
-local lastCarUtils = nil
-local function onEnterVehicle(playerObj)
-	-- Events.OnPlayerUpdate.Add(onPlayerUpdate)
+carShopEventHandler.onEnterVehicle = function(playerObj)
 	local carUtils = CarUtils:initByPlayerObj(playerObj)
-	if carUtils and carUtils:isCarOnSale() then
-		lastCarUtils = carUtils
+	if carUtils then
 		carUtils:processConstraints()
 	end
 end
 
-local function onExitVehicle(character)
-	if lastCarUtils and lastCarUtils:isCarOnSale() then
-		lastCarUtils:stopConstraints()
-		lastCarUtils = nil
+local function shutOff(playerObj)
+	local vehicle = playerObj:getVehicle()
+	local carUtils = CarUtils:initByPlayerObj(playerObj)
+	if carUtils and carUtils:isCarOnSale() and vehicle:isDriver(playerObj) and vehicle:isEngineRunning() then
+		if isClient() then
+			sendClientCommand(playerObj, 'vehicle', 'shutOff', {})
+		else
+			vehicle:shutOff()
+		end
 	end
-	-- Events.OnPlayerUpdate.Remove(onPlayerUpdate)
 end
-Events.OnEnterVehicle.Add(onEnterVehicle)
-Events.OnExitVehicle.Add(onExitVehicle)
+
+-- NOTE: Переопределяем метод выхода из авто, чтобы заглушить двигатель. Потому что через события машина перестаёт работать
+-- Двигательно нужно глушить чтобы нельзя было уехать из трейдзоны
+local base_ISExitVehicle_perform = ISExitVehicle.perform;
+---@diagnostic disable-next-line: duplicate-set-field
+function ISExitVehicle:perform()
+	shutOff(self.character)
+	return base_ISExitVehicle_perform(self);
+end
+
+-- NOTE: Переопределяем метод смены седения, чтобы глушить двигатель.
+local base_ISSwitchVehicleSeat_perform = ISSwitchVehicleSeat.perform
+---@diagnostic disable-next-line: duplicate-set-field
+function ISSwitchVehicleSeat:perform()
+	shutOff(self.character)
+	return base_ISSwitchVehicleSeat_perform(self);
+end
+
+-- NOTE: Переопределяем метод, чтоб нельзя было забрать ключи когда машина выставлена на продажу
+local base_ISVehicleDashboard_onClickKeys = ISVehicleDashboard.onClickKeys
+---@diagnostic disable-next-line: duplicate-set-field
+function ISVehicleDashboard:onClickKeys()
+	local o = base_ISVehicleDashboard_onClickKeys(self)
+	if not CarShop.isAllowGetKey and not self.vehicle:isHotwired() then
+		self.vehicle:setKeysInIgnition(true);
+	end
+	return o
+end
+
+Events.OnEnterVehicle.Add(carShopEventHandler.onEnterVehicle)
+
+-- TODO:
+-- 1. Тушить фары и свет при выходе из авто
+-- 2. Сделать функцию торга
 

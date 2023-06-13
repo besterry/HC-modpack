@@ -17,6 +17,11 @@
         "getSpecificPlayer",
         "ISVehicleDashboard",
         "getGameSpeed",
-        "setGameSpeed"
+        "setGameSpeed",
+        "getPlayerVehicleDashboard",
+        "triggerEvent",
+        "ISExitVehicle",
+        "ISTimedActionQueue",
+        "ISSwitchVehicleSeat"
     ]
 }

@@ -22,6 +22,7 @@ function CarUtils:init(offerInfo)
 	o.vehicle = getVehicleById(offerInfo.vehicleId)
 	return o
 end
+
 function CarUtils:initByPlayerObj(playerObj)
 	local vehicle = playerObj:getVehicle()
 	if not vehicle then
@@ -32,6 +33,7 @@ function CarUtils:initByPlayerObj(playerObj)
 		vehicleId = vehicle:getId()
 	})
 end
+
 function CarUtils:initByVehicle(vehicleObj)
 	local playerObj = vehicleObj:getDriver()
 	local username = ''
@@ -43,31 +45,62 @@ function CarUtils:initByVehicle(vehicleObj)
 		vehicleId = vehicleObj:getId()
 	})
 end
+
+-- HACK: не всегда корректно работает
+function CarUtils:exit(playerObj)
+	local vehicle = self.vehicle
+	local seat = vehicle:getSeat(playerObj)
+	if not seat then
+		return
+	end
+	vehicle:exit(playerObj)
+	vehicle:setCharacterPosition(playerObj, seat, "outside")
+	playerObj:PlayAnim("Idle")
+	vehicle:updateHasExtendOffsetForExitEnd(playerObj)
+	getPlayerVehicleDashboard(playerObj:getPlayerNum()):setVehicle(nil)
+end
+
+-- FIXME: по неизвестно причине не работает
+function CarUtils:stopEngine()
+	local vehicle = self.vehicle
+	local playerObj = vehicle:getDriver()
+	if vehicle and playerObj and vehicle:isDriver(playerObj) and vehicle:isEngineRunning() then
+		if isClient() then
+			sendClientCommand(self.character, 'vehicle', 'shutOff', {})
+		else
+			vehicle:shutOff()
+		end
+	end
+end
+
 function CarUtils:isCarOwner()
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
 		return CarShop.Data.CarShop[self.vehicleIdStr].username == self.username
 	end
 	return false
 end
+
 function CarUtils:isCarOnSale()
-	-- print('self.vehicleIdStr', self.vehicleIdStr)
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
 		return CarShop.Data.CarShop[self.vehicleIdStr].price ~= nil
 	end
 	return false
 end
+
 function CarUtils:getPrice()
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
 		return CarShop.Data.CarShop[self.vehicleIdStr].price
 	end
 	return nil
 end
+
 function CarUtils:getOfferInfo()
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
 		return CarShop.Data.CarShop[self.vehicleIdStr]
 	end
 	return nil
 end
+
 function CarUtils:processConstraints()
 	local constants = CarShop.constants
 	if self:isCarOnSale() then
@@ -80,12 +113,10 @@ function CarUtils:processConstraints()
 			local vehicleTowingUtils = CarUtils:initByVehicle(vehicleTowing)
 			if vehicleTowing and vehicleTowingUtils:isCarOnSale() then
 				self.vehicle:setMass(constants.vehicleLockMass)
-				return true
-			else
-				self:stopConstraints()
+				return true	
 			end
 		end
-		
+		self:stopConstraints()
 		return false
 	end
 end
@@ -94,25 +125,4 @@ function CarUtils:stopConstraints()
 	self.vehicle:setMass(self.vehicle:getInitialMass())
 	self.vehicle:updateTotalMass()
 	CarShop.isAllowGetKey = true
-	print('stopConstraints')
-	self.vehicle:shutOff()
-	-- self.vehicle:scriptReloaded()
-	-- reloadVehicles()
-	-- delayFunction(delayedStuff, 100, self)
-	-- self.vehicle:softReset()
-	-- self.vehicle:setPhysicsActive(false)
-	-- self.vehicle:updatePhysics()
-	-- self.vehicle:setPhysicsActive(true)
-	-- self.vehicle:update()
-	-- self.vehicle:postupdate()
-	-- print('!!!!!!!!!')
 end
-
--- setKeysInIgnition(boolean boolean1)
-
--- setPhysicsActive(boolean boolean1)
--- softReset()
-
-
--- syncKeyInIgnition(boolean boolean1, boolean boolean2, InventoryItem inventoryItem)
--- update()
