@@ -14,6 +14,9 @@
         "getVehicleById",
         "sendServerCommand",
         "ISTextBox",
-        "getSpecificPlayer"
+        "getSpecificPlayer",
+        "ISVehicleDashboard",
+        "getGameSpeed",
+        "setGameSpeed"
     ]
 }

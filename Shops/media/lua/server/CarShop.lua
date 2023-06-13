@@ -11,7 +11,6 @@ local CarShopCommands = {}
 local Commands = {}
 
 function Commands.onAddCarSellTicket(player, offerInfo)
-	print("Adding car clamp")
 	local vehicle = getVehicleById(offerInfo.vehicleId)
 	CarShop.Data.CarShop[offerInfo.vehicleId] = offerInfo
 	sendServerCommand(MOD_NAME, "UpdateCarShopData", offerInfo)
@@ -21,12 +20,21 @@ function Commands.onAddCarSellTicket(player, offerInfo)
 end
 
 function Commands.onRemoveFromSale(player, offerInfo)
-	print("Removing car clamp")
 	local vehicle = getVehicleById(offerInfo.vehicleId)
 	CarShop.Data.CarShop[offerInfo.vehicleId] = {}
 	sendServerCommand(MOD_NAME, "UpdateCarShopData", {vehicleId = offerInfo.vehicleId})
 	ModData.transmit(MOD_NAME)
 	vehicle:shutOff()
+end
+
+function Commands.onBuyCar(player, offerInfo)
+	local args = {
+		offerInfo.price,
+		0,
+		offerInfo.username
+	}
+	BServer.Transfer(player, args)
+	Commands.onRemoveFromSale(player, offerInfo)
 end
 
 CarShopCommands.OnClientCommand = function(module, command, player, args)

@@ -32,5 +32,10 @@ local function BS_OnServerCommand(module, command, args)
     end
 end
 
+function BClientGetAccount(player)
+    local username = player:getUsername()
+    return ModData.get("CoinBalance")[username]
+end
+
 Events.OnServerCommand.Add(BS_OnServerCommand)
 Events.OnConnected.Add(BClient.OnConnected)

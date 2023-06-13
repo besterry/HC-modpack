@@ -3,6 +3,7 @@ CarShop.Data = CarShop.Data or {};
 CarShop.ServerCommands = CarShop.ServerCommands or {}
 CarShop.TICKET_NAME = 'CarSellTicket'
 CarShop.MOD_NAME = 'CarShop'
+CarShop.isAllowGetKey = true
 
 CarShop.constants = { 
 	vehicleLockMass = 9000000 
@@ -49,15 +50,29 @@ function CarUtils:isCarOwner()
 	return false
 end
 function CarUtils:isCarOnSale()
+	-- print('self.vehicleIdStr', self.vehicleIdStr)
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
 		return CarShop.Data.CarShop[self.vehicleIdStr].price ~= nil
 	end
 	return false
 end
+function CarUtils:getPrice()
+	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
+		return CarShop.Data.CarShop[self.vehicleIdStr].price
+	end
+	return nil
+end
+function CarUtils:getOfferInfo()
+	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleIdStr] then
+		return CarShop.Data.CarShop[self.vehicleIdStr]
+	end
+	return nil
+end
 function CarUtils:processConstraints()
 	local constants = CarShop.constants
 	if self:isCarOnSale() then
 		self.vehicle:setMass(constants.vehicleLockMass)
+		CarShop.isAllowGetKey = false
 		return true
 	else
 		local vehicleTowing = self.vehicle:getVehicleTowing()
@@ -78,6 +93,8 @@ end
 function CarUtils:stopConstraints()
 	self.vehicle:setMass(self.vehicle:getInitialMass())
 	self.vehicle:updateTotalMass()
+	CarShop.isAllowGetKey = true
+	print('stopConstraints')
 	self.vehicle:shutOff()
 	-- self.vehicle:scriptReloaded()
 	-- reloadVehicles()
@@ -88,7 +105,7 @@ function CarUtils:stopConstraints()
 	-- self.vehicle:setPhysicsActive(true)
 	-- self.vehicle:update()
 	-- self.vehicle:postupdate()
-	print('!!!!!!!!!')
+	-- print('!!!!!!!!!')
 end
 
 -- setKeysInIgnition(boolean boolean1)
