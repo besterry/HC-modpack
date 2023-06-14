@@ -1,10 +1,11 @@
--- РџР°РЅРµР»СЊ СЃРѕ СЃРїРёСЃРєРѕРј РІСЃРµС… PVP-Р·РѕРЅ
+-- Панель со списком всех PVP-зон
 
 --***********************************************************
 --**                  ROBERT JOHNSON                       **
 --**                 edited by iBrRus                      **
 --***********************************************************
 require "PVPE_ForcePVPZone.lua"
+require "loadzones.lua"
 
 PVPE_ISPvpZonePanel = ISPanel:derive("PVPE_ISPvpZonePanel");
 
@@ -58,6 +59,20 @@ function PVPE_ISPvpZonePanel:initialise()
     self.addZone:instantiate();
     self.addZone.borderColor = self.buttonBorderColor;
     self:addChild(self.addZone);
+
+    self.addZoneCoord = ISButton:new(self.truePvpList.x, self.truePvpList.y + self.truePvpList.height +self.addZone.height + 10, 70, btnHgt2, getText("IGUI_PvpZone_AddZoneCoord"), self, PVPE_ISPvpZonePanel.onClick);
+    self.addZoneCoord.internal = "ADDZONECOORD";
+    self.addZoneCoord:initialise();
+    self.addZoneCoord:instantiate();
+    self.addZoneCoord.borderColor = self.buttonBorderColor;
+    self:addChild(self.addZoneCoord);
+
+    -- self.addZonefile = ISButton:new(self.truePvpList.x, self.truePvpList.y + self.truePvpList.height +self.addZone.height + self.addZoneCoord.height + 15, 70, btnHgt2, getText("IGUI_PvpZone_AddZoneFile"), self, PVPE_ISPvpZonePanel.onClick);
+    -- self.addZonefile.internal = "REFRESHFROMFILE";
+    -- self.addZonefile:initialise();
+    -- self.addZonefile:instantiate();
+    -- self.addZonefile.borderColor = self.buttonBorderColor;
+    -- self:addChild(self.addZonefile);
 
     -- self.seeZoneOnGround = ISButton:new(self.truePvpList.x, self.addZone.y + btnHgt2 + 5, 70, btnHgt2, getText("IGUI_PvpZone_SeeZone"), self, PVPE_ISPvpZonePanel.onClick);
     -- self.seeZoneOnGround.internal = "SEEZONE";
@@ -154,6 +169,42 @@ function PVPE_ISPvpZonePanel:onClick(button)
             SendCommandToServer("/invisible");
         end
     end
+    if button.internal == "ADDZONECOORD" then
+        local addPvpZone = PVPE_ISAddNonPvpZoneCoordUI:new(10,10, 400, 350, self.player);
+        addPvpZone:initialise()
+        addPvpZone:addToUIManager()
+        addPvpZone.parentUI = self;
+        self:setVisible(false);
+        if not self.player:isInvisible() then
+            SendCommandToServer("/invisible");
+        end
+    end
+
+    -- if button.internal == "REFRESHFROMFILE" then
+    --     local modData = ModData.getOrCreate("ForcePvpZoneTable")
+    --     local filename = getServerName() .. "_pvpzone.lua"
+        
+    --     if serverFileExists(filename) then
+    --         print("File found. ////////////////////////////////")
+    --         reloadServerLuaFile(filename)
+            
+    --         -- Очищаем предыдущие данные
+    --         modData.PvpZoneList = {}
+    --         modData.listSize = 0
+            
+    --         for _, t in ipairs(ServerPvpZoneList) do
+    --             print("Adding zones \\\\\\\\\\\\")
+    --             modData.listSize = modData.listSize + 1
+    --             local pvpZoneObj = ForcePVPZone.new(nil, t.title, t.x, t.y, t.x2, t.y2)
+    --             modData.PvpZoneList[t.title] = pvpZoneObj
+    --         end
+            
+    --         ModData.transmit("ForcePvpZoneTable")
+    --         self:populateList()
+    --     else
+    --         print("File not found.")
+    --     end
+    -- end    
     -- if button.internal == "SEEZONE" then
         -- self.player:setSeeNonPvpZone(not self.player:isSeeNonPvpZone());
     -- end
