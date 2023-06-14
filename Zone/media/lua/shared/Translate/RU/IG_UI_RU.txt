@@ -1,4 +1,11 @@
 IGUI_RU = {
     IGUI_AdminPanel_PvpZone = "Зона c PVP",
     IGUI_ForcePvpZone_Title = "ЗОНА ОБЯЗАТЕЛЬНОГО PVP",
+    IGUI_PvpZone_AddZoneCoord = "Добавить зону по координатам",
+    IGUI_PvpZone_ZoneCoordx1 = "Начальная координата X (min)",
+    IGUI_PvpZone_ZoneCoordx2 = "Конечная координата X (max)",
+    IGUI_PvpZone_ZoneCoordy1 = "Начальная координата y (min)",
+    IGUI_PvpZone_ZoneCoordy2 = "Конечная координата y (max)",
+    IGUI_CoordIncorrectly = "Координаты введены неверно",
+    IGUI_PvpZone_AddZoneFile = "Загрузить зоны из файла",
 }
