@@ -58,6 +58,7 @@ IGUI_RU = {
 	IGUI_Tab_Tools = "Инструменты",
 	IGUI_Tab_Cloth = "Одежда",
 	IGUI_Not_correct_place_for_shop = "Размещение магазина разрешено только в торговой зоне",
+    IGUI_AdminPanel_ShopEdit = "Ассортимент магазина",    
 
     IGUI_Balance_AccountNeeded2 = "У меня нет банковского счёта. Нужно создать его с помощью бумажника",
     IGUI_CarShop_Not_TradeZone = "Мне нужно быть в зоне торговли автомобилями",
