@@ -1,4 +1,4 @@
--- Р”РѕР±Р°РІР»РµРЅРёРµ РєРЅРѕРїРєРё "Р—РѕРЅР° СЃ PVP" РІ РїР°РЅРµР»СЊ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°
+-- Добавление кнопки "Зона с PVP" в панель администратора
 require "PVPE_ISPvpZonePanel.lua"
 
 local old_ISAdminPanelUI_create = ISAdminPanelUI.create
@@ -14,8 +14,8 @@ function ISAdminPanelUI:create()
     local x = 0;
     local y = 0;
     
-    -- 12 РєРЅРѕРїРѕРє РІ СЂСЏРґ
-    -- РџРѕСЃР»РµРґРЅСЏСЏ РєРЅРѕРїРєР° - Р·Р°РєСЂС‹С‚СЊ
+    -- 12 кнопок в ряд
+    -- Последняя кнопка - закрыть
     local last_btn = self.children[self.IDMax - 1]
     if last_btn.internal == "CANCEL" then
         last_btn = self.children[self.IDMax - 2]

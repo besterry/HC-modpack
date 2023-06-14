@@ -7,7 +7,7 @@ require "PVPE_ForcePVPZone.lua"
     -- old_ISSafetyUI_prerender_reload_debug = true
 -- end
 
--- РђРІС‚РѕРјР°С‚РёС‡РµСЃРєР°СЏ Р°РєС‚РёРІР°С†РёСЏ СЂРµР¶РёРјР° PVP
+-- Автоматическая активация режима PVP
 local old_ISSafetyUI_prerender = ISSafetyUI.prerender
 function ISSafetyUI:prerender()
     old_ISSafetyUI_prerender(self)
@@ -25,7 +25,7 @@ function ISSafetyUI:prerender()
     end
 end
 
--- РћС‚РєР»СЋС‡РµРЅРёРµ СѓСЂРѕРЅР° РІ Р·РѕРЅРµ PVPE
+-- Отключение урона в зоне PVPE
 Events.OnWeaponHitCharacter.Add(function (attackedBy, target, handWeapon, damage)
     if target:isZombie() then return end
     if attackedBy:getSafety():isEnabled() or target:getSafety():isEnabled() then
