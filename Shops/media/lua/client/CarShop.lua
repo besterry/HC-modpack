@@ -6,6 +6,8 @@ CarShop = CarShop or {};
 CarShop.Data = CarShop.Data or {};
 CarShop.ServerCommands = CarShop.ServerCommands or {}
 CarShop.updateTime = 0
+---@alias carTradeZone number[]
+---@type carTradeZone[]
 CarShop.zones = {}
 
 ---@type CarUtils
@@ -19,10 +21,12 @@ local MOD_NAME = CarShop.MOD_NAME
 local carShopEventHandler = {}
 
 if SandboxVars.Shops.CarTradeZone then
+	---@type carTradeZone[]
 	local result = {}
 	local zonesStrArr = luautils.split(SandboxVars.Shops.CarTradeZone, ';')
 	for _, zoneStr in ipairs(zonesStrArr) do
         local zoneValuesStr = luautils.split(zoneStr, " ")
+		---@type carTradeZone
 		local zoneValuesNum = {}
 		for _, coordStr in ipairs(zoneValuesStr) do
 			table.insert(zoneValuesNum, tonumber(coordStr))
@@ -32,6 +36,8 @@ if SandboxVars.Shops.CarTradeZone then
 	CarShop.zones = result
 end
 
+---@param x number
+---@param y number
 CarShop.isTradeZoneCoords = function(x, y)
 	local result = false
 	for _, zone in ipairs(CarShop.zones) do
@@ -41,7 +47,10 @@ CarShop.isTradeZoneCoords = function(x, y)
 	return true
 end
 
-function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, offerInfo)
+---@param playerObj IsoPlayer
+---@param _offerInfo offerInfo
+function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, _offerInfo)
+	local offerInfo = copyTable(_offerInfo)
 	local hasAccount = BClientGetAccount(playerObj)
 	if not hasAccount then
 		playerObj:Say('I have no account');
@@ -55,13 +64,18 @@ function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, offerInfo)
 		return
 	end
     local playerId = playerObj:getPlayerNum()
-    local modal = ISTextBox:new(0, 0, 280, 180, 'Set price for the car', '0', nil, ISVehicleMenu.onPriceEntered, playerId, playerObj, offerInfo);
+    local modal = ISTextBox:new(
+		0, 0, 280, 180, 'Set price for the car', '', 
+		nil, ISVehicleMenu.onPriceEntered, playerId, playerObj, offerInfo);
     modal:initialise();
     modal:setOnlyNumbers(true)
     modal:addToUIManager();
 end
 
-function ISVehicleMenu.onPriceEntered(target, button, playerObj, offerInfo)
+---@param playerObj IsoPlayer
+---@param _offerInfo offerInfo
+function ISVehicleMenu.onPriceEntered(target, button, playerObj, _offerInfo)
+	local offerInfo = copyTable(_offerInfo)
     if button.internal == "OK" then
         local priceValue = tonumber(button.parent.entry:getText())
 		local length = button.parent.entry:getInternalText():len()
@@ -80,7 +94,10 @@ function ISVehicleMenu.onPriceEntered(target, button, playerObj, offerInfo)
     end
 end
 
-function ISVehicleMenu.onSendCommandRemoveCarSellTicket(playerObj, offerInfo)
+---@param playerObj IsoPlayer
+---@param _offerInfo offerInfo
+function ISVehicleMenu.onSendCommandRemoveCarSellTicket(playerObj, _offerInfo)
+	local offerInfo = copyTable(_offerInfo)
 	playerObj:getInventory():AddItems(TICKET_NAME, 1);
     playerObj:Say("Rmove from sell...")
 	-- local args = { username = offerInfo.username, vehicleKeyId=offerInfo.vehicleKeyId, price = offerInfo.price }
@@ -88,7 +105,10 @@ function ISVehicleMenu.onSendCommandRemoveCarSellTicket(playerObj, offerInfo)
     sendClientCommand(playerObj, MOD_NAME, 'onRemoveFromSale', offerInfo)
 end
 
-function ISVehicleMenu.buyCar(playerObj, carInfo)
+---@param playerObj IsoPlayer
+---@param _carInfo CarUtils
+function ISVehicleMenu.buyCar(playerObj, _carInfo)
+	local carInfo = copyTable(_carInfo)
 	local account = BClientGetAccount(playerObj)
 	local price = carInfo:getPrice()
 	if not account then
@@ -106,6 +126,7 @@ function ISVehicleMenu.buyCar(playerObj, carInfo)
 end
 
 local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
+---@param playerObj IsoPlayer
 function ISVehicleMenu.showRadialMenu(playerObj)
     base_ISVehicleMenu_showRadialMenu(playerObj)
 
@@ -156,11 +177,12 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	menu:addToUIManager()
 end
 
-
+---@param offerInfo offerInfo
 function CarShop.ServerCommands.UpdateCarShopData(offerInfo)
     CarShop.Data.CarShop[offerInfo.vehicleKeyId] = offerInfo;
 end
 
+---@param offerInfo offerInfo
 function CarShop.ServerCommands.StopConstraints(offerInfo)
 	local carUtils = CarUtils:init(offerInfo)
 	carUtils:stopConstraints()
@@ -186,6 +208,9 @@ end
 
 Events.OnReceiveGlobalModData.Add(carShopEventHandler.OnReceiveGlobalModData);
 
+---@param module string
+---@param command string
+---@param args any[] | any
 carShopEventHandler.receiveServerCommand = function(module, command, args)
     if module ~= MOD_NAME then return; end
     if CarShop.ServerCommands[command] then
@@ -210,6 +235,7 @@ end
 
 Events.OnInitGlobalModData.Add(carShopEventHandler.initGlobalModData);
 
+---@param playerObj IsoPlayer
 carShopEventHandler.onEnterVehicle = function(playerObj)
 	local carUtils = CarUtils:initByPlayerObj(playerObj)
 	if carUtils then
@@ -225,6 +251,8 @@ function ISExitVehicle:perform()
 	local carUtils = CarUtils:initByPlayerObj(self.character)
 	if carUtils and carUtils:isCarOnSale() then
 		carUtils:stopEngine()
+		carUtils:stopHeater()
+		carUtils:stopHeadlights()
 		carUtils:stopConstraints()
 	end
 	return base_ISExitVehicle_perform(self);
@@ -237,6 +265,8 @@ function ISSwitchVehicleSeat:perform()
 	local carUtils = CarUtils:initByPlayerObj(self.character)
 	if carUtils and carUtils:isCarOnSale() then
 		carUtils:stopEngine()
+		carUtils:stopHeater()
+		carUtils:stopHeadlights()
 	end
 	-- carUtils:stopConstraints()
 	return base_ISSwitchVehicleSeat_perform(self);

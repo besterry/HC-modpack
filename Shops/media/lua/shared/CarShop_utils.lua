@@ -13,7 +13,8 @@ CarShop.constants = {
 ---@field username string
 ---@field vehicleKeyId integer
 ---@field vehicleKeyIdStr string
----@field vehicle 'BaseVehicle'
+---@field vehicle BaseVehicle
+---@field price number
 local CarUtils = {}
 CarUtils.__index = CarUtils
 CarShop.CarUtils = CarUtils
@@ -21,8 +22,10 @@ CarShop.CarUtils = CarUtils
 ---@class offerInfo
 ---@field username string
 ---@field vehicleKeyId integer
----@field vehicle 'BaseVehicle'
+---@field vehicle BaseVehicle | nil
+---@field price number | nil
 
+---@param offerInfo offerInfo
 ---@return CarUtils
 function CarUtils:init(offerInfo)
 	local o = {}
@@ -34,6 +37,7 @@ function CarUtils:init(offerInfo)
 	return o
 end
 
+---@param playerObj IsoPlayer
 ---@return CarUtils | nil
 function CarUtils:initByPlayerObj(playerObj)
 	local vehicle = playerObj:getVehicle()
@@ -47,7 +51,8 @@ function CarUtils:initByPlayerObj(playerObj)
 	})
 end
 
----@param vehicleObj 'BaseVehicle'
+---@param vehicleObj BaseVehicle
+---@return CarUtils
 function CarUtils:initByVehicle(vehicleObj)
 	local playerObj = vehicleObj:getDriver()
 	local username = ''
@@ -62,15 +67,12 @@ function CarUtils:initByVehicle(vehicleObj)
 end
 
 ---@param keyId integer
----@return 'BaseVehicle' | nil
+---@return BaseVehicle | nil
 function CarUtils:getVehicleByKeyId(keyId)
 	local vihiclesList = getCell():getVehicles()
 	local result = nil
-	print('vihiclesList.size()', vihiclesList:size())	
 	for i = 0, vihiclesList:size() - 1 do
-		-- print('i: ', i)
 		local vehicle = vihiclesList:get(i)
-		print('vehicle: ', vehicle, vehicle:getKeyId())
 		if vehicle:getKeyId() == keyId then
 			result = vehicle
 		end
@@ -79,6 +81,7 @@ function CarUtils:getVehicleByKeyId(keyId)
 end
 
 -- HACK: работает но вызывает не все сайд эффекты
+---@param playerObj IsoPlayer
 ---@return void
 function CarUtils:exit(playerObj)
 	local vehicle = self.vehicle
@@ -105,6 +108,36 @@ function CarUtils:stopEngine()
 	end
 end
 
+function CarUtils:stopHeater()
+	local vehicle = self.vehicle
+	local state = false
+	local temp = 0
+	local part = vehicle:getPartById("Heater");
+	if part then
+		part:getModData().active = state;
+		part:getModData().temperature = temp;
+		vehicle:transmitPartModData(part);
+	end
+end
+
+function CarUtils:stopHeadlights()
+	local vehicle = self.vehicle
+	local playerObj = vehicle:getDriver()
+	local state = false
+	local mode = 0
+	if vehicle and playerObj and vehicle:isDriver(playerObj) then 
+		if isClient() then
+			sendClientCommand(playerObj, 'vehicle', 'setHeadlightsOn', { on = state })
+			sendClientCommand(self.playerObj, 'vehicle', 'setLightbarSirenMode', {mode=mode})
+			sendClientCommand(self.playerObj, 'vehicle', 'setLightbarLightsMode', {mode=mode})
+		else
+			vehicle:setHeadlightsOn(state);
+			vehicle:setLightbarLightsMode(mode);
+			vehicle:setLightbarSirenMode(mode)
+		end
+	end
+end
+
 function CarUtils:isCarOwner()
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleKeyIdStr] then
 		return CarShop.Data.CarShop[self.vehicleKeyIdStr].username == self.username
@@ -127,7 +160,7 @@ function CarUtils:getPrice()
 	return nil
 end
 
----@return offerInfo
+---@return offerInfo | nil
 function CarUtils:getOfferInfo()
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleKeyIdStr] then
 		local result = CarShop.Data.CarShop[self.vehicleKeyIdStr]
