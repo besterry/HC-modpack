@@ -2,5 +2,5 @@ Sandbox_RU = {
 	Sandbox_Shops= "Магазин",
 	Sandbox_Shops_PurchaseLog = "Включить лог: Покупки",
 	Sandbox_Shops_SellLog = "Включить лог: Продажи ",
-	Sandbox_Shops_CarTradeZone = "Зона продажи автомобилей"
+	Sandbox_Shops_CarTradeZone = "Зоны продажи автомобилей (формат: x1 x2 y1 y2; x1 x2 y1 y2; ...)"
 }

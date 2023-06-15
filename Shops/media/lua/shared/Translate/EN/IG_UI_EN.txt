@@ -57,4 +57,14 @@ IGUI_EN = {
 	IGUI_Tab_Weapons = "Weapons",
 	IGUI_Not_correct_place_for_shop = "Placement of shops is allowed only in the trading network",
 
+    IGUI_Balance_AccountNeeded2 = "I don't have a bank account. I need to create it using a wallet",
+    IGUI_CarShop_Not_TradeZone = "I need to be in the car trade area",
+    IGUI_CarShop_Set_Price = "Set price for the car",
+    IGUI_CarShop_Is_Too_Low_Price = "Price is too low",
+    IGUI_CarShop_Adding_Car_For_Sale = "I set the car up for sale",
+    IGUI_CarShop_Remove_Car_For_Sale = "I have removed the car from sale",
+    IGUI_CarShop_Need_Money = "I don't have enough money",
+    IGUI_CarShop_Offer_For_Sale = "Offer for sale",
+    IGUI_CarShop_Remove_Car_For_Sale_W_Price = "Remove from sale at a price of ",
+    IGUI_CarShop_Buy_Car_For = "Buy the car for "
 }

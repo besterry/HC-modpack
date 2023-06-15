@@ -121,11 +121,10 @@ module Base {
 	{
 		Type				=	Normal,
 		DisplayCategory		= 	Tool,
-        Weight				=	0.5,
-		UseWhileEquipped	=	TRUE,
-		DisplayName			=	Car Sell Ticket,
+        Weight				=	0.01,
+		DisplayName			=	Car sell papers,
 		Icon				=	DriversLicense,
-		ToolTip				=	Tooltip_CarClamp,
+		ToolTip				=	Tooltip_CarSellTicket,
 	}
 
 }

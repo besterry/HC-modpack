@@ -1,0 +1,4 @@
+Tooltip_RU = {
+-- Item tooltip	
+	Tooltip_CarSellTicket = "You can sell a car in trading area. Use the car menu (V key)"
+}

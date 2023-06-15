@@ -53,19 +53,20 @@ function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, _offerInfo)
 	local offerInfo = copyTable(_offerInfo)
 	local hasAccount = BClientGetAccount(playerObj)
 	if not hasAccount then
-		playerObj:Say('I have no account');
+		playerObj:Say(getText('IGUI_Balance_AccountNeeded2'));
 		return
 	end
 
 	local x = playerObj:getX()
 	local y = playerObj:getY()
 	if not CarShop.isTradeZoneCoords(x, y) then
-		playerObj:Say('I need to be in the car trade area');
+		playerObj:Say(getText('IGUI_CarShop_Not_TradeZone'));
 		return
 	end
     local playerId = playerObj:getPlayerNum()
+	local title = getText('IGUI_CarShop_Set_Price')
     local modal = ISTextBox:new(
-		0, 0, 280, 180, 'Set price for the car', '', 
+		0, 0, 280, 180, title, '', 
 		nil, ISVehicleMenu.onPriceEntered, playerId, playerObj, offerInfo);
     modal:initialise();
     modal:setOnlyNumbers(true)
@@ -80,13 +81,12 @@ function ISVehicleMenu.onPriceEntered(target, button, playerObj, _offerInfo)
         local priceValue = tonumber(button.parent.entry:getText())
 		local length = button.parent.entry:getInternalText():len()
         if length == 0 or priceValue <= 0 then
-            playerObj:Say('Is too low');
+            playerObj:Say(getText('IGUI_CarShop_Is_Too_Low_Price'));
             return
         else
 			playerObj:getInventory():RemoveOneOf(TICKET_NAME);
-            playerObj:Say("Adding car for sale...") -- TODO: Переписать текст
+            playerObj:Say(getText('IGUI_CarShop_Adding_Car_For_Sale'))
             offerInfo.price = priceValue
-			-- local args = { username = offerInfo.username, vehicleKeyId=offerInfo.vehicleKeyId, price = priceValue }
 			offerInfo.vehicle = nil
             sendClientCommand(playerObj, MOD_NAME, 'onAddCarSellTicket', offerInfo)
 			ISTimedActionQueue.add(ISExitVehicle:new(playerObj))
@@ -99,8 +99,7 @@ end
 function ISVehicleMenu.onSendCommandRemoveCarSellTicket(playerObj, _offerInfo)
 	local offerInfo = copyTable(_offerInfo)
 	playerObj:getInventory():AddItems(TICKET_NAME, 1);
-    playerObj:Say("Rmove from sell...")
-	-- local args = { username = offerInfo.username, vehicleKeyId=offerInfo.vehicleKeyId, price = offerInfo.price }
+    playerObj:Say(getText('IGUI_CarShop_Remove_Car_For_Sale'))
 	offerInfo.vehicle = nil
     sendClientCommand(playerObj, MOD_NAME, 'onRemoveFromSale', offerInfo)
 end
@@ -108,20 +107,18 @@ end
 ---@param playerObj IsoPlayer
 ---@param _carInfo CarUtils
 function ISVehicleMenu.buyCar(playerObj, _carInfo)
-	local carInfo = copyTable(_carInfo)
+	local offerInfo = copyTable(_carInfo:getOfferInfo())
 	local account = BClientGetAccount(playerObj)
-	local price = carInfo:getPrice()
+	local price = offerInfo.price
 	if not account then
-		playerObj:Say("I have no account")
+		playerObj:Say(getText('IGUI_Balance_AccountNeeded2'))
 		return
 	end
 	if account.coin < price then
-		playerObj:Say("I don't have enough money")
+		playerObj:Say(getText('IGUI_CarShop_Need_Money'))
 		return
 	end
-	local offerInfo = carInfo:getOfferInfo()
 	offerInfo.vehicle = nil
-	offerInfo.price = price
 	sendClientCommand(playerObj, MOD_NAME, 'onBuyCar', offerInfo)
 end
 
@@ -146,9 +143,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	local vehicle = ISVehicleMenu.getVehicleToInteractWith(playerObj)
 
 	if vehicle then
-		-- local vehicleId = vehicle:getId()
 		local vehicleKeyId = vehicle:getKeyId()
-		playerObj:Say(tostring(vehicleKeyId))
         local offerInfo = {
             username = username,
 			vehicleKeyId = vehicleKeyId,
@@ -160,18 +155,35 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local playerIsCarOwner = carInfo:isCarOwner()
 
 		if playerHasCarTicket and not vehicleIsOnSale then
-        	menu:addSlice('Offer For Sale', getTexture('media/textures/ShopUI_Cart_Add.png'), ISVehicleMenu.onSendCommandAddCarSellTicket, playerObj, offerInfo)
+        	menu:addSlice(
+				getText('IGUI_CarShop_Offer_For_Sale'), 
+				getTexture('media/textures/ShopUI_Cart_Add.png'), 
+				ISVehicleMenu.onSendCommandAddCarSellTicket, playerObj, offerInfo
+			)
 		end
 		if vehicleIsOnSale and playerIsCarOwner then
-			menu:addSlice('Remove Sell Ticket', getTexture('media/textures/ShopUI_Cart_Remove.png'), ISVehicleMenu.onSendCommandRemoveCarSellTicket, playerObj, offerInfo)
+			local price = carInfo:getPrice()
+			menu:addSlice(
+				getText('IGUI_CarShop_Remove_Car_For_Sale_W_Price')..price..'$', 
+				getTexture('media/textures/ShopUI_Cart_Remove.png'), 
+				ISVehicleMenu.onSendCommandRemoveCarSellTicket, playerObj, offerInfo
+			)
 		end
 		if vehicleIsOnSale and not playerIsCarOwner then
 			local price = carInfo:getPrice()
-			menu:addSlice('Buy a car for: '..price..'$', getTexture('media/textures/ShopUI_Cart.png'), ISVehicleMenu.buyCar, playerObj, carInfo)
+			menu:addSlice(
+				getText('IGUI_CarShop_Buy_Car_For')..price..'$', 
+				getTexture('media/textures/ShopUI_Cart.png'), 
+				ISVehicleMenu.buyCar, playerObj, carInfo
+			)
 		end
 
 		if vehicleIsOnSale and (ISVehicleMechanics.cheat or playerObj:getAccessLevel() ~= 'None') then
-			menu:addSlice('CHEAT: Clean Car Sell Ticket ModData', getTexture('media/ui/BugIcon.png'), ISVehicleMenu.onSendCommandRemoveCarSellTicket, playerObj, offerInfo)
+			menu:addSlice(
+				'CHEAT: remove from sale', 
+				getTexture('media/ui/BugIcon.png'), 
+				ISVehicleMenu.onSendCommandRemoveCarSellTicket, playerObj, offerInfo
+			)
 		end
 	end
 	menu:addToUIManager()
