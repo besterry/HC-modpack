@@ -42,8 +42,7 @@ CarShop.isTradeZoneCoords = function(x, y)
 	for _, zone in ipairs(CarShop.zones) do
 		result = (x >= zone[1] and x < zone[2] and y >= zone[3] and y < zone[4]) or result
 	end
-	-- return result
-	return true
+	return result
 end
 
 ---@param playerObj IsoPlayer
