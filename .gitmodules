@@ -1,0 +1,9 @@
+[submodule "Candle"]
+	path = Candle
+	url = https://github.com/asledgehammer/Candle.git
+[submodule "PZLuaStubs"]
+	path = PZLuaStubs
+	url = https://github.com/omarkmu/PZLuaStubs.git
+[submodule "PZEventStubs"]
+	path = PZEventStubs
+	url = https://github.com/demiurgeQuantified/PZEventStubs
