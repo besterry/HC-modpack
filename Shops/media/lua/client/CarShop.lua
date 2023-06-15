@@ -1,18 +1,57 @@
+-- TODO:
+-- 1. Тушить фары и свет при выходе из авто
+-- 2. Сделать функцию торга
+
 CarShop = CarShop or {};
 CarShop.Data = CarShop.Data or {};
 CarShop.ServerCommands = CarShop.ServerCommands or {}
 CarShop.updateTime = 0
+CarShop.zones = {}
+
+---@type CarUtils
 local CarUtils = CarShop.CarUtils
 
+---@type string
 local TICKET_NAME = CarShop.TICKET_NAME
+---@type string
 local MOD_NAME = CarShop.MOD_NAME
 
 local carShopEventHandler = {}
+
+if SandboxVars.Shops.CarTradeZone then
+	local result = {}
+	local zonesStrArr = luautils.split(SandboxVars.Shops.CarTradeZone, ';')
+	for _, zoneStr in ipairs(zonesStrArr) do
+        local zoneValuesStr = luautils.split(zoneStr, " ")
+		local zoneValuesNum = {}
+		for _, coordStr in ipairs(zoneValuesStr) do
+			table.insert(zoneValuesNum, tonumber(coordStr))
+		end
+        table.insert(result, zoneValuesNum)
+    end
+	CarShop.zones = result
+end
+
+CarShop.isTradeZoneCoords = function(x, y)
+	local result = false
+	for _, zone in ipairs(CarShop.zones) do
+		result = (x >= zone[1] and x < zone[2] and y >= zone[3] and y < zone[4]) or result
+	end
+	-- return result
+	return true
+end
 
 function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, offerInfo)
 	local hasAccount = BClientGetAccount(playerObj)
 	if not hasAccount then
 		playerObj:Say('I have no account');
+		return
+	end
+
+	local x = playerObj:getX()
+	local y = playerObj:getY()
+	if not CarShop.isTradeZoneCoords(x, y) then
+		playerObj:Say('I need to be in the car trade area');
 		return
 	end
     local playerId = playerObj:getPlayerNum()
@@ -33,6 +72,8 @@ function ISVehicleMenu.onPriceEntered(target, button, playerObj, offerInfo)
 			playerObj:getInventory():RemoveOneOf(TICKET_NAME);
             playerObj:Say("Adding car for sale...") -- TODO: Переписать текст
             offerInfo.price = priceValue
+			-- local args = { username = offerInfo.username, vehicleKeyId=offerInfo.vehicleKeyId, price = priceValue }
+			offerInfo.vehicle = nil
             sendClientCommand(playerObj, MOD_NAME, 'onAddCarSellTicket', offerInfo)
 			ISTimedActionQueue.add(ISExitVehicle:new(playerObj))
         end
@@ -42,6 +83,8 @@ end
 function ISVehicleMenu.onSendCommandRemoveCarSellTicket(playerObj, offerInfo)
 	playerObj:getInventory():AddItems(TICKET_NAME, 1);
     playerObj:Say("Rmove from sell...")
+	-- local args = { username = offerInfo.username, vehicleKeyId=offerInfo.vehicleKeyId, price = offerInfo.price }
+	offerInfo.vehicle = nil
     sendClientCommand(playerObj, MOD_NAME, 'onRemoveFromSale', offerInfo)
 end
 
@@ -57,11 +100,12 @@ function ISVehicleMenu.buyCar(playerObj, carInfo)
 		return
 	end
 	local offerInfo = carInfo:getOfferInfo()
+	offerInfo.vehicle = nil
+	offerInfo.price = price
 	sendClientCommand(playerObj, MOD_NAME, 'onBuyCar', offerInfo)
 end
 
 local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
----@diagnostic disable-next-line: duplicate-set-field
 function ISVehicleMenu.showRadialMenu(playerObj)
     base_ISVehicleMenu_showRadialMenu(playerObj)
 
@@ -81,10 +125,13 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	local vehicle = ISVehicleMenu.getVehicleToInteractWith(playerObj)
 
 	if vehicle then
-		local vehicleId = vehicle:getId()
+		-- local vehicleId = vehicle:getId()
+		local vehicleKeyId = vehicle:getKeyId()
+		playerObj:Say(tostring(vehicleKeyId))
         local offerInfo = {
             username = username,
-            vehicleId = vehicleId
+			vehicleKeyId = vehicleKeyId,
+			vehicle = vehicle
         }
 		local carInfo = CarUtils:init(offerInfo)
 		local playerHasCarTicket = playerObj:getInventory():contains(TICKET_NAME)
@@ -111,7 +158,7 @@ end
 
 
 function CarShop.ServerCommands.UpdateCarShopData(offerInfo)
-    CarShop.Data.CarShop[offerInfo.vehicleId] = offerInfo;
+    CarShop.Data.CarShop[offerInfo.vehicleKeyId] = offerInfo;
 end
 
 function CarShop.ServerCommands.StopConstraints(offerInfo)
@@ -170,38 +217,33 @@ carShopEventHandler.onEnterVehicle = function(playerObj)
 	end
 end
 
-local function shutOff(playerObj)
-	local vehicle = playerObj:getVehicle()
-	local carUtils = CarUtils:initByPlayerObj(playerObj)
-	if carUtils and carUtils:isCarOnSale() and vehicle:isDriver(playerObj) and vehicle:isEngineRunning() then
-		if isClient() then
-			sendClientCommand(playerObj, 'vehicle', 'shutOff', {})
-		else
-			vehicle:shutOff()
-		end
-	end
-end
-
 -- NOTE: Переопределяем метод выхода из авто, чтобы заглушить двигатель. Потому что через события машина перестаёт работать
 -- Двигательно нужно глушить чтобы нельзя было уехать из трейдзоны
 local base_ISExitVehicle_perform = ISExitVehicle.perform;
----@diagnostic disable-next-line: duplicate-set-field
 function ISExitVehicle:perform()
-	shutOff(self.character)
+	-- shutOff(self.character)
+	local carUtils = CarUtils:initByPlayerObj(self.character)
+	if carUtils and carUtils:isCarOnSale() then
+		carUtils:stopEngine()
+		carUtils:stopConstraints()
+	end
 	return base_ISExitVehicle_perform(self);
 end
 
 -- NOTE: Переопределяем метод смены седения, чтобы глушить двигатель.
 local base_ISSwitchVehicleSeat_perform = ISSwitchVehicleSeat.perform
----@diagnostic disable-next-line: duplicate-set-field
 function ISSwitchVehicleSeat:perform()
-	shutOff(self.character)
+	-- shutOff(self.character)
+	local carUtils = CarUtils:initByPlayerObj(self.character)
+	if carUtils and carUtils:isCarOnSale() then
+		carUtils:stopEngine()
+	end
+	-- carUtils:stopConstraints()
 	return base_ISSwitchVehicleSeat_perform(self);
 end
 
 -- NOTE: Переопределяем метод, чтоб нельзя было забрать ключи когда машина выставлена на продажу
 local base_ISVehicleDashboard_onClickKeys = ISVehicleDashboard.onClickKeys
----@diagnostic disable-next-line: duplicate-set-field
 function ISVehicleDashboard:onClickKeys()
 	local o = base_ISVehicleDashboard_onClickKeys(self)
 	if not CarShop.isAllowGetKey and not self.vehicle:isHotwired() then
@@ -211,8 +253,3 @@ function ISVehicleDashboard:onClickKeys()
 end
 
 Events.OnEnterVehicle.Add(carShopEventHandler.onEnterVehicle)
-
--- TODO:
--- 1. Тушить фары и свет при выходе из авто
--- 2. Сделать функцию торга
-

@@ -22,6 +22,9 @@
         "triggerEvent",
         "ISExitVehicle",
         "ISTimedActionQueue",
-        "ISSwitchVehicleSeat"
+        "ISSwitchVehicleSeat",
+        "SandboxVars",
+        "luautils",
+        "getCell"
     ]
 }
