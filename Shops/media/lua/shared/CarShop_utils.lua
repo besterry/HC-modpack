@@ -110,13 +110,20 @@ end
 
 function CarUtils:stopHeater()
 	local vehicle = self.vehicle
+	local playerObj = vehicle:getDriver()
 	local state = false
 	local temp = 0
-	local part = vehicle:getPartById("Heater");
-	if part then
-		part:getModData().active = state;
-		part:getModData().temperature = temp;
-		vehicle:transmitPartModData(part);
+	if vehicle and playerObj and vehicle:isDriver(playerObj) then 
+		if isClient() then
+			sendClientCommand(playerObj, 'vehicle', 'toggleHeater', { on = state, temp = temp })
+		else
+			local part = vehicle:getPartById("Heater");
+			if part then
+				part:getModData().active = state;
+				part:getModData().temperature = temp;
+				vehicle:transmitPartModData(part);
+			end
+		end
 	end
 end
 
@@ -128,8 +135,8 @@ function CarUtils:stopHeadlights()
 	if vehicle and playerObj and vehicle:isDriver(playerObj) then 
 		if isClient() then
 			sendClientCommand(playerObj, 'vehicle', 'setHeadlightsOn', { on = state })
-			sendClientCommand(self.playerObj, 'vehicle', 'setLightbarSirenMode', {mode=mode})
-			sendClientCommand(self.playerObj, 'vehicle', 'setLightbarLightsMode', {mode=mode})
+			sendClientCommand(playerObj, 'vehicle', 'setLightbarSirenMode', {mode=mode})
+			sendClientCommand(playerObj, 'vehicle', 'setLightbarLightsMode', {mode=mode})
 		else
 			vehicle:setHeadlightsOn(state);
 			vehicle:setLightbarLightsMode(mode);
