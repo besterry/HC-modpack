@@ -263,6 +263,7 @@ function ISExitVehicle:perform()
 		carUtils:stopEngine()
 		carUtils:stopHeater()
 		carUtils:stopHeadlights()
+		carUtils:putKeyInIgnition()
 		carUtils:stopConstraints()
 	end
 	return base_ISExitVehicle_perform(self);
@@ -277,8 +278,8 @@ function ISSwitchVehicleSeat:perform()
 		carUtils:stopEngine()
 		carUtils:stopHeater()
 		carUtils:stopHeadlights()
+		carUtils:putKeyInIgnition()
 	end
-	-- carUtils:stopConstraints()
 	return base_ISSwitchVehicleSeat_perform(self);
 end
 
@@ -286,10 +287,15 @@ end
 local base_ISVehicleDashboard_onClickKeys = ISVehicleDashboard.onClickKeys
 function ISVehicleDashboard:onClickKeys()
 	local o = base_ISVehicleDashboard_onClickKeys(self)
-	if not CarShop.isAllowGetKey and not self.vehicle:isHotwired() then
-		self.vehicle:setKeysInIgnition(true);
-	end
+	local vehicle = self.vehicle
+	if not CarShop.isAllowGetKey and not vehicle:isHotwired() then
+		vehicle:setKeysInIgnition(true);
+		BravensUtils.DelayFunction(function()
+			vehicle:setKeysInIgnition(true);
+		end, 5);
+	end	
 	return o
 end
+
 
 Events.OnEnterVehicle.Add(carShopEventHandler.onEnterVehicle)

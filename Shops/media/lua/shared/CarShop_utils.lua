@@ -145,6 +145,14 @@ function CarUtils:stopHeadlights()
 	end
 end
 
+function CarUtils:putKeyInIgnition()
+	local vehicle = self.vehicle
+	local playerObj = vehicle:getDriver()
+	if playerObj:getInventory():haveThisKeyId(vehicle:getKeyId()) and not vehicle:isKeysInIgnition() then
+		vehicle:setKeysInIgnition(true);
+	end
+end
+
 function CarUtils:isCarOwner()
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleKeyIdStr] then
 		return CarShop.Data.CarShop[self.vehicleKeyIdStr].username == self.username
