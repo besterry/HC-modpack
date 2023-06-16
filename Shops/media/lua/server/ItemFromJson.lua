@@ -7,35 +7,6 @@ FD.forSellItems = FD.forSellItems or {}
 local shopItems = FD.shopItems
 local forSellItems = FD.forSellItems
 
--- -- загрузка элементов магазина из json
--- function LoadShopItems()
---     local fileReaderObj = getFileReader("ShopPrice.json", false) -- Укажите путь к вашему JSON-файлу
---     if fileReaderObj then 
---         print("SHOP: ShopItems file uploaded successfully")
---     else
---         print("SHOP: The file is empty or does not exist")
---     end
-
---     local json = ""
---     local line = fileReaderObj:readLine()
---     while line ~= nil do
---         json = json .. line
---         line = fileReaderObj:readLine()
---     end
---     fileReaderObj:close()
-
---     if json and json ~= "" then
---         shopItems = Json.Decode(json);
---     end
-
---     -- -- Вывод содержимого таблицы Shop.Items
---     -- for id, item in pairs(shopItems) do
---     --     print("Item ID:", id)
---     --     print("Tab:", item.tab)
---     --     print("Price:", item.price)
---     -- end
--- end
-
 ---@param filename string
 ---@return table
 function LoadJsonItems(filename)
@@ -58,13 +29,6 @@ function LoadJsonItems(filename)
     if json and json ~= "" then
         resulTable = Json.Decode(json);
     end
-
-    -- -- Вывод содержимого таблицы Shop.Items
-    -- for id, item in pairs(shopItems) do
-    --     print("Item ID:", id)
-    --     print("Tab:", item.tab)
-    --     print("Price:", item.price)
-    -- end
     return resulTable
 end
 
