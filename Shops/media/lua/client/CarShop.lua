@@ -120,6 +120,12 @@ function ISVehicleMenu.buyCar(playerObj, _carInfo)
 	sendClientCommand(playerObj, MOD_NAME, 'onBuyCar', offerInfo)
 end
 
+local base_LiftBike = LiftBike
+local this_LiftBike = function(player, vehicle)
+	local playerObj = getSpecificPlayer(player)
+	playerObj:Say('Cant do it')
+end
+
 local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 ---@param playerObj IsoPlayer
 function ISVehicleMenu.showRadialMenu(playerObj)
@@ -152,6 +158,8 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local vehicleIsOnSale = carInfo:isCarOnSale()
 		local playerIsCarOwner = carInfo:isCarOwner()
 
+		LiftBike = base_LiftBike
+
 		if playerHasCarTicket and not vehicleIsOnSale then
         	menu:addSlice(
 				getText('IGUI_CarShop_Offer_For_Sale'), 
@@ -169,6 +177,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		end
 		if vehicleIsOnSale and not playerIsCarOwner then
 			local price = carInfo:getPrice()
+			LiftBike = this_LiftBike
 			menu:addSlice(
 				getText('IGUI_CarShop_Buy_Car_For')..price..'$', 
 				getTexture('media/textures/ShopUI_Cart.png'), 
@@ -248,8 +257,9 @@ Events.OnInitGlobalModData.Add(carShopEventHandler.initGlobalModData);
 ---@param playerObj IsoPlayer
 carShopEventHandler.onEnterVehicle = function(playerObj)
 	local carUtils = CarUtils:initByPlayerObj(playerObj)
+	print('onEnterVehicle: ', bcUtils.dump(carUtils))
 	if carUtils then
-		carUtils:processConstraints()
+		carUtils:startConstraints()
 	end
 end
 
@@ -283,6 +293,20 @@ function ISSwitchVehicleSeat:perform()
 	return base_ISSwitchVehicleSeat_perform(self);
 end
 
+---@param vehicle BaseVehicle
+local setKeysInIgnition_helper = function(vehicle)
+	local delayedFn = function() 
+		if not CarShop.isAllowGetKey and not vehicle:isHotwired() and not vehicle:isKeysInIgnition() then
+			vehicle:setKeysInIgnition(true);
+		end
+	end
+	for i = 1, 20, 1 do
+		BravensUtils.DelayFunction(delayedFn, i)
+	end
+end
+
+
+
 -- NOTE: Переопределяем метод, чтоб нельзя было забрать ключи когда машина выставлена на продажу
 local base_ISVehicleDashboard_onClickKeys = ISVehicleDashboard.onClickKeys
 function ISVehicleDashboard:onClickKeys()
@@ -290,9 +314,7 @@ function ISVehicleDashboard:onClickKeys()
 	local vehicle = self.vehicle
 	if not CarShop.isAllowGetKey and not vehicle:isHotwired() then
 		vehicle:setKeysInIgnition(true);
-		BravensUtils.DelayFunction(function()
-			vehicle:setKeysInIgnition(true);
-		end, 5);
+		setKeysInIgnition_helper(vehicle)
 	end	
 	return o
 end

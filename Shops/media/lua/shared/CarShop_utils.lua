@@ -4,6 +4,7 @@ CarShop.ServerCommands = CarShop.ServerCommands or {}
 CarShop.TICKET_NAME = 'CarSellTicket'
 CarShop.MOD_NAME = 'CarShop'
 CarShop.isAllowGetKey = true
+CarShop.isConstraintActive = false
 
 CarShop.constants = { 
 	vehicleLockMass = 9000000 
@@ -189,29 +190,45 @@ function CarUtils:getOfferInfo()
 	return nil
 end
 
+function CarUtils:startConstraints()
+	CarShop.isConstraintActive = true
+	self:processConstraints()
+end
+
 function CarUtils:processConstraints()
-	local constants = CarShop.constants
+	if not CarShop.isConstraintActive then
+		return
+	end
+
+	local vehicleLockMass = CarShop.constants.vehicleLockMass
+	print('vehicle:getScriptName()', vehicle:getScriptName())
+	if string.find( vehicle:getScriptName(), "AMC" ) then
+		vehicleLockMass = vehicleLockMass / 10
+	end
+	local processConstraintsBindFn = function() return CarUtils.processConstraints(self) end
 	if self:isCarOnSale() then
-		print('processConstraints: ', self.vehicle:getScriptName())
-		self.vehicle:setMass(constants.vehicleLockMass)
-		print('getMass: ', self.vehicle.getMass())
+		self.vehicle:setMass(vehicleLockMass)
+		print('getMass: ', self.vehicle:getMass())
 		CarShop.isAllowGetKey = false
-		return true
+		BravensUtils.DelayFunction(processConstraintsBindFn, 1)
+		return
 	else
 		local vehicleTowing = self.vehicle:getVehicleTowing()
 		if vehicleTowing then
 			local vehicleTowingUtils = CarUtils:initByVehicle(vehicleTowing)
 			if vehicleTowing and vehicleTowingUtils:isCarOnSale() then
-				self.vehicle:setMass(constants.vehicleLockMass)
-				return true	
+				self.vehicle:setMass(vehicleLockMass)
+				BravensUtils.DelayFunction(processConstraintsBindFn, 1)
+				return
 			end
 		end
 		self:stopConstraints()
-		return false
 	end
+
 end
 
 function CarUtils:stopConstraints()
+	CarShop.isConstraintActive = false
 	local vehicle = self.vehicle
 	if not vehicle then
 		vehicle = self:getVehicleByKeyId(self.vehicleKeyId)
@@ -219,7 +236,9 @@ function CarUtils:stopConstraints()
 	vehicle:setMass(vehicle:getInitialMass())
 	vehicle:updateTotalMass()
 
-	-- self.vehicle:updatePhysics()
-	vehicle:updatePhysicsNetwork()
+	BravensUtils.DelayFunction(function()
+		vehicle:updatePhysics()
+		vehicle:updatePhysicsNetwork()
+	end, 50)
 	CarShop.isAllowGetKey = true
 end
