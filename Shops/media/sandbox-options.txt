@@ -17,3 +17,11 @@ option Shops.SellLog
 	page = Shops,
 	translation = Shops_SellLog,
 }
+
+option Shops.CarTradeZone
+{
+	type = string, 
+	default = 8700 8758 7064 7112;,
+	page = Shops,
+	translation = Shops_CarTradeZone,
+}

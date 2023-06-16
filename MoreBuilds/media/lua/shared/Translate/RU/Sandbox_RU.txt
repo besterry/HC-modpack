@@ -1,0 +1,13 @@
+Sandbox_RU = {
+  Sandbox_MoreBuilds = "Ѕольше построек",
+  Sandbox_MaxWaterWallStorageAmount = "¬местимость колодца",
+  Sandbox_MaxWaterWallStorageAmount_tooltip = "”становите максимальную емкость дл€ хранени€ воды дл€ колодца в других сборках <LINE> примечание: установите значение 9999, чтобы емкость отображалась как неограниченна€.",
+  Sandbox_BuildingPermission = "–азрешение на строительство"
+  Sandbox_BuildingPermission_tooltip = "”становите уровень разрешений, при котором на сервере можно использовать больше сборок. если установлено, только игроки с указанным уровнем разрешений могут строить. ѕо умолчанию ограничени€ разрешений нет.",
+  Sandbox_MoreBuilds_BuildingPermission_option1 = "None",
+  Sandbox_MoreBuilds_BuildingPermission_option2 = "Observer",
+  Sandbox_MoreBuilds_BuildingPermission_option3 = "GM",
+  Sandbox_MoreBuilds_BuildingPermission_option4 = "Overseer",
+  Sandbox_MoreBuilds_BuildingPermission_option5 = "Moderator",
+  Sandbox_MoreBuilds_BuildingPermission_option6 = "Admin",
+}

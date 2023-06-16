@@ -10,5 +10,6 @@ Items_RU = {
 	DisplayName_Fishing_Pack = "Набор рыбака"
 	DisplayName_Worm_Pack = "Набор червей"
 	DisplayName_Fishing_Line_Pack = "Рыбацкий ремонтный набор"
+	DisplayName_Car_sell_papers = "Документы на продажу авто"
 	
 }
