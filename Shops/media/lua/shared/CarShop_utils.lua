@@ -147,8 +147,8 @@ end
 
 function CarUtils:putKeyInIgnition()
 	local vehicle = self.vehicle
-	local playerObj = vehicle:getDriver()
-	if playerObj:getInventory():haveThisKeyId(vehicle:getKeyId()) and not vehicle:isKeysInIgnition() then
+	local playerObj = getPlayer()
+	if vehicle:isDriver(playerObj) and playerObj:getInventory():haveThisKeyId(vehicle:getKeyId()) and not vehicle:isKeysInIgnition() then
 		vehicle:setKeysInIgnition(true);
 	end
 end
@@ -192,7 +192,9 @@ end
 function CarUtils:processConstraints()
 	local constants = CarShop.constants
 	if self:isCarOnSale() then
+		print('processConstraints: ', self.vehicle:getScriptName())
 		self.vehicle:setMass(constants.vehicleLockMass)
+		print('getMass: ', self.vehicle.getMass())
 		CarShop.isAllowGetKey = false
 		return true
 	else
