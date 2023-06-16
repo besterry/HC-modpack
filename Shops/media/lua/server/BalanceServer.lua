@@ -55,8 +55,7 @@ function BServer.Deposit(player, args)
     BServer.writeLog(msg)
 
     ModData.transmit("CoinBalance")
-    SaveCoinBalancefd(username)
-    
+    SaveCoinBalancefd(username)    
 end
 
 function BServer.Transfer(player,args)
