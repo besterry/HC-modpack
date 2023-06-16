@@ -22,21 +22,32 @@ local width = 995
 local height = 550
 
 function ShopUI:show(player,viewMode,shop)
-    local square = player:getSquare()
-    posX = square:getX()
-    posY = square:getY()
-    if ShopUI.instance==nil then
-        ShopUI.instance = ShopUI:new (0, 0, width, height, player);
-        ShopUI.instance.shop = shop
-        ShopUI.instance.viewMode = viewMode
-        ShopUI.instance:initialise();
-        ShopUI.instance:instantiate();
+    sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
+    local receiveServerCommand
+    receiveServerCommand = function(module, command, args)
+        if module ~= 'shopItems' then return; end
+        if command == 'onGetData' then
+            Shop.Items = args
+            Events.OnServerCommand.Remove(receiveServerCommand)
+
+            local square = player:getSquare()
+            posX = square:getX()
+            posY = square:getY()
+            if ShopUI.instance==nil then
+                ShopUI.instance = ShopUI:new (0, 0, width, height, player);
+                ShopUI.instance.shop = shop
+                ShopUI.instance.viewMode = viewMode
+                ShopUI.instance:initialise();
+                ShopUI.instance:instantiate();
+            end
+            ShopUI.instance.pinButton:setVisible(false)
+            ShopUI.instance.collapseButton:setVisible(false)
+            ShopUI.instance:addToUIManager();
+            ShopUI.instance:setVisible(true);
+            return ShopUI.instance;
+        end
     end
-    ShopUI.instance.pinButton:setVisible(false)
-    ShopUI.instance.collapseButton:setVisible(false)
-    ShopUI.instance:addToUIManager();
-    ShopUI.instance:setVisible(true);
-    return ShopUI.instance;
+    Events.OnServerCommand.Add(receiveServerCommand);
 end
 
 function ShopUI:update()
@@ -219,6 +230,7 @@ function ShopUI:createCategories()
     end
 end
 
+---@return InventoryItem
 function ShopUI:getItemInstance(type)
     local item = self.ItemInstanceCache[type]
     if not item then
@@ -343,9 +355,12 @@ function ShopUI:onActivateView()
     end
     
     for k,v in pairs(Shop.Items) do
+        print('v.tab: ', v.tab)
         if v and (v.tab == tabType or tabType == Tab.All) then 
+            print('k: ', k)
             local item = self:getItemInstance(k)
             if item then
+                print('item: ', item:getDisplayName())
                 local VehicleID = item:getModData().VehicleID
                 if VehicleID then v.VehicleID = VehicleID end
                 v.favorite = character:getModData().shopFavorites[k]
@@ -356,6 +371,8 @@ function ShopUI:onActivateView()
                     v.texture = item:getTex()
                 end
                 v.name = Nfunction.trimString(item:getName(),42)
+                print('v.name: ', v.name)
+                print('v.price: ', v.price)
                 shopItems:addItem(k,v);
             end
         end

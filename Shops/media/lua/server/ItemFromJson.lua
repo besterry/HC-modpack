@@ -1,9 +1,13 @@
---if not isServer() then return end
-local json = require("json") -- Подключение модуля для работы с JSON
-shopItems = shopItems or {}
+if not isServer() then return end
+
+-- local Json = require("Json") -- Подключение модуля для работы с JSON
+FD = FD or {}
+FD.shopItems = FD.shopItems or {}
+local shopItems = FD.shopItems
+
 -- загрузка элементов магазина из json
 function LoadShopItems()
-    local fileReaderObj = getFileReader("ShopItems.json", true) -- Укажите путь к вашему JSON-файлу
+    local fileReaderObj = getFileReader("ShopPrice.json", false) -- Укажите путь к вашему JSON-файлу
     if fileReaderObj then 
         print("SHOP: ShopItems file uploaded successfully")
     else
@@ -18,20 +22,14 @@ function LoadShopItems()
     end
     fileReaderObj:close()
 
+    
+
     if json and json ~= "" then
-        shopItems = json.decode(json)
+        shopItems = Json.Decode(json);
     end
 
-    -- добавить их в таблицу Shop.Items
-    for _, item in ipairs(shopItems) do
-        Shop.Items[item.id] = {
-            tab = item.tab,
-            price = item.price
-        }
-    end
-
-    -- Вывод содержимого таблицы Shop.Items
-    -- for id, item in pairs(Shop.Items) do
+    -- -- Вывод содержимого таблицы Shop.Items
+    -- for id, item in pairs(shopItems) do
     --     print("Item ID:", id)
     --     print("Tab:", item.tab)
     --     print("Price:", item.price)
@@ -40,3 +38,17 @@ end
 
 -- Вызов функции при старте сервера
 Events.OnServerStarted.Add(LoadShopItems)
+
+local commands = {}
+commands.getData = function(player, args)
+    sendServerCommand('shopItems', "onGetData", shopItems)
+end
+
+
+local function shopItems_OnClientCommand(module, command, player, args)
+    if module == "shopItems" and commands[command] then
+        commands[command](player, args)
+    end
+end
+
+Events.OnClientCommand.Add(shopItems_OnClientCommand)

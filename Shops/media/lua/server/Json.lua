@@ -397,4 +397,5 @@ function json.Decode(str)
 end
 
 
-return json
+-- return json
+Json = json
