@@ -1,5 +1,4 @@
 function traitsGainsByKills(player)
-    print("DT Logger: running traitsGainsByKills function");
     if player:HasTrait("Agoraphobic") or player:HasTrait("Claustophobic") then
         if ZombRand(5) == 0 then
             player:getModData().DTagoraClaustroCounter = player:getModData().DTagoraClaustroCounter + ZombRand(10);
@@ -10,7 +9,6 @@ function traitsGainsByKills(player)
             -- TRAITS GAINED/LOST BY KILLS BASED ON THE PATH
             ----- THE PLAYER STARTED WITH COWARDLY -----
             if player:getModData().DTKillsPath == 1 then
-                print("DT Logger: DTKillsPath is 1");
                 if player:HasTrait("Cowardly") then
                     -- AFTER EVERY ZOMBIE KILL THERE ARE CHANCES OF REMOVING COWARDLY (AT 3000 KILL IF THE TRAIT IS STILL THERE IT IS REMOVED)
                     if DTrandomNumberForKills(player, 3000) == 0 then
@@ -58,7 +56,6 @@ function traitsGainsByKills(player)
                 end
             ----- THE PLAYER STARTED WITH BRAVE ----- 
             elseif player:getModData().DTKillsPath == 2 then
-                print("DT Logger: DTKillsPath is 2");
                 -- AFTER EVERY ZOMBIE KILL THERE ARE CHANCES OF ADDING DESENSITIZED (AT 4000 KILL IF THE TRAIT IS NOT THERE IT IS ADDED)
                 if not player:HasTrait("Desensitized") and not player:HasTrait("Agoraphobic") and not player:HasTrait("Claustophobic") then
                     if DTrandomNumberForKills(player, 4000) == 0 then
@@ -82,7 +79,6 @@ function traitsGainsByKills(player)
                 end
             ----- THE PLAYER STARTED WITHOUT TRAITS -----
             else
-                print("DT Logger: DTKillsPath is 3");
                 -- AFTER EVERY ZOMBIE KILL THERE ARE CHANCES OF REMOVING HEMOPHOBIC (AT 3000 KILL IF THE TRAIT IS STILL THERE IT IS REMOVED)
                 if player:HasTrait("Hemophobic") then
                     if DTrandomNumberForKills(player, 3000) == 0 then

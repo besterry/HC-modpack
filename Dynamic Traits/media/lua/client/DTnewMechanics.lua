@@ -1,6 +1,5 @@
 -- Grant XP multiplier if the regularity is maxed
 function exerciseMultiplierIfMaxRegularity(player)
-	print("DT Logger: running exerciseMultiplierIfMaxRegularity function");
 	--print("function exerciseMultiplierIfMaxRegularity is called");
 	player:getXp():addXpMultiplier(Perks.Fitness, 1, player:getPerkLevel(Perks.Fitness), 10); -- Grant an XP multiplier to avoid lua errors.
 	player:getXp():getMultiplierMap():remove(Perks.Fitness); -- Remove the current XP multiplier

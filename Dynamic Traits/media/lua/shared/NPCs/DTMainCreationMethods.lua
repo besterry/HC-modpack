@@ -4,7 +4,6 @@ DTBaseGameCharacterDetails = {}
 ----- NEW TRAITS / TRAITS REBALANCE / TRAITS EXLUCIONS -----
 ------------------------------------------------------------
 DTBaseGameCharacterDetails.DoTraits = function()
-    print("DT Logger: DTBaseGameCharacterDetails.DoTraits function");
     -- VANILLA TRAITS COST REBALANCE
 
     -- PROFESSION TRAITS
@@ -302,12 +301,10 @@ DTBaseGameCharacterDetails.DoTraits = function()
 
     -- SNAKE ALICE BACKPACK COMPATIBILITY
     if getActivatedMods():contains("AliceSPack") then
-        print("DT Logger: AliceSPack detected, running DoTrait function");
         ABSBaseGameCharacterDetails.DoTraits();
     end
     -- SNAKE AMMO MAKER COMPATIBILITY
     if getActivatedMods():contains("AmmoMaker") then
-        print("DT Logger: AmmoMaker detected, running DoTrait function");
         AMBaseGameCharacterDetails.DoTraits();
     end
     --[[ -- MORE SIMPLE TRAITS COMPATIBILITY
@@ -327,7 +324,6 @@ end
 ----- PROFESSIONS REBALANCE -----
 ---------------------------------
 DTBaseGameCharacterDetails.DoProfessions = function()
-    print("DT Logger: running DTBaseGameCharacterDetails.DoProfessions function");
     -- PROFFESIONS REBALANCE AND REWORK
     -- FIRE OFFICER PROFESSION REBALANCE
     local fireofficer = ProfessionFactory.getProfession("fireofficer");
@@ -460,7 +456,6 @@ end
 ----- INITIALIZATION FOR A NEW CHARACTER -----
 ----------------------------------------------
 DTBaseGameCharacterDetails.DoNewCharacterInitializations = function(playernum, character)
-    print("DT Logger: running DTBaseGameCharacterDetails.DoNewCharacterInitializations function");
     local player = getSpecificPlayer(playernum);
 
     -- TRAITS CHANGE

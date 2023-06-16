@@ -1,5 +1,4 @@
 function DTincreasePoison(player, chance, poison)
-    print("DT Logger: running DTincreasePoison function");
     local currentFoodPoison = player:getBodyDamage():getFoodSicknessLevel();
     if chance == 0 then
         player:playEmote("dtpoisonvomit");
@@ -29,7 +28,6 @@ function DTincreasePoison(player, chance, poison)
 end
 
 function DTincreasePoisonByWounds(player, chance, poison)
-    print("DT Logger: running DTincreasePoisonByWounds function");
     local currentFoodPoison = player:getBodyDamage():getFoodSicknessLevel();
     if chance == 0 then
         player:playEmote("dtpoisonvomit");
@@ -55,7 +53,6 @@ function DTincreasePoisonByWounds(player, chance, poison)
 end
 
 function DTincreaseStress(player, stress)
-    print("DT Logger: running DTincreaseStress function");
     local currentStress = player:getStats():getStress();
     if player:HasTrait("NervousWreck") then
         player:getStats():setStress(currentStress + (stress * 1.3));
@@ -68,7 +65,6 @@ function DTincreaseStress(player, stress)
 end
 
 function DTdecreaseStress(player, stress)
-    print("DT Logger: running DTdecreaseStress function");
     local currentStress = player:getStats():getStress();
     player:getStats():setStress(currentStress - stress);
     if player:getStats():getStress() < 0 then
@@ -77,7 +73,6 @@ function DTdecreaseStress(player, stress)
 end
 
 function DTdecreaseStressFromCigarettes(player, stress)
-    print("DT Logger: running DTdecreaseStressFromCigarettes function");
     local currentStressByCigarettes = player:getStats():getStressFromCigarettes();
     player:getStats():setStressFromCigarettes(currentStressByCigarettes - stress);
     if player:getStats():getStressFromCigarettes() < 0 then
@@ -86,7 +81,6 @@ function DTdecreaseStressFromCigarettes(player, stress)
 end
 
 function DTincreaseUnhappyness(player, unhappyness)
-    print("DT Logger: running DTincreaseUnhappyness function");
     local currentUnhappyness = player:getBodyDamage():getUnhappynessLevel();
     if player:HasTrait("Melancholic") then
         player:getBodyDamage():setUnhappynessLevel(currentUnhappyness + (unhappyness * 1.3));
@@ -99,7 +93,6 @@ function DTincreaseUnhappyness(player, unhappyness)
 end
 
 function DTdecreaseUnhappyness(player, unhappyness)
-    print("DT Logger: running DTdecreaseUnhappyness function");
     local currentUnhappyness = player:getBodyDamage():getUnhappynessLevel();
     player:getBodyDamage():setUnhappynessLevel(currentUnhappyness - unhappyness);
     if player:getBodyDamage():getUnhappynessLevel() < 0 then
@@ -108,7 +101,6 @@ function DTdecreaseUnhappyness(player, unhappyness)
 end
 
 function DTincreaseBoredom(player, boredom)
-    print("DT Logger: running DTincreaseBoredom function");
     local currentBoredom = player:getBodyDamage():getBoredomLevel();
     player:getBodyDamage():setBoredomLevel(currentBoredom + 15);
     if player:getBodyDamage():getBoredomLevel() > 99 then
@@ -117,7 +109,6 @@ function DTincreaseBoredom(player, boredom)
 end
 
 function DTdecreaseBoredom(player, boredom)
-    print("DT Logger: running DTdecreaseBoredom function");
     local currentBoredom = player:getBodyDamage():getBoredomLevel();
     player:getBodyDamage():setBoredomLevel(currentBoredom - 5);
     if player:getBodyDamage():getBoredomLevel() < 0 then
@@ -126,7 +117,6 @@ function DTdecreaseBoredom(player, boredom)
 end
 
 function DTincreaseFatigue(player, chance, fatigue)
-    print("DT Logger: running DTincreaseFatigue function");
     if chance == 0 then
         local currentFatigue = player:getStats():getFatigue();
         player:getStats():setFatigue(currentFatigue + fatigue);
@@ -137,7 +127,6 @@ function DTincreaseFatigue(player, chance, fatigue)
 end
 
 function DTdecreaseEndurance(player, chance, endurance)
-    print("DT Logger: running DTdecreaseEndurance function");
     if chance == 0 then
         local currentEndurance = player:getStats():getEndurance();
         player:getStats():setEndurance(currentEndurance - endurance);
@@ -148,7 +137,6 @@ function DTdecreaseEndurance(player, chance, endurance)
 end
 
 function DTluckyUnluckyModifier(player, randomRange)
-    print("DT Logger: running DTluckyUnluckyModifier function");
     if player:HasTrait("Lucky") then
         return ZombRand(randomRange)
     elseif player:HasTrait("Unlucky") then
@@ -159,7 +147,6 @@ function DTluckyUnluckyModifier(player, randomRange)
 end
 
 function DTapplyPain(player, chance, bodyPart, pain)
-    print("DT Logger: running DTapplyPain function");
     if chance == 0 then
         local bodyPartAux = BodyPartType.FromString(bodyPart);
         local playerBodyPart = player:getBodyDamage():getBodyPart(bodyPartAux);
@@ -172,7 +159,6 @@ function DTapplyPain(player, chance, bodyPart, pain)
 end
 
 function DTrandomNumberForKills(player, range)
-    print("DT Logger: running DTrandomNumberForKills function");
     local randNum = ZombRand(range - player:getZombieKills() - player:getHoursSurvived() + (DTluckyUnluckyModifier(player, (range / 10)) * -1));
     if randNum < 0 then
         randNum = 0;
@@ -181,7 +167,6 @@ function DTrandomNumberForKills(player, range)
 end
 
 function DTincreaseWetness(player, wetness)
-    print("DT Logger: running DTincreaseWetness function");
     local currentWetness = player:getBodyDamage():getWetness();
     player:getBodyDamage():setWetness(currentWetness + wetness);
     if player:getBodyDamage():getWetness() > 99 then
@@ -190,7 +175,6 @@ function DTincreaseWetness(player, wetness)
 end
 
 function applyXPBoost(player, perk, boostLevel)
-    print("DT Logger: running applyXPBoost function");
     local currentXPBoost = player:getXp():getPerkBoost(perk);
     local newBoost = currentXPBoost + boostLevel;
     if newBoost > 3 then
@@ -201,7 +185,6 @@ function applyXPBoost(player, perk, boostLevel)
 end
 
 function generateACold(player, baseRange, coldStrength)
-    print("DT Logger: running generateACold function");
     local currentColdStrength = player:getBodyDamage():getColdStrength();
     local auxRange = baseRange;
     -- Increases the range if Outdoorsman is present
@@ -227,7 +210,6 @@ function generateACold(player, baseRange, coldStrength)
 end
 
 function DTincreaseItemWetness(item, rainIntensity, windIntensity, extraValue)
-    print("DT Logger: running DTincreaseItemWetness function");
     local currentWetness = item:getWetness();
     local waterResistance = item:getWaterResistance();
     local newWetness = currentWetness + rainIntensity + windIntensity + extraValue - waterResistance;

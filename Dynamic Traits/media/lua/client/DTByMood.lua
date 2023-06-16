@@ -1,5 +1,4 @@
 function traitsByMoods(player)
-    print("DT Logger: running traitsByMoods function");
     -- Gain trait "Needs More Sleep" when Bored Moodle is Lv2 or more and remove it otherwise.
     if player:getMoodles():getMoodleLevel(MoodleType.Bored) >= 2 then
         if not player:HasTrait("NeedsMoreSleep") then
@@ -68,7 +67,6 @@ end
 
 -- NIGHTMARES TRAITS
 function nightmaresTrait(player)
-    print("DT Logger: running nightmaresTrait function");
     if player:HasTrait("Nightmares") and player:isAsleep() and ZombRand(100) == 0 then
         player:forceAwake();
         player:getStats():setPanic(95);

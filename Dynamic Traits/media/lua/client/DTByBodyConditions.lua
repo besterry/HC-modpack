@@ -1,6 +1,5 @@
 -- Traits gains based on body conditions are going to be handled in this function.
 function traitsGainsByBodyConditions(player)
-    print("DT Logger: running traitsGainsByBodyConditions function");
     --------------- TRAITS APPLIED/REMOVED FOR "EMACIATED" ---------------
     if player:HasTrait("Emaciated") then
         --
