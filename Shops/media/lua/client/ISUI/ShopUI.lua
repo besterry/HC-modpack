@@ -27,7 +27,8 @@ function ShopUI:show(player,viewMode,shop)
     receiveServerCommand = function(module, command, args)
         if module ~= 'shopItems' then return; end
         if command == 'onGetData' then
-            Shop.Items = args
+            Shop.Items = args['shopItems']
+            Shop.Sell = args['forSellItems']
             Events.OnServerCommand.Remove(receiveServerCommand)
 
             local square = player:getSquare()
@@ -355,12 +356,9 @@ function ShopUI:onActivateView()
     end
     
     for k,v in pairs(Shop.Items) do
-        print('v.tab: ', v.tab)
         if v and (v.tab == tabType or tabType == Tab.All) then 
-            print('k: ', k)
             local item = self:getItemInstance(k)
             if item then
-                print('item: ', item:getDisplayName())
                 local VehicleID = item:getModData().VehicleID
                 if VehicleID then v.VehicleID = VehicleID end
                 v.favorite = character:getModData().shopFavorites[k]
@@ -371,8 +369,6 @@ function ShopUI:onActivateView()
                     v.texture = item:getTex()
                 end
                 v.name = Nfunction.trimString(item:getName(),42)
-                print('v.name: ', v.name)
-                print('v.price: ', v.price)
                 shopItems:addItem(k,v);
             end
         end
