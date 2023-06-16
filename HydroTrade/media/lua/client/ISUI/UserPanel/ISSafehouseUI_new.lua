@@ -198,9 +198,14 @@ function ISSafehouseUI:onClickRefreshTime()
     self.timeLeftLabel:setName(timeLeftText)
 end
 
+    --
 function ISSafehouseUI:onClickResetTime()
-    local currentTime = getTimeInMillis()
+    local currentTime = getTimeInMillis()    
     self.safehouse:setLastVisited(currentTime)
+    -- local playerObj = getPlayerFromUsername(self.safehouse:getOwner())
+    -- print(playerObj)
+    -- self.safehouse:updateSafehouse(playerObj)
+    self.safehouse:syncSafehouse()
     self:onClickRefreshTime()
 end
 

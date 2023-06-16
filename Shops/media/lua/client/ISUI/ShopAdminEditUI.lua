@@ -1,17 +1,17 @@
 local Nfunction = require "Nfunction"
-ShopUI = ISCollapsableWindow:derive("ShopUI");
-ShopUI.instance = nil;
-ShopUI.SMALL_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Small):getLineHeight()
-ShopUI.MEDIUM_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Medium):getLineHeight()
-ShopUI.removeButtonX = 380
-ShopUI.previewButtonX = ShopUI.removeButtonX + 25
-ShopUI.shopItemsCache = {}
-ShopUI.total = 0
-ShopUI.totalSpecial = 0
-ShopUI.actionInProgress = false
-ShopUI.reloadItems = false
-ShopUI.lastTab = "none"
-ShopUI.ItemInstanceCache = {}
+ShopAdminEditUI = ISCollapsableWindow:derive("ShopAdminEditUI");
+ShopAdminEditUI.instance = nil;
+ShopAdminEditUI.SMALL_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Small):getLineHeight()
+ShopAdminEditUI.MEDIUM_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Medium):getLineHeight()
+ShopAdminEditUI.removeButtonX = 380
+ShopAdminEditUI.previewButtonX = ShopAdminEditUI.removeButtonX + 25
+ShopAdminEditUI.shopItemsCache = {}
+ShopAdminEditUI.total = 0
+ShopAdminEditUI.totalSpecial = 0
+ShopAdminEditUI.actionInProgress = false
+ShopAdminEditUI.reloadItems = false
+ShopAdminEditUI.lastTab = "none"
+ShopAdminEditUI.ItemInstanceCache = {}
 local posX = 0
 local posY = 0
 
@@ -21,37 +21,25 @@ local cartImg = Shop.textures.Cart;
 local width = 995
 local height = 550
 
-function ShopUI:show(player,viewMode,shop)
-    sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
-    local receiveServerCommand
-    receiveServerCommand = function(module, command, args)
-        if module ~= 'shopItems' then return; end
-        if command == 'onGetData' then
-            Shop.Items = args['shopItems']
-            Shop.Sell = args['forSellItems']
-            Events.OnServerCommand.Remove(receiveServerCommand)
-
-            local square = player:getSquare()
-            posX = square:getX()
-            posY = square:getY()
-            if ShopUI.instance==nil then
-                ShopUI.instance = ShopUI:new (0, 0, width, height, player);
-                ShopUI.instance.shop = shop
-                ShopUI.instance.viewMode = viewMode
-                ShopUI.instance:initialise();
-                ShopUI.instance:instantiate();
-            end
-            ShopUI.instance.pinButton:setVisible(false)
-            ShopUI.instance.collapseButton:setVisible(false)
-            ShopUI.instance:addToUIManager();
-            ShopUI.instance:setVisible(true);
-            return ShopUI.instance;
-        end
+function ShopAdminEditUI:show(player,viewMode,shop)
+    local square = player:getSquare()
+    posX = square:getX()
+    posY = square:getY()
+    if ShopAdminEditUI.instance==nil then
+        ShopAdminEditUI.instance = ShopAdminEditUI:new (0, 0, width, height, player);
+        ShopAdminEditUI.instance.shop = shop
+        ShopAdminEditUI.instance.viewMode = viewMode
+        ShopAdminEditUI.instance:initialise();
+        ShopAdminEditUI.instance:instantiate();
     end
-    Events.OnServerCommand.Add(receiveServerCommand);
+    ShopAdminEditUI.instance.pinButton:setVisible(false)
+    ShopAdminEditUI.instance.collapseButton:setVisible(false)
+    ShopAdminEditUI.instance:addToUIManager();
+    ShopAdminEditUI.instance:setVisible(true);
+    return ShopAdminEditUI.instance;
 end
 
-function ShopUI:update()
+function ShopAdminEditUI:update()
     if not self.viewMode then
         local player = self.player
         if player:DistTo(posX, posY) > 2 then
@@ -76,7 +64,7 @@ function ShopUI:update()
     self:updateTotal()
 end
 
-function ShopUI:doDrawCartItem(y, item, alt)
+function ShopAdminEditUI:doDrawCartItem(y, item, alt)
     local baseItemDY = 0
     if item.item.name then
         baseItemDY = self.SMALL_FONT_HGT
@@ -123,24 +111,24 @@ function ShopUI:doDrawCartItem(y, item, alt)
     return y + item.height;
 end
 
-function ShopUI:onMouseMove(dx, dy)
+function ShopAdminEditUI:onMouseMove(dx, dy)
     self.mouseOver = true;
 	if self.moving then
 		self:setX(self.x + dx);
 		self:setY(self.y + dy);
 		self:bringToTop();
 	end
-    if ShopUI.instance.panel.activeView.view.shopItems:isMouseOver() then return end
-    if ShopUI.instance.cartItems:isMouseOver() then return end
-    ShopUI.instance:toggleTooltip(false)
+    if ShopAdminEditUI.instance.panel.activeView.view.shopItems:isMouseOver() then return end
+    if ShopAdminEditUI.instance.cartItems:isMouseOver() then return end
+    ShopAdminEditUI.instance:toggleTooltip(false)
 end
 
-function ShopUI:onMouseDown(x, y)
+function ShopAdminEditUI:onMouseDown(x, y)
     ISCollapsableWindow.onMouseDown(self,x, y)
     if PreviewUI.instance then PreviewUI.instance:close() end
 end
 
-function ShopUI:onMouseDownCartItem(x, y)
+function ShopAdminEditUI:onMouseDownCartItem(x, y)
     ISScrollingListBox.onMouseDown(self,x, y)
     if PreviewUI.instance then PreviewUI.instance:close() end
 	if self.selectedRow then
@@ -152,7 +140,7 @@ function ShopUI:onMouseDownCartItem(x, y)
             return
         end
         if self.removeBtn then
-		    ShopUI.instance:removeFromCart(selectedRow)
+		    ShopAdminEditUI.instance:removeFromCart(selectedRow)
         end
     end
 end
@@ -160,7 +148,7 @@ end
 local currentTooltip = nil
 local invTooltip = nil
 local itemPackTooltip = nil
-function ShopUI:toggleTooltip(show,item)
+function ShopAdminEditUI:toggleTooltip(show,item)
     if item then
         if item.invItem then
             if not invTooltip then
@@ -174,7 +162,7 @@ function ShopUI:toggleTooltip(show,item)
             end
         else
             if not itemPackTooltip then
-                itemPackTooltip = ShopUITooltip:new();
+                itemPackTooltip = ShopAdminEditUITooltip:new();
             end
             if invTooltip then
                 invTooltip:removeFromUIManager()
@@ -195,17 +183,17 @@ function ShopUI:toggleTooltip(show,item)
     end
 end
 
-function ShopUI:onMouseMoveCartItem(dx, dy)
-    local list = ShopUI.instance.cartItems
+function ShopAdminEditUI:onMouseMoveCartItem(dx, dy)
+    local list = ShopAdminEditUI.instance.cartItems
     if not list then return end
     list.selectedRow = nil
     list.previewBtn = nil
     list.removeBtn = nil
-	if list:isMouseOverScrollBar() or not list:isMouseOver() then ShopUI.instance:toggleTooltip(false) return end
+	if list:isMouseOverScrollBar() or not list:isMouseOver() then ShopAdminEditUI.instance:toggleTooltip(false) return end
 	local rowIndex = list:rowAt(list:getMouseX(), list:getMouseY())
-    if not rowIndex then ShopUI.instance:toggleTooltip(false) return end
+    if not rowIndex then ShopAdminEditUI.instance:toggleTooltip(false) return end
     local selectedRow = list.items[rowIndex]
-    if not selectedRow then ShopUI.instance:toggleTooltip(false) return end
+    if not selectedRow then ShopAdminEditUI.instance:toggleTooltip(false) return end
     local mouseX = self:getMouseX()
     list.selectedRow = rowIndex
     if mouseX > self.parent.removeButtonX then
@@ -214,25 +202,24 @@ function ShopUI:onMouseMoveCartItem(dx, dy)
     if mouseX > self.parent.previewButtonX then
         list.previewBtn = true
     end
-    if not selectedRow.item.items then ShopUI.instance:toggleTooltip(false) return end
-    ShopUI.instance:toggleTooltip(true,selectedRow.item)
+    if not selectedRow.item.items then ShopAdminEditUI.instance:toggleTooltip(false) return end
+    ShopAdminEditUI.instance:toggleTooltip(true,selectedRow.item)
 end
 
-function ShopUI:createCategories()
+function ShopAdminEditUI:createCategories()
     for k,v in pairs(Shop.Tabs) do 
         local tab = ShopTabUI:new(0, 0, self.width, self.panel.height - self.panel.tabHeight);
         tab:initialise();
         tab:setAnchorRight(true)
         tab:setAnchorBottom(true)
-        tab:setShopUI(ShopUI.instance)
+        tab:setShopAdminEditUI(ShopAdminEditUI.instance)
         tab:setCategoryType(k)
         self.panel:addView(v, tab);
         tab.parent = self;
     end
 end
 
----@return InventoryItem
-function ShopUI:getItemInstance(type)
+function ShopAdminEditUI:getItemInstance(type)
     local item = self.ItemInstanceCache[type]
     if not item then
         item = InventoryItemFactory.CreateItem(type)
@@ -243,7 +230,7 @@ function ShopUI:getItemInstance(type)
     return item
 end
 
-function ShopUI:onActivateView()
+function ShopAdminEditUI:onActivateView()
     local character = self.player
     if not character:getModData().shopFavorites then
         character:getModData().shopFavorites = {}
@@ -377,7 +364,7 @@ function ShopUI:onActivateView()
     self.reloadItems = false 
 end
 
-function ShopUI:createChildren()
+function ShopAdminEditUI:createChildren()
     ISCollapsableWindow.createChildren(self);
     local x = 30
     local y = 85
@@ -395,30 +382,30 @@ function ShopUI:createChildren()
     self:createCategories()
     self:activateFirstTab()
 
-    self.clearCartButton = ISButton:new((self.width / 2)+380, y+280, 80,25,UIText.ClearCart,self, ShopUI.clearCartBtn);
+    self.clearCartButton = ISButton:new((self.width / 2)+380, y+280, 80,25,UIText.ClearCart,self, ShopAdminEditUI.clearCartBtn);
     self.clearCartButton:initialise()
     self:addChild(self.clearCartButton);
 
     if not self.viewMode then 
-        self.buyCartButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.BuyCart,self, ShopUI.buyCartBtn);
+        self.buyCartButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.BuyCart,self, ShopAdminEditUI.buyCartBtn);
         self.buyCartButton:initialise()
         self.buyCartButton.enable = false
         self.buyCartButton:setVisible(true)
         self:addChild(self.buyCartButton);
 
-        self.sellCartButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.Sell,self, ShopUI.sellCartBtn);
+        self.sellCartButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.Sell,self, ShopAdminEditUI.sellCartBtn);
         self.sellCartButton:initialise()
         self.sellCartButton.enable = false
         self.sellCartButton:setVisible(false)
         self:addChild(self.sellCartButton);
 
-        self.cancelBuyButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.Cancel,self, ShopUI.cancelBuyBtn);
+        self.cancelBuyButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.Cancel,self, ShopAdminEditUI.cancelBuyBtn);
         self.cancelBuyButton:initialise()
         self.cancelBuyButton.enable = false
         self.cancelBuyButton:setVisible(false)
         self:addChild(self.cancelBuyButton);
     else
-        self.balanceLabel = ISLabel:new((self.width / 2)+150, y+350, ShopUI.SMALL_FONT_HGT, UIText.ShopViewOnly, 1, 1, 1, 1, UIFont.Medium, true)
+        self.balanceLabel = ISLabel:new((self.width / 2)+150, y+350, ShopAdminEditUI.SMALL_FONT_HGT, UIText.ShopViewOnly, 1, 1, 1, 1, UIFont.Medium, true)
         self:addChild(self.balanceLabel);
     end
 
@@ -439,12 +426,12 @@ function ShopUI:createChildren()
     self.cartItems.drawBorder = false;
     self.cartItems.SMALL_FONT_HGT = self.SMALL_FONT_HGT
     self.cartItems.MEDIUM_FONT_HGT = self.MEDIUM_FONT_HGT
-    self.cartItems.doDrawItem = ShopUI.doDrawCartItem;
-    self.cartItems.onMouseMove = ShopUI.onMouseMoveCartItem;
-    self.cartItems.onMouseDown = ShopUI.onMouseDownCartItem;
+    self.cartItems.doDrawItem = ShopAdminEditUI.doDrawCartItem;
+    self.cartItems.onMouseMove = ShopAdminEditUI.onMouseMoveCartItem;
+    self.cartItems.onMouseDown = ShopAdminEditUI.onMouseDownCartItem;
     self:addChild(self.cartItems);
 
-    self.balanceLabel = ISLabel:new(x+490, 20, ShopUI.SMALL_FONT_HGT, UIText.Balance, 1, 1, 1, 1, UIFont.Medium, true)
+    self.balanceLabel = ISLabel:new(x+490, 20, ShopAdminEditUI.SMALL_FONT_HGT, UIText.Balance, 1, 1, 1, 1, UIFont.Medium, true)
     self:addChild(self.balanceLabel);
 
     local coinImg = Currency.CoinsTexture.Coin
@@ -453,7 +440,7 @@ function ShopUI:createChildren()
     self.balanceCoinTex.scaledHeight = coinImg.scale+5
     self:addChild(self.balanceCoinTex);
 
-    self.balanceCoinLabel = ISLabel:new(x+575, 20, ShopUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
+    self.balanceCoinLabel = ISLabel:new(x+575, 20, ShopAdminEditUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
     self:addChild(self.balanceCoinLabel);
 
     self.coinTex = ISImage:new(x+535, y+280, 0, 0, coinImg.texture);
@@ -461,10 +448,10 @@ function ShopUI:createChildren()
     self.coinTex.scaledHeight = coinImg.scale+5
     self:addChild(self.coinTex);
 
-    self.totalLabel = ISLabel:new(x+490, y+280, ShopUI.SMALL_FONT_HGT, UIText.Total, 1, 1, 1, 1, UIFont.Medium, true)
+    self.totalLabel = ISLabel:new(x+490, y+280, ShopAdminEditUI.SMALL_FONT_HGT, UIText.Total, 1, 1, 1, 1, UIFont.Medium, true)
     self:addChild(self.totalLabel);
 
-    self.totalCoinLabel = ISLabel:new(x+560, y+280, ShopUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
+    self.totalCoinLabel = ISLabel:new(x+560, y+280, ShopAdminEditUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
     self:addChild(self.totalCoinLabel);
 
     coinImg = Currency.CoinsTexture.SpecialCoin
@@ -473,7 +460,7 @@ function ShopUI:createChildren()
     self.balanceSpecialCoinTex.scaledHeight = coinImg.scale+5
     self:addChild(self.balanceSpecialCoinTex);
 
-    self.balanceSpecialCoinLabel = ISLabel:new(x+575, 45, ShopUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
+    self.balanceSpecialCoinLabel = ISLabel:new(x+575, 45, ShopAdminEditUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
     self:addChild(self.balanceSpecialCoinLabel);
 
     self.specialCoinTex = ISImage:new(x+535, y+305, 0, 0, coinImg.texture);
@@ -481,7 +468,7 @@ function ShopUI:createChildren()
     self.specialCoinTex.scaledHeight = coinImg.scale+5
     self:addChild(self.specialCoinTex);
 
-    self.totalSpecialCoinLabel = ISLabel:new(x+560, y+305, ShopUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
+    self.totalSpecialCoinLabel = ISLabel:new(x+560, y+305, ShopAdminEditUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
     self:addChild(self.totalSpecialCoinLabel);
 
     if not Currency.UseSpecialCoin then
@@ -492,14 +479,14 @@ function ShopUI:createChildren()
     end
 end
 
-function ShopUI:activateFirstTab()
+function ShopAdminEditUI:activateFirstTab()
     for k,v in pairs(Shop.Tabs) do 
         self.panel:activateView(v)
         break;
     end
 end
 
-function ShopUI:removeFromCart(selectedRow)
+function ShopAdminEditUI:removeFromCart(selectedRow)
     if self.actionInProgress then return end
     self:toggleTooltip(false)
     local tab = self.panel.activeView.view
@@ -510,7 +497,7 @@ function ShopUI:removeFromCart(selectedRow)
     self.cartItems:removeItem(selectedRow.text)
 end
 
-function ShopUI:clearCartBtn()
+function ShopAdminEditUI:clearCartBtn()
     if self.actionInProgress then return end
     local tab = self.panel.activeView.view
     local tabType = tab.tabType
@@ -522,7 +509,7 @@ function ShopUI:clearCartBtn()
     self.cartItems:clear()
 end
 
-function ShopUI:cancelBuyBtn()
+function ShopAdminEditUI:cancelBuyBtn()
     local tabType = self.panel.activeView.view.tabType
     if tabType == Tab.Sell then 
         self.sellCartButton.enable = true
@@ -540,7 +527,7 @@ function ShopUI:cancelBuyBtn()
     currentAction.action:forceStop()
 end
 
-function ShopUI:buyCartBtn()
+function ShopAdminEditUI:buyCartBtn()
     self.actionInProgress = true
     local ticket = {}
     ticket.coin = self.total
@@ -553,7 +540,7 @@ function ShopUI:buyCartBtn()
     self.cancelBuyButton:setVisible(true)
 end
 
-function ShopUI:sellCartBtn()
+function ShopAdminEditUI:sellCartBtn()
     self.actionInProgress = true
     local action = ShopSellAction:new(self.player,self);
     ISTimedActionQueue.add(action);
@@ -563,7 +550,7 @@ function ShopUI:sellCartBtn()
     self.cancelBuyButton:setVisible(true)
 end
 
-function ShopUI:render()
+function ShopAdminEditUI:render()
     ISCollapsableWindow.render(self);
     local actionQueue = ISTimedActionQueue.getTimedActionQueue(self.player)
     local currentAction = actionQueue.queue[1]
@@ -572,7 +559,7 @@ function ShopUI:render()
     self:drawProgressBar((self.width / 2)+180, 420, 120, 10, currentAction.action:getJobDelta(), self.fgBar)
 end
 
-function ShopUI:updateTotal()
+function ShopAdminEditUI:updateTotal()
     local total = 0
     local totalSpecial = 0
     self.totalCoinLabel:setName(""..total)
@@ -630,15 +617,15 @@ function ShopUI:updateTotal()
     end
 end
 
-function ShopUI:close()
+function ShopAdminEditUI:close()
 	ISCollapsableWindow.close(self);
     if PreviewUI.instance then PreviewUI.instance:close() end
-    ShopUI.instance:removeFromUIManager()
-    ShopUI.instance = nil
+    ShopAdminEditUI.instance:removeFromUIManager()
+    ShopAdminEditUI.instance = nil
     self:removeFromUIManager()
 end
 
-function ShopUI:new(x, y, width, height, player)
+function ShopAdminEditUI:new(x, y, width, height, player)
     local o = {}
     if x == 0 and y == 0 then
         x = (getCore():getScreenWidth() / 2) - (width / 2);
@@ -648,7 +635,7 @@ function ShopUI:new(x, y, width, height, player)
     setmetatable(o, self)
     o.fgBar = {r=0, g=0.6, b=0, a=0.7 }
     self.__index = self
-    o.title = UIText.ShopUITitle;
+    o.title = UIText.ShopAdminEditUITitle;
     o.player = player
     o.resizable = false;
     return o
