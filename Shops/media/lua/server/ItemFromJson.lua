@@ -1,6 +1,6 @@
 if not isServer() then return end
 
--- local Json = require("Json") -- ˜˜˜˜˜˜˜˜˜˜˜ ˜˜˜˜˜˜ ˜˜˜ ˜˜˜˜˜˜ ˜ JSON
+-- local Json = require("Json") -- ËœËœËœËœËœËœËœËœËœËœËœ ËœËœËœËœËœËœ ËœËœËœ ËœËœËœËœËœËœ Ëœ JSON
 FD = FD or {}
 FD.shopItems = FD.shopItems or {}
 FD.forSellItems = FD.forSellItems or {}
@@ -9,8 +9,8 @@ local forSellItems = FD.forSellItems
 
 ---@param filename string
 ---@return table
-function LoadJsonItems(filename)
-    local fileReaderObj = getFileReader(filename, false) -- ˜˜˜˜˜˜˜ ˜˜˜˜ ˜ ˜˜˜˜˜˜ JSON-˜˜˜˜˜
+local function LoadJsonItems(filename)
+    local fileReaderObj = getFileReader(filename, false) -- ËœËœËœËœËœËœËœ ËœËœËœËœ Ëœ ËœËœËœËœËœËœ JSON-ËœËœËœËœËœ
     if fileReaderObj then 
         print("SHOP: ShopItems file uploaded successfully")
     else
@@ -32,12 +32,12 @@ function LoadJsonItems(filename)
     return resulTable
 end
 
-function LoadAll()
+local function LoadAll()
     shopItems = LoadJsonItems("ShopPrice.json")
     forSellItems = LoadJsonItems("ForSell.json")
 end
 
--- ˜˜˜˜˜ ˜˜˜˜˜˜˜ ˜˜˜ ˜˜˜˜˜˜ ˜˜˜˜˜˜˜
+-- ËœËœËœËœËœ ËœËœËœËœËœËœËœ ËœËœËœ ËœËœËœËœËœËœ ËœËœËœËœËœËœËœ
 Events.OnServerStarted.Add(LoadAll)
 
 local commands = {}

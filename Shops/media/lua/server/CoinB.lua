@@ -1,13 +1,13 @@
 if not isServer() then return end
 -- local Json = require("Json")
 
---Выгрузка баланса игроков в json файл сервера
-function SaveCoinBalancefd(username) --запись в файл
+--Р’С‹РіСЂСѓР·РєР° Р±Р°Р»Р°РЅСЃР° РёРіСЂРѕРєРѕРІ РІ json С„Р°Р№Р» СЃРµСЂРІРµСЂР°
+function SaveCoinBalancefd(username) --Р·Р°РїРёСЃСЊ РІ С„Р°Р№Р»
     local coinBalance = ModData.get("CoinBalance")
     if not coinBalance then return end
     local fileWriterObj = getFileWriter("file_CoinBalance.json", true, false)
     local coinBalanceJson = Json.Encode(coinBalance)
-    -- Добавляем символ переноса строки после каждой записи
+    -- Р”РѕР±Р°РІР»СЏРµРј СЃРёРјРІРѕР» РїРµСЂРµРЅРѕСЃР° СЃС‚СЂРѕРєРё РїРѕСЃР»Рµ РєР°Р¶РґРѕР№ Р·Р°РїРёСЃРё
     local formattedJson = coinBalanceJson:gsub("},","},\n")
     fileWriterObj:write(formattedJson)
     fileWriterObj:close()
@@ -23,7 +23,7 @@ end
 --         if not coinBalance then return end
 --         local fileWriterObj = getFileWriter("file_CoinBalance.json", true, false)
 --         local coinBalanceJson = Json.Encode(coinBalance)
---         -- Добавляем символ переноса строки после каждой записи
+--         -- Р”РѕР±Р°РІР»СЏРµРј СЃРёРјРІРѕР» РїРµСЂРµРЅРѕСЃР° СЃС‚СЂРѕРєРё РїРѕСЃР»Рµ РєР°Р¶РґРѕР№ Р·Р°РїРёСЃРё
 --         local formattedJson = coinBalanceJson:gsub("},","},\n")
 --         fileWriterObj:write(formattedJson)
 --         fileWriterObj:close()
