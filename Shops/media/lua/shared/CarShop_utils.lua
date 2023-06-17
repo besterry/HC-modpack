@@ -213,7 +213,6 @@ function CarUtils:processConstraints()
 		else
 			vehicle:setMass(vehicleLockMass)
 		end
-		print('getMass: ', vehicle:getMass())
 		CarShop.isAllowGetKey = false
 		BravensUtils.DelayFunction(processConstraintsBindFn, 1)
 		return
