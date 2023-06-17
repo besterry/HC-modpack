@@ -120,12 +120,6 @@ function ISVehicleMenu.buyCar(playerObj, _carInfo)
 	sendClientCommand(playerObj, MOD_NAME, 'onBuyCar', offerInfo)
 end
 
-local base_LiftBike = LiftBike
-local this_LiftBike = function(player, vehicle)
-	local playerObj = getSpecificPlayer(player)
-	playerObj:Say('Cant do it')
-end
-
 local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 ---@param playerObj IsoPlayer
 function ISVehicleMenu.showRadialMenu(playerObj)
@@ -147,6 +141,10 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	local vehicle = ISVehicleMenu.getVehicleToInteractWith(playerObj)
 
 	if vehicle then
+		if BravensBikeUtils.isBike(vehicle) then
+			menu:clear()
+		end
+
 		local vehicleKeyId = vehicle:getKeyId()
         local offerInfo = {
             username = username,
@@ -157,8 +155,6 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local playerHasCarTicket = playerObj:getInventory():contains(TICKET_NAME)
 		local vehicleIsOnSale = carInfo:isCarOnSale()
 		local playerIsCarOwner = carInfo:isCarOwner()
-
-		LiftBike = base_LiftBike
 
 		if playerHasCarTicket and not vehicleIsOnSale then
         	menu:addSlice(
@@ -177,7 +173,6 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		end
 		if vehicleIsOnSale and not playerIsCarOwner then
 			local price = carInfo:getPrice()
-			LiftBike = this_LiftBike
 			menu:addSlice(
 				getText('IGUI_CarShop_Buy_Car_For')..price..'$', 
 				getTexture('media/textures/ShopUI_Cart.png'), 
@@ -305,8 +300,6 @@ local setKeysInIgnition_helper = function(vehicle)
 	end
 end
 
-
-
 -- NOTE: Переопределяем метод, чтоб нельзя было забрать ключи когда машина выставлена на продажу
 local base_ISVehicleDashboard_onClickKeys = ISVehicleDashboard.onClickKeys
 function ISVehicleDashboard:onClickKeys()
@@ -318,6 +311,5 @@ function ISVehicleDashboard:onClickKeys()
 	end	
 	return o
 end
-
 
 Events.OnEnterVehicle.Add(carShopEventHandler.onEnterVehicle)

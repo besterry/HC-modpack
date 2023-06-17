@@ -201,12 +201,13 @@ function CarUtils:processConstraints()
 	end
 
 	local vehicleLockMass = CarShop.constants.vehicleLockMass
-	print('vehicle:getScriptName()', vehicle:getScriptName())
-	if string.find( vehicle:getScriptName(), "AMC" ) then
-		vehicleLockMass = vehicleLockMass / 10
-	end
 	local processConstraintsBindFn = function() return CarUtils.processConstraints(self) end
+	
 	if self:isCarOnSale() then
+		print('vehicle:getScriptName()', self.vehicle:getScriptName(), string.find( self.vehicle:getScriptName(), "AMC" ))
+		if string.find( self.vehicle:getScriptName(), "AMC" ) then
+			vehicleLockMass = vehicleLockMass / 2
+		end
 		self.vehicle:setMass(vehicleLockMass)
 		print('getMass: ', self.vehicle:getMass())
 		CarShop.isAllowGetKey = false
@@ -235,10 +236,5 @@ function CarUtils:stopConstraints()
 	end
 	vehicle:setMass(vehicle:getInitialMass())
 	vehicle:updateTotalMass()
-
-	BravensUtils.DelayFunction(function()
-		vehicle:updatePhysics()
-		vehicle:updatePhysicsNetwork()
-	end, 50)
 	CarShop.isAllowGetKey = true
 end
