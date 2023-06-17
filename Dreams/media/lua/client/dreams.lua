@@ -15,14 +15,14 @@ do --Проверка на вшивость
 		--print(i,CheckIGUIDream(i))
 		if not CheckIGUIDream(i) then
 			--error('Dreams error! Dream not found:'..tostring(i))
-			print('Dreams error! Dream not found: ',i)
+			--print('Dreams error! Dream not found: ',i)
 			MAX_DREAMS = i-1
 			break
 		end
 	end
 	--Если были добавлены новые сны, автоматически расширяемся. Заодно выбрасываем ошибку.
 	if CheckIGUIDream(MAX_DREAMS + 1) then
-		print('Dreams error! Change MAX_DREAMS to '..tostring(MAX_DREAMS));
+		--print('Dreams error! Change MAX_DREAMS to '..tostring(MAX_DREAMS));
 		while CheckIGUIDream(MAX_DREAMS + 1) do
 			MAX_DREAMS = MAX_DREAMS + 1
 		end
@@ -299,7 +299,7 @@ end
 --Показывает случайный сон из заданного диапазона с учетом того, как часто сны были показаны до этого.
 function ShowRandomDream(arr) -- arr - массив номеров снов
 	if #arr == 0 then
-		print("No dreams found.")
+		--print("No dreams found.")
 		return --nil
 	end
 	--do local s='Dreams: '; for k,v in pairs(arr) do s=s..tostring(v)..', ' end print(s) end

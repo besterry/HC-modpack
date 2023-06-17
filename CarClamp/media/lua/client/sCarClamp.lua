@@ -16,7 +16,7 @@ function ISVehicleMenu.onSendCommandAddCarClamp(playerObj, vehicleInfo)
 		keys:get(i):setKeyId(vehicleInfo.CarClampId);
 	end
 
-    print("Sending command ISVehicleMenu.onAddCarClamp")
+    --print("Sending command ISVehicleMenu.onAddCarClamp")
 
     playerObj:Say("Adding car clamp...")
     sendClientCommand(playerObj, 'CarClamp', 'onAddCarClamp', vehicleInfo)
@@ -27,7 +27,7 @@ function ISVehicleMenu.onSendCommandRemoveCarClamp(playerObj, vehicleInfo)
 	playerObj:getInventory():Remove(usedKey);
 	playerObj:getInventory():AddItems("VoldarGames.CarClamp", 1);
 
-    print("Sending command ISVehicleMenu.onRemoveCarClamp")
+    --print("Sending command ISVehicleMenu.onRemoveCarClamp")
 
     playerObj:Say("Removing car clamp...")
 
@@ -35,11 +35,11 @@ function ISVehicleMenu.onSendCommandRemoveCarClamp(playerObj, vehicleInfo)
 end
 
 function ISVehicleMenu.onSendCommandNoKeyCarClamp(playerObj, vehicleInfo)
-    print("No key")
+    --print("No key")
 end
 
 function ISVehicleMenu.onSendCommandCheatCarClampGetKey(playerObj, vehicleInfo)
-    print("onSendCommandCheatCarClampGetKey")
+    --print("onSendCommandCheatCarClampGetKey")
 
 	local keys = playerObj:getInventory():AddItems("Base.KeyPadlock", 1);
 
@@ -49,7 +49,7 @@ function ISVehicleMenu.onSendCommandCheatCarClampGetKey(playerObj, vehicleInfo)
 end
 
 function ISVehicleMenu.onSendCommandCheatClearCarClampModData(playerObj, vehicleInfo)
-    print("onSendCommandCheatClearCarClampModData")
+    --print("onSendCommandCheatClearCarClampModData")
 
 	sendClientCommand(playerObj, 'CarClamp', 'onSendCommandCheatClearCarClampModData', vehicleInfo)
 end
@@ -160,7 +160,7 @@ function ISVehicleMenu.showRadialMenuOutside(playerObj)
 end
 
 function CarClampStorage.ServerCommands.UpdateCarClampData(args)
-	print("Updating car clamp data...")
+	--print("Updating car clamp data...")
     CarClampStorage.Data.CarClamp[args.key] = args.value;
 end
 

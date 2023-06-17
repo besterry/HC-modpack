@@ -17,7 +17,7 @@ function Commands.onSendCommandCheatClearCarClampModData(player, vehicleInfo)
 end
 
 function Commands.onAddCarClamp(player, vehicleInfo)
-	print("Adding car clamp")
+	--print("Adding car clamp")
 	local vehicle = getVehicleById(vehicleInfo.ClientId)
 	local commandArgs = { key = tostring(vehicleInfo.CarClampId), value = true }
 	CarClampStorage.Data.CarClamp[vehicleInfo.CarClampId] = commandArgs.value
@@ -28,7 +28,7 @@ function Commands.onAddCarClamp(player, vehicleInfo)
 end
 
 function Commands.onRemoveCarClamp(player, vehicleInfo)
-	print("Removing car clamp")
+	--print("Removing car clamp")
 	local vehicle = getVehicleById(vehicleInfo.ClientId)
 	local commandArgs = { key = tostring(vehicleInfo.CarClampId), value = false }
 	CarClampStorage.Data.CarClamp[vehicleInfo.CarClampId] = commandArgs.value
@@ -59,17 +59,17 @@ local function processCarClampConstraints(vehicle)
 	if type(CarClampStorage.Data.CarClamp) ~= "table" then return false end
 
 	if CarClampStorage.Data.CarClamp[tostring(GetCarClampIdByVehicle(vehicle))] then
-		print("Lock vehicle engine.")
+		--print("Lock vehicle engine.")
 		vehicle:setMass(constants.vehicleLockMass)
 		return true
 	else
 		local vehicleTowing = vehicle:getVehicleTowing()
 		if vehicleTowing and CarClampStorage.Data.CarClamp[tostring(GetCarClampIdByVehicle(vehicleTowing))] then
-			print("Lock vehicle engine.")
+			--print("Lock vehicle engine.")
 			vehicle:setMass(constants.vehicleLockMass)
 			return true
 		else
-			print("Unlock vehicle engine.")
+			--print("Unlock vehicle engine.")
 			vehicle:setMass(vehicle:getInitialMass())
 			vehicle:updateTotalMass()
 		end

@@ -132,10 +132,10 @@ function BetLock.Utils.getLockpickLevelBuildingObj(obj)
     local level
     if name == nil or roomLevel[name] == nil then
         level = ZombRand(2)
-        print("NO ", name)
+        --print("NO ", name)
     else
         level = roomLevel[name][1] + ZombRand(roomLevel[name][2])
-        print(name, " ", level)
+        --print(name, " ", level)
     end
 
     local tmp = {}

@@ -250,7 +250,7 @@ function ISReadABook:new(character, item, time)
             o.maxMultiplier = SkillBook[item:getSkillTrained()].maxMultiplier5;
         else
             o.maxMultiplier = 1
-            print('ERROR: book has unhandled skill level ' .. item:getLvlSkillTrained())
+            --print('ERROR: book has unhandled skill level ' .. item:getLvlSkillTrained())
         end
     end
     o.ignoreHandsWounds = true;

@@ -123,7 +123,7 @@ local function onEnableSearchMode(player, isSearchMode)
 		forageSkill = foraging:getLevel()
 	end
 	
-	print ("forageSkill = " .. forageSkill)
+	--print ("forageSkill = " .. forageSkill)
 	skillModifier = skillModifier + (forageSkill * 5)
 	
 	--player:Say("Modified skill: " .. skillModifier)

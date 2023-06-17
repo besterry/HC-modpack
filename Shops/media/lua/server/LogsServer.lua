@@ -12,7 +12,7 @@ function LServer.TransactionShopLog(player,args)
         Valhalla.Commands.writeToLog(nil, args)
         return
     end
-    print(msg)
+    writeLog("TransactionShop",msg)
 end
 
 local function LS_OnClientCommand(module, command, player, args)

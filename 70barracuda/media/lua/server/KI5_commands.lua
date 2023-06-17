@@ -7,7 +7,7 @@ KI5 = KI5 or {};
 KI5.Commands = KI5.Commands or {};
 
 function KI5.Commands.setVehicleData(playerObj, args)
-	print("KI5.Commands.setVehicleData(" .. playerObj:getUsername() .. ", " .. args["_vehicleId"] .. ")");
+	----print("KI5.Commands.setVehicleData(" .. playerObj:getUsername() .. ", " .. args["_vehicleId"] .. ")");
 
 	local vehicle = getVehicleById(args["_vehicleId"]);
 
@@ -17,7 +17,7 @@ function KI5.Commands.setVehicleData(playerObj, args)
 
 		if part
 		then
-			print("setting mod data");
+			----print("setting mod data");
 
 			local modData = part:getModData();
 
@@ -25,7 +25,7 @@ function KI5.Commands.setVehicleData(playerObj, args)
 			do
 				if k ~= "_vehicleId" and k ~= "contentAmount"
 				then
-					print("- setting " .. tostring(k) .. " = " .. tostring(v));
+					--print("- setting " .. tostring(k) .. " = " .. tostring(v));
 
 					modData[k] = v;
 				end
@@ -33,10 +33,10 @@ function KI5.Commands.setVehicleData(playerObj, args)
 
 			vehicle:transmitPartModData(part);
 		else
-			print("unable to find mule part");
+			--print("unable to find mule part");
 		end
 	else
-		print("unable to find vehicle");
+		--print("unable to find vehicle");
 	end
 end
 
@@ -47,7 +47,7 @@ function KI5.Commands.silentPartInstall(playerObj, args)
 
 	if vehicle and part and item
 	then
-		print("KI5.Commands.silentPartInstall(" .. playerObj:getUsername() .. ", " .. part .. ", " .. item .. ")");
+		--print("KI5.Commands.silentPartInstall(" .. playerObj:getUsername() .. ", " .. part .. ", " .. item .. ")");
 
 		item = InventoryItemFactory.CreateItem(item);
 		part = vehicle:getPartById(part);
@@ -64,17 +64,17 @@ function KI5.Commands.silentPartInstall(playerObj, args)
 				VehicleUtils.callLua(installTable.complete, vehicle, part);
 			end
 		else
-			print("no item generated");
+			--print("no item generated");
 		end
 	else
-		print("vehicle, part or item missing");
+		--print("vehicle, part or item missing");
 	end
 end
 
 Events.OnClientCommand.Add(function(moduleName, command, playerObj, args)
 	if moduleName == "ki5_lib" and KI5.Commands[command]
 	then
-		print(moduleName .. " -> " .. command .. " | " .. playerObj:getUsername());
+		--print(moduleName .. " -> " .. command .. " | " .. playerObj:getUsername());
 
 		KI5.Commands[command](playerObj, args);
 	end
