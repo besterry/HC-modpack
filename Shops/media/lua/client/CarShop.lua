@@ -141,6 +141,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	local vehicle = ISVehicleMenu.getVehicleToInteractWith(playerObj)
 
 	if vehicle then
+
 		local vehicleKeyId = vehicle:getKeyId()
         local offerInfo = {
             username = username,
@@ -151,6 +152,10 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local playerHasCarTicket = playerObj:getInventory():contains(TICKET_NAME)
 		local vehicleIsOnSale = carInfo:isCarOnSale()
 		local playerIsCarOwner = carInfo:isCarOwner()
+
+		if vehicleIsOnSale and BravensBikeUtils.isBike(vehicle) then
+			menu:clear()
+		end
 
 		if playerHasCarTicket and not vehicleIsOnSale then
         	menu:addSlice(
@@ -249,7 +254,7 @@ Events.OnInitGlobalModData.Add(carShopEventHandler.initGlobalModData);
 carShopEventHandler.onEnterVehicle = function(playerObj)
 	local carUtils = CarUtils:initByPlayerObj(playerObj)
 	if carUtils then
-		carUtils:processConstraints()
+		carUtils:startConstraints()
 	end
 end
 
@@ -283,6 +288,18 @@ function ISSwitchVehicleSeat:perform()
 	return base_ISSwitchVehicleSeat_perform(self);
 end
 
+---@param vehicle BaseVehicle
+local setKeysInIgnition_helper = function(vehicle)
+	local delayedFn = function() 
+		if not CarShop.isAllowGetKey and not vehicle:isHotwired() and not vehicle:isKeysInIgnition() then
+			vehicle:setKeysInIgnition(true);
+		end
+	end
+	for i = 1, 20, 1 do
+		BravensUtils.DelayFunction(delayedFn, i)
+	end
+end
+
 -- NOTE: Переопределяем метод, чтоб нельзя было забрать ключи когда машина выставлена на продажу
 local base_ISVehicleDashboard_onClickKeys = ISVehicleDashboard.onClickKeys
 function ISVehicleDashboard:onClickKeys()
@@ -290,12 +307,9 @@ function ISVehicleDashboard:onClickKeys()
 	local vehicle = self.vehicle
 	if not CarShop.isAllowGetKey and not vehicle:isHotwired() then
 		vehicle:setKeysInIgnition(true);
-		BravensUtils.DelayFunction(function()
-			vehicle:setKeysInIgnition(true);
-		end, 5);
+		setKeysInIgnition_helper(vehicle)
 	end	
 	return o
 end
-
 
 Events.OnEnterVehicle.Add(carShopEventHandler.onEnterVehicle)

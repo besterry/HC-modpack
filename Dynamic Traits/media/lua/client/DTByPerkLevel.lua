@@ -1,6 +1,5 @@
 -- Traits gains based on skills levels are going to be handled in this function.
 function traitsGainsByLevel(player, perk, perkLevel)
-    print("DT Logger: running traitsGainsByLevel function");
     -- CALL TO INITIALIZATIONS METHOD TO PREVENT LUA ERRORS WHEN A CHARACTER IS CREATED AND HAS PERK LEVELS (THE LEVEL PERK EVENT IS CALLED WHEN THE ASSIGNING THE STARTING PERK LEVELS)
     if player:getModData().DTSlowFastLearner == nil or player:getModData().DTKeenHardOfHearing == nil then
         DTBaseGameCharacterDetails.DoExistingCharacterInitializations(player);

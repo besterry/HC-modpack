@@ -4,6 +4,7 @@ CarShop.ServerCommands = CarShop.ServerCommands or {}
 CarShop.TICKET_NAME = 'CarSellTicket'
 CarShop.MOD_NAME = 'CarShop'
 CarShop.isAllowGetKey = true
+CarShop.isConstraintActive = false
 
 CarShop.constants = { 
 	vehicleLockMass = 9000000 
@@ -147,8 +148,8 @@ end
 
 function CarUtils:putKeyInIgnition()
 	local vehicle = self.vehicle
-	local playerObj = vehicle:getDriver()
-	if playerObj:getInventory():haveThisKeyId(vehicle:getKeyId()) and not vehicle:isKeysInIgnition() then
+	local playerObj = getPlayer()
+	if vehicle:isDriver(playerObj) and playerObj:getInventory():haveThisKeyId(vehicle:getKeyId()) and not vehicle:isKeysInIgnition() then
 		vehicle:setKeysInIgnition(true);
 	end
 end
@@ -189,35 +190,56 @@ function CarUtils:getOfferInfo()
 	return nil
 end
 
+function CarUtils:startConstraints()
+	CarShop.isConstraintActive = true
+	self:processConstraints()
+end
+
 function CarUtils:processConstraints()
-	local constants = CarShop.constants
+	if not CarShop.isConstraintActive then
+		return
+	end
+	local vehicle = self.vehicle
+	local vehicleLockMass = CarShop.constants.vehicleLockMass
+	local processConstraintsBindFn = function() return CarUtils.processConstraints(self) end
+	
 	if self:isCarOnSale() then
-		self.vehicle:setMass(constants.vehicleLockMass)
+		local isMoto = string.find( vehicle:getScriptName(), "AMC" )
+		local isBike = BravensBikeUtils.isBike(self.vehicle)
+		if isMoto or isBike then
+			vehicle:setForceBrake()
+			vehicle:setMaxSpeed(0)
+			
+		else
+			vehicle:setMass(vehicleLockMass)
+		end
+		print('getMass: ', vehicle:getMass())
 		CarShop.isAllowGetKey = false
-		return true
+		BravensUtils.DelayFunction(processConstraintsBindFn, 1)
+		return
 	else
-		local vehicleTowing = self.vehicle:getVehicleTowing()
+		local vehicleTowing = vehicle:getVehicleTowing()
 		if vehicleTowing then
 			local vehicleTowingUtils = CarUtils:initByVehicle(vehicleTowing)
 			if vehicleTowing and vehicleTowingUtils:isCarOnSale() then
-				self.vehicle:setMass(constants.vehicleLockMass)
-				return true	
+				vehicle:setMass(vehicleLockMass)
+				BravensUtils.DelayFunction(processConstraintsBindFn, 1)
+				return
 			end
 		end
 		self:stopConstraints()
-		return false
 	end
+
 end
 
 function CarUtils:stopConstraints()
+	CarShop.isConstraintActive = false
 	local vehicle = self.vehicle
 	if not vehicle then
 		vehicle = self:getVehicleByKeyId(self.vehicleKeyId)
 	end
 	vehicle:setMass(vehicle:getInitialMass())
 	vehicle:updateTotalMass()
-
-	-- self.vehicle:updatePhysics()
-	vehicle:updatePhysicsNetwork()
+	vehicle:setMaxSpeed(vehicle:getMaxSpeed())
 	CarShop.isAllowGetKey = true
 end

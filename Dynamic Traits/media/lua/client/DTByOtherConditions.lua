@@ -169,7 +169,6 @@ function ISGrabItemAction:update()
 end
 
 function traitsByMovingObjects(player)
-    print("DT Logger: running traitsByMovingObjects function");
     -- CHECK IF THE PLAYER ACHIEVED THE REQUIREMENTS TO REMOVE/GAIN THE TRAITS
     -- ALL THUMBS/DEXTROUS
     if player:getModData().DTatdTraits >= 0 and player:HasTrait("AllThumbs") then
@@ -186,13 +185,10 @@ function traitsByMovingObjects(player)
         player:getTraits():add("Organized");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Packmule"), true, HaloTextHelper.getColorGreen());
     end
-    print("DT Logger: DTatdTraits value is " .. player:getModData().DTatdTraits);
-    print("DT Logger: DTdoTraits value is " .. player:getModData().DTdoTraits);
 end
 
 -- OUTDOORSMAN TRAIT
 function outdoorsmanTrait(player)
-    print("DT Logger: running outdoorsmanTrait function");
     local climateManager = getClimateManager();
     local rainIntensity = climateManager:getRainIntensity();
     local snowIntensity = climateManager:getSnowIntensity();
@@ -370,12 +366,10 @@ function outdoorsmanTrait(player)
         player:getTraits():add("Outdoorsman");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_outdoorsman"), true, HaloTextHelper.getColorGreen());
     end
-    print("DT Logger: DTOutdoorsCounter value is " .. player:getModData().DTOutdoorsCounter);
 end
 
 -- CATS EYES TRAIT
 function catsEyes(player)
-    print("DT Logger: running catsEyes function");
     local gameTime = getGameTime();
     local currentHour = gameTime:getHour();
     if not player:isAsleep() then
@@ -430,12 +424,10 @@ function catsEyes(player)
         player:getTraits():add("NightVision");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_NightVision"), true, HaloTextHelper.getColorGreen());
     end
-    print("DT Logger: DTCatsEyesCounter value is " .. player:getModData().DTCatsEyesCounter);
 end
 
 -- RAIN TRAITS
 function rainTraits(player)
-    print("DT Logger: running rainTraits function");
     local climateManager = getClimateManager();
     local rainIntensity = climateManager:getRainIntensity();
 
@@ -565,11 +557,9 @@ function rainTraits(player)
         player:getTraits():add("Pluviophile");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Pluviophile"), true, HaloTextHelper.getColorGreen());
     end
-    print("DT Logger: DTRainTraits value is " .. player:getModData().DTRainTraits);
 end
 
 function pluviophileTrait(player, stress, unhappyness)
-    print("DT Logger: running pluviophileTrait function");
     local wornItems = player:getWornItems();
     local wearingPoncho = false;
     local primaryItem = player:getPrimaryHandItem();
@@ -610,7 +600,6 @@ function pluviophileTrait(player, stress, unhappyness)
 end
 
 function pluviophobiaTrait(player, stress, unhappyness)
-    print("DT Logger: running pluviophobiaTrait function");
     local wornItems = player:getWornItems();
     local wearingPoncho = false;
     local primaryItem = player:getPrimaryHandItem();
@@ -649,7 +638,6 @@ end
 
 -- CLAUSTROPHOBIC AND AGORAPHOBIC TRAITS
 function agoraphobicClaustrophobicTraits(player)
-    print("DT Logger: running agoraphobicClaustrophobicTraits function");
     if player:isOutside() and player:HasTrait("Agoraphobic") then
         player:getModData().DTagoraClaustroCounter = player:getModData().DTagoraClaustroCounter + 1;
     elseif not player:isOutside() and player:HasTrait("Claustophobic") then
@@ -665,10 +653,8 @@ function agoraphobicClaustrophobicTraits(player)
             HaloTextHelper.addTextWithArrow(player, getText("UI_trait_claustro"), false, HaloTextHelper.getColorGreen());
         end
     end
-    print("DT Logger: DTagoraClaustroCounter value is " .. player:getModData().DTagoraClaustroCounter);
 end
 function luckyUnluckyEffectsForAgoraClaustroTraits(player)
-    print("DT Logger: running luckyUnluckyEffectsForAgoraClaustroTraits function");
     if ZombRand(15) == 0 then
         player:getModData().DTagoraClaustroCounter = player:getModData().DTagoraClaustroCounter + DTluckyUnluckyModifier(player, 10);
     end
@@ -676,7 +662,6 @@ end
 
 -- SMOKER TRAIT
 function smokerTrait(player)
-    print("DT Logger: running smokerTrait function");
     local currentTimeSinceLastSmoke = player:getTimeSinceLastSmoke();
     if currentTimeSinceLastSmoke == 10 then
         player:getModData().DTdaysSinceLastSmoke = player:getModData().DTdaysSinceLastSmoke + 1;
@@ -700,11 +685,9 @@ function smokerTrait(player)
         player:getTraits():remove("Smoker");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Smoker"), false, HaloTextHelper.getColorGreen());
     end
-    print("DT Logger: DTdaysSinceLastSmoke value is " .. player:getModData().DTdaysSinceLastSmoke);
 end
 
 function smokerCough(player)
-    print("DT Logger: running smokerCough function");
     local currentTimeSinceLastSmoke = player:getTimeSinceLastSmoke();
     local currentEndurance = player:getStats():getEndurance();
     if (currentEndurance < 0.5 or currentTimeSinceLastSmoke < 2) and ZombRand(10) == 0 then
@@ -716,7 +699,6 @@ end
 
 -- ALCOHOLIC TRAIT
 function alcoholicTrait(player)
-    print("DT Logger: running alcoholicTrait function");
     local currentDrunkenness = player:getStats():getDrunkenness();
     -- Drunkenness is greater than 0 which means the player recently had a drink.
     if currentDrunkenness > 0 then
@@ -769,13 +751,10 @@ function alcoholicTrait(player)
         player:getTraits():add("Alcoholic");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Alcoholic"), true, HaloTextHelper.getColorRed());
     end
-    print("DT Logger: DThoursSinceLastDrink value is " .. player:getModData().DThoursSinceLastDrink);
-    print("DT Logger: DTthresholdToObtainAlcoholic value is " .. player:getModData().DTthresholdToObtainAlcoholic);
 end
 
 -- ANOREXY TRAIT
 function anorexyTrait(player)
-    print("DT Logger: running anorexyTrait function");
     local currentWeight = player:getNutrition():getWeight();
     if currentWeight < 65 then
         -- Based on the Unhapyness the rate to obtain Anorexy is lower/higher.
@@ -839,11 +818,9 @@ function anorexyTrait(player)
         player:getTraits():add("Anorexy");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_Anorexy"), true, HaloTextHelper.getColorRed());
     end
-    print("DT Logger: DTthresholdToObtainLoseAnorexy value is " .. player:getModData().DTthresholdToObtainLoseAnorexy);
 end
 
 function anorexyTraitHungerSymptoms(player)
-    print("DT Logger: running anorexyTraitHungerSymptoms function");
     if player:getMoodles():getMoodleLevel(MoodleType.FoodEaten) == 1 then
         -- UNHAPPYNESS
         DTincreaseUnhappyness(player, 0.5);
@@ -876,7 +853,6 @@ function anorexyTraitHungerSymptoms(player)
 end
 
 function anorexyTraitPassiveSymptoms(player)
-    print("DT Logger: running anorexyTraitPassiveSymptoms function");
     if not player:isAsleep() then
         -- FATIGUE
         DTincreaseFatigue(player, 0, 0.07);
@@ -895,7 +871,6 @@ end
 
 -- PHYSICALLY ACTIVE AND SEDENTARY TRAITS
 function activeSedentaryTraits(player)
-    print("DT Logger: running activeSedentaryTraits function");
     player:getModData().DTObtainLoseActiveSedentary = player:getModData().DTObtainLoseActiveSedentary - 0.5;
     if player:getModData().DTObtainLoseActiveSedentary < -70000 then
         player:getModData().DTObtainLoseActiveSedentary = -70000;
@@ -916,13 +891,10 @@ function activeSedentaryTraits(player)
         player:getTraits():add("PhysicallyActive");
         HaloTextHelper.addTextWithArrow(player, getText("UI_trait_PhysicallyActive"), true, HaloTextHelper.getColorGreen());
     end
-    print("DT Logger: DTObtainLoseActiveSedentary value is " .. player:getModData().DTObtainLoseActiveSedentary);
 end
 
 -- NERVOUS WRECK AND MELANCHOLIC TRAITS
 function ISTakePillAction:perform()
-    print("DT Logger: running ISTakePillAction:perform function");
-    print("DT Logger: Just took a " .. self.item:getType() .. " pill (getType)");
     local player = self.character;
     local pill = self.item;
     self.item:getContainer():setDrawDirty(true);
@@ -957,7 +929,6 @@ function ISTakePillAction:perform()
 end
 
 function nervousWreckTrait(player)
-    print("DT Logger: running nervousWreckTrait function");
     player:getModData().DTPillsBeta = player:getModData().DTPillsBeta + 1;
     if player:getModData().DTPillsBeta > 240 then
         player:getModData().DTPillsBeta = 240;
@@ -969,11 +940,9 @@ function nervousWreckTrait(player)
     if player:HasTrait("NervousWreck") then
         DTincreaseStress(player, 0.1);
     end
-    print("DT Logger: DTPillsBeta value is " .. player:getModData().DTPillsBeta);
 end
 
 function melancholicTrait(player)
-    print("DT Logger: running melancholicTrait function");
     player:getModData().DTPillsAntiDep = player:getModData().DTPillsAntiDep + 1;
     if player:getModData().DTPillsAntiDep > 240 then
         player:getModData().DTPillsAntiDep = 240;
@@ -985,21 +954,17 @@ function melancholicTrait(player)
     if player:HasTrait("Melancholic") then
         DTincreaseUnhappyness(player, 3);
     end
-    print("DT Logger: DTPillsAntiDep value is " .. player:getModData().DTPillsAntiDep);
 end
 
 function pillsOverdoseDecrease(player)
-    print("DT Logger: running pillsOverdoseDecrease function");
     player:getModData().DTPillsOverdose = player:getModData().DTPillsOverdose -1.6;
     if player:getModData().DTPillsOverdose < 0 then
         player:getModData().DTPillsOverdose = 0;
     end
-    print("DT Logger: DTPillsOverdose value is " .. player:getModData().DTPillsOverdose)
 end
 
 function poisonByOverdose(player)
     if player:getModData().DTPillsOverdose > 40 then
-        print("DT Logger: running poisonByOverdose function");
         DTincreasePoison(player, ZombRand(7), ZombRand(player:getModData().DTPillsOverdose));
     end
 end

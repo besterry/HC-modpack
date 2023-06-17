@@ -1,6 +1,5 @@
 -- Gain trait "Herbalist" when the "Herbalist" recipe is read.
 function traitsByRecipes(player)
-    print("DT Logger: running traitsByRecipes function");
     local playerRecipes = player:getKnownRecipes();
     if playerRecipes:contains("Herbalist") and not player:HasTrait("Herbalist") then
         player:getTraits():add("Herbalist");
@@ -13,7 +12,6 @@ function traitsByRecipes(player)
 end
 
 function recipesByPerksLevel(player, perk, perkLevel)
-    print("DT Logger: running recipesByPerksLevel function");
     local playerRecipes = player:getKnownRecipes();
     if perk == Perks.Woodwork then
         carpentryRecipes(player, perkLevel, playerRecipes);

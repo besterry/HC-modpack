@@ -2,7 +2,6 @@ require "TimedActions/ISBaseTimedAction"
 
 -- Additional tweaks and trait effects when the player hit a tree
 function tweaksToOnHitTree(player, weapon)
-    print("DT Logger: running tweaksToOnHitTree function");
 	if weapon:getCategories():contains("Axe") then
 		player:getXp():AddXP(Perks.Axe, 1);
 	end
@@ -30,7 +29,6 @@ end
 
 -- Additional tweaks and trait effects when the player swings the weapon
 function tweaksToSwingWeapon(player, weapon)
-    print("DT Logger: running tweaksToSwingWeapon function");
 	-- If the player has the trait "Prodigy" extra XP is given to the player for Strength and Fitness
 	if weapon:getCategories():contains("Axe") or weapon:getCategories():contains("Blunt") then
 		if player:HasTrait("Prodigy") then 
@@ -101,7 +99,6 @@ end
 
 -- EXERCISE TRAIT EFFECTS
 function ISFitnessAction:exeLooped()
-    print("DT Logger: running ISFitnessAction:exeLooped function");
     player = self.character;
     -- If the player has the trait "Prodigy", extra experience is added to Strength or/and Fitness on each loop (depending on the exercise)
     -- If the player has the trait "Physically Active" the negative moods are reduced when doing exercise
