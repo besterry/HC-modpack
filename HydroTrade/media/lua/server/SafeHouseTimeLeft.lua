@@ -1,7 +1,8 @@
 local dayInMillis = 1000 * 60 * 60 * 24
-local daysUntilDeletion = 10
+--local daysUntilDeletion = 10
+local daysUntilDeletion = getServerOptions():getInteger("SafeHouseRemovalTime")
 
-function checkSafehouses()
+local function checkSafehouses()
     local currentTime = getTimeInMillis()
     local safehouses = SafeHouse.getSafehouseList()
     for i = 0, safehouses:size() - 1 do
