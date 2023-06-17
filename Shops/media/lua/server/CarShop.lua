@@ -8,7 +8,7 @@ local MOD_NAME = CarShop.MOD_NAME
 
 local Commands = {}
 
----@type TheLogger
+-- ---@type TheLogger
 local logger = CarShop.logger
 
 ---@param player IsoPlayer
@@ -18,7 +18,8 @@ function logger:addForSale(player, offerInfo)
 	local price = offerInfo.price
 	local keyId = offerInfo.vehicleKeyId
 	local result = 'Player "'..username..'" add car for sale. keyId: '..keyId..', price: '..price..'$'
-	self:log(result)
+    writeLog(MOD_NAME, result);
+	-- self:log(result)
 end
 ---@param player IsoPlayer
 ---@param offerInfo offerInfo
@@ -27,7 +28,8 @@ function logger:removeFromSale(player, offerInfo)
 	local keyId = offerInfo.vehicleKeyId
 	local price = offerInfo.price
 	local result = 'Player "'..username..'" remove car from sale. keyId: '..keyId
-	self:log(result)
+	writeLog(MOD_NAME, result);
+	-- self:log(result)
 end
 ---@param player IsoPlayer
 ---@param offerInfo offerInfo
@@ -37,7 +39,8 @@ function logger:buyCar(player, offerInfo)
 	local sellerUsername = offerInfo.username
 	local price = offerInfo.price
 	local result = 'Player "'..username..'" bought a car from "'..sellerUsername..'" for '..price..'$. Car keyId:'..keyId 
-	self:log(result)
+	writeLog(MOD_NAME, result);
+	-- self:log(result)
 end
 
 function Commands.onAddCarSellTicket(player, offerInfo)
@@ -84,8 +87,8 @@ end
 Events.OnInitGlobalModData.Add(initGlobalModData);
 
 local initLogger = function()
-	setmetatable(logger ,{__index = TheLogger})
-	logger = logger:new('CarShop.log', MOD_NAME)
+	-- setmetatable(logger ,{__index = TheLogger})
+	-- logger = logger:new('CarShop.log', MOD_NAME)
 end
 
 Events.OnServerStarted.Add(initLogger);
