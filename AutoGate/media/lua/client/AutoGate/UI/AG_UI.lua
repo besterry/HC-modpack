@@ -3,8 +3,8 @@ if AutoGate.UI == nil then AutoGate.UI = {} end
 
 function AutoGate.UI.contextMenuOptions(_player, context, worldObjects)
     
-    print(tostring(isClient()))
-    print(tostring(isServer()))
+    --print(tostring(isClient()))
+    --print(tostring(isServer()))
     local player = getSpecificPlayer(_player)
     local door = nil
     for _,v in ipairs(worldObjects) do

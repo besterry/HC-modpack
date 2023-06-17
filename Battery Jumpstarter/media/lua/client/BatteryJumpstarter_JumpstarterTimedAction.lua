@@ -12,7 +12,7 @@ function BatteryJumpstarter_JumpstarterTimedAction:isValid() -- Check if the act
 end
 
 function BatteryJumpstarter_JumpstarterTimedAction:update() -- Trigger every game update when the action is perform
-    print("Action is update");
+    --print("Action is update");
 end
 
 function BatteryJumpstarter_JumpstarterTimedAction:waitToStart() -- Wait until return false

@@ -16,7 +16,7 @@ function ItemTweaker.tweakItems()
 			item = ScriptManager.instance:getItem(k);
 			if item ~= nil then
 				item:DoParam(t.." = "..y);
-				print(k..": "..t..", "..y);
+				--print(k..": "..t..", "..y);
 			end
 		end
 	end

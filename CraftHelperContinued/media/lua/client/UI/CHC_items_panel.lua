@@ -137,12 +137,12 @@ function CHC_items_panel:setObj(item)
         local iobj = item.itemObj
         local invItem = item.item
         if instanceof(invItem, "ComboItem") then
-            print('ignoring ComboItem')
+            --print('ignoring ComboItem')
             return
         end
         local cl = getNumClassFields(invItem)
         if cl == 0 then
-            print(string.format('No fields found for %s', invItem:getType()))
+            --print(string.format('No fields found for %s', invItem:getType()))
         end
         local objAttr = {}
 
@@ -155,7 +155,7 @@ function CHC_items_panel:setObj(item)
                 end
             end
         end
-        print(test:test())
+        --print(test:test())
     end
     self.panelSearchRow:setVisible(true)
 

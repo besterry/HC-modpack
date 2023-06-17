@@ -128,7 +128,7 @@ function KI5:checkDefaultParts(vehicle, part, partConfig)
 
                 if KI5.partDefaultsDebug and item
                 then
-                    print("KI5:checkDefaultParts() -> would install item " .. tostring(item) .. " in slot " .. partId);
+                    --print("KI5:checkDefaultParts() -> would install item " .. tostring(item) .. " in slot " .. partId);
                 end
 
 				if not KI5.partDefaultsDebug and item
@@ -146,7 +146,7 @@ function KI5:checkDefaultParts(vehicle, part, partConfig)
 
 			--if KI5.partDefaultsDebug and KI5:partIsMissing(part)
 			--then
-				--print("KI5:checkDefaultParts() -> part " .. partId .. " still missing");
+				----print("KI5:checkDefaultParts() -> part " .. partId .. " still missing");
 			--end
 		end
 	end
@@ -165,7 +165,7 @@ end
 function KI5:silentPartInstall(part, itemId)
     if KI5.partDefaultsDebug
 	then
-        print("KI5:silentPartInstall() -> silently installing " .. itemId .. " for " .. part:getId());
+        --print("KI5:silentPartInstall() -> silently installing " .. itemId .. " for " .. part:getId());
     end
 
 	KI5:sendClientCommand("ki5_lib", "silentPartInstall", {
@@ -201,7 +201,7 @@ function KI5:checkLegacyTires(vehicle)
 			then
                 if KI5.partDefaultsDebug
                 then
-                    print("KI5:checkLegacyTires() -> replacing " .. inventoryItem:getFullType() .. " on vehicle " .. tostring(vehicle:getSqlId()));
+                    --print("KI5:checkLegacyTires() -> replacing " .. inventoryItem:getFullType() .. " on vehicle " .. tostring(vehicle:getSqlId()));
                 end
 
 				KI5:silentPartInstall(part, "Base.V101Tire2");
@@ -238,11 +238,11 @@ function KI5:getMulePart(vehicle)
 
         if KI5.modDataDebug
         then
-            print("KI5:getMulePart() -> mule part not found");
+            --print("KI5:getMulePart() -> mule part not found");
         end
 	elseif KI5.modDataDebug
     then
-		print("KI5:getMulePart() -> vehicle not found");
+		--print("KI5:getMulePart() -> vehicle not found");
 	end
 
 	return nil;
@@ -257,7 +257,7 @@ function KI5:getModData(vehicle)
 	else
         if KI5.modDataDebug
         then
-            print("KI5:getModData() -> data mule part NOT found");
+            --print("KI5:getModData() -> data mule part NOT found");
         end
 
 		return {};

@@ -48,7 +48,7 @@ local function SpawnLootOnDeadZombie(zombie)
 		elseif(SandboxVars.Hydrocraft.ZombieLoot == 3) then
 			rolls = VERY_LOW_ROLLS
 		else
-			print("Error: Unknown ZombieLoot value, defaulting to normal.  Value: ", SandboxVars.Hydrocraft.ZombieLoot)
+			--print("Error: Unknown ZombieLoot value, defaulting to normal.  Value: ", SandboxVars.Hydrocraft.ZombieLoot)
 			rolls = ROLLS
 		end
 	end

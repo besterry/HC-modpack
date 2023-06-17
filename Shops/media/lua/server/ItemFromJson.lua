@@ -1,6 +1,6 @@
 if not isServer() then return end
 
--- local Json = require("Json") -- Подключение модуля для работы с JSON
+-- local Json = require("Json") --      JSON
 FD = FD or {}
 FD.shopItems = FD.shopItems or {}
 FD.forSellItems = FD.forSellItems or {}
@@ -10,7 +10,7 @@ local forSellItems = FD.forSellItems
 ---@param filename string
 ---@return table
 function LoadJsonItems(filename)
-    local fileReaderObj = getFileReader(filename, false) -- Укажите путь к вашему JSON-файлу
+    local fileReaderObj = getFileReader(filename, false) --     JSON-
     if fileReaderObj then 
         print("SHOP: ShopItems file uploaded successfully")
     else
@@ -37,7 +37,7 @@ function LoadAll()
     forSellItems = LoadJsonItems("ForSell.json")
 end
 
--- Вызов функции при старте сервера
+--     
 Events.OnServerStarted.Add(LoadAll)
 
 local commands = {}

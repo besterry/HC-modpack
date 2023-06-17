@@ -68,10 +68,10 @@ end
 
 
 function BetterSorting.OnGameBoot()
-  print("--- BetterSorting Start ---");
+  --print("--- BetterSorting Start ---");
   BetterSorting.CategorizeAllItems();
   ItemTweaker.tweakItems();
-  print("--- BetterSorting End ---");
+  --print("--- BetterSorting End ---");
 end
 
 Events.OnGameBoot.Add(BetterSorting.OnGameBoot)

@@ -19,7 +19,7 @@ local function SavePlayerPostionInCar(name,vehicle)
 	local vDATA = vehicle:getModData()
 	local vehicleNum = vDATA.RIC_vehicleNUM
 
-	--print("........... save player ".. name .." in car n ... ".. vehicleNum)
+	----print("........... save player ".. name .." in car n ... ".. vehicleNum)
 	gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),vehicleNum} 
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ local function setNilPlayerPostion(name)
 	local gtDATA = getGameTime():getModData()
 
 	gtDATA.RIC_PLAYERS_POS[name][4] = false
-	--print("........... Player position is reseted ... " .. name)
+	----print("........... Player position is reseted ... " .. name)
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function SavePlayersPostionFromCar(name,vehicle)
@@ -39,7 +39,7 @@ local function SavePlayersPostionFromCar(name,vehicle)
 
 	local playerNUM = gtDATA.RIC_PLAYERS_POS[name][4]
 	if playerNUM == vehicleNum then 
-		--print("........... save player ".. name .." in car n ... ".. playerNUM)
+		----print("........... save player ".. name .." in car n ... ".. playerNUM)
 		gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),vehicleNum} 
 	end
 end
@@ -48,7 +48,7 @@ local function preSavePlayersByNameFromCar(vehicle)
 	local gtDATA = getGameTime():getModData()
 	local vDATA = vehicle:getModData()
 	local vehicleNum = vDATA.RIC_vehicleNUM
-	--print("........... save global player in car n ... ".. vehicleNum)
+	----print("........... save global player in car n ... ".. vehicleNum)
 
 	local name = vDATA.serverForceRespawn_playerName1  ; if name ~= nil then SavePlayersPostionFromCar(name,vehicle) end
 	local name = vDATA.serverForceRespawn_playerName2  ; if name ~= nil then SavePlayersPostionFromCar(name,vehicle) end
@@ -81,11 +81,11 @@ local function RedefineSeat(vehicle)
 	local seatTaked = vDATA.serverForceRespawn_TargetedVehicle_takedSEAT
 	if CounterIN  ~= seatTaked then 
 		vDATA.serverForceRespawn_TargetedVehicle_takedSEAT = CounterIN 
-		--print(" ........... Seat redefine in ... " .. CounterIN )
+		----print(" ........... Seat redefine in ... " .. CounterIN )
 	end
 	if vDATA.serverForceRespawn_TargetedVehicle_takedSEAT > maxSeat then vDATA.serverForceRespawn_TargetedVehicle_takedSEAT = maxSeat end
 	if vDATA.serverForceRespawn_TargetedVehicle_takedSEAT < 0 then vDATA.serverForceRespawn_TargetedVehicle_takedSEAT = 0 end
-	--print("............. redefineSeat is finish ....")
+	----print("............. redefineSeat is finish ....")
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function RedefineNameListByPositionNum(vehicle)
@@ -93,19 +93,19 @@ local function RedefineNameListByPositionNum(vehicle)
 	local gtDATA = getGameTime():getModData()
 	local vehicleNum = vDATA.RIC_vehicleNUM
 
-	local name = vDATA.serverForceRespawn_playerName1  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName1  = nil end -- ; --print("........ name is removed " .. name1 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName2  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName2  = nil end -- ; --print("........ name is removed " .. name2 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName3  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName3  = nil end -- ; --print("........ name is removed " .. name3 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName4  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName4  = nil end -- ; --print("........ name is removed " .. name4 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName5  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName5  = nil end -- ; --print("........ name is removed " .. name5 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName6  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName6  = nil end -- ; --print("........ name is removed " .. name6 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName7  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName7  = nil end -- ; --print("........ name is removed " .. name7 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName8  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName8  = nil end -- ; --print("........ name is removed " .. name8 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName9  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName9  = nil end -- ; --print("........ name is removed " .. name9 ..  " ...")  end
-	local name = vDATA.serverForceRespawn_playerName10 ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName10 = nil end -- ; --print("........ name is removed " .. name10 .. " ...")  end
+	local name = vDATA.serverForceRespawn_playerName1  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName1  = nil end -- ; ----print("........ name is removed " .. name1 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName2  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName2  = nil end -- ; ----print("........ name is removed " .. name2 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName3  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName3  = nil end -- ; ----print("........ name is removed " .. name3 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName4  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName4  = nil end -- ; ----print("........ name is removed " .. name4 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName5  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName5  = nil end -- ; ----print("........ name is removed " .. name5 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName6  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName6  = nil end -- ; ----print("........ name is removed " .. name6 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName7  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName7  = nil end -- ; ----print("........ name is removed " .. name7 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName8  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName8  = nil end -- ; ----print("........ name is removed " .. name8 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName9  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName9  = nil end -- ; ----print("........ name is removed " .. name9 ..  " ...")  end
+	local name = vDATA.serverForceRespawn_playerName10 ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] ~= vehicleNum then vDATA.serverForceRespawn_playerName10 = nil end -- ; ----print("........ name is removed " .. name10 .. " ...")  end
 
 	RedefineSeat(vehicle)
-	--print (".......... RedefineNameListByPositionNum is finshed ...")
+	----print (".......... RedefineNameListByPositionNum is finshed ...")
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function RemovePlayerInCar(playerName, vehicle) 
@@ -123,7 +123,7 @@ local function RemovePlayerInCar(playerName, vehicle)
 	local name = vDATA.serverForceRespawn_playerName10 ; if name ~= nil and name == playerName then vDATA.serverForceRespawn_playerName10 = nil end
 	
 	RedefineSeat(vehicle)	
-	--print(" ........... RemovePlayerInCar " .. playerName .. " is finish... ")
+	----print(" ........... RemovePlayerInCar " .. playerName .. " is finish... ")
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function SearchCarToRemovePlayerInside(name)
@@ -136,7 +136,7 @@ local function SearchCarToRemovePlayerInside(name)
 			local vehiclesnum = vehicle:getModData().RIC_vehicleNUM
 			if vehiclesnum ~=nil then
 				if vehiclesnum == gtDATA.RIC_PLAYERS_POS[name][4] then
-					--print(" ........... SearchCarToRemovePlayerInside TRUE for ... "..vehiclesnum)
+					----print(" ........... SearchCarToRemovePlayerInside TRUE for ... "..vehiclesnum)
 					RemovePlayerInCar(name,vehicle)
 					preSavePlayersByNameFromCar(vehicle)
 					break
@@ -145,7 +145,7 @@ local function SearchCarToRemovePlayerInside(name)
 		end
 	end
 	setNilPlayerPostion(name)
-	--print(" ........... SearchCarToRemovePlayerInside is finshed ...")			
+	----print(" ........... SearchCarToRemovePlayerInside is finshed ...")			
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function SearchCarToSavePosition(name)
@@ -158,14 +158,14 @@ local function SearchCarToSavePosition(name)
 			local vehiclesnum = vehicle:getModData().RIC_vehicleNUM
 			if vehiclesnum ~= nil then
 				if vehiclesnum == gtDATA.RIC_PLAYERS_POS[name][4] then
-					--print(" ........... SearchCarToSavePosition TRUE for ... "..vehiclesnum)
+					----print(" ........... SearchCarToSavePosition TRUE for ... "..vehiclesnum)
 					preSavePlayersByNameFromCar(vehicle)
 					break
 				end
 			end
 		end		
 	end
-	--print(" ........... SearchCarToSavePosition is finshed ...")	
+	----print(" ........... SearchCarToSavePosition is finshed ...")	
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function dumpPlayersFromCar(vehicle,player)
@@ -173,16 +173,16 @@ local function dumpPlayersFromCar(vehicle,player)
 	local gtDATA = getGameTime():getModData()
 	local vehicleNum = vDATA.RIC_vehicleNUM
 
-	local name = vDATA.serverForceRespawn_playerName1  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName1  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName2  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName2  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName3  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName3  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName4  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName4  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName5  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName5  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName6  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName6  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName7  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName7  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName8  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName8  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName9  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName9  = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
-	local name = vDATA.serverForceRespawn_playerName10 ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName10 = nil end -- ; --print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName1  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName1  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName2  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName2  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName3  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName3  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName4  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName4  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName5  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName5  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName6  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName6  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName7  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName7  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName8  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName8  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName9  ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName9  = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
+	local name = vDATA.serverForceRespawn_playerName10 ; preSavePlayer(name) ; if name ~= nil and gtDATA.RIC_PLAYERS_POS[name][4] == vehicleNum then gtDATA.RIC_PLAYERS_POS[name] = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true} sendServerCommand(player,"RespawnINcar_expulse_players", "true",{name}) ; vDATA.serverForceRespawn_playerName10 = nil end -- ; ----print(" ........... this player is expulsed : ... "..name)
 
 	RedefineNameListByPositionNum(vehicle) 
 end
@@ -192,18 +192,18 @@ local function preDumpPlayersFromCar(vehicle,player)
 	for i=0, onlineUsers:size()-1 do
 		local playerOnline = onlineUsers:get(i)
 		if playerOnline and not playerOnline:isDead() then
-			--print("............ " .. playerOnline:getUsername() .. " exist ...")
+			----print("............ " .. playerOnline:getUsername() .. " exist ...")
 			local veh = playerOnline:getVehicle()
 			if veh and veh == vehicle then 
 				local txt = "There's someone inside"
 				sendServerCommand(player,"RespawnINcar_Text", "true",{txt}) 
-				--print(".......... player inside! ...") 
+				----print(".......... player inside! ...") 
 				return 
 			end
 		end
 	end
 	dumpPlayersFromCar(vehicle,player)
-	--print("............ dump players is finished ...")
+	----print("............ dump players is finished ...")
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local function expulsePlayer(vehicle,player,nameSeat)
@@ -216,7 +216,7 @@ local function expulsePlayer(vehicle,player,nameSeat)
 	if nameSeat ~= nil and gtDATA.RIC_PLAYERS_POS[nameSeat][4] == vehicleNum then 
 		gtDATA.RIC_PLAYERS_POS[nameSeat]  = {vehicle:getX(),vehicle:getY(),vehicle:getZ(),true}
 		sendServerCommand(player,"RespawnINcar_expulse_players", "true",{nameSeat})  
-		--print(" ........... this player is expulsed : ... "..nameSeat)
+		----print(" ........... this player is expulsed : ... "..nameSeat)
 		nameSeat = nil
 	end
 	
@@ -235,7 +235,7 @@ local function preExpulsePlayer(vehicle,player,nameSeat)
 	for i=0, onlineUsers:size()-1 do
 		local playerOnline = onlineUsers:get(i)
 		if playerOnline and not playerOnline:isDead() then
-			--print("............ " .. playerOnline:getUsername() .. " exist ...")
+			----print("............ " .. playerOnline:getUsername() .. " exist ...")
 			local veh = playerOnline:getVehicle()
 			local vehiclesnum = vDATA.RIC_vehicleNUM
 			local name = playerOnline:getUsername()
@@ -244,13 +244,13 @@ local function preExpulsePlayer(vehicle,player,nameSeat)
 			if (nameSeat and nameSeat == name) and ((veh and veh == vehicle) or (vehiclesnum and vehiclesnum == playerOnlinenum)) then 
 				local txt = "player is present inside!"
 				sendServerCommand(player,"RespawnINcar_Text", "true",{txt}) 
-				--print(".......... player inside! ...") 
+				----print(".......... player inside! ...") 
 				return 
 			end
 		end
 	end
 	expulsePlayer(vehicle,player,nameSeat)
-	--print("............ dump players is finished ...")
+	----print("............ dump players is finished ...")
 end
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -270,14 +270,14 @@ local function ForceRespawnInVehicle_OnClientCommand(module, command, player,arg
 			SearchCarToSavePosition(name)			
 			local Vehiclecarpos = gtDATA.RIC_PLAYERS_POS[name]--gtDATA.SERVER_RIC_vehiclesNUM[gtDATA.RIC_PLAYERS_POS[name]]
 			sendServerCommand(player,"RespawnINcar_OnStartGame", "true",Vehiclecarpos)
-			--print("............. respawn to car send client ...")
+			----print("............. respawn to car send client ...")
 		----------------------------------------------------------------------------
 		elseif gtDATA.RIC_PLAYERS_POS[name][4] == true then
 			local Groundpos = gtDATA.RIC_PLAYERS_POS[name]
 			sendServerCommand(player,"RespawnINcar_OnStartGame", "true",Groundpos)
-			--print("............. respawn to ground send client ...")
+			----print("............. respawn to ground send client ...")
 		end
-		--print("............. send client finished...")
+		----print("............. send client finished...")
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	elseif module == "RespawnINcar_expulse_player" then 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -357,7 +357,7 @@ local function ForceRespawnInVehicle_OnClientCommand(module, command, player,arg
 		----------------------------------------------------------------------------
 		if vDATA.serverForceRespawn_TargetedVehicle_takedSEAT < maxSeat then
 			vDATA.serverForceRespawn_TargetedVehicle_takedSEAT = vDATA.serverForceRespawn_TargetedVehicle_takedSEAT +1
-			--print("........... player enter +1 ...")
+			----print("........... player enter +1 ...")
 		else
 			sendServerCommand(player,"RespawnINcar_OverSeatTaked", "true",{})
 			setNilPlayerPostion(name)
@@ -387,15 +387,15 @@ local function ForceRespawnInVehicle_OnClientCommand(module, command, player,arg
 		local vDATA   = vehicle:getModData()
 					
 		if gtDATA.RIC_PLAYERS_POS[player:getUsername()][4] == vDATA.RIC_vehicleNUM then
-			--print("RespawnINcar_CarExit 4 == RIC_vehicleNUM")
+			----print("RespawnINcar_CarExit 4 == RIC_vehicleNUM")
 			RemovePlayerInCar(name,vehicle)
 			setNilPlayerPostion(player:getUsername())
 			preSavePlayersByNameFromCar(vehicle)
 		else
-			--print("RespawnINcar_CarExit search")
+			----print("RespawnINcar_CarExit search")
 			SearchCarToRemovePlayerInside(name)
 		end
-		--print("RespawnINcar_CarExit")
+		----print("RespawnINcar_CarExit")
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	elseif module == "RespawnINcar_CheckName" then 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------		
@@ -514,45 +514,45 @@ Events.OnClientCommand.Add(ForceRespawnInVehicle_OnClientCommand)
 local function autoReset_OldGetGameTime_modData()
 	if getGameTime():getModData().SERVER_RIC_vehiclesNUM ~= nil then
     	for i=#getGameTime():getModData().SERVER_RIC_vehiclesNUM,1,-1 do		
-			print("old vehicle ".. i .. " is removed to table")
+			--print("old vehicle ".. i .. " is removed to table")
 			table.remove(getGameTime():getModData().SERVER_RIC_vehiclesNUM,i)
 		end
 		getGameTime():getModData().SERVER_RIC_vehiclesNUM = nil
-		print("old getGameTime modData is removed SERVER_RIC_vehiclesNUM")
+		--print("old getGameTime modData is removed SERVER_RIC_vehiclesNUM")
 	end
 	if getGameTime():getModData().RIC_PLAYERS_GroundPOS ~= nil then
     	for i=#getGameTime():getModData().RIC_PLAYERS_GroundPOS,1,-1 do		
-			print("old player ".. i .. " is removed to table")
+			--print("old player ".. i .. " is removed to table")
 			table.remove(getGameTime():getModData().RIC_PLAYERS_GroundPOS,i)
 		end
 		getGameTime():getModData().RIC_PLAYERS_GroundPOS = nil
-		print("old getGameTime modData is removed RIC_PLAYERS_GroundPOS")
+		--print("old getGameTime modData is removed RIC_PLAYERS_GroundPOS")
 	end
 	if getGameTime():getModData().SERVER_FORCE_RESPAWN_IN_CAR ~= nil then
     	for i=#getGameTime():getModData().SERVER_FORCE_RESPAWN_IN_CAR,1,-1 do		
-			print("old vehicle ".. i .. " is removed to table")
+			--print("old vehicle ".. i .. " is removed to table")
 			table.remove(getGameTime():getModData().SERVER_FORCE_RESPAWN_IN_CAR,i)
 		end
 		getGameTime():getModData().SERVER_FORCE_RESPAWN_IN_CAR = nil
-		print("old getGameTime modData is removed SERVER_FORCE_RESPAWN_IN_CAR")
+		--print("old getGameTime modData is removed SERVER_FORCE_RESPAWN_IN_CAR")
 	end
 	if getGameTime():getModData().serverForceRespawn_PLAYER_POS ~= nil then
 		for i=#getGameTime():getModData().serverForceRespawn_PLAYER_POS,1,-1 do		
-			print("old player number ".. i .. " is removed to table")
+			--print("old player number ".. i .. " is removed to table")
 			table.remove(getGameTime():getModData().serverForceRespawn_PLAYER_POS,i)
 		end
 		getGameTime():getModData().serverForceRespawn_PLAYER_POS = nil 
-		print("old getGameTime modData is removed serverForceRespawn_PLAYER_POS")
+		--print("old getGameTime modData is removed serverForceRespawn_PLAYER_POS")
 	end
 	if getGameTime():getModData().serverForceRespawn_TargetedVehicle_NUM ~= nil then
 		getGameTime():getModData().serverForceRespawn_TargetedVehicle_NUM = nil 
-		print("old getGameTime modData is removed serverForceRespawn_TargetedVehicle_NUM")
+		--print("old getGameTime modData is removed serverForceRespawn_TargetedVehicle_NUM")
 	end
 	if getGameTime():getModData().ObjectForceRespawn_TargetedVehicle_NUM ~= nil then
 		getGameTime():getModData().ObjectForceRespawn_TargetedVehicle_NUM = nil 
-		print("old getGameTime modData is removed ObjectForceRespawn_TargetedVehicle_NUM")
+		--print("old getGameTime modData is removed ObjectForceRespawn_TargetedVehicle_NUM")
 	end
-	print("global old getGameTime modData is checked")
+	--print("global old getGameTime modData is checked")
 end
 -----------------------------	
 Events.OnGameTimeLoaded.Add(autoReset_OldGetGameTime_modData)
@@ -562,7 +562,7 @@ Events.OnGameTimeLoaded.Add(autoReset_OldGetGameTime_modData)
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 --ForceRespawnVehicle_counter = 0
 --local function ForceRespawnVehicleOnTick(numberTicks)
---	-- print(getCell():getVehicles())
+--	-- --print(getCell():getVehicles())
 --	if ForceRespawnVehicle_counter < 100 then ForceRespawnVehicle_counter = ForceRespawnVehicle_counter +1 return end
 --	ForceRespawnVehicle_counter = 0
 --	if gtDATA.SERVER_RIC_vehiclesNUM~=nil then
@@ -607,7 +607,7 @@ Events.OnGameTimeLoaded.Add(autoReset_OldGetGameTime_modData)
 --	
 --		if gtDATA.SERVER_RIC_vehiclesNUM[i] == vDATA.RIC_vehicleNUM then
 --			table.remove(gtDATA.SERVER_RIC_vehiclesNUM,i)-- 
---			--print(count)
+--			----print(count)
 --			break
 --		end --endif
 --	end --endfo

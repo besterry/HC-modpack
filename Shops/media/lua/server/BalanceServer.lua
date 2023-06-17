@@ -18,7 +18,8 @@ function BServer.writeLog(msg)
         Valhalla.Commands.writeToLog(nil, args)
         return
     end
-    print(msg)
+    --print(msg)
+    writeLog("Balance",msg)
 end
 
 function BServer.CreateAccount(player,args)

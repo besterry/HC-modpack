@@ -8,7 +8,7 @@ function ISVehiclePartMenu.getGasCanNotEmpty(playerObj, typeToItem, ...)
 
     if not fuelItem then
 
-        print("ISVehiclePartMenu_getGasCanNotEmpty");
+        --print("ISVehiclePartMenu_getGasCanNotEmpty");
 
         local equipped = playerObj:getPrimaryHandItem();
         if equipped and Utils.PredicateNotEmpty(equipped) then
@@ -40,7 +40,7 @@ function ISVehiclePartMenu.getGasCanNotFull(playerObj, typeToItem, ...)
 
     if not fuelItem then
 
-        print("ISVehiclePartMenu_getGasCanNotFull");
+        --print("ISVehiclePartMenu_getGasCanNotFull");
 
         local equipped = playerObj:getPrimaryHandItem()
         if equipped and Utils.PredicateNotFull(equipped) then
