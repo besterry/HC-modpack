@@ -1,4 +1,4 @@
--- Добавление кнопки "Ассортимент магазина" в панель администратора
+-- Р”РѕР±Р°РІР»РµРЅРёРµ РєРЅРѕРїРєРё "РђСЃСЃРѕСЂС‚РёРјРµРЅС‚ РјР°РіР°Р·РёРЅР°" РІ РїР°РЅРµР»СЊ Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°
 require "ShopAdminEditUI.lua"
 
 local old_ISAdminPanelUI_create = ISAdminPanelUI.create
@@ -14,8 +14,8 @@ function ISAdminPanelUI:create()
     local x = 0;
     local y = 0;
 
-    -- 12 кнопок в ряд
-    -- Последняя кнопка - закрыть
+    -- 12 РєРЅРѕРїРѕРє РІ СЂСЏРґ
+    -- РџРѕСЃР»РµРґРЅСЏСЏ РєРЅРѕРїРєР° - Р·Р°РєСЂС‹С‚СЊ
     local last_btn = self.children[self.IDMax - 1]
     if last_btn.internal == "CANCEL" then
         last_btn = self.children[self.IDMax - 2]
