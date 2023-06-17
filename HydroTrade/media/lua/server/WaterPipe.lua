@@ -113,11 +113,11 @@ function WaterPipe.loadPipe(pipeObject)
 		table.insert(WaterPipe.pipes, pipe);
 		table.insert(WaterPipe.modData.waterPipes.pipes, pipe);
 		
-		print("pipe : new pipe created " .. pipe.x .. "," .. pipe.y);
+		--print("pipe : new pipe created " .. pipe.x .. "," .. pipe.y);
 	else
 		pipeObject:getModData()["infinite"] = pipe.infinite;
 		pipeObject:transmitModData();
-		print("pipe : found existing pipe " .. pipe.x .. "," .. pipe.y);
+		--print("pipe : found existing pipe " .. pipe.x .. "," .. pipe.y);
 	end
 end
 
