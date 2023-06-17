@@ -114,6 +114,7 @@ IGUI_RU =
 	IGUI_CreateSH_IntersectingNav = "Близко к дороге",
 	IGUI_CreateSH_IntersectingPlayers = "В выделеной зоне есть другие игроки",
 	IGUI_TimeLeft = "До удаления убежища: ",
+	IGUI_TimeLeftSHLUI = "Удаление:",
 	IGUI_daysLeft = " дн. ",
 	IGUI_hoursLeft = " час(а) ",
 	IGUI_minLeft = " мин",

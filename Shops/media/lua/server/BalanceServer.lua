@@ -56,8 +56,7 @@ function BServer.Deposit(player, args)
     BServer.writeLog(msg)
 
     ModData.transmit("CoinBalance")
-    SaveCoinBalancefd(username)
-    
+    SaveCoinBalancefd()    
 end
 
 function BServer.Transfer(player,args)
@@ -74,7 +73,7 @@ function BServer.Transfer(player,args)
     msg = string.format(msg,username,args[3],account.coin-account.coin+args[1],account.specialCoin-account.specialCoin+args[2],username,account.coin+args[1],account.specialCoin+args[2],account.coin,account.specialCoin,
     args[3],recipientAccount.coin-args[1],recipientAccount.specialCoin-args[2],recipientAccount.coin,recipientAccount.specialCoin)
     BServer.writeLog(msg)
-    SaveCoinBalancefd(username)
+    SaveCoinBalancefd()
 
     ModData.transmit("CoinBalance")
     local noti = { 
@@ -109,7 +108,7 @@ function BServer.Withdraw(player,args)
     msg = "%s Withdraw: Coin %s Special %s [oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s]"
     msg = string.format(msg,username,account.coin+args[1]-account.coin,account.specialCoin+args[2]-account.specialCoin,account.coin+args[1],account.specialCoin+args[2],account.coin,account.specialCoin)
     BServer.writeLog(msg)
-    SaveCoinBalancefd(username)
+    SaveCoinBalancefd()
 
     ModData.transmit("CoinBalance")
 end
