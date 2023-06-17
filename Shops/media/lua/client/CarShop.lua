@@ -253,7 +253,6 @@ Events.OnInitGlobalModData.Add(carShopEventHandler.initGlobalModData);
 ---@param playerObj IsoPlayer
 carShopEventHandler.onEnterVehicle = function(playerObj)
 	local carUtils = CarUtils:initByPlayerObj(playerObj)
-	print('onEnterVehicle: ', bcUtils.dump(carUtils))
 	if carUtils then
 		carUtils:startConstraints()
 	end
