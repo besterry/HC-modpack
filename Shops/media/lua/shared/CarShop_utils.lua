@@ -199,26 +199,30 @@ function CarUtils:processConstraints()
 	if not CarShop.isConstraintActive then
 		return
 	end
-
+	local vehicle = self.vehicle
 	local vehicleLockMass = CarShop.constants.vehicleLockMass
 	local processConstraintsBindFn = function() return CarUtils.processConstraints(self) end
 	
 	if self:isCarOnSale() then
-		print('vehicle:getScriptName()', self.vehicle:getScriptName(), string.find( self.vehicle:getScriptName(), "AMC" ))
-		if string.find( self.vehicle:getScriptName(), "AMC" ) then
-			vehicleLockMass = vehicleLockMass / 2
+		local isMoto = string.find( vehicle:getScriptName(), "AMC" )
+		local isBike = BravensBikeUtils.isBike(self.vehicle)
+		if isMoto or isBike then
+			vehicle:setForceBrake()
+			vehicle:setMaxSpeed(0)
+			
+		else
+			vehicle:setMass(vehicleLockMass)
 		end
-		self.vehicle:setMass(vehicleLockMass)
-		print('getMass: ', self.vehicle:getMass())
+		print('getMass: ', vehicle:getMass())
 		CarShop.isAllowGetKey = false
 		BravensUtils.DelayFunction(processConstraintsBindFn, 1)
 		return
 	else
-		local vehicleTowing = self.vehicle:getVehicleTowing()
+		local vehicleTowing = vehicle:getVehicleTowing()
 		if vehicleTowing then
 			local vehicleTowingUtils = CarUtils:initByVehicle(vehicleTowing)
 			if vehicleTowing and vehicleTowingUtils:isCarOnSale() then
-				self.vehicle:setMass(vehicleLockMass)
+				vehicle:setMass(vehicleLockMass)
 				BravensUtils.DelayFunction(processConstraintsBindFn, 1)
 				return
 			end
@@ -236,5 +240,6 @@ function CarUtils:stopConstraints()
 	end
 	vehicle:setMass(vehicle:getInitialMass())
 	vehicle:updateTotalMass()
+	vehicle:setMaxSpeed(vehicle:getMaxSpeed())
 	CarShop.isAllowGetKey = true
 end

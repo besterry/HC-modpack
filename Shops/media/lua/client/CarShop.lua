@@ -141,9 +141,6 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	local vehicle = ISVehicleMenu.getVehicleToInteractWith(playerObj)
 
 	if vehicle then
-		if BravensBikeUtils.isBike(vehicle) then
-			menu:clear()
-		end
 
 		local vehicleKeyId = vehicle:getKeyId()
         local offerInfo = {
@@ -155,6 +152,10 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local playerHasCarTicket = playerObj:getInventory():contains(TICKET_NAME)
 		local vehicleIsOnSale = carInfo:isCarOnSale()
 		local playerIsCarOwner = carInfo:isCarOwner()
+
+		if vehicleIsOnSale and BravensBikeUtils.isBike(vehicle) then
+			menu:clear()
+		end
 
 		if playerHasCarTicket and not vehicleIsOnSale then
         	menu:addSlice(
