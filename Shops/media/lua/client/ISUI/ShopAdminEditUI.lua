@@ -22,21 +22,33 @@ local width = 995
 local height = 550
 
 function ShopAdminEditUI:show(player,viewMode,shop)
-    local square = player:getSquare()
-    posX = square:getX()
-    posY = square:getY()
-    if ShopAdminEditUI.instance==nil then
-        ShopAdminEditUI.instance = ShopAdminEditUI:new (0, 0, width, height, player);
-        ShopAdminEditUI.instance.shop = shop
-        ShopAdminEditUI.instance.viewMode = viewMode
-        ShopAdminEditUI.instance:initialise();
-        ShopAdminEditUI.instance:instantiate();
+    sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
+    local receiveServerCommand
+    receiveServerCommand = function(module, command, args)
+        if module ~= 'shopItems' then return; end
+        if command == 'onGetData' then
+            Shop.Items = args['shopItems']
+            Shop.Sell = args['forSellItems']
+            Events.OnServerCommand.Remove(receiveServerCommand)
+
+            local square = player:getSquare()
+            posX = square:getX()
+            posY = square:getY()
+            if ShopAdminEditUI.instance==nil then
+                ShopAdminEditUI.instance = ShopAdminEditUI:new (0, 0, width, height, player);
+                ShopAdminEditUI.instance.shop = shop
+                ShopAdminEditUI.instance.viewMode = viewMode
+                ShopAdminEditUI.instance:initialise();
+                ShopAdminEditUI.instance:instantiate();
+            end
+            ShopAdminEditUI.instance.pinButton:setVisible(false)
+            ShopAdminEditUI.instance.collapseButton:setVisible(false)
+            ShopAdminEditUI.instance:addToUIManager();
+            ShopAdminEditUI.instance:setVisible(true);
+            return ShopAdminEditUI.instance;
+        end
     end
-    ShopAdminEditUI.instance.pinButton:setVisible(false)
-    ShopAdminEditUI.instance.collapseButton:setVisible(false)
-    ShopAdminEditUI.instance:addToUIManager();
-    ShopAdminEditUI.instance:setVisible(true);
-    return ShopAdminEditUI.instance;
+    Events.OnServerCommand.Add(receiveServerCommand);
 end
 
 function ShopAdminEditUI:update()

@@ -54,6 +54,12 @@ Shop.textures = {
 	MoveAll= {
 		texture = getTexture("media/textures/ShopUI_MoveAll.png"),
 	},
+	Edit= {
+		texture = getTexture("media/textures/ShopUI_Edit.png"),
+	},
+	Save= {
+		texture = getTexture("media/textures/ShopUI_Save.png"),
+	},
 }
 
 Tab = Tab or {}
