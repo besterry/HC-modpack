@@ -40,10 +40,8 @@ function ISAdminPanelUI:create()
 end
 
 function ISAdminPanelUI:onOptionMouseDownShopEdit()
-    if ShopAdminEditUI.instance then
-        ShopAdminEditUI.instance:close()
-    end
-    LoadShopItems();
-    ui:initialise();
-    ui:addToUIManager();
+    local playerNum = getPlayer():getPlayerNum()
+    local player = getSpecificPlayer(playerNum)
+    ShopUI:show(player,false)
+    --ShopAdminEditUI:show(player,false)
 end

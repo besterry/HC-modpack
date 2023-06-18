@@ -21,7 +21,7 @@ local cartImg = Shop.textures.Cart;
 local width = 995
 local height = 550
 
-function ShopUI:show(player,viewMode,shop)
+function ShopUI:show(player,viewMode,shop) --Вызов интерфейса магазина
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
     local receiveServerCommand
     receiveServerCommand = function(module, command, args)
@@ -572,7 +572,7 @@ function ShopUI:render()
     self:drawProgressBar((self.width / 2)+180, 420, 120, 10, currentAction.action:getJobDelta(), self.fgBar)
 end
 
-function ShopUI:updateTotal()
+function ShopUI:updateTotal() --Обновление баланса
     local total = 0
     local totalSpecial = 0
     self.totalCoinLabel:setName(""..total)
@@ -630,7 +630,7 @@ function ShopUI:updateTotal()
     end
 end
 
-function ShopUI:close()
+function ShopUI:close() --Закрытие окна
 	ISCollapsableWindow.close(self);
     if PreviewUI.instance then PreviewUI.instance:close() end
     ShopUI.instance:removeFromUIManager()
@@ -638,7 +638,7 @@ function ShopUI:close()
     self:removeFromUIManager()
 end
 
-function ShopUI:new(x, y, width, height, player)
+function ShopUI:new(x, y, width, height, player) --Создание окна магазина
     local o = {}
     if x == 0 and y == 0 then
         x = (getCore():getScreenWidth() / 2) - (width / 2);
