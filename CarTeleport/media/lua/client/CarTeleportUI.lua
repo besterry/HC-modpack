@@ -1,3 +1,5 @@
+local main = require "CarTeleportMain"
+
 local CarTeleport_UI = {}
 g_CarTeleport_UI = CarTeleport_UI -- TODO: Удалить. Использовалось для дебага
 
@@ -64,6 +66,7 @@ end
 function CarTeleport_UI:onMouseDownOutside(x, y)
     local self = self.CarTeleport_UI_instance -- HACK: достаём наш инстанс обратно из UI инстанса
     self.base_onMouseDownOutside(self.UI, x, y)
+    
     local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), self.zPos)
     if self.selectStart then
         self.startPos = { x = math.floor(xx), y = math.floor(yy) }
@@ -72,6 +75,7 @@ function CarTeleport_UI:onMouseDownOutside(x, y)
     elseif self.selectEnd then
         self.endPos = { x = math.floor(xx), y = math.floor(yy) }
         self.selectEnd = false
+        main.getCarsListByCoord(self.startPos, self.endPos, self.zPos)
     end
 end
 
@@ -90,10 +94,10 @@ function CarTeleport_UI:createUI()
     -- NOTE: формируем UI
     UI:addText("CarTeleport_title", getText("IGUI_AdminPanel_CarTeleport_btn"), "Title", "Center")
     UI:nextLine();
-    UI:addButton("CarTeleport_selectArea_btn", "SelectArea", self.selectArea_btnHandler);
-    UI:addButton("CarTeleport_cancel_btn", "Cancel", self.cancel_btnHandler);
-    UI['CarTeleport_cancel_btn'].args = self -- NOTE: не задокументировано, но работает. Если нужно передать не key-value таблицу, а один аргумент
-    UI['CarTeleport_selectArea_btn']:addArg('self', self) -- NOTE: стандартный способ передачи аргументов (см `CarTeleport_UI.selectArea_btnHandler`)
+    UI:addButton("CarTeleport_selectAreaBtn", "SelectArea", self.selectArea_btnHandler);
+    UI:addButton("CarTeleport_cancelBtn", "Cancel", self.cancel_btnHandler);
+    UI['CarTeleport_cancelBtn'].args = self -- NOTE: не задокументировано, но работает. Если нужно передать не key-value таблицу, а один аргумент
+    UI['CarTeleport_selectAreaBtn']:addArg('self', self) -- NOTE: стандартный способ передачи аргументов (см `CarTeleport_UI.selectArea_btnHandler`)
     UI:saveLayout();
     
 end
@@ -155,6 +159,6 @@ function ISAdminPanelUI:carTeleport_btnHandler()
     CarTeleport_UI:new()
 end
 
-Events.OnCreateUI.Add(function() -- TODO: Удалить
+Events.OnCreateUI.Add(function() -- TODO: Удалить. Нужно для дебага. Чтобы просто открывать окно при старте
     CarTeleport_UI:new()
 end) 
