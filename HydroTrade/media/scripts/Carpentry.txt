@@ -2616,7 +2616,7 @@ recipe Make Chopsticks
         OnGiveXP:HCWoodwork_OnGiveTinyXP,
     }
 
-/********recipe Create Infinite Logpile*****\
+/********recipe Create Infinite Logpile*****/
 	{
 		Log,
 		Result:HCInfiniteLogpile,
@@ -2627,7 +2627,7 @@ recipe Make Chopsticks
 		IsHidden: true,
 	}
 
-/********recipe Create Infinite Oak Logpile*****\
+/********recipe Create Infinite Oak Logpile*****/
 	{
 		HCOakLog,
 		Result:HCInfiniteLogpileOak,
