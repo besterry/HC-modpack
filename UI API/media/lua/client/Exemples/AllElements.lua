@@ -73,6 +73,6 @@ function everyMinute()
     i = i + 5;
 end
 
-Events.OnCreateUI.Add(onCreateUI)
-Events.EveryTenMinutes.Add(everyTenMinutes)
-Events.EveryOneMinute.Add(everyMinute)
+-- Events.OnCreateUI.Add(onCreateUI)
+-- Events.EveryTenMinutes.Add(everyTenMinutes)
+-- Events.EveryOneMinute.Add(everyMinute)
