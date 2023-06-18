@@ -21,9 +21,10 @@ local cartImg = Shop.textures.Cart;
 local width = 995
 local height = 550
 
-function ShopUI:show(player,viewMode,shop) --Вызов интерфейса магазина
+function ShopUI:show(player,viewMode,shop,test) --Вызов интерфейса магазина
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
     local receiveServerCommand
+    print(test)
     receiveServerCommand = function(module, command, args)
         if module ~= 'shopItems' then return; end
         if command == 'onGetData' then
@@ -218,7 +219,7 @@ function ShopUI:onMouseMoveCartItem(dx, dy)
     ShopUI.instance:toggleTooltip(true,selectedRow.item)
 end
 
-function ShopUI:createCategories()
+function ShopUI:createCategories() --генерация Tab (вкладок)
     for k,v in pairs(Shop.Tabs) do 
         local tab = ShopTabUI:new(0, 0, self.width, self.panel.height - self.panel.tabHeight);
         tab:initialise();

@@ -42,6 +42,5 @@ end
 function ISAdminPanelUI:onOptionMouseDownShopEdit()
     local playerNum = getPlayer():getPlayerNum()
     local player = getSpecificPlayer(playerNum)
-    ShopUI:show(player,false)
-    --ShopAdminEditUI:show(player,false)
+    ShopUI:show(player,false,nil,"adminui")
 end
