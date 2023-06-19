@@ -24,7 +24,6 @@ local height = 550
 function ShopUI:show(player,viewMode,shop,test) --Вызов интерфейса магазина
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
     local receiveServerCommand
-    print(test)
     receiveServerCommand = function(module, command, args)
         if module ~= 'shopItems' then return; end
         if command == 'onGetData' then
