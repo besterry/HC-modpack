@@ -39,10 +39,14 @@ function ShopAdminEditUI:create()
     end
 end
 
-function ShopAdminEditUI:onOptionMouseDownShopEdit()
-    if ShopAdminEditUI.instance then
-        ShopAdminEditUI.instance:close()
+function ISEditShopUI:onOptionMouseDownShopEdit()
+
+    if ISEditShopUI.instance then
+        ISEditShopUI.instance:close()
     end
-    ui:initialise();
-    ui:addToUIManager();
+    local ui = ISEditShopUI:new(50,50,600,600, getPlayer());
+
+    --local playerNum = getPlayer():getPlayerNum()
+    --local player = getSpecificPlayer(playerNum)
+    --ShopUI:show(player,false,nil,"adminui")
 end

@@ -60,6 +60,9 @@ Shop.textures = {
 	Save= {
 		texture = getTexture("media/textures/ShopUI_Save.png"),
 	},
+	Dell= {
+		texture = getTexture("media/textures/ShopUI_Dell.png"),
+	},
 }
 
 Tab = Tab or {}
