@@ -39,8 +39,14 @@ function ISAdminPanelUI:create()
     end
 end
 
-function ISAdminPanelUI:onOptionMouseDownShopEdit()
-    local playerNum = getPlayer():getPlayerNum()
-    local player = getSpecificPlayer(playerNum)
-    ShopUI:show(player,false,nil,"adminui")
+function ISEditShopUI:onOptionMouseDownShopEdit()
+
+    if ISEditShopUI.instance then
+        ISEditShopUI.instance:close()
+    end
+    local ui = ISEditShopUI:new(50,50,600,600, getPlayer());
+
+    --local playerNum = getPlayer():getPlayerNum()
+    --local player = getSpecificPlayer(playerNum)
+    --ShopUI:show(player,false,nil,"adminui")
 end
