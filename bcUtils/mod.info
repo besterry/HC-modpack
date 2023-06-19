@@ -1,7 +1,7 @@
 name=blindcoders utility functions.
 poster=empty.png
 description=A collection of functions blindcoder regularly uses in his mods.
-id=bcUtils
+id=bcUtils_h
 
 modversion=1.2.0
 pzversion=32.24

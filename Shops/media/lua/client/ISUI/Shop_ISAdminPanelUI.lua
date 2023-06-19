@@ -43,7 +43,7 @@ function ISAdminPanelUI:onOptionMouseDownShopEdit()
     if ISEditShopUI.instance then
         ISEditShopUI.instance:close()
     end
-    local ui = ISEditShopUI:new(50,50,600,600, getPlayer());
+    local ui = ISEditShopUI:new(50,50,700,600, getPlayer());
     ui:initialise();
     ui:addToUIManager();
     --local playerNum = getPlayer():getPlayerNum()
