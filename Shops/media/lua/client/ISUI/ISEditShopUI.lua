@@ -9,7 +9,7 @@ ISEditShopUI = ISPanel:derive("ISEditShopUI");
 
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
 local FONT_HGT_MEDIUM = getTextManager():getFontHeight(UIFont.Medium)
-local selectedTab = "Sell"
+
 
 function LoadShopItems()
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
@@ -52,11 +52,11 @@ function ISEditShopUI:initialise()
     self.ok.borderColor = {r=1, g=1, b=1, a=0.1};
     self:addChild(self.ok);
 
-    self.comboBox = ISComboBox:new(10, 50, 100, 20, self);
+    self.comboBox = ISComboBox:new(10, 50, 100, 20, self,self.onClickTab);
     self.comboBox:initialise();
     self.comboBox:instantiate();
     --self.comboBox:setOnMouseDownFunction = ISEditShopUI.onClickTab;
-    self.comboBox.onRightMouseUp = ISEditShopUI.onClickTab;
+    --self.comboBox.onRightMouseUp = ISEditShopUI.onClickTab;
     self:addChild(self.comboBox);    
     
     
@@ -65,11 +65,11 @@ function ISEditShopUI:initialise()
         table.insert(keys, k)
     end
     for _, key in ipairs(keys) do
-        if key ~= "Favorite" then
+        if key ~= "Favorite" and key ~="All" then
         self.comboBox:addOption(key);
         end
     end
-
+    LoadShopItems()
     local listHeight = self:getHeight() - self.comboBox.height - padBottom - btnHgt - 60 -- вычисляем высоту списка
     --X отступ слева, Y отступ сверху, wh - размер окна
     self.scrollingList = ISScrollingListBox:new(10, self.comboBox.height+60, 400, listHeight-10)
@@ -81,8 +81,27 @@ function ISEditShopUI:initialise()
     self.scrollingList:setOnMouseDownFunction(self, self.onClickItem);
     self.scrollingList.drawBorder = true;
     self:addChild(self.scrollingList);
-    LoadShopItems()
+    for key, value in pairs(Shop.Sell) do
+        value.name = key
+        local itemName = getItemNameFromFullType(key)
+        if value.price then
+            self.scrollingList:addItem(itemName .. " - " .. value.price,value) 
+        else
+            self.scrollingList:addItem(itemName .. " - " .. "blocked") 
+        end
+    end  
     
+    self.ItemEntry = ISTextEntryBox:new("Item", self.scrollingList.x + self.scrollingList.width + 10, 70, 150, btnHgt)
+    self.ItemEntry:initialise();
+    self.ItemEntry:instantiate();
+    self:addChild(self.ItemEntry);
+
+    self.BlockBox = ISTickBox:new(self.ItemEntry.x + self.ItemEntry.width + 10, self.ItemEntry.y, 10, 10, "", nil, nil)
+    self.BlockBox:initialise();
+    self.BlockBox:instantiate();
+    self.BlockBox.selected[1] = false; -- Start false or not
+    self:addChild(self.BlockBox);
+    self.BlockBox:addOption("Block"); -- To add a text at the left of the box
 end
 
 function ISEditShopUI:prerender()
@@ -99,19 +118,35 @@ function ISEditShopUI:render ()
     selectedTab = self.comboBox:getSelectedText()
 end
 
-function ISEditShopUI:onClickTab()
-    print(selectedTab)
-    if selectedTab == "Sell" then
-        for _, item in ipairs(Shop.Sell) do
-            self.scrollingList:addItem(item.name)
-            print(item.name)
+    --local seletedData = self.comboBox:getOptionData(selectedId) -- данные, если есть
+function ISEditShopUI:onClickTab() --Подгрузка содержимого вкладок
+    local selectedId = self.comboBox.selected
+    local seletedName = self.comboBox:getOptionText(selectedId)
+
+    self.scrollingList:clear();
+    if seletedName == "Sell" then
+        for key, value in pairs(Shop.Sell) do
+            value.name = key
+            local itemName = getItemNameFromFullType(key)
+            if value.price then
+                self.scrollingList:addItem(itemName .. " - " .. value.price,value) 
+            else
+                self.scrollingList:addItem(itemName .. " - " .. "blocked") 
+            end
+        end    
+    end    
+    for key, value in pairs(Shop.Items) do
+        if  value.tab == seletedName then
+            value.name = key
+            local itemName = getItemNameFromFullType(key)                
+            self.scrollingList:addItem(itemName .. " - " .. value.price,value)
         end
-    else
-        for _, item in ipairs(Shop.Items) do
-            self.scrollingList:addItem(item.name)
-            print(item.name)
-        end
+    
     end
+end
+
+function ISEditShopUI:onClickItem () --При выборе элемента в списке
+
 end
 
 function ISEditShopUI:updateButtons()    
