@@ -3657,5 +3657,6 @@ Items_RU = {
 	Recipe_Make_Irrigation_Pipe = "Сделать ирригационную трубу",
 	Recipe_Recycle_oil_to_gas = "Переработать нефть в бензин",
 	Recipe_Pour_out_canister = "Опустошить канистру",
-	
+	Recipe_Dismantle_Gun = "Разобрать оружие",
+	Recipe_Dismantle_Pistol = "Разобрать пистолет",
 }
