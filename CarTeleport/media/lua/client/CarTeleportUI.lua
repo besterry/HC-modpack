@@ -3,7 +3,6 @@ local main = require "CarTeleportClient"
 local CarTeleport_UI = {}
 g_CarTeleport_UI = CarTeleport_UI -- TODO: Удалить. Использовалось для дебага
 
-
 local UI_TITLE = 'CarTeleport_carListTitle'
 local UI_COUNTER = 'CarTeleport_carListCounter'
 local UI_LIST = 'CarTeleport_carList'
@@ -13,6 +12,26 @@ local UI_CANCEL = 'CarTeleport_cancelBtn'
 local UI_COPY = 'CarTeleport_copyBtn'
 local UI_PASTE = 'CarTeleport_pasteBtn'
 local UI_DEL = 'CarTeleport_deletelBtn'
+local UI_DESCRIPTION = 'CarTeleport_descriptionRichText'
+local UI_TYPE_LABEL = 'CarTeleport_typeText'
+local UI_TYPE = 'CarTeleport_typeComboBox'
+
+local UI_TYPE_EXPERIMENTAL = 'experimantal'
+local UI_TYPE_STABLE = 'stable'
+local UI_TYPE_DICT = {}
+UI_TYPE_DICT['IGUI_experimantal'] = UI_TYPE_EXPERIMENTAL
+UI_TYPE_DICT['IGUI_stable'] = UI_TYPE_STABLE
+local UI_DESCRIPTION_DICT = {}
+UI_DESCRIPTION_DICT[UI_TYPE_STABLE] = 'Stable type info:<BR> The cars will be removed and spawned in a new location. Items in the containers of the cars will be deleted.'
+UI_DESCRIPTION_DICT[UI_TYPE_EXPERIMENTAL] = 'Experimental type info:<BR> Teleport distance is limited. Desynchronization may occur <BR>'
+local UI_DESCRIPTION_INSIDE = '<GREEN>Teleport is allowed'
+local UI_DESCRIPTION_OUTSIDE = '<RED>Teleport not allowed. You have left the experimental teleport zone. Get back closer to the cars'
+local UI_COPY_DICT = {}
+UI_COPY_DICT[UI_TYPE_STABLE] = 'Cut'
+UI_COPY_DICT[UI_TYPE_EXPERIMENTAL] = 'Target area'
+local UI_PASTE_DICT = {}
+UI_PASTE_DICT[UI_TYPE_STABLE] = 'Paste'
+UI_PASTE_DICT[UI_TYPE_EXPERIMENTAL] = 'Teleport'
 
 function CarTeleport_UI.selectArea_btnHandler(button, args)
     local self = args['self'] or {}
@@ -23,23 +42,66 @@ function CarTeleport_UI.selectArea_btnHandler(button, args)
     self.selectStart = true
 end
 
+---@param button any
+---@param self CarTeleport_UI
 function CarTeleport_UI.cancel_btnHandler(button, self)
     self:close()
 end
 
+---@param button any
+---@param self CarTeleport_UI
 function CarTeleport_UI.reset_btnHandler(button, self)
     self:reset()
 end
 
+---@param button any
+---@param self CarTeleport_UI
 function CarTeleport_UI.copy_btnHandler(button, self)
     print('copy_btnHandler', self.isCarTeleport_UI)
     self:startMove()
 end
 
+---@param button any
+---@param self CarTeleport_UI
 function CarTeleport_UI.paste_btnHandler(button, self)
     -- self:paste()
     print('paste_btnHandler')
     self:endMove()
+end
+
+function CarTeleport_UI:experimentalTypeSetter()
+    -- print('self.isCarTeleport_U experimentalTypeSetter', self.isCarTeleport_UI)
+    -- print('self.isExperimentalAllowed: ', self.isExperimentalAllowed)
+    local postfix = ''
+    if self.isExperimentalAllowed ~= nil then
+        postfix = UI_DESCRIPTION_OUTSIDE
+        if self.isExperimentalAllowed then
+            postfix = UI_DESCRIPTION_INSIDE
+        end
+    end
+
+    local text = UI_DESCRIPTION_DICT[UI_TYPE_EXPERIMENTAL] .. postfix
+    self.UI[UI_DESCRIPTION]:setText(text)
+end
+
+function CarTeleport_UI:setTypeText()
+    -- print('self.isCarTeleport_U setTypeText', self.isCarTeleport_UI)
+    if self.type_value == UI_TYPE_EXPERIMENTAL then
+        self:experimentalTypeSetter()
+    end
+    if self.type_value == UI_TYPE_STABLE then
+        self.UI[UI_DESCRIPTION]:setText(UI_DESCRIPTION_DICT[UI_TYPE_STABLE])
+    end
+end
+
+function CarTeleport_UI:typeChange_handler()
+    -- print('self.isCarTeleport_U typeChange_handler', self.isCarTeleport_UI)
+    -- print(self.isCarTeleport_UI)
+    -- print(self.UI[UI_TYPE]:getValue())
+    self.type_value = UI_TYPE_DICT[self.UI[UI_TYPE]:getValue()]
+    self:setTypeText()
+    self.UI[UI_COPY]:setText(UI_COPY_DICT[self.type_value]) 
+    self.UI[UI_PASTE]:setText(UI_PASTE_DICT[self.type_value]) 
 end
 
 function CarTeleport_UI:delete_confirmHandler(button)
@@ -48,6 +110,8 @@ function CarTeleport_UI:delete_confirmHandler(button)
     end
 end
 
+---@param button any
+---@param self CarTeleport_UI
 function CarTeleport_UI.delete_btnHandler(button, self)
     local vehicleList = {table.unpack(self.vehicleList)}
     local modal = ISModalDialog:new(
@@ -69,50 +133,13 @@ function CarTeleport_UI:close()
     return self.UI:close()
 end
 
-local highlightArea = function(x1, x2, y1, y2, z, color)
-    local cell = getCell()
-    for x = x1, x2 do
-        for y = y1, y2 do
-            local sq = cell:getGridSquare(x, y, z)
-            if sq then 
-                local floor = sq:getFloor()
-                if floor then
-                    floor:setHighlighted(true) 
-                    if color then
-                        if color == 'red' then                            
-                            floor:setHighlightColor(1,0,0,1); 
-                        end
-                        if color == 'green' then                            
-                            floor:setHighlightColor(0,1,0,1); 
-                        end
-                        if color == 'blue' then                            
-                            floor:setHighlightColor(0,0,1,1); 
-                        end
-                        if color == 'yellow' then                            
-                            floor:setHighlightColor(1,1,0,1); 
-                        end
-                    end
-                end        
-            end
-        end
-    end
-end
-
-local preHighlightArea = function (startX, stopX, startY, stopY, z, color)
-    local x1 = math.min(startX, stopX)
-    local x2 = math.max(startX, stopX)
-    local y1 = math.min(startY, stopY)
-    local y2 = math.max(startY, stopY)
-    highlightArea(x1, x2, y1, y2, z, color)
-end
-
 function CarTeleport_UI:render() -- NOTE: украдено из steamapps\common\ProjectZomboid\media\lua\client\DebugUIs\ISRemoveItemTool.lua
     local self = self.CarTeleport_UI_instance -- HACK: достаём наш инстанс обратно из UI инстанса
     self.base_render(self.UI)
     
     if self.selectStart or self.isMove then 
         local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), self.zPos)
-        highlightArea(xx, xx, yy, yy, self.zPos, 'yellow')
+        self.highlightArea(xx, xx, yy, yy, self.zPos, 'yellow')
         -- local sq = getCell():getGridSquare(math.floor(xx), math.floor(yy), self.zPos)
         -- if sq and sq:getFloor() then sq:getFloor():setHighlighted(true) sq:getFloor():setHighlightColor(1,1,0,1);  end
     end
@@ -121,14 +148,17 @@ function CarTeleport_UI:render() -- NOTE: украдено из steamapps\common
         local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), self.zPos)
         xx = math.floor(xx)
         yy = math.floor(yy)
-        preHighlightArea(xx, self.startPos.x, yy, self.startPos.y, self.zPos, 'yellow')
+        self.preHighlightArea(xx, self.startPos.x, yy, self.startPos.y, self.zPos, 'yellow')
     elseif self.startPos ~= nil and self.endPos ~= nil then
-        preHighlightArea(self.startPos.x, self.endPos.x, self.startPos.y, self.endPos.y, self.zPos, 'red')
+        self.preHighlightArea(self.startPos.x, self.endPos.x, self.startPos.y, self.endPos.y, self.zPos, 'red')
     end
 
     if self.target then
-        highlightArea(self.target.x1, self.target.x2, self.target.y1, self.target.y2, self.zPos, 'green')
+        -- self.highlightArea(self.target.x1-10, self.target.x2+10, self.target.y1-10, self.target.y2+10, self.zPos, 'yellow')
+        self.highlightArea(self.target.x1, self.target.x2, self.target.y1, self.target.y2, self.zPos, 'green')
+        -- highlightArea(self.target.x1-10, self.target.x2-10, self.target.y1-10, self.target.y2-10, self.zPos, 'yellow')
     end
+
 end
 
 function CarTeleport_UI:onMouseDownOutside(x, y)
@@ -159,7 +189,37 @@ function CarTeleport_UI:onMouseDownOutside(x, y)
     end
 end
 
+function CarTeleport_UI:checkDistance()
+    ---@type IsoPlayer
+    local player = self.player
+    -- print('player pos: ', player:getX(), player:getY(), player:getZ())
+    -- print('getRelevantAndDistance', player:getRelevantAndDistance(self.startPos.x, self.startPos.y, 10))
+    -- if player:getX()  then
+    -- end
+    local isDisallowed = false
+    for k,v in pairs(self.vehicleList) do
+        -- print('v: ', v, v:getId())
+        local vehicle = getVehicleById(v:getId())
+        if not vehicle then
+            player:Say('You have left the experimental teleportation zone')
+            isDisallowed = isDisallowed or true
+        else
+            -- isDisallowed = isDisallowed or true
+            -- print('vehicle: ', vehicle, vehicle:getId())
+        end
+    end
+    self.isExperimentalAllowed = not isDisallowed
+    -- print('isExperimentalAllowed', self.isExperimentalAllowed)
+    self:setTypeText()
+end
+
 function CarTeleport_UI:renderCarsList()
+    self.origin = {
+        x1 = math.min(self.startPos.x, self.endPos.x),
+        x2 = math.max(self.startPos.x, self.endPos.x),
+        y1 = math.min(self.startPos.y, self.endPos.y),
+        y2 = math.max(self.startPos.y, self.endPos.y),
+    }
     local vehicleList = main.getCarsListByCoord(self.startPos, self.endPos, self.zPos)
     local renderedList = {}
     for k,v in pairs(vehicleList) do
@@ -173,28 +233,32 @@ function CarTeleport_UI:renderCarsList()
     self.UI[UI_RESET]:setEnable(true)
     self.UI[UI_DEL]:setEnable(true)
     self.UI[UI_COPY]:setEnable(true)
+    self.UI[UI_TYPE].disabled = true
+    self.UI[UI_LIST].selected = -1
+
+    local _self = self
+    ---@param square IsoGridSquare
+    self.onTick_handler = function(square)
+        _self:checkDistance()
+    end
+    Events.OnTick.Add(self.onTick_handler)
+
 end
 
 function CarTeleport_UI:startMove()
     print('copy')
+    -- self.UI[UI_TYPE]:setEnable(false)
     self.UI[UI_COPY]:setEnable(false)
     self.UI[UI_DEL]:setEnable(false)
-    
-    self.origin = {
-        x1 = math.min(self.startPos.x, self.endPos.x),
-        x2 = math.max(self.startPos.x, self.endPos.x),
-        y1 = math.min(self.startPos.y, self.endPos.y),
-        y2 = math.max(self.startPos.y, self.endPos.y),
-    }
+
     self.isMove = true
     main.startMove(self.vehicleList)
 end
 
 function CarTeleport_UI:endMove()
     self.isMove = false
-    print('origin: ', bcUtils.dump(self.origin))
     main.moveCars(self.xDif, self.yDif)
-    -- main.sendGetCarList(self.startPos, self.endPos, self.zPos)
+    self.UI[UI_PASTE]:setEnable(false)
 end
 
 function CarTeleport_UI:delete()
@@ -203,6 +267,7 @@ function CarTeleport_UI:delete()
 end
 
 function CarTeleport_UI:reset()
+    self.isExperimentalAllowed = nil
     self.vehicleList = {}
     self.selectStart = false
     self.selectEnd = false
@@ -221,6 +286,16 @@ function CarTeleport_UI:reset()
     self.UI[UI_COPY]:setEnable(false)
     self.UI[UI_PASTE]:setEnable(false)
     self.UI[UI_DEL]:setEnable(false)
+    self.UI[UI_TYPE].disabled = false
+    self:setTypeText()
+    -- Events.ReuseGridsquare.Remove(reuseGridsquare_handler)
+    -- print('self.onTick_handler', self.onTick_handler)
+    -- if self.onTick_handler ~= nil then
+    --     Events.OnTick.Remove(self.onTick_handler)
+    -- end
+    if self.onTick_handler then
+        Events.OnTick.Remove(self.onTick_handler)
+    end
 end
 
 function CarTeleport_UI:createUI()
@@ -232,7 +307,6 @@ function CarTeleport_UI:createUI()
     UI.CarTeleport_UI_instance = self -- Записываем self в UI чтоб потом достать в рендере (см `CarTeleport_UI:render`)
     UI.render = self.render
     UI.onMouseDownOutside = self.onMouseDownOutside
-    UI:setCollapse(true)
 
     local addEmpty_helper = function()
         return UI:addEmpty(_,_,_, marginPx)
@@ -252,6 +326,22 @@ function CarTeleport_UI:createUI()
     UI:addScrollList(UI_LIST, {})
     UI:nextLine()
     addEmpty_helper()
+    UI:nextLine()
+    addEmpty_helper()
+    UI:addText(UI_TYPE_LABEL, 'Teleport type: ')
+    UI:addComboBox(UI_TYPE, UI_TYPE_DICT)
+    addEmpty_helper()
+    UI:nextLine()
+    addEmpty_helper()
+    UI:nextLine()
+    addEmpty_helper()
+    UI:addRichText(UI_DESCRIPTION, '')
+    
+    addEmpty_helper()
+    UI:nextLine()
+    addEmpty_helper()
+    UI:nextLine()
+    addEmpty_helper()
     UI:addButton(UI_SELECT, "Select area", self.selectArea_btnHandler);
     addEmpty_helper()
     UI:addButton(UI_RESET, "Reset", self.reset_btnHandler);
@@ -263,7 +353,7 @@ function CarTeleport_UI:createUI()
     UI:setLineHeightPixel(marginPx)
     UI:nextLine()
     addEmpty_helper()
-    UI:addButton(UI_COPY, "Move", self.copy_btnHandler);
+    UI:addButton(UI_COPY, "Cut", self.copy_btnHandler);
     addEmpty_helper()
     UI:addButton(UI_PASTE, "Put", self.paste_btnHandler);
     addEmpty_helper()
@@ -272,30 +362,78 @@ function CarTeleport_UI:createUI()
     UI:nextLine()
     UI:addEmpty()
     UI:setLineHeightPixel(marginPx)
+    UI['backgroundColor'].a = 1
+    
     UI[UI_SELECT]:addArg('self', self) -- NOTE: стандартный способ передачи аргументов (см `CarTeleport_UI.selectArea_btnHandler`)
     UI[UI_CANCEL].args = self -- NOTE: не задокументировано, но работает. Если нужно передать не key-value таблицу, а один аргумент
     UI[UI_RESET].args = self
     UI[UI_COPY].args = self
     UI[UI_PASTE].args = self
     UI[UI_DEL].args = self
+    UI[UI_TYPE].target = self
+    UI[UI_TYPE].onChange = self.typeChange_handler
+    UI[UI_LIST].onMouseDown = function()
+        UI[UI_LIST].selected = -1
+    end
+    
+    UI:saveLayout();
+    
     self.UI = UI
     self:reset()
-    UI:saveLayout();
-
+    self:typeChange_handler()
+    -- UI[UI_LIST]:onMouseDown()
 end
 
 function CarTeleport_UI:new()
     local o = {}
     setmetatable(o, self)
     self.__index = self
+    o.isCarTeleport_UI = true -- TODO: Удалить. Переменная просто для дебага. Чтоб отличить инстанс UI, от инстанса CarTeleport_UI. Потому что из-за хаков может возникнуть путаница
+    o.player = getPlayer()
     if CarTeleport_UI.instance then -- NOTE: Делаем что-то типа синглтона. TODO: разобраться как делать нормальные синглтоны
         CarTeleport_UI.instance:close()
     end
     CarTeleport_UI.instance = o;
-    o.player = getPlayer()
-    o.isCarTeleport_UI = true -- TODO: Удалить. Переменная просто для дебага. Чтоб отличить инстанс UI, от инстанса CarTeleport_UI. Потому что из-за хаков может возникнуть путаница
+    o.onTick_handler = false
     self.createUI(o)
     return o
+end
+
+CarTeleport_UI.highlightArea = function(x1, x2, y1, y2, z, color)
+    local cell = getCell()
+    for x = x1, x2 do
+        for y = y1, y2 do
+            local sq = cell:getGridSquare(x, y, z)
+            if sq then 
+                local floor = sq:getFloor()
+                if floor then
+                    floor:setHighlighted(true) 
+                    if color then
+                        if color == 'red' then                            
+                            floor:setHighlightColor(1,0,0,1); 
+                        end
+                        if color == 'green' then                            
+                            floor:setHighlightColor(0,1,0,1); 
+                        end
+                        if color == 'blue' then                            
+                            floor:setHighlightColor(0,0,1,1); 
+                        end
+                        if color == 'yellow' then                            
+                            floor:setHighlightColor(1,1,0,1); 
+                        end
+                    end
+                end        
+            end
+        end
+    end
+end
+
+CarTeleport_UI.preHighlightArea = function (startX, stopX, startY, stopY, z, color)
+    local x1 = math.min(startX, stopX)
+    local x2 = math.max(startX, stopX)
+    local y1 = math.min(startY, stopY)
+    local y2 = math.max(startY, stopY)
+    CarTeleport_UI.highlightArea(x1, x2, y1, y2, z, color)
 end
 
 -- NOTE: добавляем кнопку в админ панель

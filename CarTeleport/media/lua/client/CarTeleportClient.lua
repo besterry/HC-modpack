@@ -36,9 +36,10 @@ end
 ---@param vehicleList BaseVehicle[]
 local removeCars = function(vehicleList)
     for k,v in pairs(vehicleList) do
-        if isAdmin() then
-            sendClientCommand('vehicle', 'remove', {vehicle = v:getId()})
+        if not isAdmin() then
+            print('NOT ADMIN') -- TODO: return
         end
+        sendClientCommand('vehicle', 'remove', {vehicle = v:getId()})
     end
 end
 
@@ -65,6 +66,10 @@ local moveCars = function(xDif, yDif)
     }
 
     sendClientCommand(MOD_NAME, 'moveCar', args)
+    -- local player = getPlayer()
+    -- local username = player:getUsername()
+    -- local vehicleList = CacheMap[username]
+
     -- for k,vehicle in pairs(vehicleList) do
         -- local oX = vehicle:getX()
         -- local oY = vehicle:getY()
@@ -109,10 +114,11 @@ local moveCars = function(xDif, yDif)
         -- local jniTransform_fieldName = 'public final zombie.core.physics.Transform zombie.vehicles.BaseVehicle.jniTransform'
         -- for i=0, field_count-1 do
         --     local field = getClassField(vehicle, i)
-        --     if tostring(field) == jniTransform_fieldName then
-        --         print('found!')
-        --         transform_field = field
-        --     end
+        --     print(tostring(field) .. ' -- ' .. i .. ' val: ', getClassFieldVal(vehicle, field))
+        --     -- if tostring(field) == jniTransform_fieldName then
+        --     --     print('found!')
+        --     --     transform_field = field
+        --     -- end
         -- end
 
         -- if transform_field then
@@ -137,9 +143,6 @@ local moveCars = function(xDif, yDif)
         -- end
         -- print('allocVector3f client', vehicle:allocVector3f())
         -- print('car coords: ', oX, oY)
-        -- if isAdmin() then
-            -- sendClientCommand('vehicle', 'remove', {vehicle = v:getId()})
-        -- end
     -- end
 end
 
@@ -163,7 +166,12 @@ Commands.moveCar = function(args)
     local username = player:getUsername()
     local vehicleList = CacheMap[username]
     for k,vehicle in pairs(vehicleList) do
-        CarTeleport.moveCar(player, vehicle, xDif, yDif)
+        local id = vehicle:getId()
+        local keyId = vehicle:getKeyId()
+        local thisVehicle = getVehicleById(id)
+        if thisVehicle and thisVehicle:getKeyId() == keyId then
+            CarTeleport.moveCar(player, vehicle, xDif, yDif)
+        end
     end
     player:Say('client moveCar')
 

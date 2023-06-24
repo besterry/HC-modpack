@@ -10,16 +10,6 @@ local moveCar = function(player, vehicle, xDif, yDif)
     if not player:isAccessLevel("admin") then
         print('NOT ADMIN')
     end
-    -- local vihiclesArr = getCell():getVehicles()
-	-- local result = nil
-	-- for i = 0, vihiclesArr:size() - 1 do
-	-- 	local vehicle = vihiclesArr:get(i)
-
-	-- end
-
-    -- local vehicleId, xDif, yDif = unpack(args)
-    -- print('vehicleId, xDif, yDif: ', vehicleId, xDif, yDif)
-    -- local vehicle = getVehicleById(vehicleId)
     print('vehicle: ', vehicle)
     if not vehicle then
         return
@@ -50,11 +40,11 @@ local moveCar = function(player, vehicle, xDif, yDif)
         origin:set(origin:x()-xDif, origin:y(), origin:z()-yDif)
         vehicle:setWorldTransform(w_transform)
         if isClient() then
-            -- vehicle:update()
-            vehicle:updateControls()
-            vehicle:updateBulletStats()
-            vehicle:updatePhysics()
-            vehicle:updatePhysicsNetwork()
+            pcall(vehicle.update, vehicle)
+            pcall(vehicle.updateControls, vehicle)
+            pcall(vehicle.updatePhysicsNetwork, vehicle)
+            pcall(vehicle.updatePhysics, vehicle)
+            pcall(vehicle.updateBulletStats, vehicle)
         end
     else
         print('transform_field not found')
