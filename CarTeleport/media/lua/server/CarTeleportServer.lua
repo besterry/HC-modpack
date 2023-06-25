@@ -6,7 +6,7 @@ local MOD_NAME = CarTeleport.MOD_NAME
 local Commands = {}
 
 ---@type table<string, BaseVehicle[]>
-local CacheMap = {}
+local CacheMap = {}  -- NOTE: Сюда кешируем список транспорта на сервере
 
 ---@param player IsoPlayer
 ---@param vehicleIdList integer[]
@@ -16,13 +16,12 @@ Commands.saveCars = function(player, vehicleIdList)
     for k,vehicleId in pairs(vehicleIdList) do
         table.insert(vehicleList, getVehicleById(vehicleId))
     end
-    CacheMap[username] = vehicleList
+    CacheMap[username] = vehicleList -- Сохраняем тачки в кеш
 end
 
 ---@param player IsoPlayer
 ---@param args moveCarArgs
 Commands.moveCars = function(player, args)
-    print('server moveCar')
     local xDif, yDif = unpack(args)
     local username = player:getUsername()
     local vehicleList = CacheMap[username]
@@ -130,7 +129,6 @@ local setVehicleData = function(vehicle, data, sq)
             if partData["item"] then
                 if not (partItem and partItem:getFullType() == partData["item"]) then
                     if partItem then
-                        print("swapping "..partItem:getFullType().." for "..partData["item"])
                         part:setInventoryItem(nil)
                         vehicle:transmitPartItem(part)
                     end

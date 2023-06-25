@@ -1,7 +1,7 @@
 local main = require "CarTeleportClient"
 
 local CarTeleport_UI = {}
-g_CarTeleport_UI = CarTeleport_UI -- TODO: Удалить. Использовалось для дебага
+-- g_CarTeleport_UI = CarTeleport_UI -- TODO: Удалить. Использовалось для дебага
 
 local UI_TITLE = 'CarTeleport_carListTitle'
 local UI_COUNTER = 'CarTeleport_carListCounter'
@@ -19,8 +19,8 @@ local UI_TYPE = 'CarTeleport_typeComboBox'
 local UI_TYPE_EXPERIMENTAL = 'experimantal'
 local UI_TYPE_STABLE = 'stable'
 local UI_TYPE_DICT = {}
-UI_TYPE_DICT['IGUI_experimantal'] = UI_TYPE_EXPERIMENTAL
 UI_TYPE_DICT['IGUI_stable'] = UI_TYPE_STABLE
+UI_TYPE_DICT['IGUI_experimantal'] = UI_TYPE_EXPERIMENTAL
 local UI_DESCRIPTION_DICT = {}
 UI_DESCRIPTION_DICT[UI_TYPE_STABLE] = 'Stable type info:<BR> The cars will be removed and spawned in a new location. Items in the containers of the cars will be deleted.'
 UI_DESCRIPTION_DICT[UI_TYPE_EXPERIMENTAL] = 'Experimental type info:<BR> Teleport distance is limited. Desynchronization may occur <BR>'
@@ -57,21 +57,16 @@ end
 ---@param button any
 ---@param self CarTeleport_UI
 function CarTeleport_UI.copy_btnHandler(button, self)
-    print('copy_btnHandler', self.isCarTeleport_UI)
     self:startMove()
 end
 
 ---@param button any
 ---@param self CarTeleport_UI
 function CarTeleport_UI.paste_btnHandler(button, self)
-    -- self:paste()
-    print('paste_btnHandler')
     self:endMove()
 end
 
 function CarTeleport_UI:experimentalTypeSetter()
-    -- print('self.isCarTeleport_U experimentalTypeSetter', self.isCarTeleport_UI)
-    -- print('self.isExperimentalAllowed: ', self.isExperimentalAllowed)
     local lastLine = ''
     if self.isExperimentalAllowed ~= nil then
         lastLine = UI_DESCRIPTION_OUTSIDE
@@ -85,7 +80,6 @@ function CarTeleport_UI:experimentalTypeSetter()
 end
 
 function CarTeleport_UI:setTypeText()
-    -- print('self.isCarTeleport_U setTypeText', self.isCarTeleport_UI)
     if self.type_value == UI_TYPE_EXPERIMENTAL then
         self:experimentalTypeSetter()
     end
@@ -95,9 +89,6 @@ function CarTeleport_UI:setTypeText()
 end
 
 function CarTeleport_UI:typeChange_handler()
-    -- print('self.isCarTeleport_U typeChange_handler', self.isCarTeleport_UI)
-    -- print(self.isCarTeleport_UI)
-    -- print(self.UI[UI_TYPE]:getValue())
     self.type_value = UI_TYPE_DICT[self.UI[UI_TYPE]:getValue()]
     self:setTypeText()
     self.UI[UI_COPY]:setText(UI_COPY_DICT[self.type_value]) 
@@ -152,9 +143,7 @@ function CarTeleport_UI:render() -- NOTE: украдено из steamapps\common
     end
 
     if self.target then
-        -- self.highlightArea(self.target.x1-10, self.target.x2+10, self.target.y1-10, self.target.y2+10, self.zPos, 'yellow')
         self.highlightArea(self.target.x1, self.target.x2, self.target.y1, self.target.y2, self.zPos, 'green')
-        -- highlightArea(self.target.x1-10, self.target.x2-10, self.target.y1-10, self.target.y2-10, self.zPos, 'yellow')
     end
 
 end
@@ -193,7 +182,7 @@ function CarTeleport_UI:checkDistance()
     local isDisallowed = false
     for k,v in pairs(self.vehicleList) do
         local vehicle = getVehicleById(v:getId())
-        if not vehicle then
+        if not vehicle and self.type_value == UI_TYPE_EXPERIMENTAL then
             player:Say('You have left the experimental teleportation zone')
             isDisallowed = isDisallowed or true
         end
@@ -235,12 +224,11 @@ function CarTeleport_UI:renderCarsList()
 end
 
 function CarTeleport_UI:startMove()
-    print('copy')
     self.UI[UI_COPY]:setEnable(false)
     self.UI[UI_DEL]:setEnable(false)
     self.isMove = true
     main.startMove(self.vehicleList)
-    
+
     if self.type_value == UI_TYPE_STABLE then
         main.removeCars(self.vehicleList)
     end
@@ -284,11 +272,7 @@ function CarTeleport_UI:reset()
     self.UI[UI_DEL]:setEnable(false)
     self.UI[UI_TYPE].disabled = false
     self:setTypeText()
-    -- Events.ReuseGridsquare.Remove(reuseGridsquare_handler)
-    -- print('self.onTick_handler', self.onTick_handler)
-    -- if self.onTick_handler ~= nil then
-    --     Events.OnTick.Remove(self.onTick_handler)
-    -- end
+
     if self.onTick_handler then
         Events.OnTick.Remove(self.onTick_handler)
     end
@@ -304,7 +288,7 @@ function CarTeleport_UI:createUI()
     UI.render = self.render
     UI.onMouseDownOutside = self.onMouseDownOutside
 
-    local addEmpty_helper = function()
+    local addEmpty_helper = function() -- NOTE: просто хелпер чтоб не писать длинную мутатень
         return UI:addEmpty(_,_,_, marginPx)
     end
     
@@ -332,7 +316,6 @@ function CarTeleport_UI:createUI()
     UI:nextLine()
     addEmpty_helper()
     UI:addRichText(UI_DESCRIPTION, '')
-    
     addEmpty_helper()
     UI:nextLine()
     addEmpty_helper()
@@ -358,7 +341,7 @@ function CarTeleport_UI:createUI()
     UI:nextLine()
     UI:addEmpty()
     UI:setLineHeightPixel(marginPx)
-    UI['backgroundColor'].a = 1
+    UI['backgroundColor'].a = 1 -- NOTE: Убираем прозрачность у ричтекста
     
     UI[UI_SELECT]:addArg('self', self) -- NOTE: стандартный способ передачи аргументов (см `CarTeleport_UI.selectArea_btnHandler`)
     UI[UI_CANCEL].args = self -- NOTE: не задокументировано, но работает. Если нужно передать не key-value таблицу, а один аргумент
@@ -377,14 +360,13 @@ function CarTeleport_UI:createUI()
     self.UI = UI
     self:reset()
     self:typeChange_handler()
-    -- UI[UI_LIST]:onMouseDown()
 end
 
 function CarTeleport_UI:new()
     local o = {}
     setmetatable(o, self)
     self.__index = self
-    o.isCarTeleport_UI = true -- TODO: Удалить. Переменная просто для дебага. Чтоб отличить инстанс UI, от инстанса CarTeleport_UI. Потому что из-за хаков может возникнуть путаница
+    -- o.isCarTeleport_UI = true -- TODO: Удалить. Переменная просто для дебага. Чтоб отличить инстанс UI, от инстанса CarTeleport_UI. Потому что из-за хаков может возникнуть путаница
     o.player = getPlayer()
     if CarTeleport_UI.instance then -- NOTE: Делаем что-то типа синглтона. TODO: разобраться как делать нормальные синглтоны
         CarTeleport_UI.instance:close()
@@ -441,8 +423,6 @@ function ISAdminPanelUI:create()
     local btnWid = 150
     local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2)
     local btnGapY = 5
-    local x = 0;
-    local y = 0;
     
     local last_btn = self.children[self.IDMax - 1]
     if last_btn.internal == "CANCEL" then
@@ -466,6 +446,6 @@ function ISAdminPanelUI:carTeleport_btnHandler()
     CarTeleport_UI:new()
 end
 
-Events.OnCreateUI.Add(function() -- TODO: Удалить. Нужно для дебага. Чтобы просто открывать окно при старте
-    CarTeleport_UI:new()
-end) 
+-- Events.OnCreateUI.Add(function() -- TODO: Удалить. Нужно для дебага. Чтобы просто открывать окно при старте
+--     CarTeleport_UI:new()
+-- end) 
