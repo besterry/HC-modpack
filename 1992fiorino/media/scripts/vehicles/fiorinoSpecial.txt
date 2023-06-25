@@ -1,0 +1,708 @@
+module Base
+{
+	model 1992fiorinoSpecialBase
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|Vehicles_mesh,
+		shader = vehicle_norandom_multiuv_noreflect,
+		static = TRUE,
+		invertX = FALSE,
+		scale = 1,
+	}
+	model 1992fiorinoInteriorBase
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|Interior_mesh,
+		texture = Vehicles/Vehicles_fiorino_Interior,
+		shader = vehiclewheel,
+		scale = 1,
+	}
+	model 1992fiorinoBase_DoorFrontLeft
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|DoorFrontLeft_mesh,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = DoorFrontLeft 1.0,
+	}
+	model 1992fiorinoBase_DoorFrontRight
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|DoorFrontRight_mesh,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = DoorFrontRight 1.0,
+	}
+	model 1992fiorinoBase_Hood
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|Hood_mesh,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+	}
+	model 1992fiorinoBase_Trunk
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|Trunk_mesh,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+	}
+	model 1992fiorinoBase_FrontWindshield
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|FrontWindshield_mesh,
+		shader = vehicle,
+		scale = 1,
+	}
+	model 1992fiorinoBase_RearWindshield
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|RearWindshield_mesh,
+		shader = vehicle,
+		scale = 1,
+		static = FALSE,
+		boneWeight = Trunk 1.0,	
+		boneWeight = Trunk2 1.0,
+	}
+	model 1992fiorinoBase_WindowFrontLeft
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|WindowFrontLeft_mesh,
+		shader = vehicle,
+		static = FALSE,
+		scale = 1,
+		boneWeight = WindowFrontLeft 1.0,
+	}
+	model 1992fiorinoBase_WindowFrontRight
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|WindowFrontRight_mesh,
+		shader = vehicle,
+		static = FALSE,
+		scale = 1,
+		boneWeight = WindowFrontRight 1.0,
+	}
+	model 1992fiorinofrontwheelleft
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|Wheel_mesh,
+		texture = Vehicles/Vehicles_fiorino_Interior,
+		shader = vehiclewheel,
+	}
+	model 1992fiorinofrontwheelright
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|Wheel_mesh,
+		texture = Vehicles/Vehicles_fiorino_Interior,
+		shader = vehiclewheel,
+	}
+	model 1992fiorinobackwheelleft
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|Wheel_mesh,
+		texture = Vehicles/Vehicles_fiorino_Interior,
+		shader = vehiclewheel,
+	}
+	model 1992fiorinobackwheelright
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|Wheel_mesh,
+		texture = Vehicles/Vehicles_fiorino_Interior,
+		shader = vehiclewheel,
+	}
+	model 1992fiorinoSeatFrontLeft
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|SeatFrontLeft_mesh,
+		texture = Vehicles/Vehicles_fiorino_Interior,
+		shader = vehiclewheel,
+		scale = 1,		
+	}
+	model 1992fiorinoSeatFrontRight
+	{
+		mesh = vehicles/Vehicles_fiorino_Body|SeatFrontRight_mesh,
+		texture = Vehicles/Vehicles_fiorino_Interior,
+		shader = vehiclewheel,
+		scale = 1,		
+	}
+	vehicle 1992fiorinoSpecial
+	{
+		mechanicType = 1,
+		offRoadEfficiency = 0.8,
+		engineRepairLevel = 4,
+		playerDamageProtection = 0.7,
+
+		model
+		{
+			file = 1992fiorinoSpecialBase,
+			scale = 0.9500,
+			offset = 0.0000 0.6211 0.0842,
+		}
+
+
+		skin
+		{
+			texture = Vehicles/Vehicles_fiorino_Panaderia,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicles_fiorino_Arcor,
+		}
+
+		textureRust = Vehicles/Vehicles_fiorino_Rust,
+		textureMask = Vehicles/Vehicles_fiorino_Mask,
+		textureLights = Vehicles/Vehicles_fiorino_Lights,
+		textureDamage1Overlay = Vehicles/Vehicles_fiorino_Blood,
+		textureDamage2Overlay = Vehicles/Vehicles_fiorino_Blood,
+		textureDamage1Shell = Vehicles/Vehicles_fiorino_Shell_Damaged01,
+		textureDamage2Shell = Vehicles/Vehicles_fiorino_Shell_Damaged02,
+
+		sound
+		{
+			engine = VehicleEngineSmallCar,
+			engineStart = VehicleEngineSmallCar,
+			engineTurnOff = VehicleEngineSmallCar,
+			horn = VehicleHornStandard,
+			ignitionFail = VehicleIgnitionFailSmallCar,
+		}
+
+		extents = 1.6000 1.6421 3.9158,
+		mass = 650,
+		physicsChassisShape = 1.6000 1.6421 3.9158,
+		centerOfMassOffset = 0.0000 0.8526 0.0000,
+		shadowExtents = 1.6004 3.9156,
+		shadowOffset = 0.0000 -0.0027,
+		engineForce = 4000,
+		engineQuality = 60,
+		engineLoudness = 55,
+		maxSpeed = 60f,
+		gearRatioCount = 3,
+		gearRatioR = 7.09,
+		gearRatio1 = 7.44,
+		gearRatio2 = 2.29,
+		gearRatio3 = 1,
+		brakingForce = 60,
+		stoppingMovementForce = 2.0f,
+		rollInfluence = 1.0f,
+		steeringIncrement = 0.03,
+		steeringClamp = 0.3,
+		suspensionStiffness = 30,
+		suspensionCompression = 2.83,
+		suspensionDamping = 2.88,
+		maxSuspensionTravelCm = 10,
+		suspensionRestLength = 0.2,
+		wheelFriction = 1.6f,
+		frontEndHealth = 150,
+		rearEndHealth = 150,
+		seats = 2,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.6316 -0.5368 1.2211,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.6316 -0.5368 1.2211,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.6842 -0.5368 -1.0211,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.6842 -0.5368 -1.0211,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat2,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontLeft,
+			area = SeatFrontLeft,
+
+			position inside
+			{
+				offset = 0.3158 -0.2105 0.1579,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.0526 -0.7684 -0.0105,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontRight,
+			area = SeatFrontRight,
+
+			position inside
+			{
+				offset = -0.3158 -0.2105 0.1579,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0526 -0.7684 -0.0105,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 1.0316 1.2632 0.5053 0.8632,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -2.3684 1.6000 0.8000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.2000 0.2105 0.8421 1.2421,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.2000 0.2105 0.8421 1.2421,
+		}
+
+		area GasTank
+		{
+			xywh = 1.2000 -1.3053 0.8000 1.0105,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.2000 1.3053 0.8000 1.0105,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.2000 1.3053 0.8000 1.0105,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.2000 -1.3053 0.8000 1.0105,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.2000 -1.3053 0.8000 1.0105,
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			itemType = Base.SmallTrunk,
+
+			container
+			{
+				capacity = 85,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			itemType = Base.1992fiorinoTrunk,
+
+			model Default
+			{
+				file = 1992fiorinoBase_Trunk,
+				rotate = -90 0 0,
+			}
+
+			anim Close
+			{
+				anim = Trunk_anm,
+				reverse = TRUE,
+				rate = 1,
+			}
+
+			anim Open
+			{
+				anim = Trunk_anm,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = Trunk_anm,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = Trunk_anm,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+
+		part SeatFrontLeft
+		{
+			itemType = Base.1992fiorinoSeatFront,
+
+			model Default
+			{
+				file = 1992fiorinoSeatFrontLeft,
+			}
+
+			table install
+			{
+				area = SeatFrontLeft,
+			}
+
+			table uninstall
+			{
+				area = SeatFrontLeft,
+			}
+		}
+
+		part SeatFrontRight
+		{
+			itemType = Base.1992fiorinoSeatFront,
+
+			model Default
+			{
+				file = 1992fiorinoSeatFrontRight,
+			}
+
+			table install
+			{
+				area = SeatFrontRight,
+			}
+
+			table uninstall
+			{
+				area = SeatFrontRight,
+			}
+		}
+
+		part Seat*
+		{
+			container
+			{
+				capacity = 20,
+			}
+
+			table install
+			{
+				skills = Mechanics:2,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:2,
+			}
+		}
+
+		template = GloveBox,
+
+		part GloveBox
+		{
+			model Interior1992fiorino
+			{
+				file = 1992fiorinoInteriorBase,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+		}
+
+		template = GasTank,
+		template = Battery,
+		template = Engine,
+		template = Muffler,
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			itemType = Base.1992fiorinoHood,
+			mechanicRequireKey = false,
+
+			model Default
+			{
+				file = 1992fiorinoBase_Hood,
+				rotate = -90 0 0,
+			}
+
+			anim Close
+			{
+				anim = Hood_anm,
+				reverse = TRUE,
+				rate = 1,
+			}
+
+			anim Open
+			{
+				anim = Hood_anm,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = Hood_anm,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = Hood_anm,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part Windshield
+		{
+			itemType = Base.1992fiorinoFrontWindshield,
+
+			model Default
+			{
+				file = 1992fiorinoBase_FrontWindshield,
+			}
+		}
+
+		part WindshieldRear
+		{
+			itemType = Base.1992fiorinoRearWindshield,
+
+			model Default
+			{
+				file = 1992fiorinoBase_RearWindshield,
+				rotate = -90 0 0,
+			}
+
+			parent = TrunkDoor,
+
+			window
+			{
+				openable = false,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+
+		part WindowFrontLeft
+		{
+			category = door,
+			itemType = Base.1992fiorinoWindowFront,
+
+			model Default
+			{
+				file = 1992fiorinoBase_WindowFrontLeft,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = WindowFrontLeft_anm,
+				animate = FALSE,
+			}
+		}
+
+		part WindowFrontRight
+		{
+			category = door,
+			itemType = Base.1992fiorinoWindowFront,
+
+			model Default
+			{
+				file = 1992fiorinoBase_WindowFrontRight,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = WindowFrontRight_anm,
+				animate = FALSE,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+
+		part DoorFrontLeft
+		{
+			category = door,
+			itemType = Base.1992fiorinoDoorFrontLeft,
+
+			model Default
+			{
+				file = 1992fiorinoBase_DoorFrontLeft,
+			}
+
+			anim Close
+			{
+				anim = DoorFrontLeft_anm,
+				reverse = TRUE,
+				rate = 1,
+				sound = VehicleDoorCloseVan,
+			}
+
+			anim Open
+			{
+				anim = DoorFrontLeft_anm,
+				rate = 1,
+				sound = VehicleDoorOpenVan,
+			}
+
+			anim Closed
+			{
+				anim = DoorFrontLeft_anm,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = DoorFrontLeft_anm,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorFrontRight
+		{
+			category = door,
+			itemType = Base.1992fiorinoDoorFrontRight,
+
+			model Default
+			{
+				file = 1992fiorinoBase_DoorFrontRight,
+			}
+
+			anim Close
+			{
+				anim = DoorFrontRight_anm,
+				reverse = TRUE,
+				rate = 1,
+				sound = VehicleDoorCloseVan,
+			}
+
+			anim Open
+			{
+				anim = DoorFrontRight_anm,
+				rate = 1,
+				sound = VehicleDoorOpenVan,
+			}
+
+			anim Closed
+			{
+				anim = DoorFrontRight_anm,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = DoorFrontRight_anm,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Tire,
+
+		part TireFrontLeft
+		{
+			itemType = Base.1992fiorinoWheel,
+
+			model InflatedTirePlusWheel
+			{
+				file = 1992fiorinofrontwheelleft,
+			}
+		}
+
+		part TireFrontRight
+		{
+			itemType = Base.1992fiorinoWheel,
+
+			model InflatedTirePlusWheel
+			{
+				file = 1992fiorinofrontwheelright,
+			}
+		}
+
+		part TireRearLeft
+		{
+			itemType = Base.1992fiorinoWheel,
+
+			model InflatedTirePlusWheel
+			{
+				file = 1992fiorinobackwheelleft,
+			}
+		}
+
+		part TireRearRight
+		{
+			itemType = Base.1992fiorinoWheel,
+
+			model InflatedTirePlusWheel
+			{
+				file = 1992fiorinobackwheelright,
+			}
+		}
+
+		template = Brake,
+		template = Suspension,
+		template = Radio,
+		template = Headlight,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.5684 -1.9368,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.5684 1.8947,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

@@ -1,5 +1,5 @@
 name=Car Teleport
 poster=poster.png
-id=etomarat_CarTeleport
+id=CarTeleport_h
 description=Групповое перемещение и удаление транспорта
 require=UIAPI

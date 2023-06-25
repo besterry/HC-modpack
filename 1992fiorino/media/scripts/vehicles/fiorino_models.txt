@@ -1,0 +1,61 @@
+module Base
+{
+
+	model fiorinoDoorFrontWorld
+	{
+		mesh    = vehicles/Vehicles_fiorino_models|DoorFrontLeft_mesh,
+		texture = Vehicles/Vehicles_fiorino_Blanco,
+		scale   = 0.7,
+	}
+
+	model fiorinoWindowFrontWorld
+	{
+		mesh    = vehicles/Vehicles_fiorino_models|WindowFrontLeft_mesh,
+		texture = Vehicles/Vehicles_fiorino_Blanco,
+		scale   = 0.7,
+	}
+	
+	model fiorinoHoodWorld
+	{
+		mesh    = vehicles/Vehicles_fiorino_models|Hood_mesh,
+		texture = Vehicles/Vehicles_fiorino_Blanco,
+		scale   = 0.6,
+	}
+
+	model fiorinoTrunkWorld
+	{
+		mesh    = vehicles/Vehicles_fiorino_models|Trunk_mesh,
+		texture = Vehicles/Vehicles_fiorino_Blanco,
+		scale   = 0.8,
+	}
+	
+	model fiorinoWheelWorld
+	{
+		mesh    = vehicles/Vehicles_fiorino_models|Wheel_mesh,
+		texture = Vehicles/Vehicles_fiorino_Interior,
+		scale   = 0.7,
+	}
+		
+	model fiorinoFrontWindshieldWorld
+	{
+		mesh    = vehicles/Vehicles_fiorino_models|FrontWindshield_mesh,
+		texture = Vehicles/Vehicles_fiorino_Blanco,
+		scale   = 0.7,
+	}
+		
+	model fiorinoRearWindshieldWorld
+	{
+		mesh    = vehicles/Vehicles_fiorino_models|RearWindshield_mesh,
+		texture = Vehicles/Vehicles_fiorino_Blanco,
+		scale   = 0.7,
+	}
+
+	model fiorinoSeatFrontWorld
+	{
+		mesh    = vehicles/Vehicles_fiorino_models|SeatFrontLeft_mesh,
+		texture = Vehicles/Vehicles_fiorino_InteriorAsiento,
+		scale   = 0.7,
+	}
+
+
+}

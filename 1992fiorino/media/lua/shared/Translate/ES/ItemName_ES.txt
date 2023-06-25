@@ -1,0 +1,11 @@
+ItemName_ES = {
+	ItemName_Base.1992fiorinoDoorFrontLeft1 = "Puerta delantera izquierda Fiorino",
+	ItemName_Base.1992fiorinoDoorFrontRight1 = "Puerta delantera derecha Fiorino",
+	ItemName_Base.1992fiorinoWindowFront1 = "Ventana frontal Fiorino",
+	ItemName_Base.1992fiorinoHood1 = "Capó Fiorino",
+	ItemName_Base.1992fiorinoTrunk1 = "Tapa de maletero Fiorino",
+	ItemName_Base.1992fiorinoWheel1 = "Neumático Fiorino",	
+	ItemName_Base.1992fiorinoFrontWindshield1 = "Parabrisas Fiorino",
+	ItemName_Base.1992fiorinoRearWindshield1 = "Parabrisas trasero Fiorino",
+	ItemName_Base.1992fiorinoSeatFront1 = "Asiento delantero Fiorino",
+}

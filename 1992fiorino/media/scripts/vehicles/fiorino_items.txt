@@ -1,0 +1,138 @@
+module Base
+{
+
+    item 1992fiorinoDoorFrontLeft1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Left Door Fiorino,
+        Icon	=	fiorino_frontdoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoDoorFrontWorld,
+		VehicleType =   1,
+    }
+
+	item 1992fiorinoDoorFrontRight1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Right Door Fiorino,
+        Icon	=	fiorino_frontdoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoDoorFrontWorld,
+		VehicleType =   1,
+    }
+	
+    item 1992fiorinoWindowFront1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Window Front Fiorino,
+        Icon	=	fiorino_windowfront,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoWindowFrontWorld,
+		VehicleType =   1,
+    }
+	
+	
+    item 1992fiorinoHood1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Hood Fiorino,
+        Icon	=	fiorino_hood,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoHoodWorld,
+		VehicleType =   1,
+    }
+
+	
+	item 1992fiorinoTrunk1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Trunk Door Fiorino,
+        Icon	=	fiorino_trunk,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoTrunkWorld,
+		VehicleType =   1,
+    }
+	
+	
+	item 1992fiorinoWheel1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	19.0,
+        Type	=	Normal,
+        DisplayName	=	Tire Fiorino,
+        Icon	=	fiorino_wheel,
+        ChanceToSpawnDamaged = 20,
+        WheelFriction = 1.60f,
+        ConditionMax = 100,
+        ConditionLowerStandard = 0.10,
+        ConditionLowerOffroad = 0.12,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoWheelWorld,
+		VehicleType =   1,
+    }
+	
+
+	item 1992fiorinoFrontWindshield1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.5,
+        Type	=	Normal,
+        DisplayName	=	Windshield Fiorino,
+        Icon	=	fiorino_windshield,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoFrontWindshieldWorld,
+		VehicleType =   1,
+    }
+	
+	item 1992fiorinoRearWindshield1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Rear Windshield Fiorino,
+        Icon	=	fiorino_windshieldrear,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoRearWindshieldWorld,
+		VehicleType =   1,
+    }	
+
+	item 1992fiorinoSeatFront1
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Seat Fiorino,
+        Icon	=	fiorino_seat,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fiorinoSeatFrontWorld,
+		VehicleType =   1,
+    }
+ 
+ 
+}
