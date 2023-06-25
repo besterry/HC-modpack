@@ -58,6 +58,19 @@ end
 
 ---@param xDif number
 ---@param yDif number
+local spawnCars = function(xDif, yDif)
+    if not isAdmin() then
+        print('NOT ADMIN') -- TODO: return
+    end
+    local args = {
+        xDif,
+        yDif
+    }
+    sendClientCommand(MOD_NAME, 'spawn', args)
+end
+
+---@param xDif number
+---@param yDif number
 local moveCars = function(xDif, yDif)
     local args = {
         -- vehicle:getId(),
@@ -65,7 +78,7 @@ local moveCars = function(xDif, yDif)
         yDif
     }
 
-    sendClientCommand(MOD_NAME, 'moveCar', args)
+    sendClientCommand(MOD_NAME, 'moveCars', args)
     -- local player = getPlayer()
     -- local username = player:getUsername()
     -- local vehicleList = CacheMap[username]
@@ -174,8 +187,6 @@ Commands.moveCar = function(args)
         end
     end
     player:Say('client moveCar')
-
-    -- CarTeleport.moveCar(player, args)
 end
 
 ---@param module string
@@ -194,7 +205,8 @@ local export = {
     getCarsListByCoord = getCarsListByCoord,
     removeCars = removeCars,
     moveCars = moveCars,
-    startMove = startMove
+    startMove = startMove,
+    spawnCars = spawnCars
 }
 
 return export

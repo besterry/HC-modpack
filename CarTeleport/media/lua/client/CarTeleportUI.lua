@@ -72,15 +72,15 @@ end
 function CarTeleport_UI:experimentalTypeSetter()
     -- print('self.isCarTeleport_U experimentalTypeSetter', self.isCarTeleport_UI)
     -- print('self.isExperimentalAllowed: ', self.isExperimentalAllowed)
-    local postfix = ''
+    local lastLine = ''
     if self.isExperimentalAllowed ~= nil then
-        postfix = UI_DESCRIPTION_OUTSIDE
+        lastLine = UI_DESCRIPTION_OUTSIDE
         if self.isExperimentalAllowed then
-            postfix = UI_DESCRIPTION_INSIDE
+            lastLine = UI_DESCRIPTION_INSIDE
         end
     end
 
-    local text = UI_DESCRIPTION_DICT[UI_TYPE_EXPERIMENTAL] .. postfix
+    local text = UI_DESCRIPTION_DICT[UI_TYPE_EXPERIMENTAL] .. lastLine
     self.UI[UI_DESCRIPTION]:setText(text)
 end
 
@@ -140,8 +140,6 @@ function CarTeleport_UI:render() -- NOTE: украдено из steamapps\common
     if self.selectStart or self.isMove then 
         local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), self.zPos)
         self.highlightArea(xx, xx, yy, yy, self.zPos, 'yellow')
-        -- local sq = getCell():getGridSquare(math.floor(xx), math.floor(yy), self.zPos)
-        -- if sq and sq:getFloor() then sq:getFloor():setHighlighted(true) sq:getFloor():setHighlightColor(1,1,0,1);  end
     end
         
     if not self.selectStart and self.selectEnd then
@@ -192,24 +190,15 @@ end
 function CarTeleport_UI:checkDistance()
     ---@type IsoPlayer
     local player = self.player
-    -- print('player pos: ', player:getX(), player:getY(), player:getZ())
-    -- print('getRelevantAndDistance', player:getRelevantAndDistance(self.startPos.x, self.startPos.y, 10))
-    -- if player:getX()  then
-    -- end
     local isDisallowed = false
     for k,v in pairs(self.vehicleList) do
-        -- print('v: ', v, v:getId())
         local vehicle = getVehicleById(v:getId())
         if not vehicle then
             player:Say('You have left the experimental teleportation zone')
             isDisallowed = isDisallowed or true
-        else
-            -- isDisallowed = isDisallowed or true
-            -- print('vehicle: ', vehicle, vehicle:getId())
         end
     end
     self.isExperimentalAllowed = not isDisallowed
-    -- print('isExperimentalAllowed', self.isExperimentalAllowed)
     self:setTypeText()
 end
 
@@ -247,18 +236,25 @@ end
 
 function CarTeleport_UI:startMove()
     print('copy')
-    -- self.UI[UI_TYPE]:setEnable(false)
     self.UI[UI_COPY]:setEnable(false)
     self.UI[UI_DEL]:setEnable(false)
-
     self.isMove = true
     main.startMove(self.vehicleList)
+    
+    if self.type_value == UI_TYPE_STABLE then
+        main.removeCars(self.vehicleList)
+    end
 end
 
 function CarTeleport_UI:endMove()
     self.isMove = false
-    main.moveCars(self.xDif, self.yDif)
+    if self.type_value == UI_TYPE_STABLE then
+        main.spawnCars(self.xDif, self.yDif)
+    else
+        main.moveCars(self.xDif, self.yDif)
+    end
     self.UI[UI_PASTE]:setEnable(false)
+    self.player:Say('Teleport done!')
 end
 
 function CarTeleport_UI:delete()
