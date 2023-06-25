@@ -16,22 +16,26 @@ local UI_DESCRIPTION = 'CarTeleport_descriptionRichText'
 local UI_TYPE_LABEL = 'CarTeleport_typeText'
 local UI_TYPE = 'CarTeleport_typeComboBox'
 
-local UI_TYPE_EXPERIMENTAL = 'experimantal'
+local UI_TYPE_EXPERIMENTAL = 'experimental'
 local UI_TYPE_STABLE = 'stable'
 local UI_TYPE_DICT = {}
-UI_TYPE_DICT['IGUI_stable'] = UI_TYPE_STABLE
-UI_TYPE_DICT['IGUI_experimantal'] = UI_TYPE_EXPERIMENTAL
+UI_TYPE_DICT[getText('IGUI_stable')] = UI_TYPE_STABLE
+UI_TYPE_DICT[getText('IGUI_experimental')] = UI_TYPE_EXPERIMENTAL
 local UI_DESCRIPTION_DICT = {}
-UI_DESCRIPTION_DICT[UI_TYPE_STABLE] = 'Stable type info:<BR> The cars will be removed and spawned in a new location. Items in the containers of the cars will be deleted.'
-UI_DESCRIPTION_DICT[UI_TYPE_EXPERIMENTAL] = 'Experimental type info:<BR> Teleport distance is limited. Desynchronization may occur <BR>'
-local UI_DESCRIPTION_INSIDE = '<GREEN>Teleport is allowed'
-local UI_DESCRIPTION_OUTSIDE = '<RED>Teleport not allowed. You have left the experimental teleport zone. Get back closer to the cars'
+-- UI_DESCRIPTION_DICT[UI_TYPE_STABLE] = 'Stable type info:<BR> The cars will be removed and spawned in a new location. Items in the containers of the cars will be deleted.'
+UI_DESCRIPTION_DICT[UI_TYPE_STABLE] = getText('IGUI_Stable_info')
+UI_DESCRIPTION_DICT[UI_TYPE_EXPERIMENTAL] = getText('IGUI_Experimental_info')
+-- UI_DESCRIPTION_DICT[UI_TYPE_EXPERIMENTAL] = 'Experimental type info:<BR> Teleport distance is limited. Desynchronization may occur <BR>'
+-- local UI_DESCRIPTION_INSIDE = '<GREEN>Teleport is allowed'
+local UI_DESCRIPTION_INSIDE = getText('IGUI_Teleport_allowed')
+-- local UI_DESCRIPTION_OUTSIDE = '<RED>Teleport not allowed. You have left the experimental teleport zone. Get back closer to the cars'
+local UI_DESCRIPTION_OUTSIDE = getText('IGUI_Teleport_disallowed')
 local UI_COPY_DICT = {}
-UI_COPY_DICT[UI_TYPE_STABLE] = 'Cut'
-UI_COPY_DICT[UI_TYPE_EXPERIMENTAL] = 'Target area'
+UI_COPY_DICT[UI_TYPE_STABLE] = getText('IGUI_Teleport_cut_btn')
+UI_COPY_DICT[UI_TYPE_EXPERIMENTAL] = getText('IGUI_Teleport_target_btn')
 local UI_PASTE_DICT = {}
-UI_PASTE_DICT[UI_TYPE_STABLE] = 'Paste'
-UI_PASTE_DICT[UI_TYPE_EXPERIMENTAL] = 'Teleport'
+UI_PASTE_DICT[UI_TYPE_STABLE] = getText('IGUI_Teleport_paste_btn')
+UI_PASTE_DICT[UI_TYPE_EXPERIMENTAL] = getText('IGUI_Teleport_teleport_btn')
 
 function CarTeleport_UI.selectArea_btnHandler(button, args)
     local self = args['self'] or {}
@@ -107,7 +111,7 @@ function CarTeleport_UI.delete_btnHandler(button, self)
     local vehicleList = {table.unpack(self.vehicleList)}
     local modal = ISModalDialog:new(
         0, 0, 250, 150, 
-        "Permanently remove ".. #vehicleList .. ' cars?', 
+        getText('IGUI_Teleport_delete_confirm_pre').. #vehicleList .. getText('IGUI_Teleport_delete_confirm_post'), 
         true, self, CarTeleport_UI.delete_confirmHandler, self.player:getPlayerNum()
     )
     modal:initialise()
@@ -183,7 +187,7 @@ function CarTeleport_UI:checkDistance()
     for k,v in pairs(self.vehicleList) do
         local vehicle = getVehicleById(v:getId())
         if not vehicle and self.type_value == UI_TYPE_EXPERIMENTAL then
-            player:Say('You have left the experimental teleportation zone')
+            player:Say(getText('IGUI_Teleport_player_left_tp_zone'))
             isDisallowed = isDisallowed or true
         end
     end
@@ -202,11 +206,11 @@ function CarTeleport_UI:renderCarsList()
     local renderedList = {}
     for k,v in pairs(vehicleList) do
         local carName = getText("IGUI_VehicleName" .. v:getScript():getName())
-        table.insert(renderedList, carName..' | sqlId: '..v:getSqlId()..', vehicleId: '..v:getId()..', keyId: '..v:getKeyId())
+        table.insert(renderedList, carName .. ' | sqlId: ' .. v:getSqlId() .. ', vehicleId: ' .. v:getId() .. ', keyId: ' .. v:getKeyId())
     end
     self.vehicleList = vehicleList
     self.UI[UI_LIST]:setitems(renderedList)
-    self.UI[UI_COUNTER]:setText('number of cars: '..#renderedList)
+    self.UI[UI_COUNTER]:setText(getText('IGUI_Teleport_car_count') .. #renderedList)
     self.UI[UI_SELECT]:setEnable(false)
     self.UI[UI_RESET]:setEnable(true)
     self.UI[UI_DEL]:setEnable(true)
@@ -242,7 +246,7 @@ function CarTeleport_UI:endMove()
         main.moveCars(self.xDif, self.yDif)
     end
     self.UI[UI_PASTE]:setEnable(false)
-    self.player:Say('Teleport done!')
+    self.player:Say(getText('IGUI_Teleport_done'))
 end
 
 function CarTeleport_UI:delete()
@@ -297,7 +301,7 @@ function CarTeleport_UI:createUI()
     UI:addEmpty()
     UI:nextLine()
     addEmpty_helper()
-    UI:addText(UI_TITLE, 'Car List', "Small")
+    UI:addText(UI_TITLE, getText('IGUI_Teleport_car_list'), "Small")
     UI:addEmpty()
     UI:addText(UI_COUNTER, '', "Small", "Right")
     UI:nextLine()
@@ -308,7 +312,7 @@ function CarTeleport_UI:createUI()
     addEmpty_helper()
     UI:nextLine()
     addEmpty_helper()
-    UI:addText(UI_TYPE_LABEL, 'Teleport type: ')
+    UI:addText(UI_TYPE_LABEL, getText('IGUI_Teleport_teleport_type'))
     UI:addComboBox(UI_TYPE, UI_TYPE_DICT)
     addEmpty_helper()
     UI:nextLine()
@@ -321,22 +325,22 @@ function CarTeleport_UI:createUI()
     addEmpty_helper()
     UI:nextLine()
     addEmpty_helper()
-    UI:addButton(UI_SELECT, "Select area", self.selectArea_btnHandler);
+    UI:addButton(UI_SELECT, getText('IGUI_Teleport_select_area_btn'), self.selectArea_btnHandler);
     addEmpty_helper()
-    UI:addButton(UI_RESET, "Reset", self.reset_btnHandler);
+    UI:addButton(UI_RESET, getText('IGUI_Teleport_reset_btn'), self.reset_btnHandler);
     addEmpty_helper()
-    UI:addButton(UI_CANCEL, "Cancel", self.cancel_btnHandler);
+    UI:addButton(UI_CANCEL, getText('IGUI_Teleport_cancel_btn'), self.cancel_btnHandler);
     addEmpty_helper()
     UI:nextLine()
     UI:addEmpty()
     UI:setLineHeightPixel(marginPx)
     UI:nextLine()
     addEmpty_helper()
-    UI:addButton(UI_COPY, "Cut", self.copy_btnHandler);
+    UI:addButton(UI_COPY, getText('IGUI_Teleport_cut_btn'), self.copy_btnHandler);
     addEmpty_helper()
-    UI:addButton(UI_PASTE, "Put", self.paste_btnHandler);
+    UI:addButton(UI_PASTE, getText('IGUI_Teleport_paste_btn'), self.paste_btnHandler);
     addEmpty_helper()
-    UI:addButton(UI_DEL, "Remove", self.delete_btnHandler);
+    UI:addButton(UI_DEL, getText('IGUI_Teleport_remove_btn'), self.delete_btnHandler);
     addEmpty_helper()
     UI:nextLine()
     UI:addEmpty()

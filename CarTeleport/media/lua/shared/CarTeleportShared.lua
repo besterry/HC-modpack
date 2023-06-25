@@ -14,6 +14,7 @@ local moveCar = function(player, vehicle, xDif, yDif)
         return
     end
 
+    -- HACK: достаём переменную типа Transfrom из java-инстанса автомобиля
     local field_count = getNumClassFields(vehicle)
     local transform_field = nil
     local jniTransform_fieldName = 'public final zombie.core.physics.Transform zombie.vehicles.BaseVehicle.jniTransform' -- NOTE: название джава переменной в которой хранится трансформ
@@ -35,9 +36,9 @@ local moveCar = function(player, vehicle, xDif, yDif)
         if isClient() then
             pcall(vehicle.update, vehicle) -- NOTE: pcall нужен т.к. непонятно какие методы есть на клиенте а какие на сервере. Он позволяет вызвать метод если он существует
             pcall(vehicle.updateControls, vehicle)
-            pcall(vehicle.updatePhysicsNetwork, vehicle)
-            pcall(vehicle.updatePhysics, vehicle)
             pcall(vehicle.updateBulletStats, vehicle)
+            pcall(vehicle.updatePhysics, vehicle)
+            pcall(vehicle.updatePhysicsNetwork, vehicle)
         end
     end
 end

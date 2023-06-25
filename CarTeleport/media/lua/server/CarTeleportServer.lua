@@ -109,7 +109,7 @@ local setVehicleData = function(vehicle, data, sq)
     vehicle:transmitBlood()
 
     local newCarKey = nil
-    local needToPlaceKey = false
+    local needToPlaceKey = SandboxVars.CarTeleport.ForceKeySpawn or false
     if data.isKeysInIgnition and not vehicle:isKeysInIgnition() then
         needToPlaceKey = true
         newCarKey = vehicle:createVehicleKey()
