@@ -85,23 +85,34 @@ function ISEditShopUI:initialise()
         value.name = key
         local itemName = getItemNameFromFullType(key)
         if value.price then
-            self.scrollingList:addItem(itemName .. " - " .. value.price,value) 
+            self.scrollingList:addItem(itemName .. " - " .. value.price, value) 
         else
             self.scrollingList:addItem(itemName .. " - " .. "blocked") 
         end
     end  
     
-    self.ItemEntry = ISTextEntryBox:new("Item", self.scrollingList.x + self.scrollingList.width + 10, 70, 150, btnHgt)
+    self.ItemEntry = ISTextEntryBox:new("", self.scrollingList.x + self.scrollingList.width + 10, 70, 150, btnHgt)
     self.ItemEntry:initialise();
     self.ItemEntry:instantiate();
     self:addChild(self.ItemEntry);
+
+    self.PriceEntry = ISTextEntryBox:new("", self.ItemEntry.x, self.ItemEntry.y + self.ItemEntry.height + 25, 150, btnHgt)
+    self.PriceEntry:initialise()
+    self.PriceEntry:instantiate()
+    self:addChild(self.PriceEntry)
+
+    self.TabEntry = ISTextEntryBox:new("", self.PriceEntry.x, self.PriceEntry.y + self.PriceEntry.height + 25, 150, btnHgt)
+    self.TabEntry:initialise()
+    self.TabEntry:instantiate()
+    self:addChild(self.TabEntry)
+
 
     self.BlockBox = ISTickBox:new(self.ItemEntry.x + self.ItemEntry.width + 10, self.ItemEntry.y, 10, 10, "", nil, nil)
     self.BlockBox:initialise();
     self.BlockBox:instantiate();
     self.BlockBox.selected[1] = false; -- Start false or not
     self:addChild(self.BlockBox);
-    self.BlockBox:addOption("Block"); -- To add a text at the left of the box
+    self.BlockBox:addOption("Block Sell"); -- To add a text at the left of the box
 end
 
 function ISEditShopUI:prerender()
@@ -115,7 +126,6 @@ function ISEditShopUI:prerender()
 end
 
 function ISEditShopUI:render () 
-    selectedTab = self.comboBox:getSelectedText()
 end
 
     --local seletedData = self.comboBox:getOptionData(selectedId) -- данные, если есть
@@ -129,7 +139,7 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
             value.name = key
             local itemName = getItemNameFromFullType(key)
             if value.price then
-                self.scrollingList:addItem(itemName .. " - " .. value.price,value) 
+                self.scrollingList:addItem(itemName .. " - " .. value.price, value) 
             else
                 self.scrollingList:addItem(itemName .. " - " .. "blocked") 
             end
@@ -139,14 +149,15 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
         if  value.tab == seletedName then
             value.name = key
             local itemName = getItemNameFromFullType(key)                
-            self.scrollingList:addItem(itemName .. " - " .. value.price,value)
+            self.scrollingList:addItem(itemName .. " - " .. value.price, value)
         end
     
     end
 end
 
-function ISEditShopUI:onClickItem () --При выборе элемента в списке
 
+function ISEditShopUI:onClickItem () --При выборе элемента в списке
+ 
 end
 
 function ISEditShopUI:updateButtons()    
