@@ -297,6 +297,7 @@ function ChlorpromazineTakePills(_, player, percent)
 end
 
 function PillEffects()
+    local player = getPlayer()
     if player:isLocalPlayer() and player:getPlayerNum() == 0 then
         playerdata = player:getModData()
         if playerdata.ChlorpromazineHours >= 48 then ApplyPillEffects(player,8,50,0.20,0.12,0.20,100,0) return
