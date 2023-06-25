@@ -85,17 +85,26 @@ function ISEditShopUI:initialise()
         value.name = key
         local itemName = getItemNameFromFullType(key)
         if value.price then
+<<<<<<< HEAD
             self.scrollingList:addItem(itemName .. " - " .. value.price, value) 
+=======
+            self.scrollingList:addItem(itemName .. " - " .. value.price,value) 
+>>>>>>> 7b33a2c7ac71f88c41e7eb4a1b74c70d602ea635
         else
             self.scrollingList:addItem(itemName .. " - " .. "blocked") 
         end
     end  
     
+<<<<<<< HEAD
     self.ItemEntry = ISTextEntryBox:new("", self.scrollingList.x + self.scrollingList.width + 10, 70, 150, btnHgt)
+=======
+    self.ItemEntry = ISTextEntryBox:new("Item", self.scrollingList.x + self.scrollingList.width + 10, 70, 150, btnHgt)
+>>>>>>> 7b33a2c7ac71f88c41e7eb4a1b74c70d602ea635
     self.ItemEntry:initialise();
     self.ItemEntry:instantiate();
     self:addChild(self.ItemEntry);
 
+<<<<<<< HEAD
     self.PriceEntry = ISTextEntryBox:new("", self.ItemEntry.x, self.ItemEntry.y + self.ItemEntry.height + 25, 150, btnHgt)
     self.PriceEntry:initialise()
     self.PriceEntry:instantiate()
@@ -107,12 +116,18 @@ function ISEditShopUI:initialise()
     self:addChild(self.TabEntry)
 
 
+=======
+>>>>>>> 7b33a2c7ac71f88c41e7eb4a1b74c70d602ea635
     self.BlockBox = ISTickBox:new(self.ItemEntry.x + self.ItemEntry.width + 10, self.ItemEntry.y, 10, 10, "", nil, nil)
     self.BlockBox:initialise();
     self.BlockBox:instantiate();
     self.BlockBox.selected[1] = false; -- Start false or not
     self:addChild(self.BlockBox);
+<<<<<<< HEAD
     self.BlockBox:addOption("Block Sell"); -- To add a text at the left of the box
+=======
+    self.BlockBox:addOption("Block"); -- To add a text at the left of the box
+>>>>>>> 7b33a2c7ac71f88c41e7eb4a1b74c70d602ea635
 end
 
 function ISEditShopUI:prerender()
@@ -126,6 +141,10 @@ function ISEditShopUI:prerender()
 end
 
 function ISEditShopUI:render () 
+<<<<<<< HEAD
+=======
+    selectedTab = self.comboBox:getSelectedText()
+>>>>>>> 7b33a2c7ac71f88c41e7eb4a1b74c70d602ea635
 end
 
     --local seletedData = self.comboBox:getOptionData(selectedId) -- данные, если есть
@@ -139,7 +158,11 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
             value.name = key
             local itemName = getItemNameFromFullType(key)
             if value.price then
+<<<<<<< HEAD
                 self.scrollingList:addItem(itemName .. " - " .. value.price, value) 
+=======
+                self.scrollingList:addItem(itemName .. " - " .. value.price,value) 
+>>>>>>> 7b33a2c7ac71f88c41e7eb4a1b74c70d602ea635
             else
                 self.scrollingList:addItem(itemName .. " - " .. "blocked") 
             end
@@ -149,15 +172,24 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
         if  value.tab == seletedName then
             value.name = key
             local itemName = getItemNameFromFullType(key)                
+<<<<<<< HEAD
             self.scrollingList:addItem(itemName .. " - " .. value.price, value)
+=======
+            self.scrollingList:addItem(itemName .. " - " .. value.price,value)
+>>>>>>> 7b33a2c7ac71f88c41e7eb4a1b74c70d602ea635
         end
     
     end
 end
 
+<<<<<<< HEAD
 
 function ISEditShopUI:onClickItem () --При выборе элемента в списке
  
+=======
+function ISEditShopUI:onClickItem () --При выборе элемента в списке
+
+>>>>>>> 7b33a2c7ac71f88c41e7eb4a1b74c70d602ea635
 end
 
 function ISEditShopUI:updateButtons()    

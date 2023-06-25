@@ -218,7 +218,7 @@ function ShopUI:onMouseMoveCartItem(dx, dy)
     ShopUI.instance:toggleTooltip(true,selectedRow.item)
 end
 
-function ShopUI:createCategories()
+function ShopUI:createCategories() --генерация Tab (вкладок)
     for k,v in pairs(Shop.Tabs) do 
         local tab = ShopTabUI:new(0, 0, self.width, self.panel.height - self.panel.tabHeight);
         tab:initialise();
