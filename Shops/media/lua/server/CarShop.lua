@@ -71,10 +71,27 @@ function Commands.onBuyCar(player, offerInfo)
 	logger:buyCar(player, offerInfo)
 end
 
+-- function Commands.onCarRemove(args)
+-- 	local vehicleId = args[vehicle]
+-- 	print('vehicleId', vehicleId)
+-- 	local vehicleObj = getVehicleById(vehicleId)
+-- 	print('vehicleObj', vehicleObj) -- is nil
+-- 	local keyId = vehicleObj:getKeyId()
+-- 	if CarShop.Data.CarShop[keyId] then
+-- 		CarShop.Data.CarShop[keyId] = {}
+-- 		ModData.add(MOD_NAME, CarShop.Data.CarShop)
+-- 		ModData.transmit(MOD_NAME)
+-- 		sendServerCommand(MOD_NAME, "UpdateCarShopData", {vehicleKeyId = offerInfo.vehicleKeyId})
+-- 	end
+-- end
+
 local OnClientCommand = function(module, command, player, args)
 	if module == MOD_NAME and Commands[command] then
 		Commands[command](player, args)
 	end
+	-- if module == 'vehicle' and command == 'remove' then
+	-- 	Commands.onCarRemove(args)
+	-- end
 end
 
 Events.OnClientCommand.Add(OnClientCommand)

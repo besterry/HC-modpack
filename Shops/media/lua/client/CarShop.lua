@@ -49,11 +49,17 @@ end
 
 local function countCarsOnSale()
 	local result = 0
+	local resultList = {}
 	local username = getPlayer():getUsername()
 	for k, v in pairs(CarShop.Data.CarShop) do
-		if v and v.username and v.username == username then
-			result = result + 1
+		if v and v.username and v.username == username then -- NOTE: Я где-то накосячил и записи могут дублироваться. Часть типа строка часть типа интеджер. 
+			-- result = result + 1							-- Проблема нетипизируемого луа. В общем мне лень сейчас искать где косяк, это ни на что не влияет кроме этого подсчёта
+															-- Так что придётся его немного усложнить
+			resultList[tostring(v.vehicleKeyId)] = true     -- Делаем уникальный список id транспорта по имени игрока
 		end
+	end
+	for _, _ in pairs(resultList) do -- Ну а теперь просто считаем элементы в этой таблице
+		result = result + 1
 	end
 	return result
 end

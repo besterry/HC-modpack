@@ -10,6 +10,8 @@ CarShop.constants = {
 	vehicleLockMass = 9000000 
 }
 
+local MOD_NAME = CarShop.MOD_NAME
+
 ---@class CarUtils
 ---@field username string
 ---@field vehicleKeyId integer
@@ -250,3 +252,28 @@ function CarUtils:stopConstraints()
 	vehicle:setMaxSpeed(vehicle:getMaxSpeed())
 	CarShop.isAllowGetKey = true
 end
+
+
+
+if isServer() then -- отслеживаем удаление машины и убираем её с продажи. Важно чтобы этот код был в папке shared т.к. она загружается раньше чем папка server. Это даёт возможность перехватить комманду до того как сработает стандартная и машина будет удалена
+	local function onCarRemove(args)
+		local vehicleId = args.vehicle
+		local vehicleObj = getVehicleById(vehicleId)
+		local keyId = vehicleObj:getKeyId()
+		if CarShop.Data.CarShop[keyId] then
+			CarShop.Data.CarShop[keyId] = {}
+			ModData.add(MOD_NAME, CarShop.Data.CarShop)
+			ModData.transmit(MOD_NAME)
+			sendServerCommand(MOD_NAME, "UpdateCarShopData", {vehicleKeyId = keyId})
+		end
+	end
+
+	local OnClientCommand = function(module, command, player, args)
+		if module == 'vehicle' and command == 'remove' then
+			onCarRemove(args)
+		end
+	end
+	Events.OnClientCommand.Add(OnClientCommand)
+end
+
+
