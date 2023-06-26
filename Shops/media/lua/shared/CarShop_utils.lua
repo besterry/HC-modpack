@@ -176,6 +176,14 @@ function CarUtils:getPrice()
 	return nil
 end
 
+---@return string | nil
+function CarUtils:getOwner()
+	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleKeyIdStr] then
+		return CarShop.Data.CarShop[self.vehicleKeyIdStr].username
+	end
+	return nil
+end
+
 ---@return offerInfo | nil
 function CarUtils:getOfferInfo()
 	if CarShop.Data.CarShop and CarShop.Data.CarShop[self.vehicleKeyIdStr] then

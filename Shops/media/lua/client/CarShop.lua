@@ -19,6 +19,8 @@ local MOD_NAME = CarShop.MOD_NAME
 
 local carShopEventHandler = {}
 
+LuaEventManager.AddEvent("onCarSaleChange") -- Добавляем новый тип события. Будем его вызывать когда изменится количество продаваемых авто
+
 if SandboxVars.Shops.CarTradeZone then
 	---@type carTradeZone[]
 	local result = {}
@@ -45,9 +47,28 @@ CarShop.isTradeZoneCoords = function(x, y)
 	return result
 end
 
+local function countCarsOnSale()
+	local result = 0
+	local username = getPlayer():getUsername()
+	for k, v in pairs(CarShop.Data.CarShop) do
+		if v and v.username and v.username == username then
+			result = result + 1
+		end
+	end
+	return result
+end
+
+local function checkIsCarSellAllowed()
+	return countCarsOnSale() < SandboxVars.Shops.CarSellsByPlayer
+end
+
 ---@param playerObj IsoPlayer
 ---@param _offerInfo offerInfo
 function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, _offerInfo)
+	if not checkIsCarSellAllowed() then
+		playerObj:Say('I already have the maximum number of cars on sale');
+		return
+	end
 	local offerInfo = copyTable(_offerInfo)
 	local hasAccount = BClientGetAccount(playerObj)
 	if not hasAccount then
@@ -181,6 +202,15 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 			)
 		end
 
+		if vehicleIsOnSale and not playerIsCarOwner then
+			local ownerUsername = carInfo:getOwner()
+			menu:addSlice(
+				'Seller: ' .. ownerUsername, 
+				getTexture('media/textures/Item_DriversLicense.png'), 
+				nil
+			)
+		end
+
 		if vehicleIsOnSale and (ISVehicleMechanics.cheat or playerObj:getAccessLevel() ~= 'None') then
 			menu:addSlice(
 				'CHEAT: remove from sale', 
@@ -195,6 +225,8 @@ end
 ---@param offerInfo offerInfo
 function CarShop.ServerCommands.UpdateCarShopData(offerInfo)
     CarShop.Data.CarShop[offerInfo.vehicleKeyId] = offerInfo;
+	local carsOnSaleNum = countCarsOnSale()
+	triggerEvent('onCarSaleChange', carsOnSaleNum)
 end
 
 ---@param offerInfo offerInfo
@@ -312,4 +344,49 @@ function ISVehicleDashboard:onClickKeys()
 	return o
 end
 
+local userPanelHooks = function()
+	-- NOTE: делаем хук для панели юзера.
+	function ISUserPanelUI:renderCarOnSale(carsOnSaleNum)
+		print('renderCarOnSale')
+		local resultStr = 'Vehicles on sale: ' .. carsOnSaleNum .. '/' .. SandboxVars.Shops.CarSellsByPlayer
+		self.sellingCarsCount:setName(resultStr)
+	end
+
+	local base_ISUserPanelUI_create = ISUserPanelUI.create
+	function ISUserPanelUI:create()
+		base_ISUserPanelUI_create(self)
+		print('CREATE!!!')
+		local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
+		local btnWid = 150 --Ширина кнопок
+		local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2) --Высота кнопок
+		
+		self:removeChild(self.showServerInfo) -- Удаляем галочку "информация о сервере"
+		self:removeChild(self.showConnectionInfo) -- Удаляем галочку "информация о соединении"
+		
+		local y = 70
+		
+		if not self.sellingCarsCount then
+			self.sellingCarsCount = ISLabel:new(10 + btnWid + 20, y, btnHgt, '',1,1,1,1,UIFont.Small, true); -- Вставляем текст с количеством тачек на прродаже
+			self:addChild(self.sellingCarsCount);
+		end
+		self:renderCarOnSale(countCarsOnSale()) -- Отрисовываем количество машин в продаже
+		
+		y = y + btnHgt + 8;
+		self.showPingInfo:setY(y) -- Передвигаем чекбокс повыше
+
+		self.onCarSaleChange_handler = function(carsOnSaleNum)
+			self:renderCarOnSale(carsOnSaleNum) -- обновляем счётчик по событию
+		end
+		Events.onCarSaleChange.Add(self.onCarSaleChange_handler) -- Подписываемся на событие чтоб можно было обновлять счётчик во время того как окно открыто
+	end
+
+	local base_ISUserPanelUI_close = ISUserPanelUI.close
+	function ISUserPanelUI:close()
+		Events.onCarSaleChange.Remove(self.onCarSaleChange_handler) -- Незабываем отписаться от события
+		base_ISUserPanelUI_close(self)
+	end
+end
+userPanelHooks()
+
+Events.OnCreateUI.Add(userPanelHooks) -- NOTE: меняем интерфейс в этом событии потому что иначе ГитроТрейд по неизвестно причине загружается раньше и всё портит. Код ниже будет работать и в слечае использования ванильных функций (напр. отключения гидротрейда)
 Events.OnEnterVehicle.Add(carShopEventHandler.onEnterVehicle)
