@@ -1,12 +1,12 @@
 -- Добавление кнопки "Ассортимент магазина" в панель администратора
 require "ShopAdminEditUI.lua"
 
-local old_ShopAdminEditUI_create = ShopAdminEditUI.create
+local old_ISAdminPanelUI_create = ISAdminPanelUI.create
 
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
 
-function ShopAdminEditUI:create()
-    old_ShopAdminEditUI_create(self)
+function ISAdminPanelUI:create()
+    old_ISAdminPanelUI_create(self)
 
     local btnWid = 150
     local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2)
@@ -24,7 +24,7 @@ function ShopAdminEditUI:create()
     local y = last_btn.y + btnHgt + btnGapY
 
     if getAccessLevel() == "admin" then
-        self.pvpzoneBtn = ISButton:new(x, y, btnWid, btnHgt, getText("IGUI_AdminPanel_ShopEdit"), self, ShopAdminEditUI.onOptionMouseDownShopEdit);
+        self.pvpzoneBtn = ISButton:new(x, y, btnWid, btnHgt, getText("IGUI_AdminPanel_ShopEdit"), self, ISAdminPanelUI.onOptionMouseDownShopEdit);
         self.pvpzoneBtn.internal = "SHOPEDIT";
         self.pvpzoneBtn:initialise();
         self.pvpzoneBtn:instantiate();
