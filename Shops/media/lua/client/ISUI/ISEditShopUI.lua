@@ -1,8 +1,7 @@
 --require "ISEditShopUI.lua"
 
 --***********************************************************
---**                  ROBERT JOHNSON                       **
---**                   edited by FD                        **
+--**                    FD created 26/06/23                **
 --***********************************************************
 
 ISEditShopUI = ISPanel:derive("ISEditShopUI");
@@ -42,7 +41,7 @@ function ISEditShopUI:initialise()
     self.cancel.borderColor = {r=1, g=1, b=1, a=0.1};
     self:addChild(self.cancel);
 
-    --кнопка Добавить зону
+    --кнопка Сохранить
     self.ok = ISButton:new(10, self:getHeight() - padBottom - btnHgt, btnWid, btnHgt, getText("IGUI_SaveShop"), self, ISEditShopUI.onClick);
     self.ok.internal = "OK";
     self.ok.anchorTop = false
@@ -85,13 +84,13 @@ function ISEditShopUI:initialise()
         value.name = key
         local itemName = getItemNameFromFullType(key)
         if value.price then
-            self.scrollingList:addItem(itemName .. " - " .. value.price, value) 
+            self.scrollingList:addItem(itemName .. " - " .. value.price, { value = value }) 
         else
-            self.scrollingList:addItem(itemName .. " - " .. "blocked") 
+            self.scrollingList:addItem(itemName .. " - " .. "blocked", { value = value }) 
         end
     end  
     
-    self.ItemEntry = ISTextEntryBox:new("", self.scrollingList.x + self.scrollingList.width + 10, 70, 150, btnHgt)
+    self.ItemEntry = ISTextEntryBox:new("", self.scrollingList.x + self.scrollingList.width + 10, 70, 220, btnHgt)
     self.ItemEntry:initialise();
     self.ItemEntry:instantiate();
     self:addChild(self.ItemEntry);
@@ -101,18 +100,36 @@ function ISEditShopUI:initialise()
     self.PriceEntry:instantiate()
     self:addChild(self.PriceEntry)
 
-    self.TabEntry = ISTextEntryBox:new("", self.PriceEntry.x, self.PriceEntry.y + self.PriceEntry.height + 25, 150, btnHgt)
-    self.TabEntry:initialise()
-    self.TabEntry:instantiate()
-    self:addChild(self.TabEntry)
+    self.ChangeButton = ISButton:new(self.PriceEntry.x, self.PriceEntry.y + self.PriceEntry.height + 10, 60, btnHgt, "Change", self, ISEditShopUI.onChangeButtonClicked)
+    self.ChangeButton:initialise()
+    self.ChangeButton:instantiate()
+    self:addChild(self.ChangeButton)
+
+    self.SpecialCoinBox = ISTickBox:new(self.PriceEntry.x + self.PriceEntry.width + 10, self.PriceEntry.y, 10, 10, "", self, ISEditShopUI.onBlockBoxClicked)
+    self.SpecialCoinBox:initialise()
+    self.SpecialCoinBox:instantiate()
+    self.SpecialCoinBox.selected[1] = false
+    self:addChild(self.SpecialCoinBox)
+    self.SpecialCoinBox:addOption("Special Coin")
+    self.SpecialCoinBox:setVisible(false) 
 
 
-    self.BlockBox = ISTickBox:new(self.ItemEntry.x + self.ItemEntry.width + 10, self.ItemEntry.y, 10, 10, "", nil, nil)
+    self.BlockBox = ISTickBox:new(self.ItemEntry.x + self.ItemEntry.width + 5, self.ItemEntry.y, 10, 10, "", nil, nil)
     self.BlockBox:initialise();
     self.BlockBox:instantiate();
-    self.BlockBox.selected[1] = false; -- Start false or not
+    self.BlockBox.selected[1] = false;
     self:addChild(self.BlockBox);
-    self.BlockBox:addOption("Block Sell"); -- To add a text at the left of the box
+    self.BlockBox:addOption("Block"); 
+
+    self.itemLabel = ISLabel:new(self.ItemEntry.x, self.ItemEntry.y - 20, FONT_HGT_SMALL, "Item:", 1, 1, 1, 1, UIFont.Small, true)
+    self.itemLabel:initialise()
+    self.itemLabel:instantiate()
+    self:addChild(self.itemLabel)
+
+    self.priceLabel = ISLabel:new(self.PriceEntry.x, self.PriceEntry.y - 20, FONT_HGT_SMALL, "Price Coin:", 1, 1, 1, 1, UIFont.Small, true)
+    self.priceLabel:initialise()
+    self.priceLabel:instantiate()
+    self:addChild(self.priceLabel)
 end
 
 function ISEditShopUI:prerender()
@@ -132,42 +149,62 @@ end
 function ISEditShopUI:onClickTab() --Подгрузка содержимого вкладок
     local selectedId = self.comboBox.selected
     local seletedName = self.comboBox:getOptionText(selectedId)
-
+    self.SpecialCoinBox:setVisible(false)
+    self.BlockBox:setVisible(false)
     self.scrollingList:clear();
     if seletedName == "Sell" then
+        self.BlockBox:setVisible(true)  
+        self.SpecialCoinBox:setVisible(false)         
         for key, value in pairs(Shop.Sell) do
             value.name = key
             local itemName = getItemNameFromFullType(key)
             if value.price then
-                self.scrollingList:addItem(itemName .. " - " .. value.price, value) 
+                self.scrollingList:addItem(itemName .. " - " .. value.price, { value = value }) 
             else
-                self.scrollingList:addItem(itemName .. " - " .. "blocked") 
+                self.scrollingList:addItem(itemName .. " - " .. "blocked", { value = value }) 
             end
         end    
-    end    
-    for key, value in pairs(Shop.Items) do
-        if  value.tab == seletedName then
-            value.name = key
-            local itemName = getItemNameFromFullType(key)                
-            self.scrollingList:addItem(itemName .. " - " .. value.price, value)
+    else    
+        for key, value in pairs(Shop.Items) do
+            if  value.tab == seletedName then
+                value.name = key
+                local itemName = getItemNameFromFullType(key)                
+                self.scrollingList:addItem(itemName .. " - " .. value.price, { value = value })
+            end    
         end
-    
     end
 end
 
+function ISEditShopUI:onClickItem (item, doubleClick) --При выборе элемента в списке
+    if item ~= nil and item.value ~= nil then
+        self.ItemEntry:setText(item.value.name)
 
-function ISEditShopUI:onClickItem () --При выборе элемента в списке
- 
+        if item.value.price ~= nil then
+            self.PriceEntry:setVisible(true)
+            self.priceLabel:setVisible(true)
+            self.SpecialCoinBox:setVisible(true)
+            self.PriceEntry:setText(tostring(item.value.price))
+        else
+            self.priceLabel:setVisible(false)
+            self.SpecialCoinBox:setVisible(false)
+            self.PriceEntry:setVisible(false)
+        end
+
+        self.SpecialCoinBox.selected[1] = item.value.specialCoin or false
+        self.BlockBox.selected[1] = item.value.price == nil 
+    else
+        self.ItemEntry:setText("No item")
+        self.PriceEntry:setVisible(false)
+        self.TabEntry:setVisible(false)
+    end
 end
 
 function ISEditShopUI:updateButtons()    
 end
 
 function ISEditShopUI:onClick(button) -- Дествия по нажатию кнопок
-    if button.internal == "OK" then       
-        for key, value in pairs(Shop.Items) do
-            print(key, value.name)
-        end
+    if button.internal == "OK" then   
+            print(bcUtils.dump(Shop.Items))
     end
     if button.internal == "CANCEL" then
         self:setVisible(false);
