@@ -72,7 +72,7 @@ end
 ---@param _offerInfo offerInfo
 function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, _offerInfo)
 	if not checkIsCarSellAllowed() then
-		playerObj:Say('I already have the maximum number of cars on sale');
+		playerObj:Say(getText('IGUI_CarShop_Is_Maximum'));
 		return
 	end
 	local offerInfo = copyTable(_offerInfo)
@@ -211,7 +211,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		if vehicleIsOnSale and not playerIsCarOwner then
 			local ownerUsername = carInfo:getOwner()
 			menu:addSlice(
-				'Seller: ' .. ownerUsername, 
+				getText('IGUI_CarShop_Seller') .. ownerUsername, 
 				getTexture('media/textures/Item_DriversLicense.png'), 
 				nil
 			)
@@ -327,7 +327,7 @@ function ISSwitchVehicleSeat:perform()
 end
 
 ---@param vehicle BaseVehicle
-local setKeysInIgnition_helper = function(vehicle)
+local setKeysInIgnition_helper = function(vehicle) -- 20 тиков подряд проверяем что ключ в замке и вставляем его если это не так. Вызывается ниже
 	local delayedFn = function() 
 		if not CarShop.isAllowGetKey and not vehicle:isHotwired() and not vehicle:isKeysInIgnition() then
 			vehicle:setKeysInIgnition(true);
@@ -353,15 +353,13 @@ end
 local userPanelHooks = function()
 	-- NOTE: делаем хук для панели юзера.
 	function ISUserPanelUI:renderCarOnSale(carsOnSaleNum)
-		print('renderCarOnSale')
-		local resultStr = 'Vehicles on sale: ' .. carsOnSaleNum .. '/' .. SandboxVars.Shops.CarSellsByPlayer
+		local resultStr = getText('IGUI_CarShop_Vehicles_On_Sale') .. carsOnSaleNum .. '/' .. SandboxVars.Shops.CarSellsByPlayer
 		self.sellingCarsCount:setName(resultStr)
 	end
 
 	local base_ISUserPanelUI_create = ISUserPanelUI.create
 	function ISUserPanelUI:create()
 		base_ISUserPanelUI_create(self)
-		print('CREATE!!!')
 		local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
 		local btnWid = 150 --Ширина кнопок
 		local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2) --Высота кнопок
@@ -394,5 +392,5 @@ local userPanelHooks = function()
 end
 userPanelHooks()
 
-Events.OnCreateUI.Add(userPanelHooks) -- NOTE: меняем интерфейс в этом событии потому что иначе ГитроТрейд по неизвестно причине загружается раньше и всё портит. Код ниже будет работать и в слечае использования ванильных функций (напр. отключения гидротрейда)
+Events.OnCreateUI.Add(userPanelHooks) -- NOTE: меняем интерфейс в этом событии потому что иначе ГитроТрейд по неизвестно причине загружается раньше и всё портит. Код будет работать и в случие использования ванильных функций (напр. отключения гидротрейда)
 Events.OnEnterVehicle.Add(carShopEventHandler.onEnterVehicle)
