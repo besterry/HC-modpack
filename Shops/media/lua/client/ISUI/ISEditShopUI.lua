@@ -95,6 +95,19 @@ function ISEditShopUI:initialise()
             self.scrollingList:addItem(itemName .. " - " .. "blocked", { value = value }) 
         end
     end  
+
+    local entryWidth = 150
+    local entryHeight = 20
+    local entryX = self.scrollingList.x + self.scrollingList.width - entryWidth
+    local entryY = self.scrollingList.y - entryHeight - 10
+    self.findEntry = ISTextEntryBox:new("", entryX, entryY, entryWidth, entryHeight)
+    self.findEntry:initialise()
+    self.findEntry:instantiate();
+    self:addChild(self.findEntry)
+
+    local findLabel = ISLabel:new(entryX - 40, entryY + 10, 1, "Find:", 1, 1, 1, 1, UIFont.Medium, true)
+    findLabel:initialise()
+    self:addChild(findLabel)
     
     self.ItemEntry = ISTextEntryBox:new("", self.scrollingList.x + self.scrollingList.width + 10, 70, 220, btnHgt)
     self.ItemEntry:initialise();
@@ -147,6 +160,47 @@ function ISEditShopUI:initialise()
     self.priceLabel:initialise()
     self.priceLabel:instantiate()
     self:addChild(self.priceLabel)
+
+    self.findEntry.onTextChange = function()
+        self:filterScrollingList()
+    end
+end
+
+local filteredItems = {}
+function ISEditShopUI:filterScrollingList()    
+    local searchText = self.findEntry:getInternalText()
+    if searchText ~= "" then
+        local hasFilteredItems = #filteredItems > 0
+        print("Start: ",self.scrollingList:size())
+        for i = self.scrollingList:size(), 1, -1 do
+            local listItem = self.scrollingList.items[i]
+            local itemName = getItemNameFromFullType(listItem.item.value.name)  
+            if not string.find(itemName:lower(), searchText:lower(), 1, false) then                
+                table.insert(filteredItems, { listItem })
+                if not hasFilteredItems then
+                    self.scrollingList:removeItemByIndex(i)
+                end                
+            else
+                -- Удаляем элемент из filteredItems, если он снова соответствует фильтру
+                for j = #filteredItems, 1, -1 do
+                    if filteredItems[j][1] == listItem then
+                        table.remove(filteredItems, j)
+                        break
+                    end
+                end
+            end
+        end
+    else        
+        if #filteredItems > 0 then
+            for _, item in ipairs(filteredItems) do
+                if item[1].text ~= "" then
+                    self.scrollingList:addItem(item[1].text, {item[1].item.value})
+                end
+            end
+            print("Finish: ",self.scrollingList:size())
+        end
+        filteredItems = {}
+    end
 end
 
 function ISEditShopUI:prerender()
