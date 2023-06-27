@@ -188,6 +188,7 @@ function ISSafehouseUI:onClickRefreshTime()
     local dayInMillis = 24 * 60 * 60 * 1000
     -- Обновление значения времени до удаления привата    
     local currentTime = getTimeInMillis()
+    self.safehouse:syncSafehouse()
     local lastVisitedTimestamp = self.safehouse:getLastVisited()
     local timeLeftMillis = lastVisitedTimestamp + (daysUntilDeletion/24 * dayInMillis) - currentTime
     local timeLeftDays = math.floor(timeLeftMillis / (dayInMillis))
@@ -202,10 +203,9 @@ end
 function ISSafehouseUI:onClickResetTime()
     local currentTime = getTimeInMillis()    
     self.safehouse:setLastVisited(currentTime)
-    -- local playerObj = getPlayerFromUsername(self.safehouse:getOwner())
-    -- print(playerObj)
-    -- self.safehouse:updateSafehouse(playerObj)
     self.safehouse:syncSafehouse()
+    local OwnerSH = self.safehouse:getOwner()
+    sendClientCommand(getPlayer(),"SafehouseFD", "ResetSafehouseTime", {OwnerSH})    
     self:onClickRefreshTime()
 end
 

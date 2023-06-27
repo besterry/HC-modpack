@@ -8,7 +8,6 @@ option Shops.PurchaseLog
 	page = Shops,
 	translation = Shops_PurchaseLog,
 }
-
 option Shops.SellLog
 {
 	type = boolean,
@@ -24,4 +23,14 @@ option Shops.CarTradeZone
 	default = 8700 8758 7064 7112;,
 	page = Shops,
 	translation = Shops_CarTradeZone,
+}
+
+option Shops.CarSellsByPlayer
+{
+	type = integer, 
+	default = 10,
+	min = 0,
+	max = 200,
+	page = Shops,
+	translation = Shops_CarSellsByPlayer,
 }
