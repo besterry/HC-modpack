@@ -69,5 +69,8 @@ IGUI_RU = {
     IGUI_CarShop_Need_Money = "У меня не хватает денег",
     IGUI_CarShop_Offer_For_Sale = "Выставить на продажу",
     IGUI_CarShop_Remove_Car_For_Sale_W_Price = "Снять с продажи по цене ",
-    IGUI_CarShop_Buy_Car_For = "Купить авто за "
+    IGUI_CarShop_Buy_Car_For = "Купить за ",
+    IGUI_CarShop_Is_Maximum = "Я уже продаю максимальное количество автомобилей ",
+    IGUI_CarShop_Seller = "Продавец: ",
+    IGUI_CarShop_Vehicles_On_Sale = "Авто в продаже: "
 }
