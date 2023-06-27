@@ -12,9 +12,9 @@ local forSellItems = FD.forSellItems
 local function LoadJsonItems(filename)
     local fileReaderObj = getFileReader(filename, false) -- ˜˜˜˜˜˜˜ ˜˜˜˜ ˜ ˜˜˜˜˜˜ JSON-˜˜˜˜˜
     if fileReaderObj then 
-        print("SHOP: ShopItems file uploaded successfully")
+        print("SHOP: " .. filename .. " file uploaded successfully")
     else
-        print("SHOP: The file is empty or does not exist")
+        print("SHOP: " .. filename .. " file is empty or does not exist")
     end
 
     local json = ""
