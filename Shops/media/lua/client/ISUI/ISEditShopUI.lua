@@ -57,7 +57,7 @@ function ISEditShopUI:initialise()
     --self.comboBox:setOnMouseDownFunction = ISEditShopUI.onClickTab;
     --self.comboBox.onRightMouseUp = ISEditShopUI.onClickTab;
     self:addChild(self.comboBox);    
-    
+
     
     local keys = {}
     for k, v in pairs(Shop.Tabs) do
@@ -80,21 +80,21 @@ function ISEditShopUI:initialise()
     self.scrollingList:setOnMouseDownFunction(self, self.onClickItem);
     self.scrollingList.drawBorder = true;
     self:addChild(self.scrollingList);
-    for key, value in pairs(Shop.Sell) do
-        local sp = nil
-        value.name = key
-        if value.specialCoin and value.specialCoin == true then
-            sp = " SC"
-        else
-            sp = ""
-        end
-        local itemName = getItemNameFromFullType(key)
-        if value.price then
-            self.scrollingList:addItem(itemName .. " - " .. value.price .. sp, { value = value }) 
-        else
-            self.scrollingList:addItem(itemName .. " - " .. "blocked", { value = value }) 
-        end
-    end  
+    -- for key, value in pairs(Shop.Sell) do -- это здесь не нужно. Дублирование кода это плохо почти всегда. Мы просто вызовем вконце этого метода self:onClickTab()
+    --     local sp = nil
+    --     value.name = key
+    --     if value.specialCoin and value.specialCoin == true then
+    --         sp = " SC"
+    --     else
+    --         sp = ""
+    --     end
+    --     local itemName = getItemNameFromFullType(key)
+    --     if value.price then
+    --         self.scrollingList:addItem(itemName .. " - " .. value.price .. sp, { value = value }) 
+    --     else
+    --         self.scrollingList:addItem(itemName .. " - " .. "blocked", { value = value }) 
+    --     end
+    -- end  
 
     local entryWidth = 150
     local entryHeight = 20
@@ -164,42 +164,30 @@ function ISEditShopUI:initialise()
     self.findEntry.onTextChange = function()
         self:filterScrollingList()
     end
+
+    self:onClickTab() -- Просто вызываем клик на таб чтоб он отрисовал список
 end
 
-local filteredItems = {}
+
 function ISEditShopUI:filterScrollingList()    
+    -- Мы будем работать с данными и отрисовывать их. Это проще чем удалять и добавлять их по отдельности в уже отрисованный интерфейс. Чем проще код тем лучше
     local searchText = self.findEntry:getInternalText()
+    local filteredItems = {} -- Сюда сохраняем отфильтрованые айтемы
     if searchText ~= "" then
-        local hasFilteredItems = #filteredItems > 0
-        print("Start: ",self.scrollingList:size())
-        for i = self.scrollingList:size(), 1, -1 do
-            local listItem = self.scrollingList.items[i]
-            local itemName = getItemNameFromFullType(listItem.item.value.name)  
-            if not string.find(itemName:lower(), searchText:lower(), 1, false) then                
-                table.insert(filteredItems, { listItem })
-                if not hasFilteredItems then
-                    self.scrollingList:removeItemByIndex(i)
-                end                
-            else
-                -- Удаляем элемент из filteredItems, если он снова соответствует фильтру
-                for j = #filteredItems, 1, -1 do
-                    if filteredItems[j][1] == listItem then
-                        table.remove(filteredItems, j)
-                        break
-                    end
-                end
-            end
+        for _, listItem in pairs(self.initialList) do
+            local itemName = getItemNameFromFullType(listItem.item.value.name) 
+            if itemName:lower():find(searchText:lower()) then -- Можно использовать такую нотацию, чтобы обращаться к разным методам одного и того же инстанса (string) по цепочке. Просто показываю что можно так. Твой способ тоже нормальный и рабочий
+                table.insert(filteredItems, listItem) -- Собираем фильтрованный список
+            end           
         end
-    else        
-        if #filteredItems > 0 then
-            for _, item in ipairs(filteredItems) do
-                if item[1].text ~= "" then
-                    self.scrollingList:addItem(item[1].text, {item[1].item.value})
-                end
-            end
-            print("Finish: ",self.scrollingList:size())
-        end
-        filteredItems = {}
+    else
+        filteredItems = self.initialList -- если текста в поиске нет то показываем весь список
+    end
+    self.scrollingList:clear(); -- очищаем список
+    for _, listItem in pairs(filteredItems) do --Собираем список
+        local text = listItem.text
+        local item = listItem.item
+        self.scrollingList:addItem(text, item)
     end
 end
 
@@ -251,7 +239,7 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
             end
         end    
     else    
-        for key, value in pairs(Shop.Items) do
+        for key, value in pairs(Shop.Items) do -- это не работает или я сломал?
             if  value.tab == seletedName then
                 if value.specialCoin and value.specialCoin == true then
                     sp = " SC"
@@ -263,6 +251,12 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
                 self.scrollingList:addItem(itemName .. " - " .. value.price .. sp, { value = value })
             end    
         end
+    end
+    self.initialList = {} -- Копируем сюда оригинальный список, чтоб не потерять и случайно не мутировать его. Он нам пригодится для фильтрации.
+                          -- Лучше было бы конечно изначально собрать список, а потом отрисовать его. Потому что полезно отделять данные от интерфейса.
+                          -- Но мне лень переписывать ISEditShopUI:onClickTab
+    for _, listItem in pairs(self.scrollingList.items) do
+        table.insert(self.initialList, listItem)
     end
 end
 
