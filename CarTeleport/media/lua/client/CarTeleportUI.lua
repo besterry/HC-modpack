@@ -1,5 +1,6 @@
 local main = require "CarTeleportClient"
 
+---@class CarTeleport_UI
 local CarTeleport_UI = {}
 -- g_CarTeleport_UI = CarTeleport_UI -- TODO: Удалить. Использовалось для дебага
 
@@ -257,7 +258,6 @@ function CarTeleport_UI:checkBuilding()
 end
 
 function CarTeleport_UI:checkDistance()
-    ---@type IsoPlayer
     local player = self.player
     local isDisallowed = false
     for k,v in pairs(self.vehicleList) do
