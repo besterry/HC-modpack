@@ -21,6 +21,7 @@ local cartImg = Shop.textures.Cart;
 local width = 995
 local height = 550
 
+
 function ShopUI:show(player,viewMode,shop) --Вызов интерфейса магазина
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
     local receiveServerCommand
@@ -354,8 +355,9 @@ function ShopUI:onActivateView()
     if not self.reloadItems then
         if self.shopItemsCache[tabType] then shopItems.items = self.shopItemsCache[tabType] return end
     end
-    
-    for k,v in pairs(Shop.Items) do
+
+    shopItems:clear()
+    for k,v in pairs(Shop.Items) do        
         if v and (v.tab == tabType or tabType == Tab.All) then 
             local item = self:getItemInstance(k)
             if item then

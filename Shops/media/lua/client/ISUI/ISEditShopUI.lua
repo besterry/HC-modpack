@@ -461,16 +461,22 @@ function ISEditShopUI:onDeleteButtonClicked()
     local selected = self.scrollingList.items[self.scrollingList.selected]
     local selectedId = self.comboBox.selected
     local seletedName = self.comboBox:getOptionText(selectedId)
+    local msg = nil
+    local player = getPlayer()
+    print("Player:",player:getUsername())
     if selected ~= nil then
-        if seletedName == "Sell" then            
-            Shop.Sell[selected.item.value.name] = nil
+        if seletedName == "Sell" then           
+            --msg = player:getUsername() .. "delete item:" .. selected.item.text .. "from sell"            
             self.scrollingList:removeItem(selected)
+            Shop.Sell[selected.item.value.name] = nil
             self:onClickTab()
         else            
-            Shop.Items[selected.item.value.name] = nil
+            --msg = player:getUsername() .. "delete item:" .. selected.item.text .. "from buy"
             self.scrollingList:removeItem(selected)
+            Shop.Items[selected.item.value.name] = nil
             self:onClickTab()
         end
+       -- writeLog("ShopEdit", msg)
     end    
 end
 
