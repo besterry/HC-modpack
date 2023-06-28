@@ -32,9 +32,22 @@ local function LoadJsonItems(filename)
     return resulTable
 end
 
+local function SaveJsonItems(theTable,filename)
+    local fileWriterObj = getFileWriter(filename, true, false);
+    local json = Json.Encode(theTable);
+    fileWriterObj:write(json);
+    fileWriterObj:close();
+    print("File Saved: ",filename)
+end
+
 local function LoadAll()
     shopItems = LoadJsonItems("ShopPrice.json")
     forSellItems = LoadJsonItems("ForSell.json")
+end
+
+local function SaveAll()
+    SaveJsonItems(shopItems,"ShopPrice.json")
+    SaveJsonItems(forSellItems,"ForSell.json")
 end
 
 -- ˜˜˜˜˜ ˜˜˜˜˜˜˜ ˜˜˜ ˜˜˜˜˜˜ ˜˜˜˜˜˜˜
@@ -43,6 +56,11 @@ Events.OnServerStarted.Add(LoadAll)
 local commands = {}
 commands.getData = function(player, args)
     sendServerCommand('shopItems', "onGetData", {shopItems = shopItems, forSellItems = forSellItems})
+end
+commands.PushShopItems = function(player, args)
+    shopItems = args[1]
+    forSellItems = args[2]
+    SaveAll()
 end
 
 

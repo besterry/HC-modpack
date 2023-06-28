@@ -80,21 +80,6 @@ function ISEditShopUI:initialise()
     self.scrollingList:setOnMouseDownFunction(self, self.onClickItem);
     self.scrollingList.drawBorder = true;
     self:addChild(self.scrollingList);
-    -- for key, value in pairs(Shop.Sell) do -- это здесь не нужно. Дублирование кода это плохо почти всегда. Мы просто вызовем вконце этого метода self:onClickTab()
-    --     local sp = nil
-    --     value.name = key
-    --     if value.specialCoin and value.specialCoin == true then
-    --         sp = " SC"
-    --     else
-    --         sp = ""
-    --     end
-    --     local itemName = getItemNameFromFullType(key)
-    --     if value.price then
-    --         self.scrollingList:addItem(itemName .. " - " .. value.price .. sp, { value = value }) 
-    --     else
-    --         self.scrollingList:addItem(itemName .. " - " .. "blocked", { value = value }) 
-    --     end
-    -- end  
 
     local entryWidth = 150
     local entryHeight = 20
@@ -142,7 +127,6 @@ function ISEditShopUI:initialise()
     self:addChild(self.SpecialCoinBox)
     self.SpecialCoinBox:addOption("Special Coin")
     self.SpecialCoinBox:setVisible(false) 
-
 
     self.BlockBox = ISTickBox:new(self.ItemEntry.x + self.ItemEntry.width + 5, self.ItemEntry.y, 10, 10, "", nil, nil)
     self.BlockBox:initialise();
@@ -218,6 +202,7 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
     local selectedId = self.comboBox.selected
     local seletedName = self.comboBox:getOptionText(selectedId)
     local sp
+    local count
     self.SpecialCoinBox:setVisible(false)
     self.BlockBox:setVisible(false)
     self.scrollingList:clear();
@@ -230,7 +215,7 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
                 sp = " SC"
             else
                 sp = ""
-            end
+            end            
             local itemName = getItemNameFromFullType(key)
             if value.price then
                 self.scrollingList:addItem(itemName .. " - " .. value.price .. sp , { value = value }) 
@@ -246,9 +231,14 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
                 else
                     sp = ""
                 end
+                if value.quantity then
+                    count = value.quantity
+                else
+                    count = "1"
+                end
                 value.name = key
                 local itemName = getItemNameFromFullType(key)                
-                self.scrollingList:addItem(itemName .. " - " .. value.price .. sp, { value = value })
+                self.scrollingList:addItem(itemName .." (" .. count .. ") " .. " - " .. value.price .. sp, { value = value })
             end    
         end
     end
@@ -291,28 +281,30 @@ function ISEditShopUI:onChangeButtonClicked()
     local seletedtab = self.comboBox:getOptionText(selectedId)
 
     if selected ~= nil then
-        print(self.ItemEntry:getInternalText())
-        selected.item.value.name = self.ItemEntry:getInternalText()
-        if self.BlockBox.selected[1] then
-                selected.item.value.blacklisted = true
-            if selected.item.value.price then
-                selected.item.value.price = nil
+        selected.item.value.name = self.ItemEntry:getInternalText() -- получаем имя Base.Axe
+        if selected.item.value.blacklisted ~= nil then --проверка существует ли поле
+            selected.item.value.blacklisted = nil -- удаляем поле blacklisted
+        end
+        if self.BlockBox.selected[1] then --если блок выбран
+            selected.item.value.blacklisted = true --добавляем параметр blacklisted
+            if selected.item.value.price then --если есть цена
+                selected.item.value.price = nil --убираем
             end
-            if selected.item.value.specialCoin then
-                selected.item.value.specialCoin = nil
+            if selected.item.value.specialCoin then --если есть specialCoin
+                selected.item.value.specialCoin = nil --убираем
             end
-        elseif self.SpecialCoinBox.selected[1] and self.SpecialCoinBox:getIsVisible() then            
-            selected.item.value.specialCoin = true
-            selected.item.value.price = tonumber(self.PriceEntry:getInternalText())
+        elseif self.SpecialCoinBox.selected[1] and self.SpecialCoinBox:getIsVisible() then --если стоит чекбокс SpecialCoinBox             
+            selected.item.value.specialCoin = true --добавляем поле SpecialCoinBox
+            selected.item.value.price = tonumber(self.PriceEntry:getInternalText()) --устанавливаем цену
         else
-            if selected.item.value.specialCoin then
-                selected.item.value.specialCoin = nil
+            if selected.item.value.specialCoin then --если чекбокс SpecialCoinBox есть
+                selected.item.value.specialCoin = nil --убираем
             end
-            selected.item.value.price = tonumber(self.PriceEntry:getInternalText())
+            selected.item.value.price = tonumber(self.PriceEntry:getInternalText()) --Ставим цену в Coin
         end
         if seletedtab == "Sell" then
             Shop.Sell[selected.item.value.name] = selected.item.value
-        else 
+        else
             Shop.Items[selected.item.value.name] = selected.item.value
         end
         self:onClickTab()
@@ -321,40 +313,164 @@ function ISEditShopUI:onChangeButtonClicked()
 end
 
 function ISEditShopUI:onAddButtonClicked()
-    local modal = ISModalDialog:new(0, 0, 250, 150, "Add new item", true, nil, ISEditShopUI.onNewItemAdded)
+    local modal = ISModalDialog:new(0, 0, 250, 220, "Add new item", true, self, ISEditShopUI.onNewItemAdded)
     modal:initialise()
     modal:addToUIManager()
-    
+
     local x = modal:getWidth() * 0.25
     local y = 50
     local width = modal:getWidth() * 0.5
     local height = 25
     
-    local nameLabel = ISLabel:new(x - 50, y, 0, "Item:", 1, 1, 1, 1, UIFont.Medium, true)
-    nameLabel:initialise()
-    modal:addChild(nameLabel)
+    self.NInameLabel = ISLabel:new(x - 40, y+10, 0, "Item:", 1, 1, 1, 1, UIFont.Small, true)
+    self.NInameLabel:initialise()
+    self.NInameLabel:instantiate()
+    modal:addChild(self.NInameLabel)
     
-    local nameEntry = ISTextEntryBox:new("", x, y, width, height)
-    nameEntry:initialise()
-    modal:addChild(nameEntry)
+    self.NInameEntry = ISTextEntryBox:new("", x, y, width, height)
+    self.NInameEntry:initialise()
+    self.NInameEntry:instantiate()
+    modal:addChild(self.NInameEntry) 
+
+    self.NIBlockBox = ISTickBox:new(x + width + 5, y, 10, 10, "", self, ISEditShopUI.onNIBlockBoxClicked)
+    self.NIBlockBox:initialise()
+    self.NIBlockBox:instantiate()
+    self.NIBlockBox.selected[1] = false
+    modal:addChild(self.NIBlockBox)
+    self.NIBlockBox:addOption("Block")
+    local selectedId = self.comboBox.selected
+    local seletedName = self.comboBox:getOptionText(selectedId)
+    if seletedName ~= "Sell" then self.NIBlockBox:setVisible(false) else self.NIBlockBox:setVisible(true) end
+
+    self.NIpriceLabel = ISLabel:new(x - 40, y+50, 0, "Price:", 1, 1, 1, 1, UIFont.Small, true)
+    self.NIpriceLabel:initialise()
+    self.NIpriceLabel:instantiate()
+    modal:addChild(self.NIpriceLabel)
+    
+    self.NIpriceEntry = ISTextEntryBox:new("", x, y+40, width, height)
+    self.NIpriceEntry:initialise()
+    self.NIpriceEntry:instantiate()
+    modal:addChild(self.NIpriceEntry)
+
+    self.NIcountLabel = ISLabel:new(x - 40, y+90, 0, "Count:", 1, 1, 1, 1, UIFont.Small, true)
+    self.NIcountLabel:initialise()
+    self.NIcountLabel:instantiate()
+    modal:addChild(self.NIcountLabel)
+    
+    self.NIcountEntry = ISTextEntryBox:new("", x, y+80, width, height)
+    self.NIcountEntry:initialise()
+    self.NIcountEntry:instantiate()
+    modal:addChild(self.NIcountEntry)
+
+    self.NIerrorLabel = ISLabel:new(x+15, y+120, 0, "Item already exists", 1, 0, 0, 1, UIFont.Small, true)
+    self.NIerrorLabel:initialise()
+    self.NIerrorLabel:instantiate()
+    modal:addChild(self.NIerrorLabel)
+    self.NIerrorLabel:setVisible(false)
+
+    self.NIerrorNameLabel = ISLabel:new(x+15, y+120, 0, "Invalid name", 1, 0, 0, 1, UIFont.Small, true)
+    self.NIerrorNameLabel:initialise()
+    self.NIerrorNameLabel:instantiate()
+    modal:addChild(self.NIerrorNameLabel)
+    self.NIerrorNameLabel:setVisible(false)
+
+    self.NISpecialCoinBox = ISTickBox:new(x + width + 5, y + 40, 10, 10, "",nil,nil)
+    self.NISpecialCoinBox:initialise()
+    self.NISpecialCoinBox:instantiate()
+    self.NISpecialCoinBox.selected[1] = false;
+    modal:addChild(self.NISpecialCoinBox)
+    self.NISpecialCoinBox:addOption("SC")
 end
 
-function ISEditShopUI:onNewItemAdded(nameEntry,button, modal)
-    -- local itemName = nameEntry:getText()
-    -- if itemName ~= "" then
-    --     -- Добавьте введенное значение в общий список текущей вкладки
-    --     -- Примерно так: self.scrollingList:addItem(itemName, { value = value })
-        
-    --     modal:close()
+function ISEditShopUI:onNewItemAdded(button)
+    if button.internal == "NO" then return end    
+    local selectedId = self.comboBox.selected
+    local seletedName = self.comboBox:getOptionText(selectedId)
+
+    local itemName = self.NInameEntry:getText()
+    local itemPrice = tonumber(self.NIpriceEntry:getText())
+    local isBlocked = self.NIBlockBox.selected[1]
+    local hasSpecialCoin = self.NISpecialCoinBox.selected[1]
+    local count = nil
+    if self.NIcountEntry:getText()~="" then 
+        count = tonumber(self.NIcountEntry:getText())
+    else
+        count = 1
+    end
+
+    -- if not getItemNameFromFullType(itemName) then 
+    --     self.NIerrorNameLabel:setVisible(true) 
+    --     return 
+    -- else
+    --      self.NIerrorNameLabel:setVisible(false) 
     -- end
+
+    
+    if itemName ~= "" then
+        if seletedName == "Sell" then
+            if Shop.Sell[itemName] then 
+                self.NIerrorNameLabel:setVisible(true) 
+                return 
+            else 
+                self.NIerrorNameLabel:setVisible(false)                
+                local newItem = {
+                    name = itemName,
+                    price = itemPrice,            
+                    blacklisted = isBlocked,
+                    specialCoin = hasSpecialCoin
+                }
+                Shop.Sell[itemName] = newItem
+            end
+        else
+            if Shop.Items[itemName] then 
+                self.NIerrorNameLabel:setVisible(true) 
+                return 
+            else 
+                self.NIerrorNameLabel:setVisible(false) 
+                local newItem = {
+                    name = itemName,
+                    price = itemPrice,
+                    tab = seletedName,
+                    specialCoin = hasSpecialCoin,
+                    quantity = count
+                }    
+                Shop.Items[itemName] = newItem
+            end
+        end        
+        self:onClickTab()         
+    end
+end
+
+function ISEditShopUI:onNIBlockBoxClicked ()
+    if self.NIBlockBox.selected[1] then
+        self.NISpecialCoinBox:setVisible(false)
+        self.NIpriceLabel:setVisible(false)
+        self.NIpriceEntry:setVisible(false)
+        self.NIcountEntry:setVisible(false)
+        self.NIcountLabel:setVisible(false)
+    else
+        self.NISpecialCoinBox:setVisible(true)
+        self.NIpriceLabel:setVisible(true)
+        self.NIpriceEntry:setVisible(true)
+        self.NIcountEntry:setVisible(true)
+        self.NIcountLabel:setVisible(true)
+    end
 end
 
 function ISEditShopUI:onDeleteButtonClicked()
     local selected = self.scrollingList.items[self.scrollingList.selected]
+    local selectedId = self.comboBox.selected
+    local seletedName = self.comboBox:getOptionText(selectedId)
     if selected ~= nil then
-        self.scrollingList:removeItem(selected)
-        Shop.Sell[selected.item.value.name] = nil
-        self:onClickTab()
+        if seletedName == "Sell" then            
+            Shop.Sell[selected.item.value.name] = nil
+            self.scrollingList:removeItem(selected)
+            self:onClickTab()
+        else            
+            Shop.Items[selected.item.value.name] = nil
+            self.scrollingList:removeItem(selected)
+            self:onClickTab()
+        end
     end    
 end
 
@@ -362,8 +478,8 @@ function ISEditShopUI:updateButtons()
 end
 
 function ISEditShopUI:onClick(button)
-    if button.internal == "OK" then   
-            print(bcUtils.dump(Shop.Items))
+    if button.internal == "OK" then           
+        sendClientCommand(getPlayer(), "shopItems", "PushShopItems", {Shop.Items,Shop.Sell})
     end
     if button.internal == "CANCEL" then
         self:setVisible(false);
