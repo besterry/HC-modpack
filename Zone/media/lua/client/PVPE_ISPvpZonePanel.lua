@@ -1,4 +1,4 @@
--- Панель со списком всех PVP-зон
+-- пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ PVP-пїЅпїЅпїЅ
 
 --***********************************************************
 --**                  ROBERT JOHNSON                       **
@@ -36,7 +36,7 @@ function PVPE_ISPvpZonePanel:initialise()
     self.truePvpList.drawBorder = true;
     self:addChild(self.truePvpList);
 
-    self.removeZone = ISButton:new(self.truePvpList.x + self.truePvpList.width - 70, self.truePvpList.y + self.truePvpList.height + 5, 70, btnHgt2, getText("ContextMenu_Remove"), self, PVPE_ISPvpZonePanel.onClick);
+    self.removeZone = ISButton:new(self.truePvpList.x + self.truePvpList.width - 70, self.truePvpList.y + self.truePvpList.height + 5, 70, btnHgt2, getText("IGUI_PvpZone_RemoveZone"), self, PVPE_ISPvpZonePanel.onClick);
     self.removeZone.internal = "REMOVEZONE";
     self.removeZone:initialise();
     self.removeZone:instantiate();
@@ -188,7 +188,7 @@ function PVPE_ISPvpZonePanel:onClick(button)
     --         print("File found. ////////////////////////////////")
     --         reloadServerLuaFile(filename)
             
-    --         -- Очищаем предыдущие данные
+    --         -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     --         modData.PvpZoneList = {}
     --         modData.listSize = 0
             

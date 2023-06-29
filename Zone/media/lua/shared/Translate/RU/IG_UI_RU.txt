@@ -8,4 +8,5 @@ IGUI_RU = {
     IGUI_PvpZone_ZoneCoordy2 = "Конечная координата y (max)",
     IGUI_CoordIncorrectly = "Координаты введены неверно",
     IGUI_PvpZone_AddZoneFile = "Загрузить зоны из файла",
+    IGUI_PvpZone_RemoveZone = "Удалить зону",
 }

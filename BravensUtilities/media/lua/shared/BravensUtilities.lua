@@ -4,30 +4,40 @@
 
 BravensUtils = {}
 
+--- Attempt to play a sound from an entity.
+---@param obj IsoGameCharacter | DeviceData | BaseVehicle
+---@param soundName string
 BravensUtils.TryPlaySoundClip = function(obj, soundName)
 
 	if obj:getEmitter():isPlaying(soundName) then return end
     obj:getEmitter():playSoundImpl(soundName, IsoObject.new())
-
 end
 
+--- Attempt to stop playing a sound from an entity.
+---@param obj IsoGameCharacter | DeviceData | BaseVehicle
+---@param soundName string
 BravensUtils.TryStopSoundClip = function(obj, soundName)
 
 	if not obj:getEmitter():isPlaying(soundName) then return end
 	obj:getEmitter():stopSoundByName(soundName)
 end
 
--- Drain the player's stamina for whatever reason
+--- Cause physical exertion on a Player
+---@param playerObj IsoPlayer
+---@param amount number
 BravensUtils.TirePlayer = function(playerObj, amount)
 
 	local stats = playerObj:getStats()
 	if not stats then return end
 
 	if stats:getEndurance() < 0.21 then return end --We don't want to *kill* someone out of exhaustion do we?
-	stats:setEndurance(stats:getEndurance() - (amount / (playerObj:getPerkLevel(Perks.Fitness) / 2)))
+	stats:setEndurance(stats:getEndurance() - amount)
 end
 
--- Credits for this function: Konijima
+--- Delays a function by a specified amount in milliseconds
+--- <br> Credits for this function: Konijima
+---@param func function
+---@param delay number
 BravensUtils.DelayFunction = function(func, delay)
 
     delay = delay or 1;
@@ -46,12 +56,13 @@ BravensUtils.DelayFunction = function(func, delay)
     end
 
     Events.OnTick.Add(onTick);
+
     return function()
         canceled = true;
     end
 end
 
--- Get the distance between two objects
+--- Calculates the distance between two entities
 BravensUtils.DistanceBetween = function(firstObj, secondObj)
 
     local distance = {}
@@ -63,9 +74,10 @@ BravensUtils.DistanceBetween = function(firstObj, secondObj)
     return distance
 end
 
-BravensUtils.isNumber = function(i)
+--- Checks if a given variable is a number
+BravensUtils.isNumber = function(num)
 
-    if tonumber(i) ~= nil then
+    if tonumber(num) ~= nil then
         return true
     end
 

@@ -134,7 +134,7 @@ function ISSafehouseUI:initialise()
     self.playerList.drawBorder = true;
     self:addChild(self.playerList);
 
-    self.removePlayer = ISButton:new(0, self.playerList.y + self.playerList.height + 5, 70, btnHgt2, getText("ContextMenu_Remove"), self, ISSafehouseUI.onClick);
+    self.removePlayer = ISButton:new(0, self.playerList.y + self.playerList.height + 5, 70, btnHgt2, getText("IGUI_SafehouseUI_RemoveConfirm"), self, ISSafehouseUI.onClick);
     self.removePlayer.internal = "REMOVEPLAYER";
     self.removePlayer:initialise();
     self.removePlayer:instantiate();

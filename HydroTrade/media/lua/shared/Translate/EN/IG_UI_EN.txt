@@ -52,6 +52,23 @@ IGUI_EN =
 	IGUI_Position_SafeHouses = "SafeHouses Position:",
 	IGUI_AddSafeHouses = "Add SafeHouses",
 	IGUI_Big_Size_SH = "Plot too big",
-	IGUI_Close_Zone = "You cannot create a hideout in this zone",
-	IGUI_CreateSH_Intersecting = "Too close to another hideout",
+	IGUI_Close_Zone = "You cannot create a safehouse in this zone",
+	IGUI_CreateSH_Intersecting = "Too close to another safehouse",
+
+	IGUI_CreateSH_IntersectingNav = "Close to Road",
+	IGUI_CreateSH_IntersectingPlayers = "There are other players in the highlighted zone",
+	IGUI_TimeLeft = "Removing safehouse: ",
+	IGUI_TimeLeftSHLUI = "Deleting:",
+	IGUI_daysLeft = " days ",
+	IGUI_hoursLeft = " hour(s) ",
+	IGUI_minLeft = " min ",
+	IGUI_servers_refresh = "Recalculate",
+	IGUI_servers_resetime = "Renew",
+	IGUI_CreateSH_REFRESHTIME = "Refresh current time",
+	IGUI_CreateSH_RESETTIME = "Reset timer to maximum value in days: ",
+	IGUI_CreateSH_ExceedsMaxLength = "Max length of an side is 40 tiles",
+	IGUI_SafehouseUI_RemoveConfirm = "Delete",
+
+
+
 }

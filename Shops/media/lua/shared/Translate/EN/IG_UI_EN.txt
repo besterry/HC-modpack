@@ -69,5 +69,8 @@ IGUI_EN = {
     IGUI_CarShop_Buy_Car_For = "Buy the car for ",
     IGUI_CarShop_Is_Maximum = "I already have the maximum number of cars on sale ",
     IGUI_CarShop_Seller = "Seller: ",
-    IGUI_CarShop_Vehicles_On_Sale = "Vehicles on sale: "
+    IGUI_CarShop_Vehicles_On_Sale = "Vehicles on sale: ",
+    IGUI_AdminPanel_ShopEdit = "Shop Edit", 
+    IGUI_Edit_Shop = "Edit Shop, 
+    IGUI_SaveShop = "Save",
 }
