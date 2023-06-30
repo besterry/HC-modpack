@@ -42,6 +42,7 @@ function ShopUI:show(player,viewMode,shop) --Вызов интерфейса м�
                 ShopUI.instance:initialise();
                 ShopUI.instance:instantiate();
             end
+            ShopUI.instance.reloadItems = true
             ShopUI.instance.pinButton:setVisible(false)
             ShopUI.instance.collapseButton:setVisible(false)
             ShopUI.instance:addToUIManager();
