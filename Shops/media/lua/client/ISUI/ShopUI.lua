@@ -328,10 +328,10 @@ function ShopUI:onActivateView()
         for k,v in pairs(shopFavorites) do
             local shopItemDef = Shop.Items[k]
             local item = self:getItemInstance(k)
-            if shopItemDef then
+            if shopItemDef and item then
                 v.price = shopItemDef.price
             end
-            if item then
+            if shopItemDef and item then
                 local VehicleID = item:getModData().VehicleID
                 if VehicleID then v.VehicleID = VehicleID end
                 v.favorite = true
