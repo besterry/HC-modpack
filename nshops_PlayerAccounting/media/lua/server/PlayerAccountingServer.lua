@@ -12,10 +12,14 @@ local base_BServer = {}
 local getDateTimeStr = function ()
     local gt = getGameTime()
     local minutes = tostring(gt:getMinutes())
+    local hours = tostring(gt:getHour())
     if #minutes == 1 then
         minutes = '0'..minutes
     end
-    return ('%s/%s/%s %s:%s'):format(gt:getDay(), gt:getMonth(), gt:getYear(), gt:getHour(), gt:getMinutes())
+    if #hours == 1 then
+        hours = '0'..hours
+    end
+    return ('%s/%s/%s %s:%s'):format(gt:getDay(), gt:getMonth(), gt:getYear(), hours, minutes)
 end
 
 ---@class ServerAccaunting

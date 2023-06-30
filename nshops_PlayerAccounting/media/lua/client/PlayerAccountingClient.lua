@@ -26,6 +26,17 @@ local log = {}
 
 -- local accountingInst = Accounting:new(username)
 
+---@return AccountingTotal
+local getTotal = function ()
+    local username = getPlayer():getUsername()
+    return ModData.get("CoinBalance")[username]
+end
+
+---@return modDataEntry[]
+local getLog = function ()
+    local username = getPlayer():getUsername()
+    return ModData.get(MOD_NAME)[username]
+end
 
 local initGlobalModData = function (isNewGame)
     
@@ -33,10 +44,10 @@ local initGlobalModData = function (isNewGame)
         ModData.remove(MOD_NAME);
     end
 	ModData.request(MOD_NAME)
-    local modData = ModData.getOrCreate(MOD_NAME);
-    local username = getPlayer():getUsername()
-    log = modData[username]
-    print('log1', bcUtils.dump(log))
+    -- local modData = ModData.getOrCreate(MOD_NAME);
+    -- local username = getPlayer():getUsername()
+    -- log = modData[username]
+    -- print('log1', bcUtils.dump(log))
     -- accountingInst:setLog(log)
 end
 
@@ -46,9 +57,14 @@ local onReceiveGlobalModData = function(tableName, data)
 	if tableName == MOD_NAME then
         local username = getPlayer():getUsername()
         log = data[username]
-        print('log2',  bcUtils.dump(log))
+        -- print('log2',  bcUtils.dump(log))
         -- accountingInst:setLog(log)
     end
 end
 
 Events.OnReceiveGlobalModData.Add(onReceiveGlobalModData);
+
+return {
+    getTotal = getTotal,
+    getLog = getLog
+}
