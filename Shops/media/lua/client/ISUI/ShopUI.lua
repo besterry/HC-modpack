@@ -21,7 +21,8 @@ local cartImg = Shop.textures.Cart;
 local width = 995
 local height = 550
 
-function ShopUI:show(player,viewMode,shop)
+
+function ShopUI:show(player,viewMode,shop) --Вызов интерфейса магазина
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
     local receiveServerCommand
     receiveServerCommand = function(module, command, args)
@@ -41,6 +42,7 @@ function ShopUI:show(player,viewMode,shop)
                 ShopUI.instance:initialise();
                 ShopUI.instance:instantiate();
             end
+            ShopUI.instance.reloadItems = true
             ShopUI.instance.pinButton:setVisible(false)
             ShopUI.instance.collapseButton:setVisible(false)
             ShopUI.instance:addToUIManager();
@@ -218,7 +220,7 @@ function ShopUI:onMouseMoveCartItem(dx, dy)
     ShopUI.instance:toggleTooltip(true,selectedRow.item)
 end
 
-function ShopUI:createCategories()
+function ShopUI:createCategories() --генерация Tab (вкладок)
     for k,v in pairs(Shop.Tabs) do 
         local tab = ShopTabUI:new(0, 0, self.width, self.panel.height - self.panel.tabHeight);
         tab:initialise();
@@ -326,10 +328,10 @@ function ShopUI:onActivateView()
         for k,v in pairs(shopFavorites) do
             local shopItemDef = Shop.Items[k]
             local item = self:getItemInstance(k)
-            if shopItemDef then
+            if shopItemDef and item then
                 v.price = shopItemDef.price
             end
-            if item then
+            if shopItemDef and item then
                 local VehicleID = item:getModData().VehicleID
                 if VehicleID then v.VehicleID = VehicleID end
                 v.favorite = true
@@ -354,8 +356,9 @@ function ShopUI:onActivateView()
     if not self.reloadItems then
         if self.shopItemsCache[tabType] then shopItems.items = self.shopItemsCache[tabType] return end
     end
-    
-    for k,v in pairs(Shop.Items) do
+
+    shopItems:clear()
+    for k,v in pairs(Shop.Items) do        
         if v and (v.tab == tabType or tabType == Tab.All) then 
             local item = self:getItemInstance(k)
             if item then
@@ -572,7 +575,7 @@ function ShopUI:render()
     self:drawProgressBar((self.width / 2)+180, 420, 120, 10, currentAction.action:getJobDelta(), self.fgBar)
 end
 
-function ShopUI:updateTotal()
+function ShopUI:updateTotal() --Обновление баланса
     local total = 0
     local totalSpecial = 0
     self.totalCoinLabel:setName(""..total)
@@ -630,7 +633,7 @@ function ShopUI:updateTotal()
     end
 end
 
-function ShopUI:close()
+function ShopUI:close() --Закрытие окна
 	ISCollapsableWindow.close(self);
     if PreviewUI.instance then PreviewUI.instance:close() end
     ShopUI.instance:removeFromUIManager()
@@ -638,7 +641,7 @@ function ShopUI:close()
     self:removeFromUIManager()
 end
 
-function ShopUI:new(x, y, width, height, player)
+function ShopUI:new(x, y, width, height, player) --Создание окна магазина
     local o = {}
     if x == 0 and y == 0 then
         x = (getCore():getScreenWidth() / 2) - (width / 2);

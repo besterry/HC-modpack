@@ -1,6 +1,6 @@
 IGUI_RU = {
     
-    IGUI_Loot_All_Coins = "Забрать все монеты",
+     IGUI_Loot_All_Coins = "Забрать все монеты",
     IGUI_Coins_To_Account = "Перевести монеты на счет",
     IGUI_Contains = "Содержит",
 	IGUI_Valhalla_Shop = "Торговая точка игрока %1",
@@ -58,7 +58,9 @@ IGUI_RU = {
 	IGUI_Tab_Tools = "Инструменты",
 	IGUI_Tab_Cloth = "Одежда",
 	IGUI_Not_correct_place_for_shop = "Размещение магазина разрешено только в торговой зоне",
-    IGUI_AdminPanel_ShopEdit = "Ассортимент магазина",    
+    IGUI_AdminPanel_ShopEdit = "Ассортимент магазина",   
+    IGUI_Edit_Shop = "Редактирование магазина", 
+    IGUI_SaveShop = "Сохранить",
 
     IGUI_Balance_AccountNeeded2 = "У меня нет банковского счёта. Нужно создать его с помощью бумажника",
     IGUI_CarShop_Not_TradeZone = "Мне нужно быть в зоне торговли автомобилями",
@@ -73,4 +75,8 @@ IGUI_RU = {
     IGUI_CarShop_Is_Maximum = "Я уже продаю максимальное количество автомобилей ",
     IGUI_CarShop_Seller = "Продавец: ",
     IGUI_CarShop_Vehicles_On_Sale = "Авто в продаже: "
+    IGUI_LoadItem = "Перезагрузить",
+    IGUI_ReloadShopTooltip = "Загрузить таблицу из файла json",
+    IGUI_SaveShopTooltip = "Сохранить изменения, с записью в файл json",
+    IGUI_CancelShopTooltip = "Отменит все внесенные изменения",    
 }

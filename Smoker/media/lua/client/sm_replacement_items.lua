@@ -275,8 +275,8 @@ function SearchHandFireLighter(player)
 	end
 end
 
-function Eat_Nicorette(player)
-	local player = getSpecificPlayer(0);
+function Eat_Nicorette()	
+	local player = getPlayer()
 	local DATAPlayer = player:getModData();
 	if DATAPlayer.OnEat_Nicorette ~= nil and DATAPlayer.OnEat_Nicorette == true then
 		local stats = player:getStats();
