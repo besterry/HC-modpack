@@ -24,8 +24,6 @@ function PlayerAccountingUI:new()
 	o = ISUIElement:new(x, y, width, height)
 	setmetatable(o, self)
     o.textureBg = textureBg
-    -- o.closeButtonTexture = getTexture("media/ui/Dialog_Titlebar_CloseIcon.png");
-    -- o.closeButtonTexture = getTexture("media/ui/emote/no.png");
     o.closeButtonTexture = getTexture("media/ui/LootableMaps/map_x.png");
     o.width = width
     o.height = height
@@ -37,16 +35,11 @@ function PlayerAccountingUI:initialise()
 	ISUIElement.initialise(self)
 	ISUIElement.instantiate(self)
 	self:setVisible(true)
-	-- self.javaObject:setWantKeyEvents(false)
-	-- self.javaObject:setConsumeMouseEvents(false)
-
     local offsetTop = 30
     local offsetBottom = 34
     local offsetSide = 14
     local margin = 16
     self.margin = margin
-    -- local fontHeight = getTextManager():getFontHeight(UIFont.Small)
-    -- local closeWidth = getTextManager():MeasureStringX(UIFont.Small, UI_CLOSE)
     local y = offsetTop + 8
 
     self.closeBtn = ISButton:new(self.width - margin - offsetSide - 20, y, 20, 20, UI_CLOSE, self, self.btnHandler);
@@ -70,26 +63,29 @@ function PlayerAccountingUI:initialise()
     self.footer = ISRichTextPanel:new(offsetSide + margin, y, self.width - (offsetSide * 2) - (margin * 2), 0)
     local footerY = self:setFooter(offsetBottom)
 
-    -- print('self.height - footerY', self.height - footerY, self.height, footerY, self.height - y - offsetBottom - margin)
-
     local logDimension = {
         x = offsetSide + margin,
         y = y + margin,
         width = self.width - (offsetSide * 2) - (margin * 2),
-        -- height = self.height - y - offsetBottom - margin
         height = footerY - y - (margin*2)
     }
     self.logText = ISRichTextPanel:new(logDimension.x, logDimension.y, logDimension.width, logDimension.height)
     self:setLog()
 
     self.closeBtn:bringToTop()
+
+    self.onPlayerAccountingChange_handler = function()
+        self:removeChild(self.logText)
+        self.logText = ISRichTextPanel:new(logDimension.x, logDimension.y, logDimension.width, logDimension.height)
+        self:setLog()
+    end
+    Events.onPlayerAccountingChange.Add(self.onPlayerAccountingChange_handler)
     
 	self:addToUIManager()
-
 end
 
 function PlayerAccountingUI:setHeading()
-    local text = ' <H1> '..BLACK..'Nox Bank <LINE> <TEXT> <CENTRE> '..'Accounting: '..SPACE..BLACK..self.playerObj:getUsername()
+    local text = ' <H1> '..BLACK..'Knox Bank <LINE> <TEXT> <CENTRE> '..getText('IGUI_Accounting_Title')..SPACE..BLACK..self.playerObj:getUsername()
     self.heading:initialise()
     self.heading.background = false;
     self.heading:setMargins(0, 0, 0, 0)
@@ -105,7 +101,7 @@ function PlayerAccountingUI:setFooter(offsetBottom)
     local balance = main.getTotal()
     local text = (
         ' <H2> <CENTRE> =================== TOTAL ================= <BR> <LEFT>'..BLACK..'Coins: ' ..
-        balance.coin .. '$' .. ' <LINE> Specials: ' .. balance.specialCoin .. '$$ <BR> '
+        Currency.format(tostring(balance.coin)) .. '$' .. ' <LINE> Specials: ' .. Currency.format(tostring(balance.specialCoin)) .. '$$ <BR> '
     )
     self.footer:initialise()
     self.footer.background = false;
@@ -117,10 +113,27 @@ function PlayerAccountingUI:setFooter(offsetBottom)
 
     local y = self.height - self.footer.height - offsetBottom - self.margin
     self.footer:setY(y)
-    print(self.footer.height)
     return y
 end
 
+---@param coinsStr string
+---@param coin integer
+---@param specialCoin integer
+---@return string
+function PlayerAccountingUI.processCoinStr(coinsStr, coin, specialCoin)
+    local coinStr = Currency.format(tostring(coin))
+    local specialCoinStr = Currency.format(tostring(specialCoin))
+    if coin > 0 then
+        coinsStr = coinsStr .. coinStr .. '$ '
+    end
+    if coin > 0 and specialCoin > 0 then
+        coinsStr = coinsStr .. SPACE
+    end
+    if specialCoin > 0 then
+        coinsStr = coinsStr .. specialCoinStr .. '$$ '
+    end
+    return coinsStr
+end
 function PlayerAccountingUI.processLog()
     local logData = copyTable(main.getLog())
     local reverseData = {}
@@ -130,68 +143,33 @@ function PlayerAccountingUI.processLog()
     local text = ''
     for _, v in ipairs(reverseData) do
         local dt, event_type, coin, specialCoin, recipient = unpack(v)
-        coin = Currency.format(tostring(coin))
-        specialCoin = Currency.format(tostring(specialCoin))
         local indentX = getTextManager():MeasureStringX(UIFont.Small, dt .. ' : ') + 2 -- Прибито к дате
         -- local indentX = 300 -- Справа
         local line = ' <TEXT> ' .. dt .. BLACK..SPACE..': '
         if event_type == EVENT_TYPES.Linked then
-            line = line .. ' Linked wallet '
+            line = line .. getText('IGUI_Accounting_Linked_Wallet')
         end
         if event_type == EVENT_TYPES.TransferIn then
             local coinStr = DGREEN .. ' +'
-            if coin then
-                coinStr = coinStr .. coin .. '$'
-            end
-            if coin and specialCoin then
-                coinStr = coinStr .. SPACE
-            end
-            if specialCoin then
-                coinStr = coinStr .. specialCoin .. '$$'
-            end
-            line = line .. 'Incoming transfer from: ' .. recipient .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
+            coinStr = PlayerAccountingUI.processCoinStr(coinStr, coin, specialCoin)
+            line = line .. getText('IGUI_Accounting_Transfer_In') .. recipient .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
         end
         if event_type == EVENT_TYPES.TransferOut then
             local coinStr = DRED .. ' -'
-            if coin then
-                coinStr = coinStr .. coin .. '$'
-            end
-            if coin and specialCoin then
-                coinStr = coinStr .. SPACE
-            end
-            if specialCoin then
-                coinStr = coinStr .. specialCoin .. '$$'
-            end
-            line = line .. 'Outgoing transfer to: ' .. recipient .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
+            coinStr = PlayerAccountingUI.processCoinStr(coinStr, coin, specialCoin)
+            line = line .. getText('IGUI_Accounting_Transfer_Out') .. recipient .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
         end
         if event_type == EVENT_TYPES.Deposit then
             local coinStr = DGREEN .. ' +'
-            if coin then
-                coinStr = coinStr .. coin .. '$'
-            end
-            if coin and specialCoin then
-                coinStr = coinStr .. SPACE
-            end
-            if specialCoin then
-                coinStr = coinStr .. specialCoin .. '$$'
-            end
-            line = line .. 'Deposit: ' .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
+            coinStr = PlayerAccountingUI.processCoinStr(coinStr, coin, specialCoin)
+            line = line .. getText('IGUI_Accounting_Deposit') .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
         end
         if event_type == EVENT_TYPES.Withdraw then
             local coinStr = DRED .. ' -'
-            if coin then
-                coinStr = coinStr .. coin .. '$'
-            end
-            if coin and specialCoin then
-                coinStr = coinStr .. SPACE
-            end
-            if specialCoin then
-                coinStr = coinStr .. specialCoin .. '$$'
-            end
-            line = line .. 'Withdraw: ' .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
+            coinStr = PlayerAccountingUI.processCoinStr(coinStr, coin, specialCoin)
+            line = line .. getText('IGUI_Accounting_Withdraw') .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
         end
         text = text .. line .. '<BR>'
-        print(dt, event_type, coin, specialCoin, recipient)
     end
     return text
 end
@@ -231,6 +209,7 @@ function PlayerAccountingUI:btnHandler(button)
 end
 
 function PlayerAccountingUI:destroy()
+    Events.onPlayerAccountingChange.Remove(self.onPlayerAccountingChange_handler)
     self:setVisible(false);
     self:removeFromUIManager();
 end
@@ -240,7 +219,7 @@ function PlayerAccountingUI:prerender()
     self:drawTexture(texture, 0, 0, 1)
 end
 
----@param playerIndex int
+---@param playerIndex integer
 ---@param context ISContextMenu
 ---@param items table
 local onPreFillInventoryObjectContextMenu = function (playerIndex, context, items)
@@ -256,13 +235,13 @@ local onPreFillInventoryObjectContextMenu = function (playerIndex, context, item
     if not (item:getModData().belongsTo == username) then return end
 
     local ui = PlayerAccountingUI:new()
-    
-    context:addOption('Show Accounting', ui, ui.initialise);
+
+    context:addOption(getText('IGUI_Show_Accounting'), ui, ui.initialise);
 end
 
 Events.OnPreFillInventoryObjectContextMenu.Add(onPreFillInventoryObjectContextMenu);
 
-DShowPlayerAccountingUI = function ()
-    local ui = PlayerAccountingUI:new()
-    ui:initialise()
-end
+-- DShowPlayerAccountingUI = function () -- DEBUG
+--     local ui = PlayerAccountingUI:new()
+--     ui:initialise()
+-- end

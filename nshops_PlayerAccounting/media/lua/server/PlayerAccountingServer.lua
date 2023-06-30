@@ -126,7 +126,6 @@ base_BServer.Transfer = BServer.Transfer
 function BServer.Transfer(player, args)
     base_BServer.Transfer(player, args)
     serverAccaunting:Transfer(player, args)
-    print('Transfer args: ', bcUtils.dump(args))
 end
 
 
