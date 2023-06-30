@@ -65,6 +65,13 @@ commands.ReloadShopItems = function(player, args)
     LoadAll()
     print("Reload item")
 end
+commands.LogEditShop = function(player, args)
+    local EditShopLog = args[1]
+    for _, msg in ipairs(EditShopLog) do
+        writeLog("ShopEdit", msg)
+    end
+end
+
 
 
 local function shopItems_OnClientCommand(module, command, player, args)

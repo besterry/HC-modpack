@@ -11,7 +11,7 @@ local FONT_HGT_MEDIUM = getTextManager():getFontHeight(UIFont.Medium)
 
 local msg = nil
 local player = nil
-
+local EditShopLog= {}
 
 function LoadShopItems()
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
@@ -338,7 +338,7 @@ function ISEditShopUI:onChangeButtonClicked()
         if #modifiedParams > 0 then
             msg = msg .. " [Modified: " .. table.concat(modifiedParams, ", ") .. "]"
         end
-        writeLog("ShopEdit", msg)
+        table.insert(EditShopLog, msg)
         self.scrollingList.selected = selectedIndex
     end
 end
@@ -470,7 +470,7 @@ function ISEditShopUI:onNewItemAdded(button)
                 msg = player .. " add item:" .. tostring(newItem.name) .. " Tab:" .. tostring(newItem.tab) .. " price:" .. tostring(newItem.price) .. " blacklisted:" .. tostring(newItem.blacklisted) .. " SpecialCoin:" .. tostring(newItem.specialCoin) .. " Count:" .. tostring(newItem.quantity)
             end
         end        
-        writeLog("ShopEdit", msg)
+        table.insert(EditShopLog, msg)
         self:onClickTab()         
     end
 end
@@ -501,13 +501,14 @@ function ISEditShopUI:onDeleteButtonClicked()
             self.scrollingList:removeItem(selected)
             Shop.Sell[selected.item.value.name] = nil
             self:onClickTab()
+            table.insert(EditShopLog, msg)
         else   
             msg = player .. " delete item:" .. tostring(selected.item.value.name) .. " Tab:" .. tostring(selected.item.value.tab) .. " Price:" .. tostring(selected.item.value.price) .." from buy" 
             self.scrollingList:removeItem(selected)
             Shop.Items[selected.item.value.name] = nil
             self:onClickTab()
-        end
-       writeLog("ShopEdit", msg)
+            table.insert(EditShopLog, msg)
+        end        
     end    
 end
 
@@ -517,10 +518,12 @@ end
 function ISEditShopUI:onClick(button)
     if button.internal == "OK" then           
         sendClientCommand(getPlayer(), "shopItems", "PushShopItems", {Shop.Items,Shop.Sell})
+        sendClientCommand(getPlayer(), "shopItems", "LogEditShop", {EditShopLog})        
+        self:setVisible(false);
+        self:removeFromUIManager();        
     end
     if button.internal == "RELOADING" then        
         sendClientCommand(getPlayer(), "shopItems", "ReloadShopItems", {})
-        print ("Button")
         self:setVisible(false);
         self:removeFromUIManager();
     end
