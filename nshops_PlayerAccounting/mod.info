@@ -1,0 +1,5 @@
+name=PlayerAccounting
+poster=poster.png
+id=nshops_PlayerAccounting_h
+description=Отображаем баланс игрока в кошельке
+require=nshops_h
