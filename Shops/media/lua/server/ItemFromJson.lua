@@ -37,7 +37,6 @@ local function SaveJsonItems(theTable,filename)
     local json = Json.Encode(theTable);
     fileWriterObj:write(json);
     fileWriterObj:close();
-    print("File Saved: ",filename)
 end
 
 local function LoadAll()
@@ -61,6 +60,10 @@ commands.PushShopItems = function(player, args)
     shopItems = args[1]
     forSellItems = args[2]
     SaveAll()
+end
+commands.ReloadShopItems = function(player, args)
+    LoadAll()
+    print("Reload item")
 end
 
 

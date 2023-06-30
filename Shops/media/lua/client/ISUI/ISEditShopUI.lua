@@ -9,6 +9,9 @@ ISEditShopUI = ISPanel:derive("ISEditShopUI");
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
 local FONT_HGT_MEDIUM = getTextManager():getFontHeight(UIFont.Medium)
 
+local msg = nil
+local player = nil
+
 
 function LoadShopItems()
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
@@ -34,6 +37,7 @@ function ISEditShopUI:initialise()
     --кнопка Отмена (закрыть окно)
     self.cancel = ISButton:new(self:getWidth() - btnWid - 10, self:getHeight() - padBottom - btnHgt, btnWid, btnHgt, getText("UI_Cancel"), self, ISEditShopUI.onClick);
     self.cancel.internal = "CANCEL";
+    self.cancel.tooltip = getText("IGUI_CancelShopTooltip")
     self.cancel.anchorTop = false
     self.cancel.anchorBottom = true
     self.cancel:initialise();
@@ -44,12 +48,24 @@ function ISEditShopUI:initialise()
     --кнопка Сохранить
     self.ok = ISButton:new(10, self:getHeight() - padBottom - btnHgt, btnWid, btnHgt, getText("IGUI_SaveShop"), self, ISEditShopUI.onClick);
     self.ok.internal = "OK";
+    self.ok.tooltip = getText("IGUI_SaveShopTooltip")
     self.ok.anchorTop = false
     self.ok.anchorBottom = true
     self.ok:initialise();
     self.ok:instantiate();
     self.ok.borderColor = {r=1, g=1, b=1, a=0.1};
     self:addChild(self.ok);
+
+    self.loadButton = ISButton:new(self.ok.x + self.ok.width + 10, self.ok.y, btnWid, btnHgt, getText("IGUI_LoadItem"), self, ISEditShopUI.onClick);
+    self.loadButton.internal = "RELOADING";
+    self.loadButton.anchorTop = false;
+    self.loadButton.anchorBottom = true;
+    self.loadButton.tooltip = getText("IGUI_ReloadShopTooltip")
+    self.loadButton:initialise();
+    self.loadButton:instantiate();
+    self.loadButton.borderColor = {r=1, g=1, b=1, a=0.1};
+    self:addChild(self.loadButton);
+
 
     self.comboBox = ISComboBox:new(10, 50, 100, 20, self,self.onClickTab);
     self.comboBox:initialise();
@@ -148,7 +164,7 @@ function ISEditShopUI:initialise()
     self.findEntry.onTextChange = function()
         self:filterScrollingList()
     end
-
+    player = getPlayer():getUsername()
     self:onClickTab() -- Просто вызываем клик на таб чтоб он отрисовал список
 end
 
@@ -279,27 +295,37 @@ function ISEditShopUI:onChangeButtonClicked()
     local selectedIndex = self.scrollingList.selected
     local selectedId = self.comboBox.selected
     local seletedtab = self.comboBox:getOptionText(selectedId)
+    if self.ItemEntry:getInternalText() == "" then return end    
+    if self.PriceEntry:getInternalText() == "" and self.PriceEntry:getIsVisible() ~= true then return end
 
     if selected ~= nil then
         selected.item.value.name = self.ItemEntry:getInternalText() -- получаем имя Base.Axe
-        if selected.item.value.blacklisted ~= nil then --проверка существует ли поле
+        local modifiedParams = {}
+        if selected.item.value.blacklisted ~= nil then --проверка существует ли поле            
+            table.insert(modifiedParams, "blacklisted: true->false")
             selected.item.value.blacklisted = nil -- удаляем поле blacklisted
         end
         if self.BlockBox.selected[1] then --если блок выбран
+            table.insert(modifiedParams, "blacklisted: false->true")
             selected.item.value.blacklisted = true --добавляем параметр blacklisted
             if selected.item.value.price then --если есть цена
+                table.insert(modifiedParams, "price:" .. tostring(selected.item.value.price) .. "->nil")
                 selected.item.value.price = nil --убираем
             end
-            if selected.item.value.specialCoin then --если есть specialCoin
+            if selected.item.value.specialCoin then --если есть specialCoin                
+                table.insert(modifiedParams, "specialCoin:" .. tostring(selected.item.value.specialCoin) .. "->nil")
                 selected.item.value.specialCoin = nil --убираем
             end
-        elseif self.SpecialCoinBox.selected[1] and self.SpecialCoinBox:getIsVisible() then --если стоит чекбокс SpecialCoinBox             
+        elseif self.SpecialCoinBox.selected[1] and self.SpecialCoinBox:getIsVisible() then --если стоит чекбокс SpecialCoinBox              
+            table.insert(modifiedParams, "specialCoin: false -> true, price:" .. self.PriceEntry:getInternalText())           
             selected.item.value.specialCoin = true --добавляем поле SpecialCoinBox
             selected.item.value.price = tonumber(self.PriceEntry:getInternalText()) --устанавливаем цену
         else
-            if selected.item.value.specialCoin then --если чекбокс SpecialCoinBox есть
+            if selected.item.value.specialCoin then --если чекбокс SpecialCoinBox есть                
+            table.insert(modifiedParams, "specialCoin: true -> nil")
                 selected.item.value.specialCoin = nil --убираем
             end
+            table.insert(modifiedParams, "price:" .. tostring(selected.item.value.price) .. "->" .. self.PriceEntry:getInternalText()) 
             selected.item.value.price = tonumber(self.PriceEntry:getInternalText()) --Ставим цену в Coin
         end
         if seletedtab == "Sell" then
@@ -308,6 +334,11 @@ function ISEditShopUI:onChangeButtonClicked()
             Shop.Items[selected.item.value.name] = selected.item.value
         end
         self:onClickTab()
+        msg = player .. " edit item:" .. tostring(selected.item.value.name)
+        if #modifiedParams > 0 then
+            msg = msg .. " [Modified: " .. table.concat(modifiedParams, ", ") .. "]"
+        end
+        writeLog("ShopEdit", msg)
         self.scrollingList.selected = selectedIndex
     end
 end
@@ -397,7 +428,7 @@ function ISEditShopUI:onNewItemAdded(button)
     else
         count = 1
     end
-
+    -- Проверка на существование предмета (оишбки в написании)
     -- if not getItemNameFromFullType(itemName) then 
     --     self.NIerrorNameLabel:setVisible(true) 
     --     return 
@@ -420,6 +451,7 @@ function ISEditShopUI:onNewItemAdded(button)
                     specialCoin = hasSpecialCoin
                 }
                 Shop.Sell[itemName] = newItem
+                msg = player .. " add item:" .. tostring(newItem.name) .. " price:" .. tostring(newItem.price) .. " blacklisted:" .. tostring(newItem.blacklisted) .. " SpecialCoin:" .. tostring(newItem.specialCoin)
             end
         else
             if Shop.Items[itemName] then 
@@ -435,8 +467,10 @@ function ISEditShopUI:onNewItemAdded(button)
                     quantity = count
                 }    
                 Shop.Items[itemName] = newItem
+                msg = player .. " add item:" .. tostring(newItem.name) .. " Tab:" .. tostring(newItem.tab) .. " price:" .. tostring(newItem.price) .. " blacklisted:" .. tostring(newItem.blacklisted) .. " SpecialCoin:" .. tostring(newItem.specialCoin) .. " Count:" .. tostring(newItem.quantity)
             end
         end        
+        writeLog("ShopEdit", msg)
         self:onClickTab()         
     end
 end
@@ -461,22 +495,19 @@ function ISEditShopUI:onDeleteButtonClicked()
     local selected = self.scrollingList.items[self.scrollingList.selected]
     local selectedId = self.comboBox.selected
     local seletedName = self.comboBox:getOptionText(selectedId)
-    local msg = nil
-    local player = getPlayer()
-    print("Player:",player:getUsername())
     if selected ~= nil then
         if seletedName == "Sell" then           
-            --msg = player:getUsername() .. "delete item:" .. selected.item.text .. "from sell"            
+            msg = player .. " delete item:" .. tostring(selected.item.value.name) .. " from sell"
             self.scrollingList:removeItem(selected)
             Shop.Sell[selected.item.value.name] = nil
             self:onClickTab()
-        else            
-            --msg = player:getUsername() .. "delete item:" .. selected.item.text .. "from buy"
+        else   
+            msg = player .. " delete item:" .. tostring(selected.item.value.name) .. " Tab:" .. tostring(selected.item.value.tab) .. " Price:" .. tostring(selected.item.value.price) .." from buy" 
             self.scrollingList:removeItem(selected)
             Shop.Items[selected.item.value.name] = nil
             self:onClickTab()
         end
-       -- writeLog("ShopEdit", msg)
+       writeLog("ShopEdit", msg)
     end    
 end
 
@@ -486,6 +517,12 @@ end
 function ISEditShopUI:onClick(button)
     if button.internal == "OK" then           
         sendClientCommand(getPlayer(), "shopItems", "PushShopItems", {Shop.Items,Shop.Sell})
+    end
+    if button.internal == "RELOADING" then        
+        sendClientCommand(getPlayer(), "shopItems", "ReloadShopItems", {})
+        print ("Button")
+        self:setVisible(false);
+        self:removeFromUIManager();
     end
     if button.internal == "CANCEL" then
         self:setVisible(false);

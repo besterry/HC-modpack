@@ -1,6 +1,6 @@
 IGUI_RU = {
     
-    IGUI_Loot_All_Coins = "Забрать все монеты",
+     IGUI_Loot_All_Coins = "Забрать все монеты",
     IGUI_Coins_To_Account = "Перевести монеты на счет",
     IGUI_Contains = "Содержит",
 	IGUI_Valhalla_Shop = "Торговая точка игрока %1",
@@ -75,5 +75,8 @@ IGUI_RU = {
     IGUI_CarShop_Is_Maximum = "Я уже продаю максимальное количество автомобилей ",
     IGUI_CarShop_Seller = "Продавец: ",
     IGUI_CarShop_Vehicles_On_Sale = "Авто в продаже: "
-
+    IGUI_LoadItem = "Перезагрузить",
+    IGUI_ReloadShopTooltip = "Загрузить таблицу из файла json",
+    IGUI_SaveShopTooltip = "Сохранить изменения, с записью в файл json",
+    IGUI_CancelShopTooltip = "Отменит все внесенные изменения",    
 }

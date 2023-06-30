@@ -73,4 +73,8 @@ IGUI_EN = {
     IGUI_AdminPanel_ShopEdit = "Shop Edit", 
     IGUI_Edit_Shop = "Edit Shop, 
     IGUI_SaveShop = "Save",
+    IGUI_LoadItem = "Reload",
+    IGUI_ReloadShopTooltip = "Load table from json file",
+    IGUI_SaveShopTooltip = "Save changes, writing to json file",
+    IGUI_CancelShopTooltip = "Revert all changes made",
 }
