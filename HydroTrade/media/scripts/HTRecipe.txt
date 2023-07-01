@@ -861,6 +861,25 @@ recipe Unpack Swatpack
         Time:10000,
         Category:Survivalist,
     }
+
+	/*Обновить биокостюм*/
+	recipe Make biosuit
+	{
+		Glasspanel=1,
+		HCRubbercement=3,
+		HCAirfilter,
+		HCOxygentank,
+        destroy HazmatSuit,
+        NoBrokenItems:false,
+		latexfabric=8,		
+		keep AssemblyMachine,		
+		keep HCWorkgloves,
+		PetrolCan/LargePetrolCanFull,		
+        Result:HazmatSuit,
+		CanBeDoneFromFloor:true,
+        Time:10000,
+        Category:Survivalist,
+    }
 	
 	/*Сделать пустой баллон*/
 	recipe Make empty oxygen tank
