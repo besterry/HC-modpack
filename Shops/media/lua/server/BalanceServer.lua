@@ -69,7 +69,7 @@ function BServer.Transfer(player,args)
     recipientAccount.coin = recipientAccount.coin+args[1]
     recipientAccount.specialCoin = recipientAccount.specialCoin+args[2]
 
-    msg = "Transfer: %s -> %s  Coin:%s Special:%s [Sender: %s oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s Recipient: `%s oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s]"
+    msg = "Transfer: %s -> %s  Coin:%s Special:%s [Sender: %s oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s Recipient: %s oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s]"
     msg = string.format(msg,username,args[3],account.coin-account.coin+args[1],account.specialCoin-account.specialCoin+args[2],username,account.coin+args[1],account.specialCoin+args[2],account.coin,account.specialCoin,
     args[3],recipientAccount.coin-args[1],recipientAccount.specialCoin-args[2],recipientAccount.coin,recipientAccount.specialCoin)
     BServer.writeLog(msg)
