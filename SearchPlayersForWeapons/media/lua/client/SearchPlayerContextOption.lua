@@ -1,7 +1,7 @@
 function onSearchPlayerContextSelected(worldobjects, playerObj, otherPlayer)
-    print(playerObj:getDisplayName() .. " is searching " .. otherPlayer:getDisplayName());
-    print(playerObj:getDisplayName() .. " : " .. playerObj:getOnlineID())
-    print(otherPlayer:getDisplayName() .. " : " .. otherPlayer:getOnlineID())
+    -- print(playerObj:getDisplayName() .. " is searching " .. otherPlayer:getDisplayName());
+    -- print(playerObj:getDisplayName() .. " : " .. playerObj:getOnlineID())
+    -- print(otherPlayer:getDisplayName() .. " : " .. otherPlayer:getOnlineID())
     if luautils.walkAdj(playerObj, otherPlayer:getCurrentSquare()) then
         ISTimedActionQueue.add(SearchPlayerAction:new(playerObj, otherPlayer))
     end

@@ -35,7 +35,7 @@ function SearchPlayerUI:initialise()
     self.foundItems:setVisible(false);
     self:addChild(self.foundItems);
 
-    print(self.otherPlayer);
+    --print(self.otherPlayer);
 
     sendClientCommand("SearchPlayer", "requestServerItems", { self.otherPlayer:getOnlineID() })
 end
@@ -158,7 +158,7 @@ function SearchPlayerUI:new(x, y, width, height, player, otherPlayer)
 end
 
 SearchPlayerUI.ReceiveItem = function (player, item)
-    print("Searched " .. player:getDisplayName() .. " and found a " .. item:getName());
+    --print("Searched " .. player:getDisplayName() .. " and found a " .. item:getName());
     if SearchPlayerUI.instance and SearchPlayerUI.instance:isVisible() then
         SearchPlayerUI.instance.foundItems:addItem(item:getName(), item);
         SearchPlayerUI.instance.foundItems:setVisible(true);
