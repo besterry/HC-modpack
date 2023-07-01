@@ -17,11 +17,11 @@ local function OnServerCommand(module, command, args)
             local playerInv = player:getInventory();
             local weapons = playerInv:getAllEval(predicateWeapon);
             player:Say(getText("Tooltip_item_Being_searched_by") .. otherPlayer:getDisplayName())
-            print("Found " .. weapons:size() .. " weapons");
+            --print("Found " .. weapons:size() .. " weapons");
             if weapons and weapons:size() > 0 then
                 for i=1,weapons:size() do
                     local item = weapons:get(i-1)
-                    print(item:getName())
+                    --print(item:getName())
                     tradingUISendAddItem(player, otherPlayer, item);
                 end
             end
