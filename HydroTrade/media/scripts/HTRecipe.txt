@@ -653,7 +653,7 @@ item Swatpack
 		icon			= Swatpack,
 		DisplayCategory	= Survivalist,
 	}
-	
+	/*Распаковка комплекта сват*/
 recipe Unpack Swatpack
 	{
         destroy Swatpack,
@@ -779,7 +779,7 @@ recipe Unpack Swatpack
         Category:Survivalist,
     }
 	
-	/*Добыча олова киркой*/
+	/*Добыча олова киркой большой карьер*/
 	recipe mine tin with a pickaxe
 	{
 		keep PickAxe,
@@ -792,7 +792,7 @@ recipe Unpack Swatpack
         Category:Stoneworking,
     }
 	
-	/*Добыча олова буром*/
+	/*Добыча олова буром большой карьер*/
 	recipe mine tin with a Miningdrill
 	{
 		HCMiningdrillpowered,
@@ -890,7 +890,7 @@ recipe Unpack Swatpack
         Category:Survivalist,
     }
 	
-	/*Плашка*/
+	/*крафт плашки*/
 	recipe Make CutThreads
 	{		
 		MetalBar,
@@ -954,7 +954,7 @@ recipe Unpack Swatpack
         Category:Stoneworking,
         OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
-	/*Обучение*/
+	/*Обучение строительство*/
 	recipe Learn
     {
         ConstructionGuide,
@@ -965,7 +965,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTConstructionGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение кулинария*/
 	recipe Learn
     {
         CookingGuide,
@@ -976,7 +976,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTCookingGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение фермерство*/
 	recipe Learn
     {
         FarmingGuide,
@@ -987,7 +987,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTFarmingGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение медицина*/
 	recipe Learn
     {
         DoctorGuide,
@@ -998,7 +998,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTDoctorGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение электрик*/
 	recipe Learn
     {
         ElectricityGuide,
@@ -1009,7 +1009,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTElectricityGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение металлообработка*/
 	recipe Learn
     {
         MetalWeldingGuide,
@@ -1020,7 +1020,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTMetalWeldingGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение механик*/
 	recipe Learn
     {
         MechanicsGuide,
@@ -1031,7 +1031,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTMechanicsGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение шитье*/
 	recipe Learn
     {
         TailoringGuide,
@@ -1042,7 +1042,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTTailoringGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение звероловство*/
 	recipe Learn
     {
         TrappingGuide,
@@ -1053,7 +1053,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTTrappingGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение рыбалка*/
 	recipe Learn
     {
         FishingGuide,
@@ -1064,7 +1064,7 @@ recipe Unpack Swatpack
 		OnGiveXP:HTFishingGuide_OnGiveXP,
     }
 	
-	/*Обучение*/
+	/*Обучение собирательство*/
 	recipe Learn
     {
         PlantScavengingGuide,

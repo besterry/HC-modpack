@@ -619,9 +619,9 @@ recipe Make Arrow
 	
 recipe Make 5 Arrow
     {
-    HCBlackfeathers/HCWhitefeathers/HCBrownfeathers/HCRedfeather/HCStripedfeather/HCBluejayfeather/HCDucttapefletching,
-    HCStonearrowhead/HCBonearrowhead/HCMetalArrowhead,
-	Glue/HCTar/HCRubbercement/HCSuperglue/HCHotgluegunfull/HCGluejar/Woodglue/HCWoodgluejar,
+    HCBlackfeathers/HCWhitefeathers/HCBrownfeathers/HCRedfeather/HCStripedfeather/HCBluejayfeather/HCDucttapefletching=5,
+    HCStonearrowhead/HCBonearrowhead/HCMetalArrowhead=5,
+	Glue/HCTar/HCRubbercement/HCSuperglue/HCHotgluegunfull/HCGluejar/Woodglue/HCWoodgluejar=3,
     WoodenStick=5,
     NeedToBeLearn:true,
     Result:HCArrow=5,
@@ -658,7 +658,7 @@ recipe Make 10 Bolt
     Result:HCXbowbolt=10,
     Time:30,
     NeedToBeLearn:true,
-    Time:2000,
+    Time:1500,
     Category:Smithing,
     OnCreate:getBurned,
     OnGiveXP:HCWelding_OnGiveXP,
