@@ -70,6 +70,7 @@ ItemName_RU = {
 	ItemName_PinkSlip.70cuda = "Автомобиль: Cuda",	
 	ItemName_PinkSlip.isoContainer2 = "Контейнер: Грузовой",
 	ItemName_PinkSlip.isoContainer3tanker = "Контейнер: Цистерна",
+	ItemName_PinkSlip.1992florino = "Автомобиль: 1992florino",
 	ItemName_Base.Screws = "Болт с левой резьбой",
 	ItemName_Base.worldmap1 = "Карта",
 	

@@ -4,6 +4,21 @@ module PinkSlip {
         Base
     }
 	
+    item 1992florino
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 1992florino,
+        VehicleID = Base.1992florino,
+        WorldStaticModel = CW.AutoTitle, 
+		Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
 	item isoContainer3tanker
     {
         DisplayCategory = CarWanna,
