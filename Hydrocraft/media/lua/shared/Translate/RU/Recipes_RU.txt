@@ -3158,4 +3158,5 @@ Items_RU = {
 	Recipe_Pasteurization_of_milk = "Пастеризация молока",
 	Recipe_Disassemble_box = "Разобрать коробку",
 	Recipe_Fill_flask_with_water = "Наполнить колбу водой",
+	Recipe_Store_in_a_Box = "Сложить в коробку",
 }
