@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>4b515192-2713-482d-8c80-9bde6b788264</m_GUID>
+    <m_MaleModel>Skinned\Clothes\RookieJacketDOWN</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\RookieJacketDOWN</m_FemaleModel>
+    <textureChoices>Clothes\RookieJacket\RookieJacketDuty</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_Masks>13</m_Masks>
+	<m_Masks>14</m_Masks>
+	<m_Masks>3</m_Masks>
+	<m_Masks>5</m_Masks>
+</clothingItem>

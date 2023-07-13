@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>2c2e30c4-f3d6-4ae1-9220-23f67c5ba1b2</m_GUID>
+    <m_MaleModel>Skinned\Clothes\PS5MJacketDOWN</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\PS5MJacketDOWN</m_FemaleModel>
+    <textureChoices>Clothes\Mercenaries\TwilightJacketMercs</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_Masks>12</m_Masks>
+	<m_Masks>3</m_Masks>
+	<m_Masks>5</m_Masks>
+</clothingItem>

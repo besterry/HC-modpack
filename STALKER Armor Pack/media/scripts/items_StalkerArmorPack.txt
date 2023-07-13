@@ -1,0 +1,21 @@
+module Base
+{
+	imports {
+		Base
+		}
+	
+	
+	item GasMaskFilter
+	{
+	    DisplayCategory = Tool,
+		Weight	=	0.1,
+		Type	=	Normal,
+		DisplayName	=   Gas Mask Filter,
+		Icon	=	GasMaskFilter,
+		MetalValue = 2,
+		SurvivalGear = TRUE,
+		Medical = TRUE,
+		WorldStaticModel = GasMaskFilter,
+	}
+	
+}

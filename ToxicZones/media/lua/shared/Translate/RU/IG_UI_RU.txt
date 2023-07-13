@@ -1,0 +1,7 @@
+IGUI_RU = {
+    IGUI_AdminPanel_ToxicZone = "Toxic Zone",
+
+	IGUI_ToxicZone_AddZone = "Добавить зону",
+	IGUI_ToxicZone_Title = "Токсичная зона",
+	IGUI_ToxicZone_RemoveConfirm = "Вы действительно хотите удалить "%1" точксичную зону?"
+}

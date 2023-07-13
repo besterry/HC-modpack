@@ -1,0 +1,2442 @@
+module Base
+{
+    model SunriseGround
+    {
+        mesh = WorldItems/Clothing/SunriseGround,
+		texture = WorldItems/sunrisejacket,
+        scale = 1
+    }
+	model SunriseLegsGround
+    {
+        mesh = WorldItems/Clothing/Sunrise_TrousersGround,
+		texture = WorldItems/sunrisepants,
+        scale = 1
+    }
+	
+	model SunriseVestGround
+    {
+        mesh = WorldItems/Clothing/Sunrise_VestGround,
+		texture = WorldItems/SunriseVest,
+        scale = 1
+    }
+	
+	model GP5GasMaskGround
+    {
+        mesh = WorldItems/Clothing/GP5GasMaskGround,
+		texture = WorldItems/GP5GasMask,
+        scale = 1
+    }
+	
+	model RookieJacketLoner
+    {
+        mesh = WorldItems/Clothing/RookieJacketGround,
+		texture = WorldItems/RookieJacketLoner,
+        scale = 1
+    }
+	
+	model RookieJacketBandit
+    {
+        mesh = WorldItems/Clothing/RookieJacketGround,
+		texture = WorldItems/RookieJacketBandit,
+        scale = 1
+    }	
+	
+	model RookieJacketDuty
+    {
+        mesh = WorldItems/Clothing/RookieJacketGround,
+		texture = WorldItems/RookieJacketDuty,
+        scale = 1
+    }
+	
+	model RookieJacketClearSky
+    {
+        mesh = WorldItems/Clothing/RookieJacketGround,
+		texture = WorldItems/RookieJacketClearSky,
+        scale = 1
+    }
+	
+	model RookieJacketFreedom
+    {
+        mesh = WorldItems/Clothing/RookieJacketGround,
+		texture = WorldItems/RookieJacketFreedom,
+        scale = 1
+    }
+	
+	model FaceMaskGround
+    {
+        mesh = WorldItems/Clothing/FaceMaskGround,
+		texture = WorldItems/FaceMask,
+        scale = 1
+    }
+	
+	model M40GasMaskGround
+    {
+        mesh = WorldItems/Clothing/M40GasMaskGround,
+		texture = WorldItems/M40GasMask,
+        scale = 1
+    }
+	
+	model LCFJacket
+    {
+        mesh = WorldItems/Clothing/LCJacketGround,
+		texture = WorldItems/LCFJacket,
+        scale = 1
+    }
+	
+	model LCSJacket
+    {
+        mesh = WorldItems/Clothing/LCJacketGround,
+		texture = WorldItems/LCSJacket,
+        scale = 1
+    }
+	
+	model LCFVestGround
+    {
+        mesh = WorldItems/Clothing/LCBulletVestGround,
+		texture = WorldItems/LCFVest,
+        scale = 1
+    }
+	
+	model LCSVestGround
+    {
+        mesh = WorldItems/Clothing/LCBulletVestGround,
+		texture = WorldItems/LCSVest,
+        scale = 1
+    }
+	
+	model LCFPantsGround
+    {
+        mesh = WorldItems/Clothing/LCPantsGround,
+		texture = WorldItems/LCFPants,
+        scale = 1
+    }
+	
+	model LCSPantsGround
+    {
+        mesh = WorldItems/Clothing/LCPantsGround,
+		texture = WorldItems/LCSPants,
+        scale = 1
+    }
+	
+	model FencedLCVestGround
+    {
+        mesh = WorldItems/Clothing/LCBulletVestGround,
+		texture = WorldItems/FencedLCVest,
+        scale = 1
+    }
+	
+	model FencedLCPantsGround
+    {
+        mesh = WorldItems/Clothing/LCPantsGround,
+		texture = WorldItems/FencedLCPants,
+        scale = 1
+    }
+	
+	model FencedLCJacketGround
+    {
+        mesh = WorldItems/Clothing/LCJacketGround,
+		texture = WorldItems/FencedLCJacket,
+        scale = 1
+    }
+	
+	model CS1VestGround
+    {
+        mesh = WorldItems/Clothing/CS1VestGround,
+		texture = WorldItems/CS1Vest,
+        scale = 1
+    }
+	
+	model CS1PantsGround
+    {
+        mesh = WorldItems/Clothing/CS1PantsGround,
+		texture = WorldItems/CS1Pants,
+        scale = 1
+    }
+	
+	model CS1JacketGround
+    {
+        mesh = WorldItems/Clothing/CS1JacketGround,
+		texture = WorldItems/CS1Jacket,
+        scale = 1
+    }
+	
+	model SphereM12Helmet
+    {
+        mesh = WorldItems/Clothing/SphereM12Ground,
+		texture = WorldItems/M12Military,
+        scale = 1
+    }
+	
+	model SphereM12HelmetCS
+    {
+        mesh = WorldItems/Clothing/SphereM12Ground,
+		texture = WorldItems/M12CS,
+        scale = 1
+    }
+	
+	model SphereM12HelmetDuty
+    {
+        mesh = WorldItems/Clothing/SphereM12Ground,
+		texture = WorldItems/M12Duty,
+        scale = 1
+    }
+	
+	model SphereM12HelmetFreedom
+    {
+        mesh = WorldItems/Clothing/SphereM12Ground,
+		texture = WorldItems/M12Freedom,
+        scale = 1
+    }
+	
+	model SphereM12HelmetMonolith
+    {
+        mesh = WorldItems/Clothing/SphereM12Ground,
+		texture = WorldItems/M12Monolith,
+        scale = 1
+    }
+	
+	model Exohelm
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/Exohelm,
+        scale = 1
+    }
+	
+	model ExohelmBandit
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/ExohelmBandit,
+        scale = 1
+    }
+	
+	model ExohelmCS
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/ExohelmCS,
+        scale = 1
+    }
+	
+	model ExohelmDuty
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/ExohelmDuty,
+        scale = 1
+    }
+	
+	model ExohelmFreedom
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/ExohelmFreedom,
+        scale = 1
+    }
+	
+	model ExohelmMercs
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/ExohelmMercs,
+        scale = 1
+    }
+	
+	model ExohelmMilitary
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/ExohelmMilitary,
+        scale = 1
+    }
+	
+	model ExohelmMonolith
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/ExohelmMonolith,
+        scale = 1
+    }
+	
+	model PPM88
+    {
+        mesh = WorldItems/Clothing/PPM88Ground,
+		texture = WorldItems/PPM88,
+        scale = 1
+    }
+	
+	model SEVAHelm
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelm,
+        scale = 1
+    }
+	
+	model SEVAHelmBandit
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelmBandit,
+        scale = 1
+    }
+	
+	model SEVAHelmDuty
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelmDuty,
+        scale = 1
+    }
+	
+	model SEVAHelmFreedom
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelmFreedom,
+        scale = 1
+    }
+	
+	model SEVAHelmEcologist
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelmEcologist,
+        scale = 1
+    }
+	
+	model SEVAHelmCS
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelmCS,
+        scale = 1
+    }
+	
+	model SEVAHelmMercs
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelmMercs,
+        scale = 1
+    }
+	
+	model SEVAHelmMonolith
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelmMonolith,
+        scale = 1
+    }
+	
+	model SEVAHelmMonolithGreen
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/SEVAHelmMonolithGreen,
+        scale = 1
+    }
+	
+	model GP10Z
+    {
+        mesh = WorldItems/Clothing/GP10ZGround,
+		texture = WorldItems/GP10Z,
+        scale = 1
+    }
+	
+	
+	
+	model Balaclava
+    {
+        mesh = WorldItems/Clothing/BalaclavaGround,
+		texture = WorldItems/Balaclava,
+        scale = 1
+    }
+	
+	model Bandana
+    {
+        mesh = WorldItems/Clothing/BandanaGround,
+		texture = WorldItems/Bandana,
+        scale = 1
+    }
+	
+	model SovietPMG
+    {
+        mesh = WorldItems/Clothing/SovietPMGGround,
+		texture = WorldItems/SovietPMG,
+        scale = 1
+    }
+	
+	model SteelHelmMask
+    {
+        mesh = WorldItems/Clothing/SteelHelmetMaskGround,
+		texture = WorldItems/SteelHelmet,
+        scale = 1
+    }
+	
+	model SteelMask
+    {
+        mesh = WorldItems/Clothing/SteelMaskGround,
+		texture = WorldItems/SteelHelmet,
+        scale = 1
+    }
+	
+	model SteelHelm
+    {
+        mesh = WorldItems/Clothing/SteelHelmetGround,
+		texture = WorldItems/SteelHelmet,
+        scale = 1
+    }
+	
+	model Sphere08HelmetMilitary
+    {
+        mesh = WorldItems/Clothing/Sphere08Ground,
+		texture = WorldItems/M12Military,
+        scale = 1
+    }
+	
+	model Sphere08HelmetCS
+    {
+        mesh = WorldItems/Clothing/Sphere08Ground,
+		texture = WorldItems/M12CS,
+        scale = 1
+    }
+	
+	model Sphere08HelmetDuty
+    {
+        mesh = WorldItems/Clothing/Sphere08Ground,
+		texture = WorldItems/M12Duty,
+        scale = 1
+    }
+	
+	model Sphere08HelmetFreedom
+    {
+        mesh = WorldItems/Clothing/Sphere08Ground,
+		texture = WorldItems/M12Freedom,
+        scale = 1
+    }
+	
+	model Sphere08HelmetMonolith
+    {
+        mesh = WorldItems/Clothing/Sphere08Ground,
+		texture = WorldItems/M12Monolith,
+        scale = 1
+    }
+	
+	model Sphere08GlassMilitary
+    {
+        mesh = WorldItems/Clothing/Sphere08GlassGround,
+		texture = WorldItems/Sphere08Military,
+        scale = 1
+    }
+	
+	model Sphere08GlassCS
+    {
+        mesh = WorldItems/Clothing/Sphere08GlassGround,
+		texture = WorldItems/Sphere08CS,
+        scale = 1
+    }
+	
+	model Sphere08GlassDuty
+    {
+        mesh = WorldItems/Clothing/Sphere08GlassGround,
+		texture = WorldItems/Sphere08Duty,
+        scale = 1
+    }
+	
+	model Sphere08GlassFreedom
+    {
+        mesh = WorldItems/Clothing/Sphere08GlassGround,
+		texture = WorldItems/Sphere08Freedom,
+        scale = 1
+    }
+	
+	model Sphere08GlassMonolith
+    {
+        mesh = WorldItems/Clothing/Sphere08GlassGround,
+		texture = WorldItems/Sphere08Monolith,
+        scale = 1
+    }
+	
+	model Sphere08MaskMilitary
+    {
+        mesh = WorldItems/Clothing/Sphere08MaskGround,
+		texture = WorldItems/Sphere08Military,
+        scale = 1
+    }
+	
+	model Sphere08MaskCS
+    {
+        mesh = WorldItems/Clothing/Sphere08MaskGround,
+		texture = WorldItems/Sphere08CS,
+        scale = 1
+    }
+	
+	model Sphere08MaskDuty
+    {
+        mesh = WorldItems/Clothing/Sphere08MaskGround,
+		texture = WorldItems/Sphere08Duty,
+        scale = 1
+    }
+	
+	model Sphere08MaskFreedom
+    {
+        mesh = WorldItems/Clothing/Sphere08MaskGround,
+		texture = WorldItems/Sphere08Freedom,
+        scale = 1
+    }
+	
+	model Sphere08MaskMonolith
+    {
+        mesh = WorldItems/Clothing/Sphere08MaskGround,
+		texture = WorldItems/Sphere08Monolith,
+        scale = 1
+    }
+	
+	model PBF1
+    {
+        mesh = WorldItems/Clothing/PBFGround,
+		texture = WorldItems/PBF1,
+        scale = 1
+    }
+	
+	model PBF1CS
+    {
+        mesh = WorldItems/Clothing/PBFGround,
+		texture = WorldItems/PBF1CS,
+        scale = 1
+    }
+	
+	model PBF1Duty
+    {
+        mesh = WorldItems/Clothing/PBFGround,
+		texture = WorldItems/PBF1Duty,
+        scale = 1
+    }
+	
+	model PBF1Freedom
+    {
+        mesh = WorldItems/Clothing/PBFGround,
+		texture = WorldItems/PBF1Freedom,
+        scale = 1
+    }
+	
+	model PBF2
+    {
+        mesh = WorldItems/Clothing/PBFGround,
+		texture = WorldItems/PBF2,
+        scale = 1
+    }
+	
+	model PBF2CS
+    {
+        mesh = WorldItems/Clothing/PBFGround,
+		texture = WorldItems/PBF2CS,
+        scale = 1
+    }
+	
+	model PBF2Duty
+    {
+        mesh = WorldItems/Clothing/PBFGround,
+		texture = WorldItems/PBF2Duty,
+        scale = 1
+    }
+	
+	model PBF2Freedom
+    {
+        mesh = WorldItems/Clothing/PBFGround,
+		texture = WorldItems/PBF2Freedom,
+        scale = 1
+    }
+	
+	model RespiratorGold
+    {
+        mesh = WorldItems/Clothing/RespiratorGround,
+		texture = WorldItems/RespiratorGold,
+        scale = 1
+    }
+	model RespiratorSilver
+    {
+        mesh = WorldItems/Clothing/RespiratorGround,
+		texture = WorldItems/RespiratorSilver,
+        scale = 1
+    }
+	model RespiratorDuty
+    {
+        mesh = WorldItems/Clothing/RespiratorGround,
+		texture = WorldItems/RespiratorDuty,
+        scale = 1
+    }
+	model RespiratorFreedom
+    {
+        mesh = WorldItems/Clothing/RespiratorGround,
+		texture = WorldItems/RespiratorFreedom,
+        scale = 1
+    }
+	model RespiratorMonolith
+    {
+        mesh = WorldItems/Clothing/RespiratorGround,
+		texture = WorldItems/RespiratorMonolith,
+        scale = 1
+    }
+	model RespiratorCS
+    {
+        mesh = WorldItems/Clothing/RespiratorGround,
+		texture = WorldItems/RespiratorCS,
+        scale = 1
+    }
+	model ServiceOutfitVest
+    {
+        mesh = WorldItems/Clothing/ServiceOutfitVestGround,
+		texture = WorldItems/ServiceOutfitVest,
+        scale = 1
+    }
+	model ServiceOutfitPants
+    {
+        mesh = WorldItems/Clothing/ServiceOutfitPantsGround,
+		texture = WorldItems/ServiceOutfitPants,
+        scale = 1
+    }
+	model ServiceOutfitShirt
+    {
+        mesh = WorldItems/Clothing/ServiceOutfitShirtGround,
+		texture = WorldItems/ServiceOutfitShirt,
+        scale = 1
+    }
+	
+	model PS5MJacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/PS5MJacket,
+        scale = 1
+    }
+	
+	model PS5MVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/PS5MVest,
+        scale = 1
+    }
+	
+	model LootedSEVAVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/LootedSEVAVest,
+        scale = 1
+    }
+	
+	model WatchmanOfFreedomVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/WatchmanOfFreedomVest,
+        scale = 1
+    }
+	
+	model CS4AVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/CS4AVest,
+        scale = 1
+    }
+	
+	model KeeperOfFreedomVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/KeeperOfFreedomVest,
+        scale = 1
+    }
+	
+	model MercenarySEVAVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/MercenarySEVAVest,
+        scale = 1
+    }
+	
+	model MonolithPatchworkSEVAVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/MonolithPatchworkSEVAVest,
+        scale = 1
+    }
+	
+	model PS5MTVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/PS5MTVest,
+        scale = 1
+    }
+	
+	model PS59MDVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/PS59MDVest,
+        scale = 1
+    }
+	
+	model SentinelOfFreedomVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/SentinelOfFreedomVest,
+        scale = 1
+    }
+	
+	model PS5MPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/PS5MPants,
+        scale = 1
+    }
+	
+	model CS2TPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/CS2TPants,
+        scale = 1
+    }
+	
+	model LootedSEVAPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/LootedSEVAPants,
+        scale = 1
+    }
+	
+	model WatchmanOfFreedomPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/WatchmanOfFreedomPants,
+        scale = 1
+    }
+	
+	model CS4APants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/CS4APants,
+        scale = 1
+    }
+	
+	model KeeperOfFreedomPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/KeeperOfFreedomPants,
+        scale = 1
+    }
+	
+	model MercenarySEVAPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/MercenarySEVAPants,
+        scale = 1
+    }
+	
+	model MonolithPatchworkSEVAPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/MonolithPatchworkSEVAPants,
+        scale = 1
+    }
+	
+	model PS5MTPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/PS5MTPants,
+        scale = 1
+    }
+	
+	model PS59MDPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/PS59MDPants,
+        scale = 1
+    }
+	
+	model SentinelOfFreedomPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/SentinelOfFreedomPants,
+        scale = 1
+    }
+	
+	model CS2TShirt
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/CS2TShirt,
+        scale = 1
+    }
+	
+	model LootedSEVAShirt
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/LootedSEVAShirt,
+        scale = 1
+    }
+	
+	model WatchmanOfFreedomShirt
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/WatchmanOfFreedomShirt,
+        scale = 1
+    }
+	
+	model CS4AShirt
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/CS4AShirt,
+        scale = 1
+    }
+	
+	model KeeperOfFreedomShirt
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/KeeperOfFreedomShirt,
+        scale = 1
+    }
+	
+	model MercenarySEVAShirt
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/MercenarySEVAShirt,
+        scale = 1
+    }
+	
+	model MonolithPatchworkSEVAShirt
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/MonolithPatchworkSEVAShirt,
+        scale = 1
+    }
+	
+	model PS5MTShirt
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/PS5MTShirt,
+        scale = 1
+    }
+	
+	model PS59MDShirt
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/PS59MDShirt,
+        scale = 1
+    }
+	
+	model SentinelOfFreedomShirt
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/SentinelOfFreedomShirt,
+        scale = 1
+    }
+	
+	model OvercoatWhite
+    {
+        mesh = WorldItems/Clothing/OvercoatGround,
+		texture = WorldItems/OvercoatWhite,
+        scale = 1
+    }
+	
+	model OvercoatBrown
+    {
+        mesh = WorldItems/Clothing/OvercoatGround,
+		texture = WorldItems/OvercoatBrown,
+        scale = 1
+    }
+	
+	model OvercoatBlack
+    {
+        mesh = WorldItems/Clothing/OvercoatGround,
+		texture = WorldItems/OvercoatBlack,
+        scale = 1
+    }
+	
+	model ExoBackpack
+    {
+        mesh = WorldItems/Clothing/ExoBackpackGround,
+		texture = WorldItems/ExoBackpack,
+        scale = 1
+    }
+	
+	model ExoBackpackBandit
+    {
+        mesh = WorldItems/Clothing/ExoBackpackGround,
+		texture = WorldItems/ExoBackpackBandit,
+        scale = 1
+    }
+	
+	model ExoBackpackCS
+    {
+        mesh = WorldItems/Clothing/ExoBackpackGround,
+		texture = WorldItems/ExoBackpackCS,
+        scale = 1
+    }
+	
+	model ExoBackpackDuty
+    {
+        mesh = WorldItems/Clothing/ExoBackpackGround,
+		texture = WorldItems/ExoBackpackDuty,
+        scale = 1
+    }
+	
+	model ExoBackpackFreedom
+    {
+        mesh = WorldItems/Clothing/ExoBackpackGround,
+		texture = WorldItems/ExoBackpackFreedom,
+        scale = 1
+    }
+	
+	model ExoBackpackMercs
+    {
+        mesh = WorldItems/Clothing/ExoBackpackGround,
+		texture = WorldItems/ExoBackpackMercs,
+        scale = 1
+    }
+	
+	model ExoBackpackMilitary
+    {
+        mesh = WorldItems/Clothing/ExoBackpackGround,
+		texture = WorldItems/ExoBackpackMilitary,
+        scale = 1
+    }
+	
+	model ExoBackpackMonolith
+    {
+        mesh = WorldItems/Clothing/ExoBackpackGround,
+		texture = WorldItems/ExoBackpackMonolith,
+        scale = 1
+    }
+	
+	model ExosuitBootsBandit
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsBandit,
+        scale = 1
+    }
+	
+	model ExosuitBootsCS
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsCS,
+        scale = 1
+    }
+	
+	model ExosuitBootsDuty
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsDuty,
+        scale = 1
+    }
+	
+	model ExosuitBootsEco
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsEco,
+        scale = 1
+    }
+	
+	model ExosuitBootsFreedom
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsFreedom,
+        scale = 1
+    }
+	
+	model ExosuitBootsMercs
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsMercs,
+        scale = 1
+    }
+	
+	model ExosuitBootsMilitary
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsMilitary,
+        scale = 1
+    }
+	
+	model ExosuitBootsMonolith
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsMonolith,
+        scale = 1
+    }
+	
+	model ExosuitGlovesBandit
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesBandit,
+        scale = 1
+    }
+	
+	model ExosuitGlovesCS
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesCS,
+        scale = 1
+    }
+	
+	model ExosuitGlovesDuty
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesDuty,
+        scale = 1
+    }
+	
+	model ExosuitGlovesEco
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesEco,
+        scale = 1
+    }
+	
+	model ExosuitGlovesFreedom
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesFreedom,
+        scale = 1
+    }
+	
+	model ExosuitGlovesMercs
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesMercs,
+        scale = 1
+    }
+	
+	model ExosuitGlovesMilitary
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesMilitary,
+        scale = 1
+    }
+	
+	model ExosuitGlovesMonolith
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesMonolith,
+        scale = 1
+    }
+	
+	model ExosuitJacketBandit
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketBandit,
+        scale = 1
+    }
+	
+	model ExosuitJacketCS
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketCS,
+        scale = 1
+    }
+	
+	model ExosuitJacketDuty
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketDuty,
+        scale = 1
+    }
+	
+	model ExosuitJacketEco
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketEco,
+        scale = 1
+    }
+	
+	model ExosuitJacketFreedom
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketFreedom,
+        scale = 1
+    }
+	
+	model ExosuitJacketMercs
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketMercs,
+        scale = 1
+    }
+	
+	model ExosuitJacketMilitary
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketMilitary,
+        scale = 1
+    }
+	
+	model ExosuitJacketMonolith
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketMonolith,
+        scale = 1
+    }
+	
+	model ExosuitPantsBandit
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsBandit,
+        scale = 1
+    }
+	
+	model ExosuitPantsCS
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsCS,
+        scale = 1
+    }
+	
+	model ExosuitPantsDuty
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsDuty,
+        scale = 1
+    }
+	
+	model ExosuitPantsEco
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsEco,
+        scale = 1
+    }
+	
+	model ExosuitPantsFreedom
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsFreedom,
+        scale = 1
+    }
+	
+	model ExosuitPantsMercs
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsMercs,
+        scale = 1
+    }
+	
+	model ExosuitPantsMilitary
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsMilitary,
+        scale = 1
+    }
+	
+	model ExosuitPantsMonolith
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsMonolith,
+        scale = 1
+    }
+	
+	model ExosuitVestBandit
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestBandit,
+        scale = 1
+    }
+	
+	model ExosuitVestCS
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestCS,
+        scale = 1
+    }
+	
+	model ExosuitVestDuty
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestDuty,
+        scale = 1
+    }
+	
+	model ExosuitVestEco
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestEco,
+        scale = 1
+    }
+	
+	model ExosuitVestFreedom
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestFreedom,
+        scale = 1
+    }
+	
+	model ExosuitVestMercs
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestMercs,
+        scale = 1
+    }
+	
+	model ExosuitVestMilitary
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestMilitary,
+        scale = 1
+    }
+	
+	model ExosuitVestMonolith
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestMonolith,
+        scale = 1
+    }
+	
+	model Armband
+    {
+        mesh = WorldItems/Clothing/PatchArmbandGround,
+		texture = WorldItems/Armband,
+        scale = 1
+    }
+	
+	model PatchLoners
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/Loners,
+        scale = 1
+    }
+	
+	model PatchMercenaries
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/Mercenaries,
+        scale = 1
+    }
+	
+	model PatchCS
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/CS,
+        scale = 1
+    }
+	
+	model PatchEcologists
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/Ecologists,
+        scale = 1
+    }
+	
+	model PatchBandits
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/Bandits,
+        scale = 1
+    }
+	
+	model PatchMonolith
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/Monolith,
+        scale = 1
+    }
+	
+	model PatchDuty
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/Duty,
+        scale = 1
+    }
+	
+	model PatchFreedom
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/Freedom,
+        scale = 1
+    }
+	
+	model PatchMilitary
+    {
+        mesh = WorldItems/Clothing/PatchGround,
+		texture = WorldItems/Military,
+        scale = 1
+    }
+	
+	model ExoskeletonBandits
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonBandits,
+        scale = 1
+    }
+	model ExoskeletonCS
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonCS,
+        scale = 1
+    }
+	model ExoskeletonDuty
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonDuty,
+        scale = 1
+    }
+	model ExoskeletonEcologists
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonEcologists,
+        scale = 1
+    }
+	model ExoskeletonFreedom
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonFreedom,
+        scale = 1
+    }
+	model ExoskeletonMercs
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonMercs,
+        scale = 1
+    }
+	model ExoskeletonMilitary
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonMilitary,
+        scale = 1
+    }
+	model ExoskeletonMonolith
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonMonolith,
+        scale = 1
+    }
+	
+	model BerrilShirt
+    {
+        mesh = WorldItems/Clothing/BerrilShirtGround,
+		texture = WorldItems/BerrilShirt,
+        scale = 1
+    }
+	
+	model BerrilShirtDuty
+    {
+        mesh = WorldItems/Clothing/BerrilShirtGround,
+		texture = WorldItems/BerrilShirtDuty,
+        scale = 1
+    }
+	
+	model BerrilShirtFreedom
+    {
+        mesh = WorldItems/Clothing/BerrilShirtGround,
+		texture = WorldItems/BerrilShirtFreedom,
+        scale = 1
+    }
+	
+	model BerrilShirtMercs
+    {
+        mesh = WorldItems/Clothing/BerrilShirtGround,
+		texture = WorldItems/BerrilShirtMercs,
+        scale = 1
+    }
+	
+	model BerrilShirtBandits
+    {
+        mesh = WorldItems/Clothing/BerrilShirtGround,
+		texture = WorldItems/BerrilShirtBandits,
+        scale = 1
+    }
+	
+	model BerrilVest
+    {
+        mesh = WorldItems/Clothing/BerrilVestGround,
+		texture = WorldItems/BerrilVest,
+        scale = 1
+    }
+	
+	model BerrilVestDuty
+    {
+        mesh = WorldItems/Clothing/BerrilVestGround,
+		texture = WorldItems/BerrilVestDuty,
+        scale = 1
+    }
+	
+	model BerrilVestFreedom
+    {
+        mesh = WorldItems/Clothing/BerrilVestGround,
+		texture = WorldItems/BerrilVestFreedom,
+        scale = 1
+    }
+	
+	model BerrilVestMercs
+    {
+        mesh = WorldItems/Clothing/BerrilVestGround,
+		texture = WorldItems/BerrilVestMercs,
+        scale = 1
+    }
+	
+	model BerrilVestBandits
+    {
+        mesh = WorldItems/Clothing/BerrilVestGround,
+		texture = WorldItems/BerrilVestBandits,
+        scale = 1
+    }
+	
+	model BerrilPants
+    {
+        mesh = WorldItems/Clothing/BerrilPantsGround,
+		texture = WorldItems/BerrilPants,
+        scale = 1
+    }
+	
+	model BerrilPantsDuty
+    {
+        mesh = WorldItems/Clothing/BerrilPantsGround,
+		texture = WorldItems/BerrilPantsDuty,
+        scale = 1
+    }
+	
+	model BerrilPantsFreedom
+    {
+        mesh = WorldItems/Clothing/BerrilPantsGround,
+		texture = WorldItems/BerrilPantsFreedom,
+        scale = 1
+    }
+	
+	model BerrilPantsMercs
+    {
+        mesh = WorldItems/Clothing/BerrilPantsGround,
+		texture = WorldItems/BerrilPantsMercs,
+        scale = 1
+    }
+	
+	model BerrilPantsBandits
+    {
+        mesh = WorldItems/Clothing/BerrilPantsGround,
+		texture = WorldItems/BerrilPantsBandits,
+        scale = 1
+    }
+	
+	model CS2bVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/CS2bVest,
+        scale = 1
+    }
+	
+	model CS2bJacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/CS2bJacket,
+        scale = 1
+    }
+	
+	model CS2bPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/CS2bPants,
+        scale = 1
+    }
+	
+	model TwilightSEVAVestMonolith
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/TwilightSEVAVestMonolith,
+        scale = 1
+    }
+	
+	model TwilightVestMonolith
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/TwilightVestMonolith,
+        scale = 1
+    }
+	
+	model TwilightSEVAVestMercs
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/TwilightSEVAVestMercs,
+        scale = 1
+    }
+	
+	model TwilightVestMercs
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/TwilightVestMercs,
+        scale = 1
+    }
+	
+	model TwilightSEVAPantsMonolith
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/TwilightSEVAPantsMonolith,
+        scale = 1
+    }
+	
+	model TwilightSEVAPantsMercs
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/TwilightSEVAPantsMercs,
+        scale = 1
+    }
+	
+	model TwilightPantsMonolith
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/TwilightPantsMonolith,
+        scale = 1
+    }
+	
+	model TwilightPantsMercs
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/TwilightPantsMercs,
+        scale = 1
+    }
+	
+	model TwilightSEVAJacketMonolith
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/TwilightSEVAJacketMonolith,
+        scale = 1
+    }
+	
+	model TwilightSEVAJacketMercs
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/TwilightSEVAJacketMercs,
+        scale = 1
+    }
+	
+	model TwilightJacketMonolith
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/TwilightJacketMonolith,
+        scale = 1
+    }
+	
+	model TwilightJacketMonolith
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/TwilightJacketMonolith,
+        scale = 1
+    }
+	
+	model TwilightJacketMonolith
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/TwilightJacketMonolith,
+        scale = 1
+    }
+	
+	model TwilightJacketMercs
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/TwilightJacketMercs,
+        scale = 1
+    }
+	
+	model cs2ajacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/cs2ajacket,
+        scale = 1
+    }
+	
+	model cs2apants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/cs2apants,
+        scale = 1
+    }
+	
+	model cs2avest
+    {
+        mesh = WorldItems/Clothing/LCBulletVestGround,
+		texture = WorldItems/cs2avest,
+        scale = 1
+    }
+	
+	model cs3ajacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/cs3ajacket,
+        scale = 1
+    }
+	
+	model cs3apants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/cs3apants,
+        scale = 1
+    }
+	
+	model cs3avest
+    {
+        mesh = WorldItems/Clothing/LCBulletVestGround,
+		texture = WorldItems/cs3avest,
+        scale = 1
+    }
+	
+	model cs3bjacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/cs3bjacket,
+        scale = 1
+    }
+	
+	model cs3bpants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/cs3bpants,
+        scale = 1
+    }
+	
+	model cs3bvest
+    {
+        mesh = WorldItems/Clothing/LCBulletVestGround,
+		texture = WorldItems/cs3bvest,
+        scale = 1
+    }
+	
+	model isritjacketblue
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/isritjacketblue,
+        scale = 1
+    }
+	
+	model isritpantsblue
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/isritpantsblue,
+        scale = 1
+    }
+	
+	model isritvestblue
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/isritvestblue,
+        scale = 1
+    }
+	
+	model isritjacketorange
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/isritjacketorange,
+        scale = 1
+    }
+	
+	model isritpantsorange
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/isritpantsorange,
+        scale = 1
+    }
+	
+	model isritvestorange
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/isritvestorange,
+        scale = 1
+    }
+	
+	model fencedps5mjacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/fencedps5mjacket,
+        scale = 1
+    }
+	
+	model fencedps5mpants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/fencedps5mpants,
+        scale = 1
+    }
+	
+	model fencedps5mvest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/fencedps5mvest,
+        scale = 1
+    }
+	
+	model ps6vjacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/ps6vjacket,
+        scale = 1
+    }
+	
+	model ps6vpants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/ps6vpants,
+        scale = 1
+    }
+	
+	model ps6vvest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/ps6vvest,
+        scale = 1
+    }
+	
+	model windoffreedomjacket
+    {
+        mesh = WorldItems/Clothing/LCBulletVestGround,
+		texture = WorldItems/windoffreedomjacket,
+        scale = 1
+    }
+	
+	model windoffreedompants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/windoffreedompants,
+        scale = 1
+    }
+	
+	model windoffreedomvest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/windoffreedomvest,
+        scale = 1
+    }
+	
+	model ssp99mjacketblue
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/ssp99mjacketblue,
+        scale = 1
+    }
+	
+	model ssp99mpantsblue
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/ssp99mpantsblue,
+        scale = 1
+    }
+	
+	model ssp99mjacketyellow
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/ssp99mjacketyellow,
+        scale = 1
+    }
+	
+	model ssp99mpantsyellow
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/ssp99mpantsyellow,
+        scale = 1
+    }
+	
+	model ssp99mjacketred
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/ssp99mjacketred,
+        scale = 1
+    }
+	
+	model ssp99mpantsred
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/ssp99mpantsred,
+        scale = 1
+    }
+	
+	model ssp99mjacketgreen
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/ssp99mjacketgreen,
+        scale = 1
+    }
+	
+	model ssp99mpantsgreen
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/ssp99mpantsgreen,
+        scale = 1
+    }
+	
+	model ssp99mjacketorange
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/ssp99mjacketorange,
+        scale = 1
+    }
+	
+	model ssp99mpantsorange
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/ssp99mpantsorange,
+        scale = 1
+    }
+	
+	model ssp99mjacketwhite
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/ssp99mjacketwhite,
+        scale = 1
+    }
+	
+	model ssp99mpantswhite
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/ssp99mpantswhite,
+        scale = 1
+    }
+	
+	model skat9jacketmilitary
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/skat9jacketmilitary,
+        scale = 1
+    }
+	
+	model skat9pantsmilitary
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/skat9pantsmilitary,
+        scale = 1
+    }
+	
+	model skat9vestmilitary
+    {
+        mesh = WorldItems/Clothing/Skat9VestGround,
+		texture = WorldItems/skat9vestmilitary,
+        scale = 1
+    }
+	
+	model skat9jacketduty
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/skat9jacketduty,
+        scale = 1
+    }
+	
+	model skat9pantsduty
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/skat9pantsduty,
+        scale = 1
+    }
+	
+	model skat9vestduty
+    {
+        mesh = WorldItems/Clothing/Skat9VestGround,
+		texture = WorldItems/skat9vestduty,
+        scale = 1
+    }
+	
+	model skat9jacketfreedom
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/skat9jacketfreedom,
+        scale = 1
+    }
+	
+	model skat9pantsfreedom
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/skat9pantsfreedom,
+        scale = 1
+    }
+	
+	model skat9vestfreedom
+    {
+        mesh = WorldItems/Clothing/Skat9VestGround,
+		texture = WorldItems/skat9vestfreedom,
+        scale = 1
+    }
+	
+	model skat9jacketmercs
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/skat9jacketmercs,
+        scale = 1
+    }
+	
+	model skat9pantsmercs
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/skat9pantsmercs,
+        scale = 1
+    }
+	
+	model skat9vestmercs
+    {
+        mesh = WorldItems/Clothing/Skat9VestGround,
+		texture = WorldItems/skat9vestmercs,
+        scale = 1
+    }
+	
+	model skat9jacketmonolith
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/skat9jacketmonolith,
+        scale = 1
+    }
+	
+	model skat9pantsmonolith
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/skat9pantsmonolith,
+        scale = 1
+    }
+	
+	model skat9vestmonolith
+    {
+        mesh = WorldItems/Clothing/Skat9VestGround,
+		texture = WorldItems/skat9vestmonolith,
+        scale = 1
+    }
+	
+	model skat9jacketcs
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/skat9jacketcs,
+        scale = 1
+    }
+	
+	model skat9pantscs
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/skat9pantscs,
+        scale = 1
+    }
+	
+	model skat9vestcs
+    {
+        mesh = WorldItems/Clothing/Skat9VestGround,
+		texture = WorldItems/skat9vestcs,
+        scale = 1
+    }
+	
+	model autumnjacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/autumnjacket,
+        scale = 1
+    }
+	
+	model autumnpants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/autumnpants,
+        scale = 1
+    }
+	
+	model autumnvest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/autumnvest,
+        scale = 1
+    }
+	
+	model bearjacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/bearjacket,
+        scale = 1
+    }
+	
+	model bearpants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/bearpants,
+        scale = 1
+    }
+	
+	model bearvest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/bearvest,
+        scale = 1
+    }
+	
+	model droughtjacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/droughtjacket,
+        scale = 1
+    }
+	
+	model droughtpants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/droughtpants,
+        scale = 1
+    }
+	
+	model droughtvest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/droughtvest,
+        scale = 1
+    }
+	
+	model graphitejacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/graphitejacket,
+        scale = 1
+    }
+	
+	model graphitepants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/graphitepants,
+        scale = 1
+    }
+	
+	model graphitevest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/graphitevest,
+        scale = 1
+    }
+	
+	model predatorjacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/predatorjacket,
+        scale = 1
+    }
+	
+	model predatorpants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/predatorpants,
+        scale = 1
+    }
+	
+	model predatorvest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/predatorvest,
+        scale = 1
+    }
+	
+	model salamanderjacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/salamanderjacket,
+        scale = 1
+    }
+	
+	model salamanderpants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/salamanderpants,
+        scale = 1
+    }
+	
+	model salamandervest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/salamandervest,
+        scale = 1
+    }
+	
+	model tigerstripejacket
+    {
+        mesh = WorldItems/Clothing/PS5MJacketGround,
+		texture = WorldItems/tigerstripejacket,
+        scale = 1
+    }
+	
+	model tigerstripepants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/tigerstripepants,
+        scale = 1
+    }
+	
+	model tigerstripevest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/tigerstripevest,
+        scale = 1
+    }
+	
+	model ssp9bluehelm
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/ssp9mbluehelm,
+        scale = 1
+    }
+	
+	model ssp9greenhelm
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/ssp9mgreenhelm,
+        scale = 1
+    }
+	
+	model ssp9orangehelm
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/ssp9morangehelm,
+        scale = 1
+    }
+	
+	model ssp9redhelm
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/ssp9mredhelm,
+        scale = 1
+    }
+	
+	model ssp9whitehelm
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/ssp9mwhitehelm,
+        scale = 1
+    }
+	
+	model ssp9yellowhelm
+    {
+        mesh = WorldItems/Clothing/SEVAHelmGround,
+		texture = WorldItems/ssp9myellowhelm,
+        scale = 1
+    }
+	
+	model ExohelmLoner
+    {
+        mesh = WorldItems/Clothing/ExohelmGround,
+		texture = WorldItems/ExohelmLoner,
+        scale = 1
+    }
+	
+	model ExosuitVestLoner
+    {
+        mesh = WorldItems/Clothing/ExosuitVestGround,
+		texture = WorldItems/ExosuitVestLoner,
+        scale = 1
+    }
+	model ExosuitPantsLoner
+    {
+        mesh = WorldItems/Clothing/ExosuitPantsGround,
+		texture = WorldItems/ExosuitPantsLoner,
+        scale = 1
+    }
+	model ExosuitJacketLoner
+    {
+        mesh = WorldItems/Clothing/ExosuitJacketGround,
+		texture = WorldItems/ExosuitJacketLoner,
+        scale = 1
+    }
+	model ExosuitGlovesLoner
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/ExosuitGlovesLoner,
+        scale = 1
+    }
+	model ExosuitBootsLoner
+    {
+        mesh = WorldItems/Clothing/ExosuitBootsGround,
+		texture = WorldItems/ExosuitBootsLoner,
+        scale = 1
+    }
+	model Exobackpack
+    {
+        mesh = WorldItems/Clothing/ExobackpackGround,
+		texture = WorldItems/Exobackpack,
+        scale = 1
+    }
+	model ExoskeletonLoner
+    {
+        mesh = WorldItems/Clothing/ExoskeletonGround,
+		texture = WorldItems/ExoskeletonLoner,
+        scale = 1
+    }
+	
+	model SEVABackpack
+    {
+        mesh = WorldItems/Clothing/SEVABackpackGround,
+		texture = WorldItems/SEVABackpack,
+        scale = 1
+    }
+	
+	model SEVABackpackBandit
+    {
+        mesh = WorldItems/Clothing/SEVABackpackGround,
+		texture = WorldItems/SEVABackpackBandit,
+        scale = 1
+    }
+	
+	model SEVABackpackCS
+    {
+        mesh = WorldItems/Clothing/SEVABackpackGround,
+		texture = WorldItems/SEVABackpackCS,
+        scale = 1
+    }
+	
+	model SEVABackpackDuty
+    {
+        mesh = WorldItems/Clothing/SEVABackpackGround,
+		texture = WorldItems/SEVABackpackDuty,
+        scale = 1
+    }
+	
+	model SEVABackpackFreedom
+    {
+        mesh = WorldItems/Clothing/SEVABackpackGround,
+		texture = WorldItems/SEVABackpackFreedom,
+        scale = 1
+    }
+	
+	model SEVABackpackMercs
+    {
+        mesh = WorldItems/Clothing/SEVABackpackGround,
+		texture = WorldItems/SEVABackpackMercs,
+        scale = 1
+    }
+	
+	model SEVABackpackMonolith
+    {
+        mesh = WorldItems/Clothing/SEVABackpackGround,
+		texture = WorldItems/SEVABackpackMonolith,
+        scale = 1
+    }
+	
+	model OxygenTank
+    {
+        mesh = WorldItems/Clothing/OxygenTankGround,
+		texture = WorldItems/OxyTank,
+        scale = 1
+    }
+	
+	model SSP99MBackpackBlue
+    {
+        mesh = WorldItems/Clothing/SSP99MBackpackGround,
+		texture = WorldItems/SSP99MBackpackBlue,
+        scale = 1
+    }
+	
+	model SSP99MBackpackGreen
+    {
+        mesh = WorldItems/Clothing/SSP99MBackpackGround,
+		texture = WorldItems/SSP99MBackpackGreen,
+        scale = 1
+    }
+	
+	model SSP99MBackpackOrange
+    {
+        mesh = WorldItems/Clothing/SSP99MBackpackGround,
+		texture = WorldItems/SSP99MBackpackOrange,
+        scale = 1
+    }
+	
+	model SSP99MBackpackRed
+    {
+        mesh = WorldItems/Clothing/SSP99MBackpackGround,
+		texture = WorldItems/SSP99MBackpackRed,
+        scale = 1
+    }
+	
+	model SSP99MBackpackWhite
+    {
+        mesh = WorldItems/Clothing/SSP99MBackpackGround,
+		texture = WorldItems/SSP99MBackpackWhite,
+        scale = 1
+    }
+	
+	model SSP99MBackpackYellow
+    {
+        mesh = WorldItems/Clothing/SSP99MBackpackGround,
+		texture = WorldItems/SSP99MBackpackYellow,
+        scale = 1
+    }
+	
+	model SEVAVest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/SEVAVest,
+        scale = 1
+    }
+	
+	model SEVAPants
+    {
+        mesh = WorldItems/Clothing/PS5MPantsGround,
+		texture = WorldItems/SEVAPants,
+        scale = 1
+    }
+	
+	model SEVAShirt
+    {
+        mesh = WorldItems/Clothing/SEVAShirtGround,
+		texture = WorldItems/SEVAShirt,
+        scale = 1
+    }
+	
+	model SEVAGloves
+    {
+        mesh = WorldItems/Clothing/ExosuitGlovesGround,
+		texture = WorldItems/SEVAGloves,
+        scale = 1
+    }
+	
+	model cs2tvest
+    {
+        mesh = WorldItems/Clothing/PS5MVestGround,
+		texture = WorldItems/cs2tvest,
+        scale = 1
+    }
+	
+	model Sphere08MaskMercs
+    {
+        mesh = WorldItems/Clothing/SphereM12Ground,
+		texture = WorldItems/M12Military,
+        scale = 1
+    }
+	
+	model Sphere08HelmetMercs
+    {
+        mesh = WorldItems/Clothing/Sphere08Ground,
+		texture = WorldItems/M12Mercs,
+        scale = 1
+    }
+	
+	model Sphere08GlassMercs
+    {
+        mesh = WorldItems/Clothing/Sphere08GlassGround,
+		texture = WorldItems/Sphere08Mercs,
+        scale = 1
+    }
+	
+	model Sphere08MaskMercs
+    {
+        mesh = WorldItems/Clothing/Sphere08MaskGround,
+		texture = WorldItems/Sphere08Mercs,
+        scale = 1
+    }
+	
+	model SphereM12HelmetMercs
+    {
+        mesh = WorldItems/Clothing/SphereM12Ground,
+		texture = WorldItems/M12Mercs,
+        scale = 1
+    }
+	
+	model GP5GasMaskNoFilterGround
+    {
+        mesh = WorldItems/Clothing/GP5GasMaskNoFilter_Ground,
+		texture = WorldItems/GP5GasMask,
+        scale = 1
+    }
+	
+	model M40GasMaskNoFilterGround
+    {
+        mesh = WorldItems/Clothing/M40GasMaskNoFilter_Ground,
+		texture = WorldItems/M40GasMask,
+        scale = 1
+    }
+	
+	model PPM88NoFilter
+    {
+        mesh = WorldItems/Clothing/PPM88NoFilter_Ground,
+		texture = WorldItems/PPM88,
+        scale = 1
+    }
+	
+	model GP10ZNoFilter
+    {
+        mesh = WorldItems/Clothing/GP10ZNoFilter_Ground,
+		texture = WorldItems/GP10Z,
+        scale = 1
+    }
+	
+	model SovietPMGNoFilter
+    {
+        mesh = WorldItems/Clothing/SovietPMGNoFilter_Ground,
+		texture = WorldItems/SovietPMG,
+        scale = 1
+    }
+	
+	model SteelMaskNoFilter
+    {
+        mesh = WorldItems/Clothing/SteelMaskNoFilter_Ground,
+		texture = WorldItems/SteelHelmet,
+        scale = 1
+    }
+	model PBF1NoFilter
+    {
+        mesh = WorldItems/Clothing/PBFNoFilter_Ground,
+		texture = WorldItems/PBF1,
+        scale = 1
+    }
+	
+	model PBF1CSNoFilter
+    {
+        mesh = WorldItems/Clothing/PBFNoFilter_Ground,
+		texture = WorldItems/PBF1CS,
+        scale = 1
+    }
+	
+	model PBF1DutyNoFilter
+    {
+        mesh = WorldItems/Clothing/PBFNoFilter_Ground,
+		texture = WorldItems/PBF1Duty,
+        scale = 1
+    }
+	
+	model PBF1FreedomNoFilter
+    {
+        mesh = WorldItems/Clothing/PBFNoFilter_Ground,
+		texture = WorldItems/PBF1Freedom,
+        scale = 1
+    }
+	
+	model PBF2NoFilter
+    {
+        mesh = WorldItems/Clothing/PBFNoFilter_Ground,
+		texture = WorldItems/PBF2,
+        scale = 1
+    }
+	
+	model PBF2CSNoFilter
+    {
+        mesh = WorldItems/Clothing/PBFNoFilter_Ground,
+		texture = WorldItems/PBF2CS,
+        scale = 1
+    }
+	
+	model PBF2DutyNoFilter
+    {
+        mesh = WorldItems/Clothing/PBFNoFilter_Ground,
+		texture = WorldItems/PBF2Duty,
+        scale = 1
+    }
+	
+	model PBF2FreedomNoFilter
+    {
+        mesh = WorldItems/Clothing/PBFNoFilter_Ground,
+		texture = WorldItems/PBF2Freedom,
+        scale = 1
+    }
+	
+	model RespiratorGoldNoFilter
+    {
+        mesh = WorldItems/Clothing/RespiratorNoFilter_Ground,
+		texture = WorldItems/RespiratorGold,
+        scale = 1
+    }
+	model RespiratorSilverNoFilter
+    {
+        mesh = WorldItems/Clothing/RespiratorNoFilter_Ground,
+		texture = WorldItems/RespiratorSilver,
+        scale = 1
+    }
+	model RespiratorDutyNoFilter
+    {
+        mesh = WorldItems/Clothing/RespiratorNoFilter_Ground,
+		texture = WorldItems/RespiratorDuty,
+        scale = 1
+    }
+	model RespiratorFreedomNoFilter
+    {
+        mesh = WorldItems/Clothing/RespiratorNoFilter_Ground,
+		texture = WorldItems/RespiratorFreedom,
+        scale = 1
+    }
+	model RespiratorMonolithNoFilter
+    {
+        mesh = WorldItems/Clothing/RespiratorNoFilter_Ground,
+		texture = WorldItems/RespiratorMonolith,
+        scale = 1
+    }
+	model RespiratorCSNoFilter
+    {
+        mesh = WorldItems/Clothing/RespiratorNoFilter_Ground,
+		texture = WorldItems/RespiratorCS,
+        scale = 1
+    }
+	
+	model GasMaskFilter
+    {
+        mesh = WorldItems/Clothing/GasMaskFilterGround,
+		texture = WorldItems/GP5GasMask,
+        scale = 1
+    }
+	
+	
+}

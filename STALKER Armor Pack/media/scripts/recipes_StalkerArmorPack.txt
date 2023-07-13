@@ -1,0 +1,402 @@
+module Base
+{
+	recipe Put Filter in GP5 Gas Mask
+    {
+        GP5GasMaskNoFilter,
+        GasMaskFilter,
+
+        Result:GP5GasMask,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from GP5 Gas Mask
+    {
+        GP5GasMask,
+
+        Result:GP5GasMaskNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in M40 Gas Mask
+    {
+        M40GasMaskNoFilter,
+        GasMaskFilter,
+
+        Result:M40GasMask,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from M40 Gas Mask
+    {
+        M40GasMask,
+
+        Result:M40GasMaskNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PPM-88 Gas Mask
+    {
+        PPM88NoFilter,
+        GasMaskFilter,
+
+        Result:PPM88,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PPM-88 Gas Mask
+    {
+        PPM88,
+
+        Result:PPM88NoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in GP10z Gas Mask
+    {
+        GP10ZNoFilter,
+        GasMaskFilter,
+
+        Result:GP10Z,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from GP10z Gas Mask
+    {
+        GP10Z,
+
+        Result:GP10ZNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in Soviet PMG Gas Mask
+    {
+        SovietPMGNoFilter,
+        GasMaskFilter,
+
+        Result:SovietPMG,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from Soviet PMG Gas Mask
+    {
+        SovietPMG,
+
+        Result:SovietPMGNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in CS-2a Gas Mask
+    {
+        CS2aGasMaskNoFilter,
+        GasMaskFilter,
+
+        Result:CS2aGasMask,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from CS-2a Gas Mask
+    {
+        CS2aGasMask,
+
+        Result:CS2aGasMaskNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PBF Gas Mask
+    {
+        PBF1NoFilter,
+        GasMaskFilter,
+
+        Result:PBF1,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PBF Gas Mask
+    {
+        PBF1,
+
+        Result:PBF1NoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PBF (CS) Gas Mask
+    {
+        PBF1CSNoFilter,
+        GasMaskFilter,
+
+        Result:PBF1CS,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PBF (CS) Gas Mask
+    {
+        PBF1CS,
+
+        Result:PBF1CSNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PBF (Duty) Gas Mask
+    {
+        PBF1DutyNoFilter,
+        GasMaskFilter,
+
+        Result:PBF1Duty,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PBF (Duty) Gas Mask
+    {
+        PBF1Duty,
+
+        Result:PBF1DutyNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PBF (Freedom) Gas Mask
+    {
+        PBF1FreedomNoFilter,
+        GasMaskFilter,
+
+        Result:PBF1Freedom,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PBF (Freedom) Gas Mask
+    {
+        PBF1Freedom,
+
+        Result:PBF1FreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PBF2 Gas Mask
+    {
+        PBF2NoFilter,
+        GasMaskFilter,
+
+        Result:PBF2,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PBF2 Gas Mask
+    {
+        PBF2,
+
+        Result:PBF2NoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PBF2 (CS) Gas Mask
+    {
+        PBF2CSNoFilter,
+        GasMaskFilter,
+
+        Result:PBF2CS,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PBF2 (CS) Gas Mask
+    {
+        PBF2CS,
+
+        Result:PBF2CSNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PBF2 (Duty) Gas Mask
+    {
+        PBF2DutyNoFilter,
+        GasMaskFilter,
+
+        Result:PBF2Duty,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PBF2 (Duty) Gas Mask
+    {
+        PBF2Duty,
+
+        Result:PBF2DutyNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in PBF2 (Freedom) Gas Mask
+    {
+        PBF2FreedomNoFilter,
+        GasMaskFilter,
+
+        Result:PBF2Freedom,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from PBF2 (Freedom) Gas Mask
+    {
+        PBF2Freedom,
+
+        Result:PBF2FreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in Respirator (Gold) Gas Mask
+    {
+        RespiratorGoldNoFilter,
+        GasMaskFilter,
+
+        Result:RespiratorGold,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from Respirator (Gold) Gas Mask
+    {
+        RespiratorGold,
+
+        Result:RespiratorGoldNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in Respirator (Silver) Gas Mask
+    {
+        RespiratorSilverNoFilter,
+        GasMaskFilter,
+
+        Result:RespiratorSilver,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from Respirator (Silver) Gas Mask
+    {
+        RespiratorSilver,
+
+        Result:RespiratorSilverNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in Respirator (Duty) Gas Mask
+    {
+        RespiratorDutyNoFilter,
+        GasMaskFilter,
+
+        Result:RespiratorDuty,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from Respirator (Duty) Gas Mask
+    {
+        RespiratorDuty,
+
+        Result:RespiratorDutyNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in Respirator (Freedom) Gas Mask
+    {
+        RespiratorFreedomNoFilter,
+        GasMaskFilter,
+
+        Result:RespiratorFreedom,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from Respirator (Freedom) Gas Mask
+    {
+        RespiratorFreedom,
+
+        Result:RespiratorFreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in Respirator (Monolith) Gas Mask
+    {
+        RespiratorMonolithNoFilter,
+        GasMaskFilter,
+
+        Result:RespiratorMonolith,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from Respirator (Monolith) Gas Mask
+    {
+        RespiratorMonolith,
+
+        Result:RespiratorMonolithNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+	
+	recipe Put Filter in Respirator (CS) Gas Mask
+    {
+        RespiratorCSNoFilter,
+        GasMaskFilter,
+
+        Result:RespiratorCS,
+        Time:70.0,
+        Category:Health,
+    }
+	
+	recipe Remove Filter from Respirator (CS) Gas Mask
+    {
+        RespiratorCS,
+
+        Result:RespiratorCSNoFilter,
+        Time:70.0,
+        Category:Health,
+		OnCreate:GiveGasMaskFilter,
+    }
+}

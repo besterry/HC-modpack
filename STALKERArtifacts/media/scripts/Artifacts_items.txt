@@ -1,0 +1,239 @@
+module stalker
+{
+	imports
+	{
+		Base
+	}
+
+	item ArtifactCell
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Cell,
+		WorldStaticModel =	Cell_WorldItem,
+		Icon		=	ArtifactCell,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactChain
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Chain,
+		WorldStaticModel =	Chain_WorldItem,
+		Icon		=	ArtifactChain,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactCrystal
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Crystal,
+		Icon		=	ArtifactCrystal,
+		WorldStaticModel = Crystal_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactCrystalThorn
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Crystal Thorn,
+		Icon		=	CrystalThorn,
+        	WorldStaticModel =	CrystalThorn_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactEye
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Eye,
+		Icon		=	ArtifactEye,
+		WorldStaticModel = Eye_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactFirefly
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Firefly,
+		Icon		=	ArtifactFirefly,
+		WorldStaticModel = Firefly_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactFountain
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Fountain,
+		WorldStaticModel =	Fountain_WorldItem,
+		Icon		=	ArtifactFountain,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactHeart
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Heart,
+		WorldStaticModel =	Heart_WorldItem,
+		Icon		=	ArtifactHeart,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactMamasBeads
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Mama's Beads,
+		Icon		=	ArtifactMamasBeads,
+        	WorldStaticModel = MamasBeads_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactPellicle
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Pellicle,
+		Icon		=	ArtifactPellicle,
+        	WorldStaticModel =	Pellicle_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactPhantomStar
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Phantom Star,
+		WorldStaticModel =	PhantomStar_WorldItem,
+		Icon		=	ArtifactPhantomStar,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactSeraphim
+	{
+        DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Seraphim,
+		WorldStaticModel =	Seraphim_WorldItem,
+		Icon		=	ArtifactSeraphim,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactSignet
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Signet,
+		WorldStaticModel =	Signet_WorldItem,
+		Icon		=	ArtifactSignet,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactSnowflake
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Snowflake,
+		Icon		=	ArtifactSnowflake,
+		WorldStaticModel =	Snowflake_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactSoul
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Soul,
+		Icon		=	ArtifactSoul,
+        	WorldStaticModel =	Soul_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactSourpuss
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Sourpuss,
+		WorldStaticModel =	Sourpuss_WorldItem,
+		Icon		=	ArtifactSourpuss,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactStoneFlower
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Stone Flower,
+		Icon		=	ArtifactStoneFlower,
+		WorldStaticModel =	Stoneflower_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactSun
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Sun,
+		WorldStaticModel =	Sun_WorldItem,
+		Icon		=	ArtifactSun,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactUrchin
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Urchin,
+		Icon		=	ArtifactUrchin,
+		WorldStaticModel =	Urchin_WorldItem,
+		Tags		=	Artifact,
+	}
+
+	item ArtifactWrenched
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Artifact: Wrenched,
+		WorldStaticModel =	Wrenched_WorldItem,
+		Icon		=	ArtifactWrenched,
+		Tags		=	Artifact,
+	}
+
+	item EchoDetector
+	{
+        	DisplayCategory = Artifact,
+		Weight		=	0.5,
+		Type		=	Normal,
+		DisplayName	=	Echo Detector,
+		Icon		=	EchoDetector,
+		WorldStaticModel =	EchoDetector_WorldItem,
+        	Tags = FindArtifact,
+	}
+
+}

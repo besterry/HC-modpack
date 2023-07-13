@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+	<m_MaleModel>skinned\clothes\SEVABackpack</m_MaleModel>
+	<m_FemaleModel>skinned\clothes\SEVABackpack</m_FemaleModel>
+	<m_GUID>1ee22ba4-34e3-47c3-89f7-cb213c1f0e7b</m_GUID>
+	<m_Static>false</m_Static>
+	<m_AttachBone></m_AttachBone>
+	<textureChoices>Clothes\SEVA\SEVABackpackFreedom</textureChoices>
+</clothingItem>

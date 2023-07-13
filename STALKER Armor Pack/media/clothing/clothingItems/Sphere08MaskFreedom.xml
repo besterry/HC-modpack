@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>cce2919d-0648-4108-9e99-9e03d3fd9206</m_GUID>
+    <m_MaleModel>Skinned\Clothes\Sphere08Mask</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\Sphere08Mask</m_FemaleModel>
+    <textureChoices>Clothes\Sphere08\Sphere08Freedom</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_HatCategory>nobeard</m_HatCategory>
+	<m_HatCategory>nohair</m_HatCategory>
+	<m_MasksFolder>media/textures/Clothes/Hat/Masks</m_MasksFolder>
+</clothingItem>

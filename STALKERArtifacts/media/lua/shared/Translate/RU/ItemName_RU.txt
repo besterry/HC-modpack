@@ -1,0 +1,6 @@
+ItemName_RU = {
+    ItemName_Base.RadiationMag = "Как устроены детекторы",
+    ItemName_stalker.EchoDetector = "Поисковый детектор",
+    ItemName_Base.ContaminantDetector = "Счетчик Гейгера",
+    ItemName_Base.GasMaskFilter = "Газовый фильтр",
+}

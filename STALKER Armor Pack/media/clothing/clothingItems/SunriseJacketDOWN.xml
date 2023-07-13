@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>d14468a5-57b0-4aa2-b277-cc9885a6a4cb</m_GUID>
+    <m_MaleModel>Skinned\Clothes\PS5MJacketDOWN</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\PS5MJacketDOWN</m_FemaleModel>
+    <textureChoices>Clothes\Loner\sunrisejacket</textureChoices>
+	<m_Static>false</m_Static>
+	<m_Masks>12</m_Masks>
+	<m_Masks>3</m_Masks>
+	<m_Masks>5</m_Masks>
+</clothingItem>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>3a60b05b-3a0f-46f6-8d52-ced6b9d07189</m_GUID>
+    <m_MaleModel>Skinned\Clothes\ExosuitPants</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\ExosuitPants</m_FemaleModel>
+    <textureChoices>Clothes\Military\ExosuitPantsMilitary</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_Masks>7</m_Masks>
+	<m_Masks>9</m_Masks>
+	<m_Masks>2</m_Masks>
+</clothingItem>

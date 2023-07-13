@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>f94fedfe-4bd2-4291-b05b-ee871efd679a</m_GUID>
+    <m_MaleModel>Skinned\Clothes\PS5MVest</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\PS5MVest</m_FemaleModel>
+    <textureChoices>Clothes\PS5M\PS5MVest</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+</clothingItem>

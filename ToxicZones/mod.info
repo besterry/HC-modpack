@@ -1,0 +1,5 @@
+name=Toxic Zones STALKER version
+id=ToxicZonesSTALKER
+description=Toxic zones set up by Admins.
+require=StalkerArmorPack
+poster=poster.png

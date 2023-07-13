@@ -1,0 +1,12 @@
+Sandbox_RU = {
+Sandbox_ToxicZonesStalker = "Токсичные зоны",
+
+Sandbox_ToxicZonesStalker_FilterDurationMultiplier = "Множитель длительности работы фильтра",
+Sandbox_ToxicZonesStalker_FilterDurationMultiplier_tooltip = "Срок действия фильтров противогаза, множитель для базовой продолжительности работы.",
+
+Sandbox_ToxicZonesStalker_ToxicDamageMultiplier = "Множитель токсического урона",
+Sandbox_ToxicZonesStalker_ToxicDamageMultiplier_tooltip = "Насколько смертоносны токсичные зоны, множитель базового урона.",
+
+Sandbox_ToxicZonesStalker_GeigerCounterRange = "Диапазон счетчика Гейгера",
+Sandbox_ToxicZonesStalker_GeigerCounterRange_tooltip = "Насколько далеко счетчик Гейгера может обнаруживать токсичные зоны, измеряется в квадратах.",
+}

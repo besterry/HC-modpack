@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>5a8a0975-ede6-4916-9fb1-c2d30fa6874a</m_GUID>
+    <m_MaleModel>Skinned\Clothes\Skat9Vest</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\Skat9Vest</m_FemaleModel>
+    <textureChoices>Clothes\Mercenaries\skat9vestmercs</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+</clothingItem>

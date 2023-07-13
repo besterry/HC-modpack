@@ -1,0 +1,4 @@
+Items_RU = {
+
+	Recipe_Craft_Detector = "Создать детектор",
+}

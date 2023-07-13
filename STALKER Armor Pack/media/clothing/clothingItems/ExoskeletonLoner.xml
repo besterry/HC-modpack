@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>282ddca8-fc24-4ce2-99fc-54a8f2150ed8</m_GUID>
+    <m_MaleModel>Skinned\Clothes\Exoskeleton</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\Exoskeleton</m_FemaleModel>
+    <textureChoices>Clothes\Loner\ExoskeletonLoner</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+</clothingItem>

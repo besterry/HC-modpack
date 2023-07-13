@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>4df48c0d-415b-4a93-992a-f809f5f1d6f4</m_GUID>
+    <m_MaleModel>Skinned\Clothes\BerrilPants</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\BerrilPants</m_FemaleModel>
+    <textureChoices>Clothes\Bandits\BerrilPantsBandits</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_Masks>7</m_Masks>
+	<m_Masks>9</m_Masks>
+	<m_Masks>2</m_Masks>
+</clothingItem>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>d49b1fa6-d149-447c-8e68-eb4b8ca7c5b1</m_GUID>
+    <m_MaleModel>Skinned\Clothes\SEVAShirt</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\SEVAShirt</m_FemaleModel>
+    <textureChoices>Clothes\Monolith\skat9jacketmonolith</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_Masks>12</m_Masks>
+	<m_Masks>3</m_Masks>
+	<m_Masks>5</m_Masks>
+</clothingItem>

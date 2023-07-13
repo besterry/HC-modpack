@@ -1,0 +1,19 @@
+module Base
+{
+        /*Создание детектора */
+	recipe Craft Detector
+	{
+        ElectronicsScrap=4,
+        Radio.ElectricWire=4,
+        MotionSensor,
+        LightBulbGreen,
+        LightBulbRed,
+        keep [Recipe.GetItemTypes.Screwdriver],
+
+        Result:stalker.EchoDetector,
+        NeedToBeLearn:true,
+        Time:80.0,
+        Category:Electrical,
+        }
+
+}

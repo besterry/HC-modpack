@@ -1,0 +1,4 @@
+Tooltip_PTBR = {
+	-- Item tooltip
+	Tooltip_clothing_Filter = "Filtro:",
+}

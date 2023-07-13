@@ -1,0 +1,148 @@
+module Base
+{
+	
+model EchoDetector_WorldItem
+	{
+		mesh    = WorldItems/EchoDetector,
+	}
+
+model CrystalThorn_WorldItem
+	{
+		mesh    = WorldItems/CrystalThorn,
+		texture = WorldItems/CrystalThorn,
+		scale   = 0.5,
+	}
+
+model Pellicle_WorldItem
+	{
+		mesh    = WorldItems/Pellicle,
+		texture = WorldItems/Pellicle,
+		scale   = 0.5,
+	}
+
+model Soul_WorldItem
+	{
+		mesh    = WorldItems/Soul,
+		texture = WorldItems/Soul,
+		scale   = 0.5,
+	}
+
+model MamasBeads_WorldItem
+	{
+		mesh    = WorldItems/MamasBeads,
+		texture = WorldItems/MamasBeads,
+		scale   = 0.5,
+	}	
+
+model Crystal_WorldItem
+	{
+		mesh    = WorldItems/Crystal,
+		texture = WorldItems/Crystal,
+		scale   = 0.5,
+	}	
+
+model Firefly_WorldItem
+	{
+		mesh    = WorldItems/Firefly,
+		texture = WorldItems/Firefly,
+		scale   = 0.5,
+	}	
+
+model Eye_WorldItem
+	{
+		mesh    = WorldItems/Eye,
+		texture = WorldItems/Eye,
+		scale   = 0.5,
+	}	
+
+model Urchin_WorldItem
+	{
+		mesh    = WorldItems/Urchin,
+		texture = WorldItems/Urchin,
+		scale   = 0.5,
+	}	
+
+model Snowflake_WorldItem
+	{
+		mesh    = WorldItems/Urchin,
+		texture = WorldItems/Snowflake,
+		scale   = 0.5,
+	}
+
+model Stoneflower_WorldItem
+	{
+		mesh    = WorldItems/Stoneflower,
+		texture = WorldItems/Stoneflower,
+		scale   = 0.5,
+	}
+
+model Sourpuss_WorldItem
+	{
+		mesh    = WorldItems/Soul,
+		texture = WorldItems/Sourpuss,
+		scale   = 0.5,
+	}
+
+model Sun_WorldItem
+	{
+		mesh    = WorldItems/Soul,
+		texture = WorldItems/Sun,
+		scale   = 0.5,
+	}
+
+model Signet_WorldItem
+	{
+		mesh    = WorldItems/Signet,
+		texture = WorldItems/Signet,
+		scale   = 0.5,
+	}
+
+model Chain_WorldItem
+	{
+		mesh    = WorldItems/Chain,
+		texture = WorldItems/Chain,
+		scale   = 0.5,
+	}
+
+model Cell_WorldItem
+	{
+		mesh    = WorldItems/Soul,
+		texture = WorldItems/Cell,
+		scale   = 0.5,
+	}
+
+model Seraphim_WorldItem
+	{
+		mesh    = WorldItems/Soul,
+		texture = WorldItems/Seraphim,
+		scale   = 0.5,
+	}
+
+model PhantomStar_WorldItem
+	{
+		mesh    = WorldItems/PhantomStar,
+		texture = WorldItems/PhantomStar,
+		scale   = 0.5,
+	}
+
+model Heart_WorldItem
+	{
+		mesh    = WorldItems/Heart,
+		texture = WorldItems/Heart,
+		scale   = 0.5,
+	}
+
+model Wrenched_WorldItem
+	{
+		mesh    = WorldItems/Wrenched,
+		texture = WorldItems/Wrenched,
+		scale   = 0.5,
+	}
+
+model Fountain_WorldItem
+	{
+		mesh    = WorldItems/Fountain,
+		texture = WorldItems/Fountain,
+		scale   = 0.5,
+	}
+}

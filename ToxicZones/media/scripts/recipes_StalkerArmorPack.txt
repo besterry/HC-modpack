@@ -1,0 +1,1142 @@
+module Base
+{
+	recipe Put Filter in GP5 Gas Mask
+    {
+        GP5GasMaskNoFilter,
+        destroy GasMaskFilter,
+
+        Result:GP5GasMask,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from GP5 Gas Mask
+    {
+        GP5GasMask,
+
+        Result:GP5GasMaskNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in M40 Gas Mask
+    {
+        M40GasMaskNoFilter,
+        destroy GasMaskFilter,
+
+        Result:M40GasMask,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from M40 Gas Mask
+    {
+        M40GasMask,
+
+        Result:M40GasMaskNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PPM-88 Gas Mask
+    {
+        PPM88NoFilter,
+        destroy GasMaskFilter,
+
+        Result:PPM88,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PPM-88 Gas Mask
+    {
+        PPM88,
+
+        Result:PPM88NoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in GP10z Gas Mask
+    {
+        GP10ZNoFilter,
+        destroy GasMaskFilter,
+
+        Result:GP10Z,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from GP10z Gas Mask
+    {
+        GP10Z,
+
+        Result:GP10ZNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in Soviet PMG Gas Mask
+    {
+        SovietPMGNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SovietPMG,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from Soviet PMG Gas Mask
+    {
+        SovietPMG,
+
+        Result:SovietPMGNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in CS-2a Gas Mask
+    {
+        CS2aGasMaskNoFilter,
+        destroy GasMaskFilter,
+
+        Result:CS2aGasMask,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from CS-2a Gas Mask
+    {
+        CS2aGasMask,
+
+        Result:CS2aGasMaskNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PBF Gas Mask
+    {
+        PBF1NoFilter,
+        destroy GasMaskFilter,
+
+        Result:PBF1,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PBF Gas Mask
+    {
+        PBF1,
+
+        Result:PBF1NoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PBF (CS) Gas Mask
+    {
+        PBF1CSNoFilter,
+        destroy GasMaskFilter,
+
+        Result:PBF1CS,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PBF (CS) Gas Mask
+    {
+        PBF1CS,
+
+        Result:PBF1CSNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PBF (Duty) Gas Mask
+    {
+        PBF1DutyNoFilter,
+        destroy GasMaskFilter,
+
+        Result:PBF1Duty,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PBF (Duty) Gas Mask
+    {
+        PBF1Duty,
+
+        Result:PBF1DutyNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PBF (Freedom) Gas Mask
+    {
+        PBF1FreedomNoFilter,
+        destroy GasMaskFilter,
+
+        Result:PBF1Freedom,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PBF (Freedom) Gas Mask
+    {
+        PBF1Freedom,
+
+        Result:PBF1FreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PBF2 Gas Mask
+    {
+        PBF2NoFilter,
+        destroy GasMaskFilter,
+
+        Result:PBF2,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PBF2 Gas Mask
+    {
+        PBF2,
+
+        Result:PBF2NoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PBF2 (CS) Gas Mask
+    {
+        PBF2CSNoFilter,
+        destroy GasMaskFilter,
+
+        Result:PBF2CS,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PBF2 (CS) Gas Mask
+    {
+        PBF2CS,
+
+        Result:PBF2CSNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PBF2 (Duty) Gas Mask
+    {
+        PBF2DutyNoFilter,
+        destroy GasMaskFilter,
+
+        Result:PBF2Duty,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PBF2 (Duty) Gas Mask
+    {
+        PBF2Duty,
+
+        Result:PBF2DutyNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in PBF2 (Freedom) Gas Mask
+    {
+        PBF2FreedomNoFilter,
+        destroy GasMaskFilter,
+
+        Result:PBF2Freedom,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from PBF2 (Freedom) Gas Mask
+    {
+        PBF2Freedom,
+
+        Result:PBF2FreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in Respirator (Gold) Gas Mask
+    {
+        RespiratorGoldNoFilter,
+        destroy GasMaskFilter,
+
+        Result:RespiratorGold,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from Respirator (Gold) Gas Mask
+    {
+        RespiratorGold,
+
+        Result:RespiratorGoldNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in Respirator (Silver) Gas Mask
+    {
+        RespiratorSilverNoFilter,
+        destroy GasMaskFilter,
+
+        Result:RespiratorSilver,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from Respirator (Silver) Gas Mask
+    {
+        RespiratorSilver,
+
+        Result:RespiratorSilverNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in Respirator (Duty) Gas Mask
+    {
+        RespiratorDutyNoFilter,
+        destroy GasMaskFilter,
+
+        Result:RespiratorDuty,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from Respirator (Duty) Gas Mask
+    {
+        RespiratorDuty,
+
+        Result:RespiratorDutyNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in Respirator (Freedom) Gas Mask
+    {
+        RespiratorFreedomNoFilter,
+        destroy GasMaskFilter,
+
+        Result:RespiratorFreedom,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from Respirator (Freedom) Gas Mask
+    {
+        RespiratorFreedom,
+
+        Result:RespiratorFreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in Respirator (Monolith) Gas Mask
+    {
+        RespiratorMonolithNoFilter,
+        destroy GasMaskFilter,
+
+        Result:RespiratorMonolith,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from Respirator (Monolith) Gas Mask
+    {
+        RespiratorMonolith,
+
+        Result:RespiratorMonolithNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+	
+	recipe Put Filter in Respirator (CS) Gas Mask
+    {
+        RespiratorCSNoFilter,
+        destroy GasMaskFilter,
+
+        Result:RespiratorCS,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+	Override:true,
+    }
+	
+	recipe Remove Filter from Respirator (CS) Gas Mask
+    {
+        RespiratorCS,
+
+        Result:RespiratorCSNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+	Override:true,
+    }
+
+	--sphere M12 helmets
+
+	recipe Put Filter in Sphere M12 Helmet
+    {
+        SphereM12HelmetNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SphereM12Helmet,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere M12 Helmet
+    {
+        SphereM12Helmet,
+
+        Result:SphereM12HelmetNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere M12 Helmet
+    {
+        SphereM12HelmetCSNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SphereM12HelmetCS,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere M12 Helmet
+    {
+        SphereM12HelmetCS,
+
+        Result:SphereM12HelmetCSNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere M12 Helmet
+    {
+        SphereM12HelmetDutyNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SphereM12HelmetDuty,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere M12 Helmet
+    {
+        SphereM12HelmetDuty,
+
+        Result:SphereM12HelmetDutyNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere M12 Helmet
+    {
+        SphereM12HelmetFreedomNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SphereM12HelmetFreedom,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere M12 Helmet
+    {
+        SphereM12HelmetFreedom,
+
+        Result:SphereM12HelmetFreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere M12 Helmet
+    {
+        SphereM12HelmetMercsNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SphereM12HelmetMercs,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere M12 Helmet
+    {
+        SphereM12HelmetMercs,
+
+        Result:SphereM12HelmetMercsNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere M12 Helmet
+    {
+        SphereM12HelmetMonolithNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SphereM12HelmetMonolith,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere M12 Helmet
+    {
+        SphereM12HelmetMonolith,
+
+        Result:SphereM12HelmetMonolithNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	--Exohelms
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmNoFilter,
+        destroy GasMaskFilter,
+
+        Result:Exohelm,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        Exohelm,
+
+        Result:ExohelmNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmBanditNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmBandit,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmBandit,
+
+        Result:ExohelmBanditNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmCSNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmCS,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmCS,
+
+        Result:ExohelmCSNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmDutyNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmDuty,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmDuty,
+
+        Result:ExohelmDutyNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmEcologistsNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmEcologists,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmEcologists,
+
+        Result:ExohelmEcologistsNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmFreedomNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmFreedom,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmFreedom,
+
+        Result:ExohelmFreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmLonerNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmLoner,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmLoner,
+
+        Result:ExohelmLonerNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmMercsNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmMercs,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmMercs,
+
+        Result:ExohelmMercsNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmMilitaryNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmMilitary,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmMilitary,
+
+        Result:ExohelmMilitaryNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Exohelm
+    {
+        ExohelmMonolithNoFilter,
+        destroy GasMaskFilter,
+
+        Result:ExohelmMonolith,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Exohelm
+    {
+        ExohelmMonolith,
+
+        Result:ExohelmMonolithNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	--SEVA helms
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelm,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelm,
+
+        Result:SEVAHelmNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmBanditNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelmBandit,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelmBandit,
+
+        Result:SEVAHelmBanditNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmCSNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelmCS,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelmCS,
+
+        Result:SEVAHelmCSNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmDutyNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelmDuty,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelmDuty,
+
+        Result:SEVAHelmDutyNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmEcologistNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelmEcologist,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelmEcologist,
+
+        Result:SEVAHelmEcologistNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmFreedomNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelmFreedom,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelmFreedom,
+
+        Result:SEVAHelmFreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmMercsNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelmMercs,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelmMercs,
+
+        Result:SEVAHelmMercsNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmMonolithGreenNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelmMonolithGreen,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelmMonolithGreen,
+
+        Result:SEVAHelmMonolithGreenNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in SSP-99 Screen Helmet
+    {
+        SEVAHelmMonolithNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SEVAHelmMonolith,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from SSP-99 Screen Helmet
+    {
+        SEVAHelmMonolith,
+
+        Result:SEVAHelmMonolithNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	--Sphere 08 helmet
+
+	recipe Put Filter in Sphere 08 Helmet
+    {
+        Sphere08HelmetMercsNoFilter,
+        destroy GasMaskFilter,
+
+        Result:Sphere08HelmetMercs,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere 08 Helmet
+    {
+        Sphere08HelmetMercs,
+
+        Result:Sphere08HelmetMercsNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere 08 Helmet
+    {
+        Sphere08HelmetMilitaryNoFilter,
+        destroy GasMaskFilter,
+
+        Result:Sphere08HelmetMilitary,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere 08 Helmet
+    {
+        Sphere08HelmetMilitary,
+
+        Result:Sphere08HelmetMilitaryNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere 08 Helmet
+    {
+        Sphere08HelmetCSNoFilter,
+        destroy GasMaskFilter,
+
+        Result:Sphere08HelmetCS,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere 08 Helmet
+    {
+        Sphere08HelmetCS,
+
+        Result:Sphere08HelmetCSNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere 08 Helmet
+    {
+        Sphere08HelmetDutyNoFilter,
+        destroy GasMaskFilter,
+
+        Result:Sphere08HelmetDuty,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere 08 Helmet
+    {
+        Sphere08HelmetDuty,
+
+        Result:Sphere08HelmetDutyNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere 08 Helmet
+    {
+        Sphere08HelmetFreedomNoFilter,
+        destroy GasMaskFilter,
+
+        Result:Sphere08HelmetFreedom,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere 08 Helmet
+    {
+        Sphere08HelmetFreedom,
+
+        Result:Sphere08HelmetFreedomNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Sphere 08 Helmet
+    {
+        Sphere08HelmetMonolithNoFilter,
+        destroy GasMaskFilter,
+
+        Result:Sphere08HelmetMonolith,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Sphere 08 Helmet
+    {
+        Sphere08HelmetMonolith,
+
+        Result:Sphere08HelmetMonolithNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+
+	recipe Put Filter in Steel Helmet
+    {
+        SteelHelmMaskNoFilter,
+        destroy GasMaskFilter,
+
+        Result:SteelHelmMask,
+        Time:70.0,
+        Category:Health,
+	OnCreate:InsertMaskFilter,
+    }
+	
+	recipe Remove Filter from Steel Helmet
+    {
+        SteelHelmMask,
+
+        Result:SteelHelmMaskNoFilter,
+        Time:70.0,
+        Category:Health,
+	OnCreate:RemoveMaskFilter,
+    }
+}

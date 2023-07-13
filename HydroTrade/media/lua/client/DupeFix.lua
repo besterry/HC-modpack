@@ -138,3 +138,15 @@ function ISInventoryTransferAction:isValid()
 	end
     return false;
 end
+
+local CampfireDup_fix = function ()
+    local oldfunc = ISDestroyStuffAction.isValid
+    function ISDestroyStuffAction.isValid(self)
+        if self.item:getSprite():getName() == "camping_01_6" or self.item:getName() == "Campfire" then 
+             return false
+        end
+        return oldfunc(self)
+    end
+end
+
+Events.OnGameStart.Add(CampfireDup_fix)

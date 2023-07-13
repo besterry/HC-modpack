@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>cc9fc7c4-7da2-47ad-8c76-ab90e72e6576</m_GUID>
+    <m_MaleModel>Skinned\Clothes\SteelHelmet</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\SteelHelmet</m_FemaleModel>
+    <textureChoices>Clothes\SteelHelmet\SteelHelmet</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_HatCategory>nohair</m_HatCategory>
+	<m_MasksFolder>media/textures/Clothes/Hat/Masks</m_MasksFolder>
+</clothingItem>

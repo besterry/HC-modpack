@@ -1,0 +1,4 @@
+Tooltip_EN = {
+	-- Item tooltip
+	Tooltip_clothing_Filter = "Filter:",
+}

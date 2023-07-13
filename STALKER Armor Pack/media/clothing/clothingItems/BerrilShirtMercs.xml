@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>a4474187-b3df-45b4-ae79-fe71cdd74f86</m_GUID>
+    <m_MaleModel>Skinned\Clothes\BerrilShirt</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\BerrilShirt</m_FemaleModel>
+    <textureChoices>Clothes\Mercenaries\BerrilShirtMercs</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_Masks>12</m_Masks>
+	<m_Masks>3</m_Masks>
+	<m_Masks>5</m_Masks>
+</clothingItem>

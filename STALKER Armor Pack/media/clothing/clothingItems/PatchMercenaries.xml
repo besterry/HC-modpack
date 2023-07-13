@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>34576061-6272-44b0-a977-3cede47e871e</m_GUID>
+    <m_MaleModel>Skinned\Clothes\Patch</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\Patch</m_FemaleModel>
+    <textureChoices>Clothes\Patches\Mercenaries</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+</clothingItem>

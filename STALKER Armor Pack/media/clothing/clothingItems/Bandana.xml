@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>0c616e53-4832-4731-8e96-d5921eb37501</m_GUID>
+    <m_MaleModel>Skinned\Clothes\Bandana</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\Bandana</m_FemaleModel>
+    <textureChoices>Clothes\Hat\Bandana</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_HatCategory>nohair</m_HatCategory>
+	<m_MasksFolder>media/textures/Clothes/Hat/Masks</m_MasksFolder>
+</clothingItem>

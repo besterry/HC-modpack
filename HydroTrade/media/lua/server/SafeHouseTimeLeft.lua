@@ -11,7 +11,7 @@ local function checkSafehouses()
             local lastVisitedDate = os.date("%Y-%m-%d %H:%M:%S", lastVisitedTimestamp / 1000)
             local timeLeftMillis = lastVisitedTimestamp + (daysUntilDeletion/24 * dayInMillis) - currentTime
             local daysRemaining = math.floor(timeLeftMillis / (dayInMillis))
-            if daysRemaining <= 1 then
+            if daysRemaining < 1 then
                 local timeLeftMillis = lastVisitedTimestamp + (daysUntilDeletion/24 * dayInMillis) - currentTime
                 local timeLeftDays = math.floor(timeLeftMillis / (dayInMillis))
                 local timeLeftHours = math.floor((timeLeftMillis % (dayInMillis)) / (1000 * 60 * 60))

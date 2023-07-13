@@ -1,0 +1,7 @@
+local group = BodyLocations.getGroup("Human")
+group:getOrCreateLocation("FaceMask")
+group:getOrCreateLocation("Overcoat")
+group:getOrCreateLocation("ExoPowerSupply")
+group:getOrCreateLocation("PatchHolder")
+group:getOrCreateLocation("Patch")
+group:getOrCreateLocation("Exoskeleton")

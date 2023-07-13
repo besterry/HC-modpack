@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<clothingItem>
+    <m_GUID>50953816-ef1c-48a8-8d67-ee6d4351a02e</m_GUID>
+    <m_MaleModel>Skinned\Clothes\PS5MJacketDOWN</m_MaleModel>
+    <m_FemaleModel>Skinned\Clothes\PS5MJacketDOWN</m_FemaleModel>
+    <textureChoices>Clothes\ecologists\isritjacketblue</textureChoices>
+	<m_Static>false</m_Static>
+	<m_AllowRandomHue>false</m_AllowRandomHue>
+	<m_AllowRandomTint>false</m_AllowRandomTint>
+	<m_Masks>12</m_Masks>
+	<m_Masks>3</m_Masks>
+	<m_Masks>5</m_Masks>
+</clothingItem>

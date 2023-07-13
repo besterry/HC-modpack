@@ -1,0 +1,16 @@
+module Base
+{
+    item RadiationMag
+    {
+	DisplayCategory = Literature,
+        Weight		=	0.1,
+        Type		=	Literature,
+        DisplayName	=	How To Detect Radiation,
+        Icon		=	RadiationMag,
+        TeachedRecipes  =   Craft Echo Detector;Craft Geiger Counter,
+        ReplaceOnUse    =   RadiationMag,
+        StaticModel	= Magazine,
+        WorldStaticModel = MagazineOpenGround,
+    }
+
+}
