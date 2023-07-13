@@ -1,4 +1,3 @@
 Tooltip_RU = {
-	-- Item tooltip
-	Tooltip_clothing_Filter = "Фильтр:",
+    Tooltip_clothing_Filter = "Фильтр:", 
 }
