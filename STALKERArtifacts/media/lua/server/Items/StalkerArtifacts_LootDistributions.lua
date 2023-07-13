@@ -1,3 +1,4 @@
+--Не работает, если включены зоны
 require 'Items/SuburbsDistributions'
 require 'Items/ProceduralDistributions'
 
