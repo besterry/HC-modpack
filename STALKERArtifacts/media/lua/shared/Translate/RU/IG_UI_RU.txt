@@ -1,5 +1,3 @@
 IGUI_RU = {
-
     IGUI_ItemCat_Artifact = "”никальное",
-
 }
