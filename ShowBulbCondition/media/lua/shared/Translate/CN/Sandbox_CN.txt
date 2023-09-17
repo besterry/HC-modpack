@@ -1,0 +1,5 @@
+Sandbox_CN = {
+    Sandbox_ShowBulbCondition = "显示灯泡状态",
+
+    Sandbox_ShowBulbCondition_RequireElectricityLevel = "要求电工等级",
+}

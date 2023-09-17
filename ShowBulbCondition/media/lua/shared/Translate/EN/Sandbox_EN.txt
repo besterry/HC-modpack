@@ -1,0 +1,5 @@
+Sandbox_EN = {
+    Sandbox_ShowBulbCondition = "Show Bulb Condition",
+
+    Sandbox_ShowBulbCondition_RequireElectricityLevel = "Require Electrical Level",
+}

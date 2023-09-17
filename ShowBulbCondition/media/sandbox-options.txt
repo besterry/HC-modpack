@@ -1,0 +1,9 @@
+VERSION = 1,
+
+option ShowBulbCondition.RequireElectricityLevel
+{
+    type = integer, default = 2,
+    min = 0, max = 11,
+    page = ShowBulbCondition,
+    translation = ShowBulbCondition_RequireElectricityLevel,
+}
