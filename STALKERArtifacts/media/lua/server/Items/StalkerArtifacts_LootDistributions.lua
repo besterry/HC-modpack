@@ -5,7 +5,7 @@ require 'Items/ProceduralDistributions'
 local mods = getActivatedMods();
 local dontLoad = false;
 for i=0, mods:size()-1, 1 do
-	if mods:get(i) == "ToxicZonesSTALKER" then
+	if mods:get(i) == "ToxicZonesSTALKER" or mods:get(i) == "ToxicZonesSTALKER_h" then
 		dontLoad = true
 	end
 end
