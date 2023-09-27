@@ -2,7 +2,7 @@ require 'Foraging/forageSystem'
 
 local mods = getActivatedMods();
 for i=0, mods:size()-1, 1 do
-	if mods:get(i) == "ToxicZones" or mods:get(i) == "ToxicZonesSTALKER" then
+	if mods:get(i) == "ToxicZones" or mods:get(i) == "ToxicZonesSTALKER" or mods:get(i) == "ToxicZone_h" or mods:get(i) == "ToxicZonesSTALKER_h" then
 
 function forageSystem.isValidSquare(_square, _itemDef, _catDef)
 	if (not _square) then return false; end;
