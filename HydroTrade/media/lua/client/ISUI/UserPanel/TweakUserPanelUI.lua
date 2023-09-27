@@ -21,20 +21,20 @@ TweakUserPanelUI.create = function(self)
     TweakUserPanelUI.Original.create(self)
 
     -- Disable server options button.
-    if SandboxVars.ServerTweaker.HideServerOptionsFromPlayers then
-        self.serverOptionBtn.enable = false;
-    end
+    --if SandboxVars.ServerTweaker.HideServerOptionsFromPlayers then
+    --    self.serverOptionBtn.enable = false;
+    --end
 
     -- Disable tickets button.
-    if SandboxVars.ServerTweaker.HideTicketsFromPlayers then
-        self.ticketsBtn.enable = false;
-    end
+    --if SandboxVars.ServerTweaker.HideTicketsFromPlayers then
+    --    self.ticketsBtn.enable = false;
+    --end
 
     -- Disable showConnectionInfo and showServerInfo.
-    if SandboxVars.ServerTweaker.PinOverlayServerInfoText then
-        self.showConnectionInfo.enable = false;
-        self.showServerInfo.enable = false;
-    end
+    --if SandboxVars.ServerTweaker.PinOverlayServerInfoText then
+    --    self.showConnectionInfo.enable = false;
+    --    self.showServerInfo.enable = false;
+    --end
 
     -- Add server HighlightSafehouse options to client menu.
     if SandboxVars.ServerTweaker.HighlightSafehouse then
