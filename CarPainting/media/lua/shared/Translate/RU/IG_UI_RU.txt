@@ -1,0 +1,17 @@
+IGUI_RU = {
+	IGUI_NeedPaint = "Мне нужен балончик краски в руках",
+	IGUI_PaintLabel = "Покраска",
+	IGUI_AutoScript = "Автомобиль:",
+	IGUI_NoVehicleSelected = "Транспорт не выбран",
+	IGUI_Hue = "Тон",
+	IGUI_Saturation = "Насыщение",
+	IGUI_Value = "Значение",
+	IGUI_Red = "Красный",
+	IGUI_Blue = "Синий",
+	IGUI_White = "Белый",
+	IGUI_Black = "Чёрный",
+	IGUI_Other = "Другое",
+	IGUI_Next_skin = "Следующий цвет",
+	IGUI_previous_skin = "Предыдущий цвет",
+	IGUI_Save_skin = "Покрасить",
+}

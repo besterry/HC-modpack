@@ -1,0 +1,18 @@
+module Base 
+{
+	imports 
+	{
+		Base
+	}
+	
+item SprayPaint 
+	{
+		DisplayName = Spray Paint,
+		Icon = SprayPaint,
+		Weight = 0.2,
+		DisplayCategory = Household,
+		Type    =       Normal,	
+		Tooltip = Tooltip_SprayPaint,
+	}
+}
+	

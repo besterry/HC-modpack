@@ -1,0 +1,4 @@
+name=PlayersOnline
+poster=poster.png
+id=playersonline
+description=Проверяет число игроков на сервере, помещая результат в lua/online
