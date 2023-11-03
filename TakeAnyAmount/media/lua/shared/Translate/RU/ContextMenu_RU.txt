@@ -1,0 +1,5 @@
+ContextMenu_RU{
+ ContextMenu_GrabAmount = "Взять...",
+ ContextMenu_PutAmount = "Переложить...",
+ ContextMenu_TransferAmountInfo = "Пекладывание предметов (макс.",
+}

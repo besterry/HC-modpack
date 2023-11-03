@@ -454,7 +454,7 @@ item HCBarrelcorn
 	Type 			= Normal,
         DisplayName         	= Barrel of Corn Mash,
         ReplaceOnDeplete        = Hydrocraft.HCWoodenbarrel,
-        icon 			= HCWinebarrel
+        icon 			= HCWinebarrel,
 	DisplayCategory          =   CraftDist,
 	}
 

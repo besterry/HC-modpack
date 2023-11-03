@@ -61,8 +61,7 @@ function PlayerShop.addPlayerShop(worldobjects, playerNum,sprites)
 		getCell():setDrag(ShopSpriteCursor:new(player,sprites),playerNum)
 		return
 	end
-	getPlayer():Say(getText("IGUI_Not_correct_place_for_shop"))
-    
+	getPlayer():Say(getText("IGUI_Not_correct_place_for_shop"))    
 end
 
 function PlayerShop.LockUnlockPlayerShop(worldobjects, shop, lock)
@@ -87,9 +86,10 @@ function PlayerShop.PickupShop(worldobjects,player,shop)
     shop:getSquare():transmitRemoveItemFromSquare(shop)
     local item = "Base.PlayerShop"
     if shop:getContainer():getType() == "freezer" then
-        item = "Base.PlayerShopFreezer"
+       item = "Base.PlayerShopFreezer"
     end
     player:getInventory():AddItem(item)
+	--if PM.ShopCount > 0 then PM.ShopCount = PM.ShopCount-1 end
     PlayerShop.toggleBusy(shop,player:getUsername(),false)
 end
 
