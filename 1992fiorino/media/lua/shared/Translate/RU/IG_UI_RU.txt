@@ -1,4 +1,4 @@
 IG_UI_RU = {
 	IGUI_VehicleName1992fiorino = "Fiat Fiorino",
-	IGUI_VehicleName1992fiorinoSpecial = "Fiat Fiorino",
+	IGUI_VehicleName1992fiorinoSpecial = "Fiat Fiorino Special",
 }
