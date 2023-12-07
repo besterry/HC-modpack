@@ -14,7 +14,7 @@ function ModDataDebugPanel.OnOpenPanel(obj)
         ModDataDebugPanel.modDataList = {}
         table.insert(ModDataDebugPanel.modDataList, obj)
 
-        ModDataDebugPanel.instance = ModDataDebugPanel:new (100, 100, 840, 600, "Global ModData Debugger");
+        ModDataDebugPanel.instance = ModDataDebugPanel:new (100, 100, 840, 600, "Car ModData");
         ModDataDebugPanel.instance:initialise();
         ModDataDebugPanel.instance:instantiate();
     else
@@ -38,7 +38,7 @@ end
 function ModDataDebugPanel:createChildren()
     ISPanel.createChildren(self);
 
-    ISDebugUtils.addLabel(self, {}, 10, 20, "Global ModData Debugger", UIFont.Medium, true)
+    ISDebugUtils.addLabel(self, {}, 10, 20, "Car ModData", UIFont.Medium, true)
 
     self.tableNamesList = ISScrollingListBox:new(10, 50, 200, self.height - 100);
     self.tableNamesList:initialise();
@@ -65,7 +65,7 @@ function ModDataDebugPanel:createChildren()
     self:addChild(self.infoList);
 
     local y, obj = ISDebugUtils.addButton(self,"close",self.width-200,self.height-40,180,20,getText("IGUI_CraftUI_Close"),ModDataDebugPanel.onClickClose);
-    y, obj = ISDebugUtils.addButton(self,"refresh",self.width-400,self.height-40,180,20,"Refresh",ModDataDebugPanel.onClickRefresh);
+    y, obj = ISDebugUtils.addButton(self,"refresh",self.width-400,self.height-40,180,20,getText("IGUI_Refresh"),ModDataDebugPanel.onClickRefresh);
 
     self:populateList();
 end

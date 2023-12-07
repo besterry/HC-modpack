@@ -8,7 +8,7 @@ commands.getSqlId = function(player, args)
     if not vehicle:getModData().sqlId or vehicle:getModData().sqlId == nil then
         vehicle:getModData().sqlId=sqlId
         vehicle:transmitModData()
-        print("Send new sqlid")
+        --print("Send new sqlid")
     end     
     sendServerCommand('CarOutSqlId', "onGetSql", args)
 end

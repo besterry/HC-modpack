@@ -7,42 +7,50 @@ function ISVehicleMechanics:createChildren() -- Переопределение �
         self.IconInfo = ISButton:new(5, 20, 25, 25, "", self, ISVehicleMechanics.onClickInfo)
         self.IconInfo.internal = "CARINFO"
         self.IconInfo:setImage(icon)
-        --self.IconInfo:setDisplayBackground(false)
+        self.IconInfo:setDisplayBackground(false)
         self.IconInfo.borderColor = { r = 1, g = 1, b = 1, a = 0.1 }
         self:addChild(self.IconInfo);
     end
     return o
 end
 
-function ISVehicleMechanics:onClickInfo() --Событие по нажатию кнопки информация
-    -- local modData = self.vehicle:getModData()
-    -- print("modData:",modData)
+function ISVehicleMechanics:onClickInfo() --Событие по нажатию кнопки "Информация"
     ModDataDebugPanel.OnOpenPanel(self.vehicle)
-    --getTimestamp()
 end
 
 function getTimestamp() --Блок расчета текущего времени
     local time = getTimeInMillis()
-    local time = os.date("%d/%m-%H:%M", (time+10800000)/1000)
+    local time = os.date("%H:%M  %d.%m", (time+10800000)/1000)
     return time
 end
 
-local function OnEnterVehicleOnModData(player) --Блок отслеживания последних садившихся игроков
+local vehicle 
+--Отслеживания последних садившихся игроков
+local function OnEnterVehicleOnModData(player)
     local args = {}    
     local time = getTimestamp()
     local name = player:getUsername()
-    local vehicle = player:getVehicle()
-
-    -----Блок отправки изменения моддаты на сервере-----
+    vehicle = player:getVehicle()
     args.time = time
     args.name = name
     args.vehicleId = vehicle:getId()
     sendClientCommand(getPlayer(), 'CISeat', 'writeSeat', args)
-    ----------------------------------------------------
 end
 Events.OnEnterVehicle.Add(OnEnterVehicleOnModData)
 
---------------------Получение------------------
+--Отслеживания последних выходивших игроков
+local function OnExitVehicleOnModData(player)
+    local args = {}    
+    local time = getTimestamp()
+    local name = player:getUsername()
+    args.timeExit = time
+    args.name = name
+    args.vehicleId = vehicle:getId()
+    sendClientCommand(getPlayer(), 'CISeat', 'writeSeat', args)
+end
+Events.OnExitVehicle.Add(OnExitVehicleOnModData)
+
+--------------------Получение моддаты-------------------
 local receiveServerCommand
 receiveServerCommand = function(module, command, args)
     if module ~= 'CItransmitModData' then return; end

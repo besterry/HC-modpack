@@ -1,4 +1,6 @@
-
+local oldColorH
+local oldColorS
+local oldColorV
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
 
 VehicleHSV = ISCollapsableWindow:derive("VehicleHSV")
@@ -167,16 +169,24 @@ end
 
 
 function VehicleHSV:onButtonSaveSkin()
+	--print("Click butoon")
 	local item1 = getPlayer():getPrimaryHandItem()-- получаем предмет в правой руке игрока
     local item2 = getPlayer():getSecondaryHandItem() -- получаем предмет в левой руке игрока
-    if (item1 and item1:getFullType()  == "Base.SprayPaint") or (item2 and item2:getFullType()  == "Base.SprayPaint") or isAdmin() then 		
-		sendClientCommand(self.character, 'vehicle', 'setSkinIndex', args)
+    if (item1 and item1:getFullType()  == "Base.SprayPaint") or (item2 and item2:getFullType()  == "Base.SprayPaint") or isAdmin() then 
+		if args then
+			sendClientCommand(self.character, 'vehicle', 'setSkinIndex', args) --смена скина
+		end
+		local args2 = { vehicle = self.vehicle:getId(), h = self.colorHue.currentValue / 100, s = self.colorSaturation.currentValue / 100, v = self.colorValue.currentValue / 100}
+		sendClientCommand(self.character, 'vehicle', 'setHSV', args2) --смена цвета
+		--print("Send color to server")	
 		if item1 and item1:getFullType()  == "Base.SprayPaint" then 
 			getPlayer():getPrimaryHandItem():Use()
 			getPlayer():getInventory():Remove(item1) end
 		if item2 and item2:getFullType()  == "Base.SprayPaint" then 
 			getPlayer():getSecondaryHandItem():Use()
 			getPlayer():getInventory():Remove(item2) end
+		args = nil
+		args2 = nil
 		ISCollapsableWindow.close(self)
 	else
 		getPlayer():Say(getText('IGUI_NeedPaint'))
@@ -187,6 +197,7 @@ function VehicleHSV:clearVehicle()
 	self.vehicle = nil
 	self.scriptName.name = getText("IGUI_NoVehicleSelected")
 end
+
 
 function VehicleHSV:prerender()
 	ISCollapsableWindow.prerender(self)
@@ -204,12 +215,15 @@ end
 
 function VehicleHSV:close()
 	if self.vehicle then
-		local args = { vehicle = self.vehicle:getId(), h = self.colorHue.currentValue / 100, s = self.colorSaturation.currentValue / 100, v = self.colorValue.currentValue / 100}
-		sendClientCommand(self.character, 'vehicle', 'setHSV', args)
+		--print("Restore color")
+		local args = { vehicle = self.vehicle:getId(), h = oldColorH / 100, s = oldColorS / 100, v = oldColorV / 100}
+		sendClientCommand(self.character, 'vehicle', 'setHSV', args)		
 		self:clearVehicle()
 	end
+	args = nil
 	ISCollapsableWindow.close(self)
 end
+
 
 function VehicleHSV:setVehicle(vehicle)
 	self.vehicle = vehicle
@@ -217,8 +231,11 @@ function VehicleHSV:setVehicle(vehicle)
 	if self.vehicle then
 		self.scriptName.name = getText("IGUI_AutoScript")..self.script:getName()
 		self.colorHue:setCurrentValue(self.vehicle:getColorHue() * 100)
+		oldColorH = self.vehicle:getColorHue() * 100
 		self.colorSaturation:setCurrentValue(self.vehicle:getColorSaturation() * 100)
+		oldColorS = self.vehicle:getColorSaturation() * 100
 		self.colorValue:setCurrentValue(self.vehicle:getColorValue() * 100)
+		oldColorV = self.vehicle:getColorValue() * 100
 	end
 	if self.vehicle:getSkinIndex() == -1 or self.vehicle:getSkinCount() <= 1 then
 		self.nextSkinButton:setEnable(false)
