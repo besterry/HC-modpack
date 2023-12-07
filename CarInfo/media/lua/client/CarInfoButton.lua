@@ -1,3 +1,4 @@
+---@diagnostic disable: duplicate-set-field
 local old_ISVehicleMechanicscreateChildren = ISVehicleMechanics.createChildren
 local icon = getTexture("media/textures/car_info.png")
 
@@ -18,7 +19,7 @@ function ISVehicleMechanics:onClickInfo() --Событие по нажатию �
     ModDataDebugPanel.OnOpenPanel(self.vehicle)
 end
 
-function getTimestamp() --Блок расчета текущего времени
+local function getTimestamp() --Блок расчета текущего времени
     local time = getTimeInMillis()
     local time = os.date("%H:%M  %d.%m", (time+10800000)/1000)
     return time
