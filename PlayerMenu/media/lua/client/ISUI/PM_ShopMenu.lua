@@ -107,7 +107,7 @@ function PM_ShopMenu:onClick(button)
         PM_ShopMenu.instance = nil   
     end    
     if button.internal == "EXPANDCOIN" then
-        if PM.Balance >= 50 and PM.MaxShopCount<10 then
+        if PM.Balance >= 50 and PM.MaxShopCount<15 then
             local saveData = {}
             saveData.delta = 50
             saveData.balance = PM.Balance

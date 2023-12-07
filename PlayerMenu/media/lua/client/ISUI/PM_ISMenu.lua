@@ -162,6 +162,7 @@ function PM_ISMenu:render()
         self.reload.textColor = {r=1, g=1, b=1, a=0.5}
         self.reload.backgroundColor = {r=0.3, g=0.3, b=0.3, a=1}
     end
+    self.Shop:setEnabled(false) -- отключение кнопки магазин (в разработке)
 end
 
 function PM_ISMenu:onClick(button)
