@@ -1,0 +1,108 @@
+-- ModData_Vehicle = ModData_Vehicle or {}
+-- ModData_Vehicle.table = {}
+
+-- --Добавление детали ContainerModData для моддаты
+-- --В эту деталь
+-- ModData_Vehicle.init = {}
+-- function ModData_Vehicle.init.ModDataPart(vehicle, part)
+--     ModData_Vehicle.checkAndWriteSqlIdinmodData(vehicle)    
+-- end
+-- ModData_Vehicle.Create = {}
+-- function ModData_Vehicle.Create.ModDataPart(vehicle, part)
+--     part:setCondition(100)
+--     local invItem = part:getInventoryItem()
+-- end
+
+-- --Добавление детали
+-- local function AddVehiclePart()
+--     local SMinstance = ScriptManager.instance
+--     local VehiclesList = SMinstance:getAllVehicleScripts()
+--     local newVehiclePart = [[
+--         {
+--             part ContainerModData
+--             {
+--                 category = nodisplay
+
+--                 lua
+--                 {
+--                     create = ModData_Vehicle.Create.ModDataPart,
+--                     init = ModData_Vehicle.Init.ModDataPart,
+--                 }
+--             }
+--         }
+--     ]]
+--     --Внедрение детали во все машины
+--     for i=0, VehiclesList:size()-1 do
+--         local vehicle = VehiclesList:get(i)
+--         local fullname = vehicle:getFullName()
+--         local name = vehicle:getName()
+--         local VehicleScript = SMinstance:getVehicle(fullname)
+--         --Переписываем VehicleScript на добавление детали
+--         VehicleScript:Load(name, newVehiclePart)
+--         print("Part installed")
+--     end
+-- end
+-- Events.OnGameBoot.Add(AddVehiclePart)
+
+-- function ModData_Vehicle.getPartFromModData(vehicle)
+--     local part
+--     if vehicle:getPartById("ContainerModData") then
+--         part = vehicle:getPartById("ContainerModData")
+--         print("Part Find!")
+--     end
+--     return part
+-- end
+
+-- function ModData_Vehicle.getModData(vehicle)
+--     local part = ModData_Vehicle.getPartFromModData(vehicle)
+--     local modData = part and part:getModData() or nil
+--     if modData and modData ~= nil then print("ModData find") end
+--     return modData
+-- end
+
+-- --Установка моддаты в детали для моддаты
+-- --Если в аргументе указать "remove" то ключ будет удален
+-- function ModData_Vehicle.setModData(vehicle, args)
+--     if isClient() then return end
+--     print("setModData")
+--     if not vehicle then return end
+--     --retutn vehicle:getModData()
+--     local part = ModData_Vehicle.getPartFromModData(vehicle)
+--     if not part then return end
+
+--     local modData = part:getModData()
+--     for k,v in pairs(args) do
+--         if v=="remove" then --Удаление ячейки
+--              modData[k]=nil
+--         else
+--             modData[k]= v
+--         end
+--     end
+--     vehicle:transmitPartModData(part)
+-- end
+
+-- --Проверка на Sqlid в modData техники. Если таковой нет то записываем
+-- function ModData_Vehicle.checkAndWriteSqlIdinmodData(vehicle)
+--     if isClient() then return end
+--     if not vehicle then return end
+--     local part = ModData_Vehicle.getPartFromModData(vehicle)
+--     if not part then return end
+--     local modData = part:getModData()
+--     if not modData.sqlId then
+--         modData.sqlId = vehicle:getSqlId()
+--     end
+--     print("SqlID:",modData.sqlId)
+--     vehicle:transmitPartModData(part) 
+-- end
+
+-- --Принудительная запись sqlId в транспорт
+-- function ModData_Vehicle.setSqlIdInModData(vehicle)
+--     if isClient() then return end
+--     if not vehicle then return end
+--     local part = ModData_Vehicle.getPartFromModData(vehicle)
+--     if not part then return end
+--     local modData = part:getModData()
+--     modData.sqlId = vehicle:getSqlId()
+--     print("SqlID forced:",modData.sqlId)
+--     vehicle:transmitPartModData(part)
+-- end

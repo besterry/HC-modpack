@@ -1,0 +1,28 @@
+module Base 
+{
+	imports 
+	{
+		Base
+	}
+	
+item KeyKit 
+	{
+		DisplayName = Key Kit,
+		Icon = KeyKit,
+		Weight = 0.5,
+		DisplayCategory = Household,
+		Type    =       Normal,	
+		Tooltip = Tooltip_KeyKit,
+	}
+	
+item HotwiredKit 
+	{
+		DisplayName = Hotwired Kit,
+		Icon = HotwiredKit,
+		Weight = 0.5,
+		DisplayCategory = Household,
+		Type    =       Normal,	
+		Tooltip = Tooltip_HotwiredKit,
+	}
+}
+	

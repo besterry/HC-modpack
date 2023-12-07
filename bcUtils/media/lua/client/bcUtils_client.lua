@@ -31,6 +31,7 @@ if table.pack == nil then
 	end
 end
 if table.unpack == nil then
+---@diagnostic disable-next-line: duplicate-set-field
 	table.unpack = function(t, i)
 		i = i or 1;
 		if t[i] then

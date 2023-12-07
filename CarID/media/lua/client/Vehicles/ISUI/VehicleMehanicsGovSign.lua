@@ -1,37 +1,36 @@
-local old_render = ISVehicleMechanics.render
-local old_mehWindows = ISVehicleMechanics.initParts
-local vehicleId = nil
-local sqlId = "Load"
 local receiveServerCommand
+local sendMessage = false
 
-function sendcm (vehicleId)    
+local function sendcm (vehicleId)
     local args = args or {}
     args.vehicleId = vehicleId
-    --print("args.vehicleId:", args.vehicleId)
     sendClientCommand(getPlayer(), 'CargetSqlId', 'getSqlId', args)
-    Events.OnServerCommand.Add(receiveServerCommand)
 end
 
 receiveServerCommand = function(module, command, args)
     if module ~= 'CarOutSqlId' then return; end
     if command == 'onGetSql' then
-        --print("args:",args.sqlId)
-        sqlId = args.sqlId
-        Events.OnServerCommand.Remove(receiveServerCommand)            
+        sendMessage = false
+        local vehicle = getVehicleById(args.vehicleId)
+        if not vehicle then return end
+        vehicle:getModData().sqlId = args.sqlId
+        print("Load sql on server")        
     end
 end
+Events.OnServerCommand.Add(receiveServerCommand)
 
-
-function ISVehicleMechanics:render()    
-    local o = old_render(self)   
-    if not (vehicleId == self.vehicle:getId()) then
-        vehicleId = self.vehicle:getId()
-        sendcm (vehicleId)
-    else   
-        local govSign = getText("IGUI_GovSign") .. sqlId .. " KT" --self.vehicle:getId()
-        local govSignWidth = getTextManager():MeasureStringX(UIFont.Small, govSign)
-        self:drawText(govSign, self.width - govSignWidth - 20, 120, 1, 1, 1, 1, UIFont.Small);
+local old_render = ISVehicleMechanics.render
+---@diagnostic disable-next-line: duplicate-set-field
+function ISVehicleMechanics:render()
+    local o = old_render(self)
+    if not self.vehicle:getModData().sqlId and not sendMessage then
+        sendcm(self.vehicle:getId())
+        sendMessage = true
     end
+
+    self.sqlId = self.vehicle:getModData().sqlId or "Load"    
+    local govSign = getText("IGUI_GovSign") .. self.sqlId .. " KT"        
+    local govSignWidth = getTextManager():MeasureStringX(UIFont.Small, govSign)
+    self:drawText(govSign, self.width - govSignWidth - 20, 120, 1, 1, 1, 1, UIFont.Small);
     return o
 end
-

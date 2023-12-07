@@ -1,0 +1,4 @@
+ItemName_RU = {
+    ItemName_Base.KeyKit = "Заготовка ключей",
+	ItemName_Base.HotwiredKit = "Набор ремонта замка зажигания",
+}
