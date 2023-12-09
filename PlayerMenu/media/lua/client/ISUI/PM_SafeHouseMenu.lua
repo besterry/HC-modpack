@@ -89,7 +89,7 @@ function PM_SafeHouseMenu:onClick(button)
         if PM.Balance < 100 then
             getPlayer():Say(getText('IGUI_NoMoney'))
         else
-            getPlayer():Say(getText('IGUI_Success'))
+            getPlayer():Say(getText('IGUI_SuccessESH'))
             local saveData = {}
             saveData.delta = 100
             saveData.balance = PM.Balance

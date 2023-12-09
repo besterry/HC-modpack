@@ -54,12 +54,12 @@ module Rotators
 		}
 
 		extents = 1.8596 0.7018 7.2632,
-		mass = 1300,
+		mass = 900,
 		physicsChassisShape = 1.8596 0.7018 7.2632,
 		centerOfMassOffset = 0.0000 -0.0877 0.1404,
 		shadowExtents = 2.1890 7.9141,
 		shadowOffset = 0.0000 0.1524,
-		engineForce = 4300,
+		engineForce = 6250,
 		maxSpeed = 50f,
 		engineLoudness = 125,
 		engineQuality = 85,
@@ -69,7 +69,7 @@ module Rotators
 		steeringIncrement = 0.04,
 		steeringClamp = 0.25,
 		suspensionStiffness = 85,
-		suspensionCompression = 4.83,
+		suspensionCompression = 18.83,
 		suspensionDamping = 3.88,
 		maxSuspensionTravelCm = 10,
 		suspensionRestLength = 0.16f,
