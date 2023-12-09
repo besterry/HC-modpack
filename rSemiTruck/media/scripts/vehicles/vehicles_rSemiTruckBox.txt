@@ -69,7 +69,7 @@ module Rotators
 		steeringIncrement = 0.04,
 		steeringClamp = 0.25,
 		suspensionStiffness = 85,
-		suspensionCompression = 18.83,
+		suspensionCompression = 8.83,
 		suspensionDamping = 3.88,
 		maxSuspensionTravelCm = 10,
 		suspensionRestLength = 0.16f,
