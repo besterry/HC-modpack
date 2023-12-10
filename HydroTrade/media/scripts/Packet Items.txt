@@ -1,0 +1,28 @@
+module Base
+{
+	item HTpalletLogs
+	{
+		Weight             = 20,
+		Type			   = Drainable,
+		UseDelta 		   = 0.02,
+		DisplayName		   = Pallet of logs,
+		Icon			   = HTPallete,
+		DisplayCategory	= Craft,
+	}
+
+    recipe Create pallet log
+    {
+        Log/HCOakLog=50,
+        Result:HTpalletLogs,
+        Time:200,
+        Sound:BreakGlassItem,
+    }
+
+	recipe Get pallet log
+    {
+        HTpalletLogs=1,
+        Result:Log,
+        Time:10,
+        Sound:BreakGlassItem,
+    }		
+}

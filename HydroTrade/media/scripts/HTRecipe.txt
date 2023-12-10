@@ -161,7 +161,7 @@ recipe Make Strawbale
 fixing Fix Car Seat sewing
     {
         Require : NormalCarSeat1;NormalCarSeat2;NormalCarSeat3,
-        GlobalItem : Needle,
+        GlobalItem : Needle=1,
         ConditionModifier : 1.2,
 
         Fixer : Thread=5; Mechanics=4,

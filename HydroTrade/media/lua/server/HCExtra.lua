@@ -383,8 +383,6 @@ function recipe_hcsawdustRoap(items, result, player)
 	inv:AddItem("Hydrocraft.HCSawdust");
 end
 
-
-
 function recipe_hcpallet(items, result, player)
 	HCAddManySameItem("Hydrocraft.HCRopethick", 0, player);
 	HCAddManySameItem("Hydrocraft.HCWoodenpallet", 0, player);
