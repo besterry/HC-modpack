@@ -36,20 +36,35 @@ function RemoverItemAndBuildsTool:initialise()
     self.close.borderColor = {r=1, g=1, b=1, a=0.1};
     self:addChild(self.close);
 
-    self.itemType = ISRadioButtons:new(self:getWidth()/2 - 100, 45, 150, 20, self)
+    self.itemType = ISRadioButtons:new(self:getWidth()/2 - 150, 45, 150, 20, self)
     self.itemType.choicesColor = {r=1, g=1, b=1, a=1}
     self.itemType:initialise()
     self.itemType.autoWidth = true;
     self:addChild(self.itemType)
     self.itemType:addOption(getText("IGUI_Delete_AllItems"));
-    self.itemType:addOption(getText("IGUI_RemoveBuilds"))    
+    self.itemType:addOption(getText("IGUI_RemoveBuilds"))
     self.itemType:addOption(getText("IGUI_RemoveAll"))
+    self.itemType:addOption(getText("IGUI_ChangeToRoad"))
+    self.itemType:addOption(getText("IGUI_ChangeToGrass"))
     self.itemType:setSelected(1)
 end
 
 function RemoverItemAndBuildsTool:destroy()
     self:setVisible(false);
     self:removeFromUIManager();
+end
+
+local function removeAllButFloor(square)
+	if not square then return nil end
+	for i=square:getObjects():size(),2,-1 do
+		local isoObject = square:getObjects():get(i-1)
+		square:transmitRemoveItemFromSquare(isoObject)
+	end
+	for i=square:getStaticMovingObjects():size(),1,-1 do
+		local isoObject = square:getStaticMovingObjects():get(i-1)
+		isoObject:removeFromWorld()
+		isoObject:removeFromSquare()
+	end
 end
 
 function RemoverItemAndBuildsTool:onClick(button)
@@ -108,7 +123,7 @@ function RemoverItemAndBuildsTool:onClick(button)
                                         end
                                     end
                                 end
-                            elseif self.itemType:isSelected(3) then
+                            elseif self.itemType:isSelected(3) then --Удаление всего (кроме пола на 0 этаже)
                                 for i = sq:getObjects():size() - 1, 0 , -1 do
                                     local building = sq:getObjects():get(i)
                                     if building then
@@ -119,6 +134,34 @@ function RemoverItemAndBuildsTool:onClick(button)
                                             building:getSquare():RemoveTileObject(building)
                                         end
                                     end
+                                end
+                            elseif self.itemType:isSelected(4) then --Если замена на дорогу
+                                for i = sq:getObjects():size() - 1, 0 , -1 do
+                                    local building = sq:getObjects():get(i)
+                                    --print("Floor: ",building:isFloor())
+                                    if building:isFloor() and z==0 then
+                                        --print("ROAD")
+                                        removeAllButFloor(building:getSquare())
+                                        building:getSquare():getFloor():setSprite(getSprite("blends_street_01_86"))
+                                        building:transmitUpdatedSprite()
+                                        --building:transmitUpdatedSpriteToServer()
+                                        --building:setSprite(getSprite("blends_street_01_86"))
+                                    end
+
+                                end
+                            elseif self.itemType:isSelected(5) then --Если замена на дорогу
+                                for i = sq:getObjects():size() - 1, 0 , -1 do
+                                    local building = sq:getObjects():get(i)
+                                    --print("Floor: ",building:isFloor())
+                                    if building:isFloor() and z==0 then
+                                        --print("ROAD")
+                                        removeAllButFloor(building:getSquare())
+                                        building:getSquare():getFloor():setSprite(getSprite("blends_natural_01_22"))
+                                        building:transmitUpdatedSprite()
+                                        --building:transmitUpdatedSpriteToServer()
+                                        --building:setSprite(getSprite("blends_street_01_86"))
+                                    end
+
                                 end
                             end
                         end
