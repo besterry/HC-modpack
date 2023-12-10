@@ -1,0 +1,53 @@
+module Base
+{
+
+	template vehicle CytAstra89Tire
+		{
+		part CytAstra89Tire
+        	{
+		area = Engine,
+            category = tire,
+            itemType = Base.CytAstra89TR,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:4,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:4,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+	}
+}

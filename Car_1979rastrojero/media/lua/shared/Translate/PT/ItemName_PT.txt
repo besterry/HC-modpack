@@ -1,0 +1,13 @@
+ItemName_PT = {
+	ItemName_Base.1979rastrojeroDoorFrontLeft2 = "Porta dianteira esquerda Rastrojero",
+	ItemName_Base.1979rastrojeroDoorFrontRight2 = "Porta dianteira direita Rastrojero",
+	ItemName_Base.1979rastrojeroWindowFront2 = "Janela dianteira Rastrojero",
+	ItemName_Base.1979rastrojeroHood2 = "Capô Rastrojero",
+	ItemName_Base.1979rastrojeroTrunk2 = "Tampa do Porta-malas Rastrojero",
+	ItemName_Base.1979rastrojeroFleteTrunk2 = "Tampa do Porta-malas Rastrojero",	
+	ItemName_Base.1979rastrojeroCarniTrunk2 = "Tampa do Porta-malas Rastrojero",	
+	ItemName_Base.1979rastrojeroWheel2 = "Pneu Rastrojero",	
+	ItemName_Base.1979rastrojeroFrontWindshield2 = "Para-brisa Rastrojero",
+	ItemName_Base.1979rastrojeroRearWindshield2 = "Para-brisa Traseiro Rastrojero",
+	ItemName_Base.1979rastrojeroSeatFront2 = "Assento dianteira Rastrojero",
+}

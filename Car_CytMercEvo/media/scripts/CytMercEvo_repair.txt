@@ -1,0 +1,92 @@
+module Base
+{
+
+fixing Fix MercedesEvo Bullbar
+	{
+	   Require : CytMercEvoBull3,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix MercedesEvo Windshield Cage
+	{
+	   Require : CytMercEvoWindshieldBars3,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix MercedesEvo Window Armor
+	{
+	   Require : CytMercEvoWindowArmor3,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix MercedesEvo Door
+	{
+	   Require : CytMercEvoDoor3,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix MercedesEvo Trunk Hatch
+	{
+	   Require : CytMercEvoTrunkDoor3,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix MercedesEvo Hood
+	{
+	   Require : CytMercEvoHood3,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix MercedesEvo Tires
+	{
+	   Require : CytMercEvoWheel3,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : OldTire1; MetalWelding=2;Mechanics=2,
+       Fixer : NormalTire1; MetalWelding=2;Mechanics=2,
+       Fixer : ModernTire1; MetalWelding=2;Mechanics=2,
+       Fixer : OldTire2; MetalWelding=2;Mechanics=2,
+       Fixer : NormalTire2; MetalWelding=2;Mechanics=2,
+       Fixer : ModernTire2; MetalWelding=2;Mechanics=2,
+       Fixer : NormalTire3; MetalWelding=2;Mechanics=2,
+       Fixer : ModernTire3; MetalWelding=2;Mechanics=2,
+       Fixer : OldTire3; MetalWelding=2;Mechanics=2,
+
+	}
+
+fixing Fix MercedesEvo Seat
+	{
+	   Require : CytMercEvoSeat3,
+	   GlobalItem : Thread=2,
+	   ConditionModifier : 1.5,
+
+       Fixer : LeatherStrips=10; Tailoring=2,
+
+	}
+
+}

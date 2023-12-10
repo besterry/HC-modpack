@@ -1,0 +1,94 @@
+module Base
+{
+
+	fixing Fix rastrojero Hood Welding
+	{
+	   Require : 1979rastrojeroHood2,
+	   GlobalItem : BlowTorch=2,
+	   ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=1;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=1;Mechanics=2,
+	}
+
+    fixing Fix rastrojero Hood
+	{
+	   Require : 1979rastrojeroHood2,
+	   GlobalItem : Screws=8,
+	   ConditionModifier : 0.5,
+
+       Fixer : SheetMetal; Mechanics=2,
+	}
+
+	fixing Fix rastrojero Door Welding
+	{
+	   Require : 1979rastrojeroDoorFrontLeft2;1979rastrojeroDoorFrontRight2,
+	   GlobalItem : BlowTorch=2,
+	   ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=3;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=3;Mechanics=2,
+	}
+
+    fixing Fix rastrojero Car seat
+	{
+	   Require : 1979rastrojeroSeatFront2,
+	   ConditionModifier : 0.8,
+
+       Fixer : DuctTape=2;Mechanics=1,
+       Fixer : Glue=2;Mechanics=1,
+	}
+
+	
+	fixing Fix rastrojero Trunk Lid Welding
+    {
+       Require : 1979rastrojeroCarniTrunk2,
+       GlobalItem : BlowTorch=2,
+       ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=1;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=1;Mechanics=2,
+    }
+
+    fixing Fix rastrojero Trunk Lid
+	{
+       Require : 1979rastrojeroCarniTrunk2,
+	   GlobalItem : Screws=8,
+	   ConditionModifier : 0.5,
+
+       Fixer : SheetMetal; Mechanics=2,
+	}	
+
+	fixing Fix rastrojero Flete Trunk Lid Welding
+    {
+       Require : 1979rastrojeroTrunk2;1979rastrojeroFleteTrunk2,
+       GlobalItem : ClubHammer,
+       ConditionModifier : 1.2,
+
+       Fixer : Plank=3; Woodwork=1;Mechanics=1,
+    }
+
+    fixing Fix rastrojero Flete Trunk Lid
+	{
+       Require : 1979rastrojeroTrunk2;1979rastrojeroFleteTrunk2,
+	   GlobalItem : Screws=12,
+	   ConditionModifier : 0.5,
+
+       Fixer : Plank=3; Woodwork=3,
+	}
+
+	fixing Fix rastrojero Flete Trunk Welding
+	{
+	   Require : 1979rastrojeroCajaTrunk2,
+	   GlobalItem : ClubHammer,
+	   ConditionModifier : 1.2,
+
+       Fixer : Plank=12; Woodwork=3;Mechanics=1,
+       Fixer : Plank=24; Woodwork=1;Mechanics=1,
+	}
+
+
+
+}
+
+

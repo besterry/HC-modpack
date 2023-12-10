@@ -1,0 +1,24 @@
+module Base
+{
+	recipe Weld Armor for '72 Javelin
+	{
+		keep WeldingMask,
+		BlowTorch=1,
+		MetalPipe=2,
+		Nails=20,
+		Plank=10,
+		SheetMetal=3,
+
+		AnimNode:Disassemble,
+		Category:Armor,
+		CanBeDoneFromFloor:true,
+		Sound:Dismantle,
+		Time:1800.0,
+		
+		SkillRequired:MetalWelding=2,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding10,
+		Prop1:BlowTorch,
+		Prop2:MetalPipe,
+		Result:en72_Javelin_Armor,
+	}
+}

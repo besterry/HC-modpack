@@ -1,0 +1,170 @@
+module Base
+{
+	model en91Legacy_Base
+	{
+		mesh = vehicles/Vehicles_en91Legacy|Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_DoorFL
+	{
+		mesh = vehicles/Vehicles_en91Legacy|DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorFrontLeft_Bone 1.0,
+	}
+	model en91Legacy_DoorFR
+	{
+		mesh = vehicles/Vehicles_en91Legacy|DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorFrontRight_Bone 1.0,
+	}
+	model en91Legacy_DoorRL
+	{
+		mesh = vehicles/Vehicles_en91Legacy|DoorRearLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorRearLeft_Bone 1.0,
+	}
+	model en91Legacy_DoorRR
+	{
+		mesh = vehicles/Vehicles_en91Legacy|DoorRearRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorRearRight_Bone 1.0,
+	}
+	model en91Legacy_Trunk
+	{
+		mesh = vehicles/Vehicles_en91Legacy|Tailgate,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_Hood
+	{
+		mesh = vehicles/Vehicles_en91Legacy|Hood,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Hood_Bone 1.0,
+	}
+	model en91Legacy_WindowFL
+	{
+		mesh = vehicles/Vehicles_en91Legacy|WindowFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowFrontLeft_Bone 1.0,
+	}
+	model en91Legacy_WindowFR
+	{
+		mesh = vehicles/Vehicles_en91Legacy|WindowFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowFrontRight_Bone 1.0,
+	}
+	model en91Legacy_WindowRL
+	{
+		mesh = vehicles/Vehicles_en91Legacy|WindowRearLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowRearLeft_Bone 1.0,
+	}
+	model en91Legacy_WindowRR
+	{
+		mesh = vehicles/Vehicles_en91Legacy|WindowRearRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowRearRight_Bone 1.0,
+	}
+	model en91Legacy_Windshield
+	{
+		mesh = vehicles/Vehicles_en91Legacy|Windshield,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_WindshieldRear
+	{
+		mesh = vehicles/Vehicles_en91Legacy|WindshieldRear,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_Interior
+	{
+		mesh = vehicles/Vehicles_en91Legacy|Interior,
+		texture = Vehicles/vehicle_91legacy_int,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en91Legacy_Battery
+	{
+		mesh = vehicles/Vehicles_en91Legacy|Battery,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_Muffler
+	{
+		mesh = vehicles/Vehicles_en91Legacy|Muffler,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_BrakeFL
+	{
+		mesh = vehicles/Vehicles_en91Legacy|BrakeFrontLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_BrakeFR
+	{
+		mesh = vehicles/Vehicles_en91Legacy|BrakeFrontRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_BrakeRL
+	{
+		mesh = vehicles/Vehicles_en91Legacy|BrakeRearLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_BrakeRR
+	{
+		mesh = vehicles/Vehicles_en91Legacy|BrakeRearRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91Legacy_Wheel
+	{
+		mesh = vehicles/Vehicles_en91Legacy|Wheel,
+		texture = Vehicles/vehicle_91legacy_wheel,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004519,
+	}
+}

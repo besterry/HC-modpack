@@ -1,0 +1,150 @@
+module Base
+{
+
+		model CytMercEvoBullbar_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoBullbar_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWindowArmor_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindowArmorSlide_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWindshieldBars_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindshieldBars_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoDoor_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoDoor_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoDoorArmor_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindowArmor_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWheel_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWheel_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_wheel,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWindow_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindow_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoHood_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoHood_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoTrunkDoor_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoTrunkDoor_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoRearWindow_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoRearWindow_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoSeat_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoSeat_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWindshield_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindshield_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoRearWindshield_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoRearWindshield_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoMuffler_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoMuffler_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoSunroof_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoSunroof_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoRoofrack_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoRoofrack_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_bag,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWindowArmorSlide_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindowArmorSlide_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWindowBackArmor_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindowBackArmor_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWindowBack_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindowBack_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoRearWindArmor_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoRearWindshieldBars_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+
+		model CytMercEvoWindowArmor_WorldItem
+	{
+		mesh = WorldItems/CytMercEvoWindowArmor_WorldItem,
+		texture = Vehicles/Vehicle_CytMercEvo_silver,
+		scale = 0.2,
+	}
+}

@@ -1,0 +1,22 @@
+module Base
+{
+	recipe Weld Armor for '71 New Yorker
+	{
+		keep WeldingMask,
+		BlowTorch=1,
+		MetalPipe=6,
+		SheetMetal=8,
+
+		AnimNode:Disassemble,
+		Category:Armor,
+		CanBeDoneFromFloor:true,
+		Sound:Dismantle,
+		Time:1800.0,
+		
+		SkillRequired:MetalWelding=2,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding10,
+		Prop1:BlowTorch,
+		Prop2:MetalPipe,
+		Result:en71_NewYorker_Armor,
+	}
+}

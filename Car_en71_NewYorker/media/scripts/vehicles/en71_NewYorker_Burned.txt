@@ -1,0 +1,46 @@
+module Base
+{
+	model en71_NewYorker_Burned
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker_Burned|Body,
+		shader = vehicle,
+		static = TRUE,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	vehicle en71_NewYorker_Burned
+	{
+		model
+		{
+			file = en71_NewYorker_Burned,
+			scale = 1.0000,
+			offset = 0.0000 0.6600 0.0000,
+		}
+
+		spawnOffsetY = 0.24999994,
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Burned,
+		}
+
+		extents = 1.8200 1.1000 5.0800,
+		physicsChassisShape = 1.8200 1.1000 5.1000,
+		centerOfMassOffset = 0.0000 0.6700 0.0000,
+		shadowExtents = 1.8200 5.2200,
+		shadowOffset = 0.0000 0.0000,
+		mass = 500,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.2900 -2.4400,
+			rotate = 0.0000 0.0000 0.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.2700 2.5400,
+			rotate = 0.0000 0.0000 0.0000,
+		}
+	}
+}

@@ -1,0 +1,149 @@
+module Base
+{
+
+	model Hilux89BonnetW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_bonnet,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89DoorFrontLeftW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_door_fl,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89DoorFrontRightW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_door_fr,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89DoorRearLeftW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_door_rl,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89DoorRearRightW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_door_rr,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89SeatFrontW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_seat_f,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89SeatRearLeftW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_seat_rl,
+		texture = vehicles/dualcab/toyota_hilux_dualcab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89SeatRearRightW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_seat_rr,
+		texture = vehicles/dualcab/toyota_hilux_dualcab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89FuelDoorW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_fueldoor,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89TrunkDoorW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_trunkdoor,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89WindshieldW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_windshield,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89WindshieldRearW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_windshield_r,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hilux89WindowFrontLeftW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_window_fl,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+
+	}
+	model Hilux89WindowFrontRightW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_window_fr,
+		texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		scale = 0.007,
+
+	}
+	model Hilux89DualcabWindowRearLeftW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_dualcab_window_rl,
+		texture = vehicles/dualcab/toyota_hilux_dualcab_body_texture_red,
+		scale = 0.007,
+
+	}
+	model Hilux89DualcabWindowRearRightW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_dualcab_window_rr,
+		texture = vehicles/dualcab/toyota_hilux_dualcab_body_texture_red,
+		scale = 0.007,
+
+	}
+	model Hilux89ExtracabWindowRearLeftW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_extracab_window_rl,
+		texture = vehicles/extracab/toyota_hilux_extracab_body_texture_red,
+		scale = 0.007,
+
+	}
+	model Hilux89ExtracabWindowRearRightW
+	{
+		
+		mesh = vehicles/toyota_hilux_parts|toyota_hilux_part_extracab_window_rr,
+		texture = vehicles/extracab/toyota_hilux_extracab_body_texture_red,
+		scale = 0.007,
+
+	}
+
+}

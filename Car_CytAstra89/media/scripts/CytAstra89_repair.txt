@@ -1,0 +1,126 @@
+module Base
+{
+
+fixing Fix CytAstra89 Bullbar
+	{
+	   Require : CytAstra89Bull1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix CytAstra89 Windshield Cage
+	{
+	   Require : CytAstra89WindshieldBars1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix CytAstra89 Window Armor
+	{
+	   Require : CytAstra89WindowArmor1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix CytAstra89 Door
+	{
+	   Require : CytAstra89Door1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix CytAstra89 Trunk Hatch
+	{
+	   Require : CytAstra89TrunkDoor1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix CytAstra89 Hood
+	{
+	   Require : CytAstra89Hood1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+	}
+
+fixing Fix CytAstra89 Tires
+	{
+	   Require : CytAstra89Wheel1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : OldTire1; MetalWelding=2;Mechanics=2,
+       Fixer : NormalTire1; MetalWelding=2;Mechanics=2,
+       Fixer : ModernTire1; MetalWelding=2;Mechanics=2,
+       Fixer : OldTire2; MetalWelding=2;Mechanics=2,
+       Fixer : NormalTire2; MetalWelding=2;Mechanics=2,
+       Fixer : ModernTire2; MetalWelding=2;Mechanics=2,
+       Fixer : NormalTire3; MetalWelding=2;Mechanics=2,
+       Fixer : ModernTire3; MetalWelding=2;Mechanics=2,
+       Fixer : OldTire3; MetalWelding=2;Mechanics=2,
+
+	}
+
+fixing Fix CytAstra89 Trailer Door
+	{
+	   Require : CytAstra89TrailerDoor1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+
+	}
+
+fixing Fix CytAstra89 Seat
+	{
+	   Require : CytAstra89Seat1,
+	   GlobalItem : Thread=2,
+	   ConditionModifier : 1.5,
+
+       Fixer : LeatherStrips=10; Tailoring=2,
+
+	}
+
+
+fixing Fix CytAstra89 Gas Tank
+	{
+	   Require : CytAstra89GasTank1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+
+	}
+
+fixing Fix CytAstra89 Roofrack
+	{
+	   Require : CytAstraRoofrack1,
+	   GlobalItem : BlowTorch=3,
+	   ConditionModifier : 1.5,
+
+       Fixer : SheetMetal; MetalWelding=2;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=2;Mechanics=2,
+
+	}
+
+}

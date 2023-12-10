@@ -1,0 +1,416 @@
+module Base
+{
+	model CytMercEvoBullbar
+	{
+		mesh = vehicles/Vehicle_CytMercEvo|Bullbar_obj,
+		shader = vehicle,
+		scale = 1,
+	}
+
+	model CytMercEvoRearRightWindowArmor
+	{
+		mesh = vehicles/Vehicle_CytMercEvo|RearRightWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+	}
+
+	model CytMercEvoRearLeftWindowArmor
+	{
+		mesh = vehicles/Vehicle_CytMercEvo|RearLeftWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+	}
+
+	model CytMercEvoWindshieldBars
+	{
+		mesh = vehicles/Vehicle_CytMercEvo|WindshieldArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+
+	model CytMercEvoRearWindshieldBars
+	{
+		mesh = vehicles/Vehicle_CytMercEvo|RearWindshieldArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+
+	template vehicle CytMercEvoArmor
+		{
+		part CytMercEvoBullbar
+        	{
+
+			model CytMercEvoBullbar
+				{
+                		file = CytMercEvoBullbar,
+				}
+		area = Engine,
+            category = bodywork,
+            itemType = Base.CytMercEvoBull,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytMercEvoTrunkArmor
+        	{
+
+			model CytMercEvoTrunkArmor
+				{
+                		file = CytMercEvoRearWindshieldBars,
+				}
+		area = Engine,
+            category = door,
+            itemType = Base.CytMercEvoRearWindArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytMercEvoFrontRightWindowArmor
+        	{
+
+			model CytMercEvoFrontRightWindowArmor
+				{
+                		file = CytMercEvoFRW,
+				}
+
+		area = SeatFrontRight,
+		parent = DoorFrontRight,
+            category = door,
+            itemType = Base.CytMercEvoWindowArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowFrontRight,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytMercEvoFrontLeftWindowArmor
+        	{
+
+			model CytMercEvoFrontLeftWindowArmor
+				{
+                		file = CytMercEvoFLW,
+				}
+
+		area = SeatFrontLeft,
+		parent = DoorFrontLeft,
+            category = door,
+            itemType = Base.CytMercEvoWindowArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowFrontLeft,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytMercEvoRearRightWindowArmor
+        	{
+
+			model CytMercEvoRearRightWindowArmor
+				{
+                		file = CytMercEvoRearRightWindowArmor,
+				}
+		area = SeatFrontRight,
+		parent = DoorRearRight,
+            category = door,
+            itemType = Base.CytMercEvoWindowBackArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowRearRight,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytMercEvoRearLeftWindowArmor
+        	{
+
+			model CytMercEvoRearLeftWindowArmor
+				{
+                		file = CytMercEvoRearLeftWindowArmor,
+				}
+		area = SeatFrontLeft,
+		parent = DoorRearLeft,
+            category = door,
+            itemType = Base.CytMercEvoWindowBackArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowRearLeft,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytMercEvoWindshieldBars
+        	{
+
+			model CytMercEvoWindshieldBars
+				{
+                		file = CytMercEvoWindshieldBars,
+				}
+		area = Engine,
+            category = bodywork,
+            itemType = Base.CytMercEvoWindshieldBars,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+	}
+}

@@ -1,0 +1,21 @@
+ItemName_RU = {
+	ItemName_Base.Hondacrv95BonnetI1 = "Honda CR-V '95 Капот",	
+	ItemName_Base.Hondacrv95DoorFLI1 = "Honda CR-V '95 Панель передней левой двери",	
+	ItemName_Base.Hondacrv95DoorFRI1 = "Honda CR-V '95 Панель передней правой двери",	
+	ItemName_Base.Hondacrv95DoorRLI1 = "Honda CR-V '95 Панель задней левой двери",	
+	ItemName_Base.Hondacrv95DoorRRI1 = "Honda CR-V '95 Панель задней правой двери",	
+	ItemName_Base.Hondacrv95TrunkI1 = "Honda CR-V '95 Дверь багажника",	
+	ItemName_Base.Hondacrv95WindshieldI1 = "Honda CR-V '95 Лобовое стекло",	
+	ItemName_Base.Hondacrv95WindshieldRI1 = "Honda CR-V '95 Заднее стекло",	
+	ItemName_Base.Hondacrv95GlassFLI1 = "Honda CR-V '95 Переднее левое окно",	
+	ItemName_Base.Hondacrv95GlassFRI1 = "Honda CR-V '95 Переднее правое окно",	
+	ItemName_Base.Hondacrv95GlassRLI1 = "Honda CR-V '95 Заднее левое окно",	
+	ItemName_Base.Hondacrv95GlassRRI1 = "Honda CR-V '95 Заднее правое окно",	
+	ItemName_Base.Hondacrv95GlassSLI1 = "Honda CR-V '95 Боковое левое окно",	
+	ItemName_Base.Hondacrv95GlassSRI1 = "Honda CR-V '95 Боковое правое окно",	
+	ItemName_Base.Hondacrv95SeatFrontI1 = "Honda CR-V '95 Переднее сиденье",	
+	ItemName_Base.Hondacrv95SeatRearI1 = "Honda CR-V '95 Заднее сиденье",	
+	ItemName_Base.Hondacrv95SpearWheelI1 = "Запасное колесо Honda CR-V '95",	
+	ItemName_Base.Hondacrv95WheelI1 = "Колесо Honda CR-V '95",	
+	
+}

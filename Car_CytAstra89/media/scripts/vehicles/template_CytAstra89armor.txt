@@ -1,0 +1,584 @@
+module Base
+{
+	model CytAstra89Bullbar
+	{
+		mesh = vehicles/Vehicle_CytAstra89|FrontBumper_obj,
+		shader = vehicle,
+		scale = 1,
+	}
+
+	model CytAstra89RearRightWindowArmor
+	{
+		mesh = vehicles/Vehicle_CytAstra89|RearRightWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+
+	model CytAstra89RearLeftWindowArmor
+	{
+		mesh = vehicles/Vehicle_CytAstra89|RearLeftWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+
+	model CytAstra89WindshieldBars
+	{
+		mesh = vehicles/Vehicle_CytAstra89|WindshieldArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+
+	template vehicle CytAstra89Armor
+		{
+		part CytAstra89Bullbar
+        	{
+
+			model CytAstra89Bullbar
+				{
+                		file = CytAstra89Bullbar,
+				}
+		area = Engine,
+            category = bodywork,
+            itemType = Base.CytAstra89Bull,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+				create = Vehicles.Create.Default,
+            }
+		}
+
+		part CytAstra89TrunkArmor
+        	{
+
+			model CytAstra89TrunkArmor
+				{
+                		file = CytAstra89RearWindshieldArmor,
+				}
+		area = Engine,
+		parent = TrunkDoor,
+            category = door,
+            itemType = Base.CytAstra89RearWindArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytAstra89FrontRightWindowArmor
+        	{
+
+			model CytAstra89FrontRightWindowArmor
+				{
+                		file = CytAstra89FRW,
+				}
+
+			anim ClosedToOpen
+			{
+				anim = FrontRightWindowClosing,
+				animate = FALSE,
+			}
+
+		area = SeatFrontRight,
+		parent = WindowFrontRight,
+            category = door,
+            itemType = Base.CytAstra89WindowArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowFrontRight,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytAstra89FrontLeftWindowArmor
+        	{
+
+			model CytAstra89FrontLeftWindowArmor
+				{
+                		file = CytAstra89FLW,
+				}
+
+			anim ClosedToOpen
+			{
+				anim = FrontLeftWindowClosing,
+				animate = FALSE,
+			}
+
+		area = SeatFrontLeft,
+		parent = WindowFrontLeft,
+            category = door,
+            itemType = Base.CytAstra89WindowArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowFrontLeft,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytAstra89FrontRightDoorArmor
+        	{
+
+			model CytAstra89FrontLeftArmor
+				{
+                		file = CytAstra89FLA,
+				}
+		area = SeatFrontRight,
+		parent = DoorFrontRight,
+            category = door,
+            itemType = Base.CytAstra89DoorArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowFrontRight,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+
+		part CytAstra89FrontLeftDoorArmor
+        	{
+
+			model CytAstra89FrontRightArmor
+				{
+                		file = CytAstra89FRA,
+				}
+		area = SeatFrontLeft,
+		parent = DoorFrontLeft,
+            category = door,
+            itemType = Base.CytAstra89DoorArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowFrontRight,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytAstra89RearRightWindowArmor
+        	{
+
+			model CytAstra89RearRightWindowArmor
+				{
+                		file = CytAstra89RearRightWindowArmor,
+				}
+		area = SeatFrontRight,
+		parent = DoorRearRight,
+            category = door,
+            itemType = Base.CytAstra89WindowBackArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowRearRight,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytAstra89RearLeftWindowArmor
+        	{
+
+			model CytAstra89RearLeftWindowArmor
+				{
+                		file = CytAstra89RearLeftWindowArmor,
+				}
+		area = SeatFrontLeft,
+		parent = DoorRearLeft,
+            category = door,
+            itemType = Base.CytAstra89WindowBackArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowRearLeft,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytAstra89WindshieldBars
+        	{
+
+			model CytAstra89WindshieldBars
+				{
+                		file = CytAstra89WindshieldBars,
+				}
+		area = Engine,
+            category = bodywork,
+            itemType = Base.CytAstra89WindshieldBars,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytAstra89RearLeftWindowArmor
+        	{
+
+			model CytAstra89RearLeftWindowArmor
+				{
+                		file = CytAstra89RearLeftWindowArmor,
+				}
+		area = SeatFrontLeft,
+		parent = DoorRearLeft,
+            category = door,
+            itemType = Base.CytAstra89WindowBackArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+		requireInstalled = WindowRearLeft,
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Wrench,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+	      }
+	}
+}

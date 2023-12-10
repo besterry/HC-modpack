@@ -1,0 +1,25 @@
+module Base
+{
+	recipe Weld Armor for '90 Lumina APV
+	{
+		keep WeldingMask,
+		BlowTorch=1,
+		MetalPipe=6,
+		Nails=4,
+		Plank=4,
+		SheetMetal=4,
+		Wire=2,
+
+		AnimNode:Disassemble,
+		Category:Armor,
+		CanBeDoneFromFloor:true,
+		Sound:Dismantle,
+		Time:1800.0,
+		
+		SkillRequired:MetalWelding=2,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding10,
+		Prop1:BlowTorch,
+		Prop2:MetalPipe,
+		Result:en90_LuminaAPV_Armor,
+	}
+}

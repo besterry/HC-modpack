@@ -1,0 +1,6 @@
+IGUI_JP = {
+	IGUI_VehicleNameen90_LuminaAPV = "1990 シボレー Lumina APV",
+	IGUI_VehicleParten90_LuminaAPVArmor = "即席の車両装甲"
+	IGUI_VehiclePartSeatMiddleCenter = "中央中央席",
+	IGUI_SeatMiddleCenter = "ミドルセンター",
+}

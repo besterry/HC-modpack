@@ -1,0 +1,7 @@
+IG_UI_EN = {
+	IGUI_VehicleNameeclipse95rs = "Mitsubishi Eclipse RS '95"
+	IGUI_VehicleNameeclipse95gs = "Mitsubishi Eclipse GS '95"
+	IGUI_VehicleNameeclipse95gsx = "Mitsubishi Eclipse GSX '95"
+	IGUI_VehicleNameeclipse95modified = "Mitsubishi Eclipse GSX Modified '95"
+
+}

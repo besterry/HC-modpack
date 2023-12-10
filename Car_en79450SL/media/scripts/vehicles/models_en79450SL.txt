@@ -1,0 +1,109 @@
+module Base
+{
+	model en79450SL_Base
+	{
+		mesh = vehicles/Vehicles_en79450SL|Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en79450SL_DoorFL
+	{
+		mesh = vehicles/Vehicles_en79450SL|DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = FrontDoorLeft 1.0,
+	}
+	model en79450SL_DoorFR
+	{
+		mesh = vehicles/Vehicles_en79450SL|DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = FrontDoorRight 1.0,
+	}
+	model en79450SL_Hood
+	{
+		mesh = vehicles/Vehicles_en79450SL|Hood,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Hood 1.0,
+	}
+	model en79450SL_Trunk
+	{
+		mesh = vehicles/Vehicles_en79450SL|Trunk,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Trunk 1.0,
+	}
+	model en79450SL_Windshield
+	{
+		mesh = vehicles/Vehicles_en79450SL|Windshield,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en79450SL_Interior
+	{
+		mesh = vehicles/Vehicles_en79450SL|Interior,
+		shader = vehicle,
+		scale = 0.004519,
+	}
+	model en79450SL_Battery
+	{
+		mesh = vehicles/Vehicles_en79450SL|Battery,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en79450SL_Muffler
+	{
+		mesh = vehicles/Vehicles_en79450SL|Muffler,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en79450SL_BrakeFL
+	{
+		mesh = vehicles/Vehicles_en79450SL|BrakeFrontLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en79450SL_BrakeFR
+	{
+		mesh = vehicles/Vehicles_en79450SL|BrakeFrontRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en79450SL_BrakeRL
+	{
+		mesh = vehicles/Vehicles_en79450SL|BrakeRearLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en79450SL_BrakeRR
+	{
+		mesh = vehicles/Vehicles_en79450SL|BrakeRearRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en79450SL_Wheel
+	{
+		mesh = vehicles/Vehicles_en79450SL|Wheel,
+		texture = Vehicles/vehicle_79450sl_wheel,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004519,
+	}
+}

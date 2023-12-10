@@ -1,0 +1,154 @@
+module Base
+{
+	
+	model Hondacrv95BonnetW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_bonnet_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95DoorFLW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_door_fl_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95DoorFRW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_door_fr_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95DoorRLW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_door_rl_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95DoorRRW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_door_rr_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95TrunkW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_trunk_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	
+	
+	model Hondacrv95WindshieldW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_windhsield_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95WindshieldRW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_windshield_r_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95GlassFLW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_glass_fl_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95GlassFRW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_glass_fr_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95GlassRLW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_glass_rl_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95GlassRRW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_glass_rr_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95GlassSLW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_glass_sl_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95GlassSRW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_glass_sr_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	
+
+	
+	model Hondacrv95SeatFrontW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_seat_fl_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95SeatRearW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_seat_rl_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95SpearWheelW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_spearwheel_part,
+		texture = vehicles/hondacrv95_body_texture_red,
+		scale = 0.007,
+		
+	}
+	model Hondacrv95WheelW
+	{
+		
+		mesh = vehicles/hondacrv95_parts|hondacrv95_wheel_part,
+		texture = vehicles/hondacrv95_wheel_texture,
+		scale = 0.007,
+		
+	}
+
+}

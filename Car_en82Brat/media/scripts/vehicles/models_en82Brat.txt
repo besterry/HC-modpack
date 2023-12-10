@@ -1,0 +1,101 @@
+module Base
+{
+	model en82Brat_Base
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en82Brat_DoorFL
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Door_FrontLeft 1.0,
+	}
+	model en82Brat_DoorFR
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Door_FrontRight 1.0,
+	}
+	model en82Brat_Trunk
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_Tailgate,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Tailgate 1.0,
+	}
+	model en82Brat_Hood
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_Hood,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Hood 1.0,
+	}
+	model en82Brat_Rollbar
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_Rollbar,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en82Brat_WindowFL
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_WindowFrontLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = FALSE,
+		boneWeight = Window_FrontLeft 1.0,
+	}
+	model en82Brat_WindowFR
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_WindowFrontRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = FALSE,
+		boneWeight = Window_FrontRight 1.0,
+	}
+	model en82Brat_Windshield
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_WindshieldFront,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en82Brat_WindshieldRear
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_WindshieldRear,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = TRUE,
+	}
+	model en82Brat_Interior
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_Interior,
+		texture = Vehicles/vehicle_82brat_int,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en82Brat_Wheel
+	{
+		mesh = vehicles/Vehicles_en82Brat|82Brat_Wheel,
+		texture = Vehicles/wheel_82Brat,
+		shader = vehiclewheel,
+		scale = 0.004519,
+		static = TRUE,
+	}
+}

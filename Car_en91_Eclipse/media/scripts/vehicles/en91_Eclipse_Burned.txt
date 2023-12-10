@@ -1,0 +1,46 @@
+module Base
+{
+	model en91_Eclipse_Burned
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse_Burned|Burned,
+		shader = vehicle,
+		static = TRUE,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	vehicle en91_Eclipse_Burned
+	{
+		model
+		{
+			file = en91_Eclipse_Burned,
+			scale = 1.0000,
+			offset = 0.0000 0.6600 0.0000,
+		}
+
+		spawnOffsetY = 0.24999994,
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en91_Eclipse_Burned,
+		}
+
+		extents = 1.8200 1.1000 4.1400,
+		physicsChassisShape = 1.6200 1.1000 4.0600,
+		centerOfMassOffset = 0.0000 0.6300 0.0000,
+		shadowExtents = 1.7100 4.1400,
+		shadowOffset = 0.0000 0.0000,
+		mass = 500,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3600 -1.9800,
+			rotate = 0.0000 0.0000 0.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.2700 1.9900,
+			rotate = 0.0000 0.0000 0.0000,
+		}
+	}
+}

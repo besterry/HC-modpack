@@ -1,0 +1,2 @@
+IG_UI_EN = {
+	IGUI_VehicleNameen91Legacy = "1992 Subaru Legacy Wagon",

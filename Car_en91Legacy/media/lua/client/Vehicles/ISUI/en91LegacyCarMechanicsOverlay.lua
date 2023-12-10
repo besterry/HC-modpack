@@ -1,0 +1,1 @@
+ISCarMechanicsOverlay.CarList["Base.en91Legacy"] = {imgPrefix = "stationwagon_", x=10,y=0};

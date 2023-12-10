@@ -1,0 +1,308 @@
+module Base
+{
+	model FJ75PCBodyArmor
+	{
+		mesh = vehicles/Vehicle_FJ75PC|ArmorFront_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+
+	model FJ75PCArmorWindshield
+	{
+		mesh = vehicles/Vehicle_FJ75PC|ArmorWindsield_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+
+	model FJ75PCFrontLeftDoorArmor
+	{
+		mesh = vehicles/Vehicle_FJ75PC|ArmorDoorLeft_obj,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = FrontLeftDoorBone 1.0,
+	}
+
+	model FJ75PCFrontRightDoorArmor
+	{
+		mesh = vehicles/Vehicle_FJ75PC|ArmorDoorRight_obj,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = FrontRightDoorBone 1.0,
+	}
+
+	template vehicle FJ75PCArmor
+		{
+		part FJ75PCBodyArmor
+        	{
+
+			model FJ75PCBodyArmor
+				{
+                		file = FJ75PCBodyArmor,
+				}
+		area = Engine,
+            category = bodywork,
+            itemType = Base.FJ75Bullbar,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part FJ75PCArmorWindshield
+        	{
+
+			model FJ75PCArmorWindshield
+				{
+                		file = FJ75PCArmorWindshield,
+				}
+		area = Engine,
+            category = bodywork,
+            itemType = Base.FJ75WindshieldArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part FJ75PCFrontLeftDoorArmor
+        	{
+
+			model FJ75PCFrontLeftDoorArmor
+				{
+                		file = FJ75PCFrontLeftDoorArmor,
+				}
+
+			anim Close
+			{
+				anim = FrontLeftDoorClosing,
+				reverse = TRUE,
+				rate = 2.0,
+			}
+
+			anim Open
+			{
+				anim = FrontLeftDoorClosing,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = FrontLeftDoorClosing,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = FrontLeftDoorClosing,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+
+		area = Engine,
+		parent = DoorFrontLeft,
+            category = bodywork,
+            itemType = Base.FJ75DoorArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part FJ75PCFrontRightDoorArmor
+        	{
+
+			model FJ75PCFrontRightDoorArmor
+				{
+                		file = FJ75PCFrontRightDoorArmor,
+				}
+
+			anim Close
+			{
+				anim = FrontRightDoorClosing,
+				reverse = TRUE,
+				rate = 2.0,
+			}
+
+			anim Open
+			{
+				anim = FrontRightDoorClosing,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = FrontRightDoorClosing,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = FrontRightDoorClosing,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+
+		area = Engine,
+		parent = DoorFrontRight,
+            category = bodywork,
+            itemType = Base.FJ75DoorArmor,
+            mechanicRequireKey = false,
+		table install
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+						equip = primary,
+                    }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.InstallTest.Default,
+                complete = Vehicles.InstallComplete.Window,
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                    1
+                    {
+                        type = Base.Screwdriver,
+                        count = 1,
+                        keep = true,
+ 						equip = primary,
+                   }
+                }
+                time = 300,
+                  skills = Mechanics:1,
+                  recipes = Basic Mechanics,
+                test = Vehicles.UninstallTest.Default,
+            }
+		lua
+            {
+            }
+		}
+
+
+	}	
+	
+}

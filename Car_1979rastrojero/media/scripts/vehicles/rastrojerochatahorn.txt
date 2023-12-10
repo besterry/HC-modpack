@@ -1,0 +1,46 @@
+module Base
+{
+
+	sound 1979rastrojeroChataAlarm
+	{
+		category = Vehicle,
+		loop = true,
+		clip
+		{
+			file = media/sound/Marcha.mp3,
+			distanceMin = 50,
+			distanceMax = 300,
+			reverbMaxRange = 10,
+			reverbFactor = 0,
+		}
+	}
+	
+	sound 1979rastrojeroChataYelp
+	{
+		category = Vehicle,
+		loop = true,
+		clip
+		{
+			file = media/sound/Vendedor.mp3,
+			distanceMin = 10,
+			distanceMax = 75,
+			reverbMaxRange = 10,
+			reverbFactor = 0,
+		}
+	}
+	
+	sound 1979rastrojeroChataWall
+	{
+		category = Vehicle,
+		loop = true,
+		clip
+		{
+			file = media/sound/LaDanza.mp3,
+			distanceMin = 25,
+			distanceMax = 150,
+			reverbMaxRange = 10,
+			reverbFactor = 0,
+		}
+	}
+	
+}

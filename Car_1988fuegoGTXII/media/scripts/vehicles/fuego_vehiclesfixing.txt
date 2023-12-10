@@ -1,0 +1,66 @@
+module Base
+{
+
+	fixing Fix fuego Hood Welding
+	{
+	   Require : 1988fuegoHood3,
+	   GlobalItem : BlowTorch=2,
+	   ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=1;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=1;Mechanics=2,
+	}
+
+    fixing Fix fuego Hood
+	{
+	   Require : 1988fuegoHood3,
+	   GlobalItem : Screws=8,
+	   ConditionModifier : 0.5,
+
+       Fixer : SheetMetal; Mechanics=2,
+	}
+
+	fixing Fix fuego Door Welding
+	{
+	   Require : 1988fuegoDoorFrontLeft3;1988fuegoDoorFrontRight3,
+	   GlobalItem : BlowTorch=2,
+	   ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=3;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=3;Mechanics=2,
+	}
+
+    fixing Fix fuego Car seat
+	{
+	   Require : 1988fuegoSeatFront3;1988fuegoSeatRear3,
+	   ConditionModifier : 0.8,
+
+       Fixer : DuctTape=2;Mechanics=1,
+       Fixer : Glue=2;Mechanics=1,
+	}
+
+	
+	fixing Fix fuego Trunk Lid Welding
+    {
+       Require : 1988fuegoTrunk3;1988fuegoTrunkTuning3,
+       GlobalItem : BlowTorch=2,
+       ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=1;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=1;Mechanics=2,
+    }
+
+    fixing Fix fuego Trunk Lid
+	{
+       Require : 1988fuegoTrunk3;1988fuegoTrunkTuning3,
+	   GlobalItem : Screws=8,
+	   ConditionModifier : 0.5,
+
+       Fixer : SheetMetal; Mechanics=2,
+	}	
+	
+
+
+}
+
+

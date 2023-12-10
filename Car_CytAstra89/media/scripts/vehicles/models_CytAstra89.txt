@@ -1,0 +1,160 @@
+module Base
+{
+
+	model CytAstra89FLA
+	{
+		mesh = vehicles/Vehicle_CytAstra89|FrontRightDoorArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontLeftDoorBone 1.0,
+	}
+
+	model CytAstra89FRA
+	{
+		mesh = vehicles/Vehicle_CytAstra89|FrontLeftDoorArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontRightDoorBone 1.0,
+	}
+
+	model CytAstra89FLW
+	{
+		mesh = vehicles/Vehicle_CytAstra89|FrontLeftWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontLeftWindowBone 1.0,
+		boneWeight = FrontLeftArmorBone 1.0,
+	}
+
+	model CytAstra89FRW
+	{
+		mesh = vehicles/Vehicle_CytAstra89|FrontRightWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontRightWindowBone 1.0,
+		boneWeight = FrontRightArmorBone 1.0,
+	}
+
+	model CytAstra89FLAD
+	{
+		mesh = vehicles/Vehicle_CytAstra895D|FrontRightDoorArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontLeftDoorBone 1.0,
+	}
+
+	model CytAstra89FRADT
+	{
+		mesh = vehicles/Vehicle_CytAstra89ST|FrontLeftDoorArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontRightDoorBone 1.0,
+	}
+
+	model CytAstra89FLWDT
+	{
+		mesh = vehicles/Vehicle_CytAstra89ST|FrontLeftWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontLeftWindowBone 1.0,
+		boneWeight = FrontLeftArmorBone 1.0,
+	}
+
+	model CytAstra89FRWDT
+	{
+		mesh = vehicles/Vehicle_CytAstra89ST|FrontRightWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontRightWindowBone 1.0,
+		boneWeight = FrontRightArmorBone 1.0,
+	}
+
+	model CytAstra89FLADT
+	{
+		mesh = vehicles/Vehicle_CytAstra89ST|FrontRightDoorArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontLeftDoorBone 1.0,
+	}
+
+	model CytAstra89FRAD
+	{
+		mesh = vehicles/Vehicle_CytAstra895D|FrontLeftDoorArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontRightDoorBone 1.0,
+	}
+
+	model CytAstra89FLWD
+	{
+		mesh = vehicles/Vehicle_CytAstra895D|FrontLeftWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontLeftWindowBone 1.0,
+		boneWeight = FrontLeftArmorBone 1.0,
+	}
+
+	model CytAstra89FRWD
+	{
+		mesh = vehicles/Vehicle_CytAstra895D|FrontRightWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = FrontRightWindowBone 1.0,
+		boneWeight = FrontRightArmorBone 1.0,
+	}
+
+	model CytAstra89RearWindshieldArmor
+	{
+		mesh = vehicles/Vehicle_CytAstra89|RearWindshieldArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = TrunkBone 1.0,
+	}
+
+	model CytAstra895DRearWindshieldArmor
+	{
+		mesh = vehicles/Vehicle_CytAstra895D|RearWindshieldArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = TrunkBone 1.0,
+	}
+
+	model CytAstra89STRearWindshieldArmor
+	{
+		mesh = vehicles/Vehicle_CytAstra89ST|RearWindshieldArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = TrunkBone 1.0,
+	}
+
+	model CytAstra89SF
+	{
+		mesh = vehicles/Vehicle_CytAstra89|SunRoof_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+
+	model CytA89rackmod
+	{
+		mesh = vehicles/Vehicle_CytAstra89|Roofrack_obj,
+		texture = Vehicles/Vehicle_CytAstra89_bag,
+		shader = vehiclewheel,
+	}
+
+
+}

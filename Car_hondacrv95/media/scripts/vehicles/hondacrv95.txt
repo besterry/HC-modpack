@@ -1,0 +1,1134 @@
+module Base
+{
+	model hondacrv95
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_base,
+		shader = vehicle_multiuv_noreflect,
+		invertX = false,
+		scale = 0.01,
+	}
+	model Hondacrv95DoorFL
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_door_fl,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_door_fl 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95DoorFR
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_door_fr,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_door_fr 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95DoorRL
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_door_rl,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_door_rl 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95DoorRR
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_door_rr,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_door_rr 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95SeatFL
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_seat_fl,
+		shader = vehicle_multiuv_noreflect,
+		scale = 0.01,
+	}
+	model Hondacrv95SeatFR
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_seat_fr,
+		shader = vehicle_multiuv_noreflect,
+		scale = 0.01,
+	}
+	model Hondacrv95SeatRL
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_seat_rl,
+		shader = vehicle_multiuv_noreflect,
+		scale = 0.01,
+	}
+	model Hondacrv95SeatRR
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_seat_rr,
+		shader = vehicle_multiuv_noreflect,
+		scale = 0.01,
+	}
+	model Hondacrv95Bonnet
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_bonnet,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_bonnet 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95Trunk
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_trunk,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_trunku 1.0,
+		boneWeight = hondacrv95_trunkl 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95WindowFL
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_glass_fl,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_door_fl 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95WindowFR
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_glass_fr,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_door_fr 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95WindowRL
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_glass_rl,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_door_rl 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95WindowRR
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_glass_rr,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_door_rr 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95WindowSL
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_glass_sl,
+		shader = vehicle_multiuv_noreflect,
+		scale = 0.01,
+	}
+	model Hondacrv95WindowSR
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_glass_sr,
+		shader = vehicle_multiuv_noreflect,
+		scale = 0.01,
+	}
+	model Hondacrv95Windshield
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_windhsield,
+		shader = vehicle_multiuv_noreflect,
+		scale = 0.01,
+	}
+	model Hondacrv95WindshieldR
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_windshield_r,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_trunku 1.0,
+		scale = 0.01,
+	}
+	model Hondacrv95SpareTire
+	{
+		mesh = vehicles/hondacrv95_body|hondacrv95_spearwheel,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		boneWeight = hondacrv95_trunkl 1.0,
+		scale = 0.01,
+	}
+	model hondacrv95frontwheelleft
+	{
+		mesh = vehicles/hondacrv95_wheel,
+		texture = vehicles/hondacrv95_wheel_texture,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.01,
+	}
+	model hondacrv95frontwheelright
+	{
+		mesh = vehicles/hondacrv95_wheel,
+		texture = vehicles/hondacrv95_wheel_texture,
+		shader = vehiclewheel,
+		invertX = TRUE,
+		scale = 0.01,
+	}
+	model hondacrv95backwheelleft
+	{
+		mesh = vehicles/hondacrv95_wheel,
+		texture = vehicles/hondacrv95_wheel_texture,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.01,
+	}
+	model hondacrv95backwheelright
+	{
+		mesh = vehicles/hondacrv95_wheel,
+		texture = vehicles/hondacrv95_wheel_texture,
+		shader = vehiclewheel,
+		invertX = TRUE,
+		scale = 0.01,
+	}
+	vehicle hondacrv95
+	{
+		mechanicType = 1,
+		offRoadEfficiency = 1.12,
+		engineRepairLevel = 4,
+		playerDamageProtection = 1.2,
+		engineRPMType = jeep,
+
+		model
+		{
+			file = hondacrv95,
+			scale = 1.1000,
+			offset = 0.0000 -0.0900 0.0000,
+			rotate = 0 0 0,
+		}
+
+		spawnOffsetY = 0,
+
+		skin
+		{
+			texture = vehicles/hondacrv95_body_texture_blue,
+		}
+
+		skin
+		{
+			texture = vehicles/hondacrv95_body_texture_green,
+		}
+
+		skin
+		{
+			texture = vehicles/hondacrv95_body_texture_black,
+		}
+
+		skin
+		{
+			texture = vehicles/hondacrv95_body_texture_plum,
+		}
+
+		skin
+		{
+			texture = vehicles/hondacrv95_body_texture_red,
+		}
+
+		skin
+		{
+			texture = vehicles/hondacrv95_body_texture_turquoise,
+		}
+
+		skin
+		{
+			texture = vehicles/hondacrv95_body_texture_white,
+		}
+
+		textureRust = vehicles/hondacrv95_body_texture_rust,
+		textureMask = vehicles/hondacrv95_body_texture_mask,
+		textureLights = vehicles/hondacrv95_body_texture_lights,
+		textureDamage1Shell = vehicles/hondacrv95_body_texture_shell1,
+		textureDamage2Shell = vehicles/hondacrv95_body_texture_shell2,
+		textureDamage1Overlay = vehicles/hondacrv95_body_texture_blood,
+		textureDamage2Overlay = vehicles/hondacrv95_body_texture_blood,
+
+		sound
+		{
+			engine = VehicleEnginePickUpTruck,
+			engineStart = VehicleEnginePickUpTruck,
+			engineTurnOff = VehicleEnginePickUpTruck,
+			horn = VehicleHornJeep,
+			ignitionFail = VehicleIgnitionFailPickUpTruck,
+		}
+
+		extents = 1.4800 1.2200 3.6600,
+		mass = 1179,
+		physicsChassisShape = 1.4800 1.2200 3.6600,
+		centerOfMassOffset = 0.0000 0.4000 0.3900,
+		shadowExtents = 1.6800 3.8900,
+		shadowOffset = 0.0000 0.3900,
+		engineForce = 3800,
+		maxSpeed = 95f,
+		gearRatioCount = 5,
+		engineLoudness = 75,
+		engineQuality = 76,
+		brakingForce = 85,
+		gearRatioCount = 5,
+		stoppingMovementForce = 2.2f,
+		rollInfluence = 0.88f,
+		steeringIncrement = 0.046,
+		steeringClamp = 0.32,
+		suspensionStiffness = 38,
+		suspensionCompression = 2.80,
+		suspensionDamping = 2.50,
+		maxSuspensionTravelCm = 12,
+		suspensionRestLength = 0.22,
+		wheelFriction = 1.0f,
+		frontEndHealth = 150,
+		rearEndHealth = 150,
+		seats = 4,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.6700 -0.0500 1.5300,
+			radius = 0.20f,
+			width = 0.15f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.6600 -0.0500 1.5300,
+			radius = 0.20f,
+			width = 0.15f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.6800 -0.0500 -0.6500,
+			radius = 0.20f,
+			width = 0.15f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.6700 -0.0500 -0.6600,
+			radius = 0.20f,
+			width = 0.15f,
+		}
+
+		template = PassengerSeat4,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontLeft,
+			area = SeatFrontLeft,
+
+			position inside
+			{
+				offset = 0.3500 0.3300 0.2000,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.1200 -0.4700 0.1000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontRight,
+			area = SeatFrontRight,
+
+			position inside
+			{
+				offset = -0.3500 0.3300 0.2000,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.1200 -0.4700 0.1000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		passenger RearLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorRearLeft,
+			area = SeatRearLeft,
+
+			position inside
+			{
+				offset = 0.3500 0.3300 -0.4300,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.1200 -0.4700 -0.6000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearLeft,
+			}
+		}
+
+		passenger RearRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorRearRight,
+			area = SeatRearRight,
+
+			position inside
+			{
+				offset = -0.3500 0.3300 -0.4300,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.1200 -0.4700 -0.6000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 2.5300 1.1200 0.6200,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -1.7400 1.1200 0.6000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.0900 0.6000 0.7000 1.0600,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.0900 0.6000 0.7000 1.0600,
+		}
+
+		area SeatRearRight
+		{
+			xywh = -1.0900 -0.1800 0.7000 0.5000,
+		}
+
+		area SeatRearLeft
+		{
+			xywh = 1.0900 -0.1800 0.7000 0.5000,
+		}
+
+		area GasTank
+		{
+			xywh = 0.9500 -0.8300 0.4200 0.4200,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 0.9500 1.5300 0.4200 0.4200,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -0.9500 1.5300 0.4200 0.4200,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 0.9500 -0.6600 0.4200 0.4200,
+		}
+
+		area TireRearRight
+		{
+			xywh = -0.9500 -0.6600 0.4200 0.4200,
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+		template = Seat/part/SeatRearLeft,
+		template = Seat/part/SeatRearRight,
+
+		part SeatFrontLeft
+		{
+			model SeatFrontLeft
+			{
+				file = Hondacrv95SeatFL,
+			}
+
+			itemType = Base.Hondacrv95SeatFrontI,
+		}
+
+		part SeatFrontRight
+		{
+			model SeatFrontRight
+			{
+				file = Hondacrv95SeatFR,
+			}
+
+			itemType = Base.Hondacrv95SeatFrontI,
+		}
+
+		part SeatRearLeft
+		{
+			model SeatRearLeft
+			{
+				file = Hondacrv95SeatRL,
+			}
+
+			itemType = Base.Hondacrv95SeatRearI,
+		}
+
+		part SeatRearRight
+		{
+			model SeatRearRight
+			{
+				file = Hondacrv95SeatRR,
+			}
+
+			itemType = Base.Hondacrv95SeatRearI,
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+		template = Door/part/DoorRearLeft,
+		template = Door/part/DoorRearRight,
+
+		part DoorFrontLeft
+		{
+			model Hondacrv95DoorFL
+			{
+				file = Hondacrv95DoorFL,
+			}
+
+			itemType = Base.Hondacrv95DoorFLI,
+
+			anim Open
+			{
+				sound = VehicleDoorOpenStandard,
+				anim = anim_hondacrv95_door_fl,
+				reverse = false,
+				rate = 1.3,
+			}
+
+			anim Close
+			{
+				sound = VehicleDoorCloseStandard,
+				anim = anim_hondacrv95_door_fl,
+				reverse = true,
+				rate = 1.3,
+			}
+
+			anim Closed
+			{
+				anim = anim_hondacrv95_door_fl,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hondacrv95_door_fl,
+				reverse = true,
+				animate = false,
+			}
+		}
+
+		part DoorFrontRight
+		{
+			model Hondacrv95DoorFR
+			{
+				file = Hondacrv95DoorFR,
+			}
+
+			itemType = Base.Hondacrv95DoorFRI,
+
+			anim Open
+			{
+				sound = VehicleDoorOpenStandard,
+				anim = anim_hondacrv95_door_fr,
+				reverse = false,
+				rate = 1.3,
+			}
+
+			anim Close
+			{
+				sound = VehicleDoorCloseStandard,
+				anim = anim_hondacrv95_door_fr,
+				reverse = true,
+				rate = 1.3,
+			}
+
+			anim Closed
+			{
+				anim = anim_hondacrv95_door_fr,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hondacrv95_door_fr,
+				reverse = true,
+				animate = false,
+			}
+		}
+
+		part DoorRearLeft
+		{
+			model Hondacrv95DoorRL
+			{
+				file = Hondacrv95DoorRL,
+			}
+
+			itemType = Base.Hondacrv95DoorRLI,
+
+			anim Open
+			{
+				sound = VehicleDoorOpenStandard,
+				anim = anim_hondacrv95_door_rl,
+				reverse = false,
+				rate = 1.3,
+			}
+
+			anim Close
+			{
+				sound = VehicleDoorCloseStandard,
+				anim = anim_hondacrv95_door_rl,
+				reverse = true,
+				rate = 1.3,
+			}
+
+			anim Closed
+			{
+				anim = anim_hondacrv95_door_rl,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hondacrv95_door_rl,
+				reverse = true,
+				animate = false,
+			}
+		}
+
+		part DoorRearRight
+		{
+			model Hondacrv95DoorRR
+			{
+				file = Hondacrv95DoorRR,
+			}
+
+			itemType = Base.Hondacrv95DoorRRI,
+
+			anim Open
+			{
+				sound = VehicleDoorOpenStandard,
+				anim = anim_hondacrv95_door_rr,
+				reverse = false,
+				rate = 1.3,
+			}
+
+			anim Close
+			{
+				sound = VehicleDoorCloseStandard,
+				anim = anim_hondacrv95_door_rr,
+				reverse = true,
+				rate = 1.3,
+			}
+
+			anim Closed
+			{
+				anim = anim_hondacrv95_door_rr,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hondacrv95_door_rr,
+				reverse = true,
+				animate = false,
+			}
+		}
+
+		part EngineDoor
+		{
+			model Hondacrv95Bonnet
+			{
+				file = Hondacrv95Bonnet,
+			}
+
+			itemType = Base.Hondacrv95BonnetI,
+			category = bodywork,
+			area = Engine,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+
+			door
+			{
+			}
+
+			anim Open
+			{
+				sound = VehicleTrunkOpenStandard,
+				anim = anim_hondacrv95_bonnet,
+				reverse = false,
+				rate = 1.3,
+			}
+
+			anim Close
+			{
+				sound = VehicleTrunkCloseStandard,
+				anim = anim_hondacrv95_bonnet,
+				reverse = true,
+				rate = 1.3,
+			}
+
+			anim Closed
+			{
+				anim = anim_hondacrv95_bonnet,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hondacrv95_bonnet,
+				reverse = true,
+				animate = false,
+			}
+
+			anim Lock
+			{
+				sound = LockVehicleDoorStandard,
+			}
+
+			anim Unlock
+			{
+				sound = UnlockVehicleDoorStandard,
+			}
+
+			anim IsLocked
+			{
+				sound = VehicleDoorIsLockedStandard,
+			}
+
+			anim ActorOpen
+			{
+				anim = WindowOpenSuccess,
+				rate = 0.15,
+				angle = 0.0 180.0 0.0,
+			}
+
+			anim ActorClose
+			{
+				anim = Attack_Shove,
+				rate = 0.3,
+				angle = 0.0 180.0 0.0,
+			}
+
+			table install
+			{
+				items
+				{
+					item
+					{
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 300,
+				skills = Mechanics:3,
+				recipes = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicles.InstallComplete.Door,
+			}
+
+			table uninstall
+			{
+				items
+				{
+					item
+					{
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 300,
+				skills = Mechanics:3,
+				recipes = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				complete = Vehicles.UninstallComplete.Door,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+				init = Vehicles.Init.Door,
+				update = Vehicles.Update.EngineDoor,
+				use = Vehicles.Use.EngineDoor,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+		template = Window/part/WindowRearLeft,
+		template = Window/part/WindowRearRight,
+		template = hondacrv95sidewindow/part/Hondacrv95WindowSL,
+		template = hondacrv95sidewindow/part/Hondacrv95WindowSR,
+
+		part WindowFrontLeft
+		{
+			model Hondacrv95WindowFL
+			{
+				file = Hondacrv95WindowFL,
+			}
+
+			itemType = Base.Hondacrv95GlassFLI,
+		}
+
+		part WindowFrontRight
+		{
+			model Hondacrv95WindowFR
+			{
+				file = Hondacrv95WindowFR,
+			}
+
+			itemType = Base.Hondacrv95GlassFRI,
+		}
+
+		part WindowRearLeft
+		{
+			model Hondacrv95WindowRL
+			{
+				file = Hondacrv95WindowRL,
+			}
+
+			itemType = Base.Hondacrv95GlassRLI,
+		}
+
+		part WindowRearRight
+		{
+			model Hondacrv95WindowRR
+			{
+				file = Hondacrv95WindowRR,
+			}
+
+			itemType = Base.Hondacrv95GlassRRI,
+		}
+
+		part Hondacrv95WindowSL
+		{
+			model Hondacrv95WindowSL
+			{
+				file = Hondacrv95WindowSL,
+			}
+		}
+
+		part Hondacrv95WindowSR
+		{
+			model Hondacrv95WindowSR
+			{
+				file = Hondacrv95WindowSR,
+			}
+		}
+
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part Windshield
+		{
+			model Hondacrv95Windshield
+			{
+				file = Hondacrv95Windshield,
+			}
+
+			itemType = Base.Hondacrv95WindshieldI,
+		}
+
+		part WindshieldRear
+		{
+			parent = TrunkDoor,
+
+			model Hondacrv95WindshieldR
+			{
+				file = Hondacrv95WindshieldR,
+			}
+
+			itemType = Base.Hondacrv95WindshieldRI,
+
+			table install
+			{
+				requireInstalled = TrunkDoor,
+			}
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			container
+			{
+				capacity = 75,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			model Hondacrv95Trunk
+			{
+				file = Hondacrv95Trunk,
+			}
+
+			itemType = Base.Hondacrv95TrunkI,
+
+			anim Open
+			{
+				sound = VehicleTrunkOpenStandard,
+				anim = anim_hondacrv95_trunk,
+				reverse = false,
+				rate = 1.0,
+			}
+
+			anim Close
+			{
+				sound = VehicleTrunkCloseStandard,
+				anim = anim_hondacrv95_trunk,
+				reverse = true,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = anim_hondacrv95_trunk,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hondacrv95_trunk,
+				reverse = true,
+				animate = false,
+			}
+			
+			table uninstall
+			{
+				requireUninstalled = WindshieldRear,
+			}
+			
+		}
+
+		part Hondacrv95SpareTire
+		{
+			model Hondacrv95SpareTire
+			{
+				file = Hondacrv95SpareTire,
+			}
+
+			parent = TrunkDoor,
+			area = TruckBed,
+			itemType = Base.OldTire;Base.NormalTire;Base.ModernTire,
+			category = tire,
+
+			table install
+			{
+				requireInstalled = TrunkDoor,
+
+				items
+				{
+					item
+					{
+						type = Base.LugWrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 400,
+				skills = Mechanics:1,
+				recipes = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				door = EngineDoor,
+			}
+
+			table uninstall
+			{
+				items
+				{
+					item
+					{
+						type = Base.LugWrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 400,
+				skills = Mechanics:1,
+				recipes = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		part GloveBox
+		{
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = true,
+
+			container
+			{
+				capacity = 10,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = GasTank,
+
+		part GasTank
+		{
+			container
+			{
+				conditionAffectsCapacity = true,
+				capacity = 58,
+			}
+		}
+
+		template = Battery,
+		template = Engine,
+		template = Muffler,
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Tire,
+
+		part TireFrontLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = hondacrv95frontwheelleft,
+			}
+		}
+
+		part TireFrontRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = hondacrv95frontwheelright,
+			}
+		}
+
+		part TireRearLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = hondacrv95backwheelleft,
+			}
+		}
+
+		part TireRearRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = hondacrv95backwheelright,
+			}
+		}
+
+		template = Brake,
+
+		part Brake*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+		template = Headlight,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3300 -2.6600,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.3300 2.0300,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

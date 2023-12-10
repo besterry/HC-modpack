@@ -1,0 +1,6 @@
+IGUI_PTBR = {
+	IGUI_VehicleNameen91_Eclipse = "1991 Mitsubishi Eclipse GSX",
+	IGUI_VehicleNameen91_EclipseTuner = "1991 Mitsubishi Eclipse GSX (Tunado)",
+	IGUI_VehicleNameen91_Talon = "1991 Eagle Talon TSi",
+	IGUI_VehicleParten91_EclipseArmor = "Armadura de veículo improvisada"
+}

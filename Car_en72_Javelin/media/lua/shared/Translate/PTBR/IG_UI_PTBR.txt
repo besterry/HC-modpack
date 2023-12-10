@@ -1,0 +1,4 @@
+IG_UI_PTBR = {
+	IGUI_VehicleNameen72_Javelin = "1972 AMC Javelin AMX",
+	IGUI_VehicleParten72_JavelinArmor = "Armadura de veículo improvisada"
+}

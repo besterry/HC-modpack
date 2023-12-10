@@ -1,0 +1,208 @@
+module Base
+{
+
+    item CytMercEvoBull3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Bullbar,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoBullbar_WorldItem,
+        }
+
+    item CytMercEvoWindowArmor3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Window Armor,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoWindowArmor_WorldItem,
+        }
+
+    item CytMercEvoWindshieldBars3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Windshield Cage,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoWindshieldBars_WorldItem,
+        }
+
+    item CytMercEvoDoor3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Door,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoDoor_WorldItem,
+        }
+
+    item CytMercEvoWheel3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Wheel,
+            Icon	=	MercVo,
+        	MaxCapacity = 35,
+        	ChanceToSpawnDamaged = 0,
+        	WheelFriction = 1.6,
+        	ConditionLowerStandard = 0.08,
+        	ConditionLowerOffroad = 0.10,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoWheel_WorldItem,
+        }
+
+    item CytMercEvoWindow3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Window,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoWindow_WorldItem,
+        }
+
+    item CytMercEvoWindowBack3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Rear Window,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoWindowBack_WorldItem,
+        }
+
+    item CytMercEvoWindowBackArmor3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Rear Window Armor,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoWindowBackArmor_WorldItem,
+        }
+
+    item CytMercEvoHood3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Hood,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoHood_WorldItem,
+        }
+
+    item CytMercEvoTrunkDoor3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Trunk Hatch,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoTrunkDoor_WorldItem,
+        }
+
+    item CytMercEvoRearWindow3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Rear Windshield,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoRearWindow_WorldItem,
+        }
+
+    item CytMercEvoRearWindArmor3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Rear Windshield Armor,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoRearWindArmor_WorldItem,
+        }
+
+    item CytMercEvoSeat3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Seat,
+            Icon	=	MercVo,
+        	MaxCapacity = 40,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoSeat_WorldItem,
+        }
+
+    item CytMercEvoWindshield3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Windshield,
+            Icon	=	MercVo,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoWindshield_WorldItem,
+        }
+
+    item CytMercEvoMuffler3
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Mercedes-Benz 190E Evolution II Muffler,
+            Icon	=	MercVo,
+          	EngineLoudness = 100,
+            VehicleType =   1,
+            ConditionMax = 100,
+         	ConditionLowerStandard = 0.01,
+          	ConditionLowerOffroad = 0.15,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytMercEvoMuffler_WorldItem,
+        }
+
+}

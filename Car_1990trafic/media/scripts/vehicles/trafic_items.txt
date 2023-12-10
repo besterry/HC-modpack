@@ -1,0 +1,195 @@
+module Base
+{
+
+    item 1990traficDoorFrontLeft2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Left Door Trafic,
+        Icon	=	trafic_frontdoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficDoorFrontWorld,
+		VehicleType =   2,
+    }
+
+	item 1990traficDoorFrontRight2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Right Door Trafic,
+        Icon	=	trafic_frontdoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficDoorFrontWorld,
+		VehicleType =   2,
+    }
+
+	item 1990traficDoorMiddleRight2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Middle Right Door Trafic,
+        Icon	=	trafic_middledoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficDoorMiddleWorld,
+		VehicleType =   2,
+    }
+
+
+	item 1990traficDoorRearRight2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Rear Right Door Trafic,
+        Icon	=	trafic_reardoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficDoorRearWorld,
+		VehicleType =   2,
+    }
+	
+    item 1990traficWindowFront2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Window Front Trafic,
+        Icon	=	trafic_windowfront,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficWindowFrontWorld,
+		VehicleType =   2,
+    }
+
+    item 1990traficWindowMiddle2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Window Middle Trafic,
+        Icon	=	trafic_windowMiddle,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficWindowMiddleWorld,
+		VehicleType =   2,
+    }
+
+    item 1990traficWindowRear2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Window Rear Trafic,
+        Icon	=	trafic_windowRear,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficWindowRearWorld,
+		VehicleType =   2,
+    }	
+	
+    item 1990traficHood2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Hood Trafic,
+        Icon	=	trafic_hood,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficHoodWorld,
+		VehicleType =   2,
+    }
+
+	
+	item 1990traficTrunk2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Trunk Door Trafic,
+        Icon	=	trafic_trunk,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficTrunkWorld,
+		VehicleType =   2,
+    }
+	
+	
+	item 1990traficTire2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	16.0,
+        Type	=	Normal,
+        DisplayName	=	Tire Trafic,
+        Icon	=	trafic_wheel,
+        MaxCapacity = 35,
+        ChanceToSpawnDamaged = 50,
+        WheelFriction = 1.50f,
+        ConditionMax = 100,
+        ConditionLowerStandard = 0.03,
+        ConditionLowerOffroad = 0.25,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficWheelWorld,
+		VehicleType =   2,
+    }
+	
+
+	item 1990traficFrontWindshield2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.5,
+        Type	=	Normal,
+        DisplayName	=	Windshield Trafic,
+        Icon	=	trafic_windshield,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficFrontWindshieldWorld,
+		VehicleType =   2,
+    }
+	
+	item 1990traficRearWindshield2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Rear Windshield Trafic,
+        Icon	=	trafic_windshieldrear,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficRearWindshieldWorld,
+		VehicleType =   2,
+    }	
+
+	item 1990traficSeatFront2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Seat Trafic,
+        Icon	=	trafic_seat,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = traficSeatFrontWorld,
+		VehicleType =   2,
+    }
+ 
+ 
+}

@@ -1,0 +1,4 @@
+IG_UI_EN = {
+	IGUI_VehicleNameen82Brat = "1982 Subaru Brat",
+	IGUI_VehicleNameen82BratSport = "1982 Subaru Brat",
+}

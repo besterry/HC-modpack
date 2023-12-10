@@ -1,0 +1,63 @@
+module Base
+{
+/*
+	// This is a work in progress. Due to content creators being (understandably) protective of their custom code, there are very few resources available to draw knowledge from in getting improvised vehicle armor to work in the game. I have done my best, but I am not a lua developer. This is very rudimentary and will continue to be expanded upon as I continue to develop it. If you are a vehicle modder and are looking to add improvised vehicle armor to your release in a similar manor to my releases, please feel free to use this code. -ExtraNoise
+*/
+	template vehicle NewYorkerArmor
+	{
+		part en71_NewYorkerArmor
+		{
+			area = Engine,
+			category = bodywork,
+			itemType = Base.en71_NewYorker_Armor,
+			mechanicRequireKey = false,
+			repairMechanic = false,
+			specificItem = false,
+
+			model Default
+			{
+				file = en71_NewYorker_Armor,
+			}
+
+			table install
+			{
+				items
+				{
+					1
+					{
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+				time = 1000,
+				skills = Mechanics:2,
+				test = Vehicles.InstallTest.Default,
+			}
+
+			table uninstall
+			{
+				items
+				{
+					1
+					{
+						type = Base.Crowbar,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+				time = 1000,
+				skills = Mechanics:2,
+				test = Vehicles.UninstallTest.Default,
+			}
+
+			lua
+			{
+				create =,
+			}
+		}
+	}
+}
+

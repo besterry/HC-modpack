@@ -1,0 +1,16 @@
+module Base
+{
+	item en91_Eclipse_Armor
+	{
+		DisplayCategory = VehicleMaintenance,
+		Weight = 12.0,
+		Type = Normal,
+		DisplayName	= Improvised Vehicle Armor,
+		Icon = enVehicleArmor,
+		ChanceToSpawnDamaged = 0,
+		ConditionMax = 100,
+		MechanicsItem = TRUE,
+		WorldStaticModel = CampfireMaterials,
+		VehicleType = 1,
+	}
+}

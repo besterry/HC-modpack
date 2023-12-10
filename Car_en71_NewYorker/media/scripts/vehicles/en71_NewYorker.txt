@@ -1,0 +1,788 @@
+module Base
+{
+	vehicle en71_NewYorker
+	{
+		model
+		{
+			file = en71_NewYorker_Base,
+			scale = 1.0000,
+			offset = 0.0000 0.8000 0.0000,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_AmberSherwood,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_AvacadoGreen,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_AztecGold,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_BurnishedRed,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_FormalBlack,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_GlacialBlue,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_LemonTwist,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_Sandalwood,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_Spinnaker,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en71_NewYorker_Ext_WinchesterGray,
+		}
+
+		textureMask = Vehicles/Vehicle_en71_NewYorker_Overlay_Mask,
+		textureLights = Vehicles/Vehicle_en71_NewYorker_Overlay_Lights,
+		textureDamage1Overlay = Vehicles/Vehicle_en71_NewYorker_Overlay_Blood,
+		textureDamage2Overlay = Vehicles/Vehicle_en71_NewYorker_Overlay_Blood,
+		textureDamage1Shell = Vehicles/Vehicle_en71_NewYorker_Overlay_Damage,
+		textureDamage2Shell = Vehicles/Vehicle_en71_NewYorker_Overlay_Damage,
+		textureRust = Vehicles/Vehicle_en71_NewYorker_Overlay_Rust,
+
+		sound
+		{
+			engine = VehicleEnginePickUpVan,
+			engineStart = VehicleEnginePickUpVan,
+			engineTurnOff = VehicleEnginePickUpVan,
+			horn = VehicleHornStandard,
+			ignitionFail = VehicleIgnitionFailPickUpVan,
+		}
+
+		extents = 1.7400 1.0200 5.1200,
+		physicsChassisShape = 1.7400 1.0200 5.1200,
+		centerOfMassOffset = 0.0000 0.8800 0.0000,
+		shadowExtents = 1.7373 5.2462,
+		shadowOffset = 0.0000 0.0024,
+		mechanicType = 1,
+		offRoadEfficiency = 1.0,
+		playerDamageProtection = 1.4,
+		frontEndHealth = 160,
+		rearEndHealth = 160,
+		mass = 1180,
+		engineRPMType = van,
+		engineRepairLevel = 4,
+		engineForce = 6720,
+		engineLoudness = 80,
+		engineQuality = 70,
+		maxSpeed = 60f,
+		brakingForce = 70,
+		stoppingMovementForce = 5.0f,
+		rollInfluence = 0.8f,
+		steeringIncrement = 0.035,
+		steeringClamp = 0.35,
+		suspensionStiffness = 40,
+		suspensionCompression = 2.83,
+		suspensionDamping = 1.88,
+		maxSuspensionTravelCm = 10,
+		suspensionRestLength = 0.2,
+		wheelFriction = 1.4f,
+		seats = 6,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.7000 -0.4200 1.6500,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.7000 -0.4200 1.6500,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.7000 -0.4200 -1.2600,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.7000 -0.4200 -1.2600,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat6,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.3800 -0.1200 0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.0000 -0.6800 0.0000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = -0.3800 -0.1200 0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6800 0.0000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		passenger MiddleLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.0000 -0.1200 -0.7200,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.0000 -0.6800 -0.7600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearLeft,
+			}
+		}
+
+		passenger MiddleRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.0000 -0.1200 0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6800 0.0000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		passenger RearLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.3800 -0.1200 -0.7200,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.0000 -0.6800 -0.7600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearLeft,
+			}
+		}
+
+		passenger RearRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = -0.3800 -0.1200 -0.7200,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6800 -0.7600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 3.0600 1.4000 1.0000,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -3.0600 1.4000 1.0000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.3700 0.4400 1.0000 1.0000,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.3700 0.4400 1.0000 1.0000,
+		}
+
+		area SeatRearLeft
+		{
+			xywh = 1.3700 -0.4400 1.0000 1.0000,
+		}
+
+		area SeatRearRight
+		{
+			xywh = -1.3700 -0.4400 1.0000 1.0000,
+		}
+
+		area GasTank
+		{
+			xywh = 0.0200 -3.0600 1.0000 1.0000,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.2100 1.6600 0.6800 0.6800,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.2100 1.6600 0.6800 0.6800,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.2100 -1.2500 0.6800 0.6800,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.2100 -1.2500 0.6800 0.6800,
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			container
+			{
+				capacity = 35,
+			}
+
+			model TrunkDoor
+			{
+				file = en71_NewYorker_Spare,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			model TrunkDoor
+			{
+				file = en71_NewYorker_Trunk,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 3.0,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 0.8,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+		template = Seat/part/SeatMiddleLeft,
+		template = Seat/part/SeatMiddleRight,
+		template = Seat/part/SeatRearLeft,
+		template = Seat/part/SeatRearRight,
+
+		part GloveBox
+		{
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = true,
+
+			model
+			{
+				file = en71_NewYorker_Interior,
+			}
+
+			container
+			{
+				capacity = 8,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = Battery,
+
+		part Battery
+		{
+			model Battery
+			{
+				file = en71_NewYorker_Battery,
+			}
+		}
+
+		template = Engine,
+		template = GasTank,
+		template = Muffler,
+
+		part Muffler
+		{
+			model Muffler
+			{
+				file = en71_NewYorker_Muffler,
+			}
+		}
+
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			model EngineDoor
+			{
+				file = en71_NewYorker_Hood,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.0,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 0.6,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+		template = Window/part/WindowRearLeft,
+		template = Window/part/WindowRearRight,
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part WindowFrontLeft
+		{
+			model Default
+			{
+				file = en71_NewYorker_WindowFL,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowFrontRight
+		{
+			model Default
+			{
+				file = en71_NewYorker_WindowFR,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowRearLeft
+		{
+			model Default
+			{
+				file = en71_NewYorker_WindowRL,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowRearRight
+		{
+			model Default
+			{
+				file = en71_NewYorker_WindowRR,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part Windshield
+		{
+			model Default
+			{
+				file = en71_NewYorker_WindshieldFront,
+			}
+		}
+
+		part WindshieldRear
+		{
+			model Default
+			{
+				file = en71_NewYorker_WindshieldRear,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+		template = Door/part/DoorRearLeft,
+		template = Door/part/DoorRearRight,
+
+		part DoorFrontLeft
+		{
+			model Default
+			{
+				file = en71_NewYorker_DoorFL,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 3,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorFrontRight
+		{
+			model Default
+			{
+				file = en71_NewYorker_DoorFR,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 3,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorRearLeft
+		{
+			model Default
+			{
+				file = en71_NewYorker_DoorRL,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 3,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorRearRight
+		{
+			model Default
+			{
+				file = en71_NewYorker_DoorRR,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 3,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Tire,
+
+		part Tire*
+		{
+			model InflatedTirePlusWheel
+			{
+				file = en71_NewYorker_Wheel,
+			}
+		}
+
+		template = Brake,
+
+		part BrakeFrontLeft
+		{
+			model Default
+			{
+				file = en71_NewYorker_BrakeFL,
+			}
+		}
+
+		part BrakeFrontRight
+		{
+			model Default
+			{
+				file = en71_NewYorker_BrakeFR,
+			}
+		}
+
+		part BrakeRearLeft
+		{
+			model Default
+			{
+				file = en71_NewYorker_BrakeRL,
+			}
+		}
+
+		part BrakeRearRight
+		{
+			model Default
+			{
+				file = en71_NewYorker_BrakeRR,
+			}
+		}
+
+		template = Suspension,
+
+		part SuspensionRearLeft
+		{
+			model Default
+			{
+				file = en71_NewYorker_SuspensionRL,
+			}
+		}
+
+		part SuspensionRearRight
+		{
+			model Default
+			{
+				file = en71_NewYorker_SuspensionRR,
+			}
+		}
+
+		template = SpareTire,
+		template = Radio,
+		template = Headlight,
+		template = NewYorkerArmor,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3600 -2.4800,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.2700 2.5000,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

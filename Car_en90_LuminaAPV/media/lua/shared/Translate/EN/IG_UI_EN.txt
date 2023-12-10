@@ -1,0 +1,6 @@
+IG_UI_EN = {
+	IGUI_VehicleNameen90_LuminaAPV = "1990 Chevrolet Lumina APV",
+	IGUI_VehicleParten90_LuminaAPVArmor = "Improvised Vehicle Armor"
+	IGUI_VehiclePartSeatMiddleCenter = "Middle Center Seat",
+	IGUI_SeatMiddleCenter = "Middle Center",
+}

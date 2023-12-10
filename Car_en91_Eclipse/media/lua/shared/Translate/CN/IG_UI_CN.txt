@@ -1,0 +1,6 @@
+IGUI_CN = {
+	IGUI_VehicleNameen91_Eclipse = "1991 三菱 Eclipse GSX",
+	IGUI_VehicleNameen91_EclipseTuner = "1991 三菱 Eclipse GSX（改装车）",
+	IGUI_VehicleNameen91_Talon = "1991 Eagle Talon TSi",
+	IGUI_VehicleParten91_EclipseArmor = "自制车辆保护装置"
+}

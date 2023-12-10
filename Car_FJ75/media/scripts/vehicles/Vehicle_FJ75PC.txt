@@ -1,0 +1,744 @@
+module Base
+{
+	model FJ75PC
+	{
+		mesh = vehicles/Vehicle_FJ75PC|body_mesh,
+		shader = vehicle_norandom_multiuv_noreflect,
+		invertX = FALSE,
+		scale = 1,
+	}
+	model FJ75PCDriver
+	{
+		mesh = vehicles/Vehicle_FJ75PC|FrontLeftSeat_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+	model FJ75PCPassenger
+	{
+		mesh = vehicles/Vehicle_FJ75PC|FrontRightSeat_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+	model FJ75PCWindshield
+	{
+		mesh = vehicles/Vehicle_FJ75PC|WindShield_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+	model FJ75PCWindshieldRear
+	{
+		mesh = vehicles/Vehicle_FJ75PC|WindshieldRear_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+	}
+	model FJ75PCFrontRightWindow
+	{
+		mesh = vehicles/Vehicle_FJ75PC|FrontRightWindow_obj,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = FrontRightWindowBone 1.0,
+	}
+	model FJ75PCFrontLeftWindow
+	{
+		mesh = vehicles/Vehicle_FJ75PC|FrontLeftWindow_obj,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = FrontLeftWindowBone 1.0,
+	}
+	model FJ75PCFrontRightDoor
+	{
+		mesh = vehicles/Vehicle_FJ75PC|FrontRightDoor_obj,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = FrontRightDoorBone 1.0,
+	}
+	model FJ75PCFrontLeftDoor
+	{
+		mesh = vehicles/Vehicle_FJ75PC|FrontLeftDoor_obj,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = FrontLeftDoorBone 1.0,
+	}
+	model FJ75PCTrunk
+	{
+		mesh = vehicles/Vehicle_FJ75PC|Trunk_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = TrunkBone 1.0,
+	}
+	model FJ75PCHood
+	{
+		mesh = vehicles/Vehicle_FJ75PC|Hood_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+		boneWeight = HoodBone 1.0,
+	}
+	model FJ75PCWheelfrontwheelleft
+	{
+		mesh = vehicles/Wheels/Vehicle_FJ75PC_LeftWheel,
+		texture = Vehicles/Vehicle_FJ75PC_wheel,
+		shader = vehiclewheel,
+	}
+	model FJ75PCWheelfrontwheelright
+	{
+		mesh = vehicles/Wheels/Vehicle_FJ75PC_RightWheel,
+		texture = Vehicles/Vehicle_FJ75PC_wheel,
+		shader = vehiclewheel,
+	}
+	model FJ75PCWheelbackwheelleft
+	{
+		mesh = vehicles/Wheels/Vehicle_FJ75PC_LeftWheel,
+		texture = Vehicles/Vehicle_FJ75PC_wheel,
+		shader = vehiclewheel,
+	}
+	model FJ75PCWheelbackwheelright
+	{
+		mesh = vehicles/Wheels/Vehicle_FJ75PC_RightWheel,
+		texture = Vehicles/Vehicle_FJ75PC_wheel,
+		shader = vehiclewheel,
+	}
+	vehicle FJ75PC
+	{
+		mechanicType = 2,
+		offRoadEfficiency = 1.1,
+		engineRepairLevel = 4,
+		playerDamageProtection = 1.3,
+
+		model
+		{
+			file = FJ75PC,
+			scale = 0.6300,
+			offset = 0.0635 0.5238 0.2381,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_black,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_red,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_bluedark,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_bluelight,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_cream,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_greendark,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_darkgrey,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_white,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_FJ75PC_yellow,
+		}
+
+		textureRust = Vehicles/Vehicle_FJ75PC_rust,
+		textureMask = Vehicles/Vehicle_FJ75PC_mask,
+		textureLights = Vehicles/Vehicle_FJ75PC_lights,
+		textureDamage1Shell = Vehicles/Vehicle_FJ75PC_scratch,
+		textureDamage2Shell = Vehicles/Vehicle_FJ75PC_scratch,
+		textureDamage1Overlay = Vehicles/Vehicle_FJ75PC_blood,
+		textureDamage2Overlay = Vehicles/Vehicle_FJ75PC_blood,
+
+		sound
+		{
+			engine = VehicleEngineSUV,
+			engineStart = VehicleEngineSUV,
+			engineTurnOff = VehicleEngineSUV,
+			horn = VehicleHornStandard,
+			ignitionFail = VehicleIgnitionFailSUV,
+		}
+
+		extents = 2.6984 2.0952 8.5079,
+		mass = 1000,
+		physicsChassisShape = 2.6667 2.1270 8.5397,
+		centerOfMassOffset = 0.0635 1.5556 0.0000,
+		shadowExtents = 3.1347 7.4370,
+		shadowOffset = 0.0635 -0.0096,
+		engineForce = 5000,
+		engineQuality = 80,
+		engineLoudness = 120,
+		maxSpeed = 110f,
+		brakingForce = 100,
+		stoppingMovementForce = 4.0f,
+		rollInfluence = 0.50f,
+		steeringIncrement = 0.04,
+		steeringClamp = 0.3,
+		suspensionStiffness = 45,
+		suspensionCompression = 3.83,
+		suspensionDamping = 2.88,
+		maxSuspensionTravelCm = 12,
+		suspensionRestLength = 0.5,
+		wheelFriction = 1.6f,
+		frontEndHealth = 4500,
+		rearEndHealth = 3500,
+		seats = 2,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = -1.2063 0.0794 2.4603,
+			radius = 0.50f,
+			width = 0.30f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = 1.2222 0.0794 2.4603,
+			radius = 0.50f,
+			width = 0.30f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = -1.2063 0.0794 -2.2063,
+			radius = 0.50f,
+			width = 0.30f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = 1.2222 0.0794 -2.2063,
+			radius = 0.50f,
+			width = 0.30f,
+		}
+
+		template = PassengerSeat2,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.6190 0.9683 0.0159,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 2.0794 -0.6984 0.0159,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = -0.6349 0.9683 0.0159,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -2.0476 -0.1905 0.1429,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 5.1587 4.0000 2.0000,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -4.9841 2.3492 1.7460,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 2.3175 0.9683 2.0000 2.0000,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -2.1905 0.9683 2.0000 2.0000,
+		}
+
+		area GasTank
+		{
+			xywh = -1.9048 -0.2857 1.0794 0.5714,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.2222 2.6984 0.0000 0.0000,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.1587 2.6508 0.0000 0.0000,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.1905 -1.9841 0.0000 0.0000,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.0635 -1.9683 0.0000 0.0000,
+		}
+
+		template = FJ75PCArmor/part/FJ75PCBodyArmor,
+		template = FJ75PCArmor/part/FJ75PCArmorWindshield,
+		template = FJ75PCArmor/part/FJ75PCFrontLeftDoorArmor,
+		template = FJ75PCArmor/part/FJ75PCFrontRightDoorArmor,
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+		template = GloveBox,
+		template = GasTank,
+		template = Battery,
+		template = Engine,
+		template = Muffler,
+
+		part SeatFrontLeft
+		{
+			model seatfrontLeft
+			{
+				file = FJ75PCDriver,
+			}
+		}
+
+		part SeatFrontRight
+		{
+			model seatfrontRight
+			{
+				file = FJ75PCPassenger,
+			}
+		}
+
+		part Muffler
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			model engineDoor
+			{
+				file = FJ75PCHood,
+			}
+
+			anim Close
+			{
+				anim = HoodClosing,
+				reverse = TRUE,
+				rate = 1.5,
+			}
+
+			anim Open
+			{
+				anim = HoodClosing,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = HoodClosing,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = HoodClosing,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part Windshield
+		{
+			model windshieldFront
+			{
+				file = FJ75PCWindshield,
+			}
+
+			window
+			{
+				openable = false,
+			}
+
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		part WindshieldRear
+		{
+			model windshieldRear
+			{
+				file = FJ75PCWindshieldRear,
+			}
+
+			window
+			{
+				openable = false,
+			}
+
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+
+		part WindowFrontRight
+		{
+			model windowFR
+			{
+				file = FJ75PCFrontRightWindow,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = FrontRightWindowClosing,
+				animate = FALSE,
+			}
+
+			parent = DoorFrontRight,
+			area = SeatFrontRight,
+		}
+
+		part WindowFrontLeft
+		{
+			model windowFL
+			{
+				file = FJ75PCFrontLeftWindow,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = FrontLeftWindowClosing,
+				animate = FALSE,
+			}
+
+			parent = DoorFrontLeft,
+			area = SeatFrontLeft,
+		}
+
+		part DoorFrontRight
+		{
+			model Default
+			{
+				file = FJ75PCFrontRightDoor,
+			}
+
+			anim Close
+			{
+				anim = FrontRightDoorClosing,
+				reverse = TRUE,
+				rate = 2.0,
+			}
+
+			anim Open
+			{
+				anim = FrontRightDoorClosing,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = FrontRightDoorClosing,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = FrontRightDoorClosing,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorFrontLeft
+		{
+			model Default
+			{
+				file = FJ75PCFrontLeftDoor,
+			}
+
+			anim Close
+			{
+				anim = FrontLeftDoorClosing,
+				reverse = TRUE,
+				rate = 2.0,
+			}
+
+			anim Open
+			{
+				anim = FrontLeftDoorClosing,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = FrontLeftDoorClosing,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = FrontLeftDoorClosing,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			table install
+			{
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Advanced Mechanics,
+			}
+
+			model Default
+			{
+				file = FJ75PCTrunk,
+				offset = 0 0 0,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+
+			anim Close
+			{
+				anim = TrunkClosing,
+				reverse = TRUE,
+				rate = 1.5,
+			}
+
+			anim Open
+			{
+				anim = TrunkClosing,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = TrunkClosing,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = TrunkClosing,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Trunk/part/TruckBed,
+		template = Tire,
+		template = Axle,
+
+		part TireFrontLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = FJ75PCWheelfrontwheelleft,
+			}
+		}
+
+		part TireFrontRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = FJ75PCWheelfrontwheelright,
+			}
+		}
+
+		part TireRearLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = FJ75PCWheelbackwheelleft,
+			}
+		}
+
+		part TireRearRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = FJ75PCWheelbackwheelright,
+			}
+		}
+
+		template = Brake,
+
+		part Brake*
+		{
+			table install
+			{
+				skills = Mechanics:4,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:4,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				skills = Mechanics:4,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:4,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+
+		part Radio*
+		{
+			itemType = Radio.HamRadio1,
+		}
+
+		template = Headlight,
+
+		physics box
+		{
+			offset = 0.0794 1.6349 -0.0159,
+			extents = 2.8254 1.8571 7.5714,
+			rotate = 0.0000 0.0000 0.0000,
+		}
+
+		attachment trailer
+		{
+			offset = 0.0000 0.0476 -4.4603,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = -0.0159 0.0000 3.9206,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

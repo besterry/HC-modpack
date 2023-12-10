@@ -1,0 +1,44 @@
+module Base
+{
+
+	  item FJ75DoorArmor2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	10.0,0
+        Type	=	Normal,
+        DisplayName	=	Land Cruiser Door Armor,
+        Icon	=	FJ75DoorArmor,
+        VehicleType =   1,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = FJ75DoorArmor_WorldItem,
+    }
+
+    item FJ75WindshieldArmor2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	10.0,0
+        Type	=	Normal,
+        DisplayName	=	Land Cruiser Windshield Armor,
+        Icon	=	FJ75WindshieldArmor,
+        VehicleType =   1,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = FJ75WindshieldArmor_WorldItem,
+    }
+
+    item FJ75Bullbar2
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Land Cruiser Modified Bullbar,
+            Icon	=	FJ75Bullbar,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = FJ75Bullbar_WorldItem,
+        }
+
+
+}

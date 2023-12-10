@@ -1,0 +1,2 @@
+IG_UI_EN = {
+	IGUI_VehicleNameen83Bronco2 = "1984 Ford Bronco II",

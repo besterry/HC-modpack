@@ -1,0 +1,92 @@
+module Base
+{
+	model en85Fiero_Base
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en85Fiero_DoorFL
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Door_FrontLeft 1.0,
+	}
+	model en85Fiero_DoorFR
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Door_FrontRight 1.0,
+	}
+	model en85Fiero_Trunk
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_Trunk,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Trunk 1.0,
+	}
+	model en85Fiero_Hood
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_Hood,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en85Fiero_WindowFL
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_WindowFrontLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = FALSE,
+		boneWeight = Window_FrontLeft 1.0,
+	}
+	model en85Fiero_WindowFR
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_WindowFrontRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = FALSE,
+		boneWeight = Window_FrontRight 1.0,
+	}
+	model en85Fiero_Windshield
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_Windshield,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en85Fiero_WindshieldRear
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_WindshieldRear,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = TRUE,
+	}
+	model en85Fiero_Interior
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_Interior,
+		texture = Vehicles/vehicle_85Fiero_interior,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en85Fiero_Wheel
+	{
+		mesh = vehicles/Vehicles_en85Fiero|85Fiero_Wheel,
+		texture = Vehicles/wheel_85Fiero,
+		shader = vehiclewheel,
+		scale = 0.004519,
+		static = TRUE,
+	}
+}

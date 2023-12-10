@@ -1,0 +1,185 @@
+module Base
+{
+
+	model Hilux89Bonnet
+	{
+
+		mesh = vehicles/toyota_hilux_body|toyota_hilux_bonnet,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+		boneWeight = toyota_hilux_bonnet 0.01,
+
+	}
+
+	template vehicle Hilux89Bonnet
+	{
+	
+		part Hilux89Bonnet
+		{
+		
+			{
+			
+				model Hilux89Bonnet
+				{
+				
+					file = Hilux89Bonnet,
+				
+				}
+			
+			}
+			
+			anim Open
+			{
+			
+				anim = anim_toyota_hilux_bonnet,
+				reverse = false,
+				rate = 1,
+				sound = VehicleHoodOpenStandard,
+			
+			}
+			
+			anim Close
+			{
+				anim = anim_toyota_hilux_bonnet,
+				reverse = true,
+				rate = 1,
+				sound = VehicleHoodCloseStandard,
+			
+			}
+			
+			anim Opened
+			{
+			
+				anim = anim_toyota_hilux_bonnet,
+				reverse = true,
+				animate = false,
+			
+			}
+			
+			anim Closed
+			{
+				
+				anim = anim_toyota_hilux_bonnet,
+				reverse = false,
+				animate = false,
+			
+			}
+			
+			anim Lock
+				{
+				
+					sound = LockVehicleDoorStandard,
+				
+				}
+				
+			anim Unlock
+				{
+				
+					sound = UnlockVehicleDoorStandard,
+				
+				}
+				
+			anim IsLocked
+				{
+				
+					sound = VehicleDoorIsLockedStandard,
+				
+				}
+
+			anim ActorOpen
+				{
+				
+					anim = WindowOpenSuccess,
+					rate = 0.15,
+					angle = 0.0 180.0 0.0,
+				
+				}
+
+			anim ActorClose
+				{
+				
+					anim = Attack_Shove,
+					rate = 0.3,
+					angle = 0.0 180.0 0.0,
+					
+				}
+
+			area = Engine,
+			category = bodywork,
+			specificItem = false,
+			ItemType = Base.Hilux89Bonnet,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+			
+			door
+			{
+			}
+			
+			table install
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+					
+				}
+				
+				time = 300,
+				skills = Mechanics:3,
+				recipies = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicle.Install.Complete.Door,
+				
+			}
+			
+			table uninstall
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+				
+				}
+				
+				time = 300,
+				skills = Mechanics:3,
+				recipies = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				complete = Vehicle.Uninstall.Complete.Door,
+				
+			}
+			
+			lua
+			{
+			
+				create = Vehicles.Create.Default,
+				init = Vehicles.Init.Door,
+				update = Vehicles.Update.EngineDoor,
+				use = Vehicles.Use.EngineDoor,
+			
+			}
+			
+		}
+		
+	}
+
+}

@@ -1,0 +1,200 @@
+module Base
+{
+	model en71_NewYorker_Base
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_DoorFL
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorFLBone 1.0,
+	}
+	model en71_NewYorker_DoorFR
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorFRBone 1.0,
+	}
+	model en71_NewYorker_DoorRL
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|DoorRearLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorRLBone 1.0,
+	}
+	model en71_NewYorker_DoorRR
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|DoorRearRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorRRBone 1.0,
+	}
+	model en71_NewYorker_Hood
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Hood,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = HoodBone 1.0,
+	}
+	model en71_NewYorker_Trunk
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Tailgate,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = TrunkBone 1.0,
+	}
+	model en71_NewYorker_WindowFL
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|WindowFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowFLBone 1.0,
+	}
+	model en71_NewYorker_WindowFR
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|WindowFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowFRBone 1.0,
+	}
+	model en71_NewYorker_WindowRL
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|WindowRearLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowRLBone 1.0,
+	}
+	model en71_NewYorker_WindowRR
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|WindowRearRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowRRBone 1.0,
+	}
+	model en71_NewYorker_WindshieldFront
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|WindshieldFront,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_WindshieldRear
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|WindshieldRear,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_Interior
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Interior,
+		texture = Vehicles/Vehicle_en71_NewYorker_Int,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_Battery
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Battery,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_Muffler
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Muffler,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_Spare
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Spare,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_BrakeFL
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|BrakeFrontLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_BrakeFR
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|BrakeFrontRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_BrakeRL
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|BrakeRearLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_BrakeRR
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|BrakeRearRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_SuspensionRL
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|SuspensionRearLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_SuspensionRR
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|SuspensionRearRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_Wheel
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Wheel,
+		texture = Vehicles/Vehicle_en71_NewYorker_Wheel,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004519,
+	}
+	model en71_NewYorker_Armor
+	{
+		mesh = vehicles/Vehicle_en71_NewYorker|Armor,
+		shader = vehicle,
+		static = TRUE,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+}

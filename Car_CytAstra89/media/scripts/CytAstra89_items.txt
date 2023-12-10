@@ -1,0 +1,262 @@
+module Base
+{
+
+    item CytAstra89TR1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Tire Liner,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89TR_WorldItem,
+        }
+
+    item CytAstra89Bull1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Bullbar,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Bullbar_WorldItem,
+        }
+
+    item CytAstra89Roof1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Sunroof,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Sunroof_WorldItem,
+        }
+
+    item CytAstra89WindowArmor1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Window Armor,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89WindowArmor_WorldItem,
+        }
+
+    item CytAstra89WindshieldBars1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Windshield Cage,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89WindshieldBars_WorldItem,
+        }
+
+    item CytAstra89Door1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Door,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Door_WorldItem,
+        }
+
+    item CytAstra89DoorArmor1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Door Armor,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89DoorArmor_WorldItem,
+        }
+
+    item CytAstra89Wheel1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Wheel,
+            Icon	=	Vauxh,
+        	MaxCapacity = 35,
+        	ChanceToSpawnDamaged = 0,
+        	WheelFriction = 1.6,
+        	ConditionLowerStandard = 0.08,
+        	ConditionLowerOffroad = 0.10,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Wheel_WorldItem,
+        }
+
+    item CytAstra89Window1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Window,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Window_WorldItem,
+        }
+
+    item CytAstra89WindowBack1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Rear Window,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89WindowBack_WorldItem,
+        }
+
+    item CytAstra89WindowBackArmor1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Rear Window Armor,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89WindowBackArmor_WorldItem,
+        }
+
+    item CytAstra89Hood1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Hood,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Hood_WorldItem,
+        }
+
+    item CytAstra89TrunkDoor1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Trunk Hatch,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89TrunkDoor_WorldItem,
+        }
+
+    item CytAstra89RearWindow1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Rear Windshield,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89RearWindow_WorldItem,
+        }
+
+    item CytAstra89RearWindArmor1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Rear Windshield Armor,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89RearWindArmor_WorldItem,
+        }
+
+    item CytAstra89Seat1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Seat,
+            Icon	=	Vauxh,
+        	MaxCapacity = 40,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Seat_WorldItem,
+        }
+
+    item CytAstra89Windshield1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Windshield,
+            Icon	=	Vauxh,
+            VehicleType =   1,
+            ConditionMax = 100,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Windshield_WorldItem,
+        }
+
+    item CytAstra89Muffler1
+        {
+            DisplayCategory = VehicleMaintenance,
+            Weight	=	10.0,0
+            Type	=	Normal,
+            DisplayName	=	Vauxhall Astra Muffler,
+            Icon	=	Vauxh,
+          	EngineLoudness = 100,
+            VehicleType =   1,
+            ConditionMax = 100,
+         	ConditionLowerStandard = 0.01,
+          	ConditionLowerOffroad = 0.15,
+            MechanicsItem = TRUE,
+            WorldStaticModel = CytAstra89Muffler_WorldItem,
+        }
+
+    item CytAstraRoofrack1
+        {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	15.0,
+        Type	=	Normal,
+        DisplayName	=	Astra compatible Roofrack,
+        MaxCapacity = 100,
+        Icon	=	Vauxh,
+        VehicleType =   1,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = CytAstra89Roofrack_WorldItem,
+        }
+
+}

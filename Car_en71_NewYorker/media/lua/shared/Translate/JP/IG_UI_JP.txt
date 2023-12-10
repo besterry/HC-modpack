@@ -1,0 +1,4 @@
+IGUI_JP = {
+	IGUI_VehicleNameen71_NewYorker = "1971 クライスラー New Yorker",
+	IGUI_VehicleParten71_NewYorkerArmor = "即席の車両装甲"
+}

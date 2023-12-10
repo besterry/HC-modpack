@@ -1,0 +1,12 @@
+IG_UI_EN = {
+	IGUI_VehicleName1990trafic = "Renault Trafic 1990",
+	IGUI_VehicleName1990traficRojo = "Renault Trafic 1990",
+	IGUI_VehicleName1990traficNegro = "Renault Trafic 1990",
+	IGUI_VehicleName1990traficAmarillo = "Renault Trafic 1990",
+	IGUI_VehicleName1990traficVerde = "Renault Trafic 1990",	
+	IGUI_VehicleName1990traficLechero = "Renault Trafic 1990",
+	IGUI_VehicleName1990traficATC = "Renault Trafic 1990",		
+	IGUI_VehicleName1990traficPasajeros = "Renault Trafic 1990",
+	IGUI_VehicleName1990traficAmbulancia = "Renault Trafic 1990",
+	IGUI_VehicleName1990traficCamper = "Renault Trafic 1990",	
+}

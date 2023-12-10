@@ -1,0 +1,163 @@
+module Base
+{
+	model en72_Javelin_Base
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_DoorFL
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = BoneDoorFL 1.0,
+	}
+	model en72_Javelin_DoorFR
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = BoneDoorFR 1.0,
+	}
+	model en72_Javelin_Hood
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Hood,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = BoneHood 1.0,
+	}
+	model en72_Javelin_Trunk
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Trunk,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = BoneTrunk 1.0,
+	}
+	model en72_Javelin_WindowFL
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|WindowFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = BoneWindowFL 1.0,
+	}
+	model en72_Javelin_WindowFR
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|WindowFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = BoneWindowFR 1.0,
+	}
+	model en72_Javelin_WindowRL
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|WindowRearLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_WindowRR
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|WindowRearRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_Windshield
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Windshield,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_WindshieldRear
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|WindshieldRear,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_Interior
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Interior,
+		texture = Vehicles/Vehicle_en72_Javelin_Interior,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en72_Javelin_Battery
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Battery,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_GasTank
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|GasTank,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_Muffler
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Muffler,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_BrakeFL
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|BrakeFrontLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_BrakeFR
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|BrakeFrontRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_BrakeRL
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|BrakeRearLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_BrakeRR
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|BrakeRearRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_Wheel
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Wheel,
+		texture = Vehicles/Vehicle_en72_Javelin_Wheel,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004519,
+	}
+	model en72_Javelin_Armor
+	{
+		mesh = vehicles/Vehicle_en72_Javelin|Armor,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+}

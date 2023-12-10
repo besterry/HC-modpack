@@ -1,0 +1,4 @@
+IG_UI_KO = {
+	IGUI_VehicleNameen72_Javelin = "1972 AMC Javelin AMX",
+	IGUI_VehicleParten72_JavelinArmor = "수제 차량 보호"
+}

@@ -1,0 +1,569 @@
+module Base
+{
+	vehicle en85Fiero
+	{
+		model
+		{
+			file = en85Fiero_Base,
+			scale = 1.0000,
+			offset = 0.0000 0.6000 0.0000,
+		}
+
+		skin
+		{
+			texture = Vehicles/vehicle_85fiero_black,
+		}
+
+		skin
+		{
+			texture = Vehicles/vehicle_85fiero_red,
+		}
+
+		skin
+		{
+			texture = Vehicles/vehicle_85fiero_silver,
+		}
+
+		skin
+		{
+			texture = Vehicles/vehicle_85fiero_white,
+		}
+
+		textureMask = Vehicles/vehicle_85fiero_mask,
+		textureLights = Vehicles/vehicle_85fiero_lights,
+		textureDamage1Overlay = Vehicles/Veh_Blood_Mask,
+		textureDamage2Overlay = Vehicles/Veh_Blood_Hvy,
+		textureDamage1Shell = Vehicles/Veh_Damage1,
+		textureDamage2Shell = Vehicles/Veh_Damage2,
+		textureRust = Vehicles/Veh_Rust,
+
+		sound
+		{
+			engine = VehicleEngineSportsCar,
+			engineStart = VehicleEngineSportsCar,
+			engineTurnOff = VehicleEngineSportsCar,
+			horn = VehicleHornVan,
+			ignitionFail = VehicleIgnitionFailVan,
+		}
+
+		extents = 1.5600 0.8800 3.7000,
+		physicsChassisShape = 1.5600 0.8800 3.6400,
+		centerOfMassOffset = 0.0000 0.6700 0.0000,
+		shadowExtents = 1.5573 3.8162,
+		shadowOffset = 0.0000 -0.0076,
+		mechanicType = 1,
+		offRoadEfficiency = 0.6,
+		playerDamageProtection = 0.8,
+		frontEndHealth = 150,
+		rearEndHealth = 140,
+		mass = 720,
+		engineRPMType = firebird,
+		engineRepairLevel = 5,
+		engineForce = 4600,
+		engineLoudness = 100,
+		engineQuality = 70,
+		maxSpeed = 100f,
+		gearRatioCount = 5,
+		gearRatioR = 3.4,
+		gearRatio1 = 3.5,
+		gearRatio2 = 2.2,
+		gearRatio3 = 1.4,
+		gearRatio4 = 0.9,
+		gearRatio5 = 0.7,
+		brakingForce = 90,
+		stoppingMovementForce = 2.0f,
+		rollInfluence = 0.7f,
+		steeringIncrement = 0.03,
+		steeringClamp = 0.3,
+		suspensionStiffness = 45,
+		suspensionCompression = 3.9,
+		suspensionDamping = 3.1,
+		maxSuspensionTravelCm = 16,
+		suspensionRestLength = 0.2,
+		wheelFriction = 1.6f,
+		seats = 2,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.6700 -0.3200 1.0100,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.6700 -0.3200 1.0100,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.6700 -0.3200 -1.1500,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.6700 -0.3200 -1.1500,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat2,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.3300 -0.2100 -0.2000,
+				rotate = 15.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.0300 -0.6000 -0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = -0.3300 -0.2100 -0.2000,
+				rotate = 15.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0300 -0.6000 -0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = -1.1900 -0.9200 0.8200 0.8200,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -2.2600 1.2000 0.8200,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.1900 -0.0600 0.8200 0.8200,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.1900 -0.0600 0.8200 0.8200,
+		}
+
+		area GasTank
+		{
+			xywh = 1.1900 -1.4800 0.8200 0.8200,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.1200 1.0200 0.6800 0.6800,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.1200 1.0200 0.6800 0.6800,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.1200 -1.1400 0.6800 0.6800,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.1200 -1.1400 0.6800 0.6800,
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			container
+			{
+				capacity = 60,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			model TrunkDoor
+			{
+				file = en85Fiero_Trunk,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+
+		part GloveBox
+		{
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = true,
+
+			model
+			{
+				file = en85Fiero_Interior,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+
+			container
+			{
+				capacity = 7,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = GasTank,
+
+		part GasTank
+		{
+			install
+			{
+				skills = Mechanics:7,
+				recipes = Intermediate Mechanics,
+			}
+
+			uninstall
+			{
+				skills = Mechanics:7,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Battery,
+		template = Engine,
+		template = Muffler,
+
+		part Muffler
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			model Default
+			{
+				file = en85Fiero_Hood,
+				rotate = 0 0 0,
+			}
+
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part WindowFrontLeft
+		{
+			model Default
+			{
+				file = en85Fiero_WindowFL,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+			}
+		}
+
+		part WindowFrontRight
+		{
+			model
+			{
+				file = en85Fiero_WindowFR,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+			}
+		}
+
+		part Window*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		part Windshield
+		{
+			model
+			{
+				file = en85Fiero_Windshield,
+			}
+		}
+
+		part WindshieldRear
+		{
+			model
+			{
+				file = en85Fiero_WindshieldRear,
+			}
+		}
+
+		part Windshield*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+
+		part DoorFrontLeft
+		{
+			model Default
+			{
+				file = en85Fiero_DoorFL,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorFrontRight
+		{
+			model Default
+			{
+				file = en85Fiero_DoorFR,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part Door*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Tire,
+
+		part Tire*
+		{
+			model InflatedTirePlusWheel
+			{
+				file = en85Fiero_Wheel,
+			}
+		}
+
+		template = Brake,
+
+		part Brake*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+		template = Headlight,
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.1700 1.8000,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

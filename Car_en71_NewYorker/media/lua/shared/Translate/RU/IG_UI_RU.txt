@@ -1,0 +1,4 @@
+IG_UI_RU = {
+	IGUI_VehicleNameen71_NewYorker = "1971 Крайслер Нью-Йоркер",
+	IGUI_VehicleParten71_NewYorkerArmor = "Самодельная броня"
+}

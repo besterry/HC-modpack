@@ -1,0 +1,4 @@
+IGUI_JP = {
+	IGUI_VehicleNameen72_Javelin = "1972 AMC Javelin AMX",
+	IGUI_VehicleParten72_JavelinArmor = "即席の車両装甲"
+}

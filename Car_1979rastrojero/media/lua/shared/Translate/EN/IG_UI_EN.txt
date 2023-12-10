@@ -1,0 +1,6 @@
+IG_UI_EN = {
+	IGUI_VehicleName1979rastrojero = "Rastrojero 1979",
+	IGUI_VehicleName1979rastrojeroFlete = "Rastrojero 1979",
+	IGUI_VehicleName1979rastrojeroCarni = "Rastrojero 1979",
+	IGUI_VehicleName1979rastrojeroChata = "Rastrojero 1979",
+}

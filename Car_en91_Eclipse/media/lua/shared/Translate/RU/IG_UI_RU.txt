@@ -1,0 +1,6 @@
+IGUI_RU = {
+	IGUI_VehicleNameen91_Eclipse = "1991 Мицубиси Eclipse GSX",
+	IGUI_VehicleNameen91_EclipseTuner = "1991 Mitsubishi Eclipse GSX (Тюнингованный)",
+	IGUI_VehicleNameen91_Talon = "1991 Eagle Talon TSi",
+	IGUI_VehicleParten91_EclipseArmor = "Самодельная броня"
+}

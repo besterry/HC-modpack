@@ -1,0 +1,2 @@
+IG_UI_RU = {
+	IGUI_VehicleNameen83Bronco2 = "1984 Форд Бронко 2",

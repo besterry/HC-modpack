@@ -1,0 +1,1 @@
+ISCarMechanicsOverlay.CarList["Base.en83Bronco2"] = {imgPrefix = "suv_", x=0,y=0};

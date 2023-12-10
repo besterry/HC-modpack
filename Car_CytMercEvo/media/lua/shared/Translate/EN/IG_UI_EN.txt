@@ -1,0 +1,13 @@
+IG_UI_EN = {
+
+    IGUI_VehicleNameCytMercEvo = "'90 Mercedes Benz 190E 2.5-16 Evolution II",
+
+    IGUI_VehiclePartCytMercEvoattachment = "Attachments",
+    IGUI_VehiclePartCytMercEvoBullbar = "Mercedes Benz 190E Evolution Bullbar",
+    IGUI_VehiclePartCytMercEvoTrunkArmor = "Mercedes Benz 190E Evolution Rear Windshield Armor",
+    IGUI_VehiclePartCytMercEvoFrontRightWindowArmor = "Mercedes Benz 190E Evolution Window Armor",
+    IGUI_VehiclePartCytMercEvoFrontLeftWindowArmor = "Mercedes Benz 190E Evolution Window Armor",
+    IGUI_VehiclePartCytMercEvoRearRightWindowArmor = "Mercedes Benz 190E Evolution Window Armor",
+    IGUI_VehiclePartCytMercEvoRearLeftWindowArmor = "Mercedes Benz 190E Evolution Window Armor",
+    IGUI_VehiclePartCytMercEvoWindshieldBars = "Mercedes Benz 190E Evolution Windshield Armor",
+}

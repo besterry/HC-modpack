@@ -1,0 +1,282 @@
+module Base
+{
+
+	item Hilux89BonnetI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 12,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Bonnet,
+		Icon = hilux89BodyworkIcon,
+		VehicleType = 1,
+		ChanceToSpawnDamaged = 25,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89BonnetW,
+		
+	}
+	item Hilux89DoorFrontLeftI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Front Left Door Panel,
+		Icon = hilux89BodyworkIcon,
+		MaxCapacity = 35,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89DoorFrontLeftW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89DoorFrontRightI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Front Right Door Panel,
+		Icon = hilux89BodyworkIcon,
+		MaxCapacity = 35,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89DoorFrontRightW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89DoorRearLeftI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Rear Left Door Panel,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89DoorRearLeftW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89DoorRearRightI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Rear Right Door Panel,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89DoorRearRightW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89SeatFrontI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Front Seat,
+		Icon = hilux89SeatIcon,
+        MaxCapacity = 20,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89SeatFrontW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89SeatRearLeftI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Rear Left Seat,
+		Icon = hilux89SeatIcon,
+        MaxCapacity = 20,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89SeatRearLeftW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89SeatRearRightI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Rear Right Seat,
+		Icon = hilux89SeatIcon,
+        MaxCapacity = 20,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89SeatRearRightW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89FuelDoorI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 1,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Fuel Door,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89FuelDoorW,
+		VehicleType = 1,
+		
+	}
+	
+	item Hilux89TrunkDoorI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Trunk Door,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89TrunkDoorW,
+		VehicleType = 1,
+		
+	}
+	
+	item Hilux89WindshieldI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 4,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Windshield,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89WindshieldW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89WindshieldRearI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 4,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Rear Windshield,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89WindshieldRearW,
+		VehicleType = 1,
+		
+	}
+	item Hilux89WindowFrontLeftI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 3,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Front Left Window,
+		Icon = hilux89WindowIcon,
+		VehicleType = 1,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89WindowFrontLeftW,
+	
+	}
+	item Hilux89WindowFrontRightI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 3,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Front Right Window,
+		Icon = hilux89WindowIcon,
+		VehicleType = 1,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89WindowFrontRightW,
+	
+	}
+	item Hilux89DualcabWindowRearLeftI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 3,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Dualcab Rear Left Window,
+		Icon = hilux89WindowIcon,
+		VehicleType = 1,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89DualcabWindowRearLeftW,
+		
+	}
+	item Hilux89DualcabWindowRearRightI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 3,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Dualcab Rear Right Window,
+		Icon = hilux89WindowIcon,
+		VehicleType = 1,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89DualcabWindowRearRightW,
+		
+	}
+	item Hilux89ExtracabWindowRearLeftI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 3,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Extracab Rear Left Window,
+		Icon = hilux89WindowIcon,
+		VehicleType = 1,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89ExtracabWindowRearLeftW,
+		
+	}
+	item Hilux89ExtracabWindowRearRightI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 3,
+		Type = Normal,
+		DisplayName = Toyota Hilux '89 Extracab Rear Right Window,
+		Icon = hilux89WindowIcon,
+		VehicleType = 1,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hilux89ExtracabWindowRearRightW,
+		
+	}
+
+}

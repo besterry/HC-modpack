@@ -1,0 +1,138 @@
+module Base
+{
+	template vehicle PassengerPosition7
+	{
+		template! = PassengerPosition6,
+
+		passenger MiddleCenter
+		{
+			position inside
+			{
+				offset = 0.0 0.0 -0.0651,
+				rotate = 0.0 0.0 0.0,
+			}
+			position outside
+			{
+				offset = 1.0 0.0 -0.0651,
+				rotate = 0.0 0.0 0.0,
+			}
+		}
+	}
+
+	template vehicle PassengerSeat7
+	{
+		template = PassengerSeat6/passenger/FrontLeft,
+		template = PassengerSeat6/passenger/FrontRight,
+
+		passenger FrontLeft
+		{
+			switchSeat MiddleCenter
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+		}
+
+		passenger FrontRight
+		{
+			switchSeat MiddleCenter
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+		}
+
+		template = PassengerSeat6/passenger/MiddleLeft,
+		template = PassengerSeat6/passenger/MiddleRight,
+
+		passenger MiddleLeft
+		{
+			switchSeat MiddleCenter
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+		}
+
+		passenger MiddleCenter
+		{
+			door = DoorMiddleRight,
+			area = SeatMiddleRight,
+			
+			switchSeat FrontLeft
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+			
+			switchSeat FrontRight
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+			
+			switchSeat MiddleLeft
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+
+			switchSeat RearLeft
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+			
+			switchSeat RearRight
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+		}
+
+		passenger MiddleRight
+		{
+			switchSeat MiddleCenter
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+		}
+
+		template = PassengerSeat6/passenger/RearLeft,
+		template = PassengerSeat6/passenger/RearRight,
+
+		passenger RearLeft
+		{
+			switchSeat MiddleCenter
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+		}
+
+		passenger RearRight
+		{
+			switchSeat MiddleCenter
+			{
+				anim = Climb_WindowB,
+				rate = 0.23,
+				sound = ,
+			}
+		}
+
+		template! = PassengerPosition7,
+
+		template! = PassengerCommon,
+	}
+}

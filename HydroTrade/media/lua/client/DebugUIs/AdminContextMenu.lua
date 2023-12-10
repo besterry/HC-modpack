@@ -41,6 +41,7 @@ AdminContextMenu.doMenu = function(player, context, worldobjects, test)
     context:addSubMenu(debugOption, subMenu);
 
     subMenu:addOption(getText("ContextMenu_Teleport"), playerObj, AdminContextMenu.onTeleportUI);
+    subMenu:addOption(getText("ContextMenu_RemoverTools"), playerObj, AdminContextMenu.onDestroyUI);
     subMenu:addOption(getText("ContextMenu_Remove_item_tool"), playerObj, AdminContextMenu.onRemoveItemTool)
     subMenu:addOption(getText("ContextMenu_Spawn_Vehicle"), playerObj, AdminContextMenu.onSpawnVehicle);
     subMenu:addOption(getText("ContextMenu_Horde_Manager"), square, AdminContextMenu.onHordeManager, playerObj);
@@ -89,6 +90,12 @@ Events.OnFillWorldObjectContextMenu.Add(AdminContextMenu.doMenu);
 
 AdminContextMenu.onTeleportUI = function(playerObj)
     local ui = ISTeleportDebugUI:new(0, 0, 300, 200, playerObj, nil, DebugContextMenu.onTeleportValid);
+    ui:initialise();
+    ui:addToUIManager();
+end
+
+AdminContextMenu.onDestroyUI = function(playerObj)
+    local ui = RemoverItemAndBuildsTool:new(0, 0, 320, 150, playerObj);
     ui:initialise();
     ui:addToUIManager();
 end

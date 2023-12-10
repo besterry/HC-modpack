@@ -1,0 +1,179 @@
+module Base
+{
+	model en91_Eclipse_Base
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_DoorFL
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_DoorFL 1.0,
+	}
+	model en91_Eclipse_DoorFR
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_DoorFR 1.0,
+	}
+	model en91_Eclipse_Hood
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|Hood,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_Hood 1.0,
+	}
+	model en91_Eclipse_Trunk
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|Tailgate,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_Tailgate 1.0,
+	}
+	model en91_Eclipse_WindowFL
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|WindowFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_WindowFL 1.0,
+	}
+	model en91_Eclipse_WindowFR
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|WindowFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_WindowFR 1.0,
+	}
+	model en91_Eclipse_WindowRL
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|WindowRearLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_WindowRR
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|WindowRearRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_Windshield
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|WindshieldFront,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_WindshieldRear
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|WindshieldRear,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_Interior
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|Interior,
+		texture = Vehicles/Vehicle_en91_Eclipse_Int,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_Battery
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|Battery,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_GasTank
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|GasTank,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_MufflerStandard
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|MufflerStandard,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_MufflerSport
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|MufflerSport,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_BrakeFL
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|BrakeFrontLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_BrakeFR
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|BrakeFrontRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_BrakeRL
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|BrakeRearLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_BrakeRR
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|BrakeRearRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_WheelStandard
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|WheelStandard,
+		texture = Vehicles/Vehicle_en91_Eclipse_WheelStandard,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_WheelSport
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|WheelSport,
+		texture = Vehicles/Vehicle_en91_Eclipse_WheelSport,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004519,
+	}
+	model en91_Eclipse_Armor
+	{
+		mesh = vehicles/Vehicle_en91_Eclipse|Armor,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+}

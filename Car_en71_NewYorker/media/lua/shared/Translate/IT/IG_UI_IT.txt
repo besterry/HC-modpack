@@ -1,0 +1,4 @@
+IG_UI_IT = {
+	IGUI_VehicleNameen71_NewYorker = "Chrysler New Yorker del 1971",
+	IGUI_VehicleParten71_NewYorkerArmor = "Armatura per veicoli improvvisata"
+}

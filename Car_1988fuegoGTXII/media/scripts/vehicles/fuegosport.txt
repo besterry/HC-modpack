@@ -1,0 +1,917 @@
+module Base
+{
+	model 1988fuegoSportBase
+	{
+		mesh = vehicles/Vehicles_fuego_Body|VehiclesSport_mesh,
+		shader = vehicle_norandom_multiuv_noreflect,
+		static = TRUE,
+		invertX = FALSE,
+		scale = 1,
+	}
+	model 1988fuegoInteriorSportBase
+	{
+		mesh = vehicles/Vehicles_fuego_Body|InteriorSport_mesh,
+		texture = Vehicles/Vehicles_fuegoSport_Interior,
+		shader = vehiclewheel,
+		scale = 1,
+	}
+	model 1988fuegoBase_DoorFrontLeft
+	{
+		mesh = vehicles/Vehicles_fuego_Body|DoorFrontLeft_mesh,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = DoorFrontLeft 1.0,
+	}
+	model 1988fuegoBase_DoorFrontRight
+	{
+		mesh = vehicles/Vehicles_fuego_Body|DoorFrontRight_mesh,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = DoorFrontRight 1.0,
+	}
+	model 1988fuegoBase_Hood
+	{
+		mesh = vehicles/Vehicles_fuego_Body|Hood_mesh,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+	}
+	model 1988fuegoBase_Trunk
+	{
+		mesh = vehicles/Vehicles_fuego_Body|Trunk_mesh,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+	}
+	model 1988fuegoBase_FrontWindshield
+	{
+		mesh = vehicles/Vehicles_fuego_Body|FrontWindshield_mesh,
+		shader = vehicle,
+		scale = 1,
+	}
+	model 1988fuegoBase_RearWindshield
+	{
+		mesh = vehicles/Vehicles_fuego_Body|RearWindshield_mesh,
+		shader = vehicle,
+		scale = 1,
+		static = FALSE,
+		boneWeight = Trunk 1.0,
+	}
+	model 1988fuegoBase_WindowFrontLeft
+	{
+		mesh = vehicles/Vehicles_fuego_Body|WindowFrontLeft_mesh,
+		shader = vehicle,
+		static = FALSE,
+		scale = 1,
+		boneWeight = WindowFrontLeft 1.0,
+	}
+	model 1988fuegoBase_WindowFrontRight
+	{
+		mesh = vehicles/Vehicles_fuego_Body|WindowFrontRight_mesh,
+		shader = vehicle,
+		static = FALSE,
+		scale = 1,
+		boneWeight = WindowFrontRight 1.0,
+	}
+	model 1988fuegoBase_WindowRearLeft
+	{
+		mesh = vehicles/Vehicles_fuego_Body|WindowRearLeft_mesh,
+		shader = vehicle,
+		scale = 1,
+	}
+	model 1988fuegoBase_WindowRearRight
+	{
+		mesh = vehicles/Vehicles_fuego_Body|WindowRearRight_mesh,
+		shader = vehicle,
+		scale = 1,
+	}
+	model 1988fuegoTuningfrontwheelleft
+	{
+		mesh = vehicles/Vehicles_fuego_Body|WheelSport_mesh,
+		texture = Vehicles/Vehicles_fuego_Interior,
+		shader = vehiclewheel,
+	}
+	model 1988fuegoTuningfrontwheelright
+	{
+		mesh = vehicles/Vehicles_fuego_Body|WheelSport2_mesh,
+		texture = Vehicles/Vehicles_fuego_Interior,
+		shader = vehiclewheel,
+	}
+	model 1988fuegoTuningbackwheelleft
+	{
+		mesh = vehicles/Vehicles_fuego_Body|WheelSport_mesh,
+		texture = Vehicles/Vehicles_fuego_Interior,
+		shader = vehiclewheel,
+	}
+	model 1988fuegoTuningbackwheelright
+	{
+		mesh = vehicles/Vehicles_fuego_Body|WheelSport2_mesh,
+		texture = Vehicles/Vehicles_fuego_Interior,
+		shader = vehiclewheel,
+	}
+	model 1988fuegoSportSeatFrontLeft
+	{
+		mesh = vehicles/Vehicles_fuego_Body|SeatFrontLeft_mesh,
+		texture = Vehicles/Vehicles_fuegoSport_Interior,
+		shader = vehiclewheel,
+		scale = 1,		
+	}
+	model 1988fuegoSportSeatFrontRight
+	{
+		mesh = vehicles/Vehicles_fuego_Body|SeatFrontRight_mesh,
+		texture = Vehicles/Vehicles_fuegoSport_Interior,
+		shader = vehiclewheel,
+		scale = 1,		
+	}
+	model 1988fuegoSportSeatRearLeft
+	{
+		mesh = vehicles/Vehicles_fuego_Body|SeatRearLeft_mesh,
+		texture = Vehicles/Vehicles_fuegoSport_Interior,
+		shader = vehiclewheel,
+		scale = 1,		
+	}
+	model 1988fuegoSportSeatRearRight
+	{
+		mesh = vehicles/Vehicles_fuego_Body|SeatRearRight_mesh,
+		texture = Vehicles/Vehicles_fuegoSport_Interior,
+		shader = vehiclewheel,
+		scale = 1,		
+	}
+	vehicle 1988fuegoSport
+	{
+		mechanicType = 3,
+		offRoadEfficiency = 0.8,
+		engineRepairLevel = 6,
+		playerDamageProtection = 0.8,
+		engineRPMType = firebird,
+
+		model
+		{
+			file = 1988fuegoSportBase,
+			scale = 0.9500,
+			offset = 0.0000 0.5053 -0.0421,
+		}
+
+		spawnOffsetY = 0.12999995,
+
+		skin
+		{
+			texture = Vehicles/Vehicles_fuego_Sport01,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicles_fuego_Sport02,
+		}
+
+		textureRust = Vehicles/Vehicles_fuego_Rust,
+		textureMask = Vehicles/Vehicles_fuego_Mask,
+		textureLights = Vehicles/Vehicles_fuegoSport_Lights,
+		textureDamage1Overlay = Vehicles/Vehicles_fuego_Blood,
+		textureDamage2Overlay = Vehicles/Vehicles_fuego_Blood,
+		textureDamage1Shell = Vehicles/Vehicles_fuego_Shell_Damaged01,
+		textureDamage2Shell = Vehicles/Vehicles_fuego_Shell_Damaged02,
+
+		sound
+		{
+			engine = VehicleEngineSportsCar,
+			engineStart = VehicleEngineSportsCar,
+			engineTurnOff = VehicleEngineSportsCar,
+			horn = VehicleHornSportsCar,
+			ignitionFail = VehicleIgnitionFailSportsCar,
+		}
+
+		extents = 1.6842 1.1158 4.3158,
+		mass = 800,
+		physicsChassisShape = 1.6842 1.1158 4.3158,
+		centerOfMassOffset = 0.0000 0.5579 0.0000,
+		shadowExtents = 1.6855 4.3181,
+		shadowOffset = 0.0000 0.0000,
+		engineForce = 8000,
+		engineLoudness = 120,
+		engineQuality = 90,
+		maxSpeed = 140f,
+		gearRatioCount = 5,
+		gearRatioR = 3.5,
+		gearRatio1 = 4.11,
+		gearRatio2 = 2.50,
+		gearRatio3 = 1.65,
+		gearRatio4 = 1.25,
+		gearRatio5 = 0.80,
+		gearRatio5 = 0.60,
+		stoppingMovementForce = 5.0f,
+		rollInfluence = 0.7f,
+		steeringIncrement = 0.04,
+		steeringClamp = 0.3,
+		suspensionStiffness = 50,
+		suspensionCompression = 4.1,
+		suspensionDamping = 3.4,
+		maxSuspensionTravelCm = 20,
+		suspensionRestLength = 0.2f,
+		wheelFriction = 1.8f,
+		frontEndHealth = 150,
+		rearEndHealth = 150,
+		seats = 1,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.7368 -0.4316 1.3263,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.7368 -0.4316 1.3263,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.7263 -0.4316 -1.0842,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.7263 -0.4316 -1.0842,
+			radius = 0.15f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat2,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontLeft,
+			area = SeatFrontLeft,
+
+			position inside
+			{
+				offset = 0.3263 -0.2000 0.0632,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.1474 -0.7684 0.1789,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 2.5474 1.6842 0.7789,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -2.5579 1.6842 0.8000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.1263 0.0947 0.5684 0.8000,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.1263 0.0947 0.5684 0.8000,
+		}
+
+		area GasTank
+		{
+			xywh = 1.1263 -1.7684 0.5684 0.7789,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.0842 1.2947 0.4842 0.7789,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.0842 1.2947 0.4842 0.7789,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.0842 -1.1053 0.4842 0.7789,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.0842 -1.1053 0.4842 0.7789,
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			itemType = Base.1988fuegoTrunk,
+
+			model Default
+			{
+				file = 1988fuegoBase_Trunk,
+				rotate = -90 0 0,
+			}
+
+			anim Close
+			{
+				anim = Trunk_anm,
+				reverse = TRUE,
+				rate = 1,
+				sound = VehicleTrunkCloseSportsCar,
+			}
+
+			anim Open
+			{
+				anim = Trunk_anm,
+				rate = 1,
+				sound = VehicleTrunkOpenSportsCar,
+			}
+
+			anim Closed
+			{
+				anim = Trunk_anm,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = Trunk_anm,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+
+			anim Lock
+			{
+				sound = LockVehicleDoorSportsCar,
+			}
+
+			anim Unlock
+			{
+				sound = UnlockVehicleDoorSportsCar,
+			}
+
+			anim IsLocked
+			{
+				sound = VehicleDoorIsLockedSportsCar,
+			}
+
+			table install
+			{
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Advanced Mechanics,
+				requireUninstalled = WindshieldRear,
+			}
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			itemType = Base.SmallTrunk,
+
+			container
+			{
+				capacity = 90,
+			}
+		}
+
+		template = Seat/part/SeatFrontLeft,
+
+		part SeatFrontLeft
+		{
+			itemType = Base.1988fuegoSeatFront,
+
+			model Default
+			{
+				file = 1988fuegoSportSeatFrontLeft,
+			}
+
+			table install
+			{
+				area = SeatFrontLeft,
+			}
+
+			table uninstall
+			{
+				area = SeatFrontLeft,
+			}
+		}
+
+		part Seat*
+		{
+			container
+			{
+				capacity = 10,
+			}
+
+			table install
+			{
+				skills = Mechanics:2,
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:2,
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		template = GloveBox,
+
+		part GloveBox
+		{
+			container
+			{
+				capacity = 5,
+			}
+
+			model Interior1988fuegoSport
+			{
+				file = 1988fuegoInteriorSportBase,
+				rotate = 0 0 0,
+				scale = 1.0,
+			}
+		}
+
+		template = GasTank,
+
+		part GasTank
+		{
+			install
+			{
+				skills = Mechanics:7,
+				recipes = Advanced Mechanics,
+			}
+
+			uninstall
+			{
+				skills = Mechanics:7,
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		template = Battery,
+		template = Engine,
+		template = Muffler,
+
+		part Muffler
+		{
+			table install
+			{
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			itemType = Base.1988fuegoHood,
+			repairMechanic = true,
+
+			model Default
+			{
+				file = 1988fuegoBase_Hood,
+				rotate = -90 0 0,
+			}
+
+			anim Close
+			{
+				anim = Hood_anm,
+				reverse = TRUE,
+				rate = 1,
+				sound = VehicleHoodCloseSportsCar,
+			}
+
+			anim Open
+			{
+				anim = Hood_anm,
+				rate = 1,
+				sound = VehicleHoodOpenSportsCar,
+			}
+
+			anim Closed
+			{
+				anim = Hood_anm,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = Hood_anm,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+
+			table install
+			{
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part Windshield
+		{
+			itemType = Base.1988fuegoFrontWindshield,
+
+			model Default
+			{
+				file = 1988fuegoBase_FrontWindshield,
+			}
+		}
+
+		part WindshieldRear
+		{
+			itemType = Base.1988fuegoRearWindshield,
+
+			model Default
+			{
+				file = 1988fuegoBase_RearWindshield,
+				rotate = -90 0 0,
+			}
+
+			parent = TrunkDoor,
+
+			window
+			{
+				openable = false,
+			}
+
+			table install
+			{
+				requireInstalled = TrunkDoor,
+			}
+		}
+
+		part Windshield*
+		{
+			table install
+			{
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+		template = Window/part/WindowRearRight,
+		template = Window/part/WindowRearLeft,
+
+		part WindowFrontLeft
+		{
+			category = door,
+			itemType = Base.1988fuegoWindowFront,
+
+			model Default
+			{
+				file = 1988fuegoBase_WindowFrontLeft,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = WindowFrontLeft_anm,
+				animate = FALSE,
+			}
+		}
+
+		part WindowFrontRight
+		{
+			category = door,
+			itemType = Base.1988fuegoWindowFront,
+
+			model Default
+			{
+				file = 1988fuegoBase_WindowFrontRight,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = WindowFrontRight_anm,
+				animate = FALSE,
+			}
+		}
+
+		part WindowRearLeft
+		{
+			category = door,
+			itemType = Base.1988fuegoWindowRear,
+			area = TireRearLeft,
+			parent =,
+
+			table install
+			{
+				requireInstalled =,
+			}
+
+			model Default
+			{
+				file = 1988fuegoBase_WindowRearLeft,
+			}
+		}
+
+		part WindowRearRight
+		{
+			category = door,
+			itemType = Base.1988fuegoWindowRear,
+			area = TireRearRight,
+			parent =,
+
+			table install
+			{
+				requireInstalled =,
+			}
+
+			model Default
+			{
+				file = 1988fuegoBase_WindowRearRight,
+			}
+		}
+
+		part Window*
+		{
+			anim Open
+			{
+				sound = VehicleWindowElectricOpen,
+			}
+
+			anim Close
+			{
+				sound = VehicleWindowElectricClose,
+			}
+
+			table install
+			{
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+
+		part DoorFrontLeft
+		{
+			category = door,
+			itemType = Base.1988fuegoDoorFrontLeft,
+
+			model Default
+			{
+				file = 1988fuegoBase_DoorFrontLeft,
+			}
+
+			anim Close
+			{
+				anim = DoorFrontLeft_anm,
+				reverse = TRUE,
+				rate = 1,
+			}
+
+			anim Open
+			{
+				anim = DoorFrontLeft_anm,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = DoorFrontLeft_anm,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = DoorFrontLeft_anm,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorFrontRight
+		{
+			category = door,
+			itemType = Base.1988fuegoDoorFrontRight,
+
+			model Default
+			{
+				file = 1988fuegoBase_DoorFrontRight,
+			}
+
+			anim Close
+			{
+				anim = DoorFrontRight_anm,
+				reverse = TRUE,
+				rate = 1,
+			}
+
+			anim Open
+			{
+				anim = DoorFrontRight_anm,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = DoorFrontRight_anm,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = DoorFrontRight_anm,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part Door*
+		{
+			anim Open
+			{
+				sound = VehicleDoorOpenSportsCar,
+			}
+
+			anim Close
+			{
+				sound = VehicleDoorCloseSportsCar,
+			}
+
+			anim Lock
+			{
+				sound = LockVehicleDoorSportsCar,
+			}
+
+			anim Unlock
+			{
+				sound = UnlockVehicleDoorSportsCar,
+			}
+
+			anim IsLocked
+			{
+				sound = VehicleDoorIsLockedSportsCar,
+			}
+
+			table install
+			{
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		template = Tire,
+
+		part TireFrontLeft
+		{
+			itemType = Base.1988fuegoTireTuning,
+
+			model InflatedTirePlusWheel
+			{
+				file = 1988fuegoTuningfrontwheelleft,
+			}
+		}
+
+		part TireFrontRight
+		{
+			itemType = Base.1988fuegoTireTuning,
+
+			model InflatedTirePlusWheel
+			{
+				file = 1988fuegoTuningfrontwheelright,
+			}
+		}
+
+		part TireRearLeft
+		{
+			itemType = Base.1988fuegoTireTuning,
+
+			model InflatedTirePlusWheel
+			{
+				file = 1988fuegoTuningbackwheelleft,
+			}
+		}
+
+		part TireRearRight
+		{
+			itemType = Base.1988fuegoTireTuning,
+
+			model InflatedTirePlusWheel
+			{
+				file = 1988fuegoTuningbackwheelright,
+			}
+		}
+
+		template = Brake,
+
+		part Brake*
+		{
+			table install
+			{
+				skills = Mechanics:7,
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:7,
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				skills = Mechanics:7,
+				recipes = Advanced Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:7,
+				recipes = Advanced Mechanics,
+			}
+		}
+
+		template = Radio,
+		template = Headlight,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3579 -2.1684,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.3579 2.2842,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

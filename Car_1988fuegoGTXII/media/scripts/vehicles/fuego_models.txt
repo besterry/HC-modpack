@@ -1,0 +1,90 @@
+module Base
+{
+
+	model fuegoDoorFrontWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|DoorFrontLeft_mesh,
+		texture = Vehicles/Vehicles_fuego_Blanco,
+		scale   = 0.7,
+	}
+
+	model fuegoWindowFrontWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|WindowFrontLeft_mesh,
+		texture = Vehicles/Vehicles_fuego_Blanco,
+		scale   = 0.7,
+	}
+	
+	model fuegoWindowRearWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|WindowRearLeft_mesh,
+		texture = Vehicles/Vehicles_fuego_Blanco,
+		scale   = 0.7,
+	}
+	
+	model fuegoHoodWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|Hood_mesh,
+		texture = Vehicles/Vehicles_fuego_Blanco,
+		scale   = 0.6,
+	}
+	
+	model fuegoTrunkTuningWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|TrunkTuning_mesh,
+		texture = Vehicles/Vehicles_fuego_Blanco,
+		scale   = 0.6,
+	}
+	
+	model fuegoTrunkWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|Trunk_mesh,
+		texture = Vehicles/Vehicles_fuego_Blanco,
+		scale   = 0.6,
+	}
+	
+	model fuegoWheelWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|Wheel_mesh,
+		texture = Vehicles/Vehicles_fuego_Interior,
+		scale   = 0.7,
+	}
+	
+	model fuegoWheelTuningWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|WheelSport_mesh,
+		texture = Vehicles/Vehicles_fuego_Interior,
+		scale   = 0.7,
+	}	
+	
+	
+	model fuegoFrontWindshieldWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|FrontWindshield_mesh,
+		texture = Vehicles/Vehicles_fuego_Blanco,
+		scale   = 0.7,
+	}
+	
+	
+	model fuegoRearWindshieldWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|RearWindshield_mesh,
+		texture = Vehicles/Vehicles_fuego_Blanco,
+		scale   = 0.7,
+	}
+
+	model fuegoSeatFrontWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|SeatFrontLeft_mesh,
+		texture = Vehicles/Vehicles_fuego_Interior,
+		scale   = 0.7,
+	}
+
+	model fuegoSeatRearWorld
+	{
+		mesh    = vehicles/Vehicles_fuego_models|SeatRearLeft_mesh,
+		texture = Vehicles/Vehicles_fuego_Interior,
+		scale   = 0.7,
+	}
+
+}

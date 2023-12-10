@@ -1,0 +1,559 @@
+module Base
+{
+	model eclipse95rs
+	{
+		mesh = vehicles/eclipse95_rs_body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 1,
+	}
+	model eclipse95rsfrontwheelleft
+	{
+		mesh = vehicles/eclipse95_wheel,
+		texture = vehicles/eclipse95_wheel_texture,
+		shader = vehiclewheel,
+		invertX = FALSE,
+	}
+	model eclipse95rsfrontwheelright
+	{
+		mesh = vehicles/eclipse95_wheel,
+		texture = vehicles/eclipse95_wheel_texture,
+		shader = vehiclewheel,
+		invertX = TRUE,
+	}
+	model eclipse95rsbackwheelleft
+	{
+		mesh = vehicles/eclipse95_wheel,
+		texture = vehicles/eclipse95_wheel_texture,
+		shader = vehiclewheel,
+		invertX = FALSE,
+	}
+	model eclipse95rsbackwheelright
+	{
+		mesh = vehicles/eclipse95_wheel,
+		texture = vehicles/eclipse95_wheel_texture,
+		shader = vehiclewheel,
+		invertX = TRUE,
+	}
+	vehicle eclipse95rs
+	{
+		mechanicType = 1,
+		offRoadEfficiency = 0.7,
+		engineRepairLevel = 4,
+		playerDamageProtection = 1.1,
+		engineRPMType = generic,
+
+		model
+		{
+			file = eclipse95rs,
+			scale = 1.0000,
+			offset = 0.0000 0.3600 0.0000,
+			rotate = 0 0 0,
+		}
+
+		spawnOffsetY = 0,
+
+		skin
+		{
+			texture = vehicles/rs/eclipse95_body_texture_biscayne_green,
+		}
+
+		skin
+		{
+			texture = vehicles/rs/eclipse95_body_texture_cayenne_red,
+		}
+
+		skin
+		{
+			texture = vehicles/rs/eclipse95_body_texture_durango_copper,
+		}
+
+		skin
+		{
+			texture = vehicles/rs/eclipse95_body_texture_everett_green,
+		}
+
+		skin
+		{
+			texture = vehicles/rs/eclipse95_body_texture_kona_blue,
+		}
+
+		skin
+		{
+			texture = vehicles/rs/eclipse95_body_texture_minden_silver,
+		}
+
+		textureRust = vehicles/eclipse95_body_texture_rust,
+		textureMask = vehicles/eclipse95_body_texture_mask,
+		textureLights = vehicles/eclipse95_body_texture_lights,
+		textureDamage1Shell = vehicles/eclipse95_body_texture_shell1,
+		textureDamage2Shell = vehicles/eclipse95_body_texture_shell2,
+		textureDamage1Overlay = vehicles/eclipse95_body_texture_blood,
+		textureDamage2Overlay = vehicles/eclipse95_body_texture_blood,
+
+		sound
+		{
+			engine = VehicleEngineCarNormal,
+			engineStart = VehicleEngineCarNormal,
+			engineTurnOff = VehicleEngineCarNormal,
+			horn = VehicleHornStandard,
+			ignitionFail = VehicleIgnitionFailCarNormal,
+		}
+
+		extents = 1.7000 1.1400 4.4000,
+		mass = 822,
+		physicsChassisShape = 1.7000 1.1400 4.4000,
+		centerOfMassOffset = 0.0000 0.4400 0.1500,
+		shadowExtents = 1.7700 4.3900,
+		shadowOffset = 0.0000 0.1500,
+		engineForce = 2400,
+		maxSpeed = 90f,
+		gearRatioCount = 5,
+		gearRatioR = 3.56,
+		gearRatio1 = 3.32,
+		gearRatio2 = 2.35,
+		gearRatio3 = 1.45,
+		gearRatio4 = 1.07,
+		gearRatio5 = 0.62,
+		engineLoudness = 75,
+		engineQuality = 88,
+		brakingForce = 90,
+		stoppingMovementForce = 4.0f,
+		rollInfluence = 0.88f,
+		steeringIncrement = 0.074,
+		steeringClamp = 0.3,
+		suspensionStiffness = 30,
+		suspensionCompression = 3.83,
+		suspensionDamping = 2.88,
+		maxSuspensionTravelCm = 15,
+		suspensionRestLength = 0.5,
+		wheelFriction = 1.4f,
+		frontEndHealth = 150,
+		rearEndHealth = 150,
+		seats = 4,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.7700 -0.4000 1.3700,
+			radius = 0.24f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.7700 -0.4000 1.3700,
+			radius = 0.24f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.7800 -0.4000 -1.1100,
+			radius = 0.24f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.7800 -0.4000 -1.1100,
+			radius = 0.24f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat4,
+
+		passenger FrontLeft
+		{
+			position inside
+			{
+				offset = 0.3000 -0.2000 0.1300,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.1800 -0.4700 0.1300,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			position inside
+			{
+				offset = -0.3100 -0.1900 0.1400,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.1800 -0.4700 0.1200,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		passenger RearLeft
+		{
+			position inside
+			{
+				offset = 0.2900 -0.1900 -0.8600,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.2000 -0.4700 -0.9600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearLeft,
+			}
+		}
+
+		passenger RearRight
+		{
+			position inside
+			{
+				offset = -0.3000 -0.1900 -0.8700,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.2000 -0.4700 -1.0100,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 2.6500 1.3800 0.6000,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -2.3500 1.1200 0.6000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.2000 0.2800 0.7000 1.0800,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.2000 0.2800 0.7000 1.0800,
+		}
+
+		area SeatRearRight
+		{
+			xywh = -1.2000 -0.7500 0.7000 0.9800,
+		}
+
+		area SeatRearLeft
+		{
+			xywh = 1.2000 -0.7500 0.7000 0.9800,
+		}
+
+		area GasTank
+		{
+			xywh = -1.0600 -1.3700 0.4200 0.4200,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.0600 1.3700 0.4200 0.4200,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.0600 1.3700 0.4200 0.4200,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.0600 -1.1100 0.4200 0.4200,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.0600 -1.1100 0.4200 0.4200,
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			container
+			{
+				capacity = 38,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+		template = Seat/part/SeatRearLeft,
+		template = Seat/part/SeatRearRight,
+
+		part Seat*
+		{
+			table install
+			{
+				skills = Mechanics:2,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:2,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		part GloveBox
+		{
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = true,
+
+			container
+			{
+				capacity = 8,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = GasTank,
+
+		part GasTank
+		{
+			container
+			{
+				conditionAffectsCapacity = false,
+				capacity = 62,
+			}
+
+			install
+			{
+				skills = Mechanics:7,
+				recipes = Intermediate Mechanics,
+			}
+
+			uninstall
+			{
+				skills = Mechanics:7,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Battery,
+		template = Engine,
+		template = Muffler,
+
+		part Muffler
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part Windshield*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+
+		part Window*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+
+		part Door*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Tire,
+
+		part TireFrontLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = eclipse95rsfrontwheelleft,
+			}
+		}
+
+		part TireFrontRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = eclipse95rsfrontwheelright,
+			}
+		}
+
+		part TireRearLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = eclipse95rsbackwheelleft,
+			}
+		}
+
+		part TireRearRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = eclipse95rsbackwheelright,
+			}
+		}
+
+		template = Brake,
+
+		part Brake*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+		template = Headlight,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3300 -2.3800,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.3300 2.3600,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

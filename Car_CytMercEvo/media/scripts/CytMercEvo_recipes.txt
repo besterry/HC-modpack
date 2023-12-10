@@ -1,0 +1,112 @@
+module Base
+{
+
+recipe Craft Mercedes-Benz Evo II Windshield
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+       	keep Scalpel,
+		FrontWindow2=2,
+
+		Result:CytMercEvoWindshield3,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=1,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Mercedes-Benz Evo II Window
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+       	keep Scalpel,
+		FrontWindow2=1,
+
+		Result:CytMercEvoWindow3,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=1,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Mercedes-Benz Evo II Rear Windshield
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+       	keep Scalpel,
+		FrontWindow2=1,
+
+		Result:CytMercEvoRearWindow3,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=1,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Mercedes-Benz Evo II Bullbar
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+        	MetalBar=4,
+		SheetMetal=2,
+
+		Result:CytMercEvoBull3,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Mercedes-Benz Evo II Windshield Cage
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+        	MetalBar=4,
+
+		Result:CytMercEvoWindshieldBars3,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Mercedes-Benz Evo II Rear Windshield Armor
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+        	MetalBar=4,
+
+		Result:CytMercEvoWindshieldBars3,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Mercedes-Benz Evo II Window Armor
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+		SheetMetal=2,
+
+		Result:CytMercEvoWindowArmor3,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Mercedes-Benz Evo II Window Armor
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+		SheetMetal=2,
+
+		Result:CytMercEvoWindowBackArmor3,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+}

@@ -1,0 +1,3 @@
+IGUI_PTBR = {
+	IGUI_VehicleNameen88_F40 = "1988 Ferrari F40",
+}

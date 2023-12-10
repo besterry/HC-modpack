@@ -1,0 +1,4 @@
+IG_UI_CN = {
+	IGUI_VehicleNameen71_NewYorker = "1971 克莱斯勒 New Yorker",
+	IGUI_VehicleParten71_NewYorkerArmor = "自制车辆保护装置"
+}

@@ -1,0 +1,674 @@
+module Base
+{
+	vehicle en91_Eclipse
+	{
+		model
+		{
+			file = en91_Eclipse_Base,
+			scale = 1.0000,
+			offset = 0.0000 0.7400 0.0000,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en91_Eclipse_Ext_Kalapana,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en91_Eclipse_Ext_Maranello,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en91_Eclipse_Ext_Midnite,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en91_Eclipse_Ext_Misting,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en91_Eclipse_Ext_Northstar,
+		}
+
+		textureMask = Vehicles/Vehicle_en91_Eclipse_Mask,
+		textureLights = Vehicles/Vehicle_en91_Eclipse_Overlay_Lights,
+		textureDamage1Overlay = Vehicles/Vehicle_en91_Eclipse_Overlay_Blood,
+		textureDamage2Overlay = Vehicles/Vehicle_en91_Eclipse_Overlay_Blood,
+		textureDamage1Shell = Vehicles/Vehicle_en91_Eclipse_Overlay_Damage,
+		textureDamage2Shell = Vehicles/Vehicle_en91_Eclipse_Overlay_Damage,
+		textureRust = Vehicles/Vehicle_en91_Eclipse_Overlay_Rust,
+
+		sound
+		{
+			engine = VehicleEngineModernCar,
+			engineStart = VehicleEngineModernCar,
+			engineTurnOff = VehicleEngineModernCar,
+			horn = VehicleHornStandard,
+			ignitionFail = VehicleIgnitionFailModernCar,
+		}
+
+		extents = 1.5600 0.9800 3.8800,
+		physicsChassisShape = 1.5400 0.9800 3.7600,
+		centerOfMassOffset = 0.0000 0.7600 0.0000,
+		shadowExtents = 1.5799 3.9003,
+		shadowOffset = 0.0000 0.0156,
+		mechanicType = 1,
+		offRoadEfficiency = 0.9,
+		playerDamageProtection = 1.0,
+		frontEndHealth = 140,
+		rearEndHealth = 150,
+		mass = 970,
+		engineRPMType = firebird,
+		engineRepairLevel = 4,
+		engineForce = 5642,
+		engineLoudness = 90,
+		engineQuality = 85,
+		maxSpeed = 110f,
+		gearRatioCount = 5,
+		gearRatioR = 3.1,
+		gearRatio1 = 3.1,
+		gearRatio2 = 1.7,
+		gearRatio3 = 1.1,
+		gearRatio4 = 0.8,
+		gearRatio5 = 0.7,
+		brakingForce = 90,
+		stoppingMovementForce = 3.0f,
+		rollInfluence = 0.9f,
+		steeringIncrement = 0.04,
+		steeringClamp = 0.3,
+		suspensionStiffness = 40,
+		suspensionCompression = 3.8,
+		suspensionDamping = 2.88,
+		maxSuspensionTravelCm = 10,
+		suspensionRestLength = 0.2,
+		wheelFriction = 1.5f,
+		seats = 4,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.6700 -0.3800 1.1000,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.6700 -0.3800 1.1000,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.6700 -0.3800 -1.1200,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.6700 -0.3800 -1.1200,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat4,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.3600 -0.2000 -0.1000,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.0000 -0.6500 0.2500,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = -0.3600 -0.2000 -0.1000,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6500 0.2500,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		passenger RearLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.3600 -0.2000 -0.8000,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.0000 -0.6800 -0.7600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger RearRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = -0.3600 -0.2000 -0.8000,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6800 -0.7600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 2.3400 1.4000 0.8000,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -2.3400 1.4000 0.8000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.1800 0.0000 0.8000 0.8000,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.1800 0.0000 0.8000 0.8000,
+		}
+
+		area GasTank
+		{
+			xywh = 1.1800 -1.4100 0.8000 0.8000,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.0000 1.1000 0.4400 0.4400,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.0000 1.1000 0.4400 0.4400,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.0000 -1.1000 0.4400 0.4400,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.0000 -1.1000 0.4400 0.4400,
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			container
+			{
+				capacity = 35,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			model Default
+			{
+				file = en91_Eclipse_Trunk,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 0.5,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = WindshieldRear,
+			}
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+		template = Seat/part/SeatRearLeft,
+		template = Seat/part/SeatRearRight,
+
+		part GloveBox
+		{
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = true,
+
+			model
+			{
+				file = en91_Eclipse_Interior,
+			}
+
+			container
+			{
+				capacity = 7,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = Battery,
+
+		part Battery
+		{
+			model Battery
+			{
+				file = en91_Eclipse_Battery,
+			}
+		}
+
+		template = Engine,
+		template = GasTank,
+
+		part GasTank
+		{
+			mechanicRequireKey = true,
+
+			model GasTank
+			{
+				file = en91_Eclipse_GasTank,
+			}
+		}
+
+		template = Muffler,
+
+		part Muffler
+		{
+			model Muffler
+			{
+				file = en91_Eclipse_MufflerStandard,
+			}
+		}
+
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			model EngineDoor
+			{
+				file = en91_Eclipse_Hood,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 0.7,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+		template = Window/part/WindowRearLeft,
+		template = Window/part/WindowRearRight,
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part WindowFrontLeft
+		{
+			model Default
+			{
+				file = en91_Eclipse_WindowFL,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowFrontRight
+		{
+			model Default
+			{
+				file = en91_Eclipse_WindowFR,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowRearLeft
+		{
+			model Default
+			{
+				file = en91_Eclipse_WindowRL,
+			}
+
+			window
+			{
+				openable = false,
+			}
+		}
+
+		part WindowRearRight
+		{
+			model Default
+			{
+				file = en91_Eclipse_WindowRR,
+			}
+
+			window
+			{
+				openable = false,
+			}
+		}
+
+		part Windshield
+		{
+			model Default
+			{
+				file = en91_Eclipse_Windshield,
+			}
+		}
+
+		part WindshieldRear
+		{
+			parent = TrunkDoor,
+
+			model Default
+			{
+				file = en91_Eclipse_WindshieldRear,
+			}
+
+			window
+			{
+				openable = false,
+			}
+
+			table install
+			{
+				requireInstalled = TrunkDoor,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+
+		part DoorFrontLeft
+		{
+			model Default
+			{
+				file = en91_Eclipse_DoorFL,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorFrontRight
+		{
+			model Default
+			{
+				file = en91_Eclipse_DoorFR,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Tire,
+
+		part Tire*
+		{
+			model InflatedTirePlusWheel
+			{
+				file = en91_Eclipse_WheelStandard,
+			}
+		}
+
+		template = Brake,
+
+		part BrakeFrontLeft
+		{
+			model Default
+			{
+				file = en91_Eclipse_BrakeFL,
+			}
+		}
+
+		part BrakeFrontRight
+		{
+			model Default
+			{
+				file = en91_Eclipse_BrakeFR,
+			}
+		}
+
+		part BrakeRearLeft
+		{
+			model Default
+			{
+				file = en91_Eclipse_BrakeRL,
+			}
+		}
+
+		part BrakeRearRight
+		{
+			model Default
+			{
+				file = en91_Eclipse_BrakeRR,
+			}
+		}
+
+		part Brake*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+		template = Headlight,
+		template = EclipseArmor,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3800 -1.8300,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.3000 1.8800,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

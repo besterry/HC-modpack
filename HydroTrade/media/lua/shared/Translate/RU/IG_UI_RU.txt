@@ -1,5 +1,12 @@
 IGUI_RU =
 {
+	IGUI_SelectArea = "Выбрать зону",
+	IGUI_RemoveTools = "Удалить",
+	IGUI_CloseTools = "Закрыть",
+	IGUI_Delete_AllItems = "Предметы (земля,контейнеры)",
+	IGUI_RemoveBuilds = "Постройки",
+	IGUI_RemoveAll = "Всё",
+	IGUI_Remover_Tools = "Удаление лута и построек",
 	IGUI_Sandbox_CarWanna = "Выдача авто с билета",
 	IGUI_ItemCat_CarWanna = "Авто",
 	IGUI_ItemCat_Crafting = "Крафт",

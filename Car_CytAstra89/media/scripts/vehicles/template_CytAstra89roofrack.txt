@@ -1,0 +1,71 @@
+module Base
+{
+
+	template vehicle CytA89roof
+		{
+
+		part CytA89rack
+        	{
+
+			model CytA89rackmod
+				{
+                		file = CytA89rackmod,
+				}
+
+		area = CytAstrRoof,
+            category = attachment,
+            itemType = Base.CytAstraRoofrack,
+            mechanicRequireKey = false,
+
+			container
+			{
+				conditionAffectsCapacity = false,
+				test = Vehicles.ContainerAccess.TruckBedOpen,
+			}
+
+		table install
+            {
+                items
+                {
+                }
+                time = 300,
+                test = Vehicles.InstallTest.Default,
+ 
+            }
+
+            		table uninstall
+            {
+                items
+                {
+                }
+                time = 300,
+                requireEmpty = true,
+                test = Vehicles.UninstallTest.Default,
+                complete = Vehicles.UninstallComplete.Default,
+            }
+		lua
+            {
+            }
+		}
+
+		part CytA89wheelrack
+		{
+			area = TruckBed,
+			category = bodywork,
+			itemType = Base.NormalTrunk,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+			container
+			{
+			    capacity = 10,
+				conditionAffectsCapacity = false,
+				test = Vehicles.ContainerAccess.TruckBed,
+			}
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+	}
+}

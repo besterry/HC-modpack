@@ -1,0 +1,199 @@
+module Base
+{
+
+	model Hilux89Windshield
+	{
+		
+		mesh = vehicles/toyota_hilux_body|toyota_hilux_windshield,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+		
+	}
+	
+	model Hilux89WindshieldR
+	{
+		
+		mesh = vehicles/toyota_hilux_body|toyota_hilux_glass_r,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+		
+	}
+	
+	template vehicle Hilux89Windshield
+	{
+	
+		part Hilux89Windshield
+		{
+		
+			
+			model Hilux89Windshield
+			{
+				
+				file = Hilux89Windshield,
+
+			}
+
+			area = Engine,
+			category = bodywork,
+			specificItem = false,
+			ItemType = Base.Hilux89Windshield,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+		
+			window
+			{
+			   
+				openable = false,
+		
+			}
+			
+			table install
+			{
+				
+				items
+				{
+						
+					item
+					{
+							
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+							
+					}
+							
+				}
+						
+				time = 400,
+				skills = Mechanics:5,
+				recipies = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicles.InstallComplete.Window,
+						
+			}
+					
+			table uninstall
+			{
+					
+				items
+				{
+						
+					item
+					{
+					
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+							
+					}
+						
+				}
+						
+				time = 400,
+				skills = Mechanics:5,
+				recipies = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default
+				
+			}
+				
+			lua
+			{
+				
+				create = Vehices.Create.Default,
+				
+			}
+			
+		}	
+		
+		part Hilux89WindshieldR
+		{
+		
+			
+			model Hilux89WindshieldR
+			{
+				
+				file = Hilux89WindshieldR,
+
+			}
+
+			area = TruckBed,
+			category = bodywork,
+			specificItem = false,
+			ItemType = Base.Hilux89WindshieldR,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+		
+			window
+			{
+			   
+				openable = false,
+		
+			}
+			
+			table install
+			{
+				
+				items
+				{
+						
+					item
+					{
+							
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+							
+					}
+							
+				}
+						
+				time = 400,
+				skills = Mechanics:5,
+				recipies = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicles.InstallComplete.Window,
+						
+			}
+					
+			table uninstall
+			{
+					
+				items
+				{
+						
+					item
+					{
+					
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+							
+					}
+						
+				}
+						
+				time = 400,
+				skills = Mechanics:5,
+				recipies = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				
+			}
+				
+			lua
+			{
+				
+				create = Vehices.Create.Default,
+				
+			}
+
+		}
+		
+	}
+
+}

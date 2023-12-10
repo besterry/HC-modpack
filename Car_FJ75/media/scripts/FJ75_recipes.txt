@@ -1,0 +1,45 @@
+module Base
+{
+
+recipe Craft Land Cruiser Door Armor
+	{
+		BlowTorch=20,
+       	keep WeldingMask,
+		SheetMetal=4,
+
+		Result:FJ75DoorArmor2,
+		Time:800.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=4,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Land Cruiser Windshield Armor
+	{
+		BlowTorch=20,
+       	keep WeldingMask,
+		SheetMetal=3,
+
+		Result:FJ75WindshieldArmor2,
+		Time:800.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=4,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft Land Cruiser Makeshift Bullbar with Rollcage
+	{
+		BlowTorch=20,
+       	keep WeldingMask,
+		SheetMetal=4,
+        MetalBar=2,
+
+		Result:FJ75Bullbar2,
+		Time:800.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=4,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+
+}

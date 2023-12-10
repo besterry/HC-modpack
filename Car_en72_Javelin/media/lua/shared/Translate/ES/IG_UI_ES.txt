@@ -1,0 +1,4 @@
+IG_UI_ES = {
+	IGUI_VehicleNameen72_Javelin = "1972 AMC Javelin AMX",
+	IGUI_VehicleParten72_JavelinArmor = "Aarmadura de vehículo improvisada"
+}

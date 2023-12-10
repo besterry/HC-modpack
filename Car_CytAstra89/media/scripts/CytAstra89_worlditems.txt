@@ -1,0 +1,157 @@
+module Base
+{
+
+		model CytAstra89TR_WorldItem
+	{
+		mesh = WorldItems/CytAstra89TR_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_bag,
+		scale = 0.3,
+	}
+
+		model CytAstra89Bullbar_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Bullbar_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89WindowArmor_WorldItem
+	{
+		mesh = WorldItems/CytAstra89WindowArmorSlide_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89WindshieldBars_WorldItem
+	{
+		mesh = WorldItems/CytAstra89WindshieldBars_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89Door_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Door_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89DoorArmor_WorldItem
+	{
+		mesh = WorldItems/CytAstra89WindowArmor_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89Wheel_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Wheel_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_wheel,
+		scale = 0.3,
+	}
+
+		model CytAstra89Window_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Window_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89Hood_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Hood_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89TrunkDoor_WorldItem
+	{
+		mesh = WorldItems/CytAstra89TrunkDoor_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89RearWindow_WorldItem
+	{
+		mesh = WorldItems/CytAstra89RearWindow_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89Seat_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Seat_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89Windshield_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Windshield_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89RearWindshield_WorldItem
+	{
+		mesh = WorldItems/CytAstra89RearWindshield_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89Muffler_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Muffler_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89Sunroof_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Sunroof_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89Roofrack_WorldItem
+	{
+		mesh = WorldItems/CytAstra89Roofrack_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_bag,
+		scale = 0.3,
+	}
+
+		model CytAstra89WindowArmorSlide_WorldItem
+	{
+		mesh = WorldItems/CytAstra89WindowArmorSlide_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89WindowBackArmor_WorldItem
+	{
+		mesh = WorldItems/CytAstra89WindowBackArmor_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89WindowBack_WorldItem
+	{
+		mesh = WorldItems/CytAstra89WindowBack_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89RearWindArmor_WorldItem
+	{
+		mesh = WorldItems/CytAstra89RearWindshieldBars_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+
+		model CytAstra89WindowArmor_WorldItem
+	{
+		mesh = WorldItems/CytAstra89WindowArmor_WorldItem,
+		texture = Vehicles/Vehicle_CytAstra89_white,
+		scale = 0.3,
+	}
+}

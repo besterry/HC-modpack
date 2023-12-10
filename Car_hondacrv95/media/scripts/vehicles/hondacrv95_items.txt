@@ -1,0 +1,277 @@
+module Base
+{
+	
+	item Hondacrv95BonnetI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 12,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Bonnet,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95BonnetW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95DoorFLI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Front Left Door Panel,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95DoorFLW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95DoorFRI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Front Right Door Panel,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95DoorFRW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95DoorRLI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Rear Left Door Panel,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95DoorRLW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95DoorRRI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Rear Right Door Panel,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95DoorRRW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95TrunkI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Trunk Door,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95TrunkW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95WindshieldI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Windshield,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95WindshieldW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95WindshieldRI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Rear Windshield,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95WindshieldRW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95GlassFLI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Front Left Window,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95GlassFLW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95GlassFRI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Front Right Window,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95GlassFRW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95GlassRLI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Rear Left Window,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95GlassRLW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95GlassRRI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Rear Right Window,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95GlassRRW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95GlassSLI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Side Left Window,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95GlassSLW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95GlassSRI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 15,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Side Right Window,
+		Icon = hilux89WindowIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95GlassSRW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95SeatFrontI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Front Seat,
+		Icon = hilux89SeatIcon,
+        MaxCapacity = 20,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95SeatFrontW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95SeatRearI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Rear Seat,
+		Icon = hilux89SeatIcon,
+        MaxCapacity = 20,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95SeatRearW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95SpearWheelI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Spear Wheel,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95SpearWheelW,
+		VehicleType = 1,
+		
+	}
+	item Hondacrv95WheelI1
+	{
+	
+		DisplayCategory = VehicleMaintenance,
+		Weight = 10,
+		Type = Normal,
+		DisplayName = Honda CR-V '95 Wheel,
+		Icon = hilux89BodyworkIcon,
+		ChanceToSpawnDamaged = 20,
+		ConditionMax = 100,
+		MechanicsItem = true,
+		WorldStaticModel = Hondacrv95WheelW,
+		VehicleType = 1,
+		
+	}
+	
+}

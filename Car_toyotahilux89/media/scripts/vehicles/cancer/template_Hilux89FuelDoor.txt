@@ -1,0 +1,143 @@
+module Base
+{
+
+	model Hilux89FuelDoor
+	{
+				
+		mesh = vehicles/toyota_hilux_body|toyota_hilux_fueldoor,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+				
+	}
+
+	template vehicle Hilux89FuelDoor
+	
+	{
+	
+		part Hilux89FuelDoor
+		{
+		
+			{
+			
+				model Hilux89FuelDoor
+				{
+				
+					file = Hilux89FuelDoor,
+				
+				}
+			
+			}
+			
+			anim Open
+			{
+			
+				anim = anim_toyota_hilux_fueldoor,
+				reverse = false,
+				rate = 1,
+			
+			}
+			
+			anim Close
+			{
+			
+				anim = anim_toyota_hilux_fueldoor,
+				reverse = true,
+				rate = 1,
+			
+			}
+			
+			anim Opened
+			{
+			
+				anim = anim_toyota_hilux_fueldoor,
+				reverse = true,
+				animate = false,
+			
+			}
+			
+			anim Closed
+			{
+			
+				anim = anim_toyota_hilux_fueldoor,
+				reverse = false,
+				animate = false,
+			
+			}
+
+			area = GasTank,
+			category = bodywork,
+			specificItem = false,
+			ItemType = Base.Hilux89FuelDoor,
+			mechanicRequireKey = true,
+			
+			door
+			{
+			}
+			
+			table install
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+					
+				}
+				
+				time = 400,
+				skills = Mechanics:3,
+				recipies = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Hilux89.Install.Complete.FuelDoor,
+				
+			}
+			
+			table uninstall
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+				
+				}
+				
+				time = 400,
+				skills = Mechanics:3,
+				recipies = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				complete = Hilux89.Uninstall.Complete.FuelDoor,
+				
+			}
+			
+			lua
+			{
+			
+				create = Hilux89.Create.FuelDoor,
+				init = Hilux89.Init.FuelDoor,
+				use = Hilux89.Use.FuelDoor,
+			
+			}
+			
+		}
+		
+	}
+
+}

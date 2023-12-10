@@ -1,0 +1,284 @@
+module Base
+{
+
+	model Hilux89DoorFL
+	{
+
+		mesh = vehicles/toyota_hilux_body|toyota_hilux_door_fl,
+		texture = vehicles/toyota_hilux_body_texture_test,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+		boneWeight = toyota_hilux_door_fl 0.01,
+
+	}
+	
+	model Hilux89DoorFR
+	{
+		
+		mesh = vehicles/toyota_hilux_body|toyota_hilux_door_fr,
+		texture = vehicles/toyota_hilux_body_texture_test,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+		boneWeight = toyota_hilux_door_fr 0.01,
+		
+	}
+
+	template vehicle Hilux89Door
+	{
+	
+		part Hilux89DoorFrontLeft
+		{
+		
+			model Hilux89DoorFrontLeft
+			{
+				
+				file = Hilux89DoorFL,
+				
+			}
+			
+			anim Open
+			{
+			
+				anim = anim_toyota_hilux_door_fl,
+				reverse = false,
+				rate = 1,
+				sound = VehicleDoorOpenStandard,
+			
+			}
+			
+			anim Close
+			{
+			
+				anim = anim_toyota_hilux_door_fl,
+				reverse = true,
+				rate = 1,
+				sound = VehicleDoorCloseStandard,
+			
+			}
+			
+			anim Opened
+			{
+			
+				anim = anim_toyota_hilux_door_fl,
+				reverse = true,
+				animate = false,
+			
+			}
+			
+			anim Closed
+			{
+			
+				anim = anim_toyota_hilux_door_fl,
+				reverse = false,
+				animate = false,
+			
+			}
+
+			anim ActorOpen
+			{
+			
+				anim = WindowOpenSuccess,
+				rate = 0,15,
+				angle = 0.0 270.0 0.0,
+			
+			}
+
+			anim ActorClose
+			{
+			
+				anim = Attack_Shove,
+				rate = 0.3,
+				angle = 0.0 270.0 0.0,
+				
+			}
+
+			area = SeatFrontLeft,
+			ItemType = Base.Hilux89DoorFront,
+			
+			table uninstall
+			{
+			
+				requireUninstalled = Hilux89WindowFL,
+				
+			}
+			
+		}
+		
+		part Hilux89DoorFrontRight
+		{
+		
+			model Hilux89DoorFrontRight
+			{
+				
+				file = Hilux89DoorFR,
+				
+			}
+			
+			anim Open
+			{
+			
+				anim = anim_toyota_hilux_door_fr,
+				reverse = false,
+				rate = 1,
+				sound = VehicleDoorOpenStandard,
+			
+			}
+			
+			anim Close
+			{
+			
+				anim = anim_toyota_hilux_door_fr,
+				reverse = true,
+				rate = 1,
+				sound = VehicleDoorCloseStandard,
+			
+			}
+			
+			anim Opened
+			{
+			
+				anim = anim_toyota_hilux_door_fr,
+				reverse = true,
+				animate = false,
+			
+			}
+			
+			anim Closed
+			{
+			
+				anim = anim_toyota_hilux_door_fr,
+				reverse = false,
+				animate = false,
+			
+			}
+
+			anim ActorOpen
+				{
+				
+					anim = WindowOpenSuccess,
+					rate = 0,15,
+					angle = 0.0 270.0 0.0,
+				
+				}
+
+			anim ActorClose
+				{
+				
+					anim = Attack_Shove,
+					rate = 0.3,
+					angle = 0.0 270.0 0.0,
+					
+				}
+
+			area = SeatFrontRight,
+			ItemType = Base.Hilux89DoorFront,
+			
+			table uninstall
+			{
+			
+				requireUninstalled = Hilux89WindowFR,
+				
+			}
+			
+		}
+		
+		part Hilux89Door*
+		{
+		
+			anim Lock
+			{
+				
+				sound = LockVehicleDoorStandard,
+				
+			}
+				
+			anim Unlock
+			{
+				
+				sound = UnlockVehicleDoorStandard,
+				
+			}
+				
+			anim IsLocked
+			{
+				
+				sound = VehicleDoorIsLockedStandard,
+				
+			}
+				
+			category = door,
+			specificItem = false,
+			mechanicRequireKey = true,
+			
+			door
+			{
+			}
+			
+			table install
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+					
+				}
+				
+				time = 500,
+				skills = Mechanics:4,
+				recipies = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicle.Install.Complete.Door,
+				
+			}
+			
+			table uninstall
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+				
+				}
+				
+				time = 500,
+				skills = Mechanics:4,
+				recipies = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				complete = Vehicle.Uninstall.Complete.Door,
+				
+			}
+			
+			lua
+			{
+			
+				create = Vehicles.Create.Door,
+				init = Vehicles.Init.Door,
+				use = Vehicles.Use.Door,
+			
+			}
+			
+		}
+		
+	}
+	
+}

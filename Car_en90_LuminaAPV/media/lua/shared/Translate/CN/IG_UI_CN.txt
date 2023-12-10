@@ -1,0 +1,6 @@
+IG_UI_CN = {
+	IGUI_VehicleNameen90_LuminaAPV = "1990 雪佛兰 Lumina APV",
+	IGUI_VehicleParten90_LuminaAPVArmor = "自制车辆保护装置"
+	IGUI_VehiclePartSeatMiddleCenter = "中中座",
+	IGUI_SeatMiddleCenter = "中中",
+}

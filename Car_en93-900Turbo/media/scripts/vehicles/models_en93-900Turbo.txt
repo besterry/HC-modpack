@@ -1,0 +1,146 @@
+module Base
+{
+	model en93-900Turbo_Base
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_DoorFL
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorFLBone 1.0,
+	}
+	model en93-900Turbo_DoorFR
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = DoorFRBone 1.0,
+	}
+	model en93-900Turbo_Hood
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|Hood,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = HoodBone 1.0,
+	}
+	model en93-900Turbo_Trunk
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|Tailgate,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = TrunkBone 1.0,
+	}
+	model en93-900Turbo_WindowFL
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|WindowFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowFLBone 0.5,
+	}
+	model en93-900Turbo_WindowFR
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|WindowFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowFRBone 1.0,
+	}
+	model en93-900Turbo_WindowRL
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|WindowRearLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowRLBone 1.0,
+	}
+	model en93-900Turbo_WindowRR
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|WindowRearRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = WindowRRBone 1.0,
+	}
+	model en93-900Turbo_Windshield
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|Windshield,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_Interior
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|Interior,
+		texture = Vehicles/Vehicle_93-900Turbo_Int,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_Battery
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|Battery,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_Muffler
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|Muffler,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_BrakeFL
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|BrakeFrontLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_BrakeFR
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|BrakeFrontRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_BrakeRL
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|BrakeRearLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_BrakeRR
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|BrakeRearRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en93-900Turbo_Wheel
+	{
+		mesh = vehicles/Vehicle_en93-900Turbo|Wheel,
+		texture = Vehicles/Vehicle_93-900Turbo_Wheel,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004519,
+	}
+}

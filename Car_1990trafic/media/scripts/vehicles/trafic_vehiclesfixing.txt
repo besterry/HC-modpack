@@ -1,0 +1,66 @@
+module Base
+{
+
+	fixing Fix trafic Hood Welding
+	{
+	   Require : 1990traficHood2,
+	   GlobalItem : BlowTorch=2,
+	   ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=1;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=1;Mechanics=2,
+	}
+
+    fixing Fix trafic Hood
+	{
+	   Require : 1990traficHood2,
+	   GlobalItem : Screws=8,
+	   ConditionModifier : 0.5,
+
+       Fixer : SheetMetal; Mechanics=2,
+	}
+
+	fixing Fix trafic Door Welding
+	{
+	   Require : 1990traficDoorFrontLeft2;1990traficDoorFrontRight2;1990traficDoorMiddleRight2;1990traficDoorRearRight2,
+	   GlobalItem : BlowTorch=2,
+	   ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=3;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=3;Mechanics=2,
+	}
+
+    fixing Fix trafic Car seat
+	{
+	   Require : 1990traficSeatFront2,
+	   ConditionModifier : 0.8,
+
+       Fixer : DuctTape=2;Mechanics=1,
+       Fixer : Glue=2;Mechanics=1,
+	}
+
+	
+	fixing Fix trafic Trunk Lid Welding
+    {
+       Require : 1990traficTrunk2,
+       GlobalItem : BlowTorch=2,
+       ConditionModifier : 1.2,
+
+       Fixer : SheetMetal; MetalWelding=1;Mechanics=2,
+       Fixer : SmallSheetMetal=2; MetalWelding=1;Mechanics=2,
+    }
+
+    fixing Fix trafic Trunk Lid
+	{
+       Require : 1990traficTrunk2,
+	   GlobalItem : Screws=8,
+	   ConditionModifier : 0.5,
+
+       Fixer : SheetMetal; Mechanics=2,
+	}	
+	
+
+
+}
+
+

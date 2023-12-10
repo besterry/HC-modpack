@@ -1,0 +1,10 @@
+IG_UI_RU = 
+{
+
+	IGUI_VehicleNamehondacrv95 = "Honda CR-V '95"
+	
+	IGUI_VehiclePartHondacrv95WindowSL = "Боковое левое окно"
+	IGUI_VehiclePartHondacrv95WindowSR = "Боковое правое окно"
+	IGUI_VehiclePartHondacrv95SpareTire = "Запасное колесо"
+	
+};

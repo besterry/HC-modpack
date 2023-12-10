@@ -1,0 +1,10 @@
+IG_UI_EN = 
+{
+
+	IGUI_VehicleNamehondacrv95 = "Honda CR-V '95"
+	
+	IGUI_VehiclePartHondacrv95WindowSL = "Side Left Window"
+	IGUI_VehiclePartHondacrv95WindowSR = "Side Right Window"
+	IGUI_VehiclePartHondacrv95SpareTire = "Spare Tire"
+	
+};

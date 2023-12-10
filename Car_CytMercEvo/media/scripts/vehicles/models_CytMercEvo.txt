@@ -1,0 +1,29 @@
+module Base
+{
+
+	model CytMercEvoFLW
+	{
+		mesh = vehicles/Vehicle_CytMercEvo|FrontLeftWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+	}
+
+	model CytMercEvoFRW
+	{
+		mesh = vehicles/Vehicle_CytMercEvo|FrontRightWindowArmor_obj,
+		shader = vehicle_noreflect,
+		scale = 1,
+		static = FALSE,
+	}
+
+	model CytMercTrunk
+	{
+		mesh = vehicles/Vehicle_CytMercEvo|TrunkDoor_obj,
+		shader = vehicle_noreflect,
+		static = FALSE,
+		scale = 1,
+		boneWeight = TrunkBone 1.0,
+	}
+
+}

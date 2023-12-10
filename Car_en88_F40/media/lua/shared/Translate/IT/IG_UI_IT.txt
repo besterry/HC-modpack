@@ -1,0 +1,3 @@
+IG_UI_IT = {
+	IGUI_VehicleNameen88_F40 = "Ferrari F40 del 1988",
+}

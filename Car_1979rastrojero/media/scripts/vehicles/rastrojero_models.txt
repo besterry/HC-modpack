@@ -1,0 +1,75 @@
+module Base
+{
+
+	model rastrojeroDoorFrontWorld
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|DoorFrontLeft_mesh,
+		texture = Vehicles/Vehicles_rastrojero_Blanco,
+		scale   = 0.7,
+	}
+
+	model rastrojeroWindowFrontWorld
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|WindowFrontLeft_mesh,
+		texture = Vehicles/Vehicles_rastrojero_Blanco,
+		scale   = 0.7,
+	}
+	
+	model rastrojeroHoodWorld
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|Hood_mesh,
+		texture = Vehicles/Vehicles_rastrojero_Blanco,
+		scale   = 0.6,
+	}
+
+	model rastrojeroTrunkWorld
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|Trunk_mesh,
+		texture = Vehicles/Vehicles_rastrojero_Blanco,
+		scale   = 0.8,
+	}
+
+	model rastrojeroTrunk2World
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|Trunk2_mesh,
+		texture = Vehicles/Vehicles_rastrojeroFlete_Blanco,
+		scale   = 0.8,
+	}
+
+	model rastrojeroTrunk3World
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|Trunk3_mesh,
+		texture = Vehicles/Vehicles_rastrojeroCarni_Blanco,
+		scale   = 0.7,
+	}
+	
+	model rastrojeroWheelWorld
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|Wheel_mesh,
+		texture = Vehicles/Vehicles_rastrojero_Interior,
+		scale   = 0.7,
+	}
+		
+	model rastrojeroFrontWindshieldWorld
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|FrontWindshield_mesh,
+		texture = Vehicles/Vehicles_rastrojero_Blanco,
+		scale   = 0.7,
+	}
+		
+	model rastrojeroRearWindshieldWorld
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|RearWindshield_mesh,
+		texture = Vehicles/Vehicles_rastrojero_Blanco,
+		scale   = 0.7,
+	}
+
+	model rastrojeroSeatFrontWorld
+	{
+		mesh    = vehicles/Vehicles_rastrojero_models|SeatFrontLeft_mesh,
+		texture = Vehicles/Vehicles_rastrojero_Interior,
+		scale   = 0.7,
+	}
+
+
+}

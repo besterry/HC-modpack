@@ -1,0 +1,4 @@
+IG_UI_KO = {
+	IGUI_VehicleNameen71_NewYorker = "1971 크라이슬러 New Yorker",
+	IGUI_VehicleParten71_NewYorkerArmor = "수제 차량 보호"
+}

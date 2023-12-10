@@ -1,0 +1,136 @@
+module Base
+{
+
+	model Hilux89SeatFront
+	{
+		
+		mesh = vehicles/toyota_hilux_body|toyota_hilux_seat_fl,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+		
+	}
+	
+	template vehicle Hilux89SeatFront
+	{
+	
+		part Hilux89SeatFrontLeft
+		{
+		
+			
+			model Hilux89SeatFrontLeft
+			{
+				
+				file = Hilux89SeatFront,
+
+			}
+			
+			container
+			{
+				seat = FrontLeft,
+			}
+
+			area = SeatFrontLeft,
+			itemType = Base.Hilux89SeatFront,
+			
+		}
+			
+		part Hilux89SeatFrontRight
+		{
+		
+			
+			model Hilux89SeatFrontRight
+			{
+				
+				file = Hilux89SeatFront,
+					
+			}
+			
+			container
+			{
+				seat = FrontRight,
+			}
+
+			area = SeatFrontRight,
+			itemType = Base.Hilux89SeatFront,
+			
+		}
+			
+		part Hilux89SeatFront*
+		{
+			
+			category = seat,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+			specificItem = false,
+			category = seat,
+				
+			container
+			{
+				
+				test = Vehicles.ContainerAccess.Seat,
+					
+			}
+			
+			table install
+			{
+			
+				items
+				{
+					
+					1
+					{
+						
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+						
+					}
+						
+				}
+					
+				time = 600,
+				skills = Mechanics:4,
+				recipies = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+					
+			}
+				
+			table uninstall
+			{
+				
+				items
+				{
+					
+					1
+					{
+						
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+						
+					}
+					
+				}
+					
+				time = 600,
+				skills = Mechanics:4,
+				recipies = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default
+					
+			}
+				
+			lua
+			{
+				
+				create = Vehices.Create.Default,
+				
+			}
+			
+		}
+		
+	}
+
+}

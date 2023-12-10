@@ -1,0 +1,3 @@
+IG_UI_EN = {
+	IGUI_VehicleNamerx7fc = "Mazda RX-7 FC '89"
+}

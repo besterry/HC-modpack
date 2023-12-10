@@ -1,0 +1,183 @@
+module Base
+{
+
+    item 1979rastrojeroDoorFrontLeft2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Left Door Rastrojero,
+        Icon	=	rastrojero_frontdoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroDoorFrontWorld,
+		VehicleType =   2,
+    }
+
+	item 1979rastrojeroDoorFrontRight2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Right Door Rastrojero,
+        Icon	=	rastrojero_frontdoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroDoorFrontWorld,
+		VehicleType =   2,
+    }
+	
+    item 1979rastrojeroWindowFront2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Window Front Rastrojero,
+        Icon	=	rastrojero_windowfront,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroWindowFrontWorld,
+		VehicleType =   2,
+    }
+	
+	
+    item 1979rastrojeroHood2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Hood Rastrojero,
+        Icon	=	rastrojero_hood,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroHoodWorld,
+		VehicleType =   2,
+    }
+
+	
+	item 1979rastrojeroTrunk2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Trunk Door Rastrojero,
+        Icon	=	rastrojero_trunk,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroTrunkWorld,
+		VehicleType =   2,
+    }
+	
+	item 1979rastrojeroFleteTrunk2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Trunk Door Rastrojero,
+        Icon	=	rastrojero_trunk2,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroTrunk2World,
+		VehicleType =   2,
+    }
+
+	item 1979rastrojeroCarniTrunk2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Trunk Door Rastrojero,
+        Icon	=	rastrojero_trunk3,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroTrunk3World,
+		VehicleType =   2,
+    }
+
+    /************************ Usado para reparar con madera ************************/
+    item 1979rastrojeroCajaTrunk2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	50.0,
+        Type	=	Normal,
+        DisplayName	=	Big Trunk,
+        Icon	=	CarTrunk,
+        VehicleType =   2,
+        MaxCapacity = 150,
+        ConditionAffectsCapacity = true,
+        ConditionMax = 100,
+        ChanceToSpawnDamaged = 10,
+        MechanicsItem = TRUE,
+    }
+    /************************************************************************/
+	
+	item 1979rastrojeroTire2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Tire Rastrojero,
+        Icon	=	rastrojero_wheel,
+        MaxCapacity = 35,
+        ChanceToSpawnDamaged = 50,
+        WheelFriction = 1.40f,
+        ConditionMax = 100,
+        ConditionLowerStandard = 0.03,
+        ConditionLowerOffroad = 0.4,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroWheelWorld,
+		VehicleType =   2,
+    }
+	
+
+	item 1979rastrojeroFrontWindshield2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.5,
+        Type	=	Normal,
+        DisplayName	=	Windshield Rastrojero,
+        Icon	=	rastrojero_windshield,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroFrontWindshieldWorld,
+		VehicleType =   2,
+    }
+	
+	item 1979rastrojeroRearWindshield2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Rear Windshield Rastrojero,
+        Icon	=	rastrojero_windshieldrear,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroRearWindshieldWorld,
+		VehicleType =   2,
+    }	
+
+	item 1979rastrojeroSeatFront2
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Seat Rastrojero,
+        Icon	=	rastrojero_seat,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = rastrojeroSeatFrontWorld,
+		VehicleType =   2,
+    }
+ 
+ 
+}

@@ -1,0 +1,15 @@
+ItemName_PT = {
+	ItemName_Base.1990traficDoorFrontLeft2 = "Porta dianteira esquerda Trafic",
+	ItemName_Base.1990traficDoorFrontRight2 = "Porta dianteira direita Trafic",
+	ItemName_Base.1990traficDoorMiddleRight2 = "Porta central direita Trafic",	
+	ItemName_Base.1990traficDoorRearRight2 = "Porta traseira direita Trafic",
+	ItemName_Base.1990traficWindowFront2 = "Janela dianteira Trafic",
+	ItemName_Base.1990traficWindowMiddle2 = "Janela central Trafic",	
+	ItemName_Base.1990traficWindowRear2 = "Janela traseira Trafic",		
+	ItemName_Base.1990traficHood2 = "Capô Trafic",
+	ItemName_Base.1990traficTrunk2 = "Tampa do Porta-malas Trafic",
+	ItemName_Base.1990traficWheel2 = "Pneu Trafic",	
+	ItemName_Base.1990traficFrontWindshield2 = "Para-brisa Trafic",
+	ItemName_Base.1990traficRearWindshield2 = "Para-brisa traseiro Trafic",
+	ItemName_Base.1990traficSeatFront2 = "Assento Trafic",
+}

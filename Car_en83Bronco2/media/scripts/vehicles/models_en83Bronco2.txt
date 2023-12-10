@@ -1,0 +1,92 @@
+module Base
+{
+	model en83Bronco2_Base
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en83Bronco2_DoorFL
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_DoorFrontLeft 1.0,
+	}
+	model en83Bronco2_WindowFL
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_WindowFrontLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = FALSE,
+		boneWeight = Bone_WindowFrontLeft 1.0,
+	}
+	model en83Bronco2_DoorFR
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_DoorFrontRight 1.0,
+	}
+	model en83Bronco2_WindowFR
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_WindowFrontRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = FALSE,
+		boneWeight = Bone_WindowFrontRight 1.0,
+	}
+
+	model en83Bronco2_WindowRL
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_WindowRearLeft,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en83Bronco2_WindowRR
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_WindowRearRight,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en83Bronco2_Windshield
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_Windshield,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en83Bronco2_WindshieldRear
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_WindshieldRear,
+		shader = vehicle_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+		static = TRUE,
+	}
+	
+	model en83Bronco2_Interior
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_Interior,
+		texture = Vehicles/vehicle_83bronco2_interior,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en83Bronco2_Wheel
+	{
+		mesh = vehicles/Vehicles_en83Bronco2|83Bronco2_Wheel,
+		texture = Vehicles/wheel_83bronco2,
+		shader = vehiclewheel,
+		scale = 0.004519,
+		static = TRUE,
+	}
+}

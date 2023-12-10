@@ -1,0 +1,6 @@
+IG_UI_FR = {
+	IGUI_VehicleNameen91_Eclipse = "1991 Mitsubishi Eclipse GSX",
+	IGUI_VehicleNameen91_EclipseTuner = "1991 Mitsubishi Eclipse GSX (accordée)",
+	IGUI_VehicleNameen91_Talon = "1991 Eagle Talon TSi",
+	IGUI_VehicleParten91_EclipseArmor = "Blindage de véhicule improvisé"
+}

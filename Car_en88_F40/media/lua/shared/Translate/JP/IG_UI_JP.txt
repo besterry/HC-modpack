@@ -1,0 +1,3 @@
+IGUI_JP = {
+	IGUI_VehicleNameen88_F40 = "1988 フェラーリ F40",
+}

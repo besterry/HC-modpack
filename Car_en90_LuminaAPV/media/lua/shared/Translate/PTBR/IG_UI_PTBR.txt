@@ -1,0 +1,6 @@
+IG_UI_PTBR = {
+	IGUI_VehicleNameen90_LuminaAPV = "1990 Chevrolet Lumina APV",
+	IGUI_VehicleParten90_LuminaAPVArmor = "Armadura de veículo improvisada"
+	IGUI_VehiclePartSeatMiddleCenter = "Assento Central Médio",
+	IGUI_SeatMiddleCenter = "Central Médio",
+}

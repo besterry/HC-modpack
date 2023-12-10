@@ -1,0 +1,186 @@
+module Base
+{
+	model en88_F40_Base
+	{
+		mesh = vehicles/Vehicle_en88_F40|Body,
+		shader = vehicle_norandom_multiuv,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_DoorFL
+	{
+		mesh = vehicles/Vehicle_en88_F40|DoorFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_DoorFL 1.0,
+	}
+	model en88_F40_DoorFR
+	{
+		mesh = vehicles/Vehicle_en88_F40|DoorFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_DoorFR 1.0,
+	}
+	model en88_F40_Frunk
+	{
+		mesh = vehicles/Vehicle_en88_F40|Frunk,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_Frunk 1.0,
+	}
+	model en88_F40_Tailgate
+	{
+		mesh = vehicles/Vehicle_en88_F40|Tailgate,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_Tailgate 1.0,
+	}
+	model en88_F40_WindowFL
+	{
+		mesh = vehicles/Vehicle_en88_F40|WindowFrontLeft,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_WindowFL 1.0,
+	}
+	model en88_F40_WindowFR
+	{
+		mesh = vehicles/Vehicle_en88_F40|WindowFrontRight,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+		boneWeight = Bone_WindowFR 1.0,
+	}
+	model en88_F40_WindowRL
+	{
+		mesh = vehicles/Vehicle_en88_F40|WindowRearLeft,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_WindowRR
+	{
+		mesh = vehicles/Vehicle_en88_F40|WindowRearRight,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_Windshield
+	{
+		mesh = vehicles/Vehicle_en88_F40|WindshieldFront,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_WindshieldRear
+	{
+		mesh = vehicles/Vehicle_en88_F40|WindshieldRear,
+		shader = vehicle,
+		static = FALSE,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_Interior
+	{
+		mesh = vehicles/Vehicle_en88_F40|Interior,
+		texture = Vehicles/Vehicle_en88_F40_Int,
+		shader = vehiclewheel,
+		scale = 0.004519,
+	}
+	model en88_F40_Battery
+	{
+		mesh = vehicles/Vehicle_en88_F40|Battery,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_Muffler
+	{
+		mesh = vehicles/Vehicle_en88_F40|Muffler,
+		shader = vehicle,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_BrakeFL
+	{
+		mesh = vehicles/Vehicle_en88_F40|BrakeFrontLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_BrakeFR
+	{
+		mesh = vehicles/Vehicle_en88_F40|BrakeFrontRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_BrakeRL
+	{
+		mesh = vehicles/Vehicle_en88_F40|BrakeRearLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_BrakeRR
+	{
+		mesh = vehicles/Vehicle_en88_F40|BrakeRearRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_SuspensionFL
+	{
+		mesh = vehicles/Vehicle_en88_F40|SuspensionFrontLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_SuspensionFR
+	{
+		mesh = vehicles/Vehicle_en88_F40|SuspensionFrontRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_SuspensionRL
+	{
+		mesh = vehicles/Vehicle_en88_F40|SuspensionRearLeft,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_SuspensionRR
+	{
+		mesh = vehicles/Vehicle_en88_F40|SuspensionRearRight,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.004519,
+	}
+	model en88_F40_WheelFront
+	{
+		mesh = vehicles/Vehicle_en88_F40|Wheel,
+		texture = Vehicles/Vehicle_en88_F40_Wheel,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004700,
+	}
+	model en88_F40_WheelRear
+	{
+		mesh = vehicles/Vehicle_en88_F40|Wheel,
+		texture = Vehicles/Vehicle_en88_F40_Wheel,
+		shader = vehiclewheel,
+		static = TRUE,
+		scale = 0.004971,
+	}
+}

@@ -1,0 +1,97 @@
+module Base
+{
+
+	template vehicle Hilux89BumperRear
+	
+	{
+	
+		part Hilux89BumperRear
+		{
+		
+			{
+			
+				model Hilux89BumperRear
+				{
+				
+					mesh = vehicles/toyota_hilux_body|toyota_hilux_bumper_r,
+					texture = vehicles/toyota_hilux_body_texture_test,
+					shader = vehicle_multiuv_noreflect,
+					static = true,
+					scale = 0.01,
+					
+				}
+			
+			}
+
+			area = engine,
+			category = bodywork,
+			specificItem = false,
+			ItemType = Base.Hilux89Bumper,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+			
+			table install
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+					
+				}
+				
+				time = 600,
+				skills = Mechanics:4,
+				recipies = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Hilux89.Install.Complete.Bumper,
+				
+			}
+			
+			table uninstall
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+				
+				}
+				
+				time = 600,
+				skills = Mechanics:4,
+				recipies = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				complete = Hilux89.Uninstall.Complete.Bumper,
+				
+			}
+			
+			lua
+			{
+			
+				create = Hilux89.Create.Bumper,
+				init = Hilux89.Init.Bumper,
+			
+			}
+			
+		}
+		
+	}
+
+}

@@ -1,0 +1,15 @@
+ItemName_PTBR = {
+	ItemName_Base.1988fuegoDoorFrontLeft3 = "Porta dianteira esquerda Fuego GTX II",
+	ItemName_Base.1988fuegoDoorFrontRight3 = "Porta dianteira direita Fuego GTX II",
+	ItemName_Base.1988fuegoWindowFront3 = "Janela dianteira Fuego GTX II",
+	ItemName_Base.1988fuegoWindowRear3 = "Janela traseira Fuego GTX II",
+	ItemName_Base.1988fuegoHood3 = "Capô Fuego GTX II",
+	ItemName_Base.1988fuegoTrunkTuning3 = "Tampa do Porta-malas Fuego GTX II",
+	ItemName_Base.1988fuegoTrunk3 = "Tampa do Porta-malas Fuego GTX II",
+	ItemName_Base.1988fuegoWheel3 = "Pneu Fuego GTX II",
+	ItemName_Base.1988fuegoWheelTuning3 = "Pneu Fuego GTX II",		
+	ItemName_Base.1988fuegoFrontWindshield3 = "Para-brisa Fuego GTX II",
+	ItemName_Base.1988fuegoRearWindshield3 = "Para-brisa traseiro Fuego GTX II",
+	ItemName_Base.1988fuegoSeatFront3 = "Assento dianteira Fuego GTX II",
+	ItemName_Base.1988fuegoSeatRear3 = "Assento traseiro Fuego GTX II",
+}

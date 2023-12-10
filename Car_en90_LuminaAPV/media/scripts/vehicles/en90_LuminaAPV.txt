@@ -1,0 +1,782 @@
+module Base
+{
+	vehicle en90_LuminaAPV
+	{
+		model
+		{
+			file = en90_LuminaAPV_Base,
+			scale = 1.0000,
+			offset = 0.0000 0.8100 0.0000,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en90_LuminaAPV_Ext_Black,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en90_LuminaAPV_Ext_Blue,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en90_LuminaAPV_Ext_BlueBlack,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en90_LuminaAPV_Ext_Gold,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en90_LuminaAPV_Ext_Red,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en90_LuminaAPV_Ext_RedBlack,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en90_LuminaAPV_Ext_White,
+		}
+
+		textureMask = Vehicles/Vehicle_en90_LuminaAPV_Overlay_Mask,
+		textureLights = Vehicles/Vehicle_en90_LuminaAPV_Overlay_Lights,
+		textureDamage1Overlay = Vehicles/Vehicle_en90_LuminaAPV_Overlay_Blood,
+		textureDamage2Overlay = Vehicles/Vehicle_en90_LuminaAPV_Overlay_Blood,
+		textureDamage1Shell = Vehicles/Vehicle_en90_LuminaAPV_Overlay_Damage,
+		textureDamage2Shell = Vehicles/Vehicle_en90_LuminaAPV_Overlay_Damage,
+		textureRust = Vehicles/Vehicle_en90_LuminaAPV_Overlay_Rust,
+
+		sound
+		{
+			engine = VehicleEngineModernCar,
+			engineStart = VehicleEngineModernCar,
+			engineTurnOff = VehicleEngineModernCar,
+			horn = VehicleHornStandard,
+			ignitionFail = VehicleIgnitionFailModernCar,
+		}
+
+		extents = 1.6800 1.3000 4.4200,
+		physicsChassisShape = 1.6800 1.3000 4.4200,
+		centerOfMassOffset = 0.0000 0.9200 0.0100,
+		shadowExtents = 1.6799 4.4203,
+		shadowOffset = 0.0000 0.0156,
+		mechanicType = 1,
+		offRoadEfficiency = 0.8,
+		playerDamageProtection = 1.0,
+		frontEndHealth = 150,
+		rearEndHealth = 150,
+		mass = 1170,
+		engineRepairLevel = 4,
+		engineForce = 5180,
+		engineLoudness = 45,
+		engineQuality = 80,
+		maxSpeed = 75f,
+		brakingForce = 90,
+		stoppingMovementForce = 2.2f,
+		rollInfluence = 1.0f,
+		steeringIncrement = 0.04,
+		steeringClamp = 0.3,
+		suspensionStiffness = 40,
+		suspensionCompression = 2.83,
+		suspensionDamping = 2.88,
+		maxSuspensionTravelCm = 10,
+		suspensionRestLength = 0.2,
+		wheelFriction = 1.4f,
+		seats = 7,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.7000 -0.5100 1.2500,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.7000 -0.5100 1.2500,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.7000 -0.5100 -1.3000,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.7000 -0.5100 -1.3000,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat7,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontLeft,
+
+			position inside
+			{
+				offset = 0.4000 -0.0600 0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.0000 -0.6500 0.2500,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontRight,
+
+			position inside
+			{
+				offset = -0.4000 -0.0600 0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6500 0.2500,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		passenger MiddleLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorRearRight,
+
+			position inside
+			{
+				offset = 0.4600 -0.0600 -0.7200,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6500 -0.5000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		passenger MiddleCenter
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorRearRight,
+
+			position inside
+			{
+				offset = 0.0000 -0.0600 -0.7200,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6500 -0.5000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		passenger MiddleRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorRearRight,
+
+			position inside
+			{
+				offset = -0.4600 -0.0600 -0.7200,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6500 -0.5000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		passenger RearLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorRearRight,
+
+			position inside
+			{
+				offset = 0.2400 -0.0600 -1.4600,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6500 -0.5000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		passenger RearRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorRearRight,
+
+			position inside
+			{
+				offset = -0.2400 -0.0600 -1.4600,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.0000 -0.6500 -0.5000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatRearRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 2.6100 1.4000 0.8000,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -2.6100 1.4000 0.8000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.2400 0.3600 0.8000 0.8000,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.2400 0.3700 0.8000 0.8000,
+		}
+
+		area SeatRearRight
+		{
+			xywh = -1.2400 -0.5900 0.8000 0.8000,
+		}
+
+		area GasTank
+		{
+			xywh = 1.2400 -1.4700 0.8000 0.8000,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.0600 1.1900 0.4400 0.4400,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.0600 1.1900 0.4400 0.4400,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.0600 -1.2600 0.4400 0.4400,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.0600 -1.2600 0.4400 0.4400,
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			container
+			{
+				capacity = 100,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_Trunk,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 0.8,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = WindshieldRear,
+			}
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+		template = Seat/part/SeatMiddleLeft,
+		template = Seat/part/SeatMiddleCenter,
+		template = Seat/part/SeatMiddleRight,
+		template = Seat/part/SeatRearLeft,
+		template = Seat/part/SeatRearRight,
+
+		part GloveBox
+		{
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = true,
+
+			model
+			{
+				file = en90_LuminaAPV_Interior,
+			}
+
+			container
+			{
+				capacity = 8,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = Battery,
+
+		part Battery
+		{
+			model Battery
+			{
+				file = en90_LuminaAPV_Battery,
+			}
+		}
+
+		template = Engine,
+		template = GasTank,
+		template = Muffler,
+
+		part Muffler
+		{
+			model Muffler
+			{
+				file = en90_LuminaAPV_Muffler,
+			}
+		}
+
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			model EngineDoor
+			{
+				file = en90_LuminaAPV_Hood,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.0,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+		template = Window/part/WindowRearLeft,
+		template = Window/part/WindowRearRight,
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part WindowFrontLeft
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_WindowFL,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowFrontRight
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_WindowFR,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowRearLeft
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_WindowRL,
+			}
+			
+			window
+			{
+				openable = false,
+			}
+		}
+
+		part WindowRearRight
+		{
+			category = door,
+			parent = DoorRearRight,
+
+			model Default
+			{
+				file = en90_LuminaAPV_WindowRR,
+			}
+
+			window
+			{
+				openable = false,
+			}
+
+			table install
+			{
+				requireInstalled = DoorRearRight,
+			}
+		}
+
+		part Windshield
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_Windshield,
+			}
+		}
+
+		part WindshieldRear
+		{
+			parent = TrunkDoor,
+
+			model Default
+			{
+				file = en90_LuminaAPV_WindshieldRear,
+			}
+
+			window
+			{
+				openable = false,
+			}
+
+			table install
+			{
+				requireInstalled = TrunkDoor,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+		template = Door/part/DoorRearRight,
+
+		part DoorFrontLeft
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_DoorFL,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorFrontRight
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_DoorFR,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorRearRight
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_DoorRR,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 1.0,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Tire,
+
+		part Tire*
+		{
+			model InflatedTirePlusWheel
+			{
+				file = en90_LuminaAPV_Wheel,
+			}
+		}
+
+		template = Brake,
+
+		part BrakeFrontLeft
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_BrakeFL,
+			}
+		}
+
+		part BrakeFrontRight
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_BrakeFR,
+			}
+		}
+
+		part BrakeRearLeft
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_BrakeRL,
+			}
+		}
+
+		part BrakeRearRight
+		{
+			model Default
+			{
+				file = en90_LuminaAPV_BrakeRR,
+			}
+		}
+
+		part Brake*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+		template = Headlight,
+		template = LuminaAPVArmor,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.4900 -2.1000,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.4000 2.1000,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

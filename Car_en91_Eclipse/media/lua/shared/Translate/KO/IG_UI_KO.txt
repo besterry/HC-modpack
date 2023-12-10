@@ -1,0 +1,6 @@
+IGUI_KO = {
+	IGUI_VehicleNameen91_Eclipse = "1991 미쓰비시 Eclipse GSX",
+	IGUI_VehicleNameen91_EclipseTuner = "1991 미쓰비시 Eclipse GSX (튜닝은)",
+	IGUI_VehicleNameen91_Talon = "1991 Eagle Talon TSi",
+	IGUI_VehicleParten91_EclipseArmor = "수제 차량 보호"
+}

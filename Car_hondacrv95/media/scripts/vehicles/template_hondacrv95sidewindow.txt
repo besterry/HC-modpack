@@ -1,0 +1,82 @@
+module Base
+{
+	template vehicle hondacrv95sidewindow
+	{
+	
+		part Hondacrv95WindowSL
+		{
+			parent = DoorRearLeft,
+			area = SeatRearLeft,
+			itemType = Base.Hondacrv95GlassSLI,
+
+		}
+
+		part Hondacrv95WindowSR
+		{
+			parent = DoorRearRight,
+			area = SeatRearRight,
+			itemType = Base.Hondacrv95GlassSRI,
+
+		}
+
+		part Hondacrv95WindowS*
+		{
+			category = door,
+			mechanicRequireKey = true,
+			window
+			{
+				openable = false,
+			}
+			anim Open
+			{
+				sound = VehicleWindowHandleOpen,
+			}
+			anim Close
+			{
+				sound = VehicleWindowHandleClose,
+			}
+			table install
+			{
+				items
+				{
+					1
+					{
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+				time = 300,
+				skills = Mechanics:3,
+				recipes = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicles.InstallComplete.Window,
+			}
+			table uninstall
+			{
+				items
+				{
+					1
+					{
+						type = Base.Screwdriver,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+				time = 300,
+				skills = Mechanics:3,
+				recipes = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				complete = Vehicles.UninstallComplete.Default,
+			}
+			lua
+			{
+				create = Vehicles.Create.Window,
+				init = Vehicles.Init.Window,
+			}
+		}
+	}
+}
+

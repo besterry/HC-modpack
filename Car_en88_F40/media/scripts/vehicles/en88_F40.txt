@@ -1,0 +1,681 @@
+module Base
+{
+	vehicleEngineRPM en88_F40
+	{
+		VERSION = 1,
+		data
+		{
+			gearChange = 4600,
+			afterGearChange = 3000,
+		}
+		data
+		{
+			gearChange = 5000,
+			afterGearChange = 3400,
+		}
+		data
+		{
+			gearChange = 6200,
+			afterGearChange = 3800,
+		}
+		data
+		{
+			gearChange = 5800,
+			afterGearChange = 4700,
+		}
+		data
+		{
+			gearChange = 6200,
+			afterGearChange = 5000,
+		}
+	}
+	vehicle en88_F40
+	{
+		model
+		{
+			file = en88_F40_Base,
+			scale = 1.0000,
+			offset = 0.0000 0.7400 0.0000,
+		}
+
+		skin
+		{
+			texture = Vehicles/Vehicle_en88_F40_Ext_RossoCorsa,
+		}
+
+		textureMask = Vehicles/Vehicle_en88_F40_Overlay_Mask,
+		textureLights = Vehicles/Vehicle_en88_F40_Overlay_Lights,
+		textureDamage1Overlay = Vehicles/Vehicle_en88_F40_Overlay_Blood,
+		textureDamage2Overlay = Vehicles/Vehicle_en88_F40_Overlay_Blood,
+		textureDamage1Shell = Vehicles/Vehicle_en88_F40_Overlay_Damage,
+		textureDamage2Shell = Vehicles/Vehicle_en88_F40_Overlay_Damage,
+		textureRust = Vehicles/Vehicle_en88_F40_Overlay_Rust,
+
+		sound
+		{
+			engine = VehicleEngineSportsCar,
+			engineStart = VehicleEngineSportsCar,
+			engineTurnOff = VehicleEngineSportsCar,
+			horn = VehicleHornSportsCar,
+			ignitionFail = VehicleIgnitionFailSportsCar,
+		}
+
+		extents = 1.7400 0.9000 3.9000,
+		physicsChassisShape = 1.7400 0.9000 3.8600,
+		centerOfMassOffset = 0.0000 0.7800 0.0000,
+		shadowExtents = 1.7473 3.8862,
+		shadowOffset = 0.0000 0.0024,
+		mechanicType = 3,
+		offRoadEfficiency = 0.4,
+		playerDamageProtection = 0.8,
+		frontEndHealth = 130,
+		rearEndHealth = 150,
+		mass = 950,
+		engineRPMType = en88_F40,
+		engineRepairLevel = 5,
+		engineForce = 8764,
+		engineLoudness = 135,
+		engineQuality = 95,
+		maxSpeed = 290f,
+		gearRatioCount = 5,
+		gearRatioR = 2.4,
+		gearRatio1 = 2.8,
+		gearRatio2 = 1.7,
+		gearRatio3 = 1.2,
+		gearRatio4 = 0.9,
+		gearRatio5 = 0.7,
+		brakingForce = 94,
+		stoppingMovementForce = 3.4f,
+		rollInfluence = 0.6f,
+		steeringIncrement = 0.025,
+		steeringClamp = 0.25,
+		suspensionStiffness = 45,
+		suspensionCompression = 3.9,
+		suspensionDamping = 3.2,
+		maxSuspensionTravelCm = 10,
+		suspensionRestLength = 0.15,
+		wheelFriction = 2.2f,
+		seats = 2,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.7300 -0.3000 1.0200,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.7300 -0.3000 1.0200,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.7500 -0.2900 -1.1900,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.7500 -0.2900 -1.1900,
+			radius = 0.28f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat2,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = 0.3400 -0.2500 -0.0400,
+				rotate = 7.0325 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.1800 -0.6000 -0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+
+			position inside
+			{
+				offset = -0.3400 -0.2500 -0.0400,
+				rotate = 7.0325 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.1800 -0.6000 -0.1600,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 -2.3500 1.4000 0.8000,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 1.0300 3.3600 0.8000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.2700 0.0000 0.8000 0.8000,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.2700 0.0000 0.8000 0.8000,
+		}
+
+		area GasTank
+		{
+			xywh = -1.2700 -0.8000 0.8000 0.8000,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.0900 1.0300 0.4400 0.4400,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.0900 1.0300 0.4400 0.4400,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.0900 -1.1800 0.4400 0.4400,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.0900 -1.1800 0.4400 0.4400,
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			container
+			{
+				capacity = 15,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			model Default
+			{
+				file = en88_F40_Frunk,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+		template = Seat/part/SeatRearLeft,
+		template = Seat/part/SeatRearRight,
+
+		part GloveBox
+		{
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = false,
+
+			model
+			{
+				file = en88_F40_Interior,
+			}
+
+			container
+			{
+				capacity = 7,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = Battery,
+
+		part Battery
+		{
+			area = TruckBed,
+			mechanicRequireKey = true,
+
+			model Battery
+			{
+				file = en88_F40_Battery,
+			}
+
+			table install
+			{
+				door = TrunkDoor,
+			}
+		}
+
+		template = Engine,
+		template = GasTank,
+		template = Muffler,
+
+		part Muffler
+		{
+			model Muffler
+			{
+				file = en88_F40_Muffler,
+			}
+		}
+
+		template = EngineDoor,
+
+		part EngineDoor
+		{
+			model EngineDoor
+			{
+				file = en88_F40_Tailgate,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 0.7,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 0.7,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+
+			table uninstall
+			{
+				requireUninstalled = WindshieldRear,
+			}
+		}
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+		template = Window/part/WindowRearLeft,
+		template = Window/part/WindowRearRight,
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part WindowFrontLeft
+		{
+			model Default
+			{
+				file = en88_F40_WindowFL,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowFrontRight
+		{
+			model Default
+			{
+				file = en88_F40_WindowFR,
+			}
+
+			anim ClosedToOpen
+			{
+				anim = ArmatureAction,
+				animate = FALSE,
+				rate = 0.1,
+			}
+		}
+
+		part WindowRearLeft
+		{
+			model Default
+			{
+				file = en88_F40_WindowRL,
+			}
+
+			window
+			{
+				openable = false,
+			}
+		}
+
+		part WindowRearRight
+		{
+			model Default
+			{
+				file = en88_F40_WindowRR,
+			}
+
+			window
+			{
+				openable = false,
+			}
+		}
+
+		part Windshield
+		{
+			model Default
+			{
+				file = en88_F40_Windshield,
+			}
+		}
+
+		part WindshieldRear
+		{
+			parent = EngineDoor,
+
+			model Default
+			{
+				file = en88_F40_WindshieldRear,
+			}
+
+			window
+			{
+				openable = false,
+			}
+
+			table install
+			{
+				requireInstalled = EngineDoor,
+			}
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+
+		part DoorFrontLeft
+		{
+			model Default
+			{
+				file = en88_F40_DoorFL,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		part DoorFrontRight
+		{
+			model Default
+			{
+				file = en88_F40_DoorFR,
+			}
+
+			anim Close
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				rate = 2.5,
+			}
+
+			anim Open
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				rate = 1,
+			}
+
+			anim Closed
+			{
+				anim = ArmatureAction,
+				reverse = FALSE,
+				animate = FALSE,
+			}
+
+			anim Opened
+			{
+				anim = ArmatureAction,
+				reverse = TRUE,
+				animate = FALSE,
+			}
+		}
+
+		template = Tire,
+
+		part TireFront*
+		{
+			model InflatedTirePlusWheel
+			{
+				file = en88_F40_WheelFront,
+			}
+		}
+
+		part TireRear*
+		{
+			model InflatedTirePlusWheel
+			{
+				file = en88_F40_WheelRear,
+			}
+		}
+
+		template = Brake,
+
+		part BrakeFrontLeft
+		{
+			model Default
+			{
+				file = en88_F40_BrakeFL,
+			}
+		}
+
+		part BrakeFrontRight
+		{
+			model Default
+			{
+				file = en88_F40_BrakeFR,
+			}
+		}
+
+		part BrakeRearLeft
+		{
+			model Default
+			{
+				file = en88_F40_BrakeRL,
+			}
+		}
+
+		part BrakeRearRight
+		{
+			model Default
+			{
+				file = en88_F40_BrakeRR,
+			}
+		}
+
+		part Brake*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part SuspensionFrontLeft
+		{
+			model Default
+			{
+				file = en88_F40_SuspensionFL,
+			}
+		}
+
+		part SuspensionFrontRight
+		{
+			model Default
+			{
+				file = en88_F40_SuspensionFR,
+			}
+		}
+
+		part SuspensionRearLeft
+		{
+			model Default
+			{
+				file = en88_F40_SuspensionRL,
+			}
+		}
+
+		part SuspensionRearRight
+		{
+			model Default
+			{
+				file = en88_F40_SuspensionRR,
+			}
+		}
+
+		part Suspension*
+		{
+			table install
+			{
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+		template = Headlight,
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3300 -1.9100,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.3000 1.8800,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

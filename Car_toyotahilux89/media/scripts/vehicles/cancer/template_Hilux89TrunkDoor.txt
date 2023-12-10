@@ -1,0 +1,186 @@
+module Base
+{
+
+	model Hilux89TrunkDoor
+	{
+	
+		mesh = vehicles/toyota_hilux_body|toyota_hilux_trunkdoor,
+		texture = vehicles/toyota_hilux_body_texture_test,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+		
+	}	
+
+	template vehicle Hilux89TrunkDoor
+	
+	{
+	
+		part Hilux89TrunkDoor
+		{
+		
+			{
+			
+				model Hilux89TrunkDoor
+				{
+				
+					file = toyota_hilux_trunkdoor
+				
+				}
+			
+			}
+			
+			anim Open
+			{
+			
+				anim = anim_toyota_hilux_trunkbed,
+				reverse = false,
+				rate = 1,
+				sound = VehicleTrunkOpenStandard,
+			
+			}
+			
+			anim Close
+			{
+			
+				anim = anim_toyota_hilux_trunkbed,
+				reverse = true,
+				rate = 1,
+				sound = VehicleTrunkCloseStandard,
+			
+			}
+			
+			anim Opened
+			{
+			
+				anim = anim_toyota_hilux_trunkbed,
+				reverse = true,
+				animate = false,
+			
+			}
+			
+			anim Closed
+			{
+			
+				anim = anim_toyota_hilux_trunkbed,
+				reverse = false,
+				animate = false,
+			
+			}
+			
+			anim Lock
+				{
+				
+					sound = LockVehicleDoorStandard,
+				
+				}
+				
+			anim Unlock
+				{
+				
+					sound = UnlockVehicleDoorStandard,
+				
+				}
+				
+			anim IsLocked
+				{
+				
+					sound = VehicleDoorIsLockedStandard,
+				
+				}
+
+			anim ActorOpen
+				{
+				
+					anim = WindowOpenSuccess,
+					rate = 0,15,
+					angle = 0.0 0.0 0.0,
+				
+				}
+
+			anim ActorClose
+				{
+				
+					anim = Attack_Shove,
+					rate = 0.3,
+					angle = 0.0 0.0 0.0,
+					
+				}
+
+			area = TruckBed,
+			category = bodywork,
+			specificItem = false,
+			ItemType = Base.Hilux89TrunkDoor,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+			
+			door
+			{
+			}
+			
+			table install
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+					
+				}
+				
+				time = 500,
+				skills = Mechanics:4,
+				recipies = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicle.Install.Complete.Door,
+				
+			}
+			
+			table uninstall
+			{
+			
+				items
+				{
+				
+					item
+					{
+					
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					
+					}
+				
+				}
+				
+				time = 500,
+				skills = Mechanics:4,
+				recipies = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				complete = Vehicle.Uninstall.Complete.Door,
+				
+			}
+			
+			lua
+			{
+			
+				create = Vehicles.Create.TrunkDoor,
+				init = Vehicles.Init.Door,
+				use = Hilux89.Use.TrunkDoor,
+			
+			}
+			
+		}
+		
+	}
+
+}

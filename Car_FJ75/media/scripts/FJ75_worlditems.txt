@@ -1,0 +1,26 @@
+module Base
+{
+
+		model FJ75WindshieldArmor_WorldItem
+	{
+		mesh = WorldItems/FJ75WindshieldArmor_WorldItem,
+		texture = Vehicles/Vehicle_FJ75PC_white,
+		scale = 0.5,
+	}
+
+		model FJ75DoorArmor_WorldItem
+	{
+		mesh = WorldItems/FJ75DoorArmor_WorldItem,
+		texture = Vehicles/Vehicle_FJ75PC_white,
+		scale = 0.5,
+	}
+
+		model FJ75Bullbar_WorldItem
+	{
+		mesh = WorldItems/FJ75Bullbar_WorldItem,
+		texture = Vehicles/Vehicle_FJ75PC_white,
+		scale = 0.5,
+	}
+
+
+}

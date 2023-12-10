@@ -1,0 +1,954 @@
+module Base
+{
+	model toyotahilux89singlecab
+	{
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_body,
+		shader = vehicle_multiuv_noreflect,
+		invertX = FALSE,
+		scale = 0.01,
+	}
+	model Hilux89SeatFrontLeft
+	{
+	
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_seat_fl,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+	
+	}
+	model Hilux89SeatFrontRight
+	{
+	
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_seat_fr,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+	
+	}
+	model Hilux89DoorFL
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_door_fl,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+		
+
+	}
+	model Hilux89WindowFL
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_glass_fl,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+		
+
+	}
+	model Hilux89DoorFR
+	{
+		
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_door_fr,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+
+	}
+	model Hilux89WindowFR
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_glass_fr,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+		
+
+	}
+	model Hilux89TrunkDoor
+	{
+	
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_trunkdoor,
+		texture = vehicles/toyota_hilux_body_texture_test,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+		
+	}
+	model Hilux89Bonnet
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_bonnet,
+		shader = vehicle_multiuv_noreflect,
+		static = false,
+		scale = 0.01,
+
+	}
+	model Hilux89BumperFront
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_bumper_f,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89BumperRear
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_bumper_r,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89Fueldoor
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_fueldoor,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89Headlight_l
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_headlights_l,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89Headlight_r
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_headlights_r,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89Taillight_l
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_taillight_l,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89Taillight_r
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_taillight_r,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89Windshield
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_windshield,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89WindshieldR
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_glass_r,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model Hilux89Battery
+	{
+
+		mesh = vehicles/toyota_hilux_singlecab_body|toyota_hilux_battery,
+		shader = vehicle_multiuv_noreflect,
+		static = true,
+		scale = 0.01,
+
+	}
+	model toyotahilux89frontwheelleft
+	{
+		mesh = vehicles/toyota_hilux_wheel,
+		texture = vehicles/toyota_hilux_wheel_texture,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.01,
+	}
+	model toyotahilux89frontwheelright
+	{
+		mesh = vehicles/toyota_hilux_wheel,
+		texture = vehicles/toyota_hilux_wheel_texture,
+		shader = vehiclewheel,
+		invertX = TRUE,
+		scale = 0.01,
+	}
+	model toyotahilux89backwheelleft
+	{
+		mesh = vehicles/toyota_hilux_wheel,
+		texture = vehicles/toyota_hilux_wheel_texture,
+		shader = vehiclewheel,
+		invertX = FALSE,
+		scale = 0.01,
+	}
+	model toyotahilux89backwheelright
+	{
+		mesh = vehicles/toyota_hilux_wheel,
+		texture = vehicles/toyota_hilux_wheel_texture,
+		shader = vehiclewheel,
+		invertX = TRUE,
+		scale = 0.01,
+	}
+	vehicle toyotahilux89singlecab
+	{
+		mechanicType = 1,
+		offRoadEfficiency = 0.9,
+		engineRepairLevel = 4,
+		playerDamageProtection = 1.2,
+		engineRPMType = jeep,
+
+		model
+		{
+			file = toyotahilux89singlecab,
+			scale = 1.0000,
+			offset = 0.0000 0.3600 0.5100,
+			rotate = 0 0 0,
+		}
+
+		spawnOffsetY = 0,
+
+		skin
+		{
+			texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_red,
+		}
+
+		skin
+		{
+			texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_blue,
+		}
+
+		skin
+		{
+			texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_darkgrey,
+		}
+
+		skin
+		{
+			texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_white,
+		}
+
+		skin
+		{
+			texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_silver,
+		}
+
+		skin
+		{
+			texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_yellow,
+		}
+
+		skin
+		{
+			texture = vehicles/singlecab/toyota_hilux_singlecab_body_texture_green,
+		}
+
+		textureRust = vehicles/toyota_hilux_singlecab_body_texture_rust,
+		textureMask = vehicles/toyota_hilux_singlecab_body_texture_mask,
+		textureLights = vehicles/toyota_hilux_singlecab_body_texture_lights,
+		textureDamage1Shell = vehicles/toyota_hilux_singlecab_body_texture_shell1,
+		textureDamage2Shell = vehicles/toyota_hilux_singlecab_body_texture_shell2,
+		textureDamage1Overlay = vehicles/toyota_hilux_singlecab_body_texture_blood,
+		textureDamage2Overlay = vehicles/toyota_hilux_singlecab_body_texture_blood,
+
+		sound
+		{
+			engine = VehicleEnginePickUpTruck,
+			engineStart = VehicleEnginePickUpTruck,
+			engineTurnOff = VehicleEnginePickUpTruck,
+			horn = VehicleHornJeep,
+			ignitionFail = VehicleIgnitionFailPickUpTruck,
+		}
+
+		extents = 1.6800 1.2400 4.3000,
+		mass = 1233,
+		physicsChassisShape = 1.6800 1.2400 4.3000,
+		centerOfMassOffset = 0.0000 0.3800 0.0600,
+		shadowExtents = 1.6800 4.2900,
+		shadowOffset = 0.0000 0.0600,
+		engineForce = 2580,
+		maxSpeed = 84f,
+		gearRatioCount = 4,
+		gearRatioR = 4.00,
+		gearRatio1 = 3.82,
+		gearRatio2 = 2.55,
+		gearRatio3 = 1.85,
+		gearRatio4 = 1.21,
+		engineLoudness = 75,
+		engineQuality = 70,
+		brakingForce = 60,
+		stoppingMovementForce = 4.0f,
+		rollInfluence = 0.88f,
+		steeringIncrement = 0.074,
+		steeringClamp = 0.3,
+		suspensionStiffness = 30,
+		suspensionCompression = 3.03,
+		suspensionDamping = 2.88,
+		maxSuspensionTravelCm = 15,
+		suspensionRestLength = 0.5,
+		wheelFriction = 1.2f,
+		frontEndHealth = 150,
+		rearEndHealth = 150,
+		seats = 2,
+
+		wheel FrontLeft
+		{
+			front = true,
+			offset = 0.7000 -0.5900 1.0100,
+			radius = 0.22f,
+			width = 0.2f,
+		}
+
+		wheel FrontRight
+		{
+			front = true,
+			offset = -0.7000 -0.5900 1.0100,
+			radius = 0.22f,
+			width = 0.2f,
+		}
+
+		wheel RearLeft
+		{
+			front = false,
+			offset = 0.7000 -0.5900 -1.5300,
+			radius = 0.22f,
+			width = 0.2f,
+		}
+
+		wheel RearRight
+		{
+			front = false,
+			offset = -0.7000 -0.5900 -1.5300,
+			radius = 0.22f,
+			width = 0.2f,
+		}
+
+		template = PassengerSeat2,
+
+		passenger FrontLeft
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontLeft,
+			area = SeatFrontLeft,
+
+			position inside
+			{
+				offset = 0.3700 -0.1700 -0.2000,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = 1.1200 -0.4700 -0.4000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontLeft,
+			}
+		}
+
+		passenger FrontRight
+		{
+			showPassenger = true,
+			hasRoof = true,
+			door = DoorFrontRight,
+			area = SeatFrontRight,
+
+			position inside
+			{
+				offset = -0.3700 -0.1700 -0.1900,
+				rotate = 0.0000 0.0000 0.0000,
+			}
+
+			position outside
+			{
+				offset = -1.1200 -0.4700 -0.4000,
+				rotate = 0.0000 0.0000 0.0000,
+				area = SeatFrontRight,
+			}
+		}
+
+		area Engine
+		{
+			xywh = 0.0000 2.5100 1.1200 0.6200,
+		}
+
+		area TruckBed
+		{
+			xywh = 0.0000 -2.3800 1.1200 0.6000,
+		}
+
+		area SeatFrontLeft
+		{
+			xywh = 1.1500 0.4600 0.7000 1.0600,
+		}
+
+		area SeatFrontRight
+		{
+			xywh = -1.1500 0.4600 0.7000 1.0600,
+		}
+
+		area GasTank
+		{
+			xywh = -1.0100 -0.6600 0.4200 0.4200,
+		}
+
+		area TireFrontLeft
+		{
+			xywh = 1.0100 1.5200 0.4200 0.4200,
+		}
+
+		area TireFrontRight
+		{
+			xywh = -1.0100 1.5200 0.4200 0.4200,
+		}
+
+		area TireRearLeft
+		{
+			xywh = 1.0100 -1.0200 0.4200 0.4200,
+		}
+
+		area TireRearRight
+		{
+			xywh = -1.0100 -1.0200 0.4200 0.4200,
+		}
+
+		template = Seat/part/SeatFrontLeft,
+		template = Seat/part/SeatFrontRight,
+
+		part SeatFrontLeft
+		{
+			model SeatFrontLeft
+			{
+				file = Hilux89SeatFrontLeft,
+			}
+
+			itemType = Base.Hilux89SeatFrontI,
+		}
+
+		part SeatFrontRight
+		{
+			model SeatFrontRight
+			{
+				file = Hilux89SeatFrontRight,
+			}
+
+			itemType = Base.Hilux89SeatFrontI,
+		}
+
+		template = Door/part/DoorFrontLeft,
+		template = Door/part/DoorFrontRight,
+		template = Window/part/WindowFrontLeft,
+		template = Window/part/WindowFrontRight,
+
+		part DoorFrontLeft
+		{
+			model Hilux89DoorFL
+			{
+				file = Hilux89DoorFL,
+			}
+
+			itemType = Base.Hilux89DoorFrontLeftI,
+
+			anim Open
+			{
+				sound = VehicleDoorOpenStandard,
+				anim = anim_hilux_door_fl,
+				reverse = false,
+				rate = 1.0,
+			}
+
+			anim Close
+			{
+				sound = VehicleDoorCloseStandard,
+				anim = anim_hilux_door_fl,
+				reverse = true,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = anim_hilux_door_fl,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hilux_door_fl,
+				reverse = true,
+				animate = false,
+			}
+		}
+
+		part WindowFrontLeft
+		{
+			model Hilux89WindowFL
+			{
+				file = Hilux89WindowFL,
+			}
+			
+			itemType = Base.Hilux89WindowFrontLeftI,
+		}
+
+		part DoorFrontRight
+		{
+			model Hilux89DoorFR
+			{
+				file = Hilux89DoorFR,
+			}
+
+			itemType = Base.Hilux89DoorFrontRightI,
+
+			anim Open
+			{
+				sound = VehicleDoorOpenStandard,
+				anim = anim_hilux_door_fr,
+				reverse = false,
+				rate = 1.0,
+			}
+
+			anim Close
+			{
+				sound = VehicleDoorCloseStandard,
+				anim = anim_hilux_door_fr,
+				reverse = true,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = anim_hilux_door_fr,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hilux_door_fr,
+				reverse = true,
+				animate = false,
+			}
+		}
+
+		part WindowFrontRight
+		{
+			model Hilux89WindowFR
+			{
+				file = Hilux89WindowFR,
+			}
+
+			itemType = Base.Hilux89WindowFrontRightI,
+		}
+
+		template = Trunk/part/TruckBed,
+
+		part TruckBed
+		{
+			container
+			{
+				capacity = 110,
+			}
+		}
+
+		template = TrunkDoor,
+
+		part TrunkDoor
+		{
+			model TrunkDoor
+			{
+				file = Hilux89TrunkDoor,
+			}
+
+			itemType = Base.Hilux89TrunkDoorI,
+
+			anim Open
+			{
+				sound = VehicleTrunkOpenStandard,
+				anim = anim_hilux_trunkdoor,
+				reverse = false,
+				rate = 1.0,
+			}
+
+			anim Close
+			{
+				sound = VehicleTrunkCloseStandard,
+				anim = anim_hilux_trunkdoor,
+				reverse = true,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = anim_hilux_trunkdoor,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hilux_trunkdoor,
+				reverse = true,
+				animate = false,
+			}
+		}
+
+		part EngineDoor
+		{
+			model Hilux89Bonnet
+			{
+				file = Hilux89Bonnet,
+			}
+
+			itemType = Base.Hilux89BonnetI,
+			category = bodywork,
+			area = Engine,
+			mechanicRequireKey = true,
+			repairMechanic = true,
+
+			door
+			{
+			}
+
+			anim Open
+			{
+				sound = VehicleTrunkOpenStandard,
+				anim = anim_hilux_bonnet,
+				reverse = false,
+				rate = 1.0,
+			}
+
+			anim Close
+			{
+				sound = VehicleTrunkCloseStandard,
+				anim = anim_hilux_bonnet,
+				reverse = true,
+				rate = 1.0,
+			}
+
+			anim Closed
+			{
+				anim = anim_hilux_bonnet,
+				reverse = false,
+				animate = false,
+			}
+
+			anim Opened
+			{
+				anim = anim_hilux_bonnet,
+				reverse = true,
+				animate = false,
+			}
+
+			anim Lock
+			{
+				sound = LockVehicleDoorStandard,
+			}
+
+			anim Unlock
+			{
+				sound = UnlockVehicleDoorStandard,
+			}
+
+			anim IsLocked
+			{
+				sound = VehicleDoorIsLockedStandard,
+			}
+
+			anim ActorOpen
+			{
+				anim = WindowOpenSuccess,
+				rate = 0.15,
+				angle = 0.0 180.0 0.0,
+			}
+
+			anim ActorClose
+			{
+				anim = Attack_Shove,
+				rate = 0.3,
+				angle = 0.0 180.0 0.0,
+			}
+
+			table install
+			{
+				items
+				{
+					item
+					{
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 300,
+				skills = Mechanics:3,
+				recipes = Basic Mechanics,
+				test = Vehicles.InstallTest.Default,
+				complete = Vehicles.InstallComplete.Door,
+			}
+
+			table uninstall
+			{
+				items
+				{
+					item
+					{
+						type = Base.Wrench,
+						count = 1,
+						keep = true,
+						equip = primary,
+					}
+				}
+
+				time = 300,
+				skills = Mechanics:3,
+				recipes = Basic Mechanics,
+				test = Vehicles.UninstallTest.Default,
+				complete = Vehicles.UninstallComplete.Door,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+				init = Vehicles.Init.Door,
+				update = Vehicles.Update.EngineDoor,
+				use = Vehicles.Use.EngineDoor,
+			}
+		}
+
+		part GloveBox
+		{
+			model Hilux89BumperFront
+			{
+				file = Hilux89BumperFront,
+			}
+
+			model Hilux89BumperRear
+			{
+				file = Hilux89BumperRear,
+			}
+
+			model Hilux89Fueldoor
+			{
+				file = Hilux89Fueldoor,
+			}
+
+			area = SeatFrontRight,
+			itemType = Base.GloveBox,
+			mechanicRequireKey = true,
+
+			container
+			{
+				capacity = 8,
+				test = Vehicles.ContainerAccess.GloveBox,
+			}
+
+			lua
+			{
+				create = Vehicles.Create.Default,
+			}
+		}
+
+		template = GasTank,
+
+		part GasTank
+		{
+			container
+			{
+				conditionAffectsCapacity = true,
+				capacity = 70,
+			}
+		}
+
+		template = Battery,
+
+		part Battery
+		{
+			model Hilux89Battery
+			{
+				file = Hilux89Battery,
+			}
+
+			itemType = Base.CarBattery,
+		}
+
+		template = Engine,
+		template = Muffler,
+
+		part Heater
+		{
+			category = engine,
+
+			lua
+			{
+				update = Vehicles.Update.Heater,
+			}
+		}
+
+		part PassengerCompartment
+		{
+			category = nodisplay,
+
+			lua
+			{
+				update = Vehicles.Update.PassengerCompartment,
+			}
+		}
+
+		template = Tire,
+
+		part TireFrontLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = toyotahilux89frontwheelleft,
+			}
+		}
+
+		part TireFrontRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = toyotahilux89frontwheelright,
+			}
+		}
+
+		part TireRearLeft
+		{
+			model InflatedTirePlusWheel
+			{
+				file = toyotahilux89backwheelleft,
+			}
+		}
+
+		part TireRearRight
+		{
+			model InflatedTirePlusWheel
+			{
+				file = toyotahilux89backwheelright,
+			}
+		}
+
+		template = Brake,
+
+		part Brake*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Suspension,
+
+		part Suspension*
+		{
+			table install
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+
+			table uninstall
+			{
+				skills = Mechanics:6,
+				recipes = Intermediate Mechanics,
+			}
+		}
+
+		template = Radio,
+		template = Headlight,
+
+		part HeadlightLeft
+		{
+			model HeadlightLeft
+			{
+				file = Hilux89Headlight_l,
+			}
+		}
+
+		part HeadlightRight
+		{
+			model HeadlightRight
+			{
+				file = Hilux89Headlight_r,
+			}
+		}
+
+		part HeadlightRearLeft
+		{
+			model HeadlightRearLeft
+			{
+				file = Hilux89Taillight_l,
+			}
+		}
+
+		part HeadlightRearRight
+		{
+			model HeadlightRearRight
+			{
+				file = Hilux89Taillight_r,
+			}
+		}
+
+		template = Windshield/part/Windshield,
+		template = Windshield/part/WindshieldRear,
+
+		part Windshield
+		{
+			model Windshield
+			{
+				file = Hilux89Windshield,
+			}
+
+			itemType = Base.Hilux89WindshieldI,
+		}
+
+		part WindshieldRear
+		{
+			model WindshieldR
+			{
+				file = Hilux89WindshieldR,
+			}
+
+			itemType = Base.Hilux89WindshieldRearI,
+		}
+
+		attachment trailer
+		{
+			offset = 0.0000 -0.3300 -2.3800,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = -1.0000,
+		}
+
+		attachment trailerfront
+		{
+			offset = 0.0000 -0.3300 2.3600,
+			rotate = 0.0000 0.0000 0.0000,
+			zoffset = 1.0000,
+		}
+	}
+}

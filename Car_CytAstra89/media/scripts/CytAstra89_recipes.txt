@@ -1,0 +1,139 @@
+module Base
+{
+
+recipe Craft CytAstra89 TireLiner
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+		SheetMetal=3,
+
+		Result:CytAstra89Windshield1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=4,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Windshield
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+       	keep Scalpel,
+		FrontWindow2=2,
+
+		Result:CytAstra89Windshield1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=1,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Window
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+       	keep Scalpel,
+		FrontWindow2=1,
+
+		Result:CytAstra89Window1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=1,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Rear Windshield
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+       	keep Scalpel,
+		FrontWindow2=1,
+
+		Result:CytAstra89RearWindow1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=1,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Bullbar
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+        	MetalBar=4,
+		SheetMetal=2,
+
+		Result:CytAstra89Bull1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Windshield Cage
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+        	MetalBar=4,
+
+		Result:CytAstra89WindshieldBars1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Rear Windshield Armor
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+        	MetalBar=4,
+
+		Result:CytAstra89WindowArmor1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Window Armor
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+		SheetMetal=2,
+
+		Result:CytAstra89WindowArmor1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Window Armor
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+		SheetMetal=2,
+
+		Result:CytAstra89WindowBackArmor1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+recipe Craft CytAstra89 Roofrack
+	{
+		BlowTorch=4,
+       	keep WeldingMask,
+		SheetMetal=3,
+        	MetalBar=4,
+
+		Result:CytAstraRoofrack1,
+		Time:400.0,
+		Category:Car Mods,
+		SkillRequired:MetalWelding=3,
+		OnGiveXP:Recipe.OnGiveXP.MetalWelding20,
+	}
+
+}

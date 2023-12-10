@@ -1,0 +1,202 @@
+module Base
+{
+
+    item 1988fuegoDoorFrontLeft3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Left Door Fuego GTX II,
+        Icon	=	fuego_frontdoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoDoorFrontWorld,
+		VehicleType =   3,
+    }
+
+	item 1988fuegoDoorFrontRight3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Right Door Fuego GTX II ,
+        Icon	=	fuego_frontdoor,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoDoorFrontWorld,
+		VehicleType =   3,
+    }
+	
+    item 1988fuegoWindowFront3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Window Front Fuego GTX II,
+        Icon	=	fuego_windowfront,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoWindowFrontWorld,
+		VehicleType =   3,
+    }
+	
+	
+    item 1988fuegoWindowRear3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Window Rear Fuego GTX II,
+        Icon	=	fuego_windowrear,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoWindowRearWorld,
+		VehicleType =   3,
+    }
+	
+	
+    item 1988fuegoHood3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Hood Fuego GTX II,
+        Icon	=	fuego_hood,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoHoodWorld,
+		VehicleType =   3,
+    }
+	
+
+	item 1988fuegoTrunkTuning3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Trunk Door Fuego GTX II,
+        Icon	=	fuego_trunktuning,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoTrunkTuningWorld,
+		VehicleType =   3,
+    }
+
+
+
+	
+	item 1988fuegoTrunk3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Trunk Door Fuego GTX II,
+        Icon	=	fuego_trunk,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoTrunkWorld,
+		VehicleType =   3,
+    }
+	
+	
+	item 1988fuegoTire3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	16.0,
+        Type	=	Normal,
+        DisplayName	=	Tire Fuego GTX II,
+        Icon	=	fuego_wheel,
+        MaxCapacity = 35,		
+        ChanceToSpawnDamaged = 50,
+        WheelFriction = 1.60f,
+        ConditionMax = 100,
+        ConditionLowerStandard = 0.05,
+        ConditionLowerOffroad = 0.4,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoWheelWorld,
+		VehicleType =   3,
+    }
+	
+	item 1988fuegoTireTuning3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	16.0,
+        Type	=	Normal,
+        DisplayName	=	Tire Fuego GTX II,
+        Icon	=	fuego_wheeltuning,
+        MaxCapacity = 40,		
+        ChanceToSpawnDamaged = 40,
+        WheelFriction = 1.80f,
+        ConditionMax = 100,
+        ConditionLowerStandard = 0.02,
+        ConditionLowerOffroad = 0.35,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoWheelTuningWorld,
+		VehicleType =   3,
+    }	
+	
+
+	item 1988fuegoFrontWindshield3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.5,
+        Type	=	Normal,
+        DisplayName	=	Windshield Fuego GTX II,
+        Icon	=	fuego_windshield,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoFrontWindshieldWorld,
+		VehicleType =   3,
+    }
+	
+	item 1988fuegoRearWindshield3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	8.0,
+        Type	=	Normal,
+        DisplayName	=	Rear Windshield Fuego GTX II,
+        Icon	=	fuego_windshieldrear,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoRearWindshieldWorld,
+		VehicleType =   3,
+    }	
+
+	item 1988fuegoSeatFront3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Front Seat Fuego GTX II ,
+        Icon	=	fuego_frontseat,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoSeatFrontWorld,
+		VehicleType =   3,
+    }
+ 
+	item 1988fuegoSeatRear3
+    {
+        DisplayCategory = VehicleMaintenance,
+        Weight	=	14.0,
+        Type	=	Normal,
+        DisplayName	=	Rear Seat Fuego GTX II ,
+        Icon	=	fuego_rearseat,
+        ChanceToSpawnDamaged = 20,
+        ConditionMax = 100,
+        MechanicsItem = TRUE,
+        WorldStaticModel = fuegoSeatRearWorld,
+		VehicleType =   3,
+    }
+ 
+}

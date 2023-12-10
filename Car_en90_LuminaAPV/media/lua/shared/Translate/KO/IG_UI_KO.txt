@@ -1,0 +1,6 @@
+IG_UI_KO = {
+	IGUI_VehicleNameen90_LuminaAPV = "1990 쉐보레 Lumina APV",
+	IGUI_VehicleParten90_LuminaAPVArmor = "수제 차량 보호"
+	IGUI_VehiclePartSeatMiddleCenter = "중앙 중앙 좌석",
+	IGUI_SeatMiddleCenter = "중앙 중앙 좌석",
+}

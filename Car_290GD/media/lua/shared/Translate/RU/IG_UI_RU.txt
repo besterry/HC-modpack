@@ -1,0 +1,8 @@
+IG_UI_RU = {
+
+    IGUI_VehicleName290GD2Door = "Mercedes-Benz 290-GD Van",
+    IGUI_VehicleName290GD2DoorSmall = "Mercedes-Benz 290-GD",
+    IGUI_VehicleName290GD4Door = "Mercedes-Benz 290-GD Универсал",
+    IGUI_VehicleName290GDOpenTop = "Mercedes-Benz 290-GD Кабриолет",
+    IGUI_VehiclePart290SoftTop = "Мягкий верх",
+}
