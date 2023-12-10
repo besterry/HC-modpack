@@ -89,24 +89,27 @@ function RemoverItemAndBuildsTool:onClick(button)
                                 end
                             elseif self.itemType:isSelected(2) then
                                 for i = 0, sq:getObjects():size() - 1 do
-                                    if instanceof(sq:getObjects():get(i), "IsoThumpable") or (instanceof(sq:getObjects():get(i), "IsoObject") and sq:getObjects():get(i):isFloor()) then
-                                        local building = sq:getObjects():get(i)
-                                        if building then
-                                            if instanceof(building, "IsoThumpable") then --Удаление построек
-                                                --building:destroy()  --Разобрать (падают доски и гвозди)
-                                                building:getSquare():transmitRemoveItemFromSquare(building)
-					                            building:getSquare():RemoveTileObject(building)
-                                            elseif z>0 then --удаление потолков (z=0 - земля)
-                                                --building:removeFromSquare() --Работает только на стороне клиента
-                                                --building:removeFromWorld() --не работает на клиенте(возможно только на стороне сервера)
-                                                building:getSquare():transmitRemoveItemFromSquare(building)
-					                            building:getSquare():RemoveTileObject(building)
-                                            end
+                                    local building = sq:getObjects():get(i)
+                                    if building then
+                                        local isIsoThumpable = instanceof(building , "IsoThumpable")
+                                        local isIsoObject = instanceof(building, "IsoObject")
+                                        local isFloor = building:isFloor()
+                                        if isIsoThumpable or (isIsoObject and isFloor) then
+                                                if isIsoThumpable then --Удаление построек
+                                                    --building:destroy()  --Разобрать (падают доски и гвозди)
+                                                    building:getSquare():transmitRemoveItemFromSquare(building)
+                                                    building:getSquare():RemoveTileObject(building)
+                                                elseif z>0 then --удаление потолков (z=0 - земля)
+                                                    --building:removeFromSquare() --Работает только на стороне клиента
+                                                    --building:removeFromWorld() --не работает на клиенте(возможно только на стороне сервера)
+                                                    building:getSquare():transmitRemoveItemFromSquare(building)
+                                                    building:getSquare():RemoveTileObject(building)
+                                                end
                                         end
                                     end
                                 end
                             elseif self.itemType:isSelected(3) then
-                                for i = 0, sq:getObjects():size() - 1 do
+                                for i = sq:getObjects():size() - 1, 0 , -1 do
                                     local building = sq:getObjects():get(i)
                                     if building then
                                         if building:isFloor() and z==0 then
