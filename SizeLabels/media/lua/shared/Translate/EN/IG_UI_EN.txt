@@ -24,6 +24,6 @@ IGUI_EN = {
 	IGUI_Description = "You will need: a needle, scissors, thread and the material from which the thing is sewn. <BR> " ..
 					   "<RGB:0.0,0.5,1.0>The higher your sewing skill, the more chances of success. <BR>"
 	
-	IGUI_Success = "I did it! New size: "
+	IGUI_SuccessResize = "I did it! New size: "
 	IGUI_Failure = "I failed. I damaged this clothes."
 }

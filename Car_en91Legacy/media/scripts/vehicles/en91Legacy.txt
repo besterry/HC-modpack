@@ -68,7 +68,7 @@ module Base
 		rearEndHealth = 150,
 		mass = 960,
 		engineRepairLevel = 6,
-		engineForce = 5000,
+		engineForce = 3860,
 		engineLoudness = 45,
 		engineQuality = 70,
 		maxSpeed = 90f,
@@ -256,7 +256,7 @@ module Base
 		{
 			container
 			{
-				capacity = 140,
+				capacity = 65,
 			}
 		}
 

@@ -1,0 +1,3 @@
+Items_RU = {
+	Recipe_Weld_Armor_for_'90_Lumina_APV = "Создать импровизированную броню Lumina",
+}

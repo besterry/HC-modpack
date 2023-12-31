@@ -159,7 +159,7 @@ function ISChangeClothesSize:perform()
 		end
 		newExp = ZombRand(3, 6)
 		local newSize = STAR_MODS.SizeLabels.CSIZE[data.sz]
-		character:Say(getText("IGUI_Success") .. newSize)
+		character:Say(getText("IGUI_SuccessResize") .. newSize)
 	end
 	character:stopOrTriggerSound(self.sewingSound)
 	character:getXp():AddXP(Perks.Tailoring, newExp);

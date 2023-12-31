@@ -7,7 +7,7 @@ module Base
 		{
 			parent = DoorRearLeft,
 			area = SeatRearLeft,
-			itemType = Base.Hondacrv95GlassSLI,
+			itemType = Base.RearWindow,
 
 		}
 
@@ -15,7 +15,7 @@ module Base
 		{
 			parent = DoorRearRight,
 			area = SeatRearRight,
-			itemType = Base.Hondacrv95GlassSRI,
+			itemType = Base.RearWindow,
 
 		}
 

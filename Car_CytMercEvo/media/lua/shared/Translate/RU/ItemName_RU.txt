@@ -1,0 +1,17 @@
+ItemName_RU = {
+	ItemName_Base.CytMercEvoBull3 = "Кенгурятник MB-E2",
+	ItemName_Base.CytMercEvoWindowArmor3 = "Защита стекла MB-E2",
+	ItemName_Base.CytMercEvoWindshieldBars3 = "Решётки лобового стекла MB-E2",
+	ItemName_Base.CytMercEvoDoor3 = "Дверь MB-E2",
+	ItemName_Base.CytMercEvoWheel3 = "Шины MB-E2",
+	ItemName_Base.CytMercEvoWindow3 = "Окно MB-E2",
+	ItemName_Base.CytMercEvoWindowBack3 = "Заднее окно MB-E2",
+	ItemName_Base.CytMercEvoWindowBackArmor3 = "Броня заднего окна MB-E2",
+	ItemName_Base.CytMercEvoHood3 = "Капот MB-E2",
+	ItemName_Base.CytMercEvoTrunkDoor3 = "Крышка багажника MB-E2",
+	ItemName_Base.CytMercEvoRearWindow3 = "Заднее стекло MB-E2",
+	ItemName_Base.CytMercEvoRearWindArmor3 = "Броня заднего стекла MB-E2",
+	ItemName_Base.CytMercEvoSeat3 = "Сиденье MB-E2",
+	ItemName_Base.CytMercEvoWindshield3 = "Лобовое стекло MB-E2",
+	ItemName_Base.CytMercEvoMuffler3 = "Глушитель MB-E2",
+}

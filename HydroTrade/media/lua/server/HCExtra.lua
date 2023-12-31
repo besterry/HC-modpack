@@ -390,6 +390,26 @@ end
 
 --Tool Stuff
 
+
+function recipe_hcaddpallet(items, result, player)
+	for i=0, items:size()-1 do
+        if items:get(i):getType() == "HTpalletLogs" then
+			--print("Old Delta:", items:get(i):getDelta())
+			local newUseDelta = items:get(i):getDelta() + items:get(i):getUseDelta()
+			result:setDelta(newUseDelta)
+			--print("New UseDelta:", newUseDelta)
+			return
+		end
+	end
+end
+
+function Recipe.OnTest.Putpalletlog(item)
+    if item:getType() == "HTpalletLogs" then
+        if item:getUsedDelta() == 1 then return false; end
+    end
+    return true;
+end
+
 function recipe_hcportableminingmachine(items, result, player)
 	local inv = player:getInventory();
 	inv:AddItem("Hydrocraft.HCPortableminingmachine");

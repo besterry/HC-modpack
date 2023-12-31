@@ -180,9 +180,9 @@ module Base
 	}
 	vehicle hondacrv95
 	{
-		mechanicType = 1,
+		mechanicType = 2,
 		offRoadEfficiency = 1.12,
-		engineRepairLevel = 4,
+		engineRepairLevel = 5,
 		playerDamageProtection = 1.2,
 		engineRPMType = jeep,
 
@@ -459,8 +459,6 @@ module Base
 			{
 				file = Hondacrv95SeatFL,
 			}
-
-			itemType = Base.Hondacrv95SeatFrontI,
 		}
 
 		part SeatFrontRight
@@ -469,8 +467,6 @@ module Base
 			{
 				file = Hondacrv95SeatFR,
 			}
-
-			itemType = Base.Hondacrv95SeatFrontI,
 		}
 
 		part SeatRearLeft
@@ -479,8 +475,6 @@ module Base
 			{
 				file = Hondacrv95SeatRL,
 			}
-
-			itemType = Base.Hondacrv95SeatRearI,
 		}
 
 		part SeatRearRight
@@ -489,8 +483,6 @@ module Base
 			{
 				file = Hondacrv95SeatRR,
 			}
-
-			itemType = Base.Hondacrv95SeatRearI,
 		}
 
 		template = Door/part/DoorFrontLeft,
@@ -504,8 +496,6 @@ module Base
 			{
 				file = Hondacrv95DoorFL,
 			}
-
-			itemType = Base.Hondacrv95DoorFLI,
 
 			anim Open
 			{
@@ -545,8 +535,6 @@ module Base
 				file = Hondacrv95DoorFR,
 			}
 
-			itemType = Base.Hondacrv95DoorFRI,
-
 			anim Open
 			{
 				sound = VehicleDoorOpenStandard,
@@ -584,8 +572,6 @@ module Base
 			{
 				file = Hondacrv95DoorRL,
 			}
-
-			itemType = Base.Hondacrv95DoorRLI,
 
 			anim Open
 			{
@@ -625,8 +611,6 @@ module Base
 				file = Hondacrv95DoorRR,
 			}
 
-			itemType = Base.Hondacrv95DoorRRI,
-
 			anim Open
 			{
 				sound = VehicleDoorOpenStandard,
@@ -657,15 +641,14 @@ module Base
 				animate = false,
 			}
 		}
-
+	
+		template = EngineDoor,
 		part EngineDoor
 		{
 			model Hondacrv95Bonnet
 			{
 				file = Hondacrv95Bonnet,
 			}
-
-			itemType = Base.Hondacrv95BonnetI,
 			category = bodywork,
 			area = Engine,
 			mechanicRequireKey = true,
@@ -796,8 +779,6 @@ module Base
 			{
 				file = Hondacrv95WindowFL,
 			}
-
-			itemType = Base.Hondacrv95GlassFLI,
 		}
 
 		part WindowFrontRight
@@ -806,8 +787,6 @@ module Base
 			{
 				file = Hondacrv95WindowFR,
 			}
-
-			itemType = Base.Hondacrv95GlassFRI,
 		}
 
 		part WindowRearLeft
@@ -816,8 +795,6 @@ module Base
 			{
 				file = Hondacrv95WindowRL,
 			}
-
-			itemType = Base.Hondacrv95GlassRLI,
 		}
 
 		part WindowRearRight
@@ -826,8 +803,6 @@ module Base
 			{
 				file = Hondacrv95WindowRR,
 			}
-
-			itemType = Base.Hondacrv95GlassRRI,
 		}
 
 		part Hondacrv95WindowSL
@@ -855,8 +830,6 @@ module Base
 			{
 				file = Hondacrv95Windshield,
 			}
-
-			itemType = Base.Hondacrv95WindshieldI,
 		}
 
 		part WindshieldRear
@@ -867,8 +840,6 @@ module Base
 			{
 				file = Hondacrv95WindshieldR,
 			}
-
-			itemType = Base.Hondacrv95WindshieldRI,
 
 			table install
 			{
@@ -894,8 +865,6 @@ module Base
 			{
 				file = Hondacrv95Trunk,
 			}
-
-			itemType = Base.Hondacrv95TrunkI,
 
 			anim Open
 			{

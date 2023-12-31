@@ -385,8 +385,6 @@ module Base
 			{
 				seat = FrontLeft,
 			}
-
-			itemType = Base.CytMercEvoSeat,
 		}
 
 		part SeatFrontLeft
@@ -400,20 +398,14 @@ module Base
 			{
 				seat = FrontRight,
 			}
-
-			itemType = Base.CytMercEvoSeat,
 		}
 
 		part SeatRearLeft
 		{
-			category = nodisplay,
-			itemType = Base.CytMercEvoSeat,
 		}
 
 		part SeatRearRight
 		{
-			category = nodisplay,
-			itemType = Base.CytMercEvoSeat,
 		}
 
 		part Muffler
@@ -428,8 +420,6 @@ module Base
 			{
 				recipes = Intermediate Mechanics,
 			}
-
-			itemType = Base.CytMercEvoMuffler,
 		}
 
 		template = EngineDoor,
@@ -468,8 +458,6 @@ module Base
 				reverse = TRUE,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoHood,
 
 			table install
 			{
@@ -517,8 +505,6 @@ module Base
 				recipes = Intermediate Mechanics,
 			}
 
-			itemType = Base.CytMercEvoWindshield,
-
 			lua
 			{
 				create = Vehicles.Create.Default,
@@ -546,8 +532,6 @@ module Base
 			{
 				recipes = Intermediate Mechanics,
 			}
-
-			itemType = Base.CytMercEvoRearWindow,
 
 			lua
 			{
@@ -598,8 +582,6 @@ module Base
 				reverse = TRUE,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoDoor,
 		}
 
 		part DoorFrontRight
@@ -636,8 +618,6 @@ module Base
 				reverse = TRUE,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoDoor,
 		}
 
 		part DoorRearLeft
@@ -712,8 +692,6 @@ module Base
 				reverse = TRUE,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoDoor,
 		}
 
 		part WindowFrontLeft
@@ -728,8 +706,6 @@ module Base
 				anim = FrontLeftWindowClosing,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoWindow,
 			parent = DoorFrontLeft,
 			area = SeatFrontLeft,
 		}
@@ -746,8 +722,6 @@ module Base
 				anim = FrontRightWindowClosing,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoWindow,
 			parent = DoorFrontRight,
 			area = SeatFrontRight,
 		}
@@ -764,8 +738,6 @@ module Base
 				anim = RearLeftWindowClosing,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoWindowBack,
 			area = SeatRearLeft,
 		}
 
@@ -781,8 +753,6 @@ module Base
 				anim = RearRightWindowClosing,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoWindowBack,
 			area = SeatRearLeft,
 		}
 
@@ -832,8 +802,6 @@ module Base
 				reverse = TRUE,
 				animate = FALSE,
 			}
-
-			itemType = Base.CytMercEvoTrunkDoor,
 		}
 
 		template = Trunk/part/TruckBed,
@@ -863,8 +831,6 @@ module Base
 			{
 				file = CytMercEvoWheelfrontwheelleft,
 			}
-
-			itemType = Base.CytMercEvoWheel,
 		}
 
 		part TireFrontRight
@@ -873,8 +839,6 @@ module Base
 			{
 				file = CytMercEvoWheelfrontwheelright,
 			}
-
-			itemType = Base.CytMercEvoWheel,
 		}
 
 		part TireRearLeft
@@ -883,8 +847,6 @@ module Base
 			{
 				file = CytMercEvoWheelbackwheelleft,
 			}
-
-			itemType = Base.CytMercEvoWheel,
 		}
 
 		part TireRearRight
@@ -893,8 +855,6 @@ module Base
 			{
 				file = CytMercEvoWheelbackwheelright,
 			}
-
-			itemType = Base.CytMercEvoWheel,
 		}
 
 		template = Brake,

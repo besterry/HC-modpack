@@ -1,0 +1,5 @@
+ItemName_RU = {
+	ItemName_Base.FJ75DoorArmor2 = "Броня двери Land Cruiser",
+	ItemName_Base.FJ75WindshieldArmor2 = "Броня лобового стекла Land Cruiser",
+	ItemName_Base.FJ75Bullbar2 = "Кенгурятник Land Cruiser",
+}

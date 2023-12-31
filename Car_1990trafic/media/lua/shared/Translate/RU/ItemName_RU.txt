@@ -1,0 +1,15 @@
+ItemName_RU = {
+	ItemName_Base.1990traficDoorFrontLeft2 = "Передняя левая дверь Trafic",
+	ItemName_Base.1990traficDoorFrontRight2 = "Передняя правая дверь Trafic",
+	ItemName_Base.1990traficDoorMiddleRight2 = "Средняя правая дверь Trafic",
+	ItemName_Base.1990traficDoorRearRight2 = "Задняя правая дверь Trafic",
+	ItemName_Base.1990traficWindowFront2 = "Переднее стекло Trafic",
+	ItemName_Base.1990traficWindowMiddle2 = "Среднее окно Trafic",
+	ItemName_Base.1990traficWindowRear2 = "Заднее окно Trafic",
+	ItemName_Base.1990traficHood2 = "Капот Trafic",
+	ItemName_Base.1990traficTrunk2 = "Крышка багажника Trafic",
+	ItemName_Base.1990traficTire2 = "Шина Trafic",
+	ItemName_Base.1990traficFrontWindshield2 = "Лобовое стекло Trafic",
+	ItemName_Base.1990traficRearWindshield2 = "Заднее стекло Trafic",
+	ItemName_Base.1990traficSeatFront2 = "Сиденье Trafic",
+}

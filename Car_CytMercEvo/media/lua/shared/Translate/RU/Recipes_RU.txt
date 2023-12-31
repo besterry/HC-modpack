@@ -1,0 +1,6 @@
+Items_RU = {
+	Recipe_Craft_Mercedes-Benz_Evo_II_Window_Armor = "Изготовить броню для окон Mercedes-Benz Evo II",
+	Recipe_Craft_Mercedes-Benz_Evo_II_Rear_Windshield_Armor = "Изготовить броню заднего стекла Mercedes-Benz Evo II",
+	Recipe_Craft_Mercedes-Benz_Evo_II_Windshield_Cage = "Изготовить решетки лобового стекла Mercedes-Benz Evo II",
+	Recipe_Craft Mercedes-Benz_Evo_II_Bullbar = "Изготовить кенгурятник Mercedes-Benz Evo II",
+}

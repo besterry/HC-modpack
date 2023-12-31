@@ -1,0 +1,13 @@
+IG_UI_RU = {
+
+    IGUI_VehicleNameCytMercEvo = "Mercedes Benz Evolution II",
+
+    IGUI_VehiclePartCytMercEvoattachment = "Навесное оборудование",
+    IGUI_VehiclePartCytMercEvoBullbar = "Кенгурятник Mercedes Evo",
+    IGUI_VehiclePartCytMercEvoTrunkArmor = "Броня заднего стекла",
+    IGUI_VehiclePartCytMercEvoFrontRightWindowArmor = "Броня переднего правого окна",
+    IGUI_VehiclePartCytMercEvoFrontLeftWindowArmor = "Броня переднего левого окна",
+    IGUI_VehiclePartCytMercEvoRearRightWindowArmor = "Броня заднего правого окна",
+    IGUI_VehiclePartCytMercEvoRearLeftWindowArmor = "Броня заднего левого окна",
+    IGUI_VehiclePartCytMercEvoWindshieldBars = "Решётки для лобового стекла",
+}

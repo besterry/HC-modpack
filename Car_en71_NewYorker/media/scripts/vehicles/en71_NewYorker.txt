@@ -81,18 +81,18 @@ module Base
 		centerOfMassOffset = 0.0000 0.8800 0.0000,
 		shadowExtents = 1.7373 5.2462,
 		shadowOffset = 0.0000 0.0024,
-		mechanicType = 1,
+		mechanicType = 2,
 		offRoadEfficiency = 1.0,
 		playerDamageProtection = 1.4,
 		frontEndHealth = 160,
 		rearEndHealth = 160,
-		mass = 1180,
+		mass = 1280,
 		engineRPMType = van,
 		engineRepairLevel = 4,
 		engineForce = 6720,
 		engineLoudness = 80,
 		engineQuality = 70,
-		maxSpeed = 60f,
+		maxSpeed = 65f,
 		brakingForce = 70,
 		stoppingMovementForce = 5.0f,
 		rollInfluence = 0.8f,
@@ -104,7 +104,7 @@ module Base
 		maxSuspensionTravelCm = 10,
 		suspensionRestLength = 0.2,
 		wheelFriction = 1.4f,
-		seats = 6,
+		seats = 4,
 
 		wheel FrontLeft
 		{
@@ -138,7 +138,7 @@ module Base
 			width = 0.2f,
 		}
 
-		template = PassengerSeat6,
+		template = PassengerSeat4,
 
 		passenger FrontLeft
 		{
@@ -167,44 +167,6 @@ module Base
 			position inside
 			{
 				offset = -0.3800 -0.1200 0.1600,
-				rotate = 0.0000 0.0000 0.0000,
-			}
-
-			position outside
-			{
-				offset = -1.0000 -0.6800 0.0000,
-				rotate = 0.0000 0.0000 0.0000,
-				area = SeatFrontRight,
-			}
-		}
-
-		passenger MiddleLeft
-		{
-			showPassenger = true,
-			hasRoof = true,
-
-			position inside
-			{
-				offset = 0.0000 -0.1200 -0.7200,
-				rotate = 0.0000 0.0000 0.0000,
-			}
-
-			position outside
-			{
-				offset = 1.0000 -0.6800 -0.7600,
-				rotate = 0.0000 0.0000 0.0000,
-				area = SeatRearLeft,
-			}
-		}
-
-		passenger MiddleRight
-		{
-			showPassenger = true,
-			hasRoof = true,
-
-			position inside
-			{
-				offset = 0.0000 -0.1200 0.1600,
 				rotate = 0.0000 0.0000 0.0000,
 			}
 
@@ -364,8 +326,6 @@ module Base
 
 		template = Seat/part/SeatFrontLeft,
 		template = Seat/part/SeatFrontRight,
-		template = Seat/part/SeatMiddleLeft,
-		template = Seat/part/SeatMiddleRight,
 		template = Seat/part/SeatRearLeft,
 		template = Seat/part/SeatRearRight,
 
@@ -769,7 +729,7 @@ module Base
 		template = SpareTire,
 		template = Radio,
 		template = Headlight,
-		template = NewYorkerArmor,
+		/*template = NewYorkerArmor,*/
 
 		attachment trailer
 		{

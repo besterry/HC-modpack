@@ -1,0 +1,3 @@
+ItemName_RU = {
+	ItemName_Base.en91_Eclipse_Armor = "Импровизированная броня Eclipse",
+}

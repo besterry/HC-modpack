@@ -1,0 +1,6 @@
+IG_UI_RU = {
+	IGUI_VehicleName1988fuego = "Renault Fuego GTX II - 1988",
+	IGUI_VehicleName1988fuegoTuning = "Renault Fuego GTX II - 1988",
+	IGUI_VehicleName1988fuegoSport = "Renault Fuego GTX II - 1988",
+	
+}	

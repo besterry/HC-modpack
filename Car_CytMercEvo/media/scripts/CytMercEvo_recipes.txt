@@ -76,7 +76,7 @@ recipe Craft Mercedes-Benz Evo II Rear Windshield Armor
        	keep WeldingMask,
         	MetalBar=4,
 
-		Result:CytMercEvoWindshieldBars3,
+		Result:CytMercEvoRearWindArmor3,
 		Time:400.0,
 		Category:Car Mods,
 		SkillRequired:MetalWelding=3,

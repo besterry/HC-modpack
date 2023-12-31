@@ -24,5 +24,17 @@ module Base
         Result:Log,
         Time:10,
         Sound:BreakGlassItem,
-    }		
+    }	
+
+	recipe Put pallet log
+	 {
+        destroy HTpalletLogs=1,
+		Log,
+		Result:HTpalletLogs,
+		OnTest:Recipe.OnTest.Putpalletlog,
+        OnCreate:recipe_hcaddpallet,
+        Time:10,
+        Sound:BreakGlassItem,
+    }
+	
 }

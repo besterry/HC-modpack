@@ -263,10 +263,10 @@ module Base
 	}
 	vehicle toyotahilux89dualcab
 	{
-		mechanicType = 1,
-		offRoadEfficiency = 0.9,
+		mechanicType = 2,
+		offRoadEfficiency = 1.3,
 		engineRepairLevel = 4,
-		playerDamageProtection = 1.2,
+		playerDamageProtection = 1.3,
 		engineRPMType = jeep,
 
 		model
@@ -337,7 +337,7 @@ module Base
 		centerOfMassOffset = 0.0000 0.3800 0.3300,
 		shadowExtents = 1.6800 4.8600,
 		shadowOffset = 0.0000 0.3300,
-		engineForce = 2850,
+		engineForce = 4350,
 		maxSpeed = 85f,
 		gearRatioCount = 5,
 		gearRatioR = 4.31,
@@ -348,9 +348,9 @@ module Base
 		gearRatio5 = 1.32,
 		engineLoudness = 75,
 		engineQuality = 70,
-		brakingForce = 61,
+		brakingForce = 71,
 		stoppingMovementForce = 4.0f,
-		rollInfluence = 0.88f,
+		rollInfluence = 0.8f,
 		steeringIncrement = 0.071,
 		steeringClamp = 0.3,
 		suspensionStiffness = 30,
@@ -547,8 +547,6 @@ module Base
 			{
 				file = Hilux89DualcabSeatFrontLeft,
 			}
-
-			itemType = Base.Hilux89SeatFrontI,
 		}
 
 		part SeatFrontRight
@@ -557,8 +555,6 @@ module Base
 			{
 				file = Hilux89DualcabSeatFrontRight,
 			}
-
-			itemType = Base.Hilux89SeatFrontI,
 		}
 
 		part SeatRearLeft
@@ -567,8 +563,6 @@ module Base
 			{
 				file = Hilux89DualcabSeatRearLeft,
 			}
-
-			itemType = Base.Hilux89SeatRearLeftI,
 		}
 
 		part SeatRearRight
@@ -577,8 +571,6 @@ module Base
 			{
 				file = Hilux89DualcabSeatRearRight,
 			}
-
-			itemType = Base.Hilux89SeatRearRightI,
 		}
 
 		template = Door/part/DoorFrontLeft,
@@ -596,8 +588,6 @@ module Base
 			{
 				file = Hilux89DualcabDoorFL,
 			}
-
-			itemType = Base.Hilux89DoorFrontLeftI,
 
 			anim Open
 			{
@@ -637,7 +627,6 @@ module Base
 				file = Hilux89DualcabWindowFL,
 			}
 
-			itemType = Base.Hilux89WindowFrontLeftI,
 		}
 
 		part DoorFrontRight
@@ -646,8 +635,6 @@ module Base
 			{
 				file = Hilux89DualcabDoorFR,
 			}
-
-			itemType = Base.Hilux89DoorFrontRightI,
 
 			anim Open
 			{
@@ -686,8 +673,6 @@ module Base
 			{
 				file = Hilux89DualcabWindowFR,
 			}
-
-			itemType = Base.Hilux89WindowFrontRightI,
 		}
 
 		part WindowRearLeft
@@ -696,8 +681,6 @@ module Base
 			{
 				file = Hilux89DualcabWindowRL,
 			}
-
-			itemType = Base.Hilux89DualcabWindowRearLeftI,
 		}
 
 		part WindowRearRight
@@ -706,8 +689,6 @@ module Base
 			{
 				file = Hilux89DualcabWindowRR,
 			}
-
-			itemType = Base.Hilux89DualcabWindowRearRightI,
 		}
 
 		part DoorRearLeft
@@ -716,8 +697,6 @@ module Base
 			{
 				file = Hilux89DualcabDoorRL,
 			}
-
-			itemType = Base.Hilux89DoorRearLeftI,
 
 			anim Open
 			{
@@ -757,8 +736,6 @@ module Base
 				file = Hilux89DualcabDoorRR,
 			}
 
-			itemType = Base.Hilux89DoorRearRightI,
-
 			anim Open
 			{
 				sound = VehicleDoorOpenStandard,
@@ -796,7 +773,7 @@ module Base
 		{
 			container
 			{
-				capacity = 110,
+				capacity = 120,
 			}
 		}
 
@@ -808,8 +785,6 @@ module Base
 			{
 				file = Hilux89DualcabTrunkDoor,
 			}
-
-			itemType = Base.Hilux89TrunkDoorI,
 
 			anim Open
 			{
@@ -842,21 +817,12 @@ module Base
 			}
 		}
 
+		template = EngineDoor,
 		part EngineDoor
 		{
 			model Hilux89DualcabBonnet
 			{
 				file = Hilux89DualcabBonnet,
-			}
-
-			itemType = Base.Hilux89BonnetI,
-			category = bodywork,
-			area = Engine,
-			mechanicRequireKey = true,
-			repairMechanic = true,
-
-			door
-			{
 			}
 
 			anim Open
@@ -1158,8 +1124,6 @@ module Base
 			{
 				file = Hilux89DualcabWindshield,
 			}
-
-			itemType = Base.Hilux89WindshieldI,
 		}
 
 		part WindshieldRear
@@ -1168,8 +1132,6 @@ module Base
 			{
 				file = Hilux89DualcabWindshieldR,
 			}
-
-			itemType = Base.Hilux89WindshieldRearI,
 		}
 
 		attachment trailer

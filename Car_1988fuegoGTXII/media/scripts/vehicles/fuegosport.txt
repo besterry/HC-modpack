@@ -189,10 +189,10 @@ module Base
 		centerOfMassOffset = 0.0000 0.5579 0.0000,
 		shadowExtents = 1.6855 4.3181,
 		shadowOffset = 0.0000 0.0000,
-		engineForce = 8000,
+		engineForce = 7000,
 		engineLoudness = 120,
 		engineQuality = 90,
-		maxSpeed = 140f,
+		maxSpeed = 130f,
 		gearRatioCount = 5,
 		gearRatioR = 3.5,
 		gearRatio1 = 4.11,
@@ -319,7 +319,6 @@ module Base
 
 		part TrunkDoor
 		{
-			itemType = Base.1988fuegoTrunk,
 
 			model Default
 			{
@@ -386,7 +385,6 @@ module Base
 
 		part TruckBed
 		{
-			itemType = Base.SmallTrunk,
 
 			container
 			{
@@ -398,7 +396,6 @@ module Base
 
 		part SeatFrontLeft
 		{
-			itemType = Base.1988fuegoSeatFront,
 
 			model Default
 			{
@@ -491,7 +488,6 @@ module Base
 
 		part EngineDoor
 		{
-			itemType = Base.1988fuegoHood,
 			repairMechanic = true,
 
 			model Default
@@ -564,7 +560,6 @@ module Base
 
 		part Windshield
 		{
-			itemType = Base.1988fuegoFrontWindshield,
 
 			model Default
 			{
@@ -574,7 +569,6 @@ module Base
 
 		part WindshieldRear
 		{
-			itemType = Base.1988fuegoRearWindshield,
 
 			model Default
 			{
@@ -616,7 +610,6 @@ module Base
 		part WindowFrontLeft
 		{
 			category = door,
-			itemType = Base.1988fuegoWindowFront,
 
 			model Default
 			{
@@ -633,7 +626,6 @@ module Base
 		part WindowFrontRight
 		{
 			category = door,
-			itemType = Base.1988fuegoWindowFront,
 
 			model Default
 			{
@@ -650,7 +642,6 @@ module Base
 		part WindowRearLeft
 		{
 			category = door,
-			itemType = Base.1988fuegoWindowRear,
 			area = TireRearLeft,
 			parent =,
 
@@ -668,7 +659,6 @@ module Base
 		part WindowRearRight
 		{
 			category = door,
-			itemType = Base.1988fuegoWindowRear,
 			area = TireRearRight,
 			parent =,
 
@@ -712,7 +702,6 @@ module Base
 		part DoorFrontLeft
 		{
 			category = door,
-			itemType = Base.1988fuegoDoorFrontLeft,
 
 			model Default
 			{
@@ -749,7 +738,6 @@ module Base
 		part DoorFrontRight
 		{
 			category = door,
-			itemType = Base.1988fuegoDoorFrontRight,
 
 			model Default
 			{
@@ -825,7 +813,6 @@ module Base
 
 		part TireFrontLeft
 		{
-			itemType = Base.1988fuegoTireTuning,
 
 			model InflatedTirePlusWheel
 			{
@@ -835,7 +822,6 @@ module Base
 
 		part TireFrontRight
 		{
-			itemType = Base.1988fuegoTireTuning,
 
 			model InflatedTirePlusWheel
 			{
@@ -845,7 +831,6 @@ module Base
 
 		part TireRearLeft
 		{
-			itemType = Base.1988fuegoTireTuning,
 
 			model InflatedTirePlusWheel
 			{
@@ -855,7 +840,6 @@ module Base
 
 		part TireRearRight
 		{
-			itemType = Base.1988fuegoTireTuning,
 
 			model InflatedTirePlusWheel
 			{

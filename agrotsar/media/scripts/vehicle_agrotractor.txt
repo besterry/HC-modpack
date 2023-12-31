@@ -356,13 +356,21 @@ module Base
             area = Engine,
         }
         part WindowRearLeft
-        {
-            area = TireRearLeft,
-        }
+		{
+			area = TireRearLeft,
+			table install
+			{
+				requireInstalled = DoorFrontLeft,
+			}
+		}
         part WindowRearRight
-        {
-            area = TireRearRight,
-        }
+		{
+			area = TireRearRight,
+			table install
+			{
+				requireInstalled = DoorFrontRight,
+			}
+		}
 		part Window*
 		{
 			window

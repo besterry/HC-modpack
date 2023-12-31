@@ -480,7 +480,6 @@ module Base
 				seat = FrontLeft,
 			}
 
-			itemType = Base.CytAstra89Seat,
 		}
 
 		part SeatFrontLeft
@@ -495,17 +494,14 @@ module Base
 				seat = FrontRight,
 			}
 
-			itemType = Base.CytAstra89Seat,
 		}
 
 		part SeatRearLeft
 		{
-			itemType = Base.CytAstra89Seat,
 		}
 
 		part SeatRearRight
 		{
-			itemType = Base.CytAstra89Seat,
 		}
 
 		part Muffler
@@ -525,7 +521,6 @@ module Base
 				recipes = Intermediate Mechanics,
 			}
 
-			itemType = Base.CytAstra89Muffler,
 		}
 
 		template = EngineDoor,
@@ -565,7 +560,6 @@ module Base
 				animate = FALSE,
 			}
 
-			itemType = Base.CytAstra89Hood,
 
 			table install
 			{
@@ -613,7 +607,6 @@ module Base
 				recipes = Intermediate Mechanics,
 			}
 
-			itemType = Base.CytAstra89Windshield,
 
 			lua
 			{
@@ -645,7 +638,6 @@ module Base
 				recipes = Intermediate Mechanics,
 			}
 
-			itemType = Base.CytAstra89RearWindow,
 
 			lua
 			{
@@ -699,7 +691,6 @@ module Base
 				animate = FALSE,
 			}
 
-			itemType = Base.CytAstra89Door,
 		}
 
 		part DoorFrontRight
@@ -737,7 +728,6 @@ module Base
 				animate = FALSE,
 			}
 
-			itemType = Base.CytAstra89Door,
 		}
 
 		part DoorRearLeft
@@ -775,7 +765,6 @@ module Base
 				animate = FALSE,
 			}
 
-			itemType = Base.CytAstra89Door,
 		}
 
 		part DoorRearRight
@@ -813,7 +802,6 @@ module Base
 				animate = FALSE,
 			}
 
-			itemType = Base.CytAstra89Door,
 		}
 
 		part WindowFrontLeft
@@ -829,7 +817,6 @@ module Base
 				animate = FALSE,
 			}
 
-			itemType = Base.CytAstra89Window,
 			parent = DoorFrontLeft,
 			area = SeatFrontLeft,
 		}
@@ -847,7 +834,6 @@ module Base
 				animate = FALSE,
 			}
 
-			itemType = Base.CytAstra89Window,
 			parent = DoorFrontRight,
 			area = SeatFrontRight,
 		}
@@ -866,7 +852,6 @@ module Base
 			}
 
 			parent = DoorRearLeft,
-			itemType = Base.CytAstra89WindowBack,
 			area = SeatRearLeft,
 		}
 
@@ -884,7 +869,6 @@ module Base
 			}
 
 			parent = DoorRearRight,
-			itemType = Base.CytAstra89WindowBack,
 			area = SeatRearRight,
 		}
 
@@ -895,7 +879,6 @@ module Base
 				file = CytAstra89STMiddleLeftWindow,
 			}
 
-			itemType = Base.CytAstra89WindowBack,
 		}
 
 		part WindowMiddleRight
@@ -905,7 +888,6 @@ module Base
 				file = CytAstra89STMiddleRightWindow,
 			}
 
-			itemType = Base.CytAstra89WindowBack,
 		}
 
 		template = TrunkDoor,
@@ -958,7 +940,6 @@ module Base
 				animate = FALSE,
 			}
 
-			itemType = Base.CytAstra89TrunkDoor,
 		}
 
 		template = Trunk/part/TruckBed,
@@ -989,7 +970,6 @@ module Base
 				file = CytAstra89STWheelfrontwheelleft,
 			}
 
-			itemType = Base.CytAstra89Wheel,
 		}
 
 		part TireFrontRight
@@ -999,7 +979,6 @@ module Base
 				file = CytAstra89STWheelfrontwheelright,
 			}
 
-			itemType = Base.CytAstra89Wheel,
 		}
 
 		part TireRearLeft
@@ -1009,7 +988,6 @@ module Base
 				file = CytAstra89STWheelbackwheelleft,
 			}
 
-			itemType = Base.CytAstra89Wheel,
 		}
 
 		part TireRearRight
@@ -1019,7 +997,6 @@ module Base
 				file = CytAstra89STWheelbackwheelright,
 			}
 
-			itemType = Base.CytAstra89Wheel,
 		}
 
 		template = Brake,

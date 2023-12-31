@@ -1,0 +1,10 @@
+IG_UI_RU = {
+
+    IGUI_VehicleNameFJ75PC = "Toyota FJ75 Land Cruiser Pickup",
+
+    IGUI_VehiclePartFJ75PCBodyArmor = "Кенгурятник",
+    IGUI_VehiclePartFJ75PCArmorWindshield = "Броня лобового стекла",
+    IGUI_VehiclePartFJ75PCFrontLeftDoorArmor = "Броня левой двери",
+    IGUI_VehiclePartFJ75PCFrontRightDoorArmor = "Броня правой двери",
+
+}

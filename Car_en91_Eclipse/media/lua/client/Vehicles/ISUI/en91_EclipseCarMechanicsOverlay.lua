@@ -38,4 +38,4 @@ ISCarMechanicsOverlay.PartList["Engine"].vehicles["en91_Eclipse_"] = {x=56,y=53,
 ISCarMechanicsOverlay.PartList["GasTank"].vehicles["en91_Eclipse_"] = {x=64,y=503,x2=132,y2=544};
 ISCarMechanicsOverlay.PartList["Muffler"].vehicles["en91_Eclipse_"] = {x=178,y=492,x2=197,y2=552};
 
-ISCarMechanicsOverlay.PartList["en91_EclipseArmor"] = {img="armor", x=125,y=306,x2=162,y2=345, vehicles={}};
+-- ISCarMechanicsOverlay.PartList["en91_EclipseArmor"] = {img="armor", x=125,y=306,x2=162,y2=345, vehicles={}};

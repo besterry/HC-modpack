@@ -660,7 +660,6 @@ module Base
 
 		template = Radio,
 		template = Headlight,
-		template = EclipseArmor,
 
 		attachment trailer
 		{

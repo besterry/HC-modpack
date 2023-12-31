@@ -1,0 +1,2 @@
+ItemName_RU = {
+	ItemName_Base.en72_Javelin_Armor = "Импровизированная броня Javelin",

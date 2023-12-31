@@ -51,7 +51,7 @@ module Base
 		centerOfMassOffset = 0.0000 0.6700 0.0000,
 		shadowExtents = 1.5573 3.8162,
 		shadowOffset = 0.0000 -0.0076,
-		mechanicType = 1,
+		mechanicType = 3,
 		offRoadEfficiency = 0.6,
 		playerDamageProtection = 0.8,
 		frontEndHealth = 150,

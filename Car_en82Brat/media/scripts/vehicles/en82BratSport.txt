@@ -66,7 +66,7 @@ module Base
 		centerOfMassOffset = 0.0000 0.9100 0.0000,
 		shadowExtents = 1.5673 4.1762,
 		shadowOffset = 0.0000 -0.0076,
-		mechanicType = 1,
+		mechanicType = 2,
 		offRoadEfficiency = 1.0,
 		playerDamageProtection = 1.2,
 		frontEndHealth = 170,
@@ -268,7 +268,7 @@ module Base
 
 			container
 			{
-				capacity = 130,
+				capacity = 60,
 			}
 		}
 

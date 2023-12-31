@@ -1,0 +1,15 @@
+ItemName_RU = {
+	ItemName_Base.1988fuegoDoorFrontLeft3 = "Передняя левая дверь GTX II",
+	ItemName_Base.1988fuegoDoorFrontRight3 = "Передняя правая дверь GTX II",
+	ItemName_Base.1988fuegoWindowFront3 = "Переднее окно GTX II",
+	ItemName_Base.1988fuegoWindowRear3 = "Заднее окно GTX II",
+	ItemName_Base.1988fuegoHood3 = "Капот GTX II",
+	ItemName_Base.1988fuegoTrunkTuning3 = "Крышка багажника GTX II Tuning",
+	ItemName_Base.1988fuegoTrunk3 = "Крышка багажника GTX II",
+	ItemName_Base.1988fuegoTire3 = "Шина GTX II",
+	ItemName_Base.1988fuegoTireTuning3 = "Шина GTX II Tuning",
+	ItemName_Base.1988fuegoFrontWindshield3 = "Лобовое стекло GTX II",
+	ItemName_Base.1988fuegoRearWindshield3 = "Заднее стекло GTX II",
+	ItemName_Base.1988fuegoSeatFront3 = "Переднее сиденье GTX II",
+	ItemName_Base.1988fuegoSeatRear3 = "Заднее сиденье GTX II",
+}

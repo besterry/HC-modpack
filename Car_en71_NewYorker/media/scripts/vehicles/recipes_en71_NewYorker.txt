@@ -1,6 +1,6 @@
 module Base
 {
-	recipe Weld Armor for '71 New Yorker
+	/*recipe Weld Armor for '71 New Yorker*/
 	{
 		keep WeldingMask,
 		BlowTorch=1,

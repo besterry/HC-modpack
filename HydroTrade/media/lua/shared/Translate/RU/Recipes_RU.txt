@@ -1,5 +1,7 @@
 Items_RU = {
-
+	Recipe_Create_pallet_log = "Создать поддон брёвен",
+	Recipe_Get_pallet_log = "Взять бревно с поддона",
+	Recipe_Put_pallet_log = "Положить бревно на поддон",
 	Recipe_Add_Ammonia_To_Morphin_Hydrochloride_Solution = "Добавить Аммиак к раствору Морфина гидрохлорида",
 	Recipe_Add_Ammonia_To_Morphine_Hydrochloride_Solution = "Добавить аммиак в раствор гидрохлорида морфина",
 	Recipe_Add_Bonnet_to_Wagon = "Добавить крышу к телеге",

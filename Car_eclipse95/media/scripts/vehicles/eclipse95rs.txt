@@ -106,7 +106,7 @@ module Base
 		centerOfMassOffset = 0.0000 0.4400 0.1500,
 		shadowExtents = 1.7700 4.3900,
 		shadowOffset = 0.0000 0.1500,
-		engineForce = 2400,
+		engineForce = 3400,
 		maxSpeed = 90f,
 		gearRatioCount = 5,
 		gearRatioR = 3.56,

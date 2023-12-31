@@ -167,7 +167,7 @@ module Base
 		centerOfMassOffset = 0.0000 1.4603 0.1905,
 		shadowExtents = 2.4997 6.2941,
 		shadowOffset = 0.0000 0.2127,
-		engineForce = 6000,
+		engineForce = 5500,
 		maxSpeed = 50f,
 		engineLoudness = 130,
 		engineQuality = 85,
@@ -178,7 +178,7 @@ module Base
 		gearRatio3 = 4,
 		gearRatio4 = 2,
 		brakingForce = 60,
-		stoppingMovementForce = 4.0f,
+		stoppingMovementForce = 2.0f,
 		rollInfluence = 0.50f,
 		steeringIncrement = 0.04,
 		steeringClamp = 0.3,
@@ -615,7 +615,7 @@ module Base
 		{
 			container
 			{
-				capacity = 120,
+				capacity = 60,
 			}
 		}
 

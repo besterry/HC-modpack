@@ -354,11 +354,10 @@ module Base
 
 		part TruckBed
 		{
-			itemType = Base.BigTrunk,
 
 			container
 			{
-				capacity = 130,
+				capacity = 140,
 			}
 		}
 
@@ -366,7 +365,6 @@ module Base
 
 		part TrunkDoor
 		{
-			itemType = Base.1990traficTrunk,
 
 			table install
 			{
@@ -418,7 +416,6 @@ module Base
 
 		part SeatFrontLeft
 		{
-			itemType = Base.1990traficSeatFront,
 
 			model Default
 			{
@@ -438,7 +435,6 @@ module Base
 
 		part SeatFrontRight
 		{
-			itemType = Base.1990traficSeatFront,
 
 			model Default
 			{
@@ -458,7 +454,6 @@ module Base
 
 		part SeatRearRight
 		{
-			itemType = Base.1990traficSeatFront,
 
 			model Default
 			{
@@ -551,7 +546,6 @@ module Base
 
 		part EngineDoor
 		{
-			itemType = Base.1990traficHood,
 			repairMechanic = true,
 			
 			table install
@@ -624,7 +618,6 @@ module Base
 
 		part Windshield*
 		{
-			itemType = Base.1990traficFrontWindshield,
 
 			table install
 			{
@@ -644,7 +637,6 @@ module Base
 
 		part WindshieldRear
 		{
-			itemType = Base.1990traficRearWindshield,
 
 			table install
 			{
@@ -670,7 +662,6 @@ module Base
 
 		part WindowFrontLeft
 		{
-			itemType = Base.1990traficWindowFront,
 			category = door,
 
 			model Default
@@ -687,7 +678,6 @@ module Base
 
 		part WindowFrontRight
 		{
-			itemType = Base.1990traficWindowFront,
 			category = door,
 
 			model Default
@@ -721,7 +711,6 @@ module Base
 
 		part DoorFrontLeft
 		{
-			itemType = Base.1990traficDoorFrontLeft,
 			category = door,
 
 			model Default
@@ -760,7 +749,6 @@ module Base
 
 		part DoorFrontRight
 		{
-			itemType = Base.1990traficDoorFrontRight,
 			category = door,
 
 			model Default
@@ -799,7 +787,6 @@ module Base
 
 		part DoorRearRight
 		{
-			itemType = Base.1990traficDoorRearRight,
 			category = door,
 
 			model Default
@@ -868,7 +855,6 @@ module Base
 
 		part TireFrontLeft
 		{
-			itemType = Base.1990traficTire,
 
 			model InflatedTirePlusWheel
 			{
@@ -878,7 +864,6 @@ module Base
 
 		part TireFrontRight
 		{
-			itemType = Base.1990traficTire,
 
 			model InflatedTirePlusWheel
 			{
@@ -888,7 +873,6 @@ module Base
 
 		part TireRearLeft
 		{
-			itemType = Base.1990traficTire,
 
 			model InflatedTirePlusWheel
 			{
@@ -898,7 +882,6 @@ module Base
 
 		part TireRearRight
 		{
-			itemType = Base.1990traficTire,
 
 			model InflatedTirePlusWheel
 			{

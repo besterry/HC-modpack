@@ -66,7 +66,7 @@ module Base
 		centerOfMassOffset = 0.0000 0.7600 0.0000,
 		shadowExtents = 1.5799 3.9003,
 		shadowOffset = 0.0000 0.0156,
-		mechanicType = 1,
+		mechanicType = 3,
 		offRoadEfficiency = 0.9,
 		playerDamageProtection = 1.0,
 		frontEndHealth = 140,
@@ -665,7 +665,7 @@ module Base
 
 		template = Radio,
 		template = Headlight,
-		template = EclipseArmor,
+		/*template = EclipseArmor,*
 
 		attachment trailer
 		{

@@ -1,0 +1,10 @@
+IG_UI_RU = 
+{
+
+	IGUI_VehicleNametoyotahilux89singlecab = "Toyota Hilux SingleCab '89"
+	IGUI_VehicleNametoyotahilux89extracab = "Toyota Hilux ExtraCab '89"
+	IGUI_VehicleNametoyotahilux89dualcab = "Toyota Hilux DualCab '89"
+	
+	IGUI_VehiclePartBonnet = "Капот"
+
+};

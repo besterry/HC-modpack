@@ -647,7 +647,7 @@ module Base
 
 		template = Radio,
 		template = Headlight,
-		template = JavelinArmor,
+		/*template = JavelinArmor,*/
 
 		attachment trailer
 		{

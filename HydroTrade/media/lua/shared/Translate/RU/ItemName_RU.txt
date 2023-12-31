@@ -1,4 +1,5 @@
 ItemName_RU = {
+	ItemName_Base.HTpalletLogs = "Поддон брёвен",
 	ItemName_Hydrocraft.HCMysteryseedspacket = "Пакет с Неизвестными Семенами",	
 	ItemName_Hydrocraft.HCMagazinemetalworking7 = "Ежемесячник по металлообработке - Фермерские инструменты",
 	ItemName_Hydrocraft.HCMagazinemetalworking6 = "Ежемесячник по металлообработке - Шестеренки",

@@ -181,7 +181,7 @@ module Base
 		centerOfMassOffset = 0.0000 0.5300 0.0000,
 		shadowExtents = 1.7804 4.1256,
 		shadowOffset = 0.0000 -0.0027,
-		engineForce = 4000,
+		engineForce = 3600,
 		engineQuality = 80,
 		engineLoudness = 110,
 		maxSpeed = 70f,
@@ -330,7 +330,6 @@ module Base
 
 		part TruckBedOpen
 		{
-			itemType = Base.1979rastrojeroCajaTrunk,
 			container
 			{
 				capacity = 110,
@@ -341,8 +340,6 @@ module Base
 
 		part TrunkDoor
 		{
-			itemType = Base.1979rastrojeroTrunk,
-
 			model Default
 			{
 				file = 1979rastrojeroBase_Trunk,
@@ -391,7 +388,6 @@ module Base
 
 		part SeatFrontLeft
 		{
-			itemType = Base.1979rastrojeroSeatFront,
 
 			model Default
 			{
@@ -411,7 +407,6 @@ module Base
 
 		part SeatFrontRight
 		{
-			itemType = Base.1979rastrojeroSeatFront,
 
 			model Default
 			{
@@ -504,7 +499,6 @@ module Base
 
 		part EngineDoor
 		{
-			itemType = Base.1979rastrojeroHood,
 			mechanicRequireKey = false,
 			repairMechanic = true,
 
@@ -576,7 +570,6 @@ module Base
 
 		part Windshield
 		{
-			itemType = Base.1979rastrojeroFrontWindshield,
 
 			model Default
 			{
@@ -586,7 +579,6 @@ module Base
 
 		part WindshieldRear
 		{
-			itemType = Base.1979rastrojeroRearWindshield,
 
 			model Default
 			{
@@ -623,7 +615,6 @@ module Base
 		part WindowFrontLeft
 		{
 			category = door,
-			itemType = Base.1979rastrojeroWindowFront,
 
 			model Default
 			{
@@ -640,7 +631,6 @@ module Base
 		part WindowFrontRight
 		{
 			category = door,
-			itemType = Base.1979rastrojeroWindowFront,
 
 			model Default
 			{
@@ -673,7 +663,6 @@ module Base
 		part DoorFrontLeft
 		{
 			category = door,
-			itemType = Base.1979rastrojeroDoorFrontLeft,
 
 			model Default
 			{
@@ -712,7 +701,6 @@ module Base
 		part DoorFrontRight
 		{
 			category = door,
-			itemType = Base.1979rastrojeroDoorFrontRight,
 
 			model Default
 			{
@@ -765,7 +753,6 @@ module Base
 
 		part TireFrontLeft
 		{
-			itemType = Base.1979rastrojeroTire,
 
 			model InflatedTirePlusWheel
 			{
@@ -775,7 +762,6 @@ module Base
 
 		part TireFrontRight
 		{
-			itemType = Base.1979rastrojeroTire,
 
 			model InflatedTirePlusWheel
 			{
@@ -785,7 +771,6 @@ module Base
 
 		part TireRearLeft
 		{
-			itemType = Base.1979rastrojeroTire,
 
 			model InflatedTirePlusWheel
 			{
@@ -795,7 +780,6 @@ module Base
 
 		part TireRearRight
 		{
-			itemType = Base.1979rastrojeroTire,
 
 			model InflatedTirePlusWheel
 			{

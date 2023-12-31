@@ -45,7 +45,8 @@ function RemoverItemAndBuildsTool:initialise()
     self.itemType:addOption(getText("IGUI_RemoveBuilds"))
     self.itemType:addOption(getText("IGUI_RemoveAll"))
     self.itemType:addOption(getText("IGUI_ChangeToRoad"))
-    self.itemType:addOption(getText("IGUI_ChangeToGrass"))
+    self.itemType:addOption(getText("IGUI_ChangeToGrass"))    
+    -- self.itemType:addOption(getText("IGUI_ClearSnow"))
     self.itemType:setSelected(1)
 end
 
@@ -163,6 +164,17 @@ function RemoverItemAndBuildsTool:onClick(button)
                                     end
 
                                 end
+                            -- elseif self.itemType:isSelected(6) then --Если очистка от снего
+                            --     for i = sq:getObjects():size() - 1, 0 , -1 do
+                            --         local Cell = sq:getCell()
+                            --         --print("Floor: ", sq:getCell():gridSquareIsSnow(x,y,z))
+                            --         if Cell:gridSquareIsSnow(x,y,z) then    
+                            --             print("Snow clear!")                                    
+                            --             Cell:setSnowTarget(i)
+                            --         else
+                            --             print("This no snow")
+                            --         end
+                            --     end
                             end
                         end
                     end
