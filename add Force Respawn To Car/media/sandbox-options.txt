@@ -1,0 +1,14 @@
+VERSION = 1,
+
+option RespawnInCarMod.ForceToRespawnInCarEvenIfNewPlayer = {
+	type = boolean,
+	default = false,
+	page = RespawnInCarMod,
+	translation = RespawnInCarModForceToRespawnInCarEvenIfNewPlayer,
+}
+option RespawnInCarMod.FullProtectDuringRespawn = {
+	type = boolean,
+	default = false,
+	page = RespawnInCarMod,
+	translation = RespawnInCarModFullProtectDuringRespawn,
+}

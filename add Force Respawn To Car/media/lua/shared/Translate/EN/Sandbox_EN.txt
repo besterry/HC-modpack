@@ -1,0 +1,11 @@
+Sandbox_EN = {
+
+    Sandbox_RespawnInCarMod = "Respawn in Car",
+
+    Sandbox_RespawnInCarModForceToRespawnInCarEvenIfNewPlayer = "Force player to Respawn ",
+    Sandbox_RespawnInCarModForceToRespawnInCarEvenIfNewPlayer_tooltip = "If TRUE, during a new game, after the creation of a new character, if a position affiliated with the name of the character is known, even if the character is new, he will be forced to join his position , of course, this option is not valid after a death, this option is present for the Avatar mod, this offers administrators the possibility of placing avatars with the name of a player who has never joined the server part / Game, and thus force the new player to join the recorded position via the Avatar.",
+
+    Sandbox_RespawnInCarModFullProtectDuringRespawn = "Full protection during respawn",
+    Sandbox_RespawnInCarModFullProtectDuringRespawn_tooltip = "If TRUE, then complete and optimal protection will be applied to players during their respawns, only when the RIC mod forces the respawn, to be prioritized on coop servers (invisible and no clip player), if FALSE, then just dont attack by zombies.",
+
+}

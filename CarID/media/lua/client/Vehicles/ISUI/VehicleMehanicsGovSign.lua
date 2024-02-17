@@ -14,7 +14,7 @@ receiveServerCommand = function(module, command, args)
         local vehicle = getVehicleById(args.vehicleId)
         if not vehicle then return end
         vehicle:getModData().sqlId = args.sqlId
-        print("Load sql on server")        
+        --print("Load sql on server")        
     end
 end
 Events.OnServerCommand.Add(receiveServerCommand)

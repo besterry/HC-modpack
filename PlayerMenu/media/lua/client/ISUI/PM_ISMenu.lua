@@ -2,6 +2,13 @@
 
 require "ISUI/UserPanel/ISAddSHUI"
 PM_ISMenu = ISPanel:derive("PM_ISMenu");
+local mods = getActivatedMods();
+local dontLoad = false;
+for i=0, mods:size()-1, 1 do
+	if mods:get(i) == "AutoLoot" or mods:get(i) == "AutoLoot_h" then
+		dontLoad = true
+	end
+end
 
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
 local FONT_HGT_MEDIUM = getTextManager():getFontHeight(UIFont.Medium)
@@ -112,7 +119,26 @@ function PM_ISMenu:initialise()
     self.Shop:instantiate();
     self.Shop.borderColor = {r=0.99, g=0.93, b=1.0, a=0};
     self:addChild(self.Shop);
+    self.Shop:setEnabled(false) -- отключение кнопки магазин (в разработке)
+    self.Shop:setVisible(false)
     
+    if dontLoad then
+        local y_coord
+        if self.Shop:isVisible() then
+            y_coord = self.Shop.y + 35
+        else
+            y_coord = self.SHOPBTN.y + 35
+        end
+        --кнопка Автолут
+        self.AutoLoot = ISButton:new(x, y_coord, btnWid, btnHgt, getText("IGUI_AutoLoot"), self, PM_ISMenu.onClick);
+        self.AutoLoot.internal = "AutoLoot";
+        self.AutoLoot.backgroundColor = {r=0.43, g=0.21, b=0.1, a=0.8};
+        self.AutoLoot.textColor = {r=1, g=1, b=0, a=0.8};
+        self.AutoLoot:initialise();
+        self.AutoLoot:instantiate();
+        self.AutoLoot.borderColor = {r=0.99, g=0.93, b=1.0, a=0};
+        self:addChild(self.AutoLoot);
+    end
 
     --кнопка обновить баланс
     self.reload = ISButton:new(x, self:getHeight() - padBottom - btnHgt, btnWid, btnHgt, getText("IGUI_Reload"), self, PM_ISMenu.onClick);
@@ -162,7 +188,6 @@ function PM_ISMenu:render()
         self.reload.textColor = {r=1, g=1, b=1, a=0.5}
         self.reload.backgroundColor = {r=0.3, g=0.3, b=0.3, a=1}
     end
-    self.Shop:setEnabled(false) -- отключение кнопки магазин (в разработке)
 end
 
 function PM_ISMenu:onClick(button)
@@ -209,6 +234,16 @@ function PM_ISMenu:onClick(button)
             ui:addToUIManager(); 
         end
     end    
+    if button.internal == "AutoLoot" then
+        if UI_AutoLoot.instance then
+            UI_AutoLoot.instance:close()
+            UI_AutoLoot.instance = nil
+        else  
+            local ui = UI_AutoLoot:new(50,50,400,250, getPlayer());    
+            ui:initialise();
+            ui:addToUIManager(); 
+        end
+    end 
 end
 
 --Create new window

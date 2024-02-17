@@ -31,7 +31,8 @@ local function LoadJsonItems(filename) --чтение с файла json
             bonus = 0,
             safehouse = 625, 
             ShopCount = 0,
-            MaxShopCount = 5
+            MaxShopCount = 5,
+            autoloot = 0
         }
         local msg = "New user create account:" .. filename
         writeLog("BalanceAndSafeHouse", msg)
@@ -114,6 +115,8 @@ commands.saveUserData = function (player, args)
             else
                 UserData[key] = value -- Если ключ существует, перезаписываем значение
             end
+        elseif key~="action" and key ~= "delta" then -- Если ключа нет в UserData, создаем его            
+            UserData[key] = value
         end
     end
     SaveJsonItems(UserData,filename)
@@ -132,6 +135,13 @@ commands.reloadUserData = function(player, args) --кнопка перезагр
     local filename = "users/" .. nickname .. ".json"
     UserData = LoadJsonItems(filename)
     sendServerCommand('BalanceAndSH', "onGetData", {UserData = UserData})
+end
+
+commands.getServerTime = function(player, args) --Получение серверного времени    
+    --print("Server Time:", os.time())
+    args = {}
+    args.time = os.time()
+    sendServerCommand('BalanceAndSH', "onGetServerTime1", args)
 end
 
 --Объявляем функцию прослушивания BalanceAndSH с клиента и выполнение команд

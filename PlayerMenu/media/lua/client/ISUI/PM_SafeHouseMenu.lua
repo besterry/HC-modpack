@@ -94,7 +94,7 @@ function PM_SafeHouseMenu:onClick(button)
             saveData.delta = 100
             saveData.balance = PM.Balance
             saveData.safehouse = (math.sqrt(PM.SafeHouseSize)+1)^2
-            saveData.MaxShopCount = PM.MaxShopCount + 1
+            saveData.MaxShopCount = PM.MaxShopCount
             saveData.action = "buy expand safehouse"
             sendClientCommand(getPlayer(), 'BalanceAndSH', 'saveUserData', saveData)
             -- local safehouse = (math.sqrt(PM.SafeHouseSize)+1)^2

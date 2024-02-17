@@ -20,22 +20,24 @@ local MOD_NAME = CarShop.MOD_NAME
 local carShopEventHandler = {}
 
 LuaEventManager.AddEvent("onCarSaleChange") -- Добавляем новый тип события. Будем его вызывать когда изменится количество продаваемых авто
-
-if SandboxVars.Shops.CarTradeZone then
-	---@type carTradeZone[]
-	local result = {}
-	local zonesStrArr = luautils.split(SandboxVars.Shops.CarTradeZone, ';')
-	for _, zoneStr in ipairs(zonesStrArr) do
-        local zoneValuesStr = luautils.split(zoneStr, " ")
-		---@type carTradeZone
-		local zoneValuesNum = {}
-		for _, coordStr in ipairs(zoneValuesStr) do
-			table.insert(zoneValuesNum, tonumber(coordStr))
+local function onLoad()
+		if SandboxVars.Shops.CarTradeZone then
+		---@type carTradeZone[]
+		local result = {}
+		local zonesStrArr = luautils.split(SandboxVars.Shops.CarTradeZone, ';')
+		for _, zoneStr in ipairs(zonesStrArr) do
+			local zoneValuesStr = luautils.split(zoneStr, " ")
+			---@type carTradeZone
+			local zoneValuesNum = {}
+			for _, coordStr in ipairs(zoneValuesStr) do
+				table.insert(zoneValuesNum, tonumber(coordStr))
+			end
+			table.insert(result, zoneValuesNum)
 		end
-        table.insert(result, zoneValuesNum)
-    end
-	CarShop.zones = result
+		CarShop.zones = result
+	end
 end
+Events.OnLoad.Add(onLoad)
 
 ---@param x number
 ---@param y number
