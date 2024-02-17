@@ -15,6 +15,7 @@ function ISWorldMap.ToggleWorldMap(playerNum)
 		local toolS = player:getSecondaryHandItem()
 		local toolsB = player:getAttachedItems()
 		
+		
 		if toolP and (toolP:getType() == "GPSdayz" and toolP:isActivated()) then 
 			gps = player:getPrimaryHandItem() 
 	
@@ -32,6 +33,34 @@ function ISWorldMap.ToggleWorldMap(playerNum)
 			end		
 		end
 		
+		local inventory = player:getInventory()
+		local lootCount = inventory:getItems():size()
+		for i = lootCount, 1, -1 do --Проверка в основном инвентаре наличие карты
+            local item = inventory:getItems():get(i - 1)
+			if item:getType() == "worldmap1" then
+				map1 = item
+				break
+			end
+        end
+
+		if not map1 then --Если карта не найдена проверка в рюкзаках
+			local containers = player:getInventory():getItemsFromCategory("Container");
+			for i = containers:size() - 1, 0, -1 do
+				local bag = containers:get(i)
+				if bag:getType() ~= "KeyRing" then
+					inventory = bag:getInventory()
+					lootCount = inventory:getItems():size()
+					for i = lootCount, 1, -1 do --Проверка в рюкзаке наличие карты
+						local item = inventory:getItems():get(i - 1)
+						if item:getType() == "worldmap1" then
+							map1 = item
+							break
+						end
+					end					
+				end
+			end
+		end
+
 		if toolE and (toolP:getType() == "worldmap1") then 
 			map1 = player:getPrimaryHandItem() 
 	
@@ -43,13 +72,13 @@ function ISWorldMap.ToggleWorldMap(playerNum)
 			for i=1,toolsA:size() do
 				local item = toolsB:getItemByIndex(i-1)
 				if item:getType() == "worldmap1" then
-					map1 = toolsA:getItemByIndex(i-1) 
+					map1 = toolsA:getItemByIndex(i-1)
 					break
 				end
 			end		
 		end
-		--------------------------------------------------
-		if not gps and not map1 and not isAdmin() then return player:Say(getText("IGUI_No_GPS_on")) end
+		-------------------------------------------------- and not isAdmin()
+		if not gps and not map1 then player:Say(getText("IGUI_No_GPS_on")) return end
 		--------------------------------------------------
 		if ISPostDeathUI and ISPostDeathUI.instance and #ISPostDeathUI.instance > 0 then
 			return
