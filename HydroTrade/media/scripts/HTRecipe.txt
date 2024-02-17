@@ -5,8 +5,330 @@ module Hydrocraft
         Base, farming, Engineer, Survivalist
 
     }
+
+/***********Detachment***********
+
+recipe Detachment
+    {
+    	SkillRequired:Woodwork=4,
+		HCLab2,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,
+    	Result:HCLab,
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {
+    	SkillRequired:Woodwork=4,
+		HCJunkyardlargefull2,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,
+    	Result:HCJunkyardlargefull,
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCTailoringbench2,
+        Result:HCTailoringbench,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCElectornicsbench2,
+        Result:HCElectornicsbench,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCDistillery2,
+        Result:HCDistillery,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCBlastfurnace2,
+        Result:HCBlastfurnace,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCFurnacearc2,
+        Result:HCFurnacearc,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCAnvilstone2,
+        Result:HCAnvilstone,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCAnvillead2,
+        Result:HCAnvillead,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCQuarrystone2,
+        Result:HCQuarrystone,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCSmokerfull2,
+        Result:HCSmokerfull,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCOilpress2,
+        Result:HCOilpress,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCMedicallab2,
+        Result:HCMedicallab,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCHuntingblind2,
+        Result:HCHuntingblind,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCSteamhammer2,
+        Result:HCSteamhammer,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCSteamCharger2,
+        Result:HCSteamCharger,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCSmelter2,
+        Result:HCSmelter,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCFurnace2,
+        Result:HCFurnace,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCLabbig2,
+        Result:HCLabbig,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
+
+recipe Detachment
+    {    	
+		HCRoulette2,
+        Result:HCRoulette,
+        SkillRequired:Woodwork=4,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,    	
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
+    }
 	
-/************************RECIPES************************/
+/***********RECIPES***********
 
 recipe Cultivate blackmold
     {
