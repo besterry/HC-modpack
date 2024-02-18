@@ -448,7 +448,8 @@ module Base
 		template = Door/part/DoorFrontLeft,
 		template = Door/part/DoorFrontRight,
 		template = Window/part/WindowFrontLeft,
-		template = Window/part/WindowFrontRight,
+		template = Window/part/WindowFrontRight,		
+		template = Windshield/part/WindshieldRear,
 
 		part WindowFrontRight
 		{
