@@ -1,0 +1,63 @@
+Sandbox_RU = {
+
+Sandbox_itemGPS = "itemGPS",
+
+     Sandbox_itemGPSWorldMap = "Доступ к карте",
+     Sandbox_itemGPSWorldMap_tooltip = "0 = Карта полностью отключена <br>1 = Карта доступна только с GPS <br>2 = Карта доступна постоянно (с GPS или без).<br>",
+
+     Sandbox_itemGPSnoFogOnMiniMap = "Удаляет туман с мини-карты",
+     Sandbox_itemGPSnoFogOnMiniMap_tooltip = "TRUE = «Туман» и подсветка непосещенных областей будут отключены на мини-карте, непосещенные области больше не будут отображаться.",
+
+     Sandbox_itemGPSIsometricViewOnMiniMapIsAllowed = "Изометрический вид мини-карты",
+     Sandbox_itemGPSIsometricViewOnMiniMapIsAllowed_tooltip = "TRUE = Изомертический вид будет включен на мини-карте (экран GPS).",
+
+     Sandbox_itemGPSnoFogOnWorldMap = "Удалить туман с карты",
+     Sandbox_itemGPSnoFogOnWorldMap_tooltip = "TRUE = «Туман» и подсветка непосещенных областей будут отключены на интерактивной карте, непосещенные области больше не будут отображаться.",
+
+     Sandbox_itemGPSRedMarkerOnMap = "Положение маркера на карте",
+     Sandbox_itemGPSRedMarkerOnMap_tooltip = "0 = Красный маркер полностью отключен на карте <br>1 = Красный маркер будет отображаться только с GPS <br>2 = Красный маркер будет отображаться постоянно (с GPS или без него).<br>",
+
+     Sandbox_itemGPSCenterPlayerInaccuracyOnMap = "Увеличить масштаб там, где находится игрок без GPS",
+     Sandbox_itemGPSCenterPlayerInaccuracyOnMap_tooltip = "FALSE = Без GPS невозможно оценить положение на карте, карта будет уменьшена при нажатии клавиши C<br><br>TRUE = Без GPS вы сможете оценить свое положение, нажав C ключ, это приведет к некоторой неточности масштабирования вашей позиции.",
+
+     Sandbox_itemGPSCenterPlayerInaccuracyRadius = "Радиус неточности позиции игрока",
+     Sandbox_itemGPSCenterPlayerInaccuracyRadius_tooltip = "Если CenterPlayerInaccuracyOnMap = TRUE (Zoom при включенном проигрывателе): <br><br>Вы можете установить радиус неточности вашего положения на карте без GPS. <br>Чем выше число, тем сложнее будет чтобы оценить свое положение на карте, нажав клавишу C.<br>",
+
+     Sandbox_itemGPSGpsDistributionMultiplier = "Множитель распределения GPS",
+     Sandbox_itemGPSGpsDistributionMultiplier_tooltip = "0 = НЕТ РАСПРОСТРАНЕНИЯ <br>1 = ОЧЕНЬ РЕДКОЕ <br>2 = ОЧЕНЬ РЕДКОЕ <br>3 = РЕДКОЕ <br>4 = НОРМАЛЬНО <br>5 = ВЫСОКОЕ <br>6 = ОЧЕНЬ ВЫСОКОЕ <br> br>(Необходим перезагрузить игру)<br>",
+
+     Sandbox_itemGPSCableDistributionMultiplier = "Множитель распределения соответствующего кабеля GPS",
+     Sandbox_itemGPSCableDistributionMultiplier_tooltip = "0 = НЕТ РАСПРОСТРАНЕНИЯ <br>1 = ОЧЕНЬ РЕДКОЕ <br>2 = ОЧЕНЬ РЕДКОЕ <br>3 = РЕДКОЕ <br>4 = НОРМАЛЬНО <br>5 = ВЫСОКОЕ <br>6 = ОЧЕНЬ ВЫСОКОЕ <br> <br> br>(Необходим перезагрузить игру)<br>",
+
+     Sandbox_itemGPSG315Inaccuracy = "Неточность координат 315",
+     Sandbox_itemGPSG315Inaccuracy_tooltip = "Чем выше число, тем менее точными будут координаты, путевые точки тоже, красный маркер, указывающий ваше положение на карте и мини-карте, не будет затронут.<br>",
+
+    Sandbox_itemGPSG48Inaccuracy = "Неточность координат G48",
+     Sandbox_itemGPSG48Inaccuracy_tooltip = "Чем выше число, тем менее точными будут координаты, путевые точки тоже, красный маркер, указывающий ваше положение на карте и мини-карте, не будет затронут.<br>",
+
+     Sandbox_itemGPSDAGRInaccuracy = "Неточность координат DAGR",
+     Sandbox_itemGPSDAGRInaccuracy_tooltip = "Чем выше число, тем менее точными будут координаты, путевые точки тоже, красный маркер, указывающий ваше положение на карте и мини-карте, не будет затронут.<br>",
+
+     Sandbox_itemGPSH800Inaccuracy = "Неточность координат H800",
+     Sandbox_itemGPSH800Inaccuracy_tooltip = "Чем выше число, тем менее точными будут координаты, путевые точки тоже, красный маркер, указывающий ваше положение на карте и мини-карте, не будет затронут.<br>",
+
+     Sandbox_itemGPSDZ2012Inaccuracy = "Неточность координат DZ2012",
+     Sandbox_itemGPSDZ2012Inaccuracy_tooltip = "Чем выше число, тем менее точными будут координаты, путевые точки тоже, красный маркер, указывающий ваше положение на карте и мини-карте, не будет затронут.<br>",
+
+     Sandbox_itemGPSUseBatteryMultiplier = "Расход батареи",
+     Sandbox_itemGPSUseBatteryMultiplier_tooltip = "Чем выше будет число, тем самый быстрый GPS будет расходовать батарею, каждый GPS имеет свой собственный уровень потребления, благодаря этому множителю вы сможете варьировать потребление.<br>Если вы измените это число, вы не будет необходимости изменять опцию: Скорость подзарядки, поскольку подзарядка также зависит от расхода аккумулятора.<br>",
+
+     Sandbox_itemGPScanBeDestroyed = "Уничтожаемый GPS",
+     Sandbox_itemGPScanBeDestroyed_tooltip = "0 = Отключено <br>1 = GPS будет уничтожен автоматически, если вы умрете с ним <br>2 и выше = Случайный шанс того, что GPS будет уничтожен, связанный с этим числом. Чем выше он будет, тем больше шансов на ваш GPS не будет уничтожен.<br>",
+    
+     Sandbox_itemGPSKeyKShunter = "Ярлык k шунт",
+     Sandbox_itemGPSKeyKShunter_tooltip = "TRUE = Вам больше не нужно будет удерживать клавишу K на клавиатуре, чтобы просмотреть экран GPS (при прикреплении к ремню).<br>",
+
+     Sandbox_itemGPShargeBatteryMultiplier = "скорость перезарядки",
+     Sandbox_itemGPSChargeBatteryMultiplier_tooltip = "Чем выше число, тем быстрее будет перезагрузка GPS.<br>",
+
+     Sandbox_itemGPSsyncMinimapFogToWorldMap = "синхронизировать туман мини-карты с картой мира",
+     Sandbox_itemGPSsyncMinimapFogToWorldMap_tooltip = "Если туман непосещенных областей миникарты не активен (на миникарте нет тумана = true), то при включенном GPS туман карты синхронизируется с миникартой.<br>",
+
+    
+}

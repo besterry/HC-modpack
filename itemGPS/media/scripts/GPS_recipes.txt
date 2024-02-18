@@ -1,0 +1,184 @@
+module Base
+{
+	recipe Insert Battery Into GPS
+   	{
+    destroy GPSdayz,
+    destroy Battery,
+    Result:GPSdayz,
+    /*RemoveResultItem:true,*/
+    Time:150,
+    OnTest:GPS_Recipe_code.TestGPSBatteryInsert,
+    OnCreate:GPS_Recipe_code.CreateGPSBatteryInsert,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+	Prop2:GPSdayZ,
+   	}
+    
+    recipe Insert Battery Into GPS
+    {
+    destroy GPS_G48,
+    destroy Battery,
+    Result:GPS_G48,
+    /*RemoveResultItem:true,*/
+    Time:150,
+    OnTest:GPS_Recipe_code.TestGPSBatteryInsert,
+    OnCreate:GPS_Recipe_code.CreateGPSBatteryInsert,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+    Prop2:GPS_G48,
+    }
+
+    recipe Insert Battery Into GPS
+    {
+    destroy GPS_315,
+    destroy Battery,
+    Result:GPS_315,
+    /*RemoveResultItem:true,*/
+    Time:150,
+    OnTest:GPS_Recipe_code.TestGPSBatteryInsert,
+    OnCreate:GPS_Recipe_code.CreateGPSBatteryInsert,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+    Prop2:GPS_315,
+    }
+    recipe Insert Battery Into GPS
+    {
+    destroy GPS_DAGR,
+    destroy Battery,
+    Result:GPS_DAGR,
+    /*RemoveResultItem:true,*/
+    Time:150,
+    OnTest:GPS_Recipe_code.TestGPSBatteryInsert,
+    OnCreate:GPS_Recipe_code.CreateGPSBatteryInsert,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+    Prop2:GPS_DAGR,
+    }
+
+
+
+
+  	recipe Remove Battery From GPS
+   	{
+    keep GPSdayz,
+    Result:Battery,
+    Time:150,
+    OnTest:GPS_Recipe_code.TestGPSBatteryRemoval,
+    OnCreate:GPS_Recipe_code.GPSBatteryRemoval,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+	Prop2:GPSdayZ,
+   	}
+    recipe Remove Battery From GPS
+    {
+    keep GPS_G48,
+    Result:Battery,
+    Time:150,
+    OnTest:GPS_Recipe_code.TestGPSBatteryRemoval,
+    OnCreate:GPS_Recipe_code.GPSBatteryRemoval,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+    Prop2:GPS_G48,
+    }
+    recipe Remove Battery From GPS
+    {
+    keep GPS_315,
+    Result:Battery,
+    Time:150,
+    OnTest:GPS_Recipe_code.TestGPSBatteryRemoval,
+    OnCreate:GPS_Recipe_code.GPSBatteryRemoval,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+    Prop2:GPS_315,
+    }
+    recipe Remove Battery From GPS
+    {
+    keep GPS_DAGR,
+    Result:Battery,
+    Time:150,
+    OnTest:GPS_Recipe_code.TestGPSBatteryRemoval,
+    OnCreate:GPS_Recipe_code.GPSBatteryRemoval,
+    AnimNode:Disassemble,
+    Sound:GPS_changePile,
+    Prop2:GPS_DAGR,
+    }
+
+
+
+
+    recipe Dismantle GPS
+    {
+    destroy GPSdayz,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:GPS_Recipe_code.DismantleGPS,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+	Prop2:GPSdayz,
+    }
+    recipe Dismantle GPS
+    {
+    destroy GPS_G48,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:GPS_Recipe_code.DismantleGPS,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+    Prop2:GPS_G48,
+    }
+    recipe Dismantle GPS
+    {
+    destroy GPS_315,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:GPS_Recipe_code.DismantleGPS,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+    Prop2:GPS_315,
+    }
+    recipe Dismantle GPS
+    {
+    destroy GPS_DAGR,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:GPS_Recipe_code.DismantleGPS,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+    Prop2:GPS_DAGR,
+    }
+    recipe Dismantle GPS
+    {
+    destroy GPS_H800,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:GPS_Recipe_code.DismantleGPS,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+    Prop2:GPS_H800,
+    }
+}

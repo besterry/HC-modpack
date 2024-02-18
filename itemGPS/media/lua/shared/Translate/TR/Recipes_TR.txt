@@ -1,0 +1,7 @@
+Recipe_TR = {
+
+Recipe_Insert_Battery_Into_GPS = "GPS 'e pil yerlestir",
+Recipe_Remove_Battery_From_GPS = "GPS 'ten pil çikar",
+Recipe_Dismantle_GPS = "GPS'i sök ",
+
+}

@@ -1,0 +1,61 @@
+Sandbox_FR = {
+
+    Sandbox_itemGPS = "itemGPS",
+
+    Sandbox_itemGPSWorldMap = "Accès à la carte",
+    Sandbox_itemGPSWorldMap_tooltip = "0 = Carte totalement désactivée du jeu <br>1 = Carte accessible uniquement grâce à un GPS <br>2 = Carte accessible en permanence (avec ou sans GPS).<br>",
+
+    Sandbox_itemGPSnoFogOnMiniMap = "Retire le brouillard de la mini carte",
+    Sandbox_itemGPSnoFogOnMiniMap_tooltip = "TRUE = Le brouillard et la surbrillance des zones non visitées seront désactivées sur la mini carte, les zones non visitées ne seront plus indiquées.",
+
+    Sandbox_itemGPSIsometricViewOnMiniMapIsAllowed = "Vue isométrique de la minimap",
+    Sandbox_itemGPSIsometricViewOnMiniMapIsAllowed_tooltip = "TRUE = La vue isométrique sera activée sur la mini carte (écran GPS).",
+
+    Sandbox_itemGPSnoFogOnWorldMap = "Retire le brouillard de la carte",
+    Sandbox_itemGPSnoFogOnWorldMap_tooltip = "TRUE = Le brouillard et la surbrillance des zones non visitées seront désactivées sur la carte interactive, les zones non visitées ne seront plus indiquées.",
+
+    Sandbox_itemGPSRedMarkerOnMap = "Marqueur de position sur la carte",
+    Sandbox_itemGPSRedMarkerOnMap_tooltip = "0 = Marqueur rouge totalement désactivé sur la carte <br>1 = Marqueur rouge indiqué uniquement avec un GPS <br>2 = Marqueur rouge indiqué en permanance (avec ou sans GPS).<br>",
+
+    Sandbox_itemGPSCenterPlayerInaccuracyOnMap = "Zoom sur la région du joueur sans GPS",
+    Sandbox_itemGPSCenterPlayerInaccuracyOnMap_tooltip = "FALSE = Sans GPS, impossible d'évaluer sa position sur la carte, la carte sera dézoomée lorsque la touche C sera pressée <br><br>TRUE = Sans GPS, vous aurez la possibilité d'évaluer votre position en pressant la touche C du clavier, cela effectura un zoom avec une imprécision autour de votre position.",
+
+    Sandbox_itemGPSCenterPlayerInaccuracyRadius = "Rayon de l'imprécision de la position du joueur",
+    Sandbox_itemGPSCenterPlayerInaccuracyRadius_tooltip = "Si CenterPlayerInaccuracyOnMap = TRUE (Zoom sur la region du joueur activé) : <br><br>Vous pouvez régler le rayon de l'imprécision de votre position indiquée sur la carte sans GPS en votre possession. <br>Plus le chiffre est élévé, plus il sera difficle d'évaluer votre position sur la carte en pressant la touche C du clavier.<br>",
+
+    Sandbox_itemGPSGpsDistributionMultiplier = "Multiplicateur de la distribution du GPS",
+    Sandbox_itemGPSGpsDistributionMultiplier_tooltip = "0 = PAS DE DISTRIBUTION <br>1 = EXTRÊMEMENT RARE <br>2 = TRÈS RARE <br>3 = RARE <br>4 = NORMAL <br>5 = ÉLEVÉE <br>6 = TRÈS ÉLEVÉE  <br><br>(Redémmarrage du jeu nécessaire)<br>",
+
+    Sandbox_itemGPSCableDistributionMultiplier = "Multiplicateur de la distribution du cable",
+    Sandbox_itemGPSCableDistributionMultiplier_tooltip = "0 = PAS DE DISTRIBUTION <br>1 = EXTRÊMEMENT RARE <br>2 = TRÈS RARE <br>3 = RARE <br>4 = NORMAL <br>5 = ÉLEVÉE <br>6 = TRÈS ÉLEVÉE  <br><br>(Redémmarrage du jeu nécessaire)<br>",
+
+    Sandbox_itemGPSG315Inaccuracy = "Imprécision des coordonnées du 315",
+    Sandbox_itemGPSG315Inaccuracy_tooltip = "Plus le chiffre est élevé, plus les coordonnées seront imprécises, les waypoints également, le marqueur rouge indiquant votre position sur la carte et la mini carte n'est pas impacté.<br>",
+
+    Sandbox_itemGPSG48Inaccuracy = "Imprécision des coordonnées du G48",
+    Sandbox_itemGPSG48Inaccuracy_tooltip = "Plus le chiffre est élevé, plus les coordonnées seront imprécises, les waypoints également, le marqueur rouge indiquant votre position sur la carte et la mini carte n'est pas impacté.<br>",
+
+    Sandbox_itemGPSDAGRInaccuracy = "Imprécision des coordonnées du DAGR",
+    Sandbox_itemGPSDAGRInaccuracy_tooltip = "Plus le chiffre est élevé, plus les coordonnées seront imprécises, les waypoints également, le marqueur rouge indiquant votre position sur la carte et la mini carte n'est pas impacté.<br>",
+
+    Sandbox_itemGPSH800Inaccuracy = "Imprécision des coordonnées du H800",
+    Sandbox_itemGPSH800Inaccuracy_tooltip = "Plus le chiffre est élevé, plus les coordonnées seront imprécises, les waypoints également, le marqueur rouge indiquant votre position sur la carte et la mini carte n'est pas impacté.<br>",
+
+    Sandbox_itemGPSDZ2012Inaccuracy = "Imprécision des coordonnées du DZ2012",  
+    Sandbox_itemGPSDZ2012Inaccuracy_tooltip = "Plus le chiffre est élevé, plus les coordonnées seront imprécises, les waypoints également, le marqueur rouge indiquant votre position sur la carte et la mini carte n'est pas impacté.<br>",
+
+    Sandbox_itemGPSUseBatteryMultiplier = "Consommation de la batterie",
+    Sandbox_itemGPSUseBatteryMultiplier_tooltip = "Plus le chiffre est élevé, plus les GPS consommeront rapidement leur batterie, chaque GPS a son propre taux de consommation, grâce à ce multiplicateur, vous ferez varier globalement leur consommation.<br>Dans le cas ou vous modifiez ce chiffre, vous ne serez pas obligé de modifier l'option : Vitesse de rechargement, car le rechargement est également basé sur la consomation de la batterie.<br>",
+
+    Sandbox_itemGPScanBeDestroyed = "GPS destructibles",
+    Sandbox_itemGPScanBeDestroyed_tooltip = "0 = désactivé <br>1 = destruction systématique de votre GPS si vous mourrez en l'ayant sur vous <br>2 et superieur à 2 = une chance aléatoire de destruction en rapport avec ce chiffre, plus il sera élévé, plus il y aura de chance que votre GPS ne soit pas détruit.<br>",
+
+    Sandbox_itemGPSKeyKShunter = "Shunter la touche k ",
+    Sandbox_itemGPSKeyKShunter_tooltip = "TRUE = Vous n'aurez plus besoin de maintenir la touche K du clavier enfoncée pour visualiser l'écran du GPS (lorsqu'il est attaché à la ceinture).<br>", 
+
+    Sandbox_itemGPSChargeBatteryMultiplier = "Vitesse de rechargement",
+    Sandbox_itemGPSChargeBatteryMultiplier_tooltip = "Plus le chiffre est élevé, plus le rechargement d'un gps sera rapide.<br>", 
+
+    Sandbox_itemGPSsyncMinimapFogToWorldMap = "synchroniser le brouillard de la mini-carte sur la carte",
+    Sandbox_itemGPSsyncMinimapFogToWorldMap_tooltip = "Si le brouillard des zones non visitées de la minicarte n'est pas actif (pas de brouillard sur la minicarte = true), lorsque vous avez un GPS allumé, le brouillard de la carte se synchronisera sur la minicarte.<br>",
+}

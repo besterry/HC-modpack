@@ -1,0 +1,158 @@
+VERSION = 1,
+
+option itemGPS.WorldMap = {
+	type = integer,
+	default = 2,
+	min = 0,
+	max = 2,
+	page = itemGPS,
+	translation = itemGPSWorldMap,
+}
+
+
+option itemGPS.RedMarkerOnMap = {
+	type = integer,
+	default = 1,
+	min = 0,
+	max = 2,
+	page = itemGPS,
+	translation = itemGPSRedMarkerOnMap,
+}
+
+option itemGPS.CenterPlayerInaccuracyOnMap = {
+	type = boolean,
+	default = true,
+	page = itemGPS,
+	translation = itemGPSCenterPlayerInaccuracyOnMap,
+}
+option itemGPS.CenterPlayerInaccuracyRadius = {
+	type = integer,
+	default = 350,
+	min = 0,
+	max = 2000,
+	page = itemGPS,
+	translation = itemGPSCenterPlayerInaccuracyRadius,
+}
+
+
+
+option itemGPS.noFogOnMiniMap = {
+	type = boolean,
+	default = false,
+	page = itemGPS,
+	translation = itemGPSnoFogOnMiniMap,
+}
+option itemGPS.IsometricViewOnMiniMapIsAllowed = {
+	type = boolean,
+	default = false,
+	page = itemGPS,
+	translation = itemGPSIsometricViewOnMiniMapIsAllowed,
+}
+option itemGPS.noFogOnWorldMap = {
+	type = boolean,
+	default = false,
+	page = itemGPS,
+	translation = itemGPSnoFogOnWorldMap,
+}
+option itemGPS.syncMinimapFogToWorldMap = {
+	type = boolean,
+	default = true,
+	page = itemGPS,
+	translation = itemGPSsyncMinimapFogToWorldMap,
+}
+
+
+option itemGPS.GpsDistributionMultiplier = {
+	type = integer,
+	default = 3,
+	min = 0,
+	max = 6,
+	page = itemGPS,
+	translation = itemGPSGpsDistributionMultiplier,
+}
+option itemGPS.CableDistributionMultiplier = {
+	type = integer,
+	default = 4,
+	min = 0,
+	max = 6,
+	page = itemGPS,
+	translation = itemGPSCableDistributionMultiplier,
+}
+
+
+
+option itemGPS.G315Inaccuracy = {
+	type = integer,
+	default = 10,
+	min = 0,
+	max = 100,
+	page = itemGPS,
+	translation = itemGPSG315Inaccuracy,
+}
+option itemGPS.G48Inaccuracy = {
+	type = integer,
+	default = 20,
+	min = 0,
+	max = 100,
+	page = itemGPS,
+	translation = itemGPSG48Inaccuracy,
+}
+option itemGPS.DAGRInaccuracy = {
+	type = integer,
+	default = 0,
+	min = 0,
+	max = 100,
+	page = itemGPS,
+	translation = itemGPSDAGRInaccuracy,
+}
+option itemGPS.H800Inaccuracy = {
+	type = integer,
+	default = 15,
+	min = 0,
+	max = 100,
+	page = itemGPS,
+	translation = itemGPSH800Inaccuracy,
+}
+option itemGPS.DZ2012Inaccuracy = {
+	type = integer,
+	default = 5,
+	min = 0,
+	max = 100,
+	page = itemGPS,
+	translation = itemGPSDZ2012Inaccuracy,
+}
+
+
+option itemGPS.UseBatteryMultiplier = {
+	type = integer,
+	default = 10,
+	min = 0,
+	max = 30,
+	page = itemGPS,
+	translation = itemGPSUseBatteryMultiplier,
+}
+
+option itemGPS.ChargeBatteryMultiplier = {
+	type = integer,
+	default = 5,
+	min = 1,
+	max = 10,
+	page = itemGPS,
+	translation = itemGPSChargeBatteryMultiplier,
+}
+
+option itemGPS.canBeDestroyed = {
+	type = integer,
+	default = 0,
+	min = 0,
+	max = 30,
+	page = itemGPS,
+	translation = itemGPScanBeDestroyed,
+}
+
+option itemGPS.KeyKShunter = {
+	type = boolean,
+	default = false,
+	page = itemGPS,
+	translation = itemGPSKeyKShunter,
+}

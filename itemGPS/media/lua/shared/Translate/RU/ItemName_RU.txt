@@ -1,6 +1,6 @@
 ItemName_RU = {
 
-ItemName_Base.GPScable = "GPS кабель",
-ItemName_Base.GPSdestroyed = "GPS сломанный",
+ItemName_Base.GPScable = " абель питани€ GPS",
+ItemName_Base.GPSdestroyed = "GPS (уничтожен)",
 
 }

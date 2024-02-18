@@ -1,18 +1,79 @@
 IG_UI_FR = {
    
-IGUI_No_miniMap = "L'accés à la mini carte se fait par le GPS.",
+IGUI_No_miniMap = "L'accès à la mini carte se fait par le GPS.",
 IGUI_No_Map_IG = "Il n'y aura aucun moyen d'accéder à la carte.",
-IGUI_No_GPS_on = "Il vous faut un GPS en fonctionnement.",
+IGUI_No_GPS_on = "Il vous faut un GPS en état de fonctionner.",
 
 IGUI_Plug = "Brancher le GPS",
 IGUI_noPlugIfnoBat = "Le GPS n'a plus de batterie.",
-IGUI_noPlugIfnoCable = "Vous aurez besoin d'un câble GPS pour le brancher sur l'allume-cigare.",
+IGUI_noPlugIfnoCable = "<br>Vous aurez besoin d'un câble pour brancher ce GPS sur l'allume-cigare.<br>Une fois le GPS totalement rechargé, il sera déconnecté automatiquement.<br><br>Le rechargement affectera la batterie du véhicule.",
 IGUI_unPlug = "Débrancher le GPS",
-IGUI_autoUnplugInfo = "Le GPS sera déconnecté automatique une fois chargé.",
-IGUI_Info = "info",
+IGUI_autoUnplugInfo = "<br>Le GPS sera déconnecté automatiquement une fois rechargé.<br><br>Le rechargement affecte la batterie du véhicule.",
+IGUI_Info = "Info",
 
-IGUI_Item_itemGps = "Une fois le GPS déchargé, il s'éteindra du à la batterie insuffisante, il faudra le recharger ou la remplacer par une batterie chargée.",
-IGUI_Item_GpsCable = "Ce câble vous servira à recharger le GPS sur l'allume-cigare, dans une voiture et sur l'une des deux places à avant.",
+
+IGUI_Item_GpsCable = "<br>Ce câble vous servira à recharger les GPS sur l'allume-cigare, dans une voiture et sur l'un des deux sièges à l'avant.<br><br>Il vous servira aussi à brancher les GPS prévus pour les vehicules (non portatif), mettez simplement le GPS non portatif dans la boîte à gant ainsi que son câble de branchement. ",
 
 IGUI_noBattery = "Batterie insuffisante !",
+
+IGUI_Item_itemGps_GPSdayz = "<br>Ce GPS est couramment utilisé par les militaires, moins souvent par la police, tout de même accessible au civils.<br><br>Si ce GPS est déchargé (inférieur à 1%), il s'éteindra automatiquement dû à la batterie insuffisante, il faudra le recharger dans un véhicule grâce son câble de branchement. <br>Si le GPS est à 0%, il vous sera impossible de le recharger, il faudra remettre une batterie.<br><br>Le rechargement du GPS consommera la batterie du véhicule.<br><br>Options accessibles en cliquant droit sur l'écran (veillez à bien cliquer sur le fond de l'écran et non sur les données).<br><br>Un raccourci clavier est configurable dans les options (si mod option est installé), la touche vanilla est K : <br>- Pressez deux fois pour ranger/sortir votre GPS.<br>- Pressez une fois pour allumer/éteindre votre GPS si il est équipé dans votre main.<br>- Gardez pressé pour visualiser votre GPS si il est attaché à votre ceinture.",
+
+IGUI_Item_itemGps_GPS_315 = "<br>Ce GPS est utilisé par la majorité des services publics. Accessible au civils.<br><br>Si ce GPS est déchargé (inferieur à 1%), il s'éteindra automatiquement dû à la batterie insuffisante, il faudra le recharger dans un véhicule grâce son câble de branchement. <br>Si le GPS est à 0%, il vous sera impossible de le recharger, il faudra remettre une batterie.<br><br>Le rechargement du GPS consommera la batterie du véhicule.<br><br>Options accessibles en cliquant droit sur l'écran (veillez à bien cliquer sur le fond de l'écran et non sur les données).<br><br>Un raccourci clavier est configurable dans les options (si mod option est installé), la touche vanilla est K : <br>- Pressez deux fois pour ranger/sortir votre GPS.<br>- Pressez une fois pour allumer/éteindre votre GPS si il est équipé dans votre main.<br>- Gardez pressé pour visualiser votre GPS si il est attaché à votre ceinture.",
+
+IGUI_Item_itemGps_GPS_DAGR = "<br>Ce GPS est exclusivement utilisé par les militaires, sa précision est inégalée, la police possède quelques modèls mais cela reste occasionnel, il est interdit au civils.<br><br>Si ce GPS est déchargé (inferieur à 1%), il s'éteindra automatiquement dû à la batterie insuffisante, il faudra le recharger dans un véhicule grâce son câble de branchement. <br>Si le GPS est à 0%, il vous sera impossible de le recharger, il faudra remettre une batterie.<br><br>Le rechargement du GPS consommera la batterie du véhicule.<br><br>Options accessibles en cliquant droit sur l'écran (veillez à bien cliquer sur le fond de l'écran et non sur les données).<br><br>Un raccourci clavier est configurable dans les options (si mod option est installé), la touche vanilla est K : <br>- Pressez deux fois pour ranger/sortir votre GPS.<br>- Pressez une fois pour allumer/éteindre votre GPS si il est équipé dans votre main.<br>- Gardez pressé pour visualiser votre GPS si il est attaché à votre ceinture.",
+
+IGUI_Item_itemGps_GPS_G48 = "<br>Ce GPS est exclusivement prévu aux civils, très utile pour les randonnées.<br><br>Si ce GPS est déchargé (inferieur à 1%), il s'éteindra automatiquement dû à la batterie insuffisante, il faudra le recharger dans un véhicule grâce son câble de branchement, <br>Si le GPS est à 0%, il vous sera impossible de le recharger, il faudra remettre une batterie.<br><br>Le rechargement du GPS consommera la batterie du véhicule.<br><br>Options accessibles en cliquant droit sur l'écran (veillez à bien cliquer sur le fond de l'écran et non sur les données).<br><br>Un raccourci clavier est configurable dans les options (si mod option est installé), la touche vanilla est K : <br>- Pressez deux fois pour ranger/sortir votre GPS.<br>- Pressez une fois pour allumer/éteindre votre GPS si il est équipé dans votre main.<br>- Gardez pressé pour visualiser votre GPS si il est attaché à votre ceinture.",
+
+IGUI_itemGPSmod_On = "Allumer",
+
+IGUI_itemGPSmod_Off = "Éteindre",
+
+IGUI_Item_itemGpsCar = "<br>Ce GPS est utilisé principalement sur les véhicules des services publics, cela reste bien moins répandu sur les véhicules civils, seuls quelques modèles en possédent un.<br><br>Ce GPS est utilisable uniquement dans un véhicule, pour ce faire, mettez-le dans la boîte à gant ainsi que son câble de branchement, clé sur le contact et batterie du véhicule chargée.<br><br>Le GPS allumé consommera la batterie du véhicule.<br><br><br>Options accessibles en cliquant droit sur l'écran (veillez à bien cliquer sur le fond de l'écran et non sur les données).<br><br>Un raccourci clavier est configurable dans les options (si mod option est installé), la touche vanilla est K : <br>- Pressez une fois pour allumer/éteindre votre GPS si il est correctement placé, et si vous n'avez pas déjà un GPS dans votre main.",
+
+IGUI_itemGPS_invalidChunk = "Coordonnées invalides.",
+
+IGUI_itemGPS_areaMenu_doevalley_MA  = "Doe valley west - shopping area",
+IGUI_itemGPS_areaMenu_marchridge    = "Marchridge ",
+IGUI_itemGPS_areaMenu_muldraugh     = "Muldraugh",
+IGUI_itemGPS_areaMenu_muldraugh_N   = "North",
+IGUI_itemGPS_areaMenu_muldraugh_S   = "South",
+IGUI_itemGPS_areaMenu_louisville    = "Louisville",
+IGUI_itemGPS_areaMenu_louisville_IS = "South - industrial",
+IGUI_itemGPS_areaMenu_louisville_MS = "South - Mall",
+IGUI_itemGPS_areaMenu_louisville_MNE = "North east - shopping area",
+IGUI_itemGPS_areaMenu_louisville_S  = "South - town",
+IGUI_itemGPS_areaMenu_louisville_W  = "West - town",
+IGUI_itemGPS_areaMenu_louisville_E  = "East - town",
+IGUI_itemGPS_areaMenu_louisville_C  = "Center - town",
+IGUI_itemGPS_areaMenu_louisville_L  = "Lake",
+IGUI_itemGPS_areaMenu_louisville_INW = "North west - industrial",
+IGUI_itemGPS_areaMenu_louisville_N  = "North - bridge",
+IGUI_itemGPS_areaMenu_riverside     = "Riverside",
+IGUI_itemGPS_areaMenu_riverside_L   = "Lake",
+IGUI_itemGPS_areaMenu_riverside_I   = "Industrial",
+IGUI_itemGPS_areaMenu_riverside_W   = "West",
+IGUI_itemGPS_areaMenu_riverside_C   = "Center",
+IGUI_itemGPS_areaMenu_riverside_E   = "East",
+IGUI_itemGPS_areaMenu_Rosewood      = "Rosewood",
+IGUI_itemGPS_areaMenu_valleystation = "Valley Station",
+IGUI_itemGPS_areaMenu_valleystation_M = "shopping area",
+IGUI_itemGPS_areaMenu_valleystation = "Center",
+IGUI_itemGPS_areaMenu_westpoint     = "Westpoint",
+IGUI_itemGPS_areaMenu_westpoint_W   = "West",
+IGUI_itemGPS_areaMenu_Westpoint_C   = "Center",
+
+IGUI_itemGPS_areaMenu_Chestown      = "Chestown",
+IGUI_itemGPS_areaMenu_Seaside       = "Seaside",
+IGUI_itemGPS_areaMenu_Grapeseed     = "Grapeseed",
+IGUI_itemGPS_areaMenu_Ashenwood     = "Ashenwood",
+IGUI_itemGPS_areaMenu_Ashenwood_S   = "South",
+IGUI_itemGPS_areaMenu_Ashenwood_N   = "North",
+IGUI_itemGPS_areaMenu_RabbitHashKY  = "RabbitHash",
+IGUI_itemGPS_areaMenu_RabbitHashKY_W   = "West",
+IGUI_itemGPS_areaMenu_RabbitHashKY_E   = "East",
+IGUI_itemGPS_areaMenu_KingsmouthKY     = "Kingsmouth",
+IGUI_itemGPS_areaMenu_KingsmouthKY_NW  = "North west",
+IGUI_itemGPS_areaMenu_KingsmouthKY_SE  = "South east",
+IGUI_itemGPS_areaMenu_Trelai_4x4_Steam = "Trelai",
+IGUI_itemGPS_areaMenu_Utopia           = "Utopia",
     }

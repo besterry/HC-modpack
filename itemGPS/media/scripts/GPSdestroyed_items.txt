@@ -1,0 +1,146 @@
+module Base
+{
+	item GPSdayzDestroyed
+    {
+        Type			  =	Normal,
+        DisplayCategory = Electronics,
+        Weight			  =	1.2,
+        DisplayName		  =	GPS-DZ2012 Destroyed,
+        Icon			  =	GPSdayzDestroyed,
+        AttachmentType    = Walkie,
+        StaticModel 	  = GPSdayzDestroyed,
+        WorldStaticModel  = GPSdayzDestroyed,
+	    primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,   
+        Tags = GPSmodDestroyed, 
+    }
+
+    model GPSdayzDestroyed
+	{
+		mesh    = GPSdayZ,
+		texture = GPSdayzDestroyed_texture,
+		invertX = FALSE,
+		scale   = 0.007,
+
+		attachment world
+		{
+			offset = -0.6980 2.0280 2.8820,
+			rotate = 0.0000 0.0000 -86.0000,
+		}
+	}
+
+
+
+	item GPS_315Destroyed
+    {
+        Type			  =	Normal,
+        DisplayCategory = Electronics,
+        Weight			  =	1.5,
+        DisplayName		  =	GPS-315 Destroyed,
+        Icon			  =	GPS_315Destroyed,
+        AttachmentType    = Walkie,
+        StaticModel 	  = GPS_315Destroyed,
+        WorldStaticModel  = GPS_315Destroyed,
+	    primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,  
+        Tags = GPSmodDestroyed, 
+
+    }
+	model GPS_315Destroyed
+	{
+		mesh    = GPS_315,
+		texture = GPS_315Destroyed_texture,
+		invertX = FALSE,
+		scale   = 0.007,
+
+		attachment world
+		{
+			offset = -0.0300 0.0070 -0.0150,
+			rotate = 0.0000 0.0000 -86.0000,
+		}
+	}
+	item GPS_DAGRDestroyed
+    {
+        Type			  =	Normal,
+        DisplayCategory = Electronics,
+        Weight			  =	1.7,
+        DisplayName		  =	GPS-DAGR Destroyed,
+        Icon			  =	GPS_DAGRDestroyed,
+        AttachmentType    = Walkie,
+        StaticModel 	  = GPS_DAGRDestroyed,
+        WorldStaticModel  = GPS_DAGRDestroyed,
+	    primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,  
+        Tags = GPSmodDestroyed, 
+       
+    }
+	model GPS_DAGRDestroyed
+	{
+		mesh    = GPS_DAGR,
+		texture = GPS_DAGRDestroyed_texture,
+		invertX = FALSE,
+		scale   = 0.007,
+
+		attachment world
+		{
+			offset = -0.0300 0.0070 -0.0150,
+			rotate = -90.0000 0.0000 0.0000,
+		}
+	}
+	item GPS_H800Destroyed
+    {
+        Type			  =	Normal,
+        DisplayCategory = Electronics,
+        Weight			  =	2.2,
+        DisplayName		  =	GPS-H800 Destroyed,
+        Icon			  =	GPS_H800Destroyed,
+        AttachmentType    = Walkie,
+        StaticModel 	  = GPS_H800Destroyed,
+        WorldStaticModel  = GPS_H800Destroyed,
+	    primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,  
+        Tags = GPSmodDestroyed, 
+       
+    }
+	model GPS_H800Destroyed
+    {
+        mesh    = GPS_H800,
+        texture = GPS_H800Destroyed_texture,
+        invertX = FALSE,
+        scale   = 0.007,
+
+        attachment world
+        {
+            offset = -0.0300 0.0070 -0.0150,
+            rotate = 0.0000 0.0000 -86.0000,
+        }
+    }
+	item GPS_G48Destroyed
+    {
+        Type			  =	Normal,
+        DisplayCategory = Electronics,
+        Weight			  =	1,
+        DisplayName		  =	GPS-G48 Destroyed,
+        Icon			  =	GPS_G48Destroyed,
+        AttachmentType    = Walkie,
+        StaticModel 	  = GPS_G48Destroyed,
+        WorldStaticModel  = GPS_G48Destroyed,
+	    primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,  
+        Tags = GPSmodDestroyed, 
+       
+    }
+	model GPS_G48Destroyed
+	{
+		mesh    = GPS_G48,
+		texture = GPS_G48Destroyed_texture,
+		invertX = FALSE,
+		scale   = 0.007,
+
+		attachment world
+		{
+			offset = -0.0300 0.0070 -0.0150,
+			rotate = -90.0000 1.0000 180.0000,
+		}
+	}
+}

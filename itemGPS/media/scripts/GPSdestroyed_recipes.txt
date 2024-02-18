@@ -1,0 +1,79 @@
+module Base
+{
+	
+    recipe Dismantle GPS
+    {
+    destroy GPSdayzDestroyed,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:DismantleGPSdest,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+	Prop2:GPSdayzDestroyed,
+    }
+    recipe Dismantle GPS
+    {
+    destroy GPS_315Destroyed,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:DismantleGPSdest,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+    Prop2:GPS_315Destroyed,
+    }
+    recipe Dismantle GPS
+    {
+    destroy GPS_DAGRDestroyed,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:DismantleGPSdest,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+    Prop2:GPS_DAGRDestroyed,
+    }
+    recipe Dismantle GPS
+    {
+    destroy GPS_H800Destroyed,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:DismantleGPSdest,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+    Prop2:GPS_H800Destroyed,
+    }
+    recipe Dismantle GPS
+    {
+    destroy GPS_G48Destroyed,
+    keep Screwdriver/Multitool,
+    NoBrokenItems:true,
+    Result:ElectronicsScrap,
+    Time:450.0,
+    OnCreate:DismantleGPSdest,
+    OnGiveXP:Recipe.OnGiveXP.DismantleRadio,
+    Category:Electrical,
+    AnimNode:Disassemble,
+    Sound:Dismantle_GPS,
+    Prop1:Screwdriver,
+    Prop2:GPS_G48Destroyed,
+    }
+}

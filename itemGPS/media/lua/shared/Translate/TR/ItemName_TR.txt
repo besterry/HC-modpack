@@ -1,0 +1,6 @@
+ItemName_TR = {
+
+ItemName_Base.GPScable = "GPS gьз kablosu",
+ItemName_Base.GPSdestroyed = "GPS (bozulmus)",
+
+}

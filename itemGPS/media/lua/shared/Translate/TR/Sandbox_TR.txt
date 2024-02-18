@@ -1,0 +1,61 @@
+Sandbox_TR = {
+
+Sandbox_itemGPS = "itemGPS",
+
+Sandbox_itemGPSWorldMap = "Haritayi aç",
+Sandbox_itemGPSWorldMap_tooltip = "0 = Harita kullanimi devre disi birak <br>1 = Haritaya sadece GPS ile ulasabilirsin <br>2 = Harita her zaman aktif olucak (GPS olsada olmasada ).<br>",
+
+Sandbox_itemGPSnoFogOnMiniMap = "Mini haritadan sisi kaldirir",
+Sandbox_itemGPSnoFogOnMiniMap_tooltip = "TRUE = 'Fog' ziyaret edilmeyen alanlarin vurgulanmasi mini haritada devre disi birakilacak, ziyaret edilmeyen alanlar artik görüntülenmeyecek.",
+
+Sandbox_itemGPSIsometricViewOnMiniMapIsAllowed = "Izometrik mini-Harita görünümü",
+Sandbox_itemGPSIsometricViewOnMiniMapIsAllowed_tooltip = "TRUE = Mini haritayi Izometrik bir sekilde görmeyi aktif eder (GPS ekraninda).",
+
+Sandbox_itemGPSnoFogOnWorldMap = "Haritadan Sisi kaldir",
+Sandbox_itemGPSnoFogOnWorldMap_tooltip = "TRUE = 'Fog' ziyaret edilmeyen alanlarin vurgulanmasi haritada devre disi birakilacak, ziyaret edilmeyen alanlar artik görüntülenmeyecek.",
+
+Sandbox_itemGPSRedMarkerOnMap = "Harita üzerinde konum isaretleme",
+Sandbox_itemGPSRedMarkerOnMap_tooltip = "0 = Kirmizi nokta haritada hiçbir sekilde olmayacaktir <br>1 = Kirmizi nokta GPS varsa gözükecektir <br>2 = Kirmizi nokta hiçbir sekilde gözükmeyecektir(GPS olsa da olmasada ).<br>",
+
+Sandbox_itemGPSCenterPlayerInaccuracyOnMap = "Oyuncunun GPS'siz oldugu yere yakinlastir",
+Sandbox_itemGPSCenterPlayerInaccuracyOnMap_tooltip = "FALSE = GPS olmadan, harita üzerinde konum degerlendirmek mümkün degil, C tusuna basildiginda harita uzaklastirilacak<br><br>TRUE = GPS olmadan, C tusuna basarak konumunuzu degerlendirebileceksiniz, bu, konumunuz etrafinda bazi hata payi ile yakinlastiracaktir.",
+
+Sandbox_itemGPSCenterPlayerInaccuracyRadius = "Oyuncunun Haritada dogru gözükmesindeki hata payi",
+Sandbox_itemGPSCenterPlayerInaccuracyRadius_tooltip = "Eger HaritadaMerkezOyuncuHataPayi = TRUE (Oyuncunun oldugu yere yakinlastirmak aktif olucak) : <br><br>Konumunuzun hata oranini GPS olmadan harita üzerinde ayarlayabilirsiniz. <br>Rakam ne kadar yüksekse C tusuna basarak haritadaki konumunuzu degerlendirmeniz o kadar zor olacaktir.<br>",
+
+Sandbox_itemGPSGpsDistributionMultiplier = "GPS dagitim Çarpani",
+Sandbox_itemGPSGpsDistributionMultiplier_tooltip = "0 = DAGITIM YOK <br>1 = SON DERECE NADIR <br>2 = ÇOK NADIR <br>3 = NADIR <br>4 = NORMAL <br>5 = YÜKSEK <br>6 = ÇOK YÜKSEK <br><br>(Oyunu yeniden baslatmak gerekir)<br>",
+
+Sandbox_itemGPSCableDistributionMultiplier = "GPS Kablosunun dagitim orani",
+Sandbox_itemGPSCableDistributionMultiplier_tooltip = "0 = DAGITIM YOK <br>1 = SON DERECE NADIR <br>2 = ÇOK NADIR <br>3 = NADIR <br>4 = NORMAL <br>5 = YÜKSEK <br>6 = ÇOK YÜKSEK <br><br>(Oyunu yeniden baslatmak gerekir)<br>",
+
+Sandbox_itemGPSG315Inaccuracy = "315 koordinatlarindaki hata payi",
+Sandbox_itemGPSG315Inaccuracy_tooltip = "Sayi ne kadar yüksek olursa, koordinatlar o kadar fazla hata payi olacaktir, yol noktalari da haritadaki konumunuzu gösteren kirmizi isaretçi ve mini harita etkilenmeyecektir.<br>",
+
+Sandbox_itemGPSG48Inaccuracy = "G48 koordinatlarindaki hata payi",
+Sandbox_itemGPSG48Inaccuracy_tooltip = "Sayi ne kadar yüksek olursa, koordinatlar o kadar fazla hata payi olacaktir, yol noktalari da haritadaki konumunuzu gösteren kirmizi isaretçi ve mini harita etkilenmeyecektir.<br>",
+
+Sandbox_itemGPSDAGRInaccuracy = "DAGR koordinatlarindaki hata payi",
+Sandbox_itemGPSDAGRInaccuracy_tooltip = "Sayi ne kadar yüksek olursa, koordinatlar o kadar fazla hata payi olacaktir, yol noktalari da haritadaki konumunuzu gösteren kirmizi isaretçi ve mini harita etkilenmeyecektir.<br>",
+
+Sandbox_itemGPSH800Inaccuracy = " H800 koordinatlarindaki hata payi",
+Sandbox_itemGPSH800Inaccuracy_tooltip = "Sayi ne kadar yüksek olursa, koordinatlar o kadar fazla hata payi olacaktir, yol noktalari da haritadaki konumunuzu gösteren kirmizi isaretçi ve mini harita etkilenmeyecektir.<br>",
+
+Sandbox_itemGPSDZ2012Inaccuracy = "DZ2012 koordinatlarindaki hata payi",
+Sandbox_itemGPSDZ2012Inaccuracy_tooltip = "Sayi ne kadar yüksek olursa, koordinatlar o kadar fazla hata payi olacaktir, yol noktalari da haritadaki konumunuzu gösteren kirmizi isaretçi ve mini harita etkilenmeyecektir.<br>",
+
+Sandbox_itemGPSUseBatteryMultiplier = "Pil ömrü",
+Sandbox_itemGPSUseBatteryMultiplier_tooltip = "Belirtiren rakam ne kadar fazla olursa GPS enerjisi o kadar hizli tükenecek, her GPS'in kendi tüketim orani vardir, bu çarpan sayesinde tüketimi çesitlendirebileceksiniz. tüketimler orani bütün oyuncular için degistireceksiniz.<br>Bu sayiyi degistirmeniz durumunda su seçenegi degistirmek zorunda kalmazsiniz: Sarj hizi, çünkü sarj ayni zamanda pil tüketimine de baglidir.<br>",
+
+Sandbox_itemGPScanBeDestroyed = "GPS Bozulmasi",
+Sandbox_itemGPScanBeDestroyed_tooltip = "0 = Inaktif <br>1 = GPS öldükten sonra otomatik olarak bozulucak <br>2 and above = GPS'in bu sayiyla iliskili olarak yok edilmesinin rastgele sansi olucak, Ne kadar yüksek olursa, GPS'inizin yok edilmeme olasiligi o kadar yüksek olur.<br>",
+
+Sandbox_itemGPSKeyKShunter = "kisayol k sant",
+Sandbox_itemGPSKeyKShunter_tooltip = "TRUE = GPS ekranini görüntülemek için artik klavyedeki K tusunu basili tutmaniza gerek kalmayacak (kemere takildiginda).<br>",
+
+Sandbox_itemGPSChargeBatteryMultiplier = "sarj hizi",
+Sandbox_itemGPSChargeBatteryMultiplier_tooltip = "Sayi ne kadar yüksekse, gps'in yeniden yüklenmesi o kadar hizli olacaktir.<br>", 
+
+Sandbox_itemGPSsyncMinimapFogToWorldMap = "mini harita sisini dünya haritasina senkronize et",
+Sandbox_itemGPSsyncMinimapFogToWorldMap_tooltip = "Mini haritanin ziyaret edilmeyen bölgelerinin sisi aktif degilse (mini haritada sis yok = true), GPS açikken haritanin sisi mini haritada senkronize olur.<br>",
+}

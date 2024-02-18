@@ -1,7 +1,7 @@
 Recipe_EN = {
 
-Recipe_Insert_Battery_Into_GPS = "Insert battery into GPS",
-Recipe_Remove_Battery_From_GPS = "Remove battery from GPS",
+Recipe_Insert_Battery_Into_GPS = "Insert battery in GPS",
+Recipe_Remove_Battery_From_GPS = "Take out battery from GPS",
 Recipe_Dismantle_GPS = "Dismantle GPS",
 
 }

@@ -1,0 +1,180 @@
+module Base
+{
+	item GPSdayz
+    {
+        Type			  =	Drainable,
+        DisplayCategory = Electronics,
+        Weight			  =	1.2,
+        DisappearOnUse    = FALSE,
+        UsesBattery       = FALSE,
+        ActivatedItem     = FALSE,
+        UseDelta          = 0,
+        DisplayName		  =	GPS-DZ2012,
+        Icon			  =	GPSdayz,
+        StaticModel 	  = GPSdayz,
+        WorldStaticModel  = GPSdayz,
+        AttachmentType 	  = Walkie,
+        ToolTip = IGUI_Item_itemGps_GPSdayz,
+	    primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,
+        Tags = GPSmod,
+       
+    }
+	model GPSdayz
+    {
+        mesh    = GPSdayz,
+        texture = GPSdayz,
+        invertX = FALSE,
+        scale   = 0.007,
+
+        attachment world
+        {
+            offset = -0.6980 2.0280 2.8820,
+            rotate = 0.0000 0.0000 -86.0000,
+        }
+    }
+	item GPS_315
+    {
+        Type              = Drainable,
+        DisplayCategory = Electronics,
+        Weight            = 1.5,
+        DisappearOnUse    = FALSE,
+        UsesBattery       = FALSE,
+        ActivatedItem     = FALSE,
+        UseDelta          = 0,
+        DisplayName       = GPS-315,       
+        Icon              = GPS_315,
+        StaticModel       = GPS_315,
+        WorldStaticModel  = GPS_315,
+        AttachmentType    = Walkie,
+        ToolTip = IGUI_Item_itemGps_GPS_315,
+        primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,
+        Tags = GPSmod,
+       
+    }
+	model GPS_315
+	{
+		mesh    = GPS_315,
+		texture = GPS_315,
+		invertX = FALSE,
+		scale   = 0.007,
+
+		attachment world
+		{
+			offset = -0.0300 0.0070 -0.0150,
+			rotate = 0.0000 0.0000 -86.0000,
+		}
+	}
+	item GPS_DAGR
+    {
+        Type              = Drainable,
+        DisplayCategory = Electronics,
+        Weight            = 1.7,
+        DisappearOnUse    = FALSE,
+        UsesBattery       = FALSE,
+        ActivatedItem     = FALSE,
+        UseDelta          = 0,
+        DisplayName       = GPS-DAGR,
+        Icon              = GPS_DAGR,
+        StaticModel       = GPS_DAGR,
+        WorldStaticModel  = GPS_DAGR,
+        AttachmentType    = Walkie,
+        ToolTip = IGUI_Item_itemGps_GPS_DAGR,
+        primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,
+        Tags = GPSmod,
+       
+    }
+	model GPS_DAGR
+	{
+		mesh    = GPS_DAGR,
+		texture = GPS_DAGR,
+		invertX = FALSE,
+		scale   = 0.007,
+
+		attachment world
+		{
+			offset = -0.0300 0.0070 -0.0150,
+			rotate = -90.0000 0.0000 0.0000,
+		}
+	}
+	item GPS_H800
+    {
+        Type                = Normal,
+        DisplayCategory = Electronics,
+        Weight            = 2.2,
+        DisplayName       = GPS-H800,
+        Icon              = GPS_H800,
+        StaticModel       = GPS_H800,
+        WorldStaticModel  = GPS_H800,
+        AttachmentType    = Walkie,
+        ToolTip = IGUI_Item_itemGpsCar,
+        primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,
+        Tags = GPSmodCar,
+       
+    }
+	model GPS_H800
+    {
+        mesh    = GPS_H800,
+        texture = GPS_H800,
+        invertX = FALSE,
+        scale   = 0.007,
+
+        attachment world
+        {
+            offset = -0.0300 0.0070 -0.0150,
+            rotate = 0.0000 0.0000 -86.0000,
+        }
+    }
+	item GPS_G48
+    {
+        Type              = Drainable,
+        DisplayCategory = Electronics,
+        Weight            = 1,
+        DisappearOnUse    = FALSE,
+        UsesBattery       = FALSE,
+        ActivatedItem     = FALSE,
+        UseDelta          = 0,
+        DisplayName       = GPS-G48,
+        Icon              = GPS_G48,
+        StaticModel       = GPS_G48,
+        WorldStaticModel  = GPS_G48,
+        AttachmentType    = Walkie,
+        ToolTip = IGUI_Item_itemGps_GPS_G48,
+        primaryAnimMask = HoldingTorchRight,
+        secondaryAnimMask = HoldingTorchLeft,
+        Tags = GPSmod,
+       
+    }
+	model GPS_G48
+	{
+		mesh    = GPS_G48,
+		texture = GPS_G48,
+		invertX = FALSE,
+		scale   = 0.007,
+
+		attachment world
+		{
+			offset = -0.0300 0.0070 -0.0150,
+			rotate = -90.0000 1.0000 180.0000,
+		}
+	}
+	item GPScable
+    {
+        Weight				= 0.2,
+        Type    			= Normal,
+        DisplayName     	= GPS cable,
+        icon 				= GPSCable,
+        WorldStaticModel  = cableGPS3d,
+        ToolTip = IGUI_Item_GpsCable,
+    }
+	model cableGPS3d
+    {
+        mesh    = cableGPS3d,
+        texture = GPSdayZCable_texture,
+        invertX = FALSE,
+        scale   = 0.007,
+    }
+}

@@ -1,0 +1,6 @@
+UI_RU = {
+
+UI_optionscreen_binding_HotkeyGPS = "Горячая кнопка GPS",
+UI_optionscreen_binding_GPS_CheckBelt_key = "Проверить GPS на поясе",
+
+}

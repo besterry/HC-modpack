@@ -1,0 +1,198 @@
+module Base
+{
+	sound out_GPS_G48_Beep_chargeUNPLUG
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_chargeUNPLUG.ogg,
+			volume = 0.1,
+		}
+	}
+	sound out_GPS_G48_Beep_chargeOK
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_chargeOK.ogg,
+			volume = 0.1,
+		}
+	}
+	sound out_GPS_G48_Beep_chargeLOW
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_chargeLOW.ogg,
+			volume = 0.1,
+		}
+	}
+	sound out_GPS_G48_Beep_chargePLUG
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_chargePLUG.ogg,
+			volume = 0.1,
+		}
+	}
+	sound out_GPS_G48_Beep_ON
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_ON.ogg,
+			volume = 0.1,
+		}
+	}
+	sound out_GPS_G48_Beep_OFF
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_OFF.ogg,
+			volume = 0.1,
+		}
+	}
+	sound out_GPS_G48_Beep_SIGNAL
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_SIGNAL.ogg,
+			volume = 0.05,
+		}
+	}
+	sound out_GPS_G48_Beep_toneUP
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_toneUP.ogg,
+			volume = 0.1,
+		}
+	}
+	sound out_GPS_G48_Beep_toneMIDLE
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_toneMIDLE.ogg,
+			volume = 0.1,
+		}
+	}
+	sound out_GPS_G48_Beep_toneDOWN
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_toneDOWN.ogg,
+			volume = 0.1,
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+	sound in_GPS_G48_Beep_chargeUNPLUG
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_chargeUNPLUG.ogg,
+			volume = 0.05,
+		}
+	}
+	sound in_GPS_G48_Beep_chargeOK
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_chargeOK.ogg,
+			volume = 0.05,
+		}
+	}
+	sound in_GPS_G48_Beep_chargeLOW
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_chargeLOW.ogg,
+			volume = 0.05,
+		}
+	}
+	sound in_GPS_G48_Beep_chargePLUG
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_chargePLUG.ogg,
+			volume = 0.05,
+		}
+	}
+	sound in_GPS_G48_Beep_ON
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_ON.ogg,
+			volume = 0.05,
+		}
+	}
+	sound in_GPS_G48_Beep_OFF
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_OFF.ogg,
+			volume = 0.05,
+		}
+	}
+	sound in_GPS_G48_Beep_SIGNAL
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_SIGNAL.ogg,
+			volume = 0.025,
+		}
+	}
+	sound in_GPS_G48_Beep_toneUP
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_toneUP.ogg,
+			volume = 0.05,
+		}
+	}
+	sound in_GPS_G48_Beep_toneMIDLE
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_toneMIDLE.ogg,
+			volume = 0.05,
+		}
+	}
+	sound in_GPS_G48_Beep_toneDOWN
+	{
+		category = Player,
+		clip
+		{
+			file = media/sound/GPSbeep/GPS_G48_Beep_toneDOWN.ogg,
+			volume = 0.05,
+		}
+	}
+
+
+
+}
+

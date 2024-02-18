@@ -1,0 +1,63 @@
+Sandbox_EN = {
+
+    Sandbox_itemGPS = "itemGPS",
+
+    Sandbox_itemGPSWorldMap = "Access to map",
+    Sandbox_itemGPSWorldMap_tooltip = "0 = Map totally disabled <br>1 = Map available only with GPS <br>2 = Map available all the time (with or without GPS).<br>",
+
+    Sandbox_itemGPSnoFogOnMiniMap = "Removes fog from the minimap",
+    Sandbox_itemGPSnoFogOnMiniMap_tooltip = "TRUE = 'Fog' and higlightings of non-visited areas will be disabled on mini-map, non-visited areas won't be displayed anymore.",
+
+    Sandbox_itemGPSIsometricViewOnMiniMapIsAllowed = "Isometric mini-map view",
+    Sandbox_itemGPSIsometricViewOnMiniMapIsAllowed_tooltip = "TRUE = Isomertic view will be enabled on mini-map (GPS screen).",
+
+    Sandbox_itemGPSnoFogOnWorldMap = "Remove fog from map",
+    Sandbox_itemGPSnoFogOnWorldMap_tooltip = "TRUE = 'Fog' and higlightings of non-visited areas will be disabled on interactive map, non-visited areas won't be displayed anymore.",
+
+    Sandbox_itemGPSRedMarkerOnMap = "Position marker on the map",
+    Sandbox_itemGPSRedMarkerOnMap_tooltip = "0 = Red marker totally disabled on the map <br>1 = Red marker will be displayed with GPS only <br>2 = Red marker will be permanently displayed (with or without GPS).<br>",
+
+    Sandbox_itemGPSCenterPlayerInaccuracyOnMap = "Zoom where player is without GPS",
+    Sandbox_itemGPSCenterPlayerInaccuracyOnMap_tooltip = "FALSE = Without GPS, it's impossible to evaluate position on map, map will be zoomed out when the C key will be pressed<br><br>TRUE = Without GPS, you will be able to evaluate your position by pressing C key, this will zoom with some inaccuracy around your position.",
+
+    Sandbox_itemGPSCenterPlayerInaccuracyRadius = "Inaccuracy radius for player's position",
+    Sandbox_itemGPSCenterPlayerInaccuracyRadius_tooltip = "If CenterPlayerInaccuracyOnMap = TRUE (Zoom where player is enabled) : <br><br>You can set the inaccuracy radius of your position on the map without GPS. <br>The higher the number is, the hardest it will be to evaluate your position on the map by pressing C key.<br>",
+
+    Sandbox_itemGPSGpsDistributionMultiplier = "GPS distribution multiplier",
+    Sandbox_itemGPSGpsDistributionMultiplier_tooltip = "0 = NO DISTRIBUTION <br>1 = EXTREMELY RARE <br>2 = VERY RARE <br>3 = RARE <br>4 = NORMAL <br>5 = HIGH <br>6 = VERY HIGH  <br><br>(Restarting game needed)<br>",
+
+    Sandbox_itemGPSCableDistributionMultiplier = "Related GPS' cable distribution multiplier",
+    Sandbox_itemGPSCableDistributionMultiplier_tooltip = "0 = NO DISTRIBUTION <br>1 = EXTREMELY RARE <br>2 = VERY RARE <br>3 = RARE <br>4 = NORMAL <br>5 = HIGH <br>6 = VERY HIGH  <br><br>(Restarting game needed)<br>",
+
+    Sandbox_itemGPSG315Inaccuracy = "Inaccuracy 315's coordinates",
+    Sandbox_itemGPSG315Inaccuracy_tooltip = "The higher the number is, the less coordinates will be accurate, waypoints too, red marker indicating your position on map and mini-map will not be affected.<br>",
+
+    Sandbox_itemGPSG48Inaccuracy = "Inaccuracy G48's coordinates",
+    Sandbox_itemGPSG48Inaccuracy_tooltip = "The higher the number is, the less coordinates will be accurate, waypoints too, red marker indicating your position on map and mini-map will not be affected.<br>",
+
+    Sandbox_itemGPSDAGRInaccuracy = "Inaccuracy DAGR's coordinates",
+    Sandbox_itemGPSDAGRInaccuracy_tooltip = "The higher the number is, the less coordinates will be accurate, waypoints too, red marker indicating your position on map and mini-map will not be affected.<br>",
+
+    Sandbox_itemGPSH800Inaccuracy = "Inaccuracy H800's coordinates",
+    Sandbox_itemGPSH800Inaccuracy_tooltip = "The higher the number is, the less coordinates will be accurate, waypoints too, red marker indicating your position on map and mini-map will not be affected.<br>",
+
+    Sandbox_itemGPSDZ2012Inaccuracy = "Inaccuracy DZ2012's coordinates",  
+    Sandbox_itemGPSDZ2012Inaccuracy_tooltip = "The higher the number is, the less coordinates will be accurate, waypoints too, red marker indicating your position on map and mini-map will not be affected.<br>",
+
+    Sandbox_itemGPSUseBatteryMultiplier = "Battery consumption",
+    Sandbox_itemGPSUseBatteryMultiplier_tooltip = "The higher the number will be, the fastest GPS will consume battery, each GPS has its own consumption rate, thanks to this multiplier, you will be able to vary the consumption.<br>In case you modify this number, you will not be obliged to modify the option: Recharging speed, because the recharging is also based on the consumption of the battery.<br>",
+
+    Sandbox_itemGPScanBeDestroyed = "Destroyable GPS",
+    Sandbox_itemGPScanBeDestroyed_tooltip = "0 = Disabled <br>1 = GPS will be destroyed automatically if you die having it <br>2 and above = Random chance that GPS is destroyed related to this number, The higher it will be, the better chances your GPS won't be destroyed.<br>",
+    
+    Sandbox_itemGPSKeyKShunter = "Shortcut k shunt",
+    Sandbox_itemGPSKeyKShunter_tooltip = "TRUE = You will no longer need to hold the K key on the keyboard in order to view the GPS screen (when attached to the belt).<br>", 
+
+    Sandbox_itemGPSChargeBatteryMultiplier = "recharge speed",
+    Sandbox_itemGPSChargeBatteryMultiplier_tooltip = "The higher the number is, the faster the reloading of a gps will be.<br>", 
+
+    Sandbox_itemGPSsyncMinimapFogToWorldMap = "sync minimap fog to worldmap",
+    Sandbox_itemGPSsyncMinimapFogToWorldMap_tooltip = "If the fog of the unvisited areas of the minimap is not active (no fog on the minimap = true), when you have a GPS turned on, the fog of the map will synchronize on the minimap.<br>",
+
+    
+}
