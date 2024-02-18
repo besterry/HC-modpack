@@ -1,6 +1,0 @@
-UI_FR = {
-
-UI_optionscreen_binding_HotkeyGPS = "Raccourcis GPS",
-UI_optionscreen_binding_GPS_CheckBelt_key = "Vérifier le GPS provenant de votre ceinture",
-
-}

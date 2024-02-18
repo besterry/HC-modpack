@@ -1,7 +1,0 @@
-Recipe_RU = {
-
-Recipe_Insert_Battery_Into_GPS = "Вставьте аккумулятор в GPS",
-Recipe_Remove_Battery_From_GPS = "Извлеките аккумулятор из GPS",
-Recipe_Dismantle_GPS = "Разобрать GPS",
-
-}
