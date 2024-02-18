@@ -1,0 +1,4 @@
+Recipes_RU {
+	Recipe_Make_ZipContainer = "Cделать подвал",
+	Recipe_Make_ZipContainerBox = "Сделать ящик",
+}

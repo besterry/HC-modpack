@@ -1,0 +1,18 @@
+VERSION = 1,
+
+option ZipContainer.WhiteList
+{
+	type = string,
+    default = ,
+
+	page = ZipContainer,
+	translation = ZipContainer_WhiteList,
+}
+option ZipContainer.WhiteListJsonFileName
+{
+	type = string,
+    default = ZipContainer_WhiteList.json,
+
+	page = ZipContainer,
+	translation = ZipContainer_WhiteListJsonFileName,
+}

@@ -1,0 +1,8 @@
+name=ZipContainer
+poster=poster.png
+id=ZipContainer
+description=Contain loot in table modData instead of InventoryItems
+
+
+pack=ZipContainer
+tiledef=ZipContainer 6342

@@ -1,0 +1,4 @@
+Moveables_RU = {
+	ZipContainer = "ѕодвал",
+    ZipContainerBox = "ящик",
+    }
