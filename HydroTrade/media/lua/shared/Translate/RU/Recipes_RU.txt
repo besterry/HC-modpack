@@ -1,4 +1,5 @@
 Items_RU = {
+	Recipe_Clear_Bottle_Disinfectant = "Опустошить и промыть бутылку",
 	Recipe_Detachment = "Открепить [содержимое удалится]",
 	Recipe_Create_pallet_log = "Создать поддон брёвен",
 	Recipe_Get_pallet_log = "Взять бревно с поддона",

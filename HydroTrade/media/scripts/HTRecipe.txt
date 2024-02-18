@@ -327,8 +327,33 @@ recipe Detachment
         Prop1:Crowbar,
         Sound:Dismantle,
     }
+
+
 	
 /***********RECIPES***********
+
+recipe Make Bottle of Homemade Disinfectant
+    {    	
+        HCMothballs=10,
+        Water=5,
+        WaterBottleEmpty,
+        Result:HCHomedisinfectant,
+        SkillRequired:Doctor=4,
+        CanBeDoneFromFloor:false,
+    	Time:500,
+    	Category:Health,   
+    }
+
+recipe Clear Bottle Disinfectant
+    {    	
+        destroy Disinfectant,
+        Water=1,
+        Result:WaterBottleEmpty,
+        CanBeDoneFromFloor:false,
+    	Time:250,
+    	Category:Health,   
+    }
+
 
 recipe Cultivate blackmold
     {
