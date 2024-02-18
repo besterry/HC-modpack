@@ -1,7 +1,7 @@
 Recipe_RU = {
 
-Recipe_Insert_Battery_Into_GPS = "Вставьте батарею в GPS",
-Recipe_Remove_Battery_From_GPS = "Извлеките батарею из GPS",
+Recipe_Insert_Battery_Into_GPS = "Вставить батарею в GPS",
+Recipe_Remove_Battery_From_GPS = "Извлечь батарею из GPS",
 Recipe_Dismantle_GPS = "Разобрать GPS",
 
 }

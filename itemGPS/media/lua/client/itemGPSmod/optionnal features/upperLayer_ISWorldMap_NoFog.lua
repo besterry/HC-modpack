@@ -2,13 +2,14 @@ require "ISUI/Maps/ISWorldMap"
 
 local upperLayer = {}
 upperLayer.ISWorldMap = {}
+
         
 upperLayer.ISWorldMap.updateJoypad = ISWorldMap.updateJoypad
 function ISWorldMap:updateJoypad()
     upperLayer.ISWorldMap.updateJoypad(self)
-
     local noMap = SandboxVars.itemGPS.WorldMap
-    if (noMap == 0 or (noMap == 1 and not itemGPSmod.gps)) and not isAdmin() then  
+    local wmap = CheckMapItem()
+    if (noMap == 0 or (noMap == 1 and not itemGPSmod.gps and not wmap)) and not isAdmin() then  
         --self.close() 
         if ISWorldMap_instance and ISWorldMap_instance:isVisible() then
             local player = getSpecificPlayer(0)
