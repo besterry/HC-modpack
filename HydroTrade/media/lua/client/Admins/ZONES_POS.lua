@@ -6,8 +6,8 @@ local ZONES_POS = POS
 local admin
 local textManager = getTextManager();
 
-local screenX = 65;
-local screenY = 13;
+local screenX = 150; --65
+local screenY = 5; --13
 
 local cache_room = nil
 local cache_room_name = ''
