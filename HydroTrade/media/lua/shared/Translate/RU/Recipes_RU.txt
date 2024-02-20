@@ -1,4 +1,6 @@
 Items_RU = {
+	Recipe_Disassemble_Antique_Stove = "Разобрать печь",
+	Recipe_Make_Mop = "Сделать швабру",
 	Recipe_Clear_Bottle_Disinfectant = "Опустошить и промыть бутылку",
 	Recipe_Detachment = "Открепить [содержимое удалится]",
 	Recipe_Create_pallet_log = "Создать поддон брёвен",

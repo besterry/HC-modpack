@@ -328,6 +328,42 @@ recipe Detachment
         Sound:Dismantle,
     }
 
+recipe Rip Clothing
+    {
+        Shoes_Random/Belt/Belt2/HCLeatherball,
+        keep Scissors/HCChildsafetyscissors,
+        InSameInventory:true,
+        AllowDestroyedItem:false,
+        Result:LeatherStrips,
+        Sound:ClothesRipping,
+        AnimNode:RipSheets,
+        Category:Survivalist,   
+        Time:100.0,
+    }
+
+recipe Disassemble Antique Stove
+    {
+        Mov_AntiqueStove,
+        BlowTorch,
+        keep WeldingMask,
+        Result:SheetMetal=6,
+        SkillRequired:MetalWelding=1,
+        CanBeDoneFromFloor:true,
+    	Time:400,
+    	Category:Engineer,   
+        OnGiveXP:HCWelding_OnGiveXP,
+    }
+
+recipe Make Mop
+    {
+        WoodenStick,
+        RippedSheets=5,
+        Rope,
+        Result:Mop,
+        SkillRequired:Woodwork=1,
+    	Time:400,
+    	Category:Survivalist,   
+    }
 
 	
 /***********RECIPES***********
