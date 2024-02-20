@@ -1,0 +1,6 @@
+Sandbox_RU = {
+    Sandbox_AutoLoot = "Автолут",
+	Sandbox_AutoLoot_PriceAutoLoot = "Цена автолута",
+	Sandbox_AutoLoot_DurabilityAutoLoot = "Время активации автолута в днях",
+	Sandbox_AutoLoot_Buy = "Покупка",
+}

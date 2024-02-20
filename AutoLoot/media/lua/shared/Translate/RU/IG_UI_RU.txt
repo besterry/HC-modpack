@@ -1,0 +1,29 @@
+IGUI_RU = {
+	IGUI_Bag_is_full = "Сумка полная",
+	IGUI_Bag_UnEquipped = "Сумка снята, переключен на основной инвентарь",
+	IGUI_No_Bag_Equipped = "Нет одетых сумок",
+	IGUI_AutoLoot = "Автосбор",
+	IGUI_InventoryBag = "Выбор сумки",
+	IGUI_Main_Inventory = "Основной инвентарь",
+	IGUI_Category = "Категории",
+	IGUI_Activate = "Активация",
+	IGUI_Accessories = "Аксессуары",
+	IGUI_Tool = "Инструменты",
+	IGUI_Money = "Деньги, кошельки",
+	IGUI_WepFire = "Огнестрел, патроны",
+	IGUI_WepMelee = "Оружие ближ.боя",
+	IGUI_WepAmmoMag = "Оруж. магазины",
+	IGUI_WeaponPart = "Оруж. компоненты",
+	IGUI_Cloth = "Одежда",
+	IGUI_TimeLeftActivate = "Активно:"
+	IGUI_Day = "д",
+	IGUI_Hour = "ч",
+	IGUI_Minute = "м",
+	IGUI_Second = "с",
+	IGUI_Buy = "Купить",
+	IGUI_BuyInfo = "Подписка ",
+	IGUI_BuyInfoDay = " дн: ",
+	IGUI_IGAutoLootAdminPanel = "Список игроков с активной подпиской Автосбора",
+	
+	
+}

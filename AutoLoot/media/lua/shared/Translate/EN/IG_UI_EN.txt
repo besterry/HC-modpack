@@ -1,0 +1,21 @@
+IGUI_EN = {
+	IGUI_Bag_is_full = "Bag is full",
+	IGUI_No_Bag_Equipped = "No bags equipped",
+	IGUI_AutoLoot = "AutoLoot",
+	IGUI_InventoryBag = "Select bag",
+	IGUI_Main_Inventory = "Main Inventory",
+	IGUI_Category = "Categories",
+	IGUI_Activate = "Activation",
+	IGUI_Accessories = "Accessories",
+	IGUI_Tool = "Tools",
+	IGUI_Money = "Money, wallets",
+	IGUI_WepFire = "Firearm, cartridges",
+	IGUI_WepMelee = "Melee Weapon",
+	IGUI_WepAmmoMag = "Weapon stores",
+	IGUI_WeaponPart = "Weapon Parts",
+	IGUI_Cloth = "Clothes",
+	IGUI_TimeLeftActivate = "Active:"
+	IGUI_Hour = "h.",
+	IGUI_Minute = "min.",
+	IGUI_Second = "sec.",
+}

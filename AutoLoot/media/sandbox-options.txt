@@ -1,0 +1,30 @@
+VERSION = 1,
+
+option AutoLoot.Buy
+{
+	type = boolean,
+	default = true,
+	page = AutoLoot,
+	translation = AutoLoot_Buy,
+}
+
+option AutoLoot.PriceAutoLoot
+{
+	type = integer,
+	min = 0,
+	max = 99999,
+	default = 100,
+	page = AutoLoot,
+	translation = AutoLoot_PriceAutoLoot,
+}
+
+option AutoLoot.DurabilityAutoLoot
+{
+	type = integer,
+	min = 0,
+	max = 99999,
+	default = 7,
+	page = AutoLoot,
+	translation = AutoLoot_DurabilityAutoLoot,
+}
+
