@@ -65,7 +65,8 @@ function ZipContainer.isValid(container)
     if not container then
         return false
     end
-    return container:getType() == ZIP_CONTAINER_TYPE
+    return luautils.stringStarts(container:getType(), ZIP_CONTAINER_TYPE)
+    --return container:getType() == ZIP_CONTAINER_TYPE
 end
 
 ---@param containersArr ArrayList | nil
