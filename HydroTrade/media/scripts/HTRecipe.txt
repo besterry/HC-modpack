@@ -365,9 +365,6 @@ recipe Make Mop
     	Category:Survivalist,   
     }
 
-	
-/***********RECIPES***********
-
 recipe Make Bottle of Homemade Disinfectant
     {    	
         HCMothballs=10,

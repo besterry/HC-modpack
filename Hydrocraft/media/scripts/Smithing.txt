@@ -2835,14 +2835,14 @@ recipe Pack Pallet of Metal Bars
 		HCWoodenpallet,
     	CanBeDoneFromFloor:true,
     	Result:HCMetalbarbox,
-    	Time:20.0,
+    	Time:200.0,
     }
 	
 recipe Unpack Pallet of Metal Bars
     {
     	HCMetalbarbox,
     	Result:MetalBar=50,
-    	Time:20.0,
+    	Time:100.0,
     	OnCreate:recipe_hcpallet,
     }
 
