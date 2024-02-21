@@ -4,6 +4,7 @@ PM.AutolootDisplayCategory = PM.AutolootDisplayCategory or {}
 PM.InventorySelected = PM.InventorySelected or {}
 PM.AutolootDurationAction = PM.AutolootDurationAction or {}
 PM.TimeActivateAutoLoot = PM.TimeActivateAutoLoot or {} --Когда был куплен автолут
+PM.AutoLootMessage = PM.AutoLootMessage or {}
 
 local function reloadSell() --Обновление списка предметов кажды игровой час
     PM.desiredItemsSet = {}
@@ -103,7 +104,9 @@ local function AutoLoot(zombie) --автолут
                 if inv ~= nil then
                     if (inv:getCapacityWeight() + item:getWeight()) <= capacitybag then
                         local itemName = item:getDisplayName()
-                        player:Say("+" .. itemName)
+                        if PM.AutoLootMessage then
+                            player:Say("+" .. itemName)
+                        end
                         inv:AddItem(item)
                     else
                         player:Say(getText("IGUI_Bag_is_full"))

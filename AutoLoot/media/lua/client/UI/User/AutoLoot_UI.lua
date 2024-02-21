@@ -9,7 +9,8 @@ PM.InventorySelected = PM.InventorySelected or {}
 PM.TimeActivateAutoLoot = PM.TimeActivateAutoLoot or {} --Время покупки
 PM.AutolootDurationAction = PM.AutolootDurationAction or {}
 PM.AutoLootSandBoxBuy = PM.AutoLootSandBoxBuy or {}
-
+PM.AutoLootMessage = PM.AutoLootMessage or {}
+--local player = getPlayer()
 local price
 Events.EveryTenMinutes.Add(function()
     price = SandboxVars.AutoLoot.PriceAutoLoot
@@ -36,13 +37,11 @@ end
 
 --сохранение конфигураций
 local function saveConfig()
-    local fileWriterObj = getFileWriter("AutoLoot_Config.txt", true, false)
-    -- Сохранение значения PM.Autoloot
-    fileWriterObj:write("PM.Autoloot = " .. tostring(PM.Autoloot) .. "\n")
-    --Сохранение последней сумки
-    fileWriterObj:write("PM.InventorySelected = " .. tostring(PM.InventorySelected:getName()) .. "\n")
-    -- Сохранение таблицы PM.AutolootSettings в одну строку
-    fileWriterObj:write("PM.AutolootDisplayCategory = {")
+    local fileWriterObj = getFileWriter("AutoLoot_Config.txt", true, false)   
+    fileWriterObj:write("PM.Autoloot = " .. tostring(PM.Autoloot) .. "\n") -- Сохранение значения вкл автолута
+    fileWriterObj:write("PM.AutoLootMessage = " .. tostring(PM.AutoLootMessage) .. "\n") -- Сохранение значения сообщения автолута
+    fileWriterObj:write("PM.InventorySelected = " .. tostring(PM.InventorySelected:getName()) .. "\n")--Сохранение последней сумки
+    fileWriterObj:write("PM.AutolootDisplayCategory = {")-- Сохранение таблицы PM.AutolootSettings в одну строку
     for category, isEnabled in pairs(PM.AutolootDisplayCategory) do
         fileWriterObj:write(string.format('["%s"]=%s,', category, tostring(isEnabled)))
     end
@@ -119,12 +118,20 @@ function UI_AutoLoot:initialise()
     self:addChild(self.Buy)
 
     --Чекбокс включения\выключения автолута
-    self.EnableAutoLootCheckBox = ISTickBox:new(x + 50, self:getHeight() - padBottom - btnHgt*2 - 10, 10, 10, "", self, UI_AutoLoot.onEnableAutoLootCheckbox)
+    self.EnableAutoLootCheckBox = ISTickBox:new(x + 10, self:getHeight() - padBottom - btnHgt*2 - 10, 10, 10, "", self, UI_AutoLoot.onEnableAutoLootCheckbox)
     self.EnableAutoLootCheckBox:initialise()
     self.EnableAutoLootCheckBox:instantiate()
     self.EnableAutoLootCheckBox.selected[1] = PM.Autoloot
     self:addChild(self.EnableAutoLootCheckBox)
     self.EnableAutoLootCheckBox:addOption(getText("IGUI_Activate"));
+
+    --Чекбокс включения\выключения сообщения автолута
+    self.EnableAutoLootMessageCheckBox = ISTickBox:new(x + 100, self:getHeight() - padBottom - btnHgt*2 - 10, 10, 10, "", self, UI_AutoLoot.onEnableAutoLootMessageCheckbox)
+    self.EnableAutoLootMessageCheckBox:initialise()
+    self.EnableAutoLootMessageCheckBox:instantiate()
+    self.EnableAutoLootMessageCheckBox.selected[1] = PM.AutoLootMessage or true
+    self:addChild(self.EnableAutoLootMessageCheckBox)
+    self.EnableAutoLootMessageCheckBox:addOption(getText("IGUI_ActivateMessage"));
 
     --Чекбокс аксесуары
     self.EnableAccessoriesCheckBox = ISTickBox:new(x + 240, y + 20, 10, 10, "", self, UI_AutoLoot.onEnableaccessoriesCheckbox)
@@ -240,17 +247,33 @@ end
 
 function UI_AutoLoot:onEnableAutoLootCheckbox()
     PM.Autoloot = self.EnableAutoLootCheckBox.selected[1]
+    if PM.Autoloot then
+        getPlayer():setHaloNote(getText("IGUI_AutolootActivate"), 255, 255, 100, 300);
+    else 
+        getPlayer():setHaloNote(getText("IGUI_AutolootDeActivate"), 255, 255, 100, 300)
+    end
     saveConfig()
+end
+
+function UI_AutoLoot:onEnableAutoLootMessageCheckbox()
+    PM.AutoLootMessage = self.EnableAutoLootMessageCheckBox.selected[1]
+    saveConfig()
+    if PM.AutoLootMessage then
+        getPlayer():setHaloNote(getText("IGUI_AutolootMessageActivate"), 255, 255, 100, 300);
+    else
+        getPlayer():setHaloNote(getText("IGUI_AutolootMessageDeActivate"), 255, 255, 100, 300);
+    end
+    
 end
 
 function UI_AutoLoot:onEnableClothCheckbox() --Tool
     local isCheckboxSelected = self.EnableClothCheckBox.selected[1]
+    saveConfig()
     if isCheckboxSelected then
         PM.AutolootDisplayCategory["Cloth"] = true        
     else
         PM.AutolootDisplayCategory["Cloth"] = nil
-    end
-    saveConfig()
+    end    
 end
 
 function UI_AutoLoot:onEnableToolCheckbox() --Tool
@@ -443,6 +466,8 @@ local function onLoad() --Чтение настроек из файла (вос�
             if key and value then
                 if key == "PM.Autoloot" then
                     PM.Autoloot = value == "true"
+                elseif key == "PM.AutoLootMessage" then
+                    PM.AutoLootMessage = value == "true"
                 elseif key == "PM.InventorySelected" then
                     SetInventorySelectedByName(value)
                 elseif key == "PM.AutolootDisplayCategory" then

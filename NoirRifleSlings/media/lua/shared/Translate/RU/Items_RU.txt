@@ -1,0 +1,7 @@
+Items_RU = {
+	DisplayName_Rifle_Sling = "Тактический многоцелевой ремень",
+	ItemName_Base.SlingA = "Тактический многоцелевой ремень",
+	ItemName_Base.SlingAalt = "Тактический многоцелевой ремень",
+	ItemName_Base.SlingAalt2 = "Тактический многоцелевой ремень",
+	ItemName_Base.SlingAalt3 = "Тактический многоцелевой ремень",
+}

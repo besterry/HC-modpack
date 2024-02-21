@@ -1,0 +1,4 @@
+IGUI_RU = {
+    IGUI_CraftCategory_Tailoring = "ЎитьЄ",
+	IGUI_Sling = "–емень",
+}

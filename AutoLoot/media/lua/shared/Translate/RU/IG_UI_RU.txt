@@ -24,6 +24,10 @@ IGUI_RU = {
 	IGUI_BuyInfo = "Подписка ",
 	IGUI_BuyInfoDay = " дн: ",
 	IGUI_IGAutoLootAdminPanel = "Список игроков с активной подпиской Автосбора",
-	
+	IGUI_ActivateMessage = "Оповещение",
+	IGUI_AutolootActivate = "Автосбор активирован!",
+	IGUI_AutolootDeActivate = "Автосбор отключен!",
+	IGUI_AutolootMessageActivate = "Показ собираемых вещей включен",
+	IGUI_AutolootMessageDeActivate = "Показ собираемых вещей отключен",
 	
 }

@@ -1,6 +1,6 @@
 Recipe_RU = {
 
-Recipe_makeDoorsRepairKitWood = "Сделайте ремонтный комплект для дверей",
-Recipe_makeDoorsReinforceKitMetal = "Сделайте комплект усиления для дверей",
+Recipe_makeDoorsRepairKitWood = "Создать ремонтный комплект для дверей",
+Recipe_makeDoorsReinforceKitMetal = "Создать комплект усиления для дверей",
 
 }
