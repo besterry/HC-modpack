@@ -70,11 +70,11 @@ module Base
 
 	recipe Make Rifle Sling
     {
-        Belt2=1,
-        LeatherStrips=4,
-        Thread=1, 
-        keep Scissors,
-        keep Needle,
+        Belt/Belt2=2,
+        LeatherStrips=6,
+        Thread=16, 
+        keep Scissors/HCChildsafetyscissors,
+        keep Needle/HCBoneneedle,
         Result:SlingA,
         Time:800.0,
         AnimNode:RipSheets,
