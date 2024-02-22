@@ -389,10 +389,11 @@ end
 function UI_AutoLoot:render()  
     local d, h, m, s    
     --print("PM.TimeActivateAutoLoot:",PM.TimeActivateAutoLoot)
-    if type(PM.TimeActivateAutoLoot) ~= "table" and PM.TimeActivateAutoLoot ~= nil then --Блок отображения оставшегося времени        
+    if type(PM.TimeActivateAutoLoot) ~= "table" and PM.TimeActivateAutoLoot ~= nil and PM.TimeActivateAutoLoot>0 then --Блок отображения оставшегося времени        
         d, h, m, s = calculateTime()
     else
         d,h,m,s = 0,0,0,0
+        remainingTime = 0
     end
 
     if remainingTime > 0 or not PM.AutoLootSandBoxBuy then self.Buy:setEnable(false) else self.Buy:setEnable(true) end
@@ -438,13 +439,16 @@ local function SetInventorySelectedByName(value)
 end
 
 function TimeActivateAutoLoot() --Получение времени покупки
-    sendClientCommand(getPlayer(), 'BalanceAndSH', 'getData', {})
+    sendClientCommand(getPlayer(), 'BalanceAndSH', 'getDataAutoLoot', {})
     local receiveServerCommand
     receiveServerCommand = function(module, command, args)
         if module ~= 'BalanceAndSH' then return; end
-        if command == 'onGetData' then
+        if command == 'onGetDataAutoLoot' then
+            -- print("Command recive TimeActivateAutoLoot, args['UserData'].autoloot:",args['UserData'].autoloot)
             if args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
                 PM.TimeActivateAutoLoot = args['UserData'].autoloot
+            else 
+                PM.TimeActivateAutoLoot = 0
             end            
             if type(PM.TimeActivateAutoLoot) ~= "table" and PM.TimeActivateAutoLoot ~= nil then
                 calculateTime()

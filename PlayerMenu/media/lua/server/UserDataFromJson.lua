@@ -8,7 +8,8 @@ function checkUserdata() --проверка на существование по
     if not UserData.bonus then  UserData.bonus = 0 end
     if not UserData.safehouse then  UserData.safehouse = 625 end    
     if not UserData.ShopCount then  UserData.ShopCount = 0 end        
-    if not UserData.MaxShopCount then  UserData.MaxShopCount = 5 end
+    if not UserData.MaxShopCount then  UserData.MaxShopCount = 5 end       
+    if not UserData.autoloot then  UserData.autoloot = 0 end
 end
 
 local function SaveJsonItems(theTable,filename) --Сохранение в файл
@@ -73,13 +74,25 @@ local commands = {} --Команды приходящие на сервер
 
 commands.getData = function(player, args) --Считывание UserData из jsob и отправка
     local nickname = player:getUsername()    
-    local filename = "users/" .. nickname .. ".json"
+    local filename = "users/" .. nickname .. ".json"    
+    UserData = LoadJsonItems(filename)
+    checkUserdata()
+    if UserData then
+        sendServerCommand('BalanceAndSH', "onGetDataAutoLoot", {UserData = UserData})
+    end
+end
+
+
+commands.getDataAutoLoot = function(player, args) --Считывание UserData из jsob и отправка
+    local nickname = player:getUsername()    
+    local filename = "users/" .. nickname .. ".json"    
     UserData = LoadJsonItems(filename)
     checkUserdata()
     if UserData then
         sendServerCommand('BalanceAndSH', "onGetData", {UserData = UserData})
     end
 end
+
 
 commands.saveData = function(player, args) 
     local nickname = player:getUsername()    
