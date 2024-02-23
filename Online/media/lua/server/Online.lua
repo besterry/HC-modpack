@@ -1,4 +1,4 @@
-function SavePlayersCount(players,playersListString)
+local function SavePlayersCount(players,playersListString)
     local fileWriterObj = getFileWriter("Online/players_online.txt", true, false);
     fileWriterObj:write(tostring(players));
     fileWriterObj:close();

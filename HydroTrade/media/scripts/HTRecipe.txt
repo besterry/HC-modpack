@@ -6,7 +6,7 @@ module Hydrocraft
 
     }
 
-/***********Detachment***********
+/***********Detachment***********/
 
 recipe Detachment
     {
@@ -365,6 +365,7 @@ recipe Make Mop
     	Category:Survivalist,   
     }
 
+/************Recipe****/
 recipe Make Bottle of Homemade Disinfectant
     {    	
         HCMothballs=10,

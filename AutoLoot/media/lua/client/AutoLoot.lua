@@ -34,24 +34,49 @@ local function calculateTime() --Рассчет оставшегося врем�
 end
 Events.EveryTenMinutes.Add(calculateTime)
 
+-- function GetTimeActivateAutoLootForcalculateTime() --Получение времени покупки
+--     print("GETPLAYER:",getPlayer())
+--     sendClientCommand(getPlayer(), 'BalanceAndSH', 'getDataAutoLoot', nil)
+--     local receiveServerCommand
+--     receiveServerCommand = function(module, command, args)
+--         if module ~= 'BalanceAndSH' then return; end
+--         if command == 'onGetDataAutoLoot' then
+--             if args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
+--                 PM.TimeActivateAutoLoot = args['UserData'].autoloot
+--                 print("PM.TimeActivateAutoLoot on DB:",PM.TimeActivateAutoLoot)
+--             end          
+--             calculateTime()
+--             reloadSell()
+--             Events.OnServerCommand.Remove(receiveServerCommand)
+--         end
+--     end
+--     Events.OnServerCommand.Add(receiveServerCommand)
+-- end
+-- Events.OnGameStart.Add(GetTimeActivateAutoLootForcalculateTime)
+
 function GetTimeActivateAutoLootForcalculateTime() --Получение времени покупки
-    sendClientCommand(getPlayer(), 'BalanceAndSH', 'getData', {})
-    local receiveServerCommand
-    receiveServerCommand = function(module, command, args)
-        if module ~= 'BalanceAndSH' then return; end
-        if command == 'onGetData' then
-            if args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
-                PM.TimeActivateAutoLoot = args['UserData'].autoloot
-                print("PM.TimeActivateAutoLoot on DB:",PM.TimeActivateAutoLoot)
-            end          
-            calculateTime()
-            reloadSell()
-            Events.OnServerCommand.Remove(receiveServerCommand)
-        end
+    local player = getPlayer()
+
+    if not player then return end
+
+    --print("GETPLAYER:",player)
+    sendClientCommand(player, 'BalanceAndSH', 'getDataAutoLoot', nil)
+    
+    local function receiveServerCommand(module, command, args)
+        if module ~= 'BalanceAndSH' and command ~="onGetDataAutoLoot" then return; end
+        if args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
+            PM.TimeActivateAutoLoot = args['UserData'].autoloot
+            --print("PM.TimeActivateAutoLoot on DB:",PM.TimeActivateAutoLoot)
+        end          
+        calculateTime()
+        reloadSell()
+        Events.OnServerCommand.Remove(receiveServerCommand)
     end
     Events.OnServerCommand.Add(receiveServerCommand)
+    Events.OnTick.Remove(GetTimeActivateAutoLootForcalculateTime)
 end
-Events.OnGameStart.Add(GetTimeActivateAutoLootForcalculateTime)
+Events.OnTick.Add(GetTimeActivateAutoLootForcalculateTime)
+-- GetTimeActivateAutoLootForcalculateTime()
 
 
 local function AutoLoot(zombie) --автолут

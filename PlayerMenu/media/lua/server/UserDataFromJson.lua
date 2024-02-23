@@ -3,13 +3,12 @@ if not isServer() then return end
 -- FD.UserData = FD.UserData or {}
 local UserData --= FD.UserData
 
-function checkUserdata() --проверка на существование полей
+local function checkUserdata() --проверка на существование полей
     if not UserData.balance then UserData.balance = 0 end   
     if not UserData.bonus then  UserData.bonus = 0 end
     if not UserData.safehouse then  UserData.safehouse = 625 end    
     if not UserData.ShopCount then  UserData.ShopCount = 0 end        
     if not UserData.MaxShopCount then  UserData.MaxShopCount = 5 end       
-    if not UserData.autoloot then  UserData.autoloot = 0 end
 end
 
 local function SaveJsonItems(theTable,filename) --Сохранение в файл
@@ -78,21 +77,30 @@ commands.getData = function(player, args) --Считывание UserData из j
     UserData = LoadJsonItems(filename)
     checkUserdata()
     if UserData then
-        sendServerCommand('BalanceAndSH', "onGetDataAutoLoot", {UserData = UserData})
+        sendServerCommand('BalanceAndSH', "onGetData", {UserData = UserData})
     end
 end
 
-
 commands.getDataAutoLoot = function(player, args) --Считывание UserData из jsob и отправка
+    --print("test")
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"    
     UserData = LoadJsonItems(filename)
     checkUserdata()
     if UserData then
-        sendServerCommand('BalanceAndSH', "onGetData", {UserData = UserData})
+        sendServerCommand(player, 'BalanceAndSH', "onGetDataAutoLoot", {UserData = UserData})
     end
 end
 
+commands.getDataALUI = function(player, args) --Считывание UserData из jsob и отправка
+    local nickname = player:getUsername()    
+    local filename = "users/" .. nickname .. ".json"    
+    UserData = LoadJsonItems(filename)
+    checkUserdata()
+    if UserData then
+        sendServerCommand(player, 'BalanceAndSH', "onGetDataALUI", {UserData = UserData})
+    end
+end
 
 commands.saveData = function(player, args) 
     local nickname = player:getUsername()    
