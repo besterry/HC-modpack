@@ -280,8 +280,10 @@ function UI_AutoLoot:onEnableToolCheckbox() --Tool
 	local isCheckboxSelected = self.EnableToolCheckBox.selected[1]
 	if isCheckboxSelected then
 		PM.AutolootDisplayCategory["Tool"] = true
+		PM.AutolootDisplayCategory["FoodN"] = true --Батончики
 	else
 		PM.AutolootDisplayCategory["Tool"] = nil
+		PM.AutolootDisplayCategory["FoodN"] = nil  --Батончики
 	end
 	saveConfig()
 end
