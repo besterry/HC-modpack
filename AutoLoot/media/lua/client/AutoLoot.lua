@@ -64,9 +64,11 @@ function GetTimeActivateAutoLootForcalculateTime() --Получение врем
     
     local function receiveServerCommand(module, command, args)
         if module ~= 'BalanceAndSH' and command ~="onGetDataAutoLoot" then return; end
-        if args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
+        if args['UserData'].autoloot and args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
             PM.TimeActivateAutoLoot = args['UserData'].autoloot
             --print("PM.TimeActivateAutoLoot on DB:",PM.TimeActivateAutoLoot)
+        else
+            PM.TimeActivateAutoLoot = 0 --Test FIX
         end          
         calculateTime()
         reloadSell()
