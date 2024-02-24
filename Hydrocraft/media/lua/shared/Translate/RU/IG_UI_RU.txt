@@ -1,5 +1,11 @@
 IGUI_RU = {
 
+	IGUI_This_is_too_difficult = "Это слишком сложно!",
+	IGUI_I_bagged_one = "Я поймал одиного!",
+	IGUI_Darn_it_got_away = "Черт, я упустил его!",
+	IGUI_What_a_waste_the_bears_are_hibernating = "Все в пустую, медведи в спячке!",
+	IGUI_There_are_no_birds_indoors = "Птиц в помещении нет",
+	IGUI_There_are_no_animals_indoors = "В помещении нет животных",
 	IGUI_CraftCategory_Ranching = "Животноводство",
 	IGUI_CraftCategory_Alchemy = "Химия",
 	IGUI_CraftCategory_Death = "Суицид",

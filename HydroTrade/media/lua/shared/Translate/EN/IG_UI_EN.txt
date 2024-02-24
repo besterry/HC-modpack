@@ -1,8 +1,11 @@
 IGUI_EN =
 {
+	IGUI_I_found_nothing = "I didn't find anything"
+	IGUI_There_are_no_dung_indoors = "There is no dung in the room",
+	IGUI_Use_Bench = "Use bench",
+	IGUI_Use_A_Treadmill = "Use treadmill",
 	IGUI_ItemCat_CarWanna = "PinkSlip",
-	IGUI_FIX_T15K_TradeFix= "Temporarily unavailable",
-	
+	IGUI_FIX_T15K_TradeFix= "Temporarily unavailable",	
 	IGUI_SafehouseUI_Area = "Safehouse Area:",
     IGUI_UserPanel_HighlightSafehouse = "Highlight Safehouse",
     IGUI_PlayerText_VehicleIsInSafehouse = "Vehicle is in someone's safehouse",

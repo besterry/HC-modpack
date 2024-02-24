@@ -3665,4 +3665,12 @@ Items_RU = {
 	Recipe_Pour_out_canister = "Опустошить канистру",
 	Recipe_Dismantle_Gun = "Разобрать оружие",
 	Recipe_Dismantle_Pistol = "Разобрать пистолет",
+	Recipe_Unpack_Pallet_of_Aluminum_Ingot = "Распаковать поддон с алюминиевыми слитками",
+	Recipe_Unpack_Pallet_of_Aluminum_Pipes = "Распаковать поддон с алюминиевыми трубами",
+	Recipe_Unpack_Pallet_of_Brass_Ingots = "Распаковать поддон с латунными слитками",
+	Recipe_Unpack_Pallet_of_Concrete_Ingots = "Распаковать поддон с бетонными слитками",
+	Recipe_Unpack_Pallet_of_Constantan_Ingots = "Распаковать поддон константановых слитков",
+	Recipe_Unpack_Pallet_of_Copper_Ingots = "Распаковать поддон медных слитков",
+	Recipe_Unpack_Pallet_of_Copper_Sheets = "Распаковать поддон с медными листами",
+	Recipe_Unpack_Pallet_of_Electrum_Ingots = "Распаковать поддон слитков электрума",
 }

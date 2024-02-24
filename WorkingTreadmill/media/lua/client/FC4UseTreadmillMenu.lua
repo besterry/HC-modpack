@@ -77,7 +77,7 @@ FC4UseTreadmillMenu.doBuildMenu = function(player, context, worldobjects)
 		
 		soundFile = "FC4treadmillrun"
 		soundEnd = "FC4treadmillend"
-		contextMenu = "Use A Treadmill"
+		contextMenu = getText("IGUI_Use_A_Treadmill")--Use A Treadmill
 		actionType = "TreadmillRunning"
 		--print("Found usable treadmill")
 	else

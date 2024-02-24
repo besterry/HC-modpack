@@ -59,7 +59,7 @@ NCUseBenchPressMenu.doBuildMenu = function(player, context, worldobjects)
 		local spriteName = benchObject:getSprite():getName()
 	
 		soundFile = "bench_sound"
-		contextMenu = "Use Bench"
+		contextMenu = getText("IGUI_Use_Bench")
 		actionType = "UseBench"
 	else
 		return

@@ -1,5 +1,9 @@
 IGUI_RU =
 {
+	IGUI_I_found_nothing = "Я ничего не нашел",
+	IGUI_There_are_no_dung_indoors = "В помещении нет навоза",
+	IGUI_Use_Bench = "Использовать скамейку",
+	IGUI_Use_A_Treadmill = "Использовать беговую дорожку",
 	IGUI_ChangeToRoad = "Заменить пол на асфальт",
 	IGUI_ChangeToGrass = "Заменить пол на траву",
 	IGUI_SelectArea = "Выбрать зону",

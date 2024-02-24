@@ -22,20 +22,20 @@ end
 
 function HCSpeaking(player, line)
 	if line == 0 then
-		player:Say("This is too difficult!");
+		player:Say(getText("IGUI_This_is_too_difficult")); --This is too difficult!
 	elseif line == 1 then
-		player:Say("I bagged one!");
+		player:Say(getText("IGUI_I_bagged_one")); --I bagged one!
 	elseif line == 2 then
-		player:Say("Darn, it got away!");
+		player:Say(getText("IGUI_Darn_it_got_away"));--Darn, it got away!
 	elseif line == 3 then
-		player:Say("What a waste, the bears are hibernating!");
+		player:Say(getText("IGUI_What_a_waste_the_bears_are_hibernating"));--What a waste, the bears are hibernating!
 	end
 end
 
 
 function HCFeedTheBirds(items, result, player)
 if not player:isOutside() then
-player:Say("There are no birds indoors.");
+player:Say(getText("IGUI_There_are_no_birds_indoors")); --There are no birds indoors.
 return;
 end
 
@@ -57,7 +57,7 @@ end
 
 function HCHuntSmallGame(items, result, player)
 	if not player:isOutside() then
-		player:Say("There are no animals indoors.");
+		player:Say(getText("IGUI_There_are_no_animals_indoors"));
 	return;
 	end
 	local chance = 0;
@@ -125,7 +125,7 @@ end
 
 function HCHuntDeer(items, result, player)
 	if not player:isOutside() then
-		player:Say("There are no animals indoors.");
+		player:Say(getText("IGUI_There_are_no_animals_indoors")); --There are no animals indoors.
 	return;
 	end
 	local chance = 0;
@@ -167,7 +167,7 @@ end
 
 function HCHuntBoar(items, result, player)
 	if not player:isOutside() then
-		player:Say("There are no animals indoors.");
+		player:Say(getText("IGUI_There_are_no_animals_indoors"));
 	return;
 	end
 	local chance = 0;
@@ -209,7 +209,7 @@ end
 
 function HCHuntBear(items, result, player)
 	if not player:isOutside() then
-		player:Say("There are no animals indoors.");
+		player:Say(getText("IGUI_There_are_no_animals_indoors"));
 	return;
 	end
 	local chance = 0;
@@ -252,7 +252,7 @@ end
 
 function HCHuntCougar(items, result, player)
 	if not player:isOutside() then
-		player:Say("There are no animals indoors.");
+		player:Say(getText("IGUI_There_are_no_animals_indoors"));
 	return;
 	end
 	local chance = 0;
@@ -285,7 +285,7 @@ end
 
 function HCHuntBird(items, result, player)
 	if not player:isOutside() then
-		player:Say("There are no animals indoors.");
+		player:Say(getText("IGUI_There_are_no_animals_indoors"));
 	return;
 	end
 	local chance = 0;

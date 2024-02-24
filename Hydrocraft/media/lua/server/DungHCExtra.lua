@@ -2,7 +2,7 @@
 --Randomize findings for Gathering Dung.
 function HCDungGather(items, result, player)
  if not player:isOutside() then
-player:Say("There are no dung indoors.");
+player:Say(getText("IGUI_There_are_no_dung_indoors")); -- There are no dung indoors
 return;
 end
 player:getStats():setFatigue(player:getStats():getFatigue()+0.05)
@@ -125,7 +125,7 @@ player:getStats():setFatigue(player:getStats():getFatigue()+0.05)
         end
 		player:getXp():AddXP(Perks.PlantScavenging, 10);
     elseif chance <= nothing+dungLvl0+dungLvl1+dungLvl2+dungLvl3+dungLvl4+dungLvl5+dungLvl6+dungLvl7+dungLvl8+dungLvl9+dungLvl10 and nothing > 0 then
-        player:Say("I found nothing!");
+        player:Say(getText("IGUI_I_found_nothing")); --I found nothing
     end
 end
 
