@@ -15,13 +15,21 @@ local function tableToString(t)
     return result
 end
 
+ --Сохраняем в текстовый файл данные убежища для дальнейшей обработки
+local function SaveSHListData(SHData)
+    local fileWriterObj = getFileWriter("SafeHousesData/" .. SHData.Owner .. ".txt", true, false);
+    fileWriterObj:write(tableToString(SHData));
+    fileWriterObj:close();
+end
+
 local timeToRemoveSHOption = getServerOptions():getOptionByName("SafeHouseRemovalTime"):getValue() --Получаем значение настройки SafeHouseRemovalTime
 local timeInMillis = timeToRemoveSHOption * 3600000 --Переводим в мс
 
 local function checkSafehouses() --Получаем список всех убежищ и проверяем какие из них истекли
     local currentTime = getTimeInMillis()
     local safehouses = SafeHouse.getSafehouseList()
-    for i = 0, safehouses:size() - 1 do
+    local count = safehouses:size()
+    for i = count - 1, 0, -1 do
         local SHData = {}
         local safehouse = safehouses:get(i)
         local lastVisitedTimestamp = safehouse:getLastVisited()   
@@ -37,6 +45,7 @@ local function checkSafehouses() --Получаем список всех убе
             SHData.CurrentTime = os.date("%Y-%m-%d %H:%M:%S", currentTime / 1000)
             SHData.Delete = true
             SaveSHListData(SHData)
+            safehouse:removeSafeHouse(getPlayerFromUsername(safehouse:getOwner())) --Удаления убежища у которого истекло время после пометки их к удалению
         else --Если время не истекло - фиксируем обновленные значения
             SHData.Name = safehouse:getTitle()
             SHData.Owner = safehouse:getOwner()
@@ -54,11 +63,3 @@ local function checkSafehouses() --Получаем список всех убе
 end
 --Events.EveryTenMinutes.Add(checkSafehouses)
 Events.EveryDays.Add(checkSafehouses) -- Проверять каждый игровой день
-
---Сохраняем в текстовый файл данные убежища для дальнейшей обработки
-function SaveSHListData(SHData)
-    local fileWriterObj = getFileWriter("SafeHousesData/" .. SHData.Owner .. ".txt", true, false);
-    fileWriterObj:write(tableToString(SHData));
-    fileWriterObj:close();
-end
-
