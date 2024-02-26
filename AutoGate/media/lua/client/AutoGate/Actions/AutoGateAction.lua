@@ -47,7 +47,7 @@ function AutoGateAction:perform()
     else
         AutoGate.Utils.InstallGate(args)
     end
-    self.character:Say("Done! I need a controller to pair.")
+    self.character:Say(getText("IGUI_Done_I_need_a_controller_to_pair")) -- "Done! I need a controller to pair."
 end 
 
 function AutoGateAction:new(character, obj)

@@ -1,0 +1,8 @@
+IGUI_EN = {
+	IGUI_Controller_paired_should_make_more_copies = "The controller is connected, it's better to make a couple of copies",
+	IGUI_Done_I_need_a_controller_to_pair = "Done, now I need a controller to pair",
+	IGUI_Empty_Controller = "<RGB:0.9,0,0> Gate controller",
+	IGUI_Copy_Controller = "Creating a copy",
+	IGUI_UseController = "Use",
+	IGUI_Needs_to_be_paired_or_copied = "You need to connect the controller to the gate",
+}

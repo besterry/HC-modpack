@@ -22,18 +22,18 @@ function AutoGate.UI.contextMenuOptions(_player, context, worldObjects)
             local battery = AutoGate.UI.getBattery(door)
             if wasPaired == nil then
                 local emptyCtrl = AutoGate.UI.findController(player, nil)
-                local pair = context:addOption("Pair Controller", player, AutoGate.UI.pairController, emptyCtrl, door)
+                local pair = context:addOption(getText("ContextMenu_Pair_Controller"), player, AutoGate.UI.pairController, emptyCtrl, door)
                 if (not emptyCtrl) or (not battery) then
                     AutoGate.ToolTip.toolTipPair(pair, emptyCtrl, battery)
                     pair.notAvailable = true
                 end 
             else
                 local pairedCtrl = AutoGate.UI.findController(player, wasPaired)
-                local open = context:addOption("Use Controller", player, AutoGate.UI.toggleAutoGate, door, battery)  
+                local open = context:addOption(getText("ContextMenu_Use_Controller"), player, AutoGate.UI.toggleAutoGate, door, battery)  
                 if pairedCtrl then
                     local emptyCtrl = AutoGate.UI.findController(player, nil)
                     if emptyCtrl then
-                        local copy = context:addOption("Make a copy", player, AutoGate.UI.makeCopy, emptyCtrl, pairedCtrl)
+                        local copy = context:addOption(getText("ContextMenu_Make_a_copy"), player, AutoGate.UI.makeCopy, emptyCtrl, pairedCtrl)
                     end
                 else
                     AutoGate.ToolTip.toolTipOpen(open)
@@ -41,7 +41,7 @@ function AutoGate.UI.contextMenuOptions(_player, context, worldObjects)
                 end 
             end
         else
-            local install = context:addOption("Install Components", player, AutoGate.UI.installGateMotor, door:getSquare(), door:getOppositeSquare(), door)
+            local install = context:addOption(getText("ContextMenu_Install_Components"), player, AutoGate.UI.installGateMotor, door:getSquare(), door:getOppositeSquare(), door)
             AutoGate.UI.checkCanInstall(player, install)
         end
     end       
@@ -103,12 +103,12 @@ end
 
 function AutoGate.UI.pairController(player, gateCtrl, door)
     AutoGate.Utils.pairGateCtrl(gateCtrl, door)
-    player:Say("Controller paired, should make more copies!")
+    player:Say(getText("IGUI_Controller_paired_should_make_more_copies"))
 end
 
 function AutoGate.UI.makeCopy(player, gateCtrl, pairedCtrl)
     AutoGate.Utils.makeCopy(gateCtrl, pairedCtrl)
-    player:Say("Success!")
+    player:Say(getText("IGUI_Success"))
 end
 
 -- function AutoGate.UI.lockGate(gate)
@@ -172,13 +172,13 @@ function AutoGate.UI.contextInvObjMenuOptions(_player, context, invObjects)
         for _,v in ipairs(itens) do
             if v:getType() == "GateController" then
                 local fqc = AutoGate.Utils.GetFrequency(v)
-                local useCtrl = context:addOption("Use", player, AutoGate.UI.openFromInv, fqc)
+                local useCtrl = context:addOption(getText("ContextMenu_Use"), player, AutoGate.UI.openFromInv, fqc)
                 if not fqc then
                     useCtrl.notAvailable = true
                     AutoGate.ToolTip.toolTipUse(useCtrl)
                 else
                     local emptyCtrl = AutoGate.UI.findController(player, nil)
-                    local copy = context:addOption("Make a copy", player, AutoGate.UI.makeCopy, emptyCtrl, v)
+                    local copy = context:addOption(getText("ContextMenu_Make_a_copy"), player, AutoGate.UI.makeCopy, emptyCtrl, v)
                     if not emptyCtrl then
                         copy.notAvailable = true
                         AutoGate.ToolTip.toolTipCopy(copy)

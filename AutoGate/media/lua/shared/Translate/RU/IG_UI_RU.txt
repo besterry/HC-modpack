@@ -1,0 +1,8 @@
+IGUI_RU = {
+	IGUI_Controller_paired_should_make_more_copies = "Контроллер подключен, лучше сделать пару копий",
+	IGUI_Done_I_need_a_controller_to_pair = "Готово, теперь мне нужен контроллер для подключения",
+	IGUI_Empty_Controller = "<RGB:0.9,0,0> Контроллер ворот",
+	IGUI_Copy_Controller = "Создание копии",
+	IGUI_UseController = "Использование",
+	IGUI_Needs_to_be_paired_or_copied = "Нужно подключить контроллер к воротам",
+}

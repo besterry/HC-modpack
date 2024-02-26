@@ -1,0 +1,8 @@
+ContextMenu_RU = {
+	ContextMenu_Install_Components = "Автоворота",
+	ContextMenu_Make_a_copy = "Сделать копию",
+	ContextMenu_Use_Controller = "Использовать контроллер",
+	ContextMenu_Pair_Controller = "Подключить контроллер",
+	ContextMenu_Use = "Использовать",
+	ContextMenu_Make_a_copy = "Сделать копию",	
+}

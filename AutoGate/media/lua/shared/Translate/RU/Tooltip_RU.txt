@@ -1,0 +1,14 @@
+Tooltip_RU = {
+	Tooltip_Install_Components = "Установка компонентов",
+	Tooltip_Gate_Components = " Компонент ворот <LINE> "
+	Tooltip_Gate_BlowTorch = " Пропановая горелка <LINE> ",
+	Tooltip_Gate_WeldingMask = " Сварочная маска <LINE> ",
+	Tooltip_Gate_Metalworking = " Газоварка - 2 <LINE> ",
+	Tooltip_Gate_Mechanics = " Автомеханика - 2 <LINE> ",
+	Tooltip_Gate_Electrical = " Электроника - 1 <LINE> ",	
+	Tooltip_Paired_Controller = "<RGB:0.9,0,0> Подключенный контроллер <LINE> ",
+	Tooltip_Car_Battery_Gate_container = "Автомобильный аккумулятор (в контейнере ворот, заряженный) <LINE> ",
+	Tooltip_Empty_Gate_Controller = "Контроллер ворот (не подключенный) <LINE> ",
+	Tooltip_Pairing = "Подключение",
+	Tooltip_OpenGate = "Открыть",
+}

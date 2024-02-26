@@ -1,0 +1,14 @@
+Tooltip_EN = {
+	Tooltip_Install_Components = "Installing components",
+	Tooltip_Gate_Components = " Gate Component <LINE> "
+	Tooltip_Gate_BlowTorch = "Propane Torch <LINE>",
+	Tooltip_Gate_WeldingMask = "Welding mask <LINE> ",
+	Tooltip_Gate_Metalworking = "Gas Cooker - 2 <LINE> ",
+	Tooltip_Gate_Mechanics = "Auto mechanics - 2 <LINE> ",
+	Tooltip_Gate_Electrical = "Electronics - 1 <LINE> ",
+	Tooltip_Paired_Controller = "<RGB:0.9,0,0> Paired controller <LINE> ",
+	Tooltip_Car_Battery_Gate_container = "Car Battery (in gate container, charged) <LINE> ",
+	Tooltip_Empty_Gate_Controller = "Gate controller (not connected) <LINE> ",
+	Tooltip_Pairing = "Connection",
+	Tooltip_OpenGate = "Open",
+}
