@@ -588,15 +588,15 @@ recipe Catch Bugs
 recipe Mash Bugs
     {
         keep MortarPestle,
-        Worm/Cricket/Grasshopper/Cockroach/HCBeetle/HCBollweevil/HCLadybug/HCDragonfly/HCGardenspider/HCCaterpillar/HCBeetlegrub/HCCicada/HCRedant/HCBlackant/HCPillbug/HCTermite/HCYellowjacket/HCMolecricket/HCHousespider/HCSnail,
-        Worm/Cricket/Grasshopper/Cockroach/HCBeetle/HCBollweevil/HCLadybug/HCDragonfly/HCGardenspider/HCCaterpillar/HCBeetlegrub/HCCicada/HCRedant/HCBlackant/HCPillbug/HCTermite/HCYellowjacket/HCMolecricket/HCHousespider/HCSnail,
-        Worm/Cricket/Grasshopper/Cockroach/HCBeetle/HCBollweevil/HCLadybug/HCDragonfly/HCGardenspider/HCCaterpillar/HCBeetlegrub/HCCicada/HCRedant/HCBlackant/HCPillbug/HCTermite/HCYellowjacket/HCMolecricket/HCHousespider/HCSnail,
-        Worm/Cricket/Grasshopper/Cockroach/HCBeetle/HCBollweevil/HCLadybug/HCDragonfly/HCGardenspider/HCCaterpillar/HCBeetlegrub/HCCicada/HCRedant/HCBlackant/HCPillbug/HCTermite/HCYellowjacket/HCMolecricket/HCHousespider/HCSnail,
-        Worm/Cricket/Grasshopper/Cockroach/HCBeetle/HCBollweevil/HCLadybug/HCDragonfly/HCGardenspider/HCCaterpillar/HCBeetlegrub/HCCicada/HCRedant/HCBlackant/HCPillbug/HCTermite/HCYellowjacket/HCMolecricket/HCHousespider/HCSnail,
-        Result:HCBugmash,
+		Bowl,
+		Worm/Cricket/Grasshopper/Cockroach/HCBollweevil,
+        HCLadybug/HCDragonfly/HCGardenspider/HCCaterpillar/HCBeetlegrub,
+		HCCicada/HCRedant/HCBlackant/HCTermite/HCYellowjacket,
+		HCMolecricket/HCHousespider/HCPillbug/HCSnail/HCBeetle,
+        Result:BugMash,
         Time:1000.0,
         Category:Cooking,
-   	OnGiveXP:HCCooking_OnGiveXP,
+		OnGiveXP:HCCooking_OnGiveXP,
     }
 
 

@@ -1,7 +1,30 @@
 module Base
 {
     /************************Normal************************/
-	
+	item BugMash
+	{
+		DisplayName = Bug Mash,
+		DisplayCategory = Food,
+		Type = Food,
+		Weight = 0.05,
+		Icon = BugMash,
+		FoodType = NoExplicit,
+		DaysFresh = 3,
+		DaysTotallyRotten = 5,
+		HungerChange = -17,
+		ThirstChange = +1,
+		UnhappyChange =	+5,
+		ReplaceOnUse = Bowl,
+		Alcoholic =	TRUE,
+		AlcoholPower = 1,
+		Calories = 113,
+		Carbohydrates = 0.13,
+		Lipids = 0.61,
+		Proteins = 3.47,
+		CustomEatSound = EatingFruit,
+		CantBeFrozen = TRUE,
+	}
+
 	item RubberTree
     {
         Weight	=	80,
