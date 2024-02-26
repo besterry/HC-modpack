@@ -1,4 +1,9 @@
 Items_RU = {
+	Recipe_Disassemble_Wooden_Pallet = "Разобрать деревянный поддон",
+	Recipe_Disassemble_Binoculars = "Разобрать бинокль",
+	Recipe_Disassemble_Drillcordless = "Разобрать аккумуляторную дрель",
+	Recipe_Make_Tire_RunFlat_M998_from_a_Normal_Tire = "Усилить тяжелую шину",
+	Recipe_Make_Tire_RunFlat_M998 = "Усилить элитную тяжелую шину",
 	Recipe_Make_glue_empty = "Спаять бутылку клея",
 	Recipe_Make_wood_glue_empty = "Спаять бутылку древесного клея",
 	Recipe_Disassemble_Antique_Stove = "Разобрать печь",

@@ -6,6 +6,72 @@ module Hydrocraft
 
     }
 
+recipe Make Tire RunFlat M998 from a Normal Tire
+    {
+        SkillRequired:Mechanics=4,
+        SkillRequired:MetalWelding=2,
+        NormalTire2,
+        HCRubbersheet=2,
+        HCElectricmultitooldrillpowered,
+        BlowTorch=5,
+        HCNut=5,
+        keep WeldingMask,
+        keep LugWrench,
+        keep HCFile,
+        Result:V101Tire2,
+        Time:700,
+        Category:Mechanics,
+        OnGiveXP:HCMechanicsWelding_OnGiveXP,
+    }
+
+recipe Make Tire RunFlat M998
+    {
+        SkillRequired:Mechanics=4,
+        SkillRequired:MetalWelding=2,
+        ModernTire2,
+        HCElectricmultitooldrillpowered,
+        BlowTorch=3,
+        HCNut=5,
+        keep WeldingMask,
+        keep LugWrench,
+        keep HCFile,
+        Result:V101Tire2,
+        Time:700,
+        Category:Mechanics,
+        OnGiveXP:HCMechanicsWelding_OnGiveXP,
+    }
+
+recipe Disassemble Wooden Pallet
+    {
+        HCWoodenpallet,
+        keep Crowbar,
+		keep Hammer,
+        Result:Plank=4,
+        Time:300,
+        Category:Survivalist,
+    }
+
+recipe Disassemble Binoculars
+    {
+        HCBinoculars,
+        keep Screwdriver,
+		keep HCPliers,
+        Result:MatShatteredGlass=2,
+        Time:1000,
+        Category:Engineer,
+        OnCreate:recipe_hcdismantleBinoculars,
+    }
+
+recipe Disassemble Drillcordless
+    {
+        HCDrillcordless,
+        keep Screwdriver,
+		keep HCPliers,
+        Result:ElectronicsScrap=8,
+        Time:1000,
+        Category:Engineer,
+        OnGiveXP:HCElectricity_OnGiveXP,
+    }
 
 recipe Make wood glue empty
     {

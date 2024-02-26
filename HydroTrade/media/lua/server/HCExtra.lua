@@ -342,6 +342,10 @@ function recipe_hcgetemptymethlaminbarrelblue(items, result, player)
 	inv:AddItem("Hydrocraft.HCMethylaminbarrelblueempty");
 end
 
+function recipe_hcdismantleBinoculars(items, result, player) --Разбор бинокля
+    HCAddManySameItem("Hydrocraft.HCPlastic", 1, player);
+end
+
 function recipe_hcgetemptyphenylbarrel(items, result, player)
 	local inv = player:getInventory();
 	inv:AddItem("Hydrocraft.HCPhenylbarrelempty");
