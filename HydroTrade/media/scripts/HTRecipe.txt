@@ -6,7 +6,28 @@ module Hydrocraft
 
     }
 
-/***********Detachment***********/
+
+recipe Make wood glue empty
+    {
+        SkillRequired:Woodwork=1,
+        HCPlastic=2,
+        HCSoldergunpowered,
+        NeedToBeLearn:false,
+        Result:HCWoodglueempty,
+        Time:200,
+        Category:Survivalist,
+    }
+
+recipe Make glue empty
+    {
+        SkillRequired:Woodwork=1,
+        HCPlastic=2,
+        HCSoldergunpowered,
+        NeedToBeLearn:false,
+        Result:HCGlueempty,
+        Time:200,
+        Category:Survivalist,
+    }
 
 recipe Detachment
     {
