@@ -2217,6 +2217,10 @@ function HC_ToyStatModifier(items, result, player)
         elseif toy == "Bricktoys" or toy == "HCToycar" or toy == "HCToyairplane" or toy == "HCToyship" or toy == "HCToytrain" or toy == "HCToyrocketship" or toy == "HCToyhelicopter" or toy == "HCToydrawing" then
             boredom = 10;
             unhappy = 4;
+		--Ten boredom, six unhappy.
+        elseif toy == "falloimitator" then
+            boredom = 8;
+            unhappy = 8;
         --Ten boredom, six unhappy.
         elseif toy == "HCCheckers" then
             boredom = 10;

@@ -25,6 +25,34 @@ module Base
 		CantBeFrozen = TRUE,
 	}
 
+	
+	item falloimitator
+    {
+        Weight	=	0.4,
+        Type	=	Normal,
+        DisplayName	=	falloimitator,
+        Icon	=	falloimitator,
+        WorldStaticModel = falloimitator,
+    }
+
+	item leatherface
+    {
+        Weight	=	0.4,
+        Type	=	Normal,
+        DisplayName	=	leatherface,
+        Icon	=	leatherface,
+        WorldStaticModel = leatherface,
+    }
+
+	item Treatedpieceofleather
+    {
+        Weight	=	0.2,
+        Type	=	Normal,
+        DisplayName	=	Treated piece of leather,
+        Icon	=	ZLeather,
+        WorldStaticModel = ZLeather,
+    }
+
 	item RubberTree
     {
         Weight	=	80,

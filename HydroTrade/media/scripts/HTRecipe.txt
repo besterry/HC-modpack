@@ -6,6 +6,136 @@ module Hydrocraft
 
     }
 
+recipe Play With
+    {
+    falloimitator,
+    Result:falloimitator,
+    Time:500,
+    OnCreate:HC_ToyStatModifier,
+    Category:Leisure,
+    OnGiveXP:HCHunger_OnGiveXP,
+    }
+
+recipe Make falloimitator
+    {
+        Treatedpieceofleather=2,
+        PaintPurple,
+        Glue/Woodglue,
+        Result:falloimitator,
+        Time:120,
+        Category:Tailoring,    
+        OnGiveXP:HCTailoring_OnGiveBitXP, 
+    }
+
+recipe Make leatherface
+    {
+        Treatedpieceofleather,
+        keep Needle/HCBoneneedle,
+        Thread=6,
+        keep Scissors/HCChildsafetyscissors/HCNailclipper/HCHedgecutter,
+        Result:leatherface,
+        Time:120,
+        Category:Tailoring,    
+        OnGiveXP:HCTailoring_OnGiveBitXP, 
+    }
+
+recipe Make Leather strip fine
+    {
+        Treatedpieceofleather,
+        keep Scissors/HCChildsafetyscissors/HCNailclipper/HCHedgecutter,
+        Result:HCLeatherstripfine,
+        Time:50,
+        Category:Survivalist,    
+    }
+
+recipe Craft belt buckle
+    {
+        HCWirezinc=2,
+        keep HCPliers,
+        Result:HCBeltbuckle,
+        Time:100,
+        Category:Survivalist,
+    }
+
+recipe Join into a hard leather strip
+    {
+        Treatedpieceofleather=2,
+        Glue/Woodglue,
+        Result:HCLeatherstriphard,
+        Time:150,
+        Category:Survivalist,
+    }
+
+recipe Sew brief case
+    {
+        Treatedpieceofleather=6,
+        MetalBar,
+        Thread=12,
+        keep Needle/HCBoneneedle,
+        keep Scissors/HCChildsafetyscissors/HCNailclipper/HCHedgecutter,
+        Result:HCBriefcase,
+        Time:300,
+        Category:Tailoring,    
+        OnGiveXP:HCTailoring_OnGiveBitXP, 
+    }
+
+recipe Sew tight leather trousers
+    {
+        Treatedpieceofleather=7,
+        Thread=16,
+        keep Needle/HCBoneneedle,
+        keep Scissors/HCChildsafetyscissors/HCNailclipper/HCHedgecutter,
+        Result:TrousersMesh_Leather,
+        Time:350,
+        Category:Tailoring,    
+        OnGiveXP:HCTailoring_OnGiveTwoXP, 
+    }
+
+recipe Sew a leather cloak
+    {
+        Treatedpieceofleather=10,
+        Thread=24,
+        keep Needle/HCBoneneedle,
+        keep Scissors/HCChildsafetyscissors/HCNailclipper/HCHedgecutter,
+        Result:JacketLong_Random,
+        Time:450,
+        Category:Tailoring,    
+        OnGiveXP:HCTailoring_OnGiveXP, 
+    }
+
+recipe Sew a leather bag
+    {
+        Treatedpieceofleather=6,
+        Thread=13,
+        keep Needle/HCBoneneedle,
+        keep Scissors/HCChildsafetyscissors/HCNailclipper/HCHedgecutter,
+        Result:HCLeatherbag,
+        Time:250,
+        Category:Survivalist,    
+        OnGiveXP:HCTailoring_OnGiveTwoXP, 
+    }
+
+recipe Cut the casing into strips
+    {
+        Treatedpieceofleather,
+        keep Scissors/HCChildsafetyscissors/HCNailclipper/HCHedgecutter,
+        Result:LeatherStrips=3,
+        Time:80,
+        Category:Survivalist,    
+        OnGiveXP:HCTailoring_OnGiveBitXP, 
+    }
+
+recipe Process a piece of leather
+    {
+        HCZedskindried,
+        HCWoodenbucketlime,
+        Result:Treatedpieceofleather,
+        NeedToBeLearn:true,
+        Time:150,
+        Category:Survivalist,
+        OnGiveXP:HCTailoring_OnGiveBitXP,
+    }
+
 recipe Make Tire RunFlat M998 from a Normal Tire
     {
         SkillRequired:Mechanics=4,

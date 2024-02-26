@@ -191,6 +191,11 @@ function recipe_hcslotmachine(items, result, player)
     end
 end
 
+--HydroTrade
+function recipe_hcdismantleBinoculars(items, result, player) --Разбор бинокля
+    HCAddManySameItem("Hydrocraft.HCPlastic", 1, player);
+end
+
 -- Trash
 
 function recipe_hcget8trashbottle(items, result, player)
@@ -340,10 +345,6 @@ end
 function recipe_hcgetemptymethlaminbarrelblue(items, result, player)
 	local inv = player:getInventory();
 	inv:AddItem("Hydrocraft.HCMethylaminbarrelblueempty");
-end
-
-function recipe_hcdismantleBinoculars(items, result, player) --Разбор бинокля
-    HCAddManySameItem("Hydrocraft.HCPlastic", 1, player);
 end
 
 function recipe_hcgetemptyphenylbarrel(items, result, player)

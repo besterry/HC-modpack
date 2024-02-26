@@ -169,6 +169,10 @@ function HCTailoring_OnGiveBitXP(recipe, ingredients, result, player)
     player:getXp():AddXP(Perks.Tailoring, 1);
 end
 
+function HCTailoring_OnGiveTwoXP(recipe, ingredients, result, player)
+    player:getXp():AddXP(Perks.Tailoring, 2);
+end
+
 function HCTailoring_OnGiveXP(recipe, ingredients, result, player)
     player:getXp():AddXP(Perks.Tailoring, 3);
 end

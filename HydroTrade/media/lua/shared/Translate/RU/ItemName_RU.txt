@@ -1,4 +1,7 @@
 ItemName_RU = {
+	ItemName_Base.falloimitator = "Игрушка для взрослых",
+	ItemName_Base.leatherface = "Кожанное лицо",
+	ItemName_Base.Treatedpieceofleather = "Обработанный кусок кожи",
 	ItemName_Base.HTpalletLogs = "Поддон брёвен",
 	ItemName_Hydrocraft.HCMysteryseedspacket = "Пакет с Неизвестными Семенами",	
 	ItemName_Hydrocraft.HCMagazinemetalworking7 = "Ежемесячник по металлообработке - Фермерские инструменты",
