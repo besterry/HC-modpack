@@ -407,35 +407,35 @@ function RemoverItemAndBuildsTool.removeItems(items, player)
 end
 
 --************************************************************************--
+--Блок удаления предмета в инветаре (дубль)
+-- local function RemoveItemContextOptions(player, context, items)
+--     if not (isDebugEnabled() or (isClient() and (isAdmin() or getAccessLevel() ~= ""))) then return true; end
 
-local function RemoveItemContextOptions(player, context, items)
-    if not (isDebugEnabled() or (isClient() and (isAdmin() or getAccessLevel() ~= ""))) then return true; end
+--     local container = nil
+--     local resItems = {}
+--     for i,v in ipairs(items) do
+--         if not instanceof(v, "InventoryItem") then
+--             for _, it in ipairs(v.items) do
+--                 resItems[it] = true
+--             end
+--             container = v.items[1]:getContainer()
+--         else
+--             resItems[v] = true
+--             container = v:getContainer()
+--         end
+--     end
 
-    local container = nil
-    local resItems = {}
-    for i,v in ipairs(items) do
-        if not instanceof(v, "InventoryItem") then
-            for _, it in ipairs(v.items) do
-                resItems[it] = true
-            end
-            container = v.items[1]:getContainer()
-        else
-            resItems[v] = true
-            container = v:getContainer()
-        end
-    end
+--     local listItems = {}
+--     for v, _ in pairs(resItems) do
+--         table.insert(listItems, v)
+--     end
 
-    local listItems = {}
-    for v, _ in pairs(resItems) do
-        table.insert(listItems, v)
-    end
+--     local removeOption = context:addDebugOption("Delete:")
+--     local subMenuRemove = ISContextMenu:getNew(context)
+--     context:addSubMenu(removeOption, subMenuRemove)
 
-    local removeOption = context:addDebugOption("Delete:")
-    local subMenuRemove = ISContextMenu:getNew(context)
-    context:addSubMenu(removeOption, subMenuRemove)
-
-    subMenuRemove:addOption("1 item", listItems[1], RemoverItemAndBuildsTool.removeItem, player)
-    subMenuRemove:addOption("selected", listItems, RemoverItemAndBuildsTool.removeItems, player)
-end
-Events.OnFillInventoryObjectContextMenu.Add(RemoveItemContextOptions)
+--     subMenuRemove:addOption("1 item", listItems[1], RemoverItemAndBuildsTool.removeItem, player)
+--     subMenuRemove:addOption("selected", listItems, RemoverItemAndBuildsTool.removeItems, player)
+-- end
+-- Events.OnFillInventoryObjectContextMenu.Add(RemoveItemContextOptions)
 

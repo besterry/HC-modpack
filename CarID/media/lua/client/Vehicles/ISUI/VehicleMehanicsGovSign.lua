@@ -23,6 +23,7 @@ local old_render = ISVehicleMechanics.render
 ---@diagnostic disable-next-line: duplicate-set-field
 function ISVehicleMechanics:render()
     local o = old_render(self)
+    local register = self.vehicle:getModData().register
     if not self.vehicle:getModData().sqlId and not sendMessage then
         sendcm(self.vehicle:getId())
         sendMessage = true
@@ -32,5 +33,11 @@ function ISVehicleMechanics:render()
     local govSign = getText("IGUI_GovSign") .. self.sqlId .. " KT"        
     local govSignWidth = getTextManager():MeasureStringX(UIFont.Small, govSign)
     self:drawText(govSign, self.width - govSignWidth - 20, 120, 1, 1, 1, 1, UIFont.Small);
+    local registerText
+    if  register then
+        registerText = getText("IGUI_CheckRegister") .. register
+        self:drawText(registerText, self.width - govSignWidth - 200, 120, 1, 1, 1, 1, UIFont.Small);
+    end
+    
     return o
 end

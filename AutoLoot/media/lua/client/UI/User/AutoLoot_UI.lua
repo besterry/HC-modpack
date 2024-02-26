@@ -245,7 +245,7 @@ function UI_AutoLoot:onClick(button)
 	end
 end
 
-function UI_AutoLoot:onEnableAutoLootCheckbox()
+function UI_AutoLoot:onEnableAutoLootCheckbox() --Чекбокс активации автолута
 	PM.Autoloot = self.EnableAutoLootCheckBox.selected[1]
 	if PM.Autoloot then
 		getPlayer():setHaloNote(getText("IGUI_AutolootActivate"), 255, 255, 100, 300);
@@ -255,7 +255,7 @@ function UI_AutoLoot:onEnableAutoLootCheckbox()
 	saveConfig()
 end
 
-function UI_AutoLoot:onEnableAutoLootMessageCheckbox()
+function UI_AutoLoot:onEnableAutoLootMessageCheckbox() --Чекбокс сообщений автолута
 	PM.AutoLootMessage = self.EnableAutoLootMessageCheckBox.selected[1]
 	saveConfig()
 	if PM.AutoLootMessage then
@@ -266,7 +266,7 @@ function UI_AutoLoot:onEnableAutoLootMessageCheckbox()
 	
 end
 
-function UI_AutoLoot:onEnableClothCheckbox() --Tool
+function UI_AutoLoot:onEnableClothCheckbox() --Чекбокс Cloth
 	local isCheckboxSelected = self.EnableClothCheckBox.selected[1]
 	saveConfig()
 	if isCheckboxSelected then
@@ -276,7 +276,7 @@ function UI_AutoLoot:onEnableClothCheckbox() --Tool
 	end    
 end
 
-function UI_AutoLoot:onEnableToolCheckbox() --Tool
+function UI_AutoLoot:onEnableToolCheckbox() --Чекбокс Tool,FoodN
 	local isCheckboxSelected = self.EnableToolCheckBox.selected[1]
 	if isCheckboxSelected then
 		PM.AutolootDisplayCategory["Tool"] = true
@@ -288,7 +288,7 @@ function UI_AutoLoot:onEnableToolCheckbox() --Tool
 	saveConfig()
 end
 
-function UI_AutoLoot:onEnableMoneyCheckbox() --Money
+function UI_AutoLoot:onEnableMoneyCheckbox() --Чекбокс Money
 	local isCheckboxSelected = self.EnableMoneyCheckBox.selected[1]
 	if isCheckboxSelected then
 		PM.AutolootDisplayCategory["Junk"] = true
@@ -302,7 +302,7 @@ function UI_AutoLoot:onEnableMoneyCheckbox() --Money
 	saveConfig()
 end
 
-function UI_AutoLoot:onEnableWepFireCheckbox() --WepFire
+function UI_AutoLoot:onEnableWepFireCheckbox() --Чекбокс WepFire
 	local isCheckboxSelected = self.EnableWepFireCheckBox.selected[1]
 	if isCheckboxSelected then
 		PM.AutolootDisplayCategory["WepFire"] = true
@@ -314,7 +314,7 @@ function UI_AutoLoot:onEnableWepFireCheckbox() --WepFire
 	saveConfig()
 end
 
-function UI_AutoLoot:onEnableWepMeleeCheckbox() --WepMelee
+function UI_AutoLoot:onEnableWepMeleeCheckbox() --Чекбокс WepMelee
 	local isCheckboxSelected = self.EnableWepMeleeCheckBox.selected[1]
 	if isCheckboxSelected then
 		PM.AutolootDisplayCategory["WepMelee"] = true
@@ -324,7 +324,7 @@ function UI_AutoLoot:onEnableWepMeleeCheckbox() --WepMelee
 	saveConfig()
 end
 
-function UI_AutoLoot:onEnableWepAmmoMagCheckbox() --WepAmmoMag
+function UI_AutoLoot:onEnableWepAmmoMagCheckbox() --Чекбокс WepAmmoMag
 	local isCheckboxSelected = self.EnableWepAmmoMagCheckBox.selected[1]
 	if isCheckboxSelected then
 		PM.AutolootDisplayCategory["WepAmmoMag"] = true
@@ -334,7 +334,7 @@ function UI_AutoLoot:onEnableWepAmmoMagCheckbox() --WepAmmoMag
 	saveConfig()
 end
 
-function UI_AutoLoot:onEnableaccessoriesCheckbox()
+function UI_AutoLoot:onEnableaccessoriesCheckbox()--Чекбокс ClothM,ClothA
 	local isCheckboxSelected = self.EnableAccessoriesCheckBox.selected[1]
 	if isCheckboxSelected then
 		PM.AutolootDisplayCategory["ClothM"] = true
@@ -346,8 +346,7 @@ function UI_AutoLoot:onEnableaccessoriesCheckbox()
 	saveConfig()
 end
 
-
-function UI_AutoLoot:onEnableWepPartCheckbox()
+function UI_AutoLoot:onEnableWepPartCheckbox() --Чекбокс WepPart
 	local isCheckboxSelected = self.EnableWepPartCheckBox.selected[1]
 	if isCheckboxSelected then
 		PM.AutolootDisplayCategory["WepPart"] = true
@@ -357,7 +356,7 @@ function UI_AutoLoot:onEnableWepPartCheckbox()
 	saveConfig()
 end
 
-function UI_AutoLoot:onClickTab()
+function UI_AutoLoot:onClickTab() --Дествие при выборе сумки
 	BackpacksUser()
 	self.comboBox:clear()
 	self.comboBox:addOptionWithData(getText("IGUI_Main_Inventory"), self.player);
@@ -373,7 +372,7 @@ function UI_AutoLoot:onClickTab()
 	saveConfig()
 end
 local remainingTime = 0
-local function calculateTime()
+local function calculateTime() --Расчет оставшего время действия
 	local subscriptionDuration = PM.AutolootDurationAction * 24 * 60 * 60  -- 7 дней в секундах   
 	--print("subscriptionDuration:",subscriptionDuration) 
 	local currentDate = os.time()-- Текущая дата и время
