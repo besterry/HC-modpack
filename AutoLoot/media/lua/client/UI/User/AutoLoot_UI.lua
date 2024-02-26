@@ -80,7 +80,7 @@ function UI_AutoLoot:initialise()
 	for _, bagName in ipairs(PM.Inventory) do
 		self.comboBox:addOptionWithData(bagName:getName(),bagName)
 	end
-	PM.InventorySelected=self.player    
+	PM.InventorySelected=PM.InventorySelected or self.player
 
 	--Заголовок категории
 	self.CategoryLabel = ISLabel:new(250, 10, FONT_HGT_MEDIUM, getText("IGUI_Category"), 1, 1, 1, 1, UIFont.Medium, true)
