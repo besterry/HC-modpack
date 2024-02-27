@@ -10,10 +10,15 @@ end
 ---@return getOnlinePlayers ArrayList
 ---@type getOnlinePlayers userdata
 local function PlayersOnline()
-    local players = getOnlinePlayers():size()  
+    --Получение игрового времени
+    local hour = tostring(getGameTime():getHour())
+    local mimutes = tostring(getGameTime():getMinutes())
+    local gameTime = hour .. ":" .. mimutes
+    --Получение количества игроков и запись в строку result и игрового времени
     local maxPlayersOption = getServerOptions():getOptionByName("MaxPlayers"):getValue()
-    local result = players .. "/" .. maxPlayersOption
-    --Получение списка имен и формирование строки
+    local players = getOnlinePlayers():size()  
+    local result = players .. "/" .. maxPlayersOption .. " " .. gameTime
+    --Получение списка имен и формирование таблицы игроков онлайн
     local onlinePlayers = getOnlinePlayers()
     local playersCount = onlinePlayers:size()
     local playerNames = {}
