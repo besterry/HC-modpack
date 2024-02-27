@@ -12,8 +12,10 @@ end
 local function PlayersOnline()
     --Получение игрового времени
     local hour = tostring(getGameTime():getHour())
-    local mimutes = tostring(getGameTime():getMinutes())
-    local gameTime = hour .. ":" .. mimutes
+    local mimutes = string.format("%02d",(tostring(getGameTime():getMinutes())))
+    print(getGameTime():getMinutes())
+    local gameTime = tostring(hour .. ":" .. mimutes)
+    print("gameTime:",gameTime)
     --Получение количества игроков и запись в строку result и игрового времени
     local maxPlayersOption = getServerOptions():getOptionByName("MaxPlayers"):getValue()
     local players = getOnlinePlayers():size()  
