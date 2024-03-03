@@ -1,4 +1,8 @@
 Items_RU = {
+	Recipe_Make_Double_improved_freezer = "Сделать сдвоенный улучшенный морозильник",
+	Recipe_Make_Improved_freezer = "Сделать улучшенный морозильник",
+	Recipe_Make_homemade_freezer = "Сделать самодельный морозильник",
+	Recipe_Make_Simple_homemade_freezer = "Сделать простой самодельный морозильник",
 	Recipe_Make falloimitator = "Сделать взрослую игрушку",
 	Recipe_Make_leatherface = "Сшить кожанное лицо",
 	Recipe_Sew_brief_case = "Сшить кожанный портфель",

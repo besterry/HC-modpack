@@ -1,0 +1,6 @@
+Moveables_RU = {
+	Simple_homemade_freezer = "Простой самодельный морозильник",
+    Homemade_freezer = "Самодельный морозильник",    
+    Improved_freezer = "Улучшенный морозильник",
+    freezer_Doubleimproved = "Сдвоенный улучшенный морозильник",
+    }

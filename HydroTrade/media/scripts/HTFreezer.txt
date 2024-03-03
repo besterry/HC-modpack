@@ -1,0 +1,151 @@
+module Base
+{
+imports {Base}
+
+/* Предметы */
+item CraftFreezer1
+	{
+		DisplayCategory = Furniture,
+		Type			= Moveable,
+		Icon			= default,
+		Weight		  	= 10,
+		DisplayName		= Simple homemade freezer,
+		WorldObjectSprite	= htrefrigeration_01_0,
+	}
+item CraftFreezer2
+	{
+		DisplayCategory = Furniture,
+		Type			= Moveable,
+		Icon			= default,
+		Weight		  	= 12.5,
+		DisplayName		= Homemade freezer,
+		WorldObjectSprite	= htrefrigeration_01_1,
+	}
+item CraftFreezer3
+	{
+		DisplayCategory = Furniture,
+		Type			= Moveable,
+		Icon			= default,
+		Weight		  	= 15,
+		DisplayName		= Improved freezer,
+		WorldObjectSprite	= htrefrigeration_01_2,
+	}
+item CraftFreezer4
+	{
+		DisplayCategory = Furniture,
+		Type			= Moveable,
+		Icon			= default,
+		Weight		  	= 25,
+		DisplayName		= freezer_Doubleimproved,
+		WorldObjectSprite	= htrefrigeration_01_3,
+	}
+
+/* Рецепты морозилок */
+
+recipe Make Simple homemade freezer
+    {
+	    HCIcechest, /* Переносной холодильник (20 вместимость) */
+        Plank=2, /* Доски */
+        Nails=2, /* Гвозди */
+        HCThermometer /* Термометр */
+        HCElectromotorsmall, /* Маленький электромотор */
+        HCSoldergunpowered, /* Заряженный паяльник */
+        HCSolder=5 /* Припой */,
+    	keep Hammer, /* молоток */
+        keep Saw/GardenSaw, /* Пилы */
+        keep Screwdriver/Multitool/Leatherdad,
+    	CanBeDoneFromFloor:false, /* Можно вне инвентаря? нет */
+   	    Result:CraftFreezer1, /* Что получим */
+	    SkillRequired:Electricity=1, /* Требуемый навык */
+    	Sound:PZ_Hammer, /* Какой звук */
+    	NeedToBeLearn:false, /* Нужно ли что-то прочитать чтоб крафтить */
+    	Time:2500, /* Время крафта */
+    	Category:Electrical, /* Категория */
+        OnGiveXP:HCElectricity_OnGiveXP, /* 2 XP */
+    }
+
+recipe Make Simple homemade freezer
+    {
+	    HCIcechest, /* Переносной холодильник (20 вместимость) */
+        HCWoodencrate, /* Деревянный ящик */
+        HCThermometer /* Термометр */
+        HCElectromotorsmall, /* Маленький электромотор */
+        HCSoldergunpowered, /* Заряженный паяльник */
+        HCSolder=5, /* Припой */,
+        keep Saw/GardenSaw, /* Пилы */
+        keep Screwdriver/Multitool/Leatherdad,
+    	CanBeDoneFromFloor:false, /* Можно вне инвентаря? нет */
+   	    Result:CraftFreezer1, /* Что получим */
+	    SkillRequired:Electricity=1, /* Требуемый навык */
+    	Sound:PZ_Hammer, /* Какой звук */
+    	NeedToBeLearn:false, /* Нужно ли что-то прочитать чтоб крафтить */
+    	Time:2000, /* Время крафта */
+    	Category:Electrical, /* Категория */
+        OnGiveXP:HCElectricity_OnGiveXP, /* 2 XP */
+    }
+
+recipe Make homemade freezer
+    {
+        Cooler, /* Термосумка */
+	    Plank=4, /* Доска */
+        Nails=4, /*Гвоздь */        
+        CraftFreezer1, /* первый морозильник */
+        HCElectromotorsmall, /* Маленький электромотор */
+        HCSoldergunpowered, /* Заряженный паяльник */
+        HCSolder=2, /* Припой */,
+    	keep Hammer,
+        keep Saw/GardenSaw, /* Пилы */
+        keep Screwdriver/Multitool/Leatherdad,
+    	CanBeDoneFromFloor:false,
+   	    Result:CraftFreezer2,
+	    SkillRequired:Electricity=2,
+    	Sound:PZ_Hammer,
+    	NeedToBeLearn:false,
+    	Time:1250,
+    	Category:Electrical, 
+        OnGiveXP:HCElectricity_OnGiveXP, /* 2 XP */
+    }
+
+recipe Make Improved freezer
+    {
+        CraftFreezer2, /* 2й морозильник */
+        Cooler, /* Термосумка */
+        Coldpack=2, /* Гипотермический пакет */ 
+        HCWirethermocouple=2, /* Термопарный провод */
+        HCIronsheet = 4, /* Железный лист */
+        BlowTorch=5, /* Пропановая горелка */    
+        HCElectromotor, /* Большой электромотор */ 
+        HCSolder=3, /* Припой */,  
+        HCSoldergunpowered, /* Заряженный паяльник */
+        Keep WeldingMask, /* Сварочная маска */
+        keep Screwdriver/Multitool/Leatherdad,
+    	CanBeDoneFromFloor:false,
+   	    Result:CraftFreezer3,
+	    SkillRequired:Electricity=4,
+    	Sound:PZ_Hammer,
+    	NeedToBeLearn:false,
+    	Time:1250,
+    	Category:Electrical, 
+        OnGiveXP:HCElectricity_OnGiveManyXP, /* 20 EXP */
+    }
+
+recipe Make Double improved freezer
+    {	    
+        CraftFreezer3=2, /* Предыдущий морозильник*/
+        HCSteelsheetlarge=2, /* Большой стальной лист */
+        BlowTorch=5, /* Пропановая горелка */   
+        HCElectromotor, /* Большой электромотор */ 
+        HCSolder=4, /* Припой */,  
+        HCSoldergunpowered, /* Заряженный паяльник */
+        Keep WeldingMask, /* Сварочная маска */
+        keep Screwdriver/Multitool/Leatherdad,
+    	CanBeDoneFromFloor:true, /* Можно крафтить не в инвентаре */
+   	    Result:CraftFreezer4,
+	    SkillRequired:Electricity=6,
+    	Sound:PZ_Hammer,
+    	NeedToBeLearn:false,
+    	Time:1250,
+    	Category:Electrical, 
+        OnGiveXP:HCElectricity_OnGiveManyXP, /* 20 EXP */
+    }
+}

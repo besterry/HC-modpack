@@ -2,3 +2,5 @@ name=HydroTrade
 id=HydroTrade_h
 description=Trade for Hydrocraft
 poster=poster.png
+pack=refrigeration
+tiledef=refrigeration 1101
