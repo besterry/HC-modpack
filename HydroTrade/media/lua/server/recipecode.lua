@@ -316,39 +316,39 @@ function Recipe.OnGiveXP.Cooking3(recipe, ingredients, result, player)
 end
 
 function Recipe.OnGiveXP.Cooking10(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.Cooking, 10);
+    player:getXp():AddXP(Perks.Cooking, 5);
 end
 
 function Recipe.OnGiveXP.MetalWelding10(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.MetalWelding, 10);
+    player:getXp():AddXP(Perks.MetalWelding, 1);
 end
 
 function Recipe.OnGiveXP.MetalWelding15(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.MetalWelding, 15);
+    player:getXp():AddXP(Perks.MetalWelding, 1.5);
 end
 
 function Recipe.OnGiveXP.MetalWelding20(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.MetalWelding, 20);
+    player:getXp():AddXP(Perks.MetalWelding, 3.5);
 end
 
 function Recipe.OnGiveXP.MetalWelding25(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.MetalWelding, 25);
+    player:getXp():AddXP(Perks.MetalWelding, 5);
 end
 
 function Recipe.OnGiveXP.Blacksmith10(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.Blacksmith, 10);
+    player:getXp():AddXP(Perks.Blacksmith, 1);
 end
 
 function Recipe.OnGiveXP.Blacksmith15(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.Blacksmith, 15);
+    player:getXp():AddXP(Perks.Blacksmith, 1.5);
 end
 
 function Recipe.OnGiveXP.Blacksmith20(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.Blacksmith, 20);
+    player:getXp():AddXP(Perks.Blacksmith, 3.5);
 end
 
 function Recipe.OnGiveXP.Blacksmith25(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.Blacksmith, 25);
+    player:getXp():AddXP(Perks.Blacksmith, 5);
 end
 
 -- check that the water isn't tainted when used in a recipe
