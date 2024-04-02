@@ -1,42 +1,32 @@
-
-
 --Find seeds in food.
 function HCFindSeeds(items, result, player)
 
-local skill = player:getPerkLevel(Perks.PlantScavenging);
-local luck = ZombRand(13) + skill;
-if  player:getTraits():contains('Lucky') then luck = luck + 5;
-end
+  local skill = player:getPerkLevel(Perks.PlantScavenging);
+  local luck = ZombRand(13) + skill; --MAX 23
+  if  player:getTraits():contains('Lucky') then luck = luck + 5; end
+  if  player:getTraits():contains('Unlucky') then luck = luck - 5; end
 
-if luck >= 15 then -- find something
+  if luck >= 15 then -- find something
+    player:Say(getText('IGUI_I_found_seeds'));
+    -- get type of item that was used and add possible results
+    for i=0, items:size()-1 do
+      print (items:get(i):getType())
+      if (items:get(i):getType() == "Cereal") then seeds= {'Hydrocraft.HCWheat','Hydrocraft.HCFlaxseeds'};
+      elseif (items:get(i):getType() == "Popcorn") then seeds={'Hydrocraft.HCCornseeds','Hydrocraft.HCCornredseeds','Hydrocraft.HCCornblueseeds'};
+      elseif (items:get(i):getType() == "HCHerbs") then seeds={'Hydrocraft.HCBasilseeds','Hydrocraft.HCOreganoseeds'};
+      end
+    end
 
-player:Say ('I found seeds');
+    local count = 0;
+    local ItemNr = 0;
 
--- get type of item that was used and add possible results
-for i=0, items:size()-1 do
-    print (items:get(i):getType())
-    if (items:get(i):getType() == "Cereal") then seeds= {'Hydrocraft.HCWheat','Hydrocraft.HCFlaxseeds'};
-    elseif (items:get(i):getType() == "Popcorn") then seeds={'Hydrocraft.HCCornseeds','Hydrocraft.HCCornredseeds','Hydrocraft.HCCornblueseeds'};
-    elseif (items:get(i):getType() == "HCHerbs") then seeds={'Hydrocraft.HCBasilseeds','Hydrocraft.HCOreganoseeds'};
-end 
-end 
+    for _ in pairs(seeds) do count = count + 1 end
+    ItemNr = ZombRand(count)+1;
+    player:getInventory():AddItem(seeds[ItemNr]);
 
-
-local count = 0;
-local ItemNr = 0;
-
-for _ in pairs(seeds) do count = count + 1 end
-ItemNr = ZombRand(count)+1;
-player:getInventory():AddItem(seeds[ItemNr]);
-
-
-else player:Say ('Nothing..');
-end -- i was lucky
+    else player:Say(getText('IGUI_Nothing_seeds')); --player:Say('Nothing..');
+  end -- i was lucky
 end -- function
-
-
-
-
 
 --Randomized Seeds.
 function HCRandomseeds(items, result, player)

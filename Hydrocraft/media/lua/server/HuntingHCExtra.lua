@@ -34,26 +34,23 @@ end
 
 
 function HCFeedTheBirds(items, result, player)
-if not player:isOutside() then
-player:Say(getText("IGUI_There_are_no_birds_indoors")); --There are no birds indoors.
-return;
-end
+	if not player:isOutside() then
+		player:Say(getText("IGUI_There_are_no_birds_indoors")); --There are no birds indoors.
+		return;
+	end
 
-local luck= ZombRand(11);
-local count=0;
-local ItemNr=0;
-animals={'Hydrocraft.HCChickenmalehungry','Hydrocraft.HCChickenfemalehungry','Hydrocraft.HCChickenmalebaby','Hydrocraft.HCChickenfemalebaby'}
-if  player:getTraits():contains('Lucky') then luck = luck + 3;
-end
+	local luck= ZombRand(11);
+	local count=0;
+	local ItemNr=0;
+	animals={'Hydrocraft.HCChickenmalehungry','Hydrocraft.HCChickenfemalehungry','Hydrocraft.HCChickenmalebaby','Hydrocraft.HCChickenfemalebaby'}
+	if  player:getTraits():contains('Lucky') then luck = luck + 3; end
 
-if luck >= 10 then
-for _ in pairs(animals) do count = count + 1 end
-ItemNr = ZombRand(count)+1;
-player:getInventory():AddItem(animals[ItemNr]);
+	if luck >= 10 then
+		for _ in pairs(animals) do count = count + 1 end
+		ItemNr = ZombRand(count)+1;
+		player:getInventory():AddItem(animals[ItemNr]);
+	end
 end
-end
-
-
 
 function HCHuntSmallGame(items, result, player)
 	if not player:isOutside() then

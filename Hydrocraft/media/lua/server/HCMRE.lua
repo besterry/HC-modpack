@@ -3,19 +3,18 @@
 --Open MRE Package
 function recipe_HCMRE_OpenPackage(items, result, player)
 	local inv = player:getInventory()
-	inv:AddItem("Hydrocraft.HCMREmeal");
-	inv:AddItem("Hydrocraft.HCMREmealside");
-	inv:AddItem("Hydrocraft.HCMREFRH");
-	inv:AddItem("Hydrocraft.HCMREcrackers");
-	inv:AddItem("Hydrocraft.HCMREbread");
+	inv:AddItem("Hydrocraft.HCMREmeal"); --Обычная еда
+	inv:AddItem("Hydrocraft.HCMREmealside"); --Гарнир
+	inv:AddItem("Hydrocraft.HCMREFRH"); --Беспламенный разогреватель
+	inv:AddItem("Hydrocraft.HCMREcrackers"); --Крекер
+	inv:AddItem("Hydrocraft.HCMREbread"); --Галеты
+	inv:AddItem("Hydrocraft.HCPurifyingtablets"); --Обеззараживающие таблетки
 	inv:AddItem("Hydrocraft.HCPurifyingtablets");
-	inv:AddItem("Hydrocraft.HCPurifyingtablets");
-	inv:AddItem("Hydrocraft.AlcoholWipes");
+	inv:AddItem("Hydrocraft.AlcoholWipes"); --Спирт. салфетки
 
+	--Вкусняшка
 	local items = {"Hydrocraft.HCCandymnm", "Hydrocraft.HCCandyrainbow", "Hydrocraft.HCCandycorn", "Hydrocraft.HCGum", "Hydrocraft.HCGum2", "Hydrocraft.HCGum3", "Base.Chocolate", "Hydrocraft.HCGummyworms", "Hydrocraft.HCChocolatedark", "Hydrocraft.HCGummybears", "Hydrocraft.HCJellybeans", "Hydrocraft.HCTaffy", "Hydrocraft.HCEnergybar"};
-
 	inv:AddItem(items[ZombRand(#items)+1])
-
 end
 
 --Heat MRE With FRH

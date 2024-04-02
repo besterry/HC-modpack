@@ -1,5 +1,7 @@
 IGUI_RU = {
-
+	IGUI_I_found_seeds = "Нашел семена",
+	IGUI_Nothing_seeds = "Ничего...",
+	IGUI_Ouch_that_burns = "Ой, горячо!",
 	IGUI_This_is_too_difficult = "Это слишком сложно!",
 	IGUI_I_bagged_one = "Я поймал одиного!",
 	IGUI_Darn_it_got_away = "Черт, я упустил его!",

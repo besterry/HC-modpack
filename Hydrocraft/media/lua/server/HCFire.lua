@@ -80,7 +80,7 @@ function getBurned(items, result, player)
 		bodyPart:setBurned();
 		player:getBodyDamage():SetBandaged(bodyPart:getIndex(), false, 0, false, nil);
 
-		player:Say("Ouch, that burns!");
+		player:Say(getText("IGUI_Ouch_that_burns")); --player:Say("Ouch, that burns!")
 		player:getCurrentSquare():playSound("PZ_Fire", false);
 
 		end
@@ -164,7 +164,7 @@ local function GenericBurn(items, result, player, burnPower)
 		bodyPart:setBurned();
 		player:getBodyDamage():SetBandaged(bodyPart:getIndex(), false, 0, false, nil);
 
-		player:Say("Ouch, that burns!");
+		player:Say(getText("IGUI_Ouch_that_burns")); --player:Say("Ouch, that burns!");
 		player:getCurrentSquare():playSound("PZ_Fire", false);
 
 		end
