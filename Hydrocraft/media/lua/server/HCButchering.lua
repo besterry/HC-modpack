@@ -4,7 +4,6 @@ local FEMALE = 2
 
 local function HydrocraftButchering_SplitItems(items)
 	local animal, knife
-	
 	local item1 = items:get(0)
 	local item2 = items:get(1)
 	--print("HydrocraftButchering_SplitItems: " .. item0:getName() .. " - " .. item1:getName())
@@ -16,16 +15,13 @@ local function HydrocraftButchering_SplitItems(items)
 		knife = item2
 		animal = item1
 	end
-	
 	return animal, knife
 end
 
 function HydrocraftButchering_NoXP(recipe, ingredients, result, player)
 	--no xp for you.
-	
 	--skinning used to give: player:getXp():AddXP(Perks.Doctor, 1); 
 	--butchering used to give: player:getXp():AddXP(Perks.Cooking, 2);
-	
 end
 
 local function HydrocraftButchering_ButcherBoar(animal, player)
@@ -105,14 +101,13 @@ local function HydrocraftButchering_ButcherDeer(animal, player, gender)
 
 	local age = animal:getAge()
 	local rotten = animal:isRotten()
-	
+
 	for i=1, 10, 1 do
 		local v = InventoryItemFactory.CreateItem("Hydrocraft.HCVenison")
 		v:setAge(age)
 		v:setRotten(rotten)
 		inv:AddItem(v)
-	end		
-
+	end
 end
 
 local function HydrocraftButchering_ButcherBear(animal, player)
@@ -131,9 +126,7 @@ local function HydrocraftButchering_ButcherBear(animal, player)
 		steak:setRotten(rotten)
 		inv:AddItem(steak)
 	end
-	
 	--inv:AddItems("Hydrocraft.HCBearsteak", 20)
-	
 end
 
 local function HydrocraftButchering_ButcherBlackBear(animal, player)
@@ -152,7 +145,6 @@ local function HydrocraftButchering_ButcherBlackBear(animal, player)
 		steak:setRotten(rotten)
 		inv:AddItem(steak)
 	end	
-
 end
 
 local function HydrocraftButchering_ButcherCougar(animal, player)
@@ -170,8 +162,7 @@ local function HydrocraftButchering_ButcherCougar(animal, player)
 		steak:setAge(age)
 		steak:setRotten(rotten)
 		inv:AddItem(steak)
-	end	
-
+	end
 end
 
 local function HydrocraftButchering_ButcherSheep(animal, player)
@@ -192,13 +183,11 @@ local function HydrocraftButchering_ButcherSheep(animal, player)
 		inv:AddItem(chop)
 	end
 	--inv:AddItems("Base.MuttonChop", 3)--this seem very low.
-	
 end
 
 local function HydrocraftButchering_ButcherGoat(animal, player)
 	local inv = player:getInventory()
 	inv:AddItem("Hydrocraft.HCHiderawgoat")
-	
 	inv:AddItems("Hydrocraft.HCIntestines", 2)
 	inv:AddItems("Hydrocraft.HCLard", 3)
 	inv:AddItems("Hydrocraft.HCBone", 3)
@@ -212,8 +201,7 @@ local function HydrocraftButchering_ButcherGoat(animal, player)
 		chop:setAge(age)
 		chop:setRotten(rotten)
 		inv:AddItem(chop)
-	end	
-	
+	end
 	--inv:AddItems("Base.MuttonChop", 3)--this seem very low.
 end
 
@@ -246,7 +234,6 @@ local function HydrocraftButchering_ButcherPig(animal, player, gender)
 		ham:setRotten(rotten)
 		inv:AddItem(ham)
 	end
-	
 	--inv:AddItems("Base.PorkChop", 4)
 	--inv:AddItems("farming.Bacon", 2)
 	--inv:AddItems("Hydrocraft.HCFreshham", 2)
@@ -273,15 +260,12 @@ local function HydrocraftButchering_ButcherCow(animal, player, gender)
 		steak:setAge(age)
 		steak:setRotten(rotten)
 		inv:AddItem(steak)
-	end		
-	
+	end
 	--inv:AddItems("Base.Steak", 10)
 end
 
 local function HydrocraftButchering_ButcherDonkey(animal, player)
-
 	local inv = player:getInventory()
-
 	inv:AddItem("Hydrocraft.HCHiderawdonkey")
 	inv:AddItems("Hydrocraft.HCIntestines", 4)
 	inv:AddItems("Hydrocraft.HCLard", 5)
@@ -300,13 +284,11 @@ local function HydrocraftButchering_ButcherDonkey(animal, player)
 end
 
 local function HydrocraftButchering_ButcherHorse(animal, player)
-
 	local inv = player:getInventory()
 	--inv:AddItems("Hydrocraft.HCCheval", 10)
 	inv:AddItems("Hydrocraft.HCIntestines", 4)
 	inv:AddItems("Hydrocraft.HCLard", 6)
 	inv:AddItems("Hydrocraft.HCBone", 6)
-
 	inv:AddItem("Hydrocraft.HCHiderawhorse")
 
 	local age = animal:getAge()
@@ -317,17 +299,14 @@ local function HydrocraftButchering_ButcherHorse(animal, player)
 		steak:setAge(age)
 		steak:setRotten(rotten)
 		inv:AddItem(steak)
-	end		
-	
+	end
 end
 
 function HydrocraftButchering_ButcherLargeAnimal(items, result, player)
 	local animal, cleaver = HydrocraftButchering_SplitItems(items)
-
 	--print(" **** HydrocraftButchering_ButcherAnimal: animal = " .. animal:getName() .. " - " .. animal:getType())
-	
 	local fullType = animal:getFullType()
-	
+
 	if(fullType == "Hydrocraft.HCBoardead") then
 		HydrocraftButchering_ButcherBoar(animal, player)
 	elseif(fullType == "Hydrocraft.HCDeerdead") then
@@ -358,13 +337,11 @@ function HydrocraftButchering_ButcherLargeAnimal(items, result, player)
 		print("Exception: unknown large animal: " .. animal:getFullType())
 		return
 	end
-	
-	player:getXp():AddXP(Perks.Cooking, 4)	
-	
+
+	player:getXp():AddXP(Perks.Cooking, 4)
 end
 
 local function HydrocraftButchering_GenericButcherMeat(animal, meatFullType)
-
 	local meat = InventoryItemFactory.CreateItem(meatFullType)
 	if(meat == nil) then
 		print("Exception: Unknown type: " .. meatFullType)
@@ -374,7 +351,6 @@ local function HydrocraftButchering_GenericButcherMeat(animal, meatFullType)
 	if(new_hunger < -100) then
 		new_hunger = -100
 	end
-
 	meat:setBaseHunger(new_hunger)
 	meat:setHungChange(new_hunger)
 	
@@ -389,12 +365,10 @@ local function HydrocraftButchering_GenericButcherMeat(animal, meatFullType)
 
 	--meat:setAge(animal:getAge())
 	meat:setRotten(animal:isRotten())
-	
 	return meat	
 end
 
 local function CreateAgedMeat(animal, fullType, count, inv)
-
 	--local age = animal:getAge()
 	local rotten = animal:isRotten()
 	
@@ -404,7 +378,6 @@ local function CreateAgedMeat(animal, fullType, count, inv)
 		meat:setRotten(rotten)
 		inv:AddItem(meat)
 	end
-
 end
 
 function HydrocraftButchering_ButcherSmallAnimal(items, result, player)
@@ -662,8 +635,6 @@ function HydrocraftButchering_ButcherBird(items, result, player)
 		--inv:AddItem("Hydrocraft.HCWishbone")
 		inv:AddItems("Hydrocraft.HCBrownfeathers", 6)
 	end
-
 	player:getXp():AddXP(Perks.Cooking, 2);
-	
 end
 
