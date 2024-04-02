@@ -136,5 +136,7 @@ IGUI_RU =
 	IGUI_CreateSH_REFRESHTIME = "Обновить текущее время",
 	IGUI_CreateSH_RESETTIME = "Сбросить таймер до максимального значения, дней: ",
 	IGUI_CreateSH_ExceedsMaxLength = "Максимальная длина стороны убежища 40 клеток",
+	IGUI_RenameContainers_RenameTooltip = "Нажмите, чтобы переименовать этот контейнер",
+    IGUI_RenameContainers_RenameModal = "Переименуйте этот контейнер",
 	
 }

@@ -71,7 +71,8 @@ IGUI_EN =
 	IGUI_CreateSH_RESETTIME = "Reset timer to maximum value in days: ",
 	IGUI_CreateSH_ExceedsMaxLength = "Max length of an side is 40 tiles",
 	IGUI_SafehouseUI_RemoveConfirm = "Delete",
-
+	IGUI_RenameContainers_RenameTooltip = "Click to rename this container",
+ 	IGUI_RenameContainers_RenameModal = "Rename this container",
 
 
 }
