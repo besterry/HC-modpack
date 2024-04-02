@@ -58,8 +58,10 @@ function getBurned(items, result, player)
 
 	if player:getTraits():contains('Lucky') then
 		burnPower = burnPower - ZombRand(10);
+	elseif player:getTraits():contains('Unlucky') then
+		burnPower = burnPower + ZombRand(20);
 	else
-		burnPower = burnPower + ZombRand(15); 
+		burnPower = burnPower + ZombRand(15);
 	end
 
 	if player:getDescriptor():getProfession() == "fireofficer" then burnPower = burnPower - 30;end
@@ -71,11 +73,8 @@ function getBurned(items, result, player)
 
 
 	for count, bodyPart in ipairs(bodyParts) do
-
 		burnPower=burnPower-bodyProtection[count] - ZombRand(10);
-	--print("Protection:" .. bodyProtection[count]," Burnpower:  " .. burnPower)
-
-
+		--print("Protection:" .. bodyProtection[count]," Burnpower:  " .. burnPower)
 		if (burnPower > 0) then
 		bodyPart:AddDamage(burnPower);
 		bodyPart:setBurned();
@@ -85,7 +84,6 @@ function getBurned(items, result, player)
 		player:getCurrentSquare():playSound("PZ_Fire", false);
 
 		end
-
 	end
 end -- funtion
 
@@ -160,7 +158,6 @@ local function GenericBurn(items, result, player, burnPower)
 
 		burnPower=burnPower-bodyProtection[count] - ZombRand(10);
 		--print("Protection:" .. bodyProtection[count]," Burnpower:  " .. burnPower)
-
 
 		if (burnPower > 0) then
 		bodyPart:AddDamage(burnPower);
