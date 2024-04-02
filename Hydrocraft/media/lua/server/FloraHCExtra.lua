@@ -10,13 +10,18 @@ player:getStats():setFatigue(player:getStats():getFatigue()+0.01);
 
 
 local skill = player:getPerkLevel(Perks.PlantScavenging);
-local luck = ZombRand(16) + skill;
+local luck = ZombRand(16) + skill; --MAX 26
 local ItemNr=0;
 local count =0;
 gatherFinds = {};
 
 
-if  player:getTraits():contains('Lucky') then luck = luck + 3;
+if  player:getTraits():contains('Lucky') then
+	luck = luck + 3; -- MAX 29
+end
+
+if  player:getTraits():contains('Unlucky') then
+	luck = luck - 1; -- MAX 25
 end
 
 -- winter less luck + other items
@@ -38,15 +43,18 @@ if luck <= 8 then player:Say(getText("ContextMenu_I_found_nothing"));
     return;
 end
 
-if luck < 15 then gatherFinds = low;
-elseif luck < 22 then gatherFinds = medium;
-else gatherFinds = good;
+if luck < 15 then
+	gatherFinds = low;
+elseif luck < 22 then
+	gatherFinds = medium;
+else 
+	gatherFinds = good;
 end
 
 for _ in pairs(gatherFinds) do count = count + 1 end
 ItemNr = ZombRand(count)+1;
 player:getInventory():AddItem(gatherFinds[ItemNr]);
- 
+
 
 
 -- getting seeds from gathering flora in autum
@@ -79,7 +87,7 @@ end
 end 
 
 
-player:getXp():AddXP(Perks.PlantScavenging, 10);
+player:getXp():AddXP(Perks.PlantScavenging, 1);
 end
 
 

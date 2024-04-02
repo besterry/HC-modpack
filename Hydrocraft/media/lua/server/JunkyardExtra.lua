@@ -25,32 +25,33 @@ end
 
 function hcjunksearchsmall(items, result, player)
 
-local skill = player:getPerkLevel(Perks.PlantScavenging);
-local luck = ZombRand(10) + skill;
-local ItemNr=0;
-local count =0;
-junkFinds = {};
+    local skill = player:getPerkLevel(Perks.PlantScavenging);
+    local luck = ZombRand(10) + skill;
+    local ItemNr=0;
+    local count =0;
+    junkFinds = {};
 
-junk = {'Base.ElectronicsScrap','Base.Newspaper','Hydrocraft.HCBatterysmalldead','Hydrocraft.HCBatteryempty','Hydrocraft.HCBatterymediumdead','Hydrocraft.HCBatterylargedead','Hydrocraft.HCDeodorantspray','Hydrocraft.HCRazorblade','Hydrocraft.HCBookcover','Hydrocraft.HCWirehanger','Hydrocraft.HCWoodhanger','Hydrocraft.HCBathtoweldirty','Hydrocraft.HCSafetypin','Hydrocraft.HCSewingpin','Hydrocraft.HCFilmcanister','Hydrocraft.HCThumbtack','Hydrocraft.HCBinderclip','Hydrocraft.HCDustpan','Base.JarLid','Hydrocraft.HCPaintcan','Hydrocraft.HCGummybearstrash','Hydrocraft.HCCandycorntrash','Hydrocraft.HCEnergydrinktrash','Hydrocraft.HCCrisps6trash','Hydrocraft.HCCrisps5trash','Hydrocraft.HCPoptrash','Hydrocraft.HCCannedsardinesempty','Hydrocraft.HCCannedtomatoempty','Hydrocraft.HCCannedpumpkinempty','Hydrocraft.HCCannedpearempty','Hydrocraft.HCCannedappleempty','Hydrocraft.HCTrailmixtrash','Hydrocraft.HCChocolatewhitetrash','Hydrocraft.HCChocolatedarktrash','Hydrocraft.HCMintcandytrash','Hydrocraft.HCMustardempty','Hydrocraft.HCKetchupempty','Hydrocraft.HCYoghurtempty','Hydrocraft.HCIcecreamempty','Hydrocraft.HCCerealtrash','Hydrocraft.HCOatsempty','Hydrocraft.HCScotchtapeempty','Hydrocraft.HCLicenceplate','Hydrocraft.HCLicenceplate','Hydrocraft.HCEyedropperbottle','Hydrocraft.HCGlassbottlesulfuricacidempty','Hydrocraft.HCGlassbottlephenylempty','Hydrocraft.HCGlassbottlemethylaminempty','Hydrocraft.HCGlassbottleh2o2empty','Hydrocraft.HCGlassbottleammoniaempty','Hydrocraft.HCGlassbottleethanolempty','Hydrocraft.HCPlastcfork','Hydrocraft.HCNapkindirty','Hydrocraft.HCPlasticstraw','Hydrocraft.HCBeercan','Hydrocraft.HCBabyfoodjar','Hydrocraft.HCRamencheesetrash','Hydrocraft.HCRamenshrimptrash','Hydrocraft.HCRamenchickentrash','Hydrocraft.HCCanbangedupopenempty','Hydrocraft.HCCannedcheesesauceopenempty','Hydrocraft.HCCannedchickenbreastopenempty','Hydrocraft.HCCannedfruitcocktailopenempty','Hydrocraft.HCCannedgovermentbeefopenempty','Hydrocraft.HCCannedgovermentbreadopenempty','Hydrocraft.HCCannedgovermentchickenopenempty','Hydrocraft.HCCannedgovermentporkopenempty','Hydrocraft.HCCannedpiefillingappleopenempty','Hydrocraft.HCCannedpiefillingcherryopenempty','Hydrocraft.HCCannedpiefillingblueberryopenempty','Hydrocraft.HCCannedravioliopenempty','Hydrocraft.HCCannedspaghettiringsopenempty','Hydrocraft.HCWhippedcreamcanempty','Hydrocraft.HCPuddingcupempty','Hydrocraft.HCCookiesbrowniebagtrash','Hydrocraft.HCCookiesmintbagtrash','Hydrocraft.HCCookieschocolatechipbagtrash','Hydrocraft.HCEvaporatedmilkopenempty'}
-good = {'Base.Bullets44Box','Base.Bullets9mmBox','Base.ShotgunShellsBox','Hydrocraft.HCColoredwire','Hydrocraft.HCColander','Base.LightBulb','Hydrocraft.HCSyringeempty','Base.Coldpack','Base.RubberBand','Base.Screws','Base.CordlessPhone','Base.KitchenKnife','Hydrocraft.HCHairdryer','farming.GardeningSprayEmpty','Hydrocraft.HCTampon','Base.Headphones','Hydrocraft.HCClothespin','Hydrocraft.HCBungeecord','Hydrocraft.HCWeldinghose','Hydrocraft.HCRubberhose','Base.CDplayer','Base.Needle','Hydrocraft.HCBoxphoto','Hydrocraft.HCBoxgarden','Hydrocraft.HCBoxpet','Hydrocraft.HCBoxelectronic','Hydrocraft.HCBoxlab','Hydrocraft.HCMysteryseedspacket','Hydrocraft.HCCircuitboarduseless','Hydrocraft.HCElectronicparts01','Hydrocraft.HCColoredwire','Base.Book','Hydrocraft.HCFlourempty','Hydrocraft.HCRiceempty','Hydrocraft.HCSugarempty','Hydrocraft.HCVinegarempty','Hydrocraft.HCGlueempty','Hydrocraft.HCValve','Hydrocraft.HCXmasgift'}
+    junk = {'Base.ElectronicsScrap','Base.Newspaper','Hydrocraft.HCBatterysmalldead','Hydrocraft.HCBatterydead','Hydrocraft.HCBatterymediumdead','Hydrocraft.HCBatterylargedead','Hydrocraft.HCDeodorantspray','Hydrocraft.HCRazorblade','Hydrocraft.HCBookcover','Hydrocraft.HCWirehanger','Hydrocraft.HCWoodhanger','Hydrocraft.HCBathtoweldirty','Hydrocraft.HCSafetypin','Hydrocraft.HCSewingpin','Hydrocraft.HCFilmcanister','Hydrocraft.HCThumbtack','Hydrocraft.HCBinderclip','Hydrocraft.HCDustpan','Base.JarLid','Hydrocraft.HCPaintcan','Hydrocraft.HCGummybearstrash','Hydrocraft.HCCandycorntrash','Hydrocraft.HCEnergydrinktrash','Hydrocraft.HCCrisps6trash','Hydrocraft.HCCrisps5trash','Hydrocraft.HCPoptrash','Hydrocraft.HCCannedsardinesempty','Hydrocraft.HCCannedtomatoempty','Hydrocraft.HCCannedpumpkinempty','Hydrocraft.HCCannedpearempty','Hydrocraft.HCCannedappleempty','Hydrocraft.HCTrailmixtrash','Hydrocraft.HCChocolatewhitetrash','Hydrocraft.HCChocolatedarktrash','Hydrocraft.HCMintcandytrash','Hydrocraft.HCMustardempty','Hydrocraft.HCKetchupempty','Hydrocraft.HCYoghurtempty','Hydrocraft.HCIcecreamempty','Hydrocraft.HCCerealtrash','Hydrocraft.HCOatsempty','Hydrocraft.HCScotchtapeempty','Hydrocraft.HCLicenceplate','Hydrocraft.HCLicenceplate','Hydrocraft.HCEyedropperbottle','Hydrocraft.HCGlassbottlesulfuricacidempty','Hydrocraft.HCGlassbottlephenylempty','Hydrocraft.HCGlassbottlemethylaminempty','Hydrocraft.HCGlassbottleh2o2empty','Hydrocraft.HCGlassbottleammoniaempty','Hydrocraft.HCGlassbottleethanolempty','Hydrocraft.HCPlastcfork','Hydrocraft.HCNapkindirty','Hydrocraft.HCPlasticstraw','Hydrocraft.HCBeercan','Hydrocraft.HCBabyfoodjar','Hydrocraft.HCRamencheesetrash','Hydrocraft.HCRamenshrimptrash','Hydrocraft.HCRamenchickentrash','Hydrocraft.HCCanbangedupopenempty','Hydrocraft.HCCannedcheesesauceopenempty','Hydrocraft.HCCannedchickenbreastopenempty','Hydrocraft.HCCannedfruitcocktailopenempty','Hydrocraft.HCCannedgovermentbeefopenempty','Hydrocraft.HCCannedgovermentbreadopenempty','Hydrocraft.HCCannedgovermentchickenopenempty','Hydrocraft.HCCannedgovermentporkopenempty','Hydrocraft.HCCannedpiefillingappleopenempty','Hydrocraft.HCCannedpiefillingcherryopenempty','Hydrocraft.HCCannedpiefillingblueberryopenempty','Hydrocraft.HCCannedravioliopenempty','Hydrocraft.HCCannedspaghettiringsopenempty','Hydrocraft.HCWhippedcreamcanempty','Hydrocraft.HCPuddingcupempty','Hydrocraft.HCCookiesbrowniebagtrash','Hydrocraft.HCCookiesmintbagtrash','Hydrocraft.HCCookieschocolatechipbagtrash','Hydrocraft.HCEvaporatedmilkopenempty'}
+    good = {'Hydrocraft.HCMenstrualpadDirty','Hydrocraft.HCColoredwire','Hydrocraft.HCColander','Base.LightBulb','Hydrocraft.HCSyringeempty','Base.Coldpack','Base.RubberBand','Base.Screws','Base.CordlessPhone','Base.KitchenKnife','Hydrocraft.HCHairdryer','farming.GardeningSprayEmpty','Hydrocraft.HCTampon','Base.Headphones','Hydrocraft.HCClothespin','Hydrocraft.HCBungeecord','Hydrocraft.HCRubberhose','Base.CDplayer','Base.Needle','Hydrocraft.HCMysteryseedspacket','Hydrocraft.HCCircuitboarduseless','Hydrocraft.HCElectronicparts01','Hydrocraft.HCColoredwire','Base.Book','Hydrocraft.HCFlourempty','Hydrocraft.HCRiceempty','Hydrocraft.HCSugarempty','Hydrocraft.HCVinegarempty','Hydrocraft.HCGlueempty','Hydrocraft.HCValve','Hydrocraft.HCXmasgift'}
+    nice = {'Base.falloimitator','Hydrocraft.HCAdultmagazine6','Hydrocraft.HCAdultmagazine5','Hydrocraft.HCAdultmagazine4','Hydrocraft.HCAdultmagazine','Hydrocraft.HCAdultmagazine2','Hydrocraft.HCAdultmagazine3','Base.Bullets44Box','Base.Bullets9mmBox','Base.ShotgunShellsBox','Hydrocraft.HCWeldinghose','Hydrocraft.HCBoxphoto','Hydrocraft.HCBoxgarden','Hydrocraft.HCBoxpet','Hydrocraft.HCBoxelectronic','Hydrocraft.HCBoxlab','Hydrocraft.HC100dollarbill','Hydrocraft.HCCigarettepack','Base.BandageDirty'}
+    if  player:getTraits():contains('Lucky') then
+        luck = luck + 3;
+        player:getInventory():AddItems("Base.ScrapMetal",ZombRand(5));
+    else
+        player:getInventory():AddItems("Base.ScrapMetal",ZombRand(3));
+    end
 
-if  player:getTraits():contains('Lucky') then 
-    luck = luck + 3;
-    player:getInventory():AddItems("Base.ScrapMetal",ZombRand(5));
-else
-    player:getInventory():AddItems("Base.ScrapMetal",ZombRand(3));
-end
+    if luck <= 10 then -- found junk
+        junkFinds = junk;
+    elseif luck <= 17 then -- found good
+        junkFinds = good;
+    else -- found nice
+        junkFinds = nice;
+    end
 
-if luck <= 12 then -- found junk
-    junkFinds = junk;
-else 
-    junkFinds = good;
-end
-
-for _ in pairs(junkFinds) do count = count + 1 end
-ItemNr = ZombRand(count)+1;
-player:getInventory():AddItem(junkFinds[ItemNr]);
-
+    for _ in pairs(junkFinds) do count = count + 1 end
+    ItemNr = ZombRand(count)+1;
+    player:getInventory():AddItem(junkFinds[ItemNr]);
 end
 	
 function hcjunksearchmedium(items, result, player)
@@ -77,11 +78,11 @@ function hcjunksearchmedium(items, result, player)
     elseif metal == 81 then	
 	    player:getInventory():AddItem("Base.OldCarMuffler3");
     elseif metal == 80 then
-	    player:getInventory():AddItem("Base.GloveBox1");
+	    player:getInventory():AddItem("Base.falloimitator");
     elseif metal == 79 then
-	    player:getInventory():AddItem("Base.GloveBox2");
+	    --player:getInventory():AddItem("Base.GloveBox2");
     elseif metal == 78 then
-	    player:getInventory():AddItem("Base.GloveBox3");
+	   -- player:getInventory():AddItem("Base.GloveBox3");
     elseif metal == 77 then	
 	    player:getInventory():AddItem("Base.CarBattery1");
     elseif metal == 76 then
@@ -243,20 +244,26 @@ end
 
 
 function hcjunksearchlarge(items, result, player)
-    local metal = ZombRand(58);
+    local metal = ZombRand(61);
     
     if metal == 57 then
-	    player:getInventory():AddItem("Base.SportCarSeat1");
+	    player:getInventory():AddItem("Base.CUDAFrontBumper2");
+    elseif metal == 60 then	
+	    player:getInventory():AddItem("Base.CorpseFemale");
+    elseif metal == 59 then	
+	    player:getInventory():AddItem("Hydrocraft.HCElectromotor");
+    elseif metal == 58 then	
+	    player:getInventory():AddItem("Hydrocraft.HCTelescope");
     elseif metal == 56 then	
-	    player:getInventory():AddItem("Base.SportCarSeat2");
+	    player:getInventory():AddItem("Base.CUDADoor3");
     elseif metal == 55 then	
-	    player:getInventory():AddItem("Base.SportCarSeat3");
+	    player:getInventory():AddItem("Base.CUDAFrontBumper1");
     elseif metal == 54 then	
-	    player:getInventory():AddItem("Base.BigCarSeat1");
+	    player:getInventory():AddItem("Base.CUDAEngineDoorAAR");
     elseif metal == 53 then	
-	    player:getInventory():AddItem("Base.BigCarSeat2");
+	    player:getInventory():AddItem("Base.ATAProtectionWheelsChain");
     elseif metal == 52 then	
-	    player:getInventory():AddItem("Base.BigCarSeat3");
+	    player:getInventory():AddItem("Radio.HamRadio1");
     elseif metal == 51 then		
 	    player:getInventory():AddItem("Base.NormalCarSeat1");
     elseif metal == 50 then	
@@ -294,73 +301,81 @@ function hcjunksearchlarge(items, result, player)
     elseif metal == 34 then		
 	    player:getInventory():AddItem("Base.FrontCarDoor3");
     elseif metal == 33 then	
-	    player:getInventory():AddItem("Base.BigTrunk1");
+	    player:getInventory():AddItem("Base.DodgeRTtire3");
     elseif metal == 32 then	
-	    player:getInventory():AddItem("Base.BigTrunk2");
+	    player:getInventory():AddItem("Base.CUDAEngineDoor");
     elseif metal == 31 then	
-	    player:getInventory():AddItem("Base.BigTrunk3");
+        player:getInventory():AddItem("Base.CUDATrunkDoor3");
     elseif metal == 30 then	
-	    player:getInventory():AddItem("Base.NormalTrunk1");
+	    player:getInventory():AddItem("Base.CUDAFrontBumper0");
     elseif metal == 29 then	
-	    player:getInventory():AddItem("Base.NormalTrunk2");
+	    player:getInventory():AddItem("Base.CUDASpoiler1");
     elseif metal == 28 then	
-	    player:getInventory():AddItem("Base.NormalTrunk3");
+	    player:getInventory():AddItem("Base.CUDASpoiler0");
     elseif metal == 27 then	
-	    player:getInventory():AddItem("Base.SmallTrunk1");
+	    player:getInventory():AddItem("Base.CUDARearSeat3");
     elseif metal == 26 then	
-	    player:getInventory():AddItem("Base.SmallTrunk2");
+        player:getInventory():AddItem("Base.CUDARearBumper0");
     elseif metal == 25 then	
-	    player:getInventory():AddItem("Base.SmallTrunk3");
+	    player:getInventory():AddItem("Base.CUDAtire3"); --Шина баракуды
     elseif metal == 24 then		
-	    player:getInventory():AddItem("Hydrocraft.HCComputer");
+	    player:getInventory():AddItem("Hydrocraft.HCComputer"); --Компьютер
     elseif metal == 23 then	
-        player:getInventory():AddItem("Hydrocraft.HCBarrelblueempty");
+        player:getInventory():AddItem("Hydrocraft.HCBarrelblueempty"); --Пусьая синяя бочка
     elseif metal == 22 then	
-        player:getInventory():AddItem("Hydrocraft.HCSteelbeam");
+        player:getInventory():AddItem("Hydrocraft.CUDAEngineDoorStock");
     elseif metal == 21 then
-        player:getInventory():AddItem("Hydrocraft.HCToywagon");
+        player:getInventory():AddItem("Hydrocraft.HCToywagon"); --Игрушечная тележка
     elseif metal == 20 then
-        player:getInventory():AddItem("Hydrocraft.HCJunkmicro");
+        player:getInventory():AddItem("Hydrocraft.HCJunkmicro"); --Сломаная микроволновка
     elseif metal == 19 then
-        player:getInventory():AddItem("Hydrocraft.HCSteelpipe");
+        player:getInventory():AddItem("Hydrocraft.CUDAFrontSeat3");
     elseif metal == 18 then
-        player:getInventory():AddItem("Hydrocraft.HCLargesheetmetal");
+        player:getInventory():AddItem("Hydrocraft.HCLargesheetmetal"); --Большой алюминиевый ллист
     elseif metal == 17 then
-        player:getInventory():AddItem("Hydrocraft.HCBarrelmetalempty");
+        player:getInventory():AddItem("Hydrocraft.HCBarrelmetalempty"); --Пустая металлическая бочка
     elseif metal == 16 then
-        player:getInventory():AddItem("Hydrocraft.HCJunkbicycle");
+        player:getInventory():AddItem("Hydrocraft.HCJunkbicycle"); --Сломанный велосипед
     elseif metal == 15 then
-        player:getInventory():AddItem("Hydrocraft.HCSteelsheet");
+        player:getInventory():AddItem("Hydrocraft.HCSteelsheet"); --Стальной лист металла
     elseif metal == 14 then
-        player:getInventory():AddItem("Hydrocraft.HCSteelsheetlarge");
+        player:getInventory():AddItem("Hydrocraft.HCSteelsheetlarge"); --Большой стальной лист 
     elseif metal == 13 then
-        player:getInventory():AddItem("Hydrocraft.HCJunkmicro");
+        player:getInventory():AddItem("Hydrocraft.HCJunkmicro"); --Сломаная микроволновка
     elseif metal == 12 then
-        player:getInventory():AddItem("Hydrocraft.HCFishtank");
+        player:getInventory():AddItem("Hydrocraft.HCFishtank"); --Аквариум
     elseif metal == 11 then
-        player:getInventory():AddItem("Hydrocraft.HCVacuum");
+        player:getInventory():AddItem("Hydrocraft.HCVacuum"); --пылесос
     elseif metal == 10 then
-        player:getInventory():AddItem("Hydrocraft.HCVac");
+        player:getInventory():AddItem("Hydrocraft.HCVac"); --пылесос
     elseif metal == 9 then
-        player:getInventory():AddItem("Hydrocraft.HCShopvac");
+        player:getInventory():AddItem("Hydrocraft.HCShopvac"); --Промышленный пылесос
     elseif metal == 8 then
-        player:getInventory():AddItem("Hydrocraft.HCPrinter");
+        player:getInventory():AddItem("Hydrocraft.HCPrinter"); -- Принтер
     elseif metal == 7 then
-        player:getInventory():AddItem("Hydrocraft.HCComputermonitor");
+        player:getInventory():AddItem("Hydrocraft.HCComputermonitor"); --Комп. Монитор
     elseif metal == 6 then
-        player:getInventory():AddItem("Hydrocraft.HCFaxmachine");
+        player:getInventory():AddItem("Hydrocraft.HCFaxmachine"); --Факс
     elseif metal == 5 then
-        player:getInventory():AddItem("Hydrocraft.HCScaner");
+        player:getInventory():AddItem("Hydrocraft.HCScaner"); --Сканер
     elseif metal == 4 then
-        player:getInventory():AddItem("Hydrocraft.HCShoppingcart");
+        player:getInventory():AddItem("Hydrocraft.HCShoppingcart"); --Магазинная корзина
     elseif metal == 3 then
-        player:getInventory():AddItem("Hydrocraft.HCToywagon");
+        player:getInventory():AddItem("Hydrocraft.HCToywagon"); --Игрушечная тележка
     elseif metal == 2 then
-        player:getInventory():AddItem("Hydrocraft.HCIcechest");
+        player:getInventory():AddItem("Hydrocraft.HCIcechest"); --Переносной холодильник
     elseif metal == 1 then
-		local tank = InventoryItemFactory.CreateItem("Base.PropaneTank")
-		tank:setUsedDelta(0.0)
-        player:getInventory():AddItem(tank);
+        local random = ZombRand(3)
+        if random == 0 then 
+            player:getInventory():AddItem("Base.ATAMotoBagBMW1");
+        elseif random == 1 then
+            player:getInventory():AddItem("Base.ATAMotoHarleyHolster");
+        else
+            player:getInventory():AddItem("Base.ATAMotoHarleyBag");
+        end
+		-- local tank = InventoryItemFactory.CreateItem("Base.PropaneTank") --Баллон пропана
+		-- tank:setUsedDelta(0.0)
+        -- player:getInventory():AddItem(tank);
     elseif metal == 0 then
         player:getInventory():AddItem("Base.EmptyPetrolCan");
     end
@@ -399,61 +414,54 @@ end
 -- Randomize findings for scavange.
 function hcmetalsearch(items, result, player)
 
-trash = {'Hydrocraft.HCJunkbicycle','Hydrocraft.HCHedgetrimmer','Hydrocraft.HCBottleopener','Hydrocraft.HCWirehanger','Base.ElectronicsScrap ','Hydrocraft.HCWhippedcreamcanempty','Hydrocraft.HCPop6trash','Hydrocraft.HCCannedspaghettiringsopenempty','Hydrocraft.HCCannedspaghettiringsopenempty','Hydrocraft.HCCannedmacncheeseopenempty','Hydrocraft.HCCannedgovermentporkopenempty','Hydrocraft.HCCannedfruitcocktailopenempty','Hydrocraft.HCCannedchickenbreastopenempty','Hydrocraft.HCCannedcheesesauceopenempty','Hydrocraft.HCCanbangedupopenempty','Hydrocraft.HCRustyshards','Hydrocraft.HCInkroller','Base.VideoGame','Base.JarLid','Hydrocraft.HCTincan','Hydrocraft.HCRustyshards','Hydrocraft.HCBatterysmalldead','Hydrocraft.HCBatterymediumdead','Hydrocraft.HCBatterylargedead','Base.Extinguisher','Base.Paperclip'}
-good = {'Hydrocraft.HCFile','Hydrocraft.HCClothespin','Base.Nails','Base.Screws','Base.BarbedWire','Base.Wire','Base.Needle','Base.Bullets9mm','Base.ShotgunShells','Base.223Bullets','Base.308Bullets','Base.Screwdriver','Base.Hammer','Base.Saw','Base.Hinge','Base.Doorknob','Base.Pipe','Base.SheetMetal','farming.GardeningSprayEmpty','farming.WateredCan','Base.Shovel2','Base.Tweezers','Hydrocraft.HCWrench','Base.Tongs','Hydrocraft.HCPliers','Hydrocraft.HCJackknife','Base.Toolbox','Base.Rake','Hydrocraft.HCMedicalbox','Hydrocraft.HCSurvivalaxe','Hydrocraft.HCSteelpipe','Hydrocraft.HCCopperpipe','Hydrocraft.HCChickenwire','Base.Padlock','Hydrocraft.HCDrillhead','Base.PickAxe','Base.WeldingMask ','Base.BlowTorch ','Hydrocraft.HCBoxcutter','Hydrocraft.HCCalculator ','Hydrocraft.HCBatterysmall','Hydrocraft.HCBatterymedium ','Hydrocraft.HCBatterylarge ','Hydrocraft.HCBatteryhuge ','Base.Battery','Hydrocraft.HCMeatcleaver','Hydrocraft.HCMeteorite','Hydrocraft.HCIronore ','Base.CDplayer','Base.Lighter ','Hydrocraft.HCPitchfork ','Hydrocraft.HCPipebender','Hydrocraft.HCGlasscutter','Hydrocraft.HCChiselhead','Hydrocraft.HCSawcircularblade','Hydrocraft.HCSawcircularblade','Base.Jack','Base.Wrench','Base.LugWrench','Base.TirePump'}
-nice = {'Hydrocraft.HCManometer','Hydrocraft.HCIroningot','Hydrocraft.HCMagnetite','Hydrocraft.HCValve','Hydrocraft.HCAuger','Hydrocraft.HCShears','Base.EngineParts','Hydrocraft.HCMagnetite','Hydrocraft.HCChain','Hydrocraft.HCDogwhistle'}
-jackpot = {'Hydrocraft.HCConanSword','Hydrocraft.HCSpikedmacesteel','Hydrocraft.HCSpearsteel'}
+    trash = {'Base.UnusableMetal','Base.ScrapMetal','Base.UnusableMetal','Base.ScrapMetal','Base.UnusableMetal','Base.ScrapMetal','Hydrocraft.HCJunkbicycle','Hydrocraft.HCBottleopener','Hydrocraft.HCWirehanger','Base.ElectronicsScrap','Hydrocraft.HCWhippedcreamcanempty','Hydrocraft.HCPop6trash','Hydrocraft.HCCannedspaghettiringsopenempty','Hydrocraft.HCCannedspaghettiringsopenempty','Hydrocraft.HCCannedmacncheeseopenempty','Hydrocraft.HCCannedgovermentporkopenempty','Hydrocraft.HCCannedfruitcocktailopenempty','Hydrocraft.HCCannedchickenbreastopenempty','Hydrocraft.HCCannedcheesesauceopenempty','Hydrocraft.HCCanbangedupopenempty','Hydrocraft.HCRustyshards','Hydrocraft.HCInkroller','Base.VideoGame','Base.JarLid','Hydrocraft.HCTincan','Hydrocraft.HCRustyshards','Hydrocraft.HCBatterysmalldead','Hydrocraft.HCBatterymediumdead','Hydrocraft.HCBatterylargedead','Base.Extinguisher','Base.Paperclip'}
+    good = {'Base.UnusableMetal','Base.ScrapMetal','Base.UnusableMetal','Base.ScrapMetal','Hydrocraft.HCFile','Hydrocraft.HCHedgetrimmer','Hydrocraft.HCClothespin','Base.Nails','Base.Screws','Base.BarbedWire','Base.Wire','Base.Needle','Base.Bullets9mm','Base.ShotgunShells','Base.223Bullets','Base.308Bullets','Base.Screwdriver','Base.Hammer','Base.Saw','Base.Hinge','Base.Doorknob','Base.Pipe','Base.SheetMetal','farming.GardeningSprayEmpty','farming.WateredCan','Base.Shovel2','Base.Tweezers','Hydrocraft.HCWrench','Base.Tongs','Hydrocraft.HCPliers','Hydrocraft.HCJackknife','Base.Toolbox','Base.Rake','Hydrocraft.HCMedicalbox','Hydrocraft.HCSurvivalaxe','Hydrocraft.HCSteelpipe','Hydrocraft.HCCopperpipe','Hydrocraft.HCChickenwire','Base.Padlock','Hydrocraft.HCDrillhead','Base.WeldingMask','Hydrocraft.HCBoxcutter','Hydrocraft.HCCalculator','Hydrocraft.HCBatterysmall','Hydrocraft.HCBatterylarge','Hydrocraft.HCBatteryhuge','Base.Battery','Hydrocraft.HCMeatcleaver','Hydrocraft.HCMeteorite','Hydrocraft.HCIronore','Radio.CDplayer','Base.Lighter','Hydrocraft.HCPitchfork','Hydrocraft.HCPipebender','Hydrocraft.HCGlasscutter','Hydrocraft.HCChiselhead','Hydrocraft.HCSawcircularblade','Hydrocraft.HCSawcircularblade','Base.Jack','Base.Wrench','Base.LugWrench','Base.TirePump'}
+    nice = {'Base.UnusableMetal','Base.ScrapMetal','Base.BlowTorch','Base.PickAxe','Hydrocraft.HCBatterymedium','Hydrocraft.HCManometer','Hydrocraft.HCIroningot','Hydrocraft.HCMagnetite','Hydrocraft.HCValve','Hydrocraft.HCShears','Base.EngineParts','Hydrocraft.HCMagnetite','Hydrocraft.HCChain'}
+    jackpot = {'Hydrocraft.HCSpearsteel','Hydrocraft.HCDogwhistle','Hydrocraft.HCSkullsplitter','Base.Katana','Base.BarBell'}
 
-local skill = player:getPerkLevel(Perks.PlantScavenging);
-local count = 0;
-local ItemNr = 0;
-local luck = ZombRand(20) + skill;
+    local skill = player:getPerkLevel(Perks.PlantScavenging);
+    local count = 0;
+    local ItemNr = 0;
+    local luck = ZombRand(20) + skill; --30 MAX (+5 Luck or -5 unLuck)
 
-if  player:getTraits():contains('Lucky') then 
-luck = luck + 5;
-end
-
-if luck >= 14 then -- found nothing.
-
-if luck <= 15  then
-print ("I found trash");
-for _ in pairs(trash) do count = count + 1 end
-ItemNr = ZombRand(count)+1;
-
-player:getInventory():AddItem(trash[ItemNr]);
-
-
-elseif luck <= 27  then
-print ("I found something usefull");
-for _ in pairs(good) do count = count + 1 end
-ItemNr = ZombRand(count)+1;
-player:getInventory():AddItem(good[ItemNr]);
-
-else
-print ("I was very lucky");
-for _ in pairs(nice) do count = count + 1 end
-ItemNr = ZombRand(count)+1;
-player:getInventory():AddItem(nice[ItemNr]);
-end -- finding anything
-
-
--- chance to find a high end weapon
-count = 0;
-if luck >= 30 then
-    luck = ZombRand(5);
-    if  player:getTraits():contains('Lucky') then 
-        luck = luck + 1;
+    if player:getTraits():contains('Lucky') then
+        luck = luck + 5; --MAX 35
     end
-    if luck >= 5 then
-        for _ in pairs(jackpot) do count = count + 1 end
-        ItemNr = ZombRand(count)+1;
-        print (jackpot[ItemNr]);
-        player:getInventory():AddItem(jackpot[ItemNr]);
+    if player:getTraits():contains('Unlucky') then
+        local Unlucky = ZombRand(5)
+        luck = luck - 4 + Unlucky; --MAX 30
     end
-end -- superlucky
+    if luck >= 14 then -- found nothing.
+        if luck <= 15  then -- TRASH    
+            for _ in pairs(trash) do count = count + 1 end
+            ItemNr = ZombRand(count)+1;
+            player:getInventory():AddItem(trash[ItemNr]);
+        elseif luck <= 27 then --GOOD
+            for _ in pairs(good) do count = count + 1 end
+            ItemNr = ZombRand(count)+1;
+            player:getInventory():AddItem(good[ItemNr]);
+        else
+            for _ in pairs(nice) do count = count + 1 end --NICE
+            ItemNr = ZombRand(count)+1;
+            player:getInventory():AddItem(nice[ItemNr]);
+        end -- finding anything
 
-
-
-
-end -- you will find something
+        -- chance to find a high end weapon
+        count = 0;
+        if luck >= 30 then
+            luck = ZombRand(10);
+            if player:getTraits():contains('Lucky') then
+                luck = luck + 1;
+            end
+            if player:getTraits():contains('Unlucky') then
+                luck = luck - 1;
+            end
+            if luck >= 9 then
+                for _ in pairs(jackpot) do count = count + 1 end
+                ItemNr = ZombRand(count)+1;
+                --print (jackpot[ItemNr]);
+                player:getInventory():AddItem(jackpot[ItemNr]);
+            end
+        end -- superlucky
+    end -- you will find something
 end -- end of metal search

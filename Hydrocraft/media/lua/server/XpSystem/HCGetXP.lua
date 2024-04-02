@@ -78,7 +78,7 @@ function HCFishing_OnGiveXP(recipe, ingredients, result, player)
 end
 
 function HCPlantScavenging_OnGiveXP(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.PlantScavenging, 2);
+    player:getXp():AddXP(Perks.PlantScavenging, 1);
 	-- player:getStats():setHunger(player:getStats():getHunger()+0.01)	
 end
 
