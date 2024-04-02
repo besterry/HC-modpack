@@ -56,14 +56,12 @@ Events.EveryTenMinutes.Add(calculateTime)
 
 function GetTimeActivateAutoLootForcalculateTime() --Получение времени покупки
     local player = getPlayer()
-
     if not player then return end
-
     --print("GETPLAYER:",player)
-    sendClientCommand(player, 'BalanceAndSH', 'getDataAutoLoot', nil)
-    
+    sendClientCommand(player, 'BalanceAndSH', 'getDataAutoLoot', nil)    
     local function receiveServerCommand(module, command, args)
-        if module ~= 'BalanceAndSH' and command ~="onGetDataAutoLoot" then return; end
+        if module ~= 'BalanceAndSH' then return; end
+        if command ~='onGetDataAutoLoot' then return; end
         if args['UserData'].autoloot and args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
             PM.TimeActivateAutoLoot = args['UserData'].autoloot
             --print("PM.TimeActivateAutoLoot on DB:",PM.TimeActivateAutoLoot)

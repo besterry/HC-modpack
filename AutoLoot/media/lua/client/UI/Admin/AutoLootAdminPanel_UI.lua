@@ -1,5 +1,5 @@
 -- Author: FD --
-
+local o = {} -- Создаем новый объект
 AutoLootAdminPanel_UI = ISPanel:derive("AutoLootAdminPanel_UI");
 PM = PM or {} -- Глобальный контейнер PlayerMenu
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
@@ -7,11 +7,22 @@ local FONT_HGT_MEDIUM = getTextManager():getFontHeight(UIFont.Medium)
 local FONT_HGT_LARGE = getTextManager():getFontHeight(UIFont.Large)
 --PM.Autoloot = false
 local price = 100 --Цена подписки
-PM.AutolootDurationAction = 7 --На сколько активируется подписка
 
-local function onGetPlayers()    
+local function receiveServerCommand(module, command, args)
+    if module ~= 'AdminAutoLoot' then return; end;
+    if command == 'onGetPlayers' then
+        if args and args.localdata then
+            local list = {}
+            list = args
+            o:onDataList(list)
+            Events.OnServerCommand.Remove(receiveServerCommand)
+        end
+    end
+end
+
+local function GetPlayers()
     sendClientCommand(getPlayer(),'AdminAutoLoot','getPlayers',{})
-    print("send command")
+    Events.OnServerCommand.Add(receiveServerCommand)
 end
 
 function AutoLootAdminPanel_UI:initialise()
@@ -33,7 +44,7 @@ function AutoLootAdminPanel_UI:initialise()
     self.datas = ISScrollingListBox:new(10, listY, self.width - 20, self.height - padBottom - btnHgt - padBottom - padBottom - listY);
     self.datas:initialise();
     self.datas:instantiate();
-    self.datas.itemheight = FONT_HGT_SMALL + 2 * 2;
+    self.datas.itemheight = FONT_HGT_SMALL + 6 * 2;
     self.datas.selected = 0;
     self.datas.joypadParent = self;
     self.datas.font = UIFont.NewSmall;
@@ -62,8 +73,7 @@ function AutoLootAdminPanel_UI:initialise()
     self.cancel.backgroundColor = {r=0.43, g=0.21, b=0.1, a=0.8}
     self.cancel.borderColor = {r=0.99, g=0.93, b=1.0, a=0}
     self:addChild(self.cancel)
-
-    self:onDataList()
+    GetPlayers()
 end
 
 function AutoLootAdminPanel_UI:onClick(button)
@@ -73,26 +83,38 @@ function AutoLootAdminPanel_UI:onClick(button)
         AutoLootAdminPanel_UI.instance = nil
     end
     if button.internal == "Refresh" then
-        print("RefreshBtn")
-        onGetPlayers()
-        --self:onDataList()
+        GetPlayers()
     end
 end
 
-function AutoLootAdminPanel_UI:onDataList()
-    --onGetPlayers()
-    -- self.datas:clear();
-    -- for i=0,Faction.getFactions():size()-1 do
-    --     local fact = Faction.getFactions():get(i);
-    --    self.datas:addItem(fact:getName(), fact);
-    -- end
+function AutoLootAdminPanel_UI:onDataList(list)
+    self.datas:clear();
+    local function formatTime(seconds)
+        local days = math.floor(seconds / (3600*24))
+        seconds = seconds % (3600*24)
+
+        local hours = math.floor(seconds / 3600)
+        seconds = seconds % 3600
+
+        local minutes = math.floor(seconds / 60)
+        seconds = seconds % 60
+
+        return string.format("%d d. %02d h. %02d m.", days, hours, minutes)
+    end
+    local currentTime = list.currentTime
+    for i, data in ipairs(list.localdata) do
+        local activationTime = data.time + (SandboxVars.AutoLoot.DurabilityAutoLoot * 24 * 60 * 60)
+        local remainingTime = activationTime - currentTime
+        local displayName = data.user .. " (" .. formatTime(remainingTime) .. ")"
+        self.datas:addItem(displayName, data);
+    end
 end
 
 function AutoLootAdminPanel_UI:render()    
 end
 
 function AutoLootAdminPanel_UI:new(x, y, width, height, player) --Функция создания окна
-    local o = {} -- Создаем новый объект
+    
     x = getCore():getScreenWidth() / 2 - (width / 2);
     y = getCore():getScreenHeight() / 2 - (height / 2);
     o = ISPanel:new(x, y, width, height); -- Создание объекта окна с заданными размерами

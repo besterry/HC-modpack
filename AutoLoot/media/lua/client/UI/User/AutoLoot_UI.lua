@@ -222,6 +222,7 @@ local function Purchase()
 			saveData.autoloot = PM.TimeActivateAutoLoot
 			saveData.action = "buy autoloot"
 			sendClientCommand(getPlayer(), 'BalanceAndSH', 'saveUserData', saveData)
+			sendClientCommand(getPlayer(), 'AdminAutoLoot', 'purchaseAutoLoot', saveData)
 			LoadBalanceAndSafeHousePlayer()
 			Events.OnServerCommand.Remove(receiveServerCommand)
 			GetTimeActivateAutoLootForcalculateTime()

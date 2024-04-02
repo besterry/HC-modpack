@@ -77,7 +77,7 @@ commands.getData = function(player, args) --Считывание UserData из j
     UserData = LoadJsonItems(filename)
     checkUserdata()
     if UserData then
-        sendServerCommand('BalanceAndSH', "onGetData", {UserData = UserData})
+        sendServerCommand('BalanceAndSH', 'onGetData', {UserData = UserData})
     end
 end
 
@@ -88,7 +88,7 @@ commands.getDataAutoLoot = function(player, args) --Считывание UserDat
     UserData = LoadJsonItems(filename)
     checkUserdata()
     if UserData then
-        sendServerCommand(player, 'BalanceAndSH', "onGetDataAutoLoot", {UserData = UserData})
+        sendServerCommand(player, 'BalanceAndSH', 'onGetDataAutoLoot', {UserData = UserData})
     end
 end
 
@@ -98,7 +98,7 @@ commands.getDataALUI = function(player, args) --Считывание UserData и
     UserData = LoadJsonItems(filename)
     checkUserdata()
     if UserData then
-        sendServerCommand(player, 'BalanceAndSH', "onGetDataALUI", {UserData = UserData})
+        sendServerCommand(player, 'BalanceAndSH', 'onGetDataALUI', {UserData = UserData})
     end
 end
 
@@ -155,14 +155,14 @@ commands.reloadUserData = function(player, args) --кнопка перезагр
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"
     UserData = LoadJsonItems(filename)
-    sendServerCommand('BalanceAndSH', "onGetData", {UserData = UserData})
+    sendServerCommand('BalanceAndSH', 'onGetData', {UserData = UserData})
 end
 
 commands.getServerTime = function(player, args) --Получение серверного времени    
     --print("Server Time:", os.time())
     args = {}
     args.time = os.time()
-    sendServerCommand('BalanceAndSH', "onGetServerTime1", args)
+    sendServerCommand('BalanceAndSH', 'onGetServerTime1', args)
 end
 
 --Объявляем функцию прослушивания BalanceAndSH с клиента и выполнение команд
