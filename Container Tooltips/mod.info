@@ -1,0 +1,4 @@
+name=Container Tooltips
+id=ContainerTooltips_h
+description=Shows container names when you hover over them in the inventory.
+poster=poster.png

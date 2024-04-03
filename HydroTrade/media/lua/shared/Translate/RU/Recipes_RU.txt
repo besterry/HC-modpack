@@ -1,4 +1,5 @@
 Items_RU = {
+	Recipe_Bury_a_mine = "Закопать шахту",
 	Recipe_Make_Double_improved_freezer = "Сделать сдвоенный улучшенный морозильник",
 	Recipe_Make_Improved_freezer = "Сделать улучшенный морозильник",
 	Recipe_Make_homemade_freezer = "Сделать самодельный морозильник",

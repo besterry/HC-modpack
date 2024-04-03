@@ -1,0 +1,10 @@
+UI_EN = {
+	UI_ContainerTooltips_Options_Vanilla_Name = "Display Vanilla Names",
+	UI_ContainerTooltips_Options_Vanilla_Tooltip = "Check this to display vanilla names like 'Fridge' as tooltips.",
+
+	UI_ContainerTooltips_Options_RenameContainer_Name = "Display 'Rename Containers' Names",
+	UI_ContainerTooltips_Options_RenameContainer_Tooltip = "Check to use container names from the 'Rename Containers' mod as tooltips.",
+
+	UI_ContainerTooltips_Options_RenameEverything_Name = "Display 'Everything Has a Name' Names"
+	UI_ContainerTooltips_Options_RenameEverything_Tooltip = "Check to use container names from the 'Everything Has a Name' mod as tooltips."
+}

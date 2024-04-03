@@ -1,0 +1,103 @@
+module Base
+{
+    /* Первая шахта 0.001 - 2000 копок */
+    item HCMineholeBD
+    {
+        Weight    		= 1000,
+        Type    		= Drainable,
+        UseDelta 		   = 0.0005,
+        DisplayName     = Mine Hole,
+        icon 			= HCMinehole,
+		DisplayCategory	= CraftMine,		
+    }
+
+    /* Шахта со шкивом 0.00025 - 4000 копок*/
+    item HCMinehole2BD
+    {
+        Weight    		= 1000,
+        Type    		= Drainable,
+        UseDelta 		   = 0.00025,
+        DisplayName     = Mine Hole with Pully,
+        icon 			= HCMinehole2,
+		DisplayCategory	= CraftMine,		
+    }
+
+    /* Железная шахта 0.001 - 1000 копок */
+    item HCIronMineBD
+    {
+        Weight          = 1000,
+        Type    		= Drainable,
+        UseDelta 		   = 0.001,
+        DisplayName     = Iron Mine,
+        icon            = HCMinehole2,
+		DisplayCategory	= CraftMine,		
+    }
+
+    /* Угольная шахта 0.001 - 1000 копок */
+    item HCCoalMineBD
+    {
+        Weight          = 1000,
+        Type    		= Drainable,
+        UseDelta 		   = 0.001,
+        DisplayName     = Coal Mine,
+        icon            = HCMinehole2,
+		DisplayCategory	= CraftMine,		
+    }
+
+    /* Темная шахта */
+    item HCDarkmineBD
+    {
+        Weight    		= 1000,
+        Type    		= Drainable,
+        UseDelta 		   = 0.001,
+        DisplayName     = Dark Mine,
+        icon 			= HCDarkmine,
+		DisplayCategory	= CraftMine,	
+    }
+
+    /* Темная шахта со шкивом */
+    item HCDarkmine2BD
+    {
+        Weight    		= 1000,
+        Type    		= Drainable,
+        UseDelta 		   = 0.001,
+        DisplayName     = Dark Mine with Pully,
+        icon 			= HCDarkmine2,
+		DisplayCategory	= CraftMine,
+    }
+
+    /* Темная шахта с паровым шкивом */
+    item HCDarkmine3BD
+    {
+        Weight    		= 1000,
+        Capacity        = 100,
+        Type    		= Drainable,
+        UseDelta 		   = 0.001,
+        DisplayName     = Dark Mine with Steam Pully,
+        icon 			= HCDarkmine3,
+		DisplayCategory	= CraftMine,	
+    }
+
+    /* Каменный карьер */
+    item HCQuarrystone2D
+    {
+        Weight    		= 1000,
+        Type    		= Drainable,
+        UseDelta 		   = 0.001,
+        DisplayName         	= Stone Quarry,
+        icon 			= HCQuarrystone,
+		DisplayCategory	= CraftMine,
+    }
+
+    recipe Bury a mine
+    {
+        destroy HCMineholeBD/HCMinehole2BD/HCIronMineBD/HCCoalMineBD,
+        HCDirt = 50,
+        keep Shovel/Shovel2,
+        CanBeDoneFromFloor:true,
+        Result:HCDirt,
+        RemoveResultItem:true,
+        Time:1250,
+        Category:Stoneworking,
+    }
+}

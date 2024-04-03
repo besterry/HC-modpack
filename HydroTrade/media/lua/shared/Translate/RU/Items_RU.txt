@@ -1,8 +1,10 @@
 Items_RU = {
 
-	/************************Translations by TRADUS************************/
-
-	DisplayNameGas_Can = "Канистра с бензином",
+	DisplayName_Old_Coal_Mine = "Обветшалая угольная шахта",
+	DisplayName_Old_Iron_Mine = "Обветшалая железная шахта",
+	DisplayName_Old_Mine_Hole_with_Pully = "Обветшалая шахта со шкивом",
+	DisplayName_Old_Mine_Hole = "Обветшалая шахта",
+	DisplayName_Gas_Can = "Канистра с бензином",
 	DisplayName_100_Dollar_Bill = "100 долларовая банкнота",
 	DisplayName_10_Dollar_Bill = "10 долларовая банкнота",
 	DisplayName_1_Dollar_Bill = "1 долларовая банкнота",

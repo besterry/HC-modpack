@@ -1547,30 +1547,6 @@ recipe Unpack Swatpack
         Category:Survivalist,
     }
 	
-	/*Добыча железа в большом карьере*/
-	recipe Mine iron
-	{
-		keep PickAxe,
-		keep bigquarry,
-		keep HCWorkgloves,
-        Result:HCIronore,	
-		CanBeDoneFromFloor:true,
-        Time:250,
-        Category:Stoneworking,
-		OnGiveXP:HCPlantScavenging_OnGiveXP,
-    }
-
-	/*Добыча угля в большом карьере*/
-	recipe Mine Coal
-    {
-        keep bigquarry,
-        keep PickAxe,
-        CanBeDoneFromFloor:true,
-        Result:HCCoal,
-        Time:250,
-        Category:Stoneworking,
-        OnGiveXP:HCPlantScavenging_OnGiveXP,
-    }
 	/*Обучение строительство*/
 	recipe Learn
     {

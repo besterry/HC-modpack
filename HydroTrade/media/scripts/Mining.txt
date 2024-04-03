@@ -23,7 +23,7 @@ item HCMineholeB
     {
         Weight    		= 10000,
         Type    		= Normal,
-        DisplayName     = Mine Hole,
+        DisplayName     = Old Mine Hole,
         icon 			= HCMinehole,
 		DisplayCategory	= CraftMine,		
     }
@@ -41,7 +41,7 @@ item HCMinehole2B
     {
         Weight    		= 10000,
         Type    		= Normal,
-        DisplayName     = Mine Hole with Pully,
+        DisplayName     = Old Mine Hole with Pully,
         icon 			= HCMinehole2,
 		DisplayCategory	= CraftMine,		
     }
@@ -59,7 +59,7 @@ item HCIronMineB
     {
         Weight          = 1000,
         Type            = Normal,
-        DisplayName     = Iron Mine,
+        DisplayName     = Old Iron Mine,
         icon            = HCMinehole2,
 		DisplayCategory	= CraftMine,		
     }
@@ -77,7 +77,7 @@ item HCCoalMineB
     {
         Weight          = 10000,
         Type            = Normal,
-        DisplayName     = Coal Mine,
+        DisplayName     = Old Coal Mine,
         icon            = HCMinehole2,
 		DisplayCategory	= CraftMine,		
     }
@@ -120,8 +120,7 @@ item HCDarkmine2B
         Type    		= Normal,
         DisplayName     = Dark Mine with Pully,
         icon 			= HCDarkmine2,
-		DisplayCategory	= CraftMine,		
-	
+		DisplayCategory	= CraftMine,
     }
 
 item HCDarkmine3
@@ -629,6 +628,7 @@ recipe Unpack Dirt
     Category:Stoneworking,
     }
 
+/** Копать шахту (крафт шахты) **/
 recipe Dig Mine
     {
     HCAuger/HCQuarrystone/HCQuarrystone2,
@@ -643,16 +643,17 @@ recipe Dig Mine
     OnGiveXP:HCHunger_OnGiveXP,
     }
 
-
+/** Закрепить обычную шахту **/
 recipe Anchor Mine
     {
-    HCMinehole,
+    HCMinehole/HCMineholeB,
     CanBeDoneFromFloor:true,
-    Result:HCMineholeB,
+    Result:HCMineholeBD,
     Time:100,
     Category:Anchor,
     }
 
+/** Улучшить шахту до шахты со шкивом  **/
 recipe Upgrade Mine
     {
 	HCWoodenbucket,
@@ -671,16 +672,17 @@ recipe Upgrade Mine
     OnGiveXP:HCHunger_OnGiveXP,
     }
 
+/** Закрепить шахту со шкивом **/
 recipe Anchor Mine
     {
-    HCMinehole2,
+    HCMinehole2/HCMinehole2B,
     CanBeDoneFromFloor:true,
-    Result:HCMinehole2B,
+    Result:HCMinehole2BD,
     Time:100,
     Category:Anchor,
     }
 
-
+/** Улучшение до железной шахты **/
 recipe Expand Mine to Iron Mine
     {
     HCAuger,
@@ -697,16 +699,17 @@ recipe Expand Mine to Iron Mine
     OnGiveXP:HCHunger_OnGiveXP,
     }
 
+/** Закрепление железной шахты **/
 recipe Anchor Mine
     {
-    HCIronMine,
+    HCIronMine/HCIronMineB,
     CanBeDoneFromFloor:true,
-    Result:HCIronMineB,
+    Result:HCIronMineBD,
     Time:100,
     Category:Anchor,
     }
 
-
+/** Улучшение до угольной шахты **/
 recipe Expand Mine to Coal Mine
     {
     HCAuger,
@@ -723,16 +726,17 @@ recipe Expand Mine to Coal Mine
     OnGiveXP:HCHunger_OnGiveXP,
     }
 
+/** Закрепление угольной шахты **/
 recipe Anchor Mine
     {
-    HCCoalMine,
+    HCCoalMine/HCCoalMine,
     CanBeDoneFromFloor:true,
-    Result:HCCoalMineB,
+    Result:HCCoalMineBD,
     Time:100,
     Category:Anchor,
     }
 
-
+/** Улучшение до темной шахты **/
 recipe Upgrade to Dark Mine
     {
 	HCCandleholder2=6,
@@ -752,6 +756,7 @@ recipe Upgrade to Dark Mine
     	OnGiveXP:HCHunger_OnGiveXP,
     }
 
+/** Закрепление темной шахты **/
 recipe Anchor Dark Mine
     {
     	HCDarkmine,
@@ -761,6 +766,7 @@ recipe Anchor Dark Mine
     	Category:Anchor,
     }
 
+/** Улучшение до темной шахты со шкивом **/
 recipe Upgrade Dark Mine
     {
 	SkillRequired:Mechanics=3,
@@ -779,6 +785,7 @@ recipe Upgrade Dark Mine
     OnGiveXP:HCMechanics_OnGiveXP,
     }
 
+/** Закрепление темной шахты со шкивом **/
 recipe Anchor Dark Mine
     {
     HCDarkmine2,
@@ -788,7 +795,7 @@ recipe Anchor Dark Mine
     Category:Anchor,
     }
 
-
+/** Добавление паровой машины в шахту со шкивом **/
 recipe Add Steam Machine to Dark Mine
     {
 	SkillRequired:Mechanics=4,
@@ -802,6 +809,7 @@ recipe Add Steam Machine to Dark Mine
     OnGiveXP:HCMechanics_OnGiveXP,
     }
 
+/** Закрепление темной шахты с паровой шкивом **/
 recipe Anchor Dark Mine
     {
     HCDarkmine3,
@@ -811,7 +819,7 @@ recipe Anchor Dark Mine
     Category:Anchor,
     }
 
-
+/** Копать карьер (крафт) **/
 recipe Dig Quarry
     {
     	HCAuger,
@@ -823,48 +831,72 @@ recipe Dig Quarry
     	OnGiveXP:HCHunger_OnGiveXP,
     }
 
+/** Закрепление карьера **/
 recipe Anchor Quarry
     {
     	HCQuarrystone,
     	CanBeDoneFromFloor:true,
-    	Result:HCQuarrystone2,
+    	Result:HCQuarrystone2D,
     	Time:100,
     	Category:Anchor,
     }
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*normal mines*/
 
+
+/** Копать на карьере киркой 300=>5сек**/
 recipe Mine
     {
-    keep HCMineholeB/bigquarry,
+    keep bigquarry,
     keep Shovel/Shovel2/PickAxe,
     CanBeDoneFromFloor:true,
     Result:HCDirt,
     NeedToBeLearn:true,
-    Time:1000,
+    Time:300,
     Category:Stoneworking,
     OnCreate:HCMine,
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
+/** Копать на карьере буровым инструментом **/
 recipe Mine
     {
-    keep HCMineholeB/bigquarry,
+    keep bigquarry,
     HCMiningdrillpowered/HCMiningchiselpowered,
     CanBeDoneFromFloor:true,
     Result:HCDirt,
     NeedToBeLearn:true,
-    Time:250,
+    Time:100,
     Category:Stoneworking,
     OnCreate:HCMine,
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
+
+
+
+/** Копать на простой шахте киркой 600 => 10 сек**/
 recipe Mine
     {
-    keep HCMinehole2B/bigquarry,
+    HCMineholeBD,
     keep Shovel/Shovel2/PickAxe,
     CanBeDoneFromFloor:true,
     Result:HCDirt,
@@ -874,10 +906,70 @@ recipe Mine
     OnCreate:HCMine,
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
-
+/** Копать простую шахту буровым инструментом **/
 recipe Mine
     {
-    keep HCMinehole2B/bigquarry,
+    HCMineholeBD,
+    HCMiningdrillpowered/HCMiningchiselpowered,
+    CanBeDoneFromFloor:true,
+    Result:HCDirt,
+    NeedToBeLearn:true,
+    Time:200,
+    Category:Stoneworking,
+    OnCreate:HCMine,
+    OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+
+
+
+/* Копать на карьере */
+recipe Mine
+    {
+    keep bigquarry,
+    keep Shovel/Shovel2/PickAxe,
+    CanBeDoneFromFloor:true,
+    Result:HCDirt,
+    NeedToBeLearn:true,
+    Time:400,
+    Category:Stoneworking,
+    OnCreate:HCMine,
+    OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+/* Копать на карьере авто инструментом */
+recipe Mine
+    {
+    keep bigquarry,
+    HCMiningdrillpowered/HCMiningchiselpowered,
+    CanBeDoneFromFloor:true,
+    Result:HCDirt,
+    NeedToBeLearn:true,
+    Time:100,
+    Category:Stoneworking,
+    OnCreate:HCMine,
+    OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+
+
+
+/* Копать на шахте со шкивом ручным инструментом */
+recipe Mine
+    {
+    HCMinehole2BD,
+    keep Shovel/Shovel2/PickAxe,
+    CanBeDoneFromFloor:true,
+    Result:HCDirt,
+    NeedToBeLearn:true,
+    Time:400,
+    Category:Stoneworking,
+    OnCreate:HCMine,
+    OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+/* Копать на шахте со шкивом авто инструментом */
+recipe Mine
+    {
+    HCMinehole2BD,
     HCMiningdrillpowered/HCMiningchiselpowered,
     CanBeDoneFromFloor:true,
     Result:HCDirt,
@@ -889,8 +981,26 @@ recipe Mine
     }
 
 
-/*Dark mine*/
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Dark mine*/
 
 recipe Mine
     {
@@ -900,7 +1010,7 @@ recipe Mine
     CanBeDoneFromFloor:true,
     Result:Stone,
     NeedToBeLearn:true,
-    Time:1000,
+    Time:600,
     Category:Stoneworking,
     OnCreate:HCDarkmine,
     OnGiveXP:HCPlantScavenging_OnGiveXP,
@@ -914,7 +1024,7 @@ recipe Mine
     CanBeDoneFromFloor:true,
     Result:Stone,
     NeedToBeLearn:true,
-    Time:500,
+    Time:300,
     Category:Stoneworking,
     OnCreate:HCDarkmine,
     OnGiveXP:HCPlantScavenging_OnGiveXP,
@@ -931,7 +1041,7 @@ recipe Mine
     CanBeDoneFromFloor:true,
     Result:Stone,
     NeedToBeLearn:true,
-    Time:750,
+    Time:550,
     Category:Stoneworking,
     OnCreate:HCDarkmine,
     OnGiveXP:HCPlantScavenging_OnGiveXP,
@@ -945,7 +1055,7 @@ recipe Mine
     CanBeDoneFromFloor:true,
     Result:Stone,
     NeedToBeLearn:true,
-    Time:350,
+    Time:250,
     Category:Stoneworking,
     OnCreate:HCDarkmine,
     OnGiveXP:HCPlantScavenging_OnGiveXP,
@@ -992,24 +1102,49 @@ recipe Mine
 
 recipe Mine Iron
     {
-        keep HCIronMineB,
+        HCIronMineBD,
         keep Shovel/Shovel2/PickAxe,
         CanBeDoneFromFloor:true,
         Result:HCIronore,
         NeedToBeLearn:true,
-        Time:2500,
+        Time:1200,
         Category:Stoneworking,
         OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
 recipe Mine Coal
     {
-        keep HCCoalMineB,
+        HCCoalMineBD,
         keep Shovel/Shovel2/PickAxe,
         CanBeDoneFromFloor:true,
         Result:HCCoal,
         NeedToBeLearn:true,
-        Time:2500,
+        Time:1200,
+        Category:Stoneworking,
+        OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+/*Добыча железа в большом карьере*/
+recipe Mine iron
+	{
+		keep PickAxe,
+		keep bigquarry,
+		keep HCWorkgloves,
+        Result:HCIronore,	
+		CanBeDoneFromFloor:true,
+        Time:300,
+        Category:Stoneworking,
+		OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+/*Добыча угля в большом карьере*/
+recipe Mine Coal
+    {
+        keep bigquarry,
+        keep PickAxe,
+        CanBeDoneFromFloor:true,
+        Result:HCCoal,
+        Time:300,
         Category:Stoneworking,
         OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
@@ -1027,26 +1162,38 @@ recipe Sift Dirt
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
+/* Копать глину */
 recipe Shovel Clay
     {
-        keep HCQuarrystone2/bigquarry,
+        keep bigquarry,
         keep Shovel2/Shovel,
         CanBeDoneFromFloor:true,
         Result:Shovel2,
-        RemoveResultItem:true,
-        
+        RemoveResultItem:true,        
         Time:175,
         Category:Stoneworking,
         OnGiveXP:HCPlantScavenging_OnGiveXP,
         OnCreate:HCShovelClay,
     }
 
+/* Копать глину */
+recipe Shovel Clay
+    {
+        HCQuarrystone2D,
+        keep Shovel2/Shovel,
+        CanBeDoneFromFloor:true,
+        Result:Shovel2,
+        RemoveResultItem:true,        
+        Time:175,
+        Category:Stoneworking,
+        OnGiveXP:HCPlantScavenging_OnGiveXP,
+        OnCreate:HCShovelClay,
+    }
 
-
-
+/* Копать камень */
 recipe Mine Stone
     {
-    keep HCQuarrystone2/bigquarry,
+    keep bigquarry,
     keep PickAxe,
     CanBeDoneFromFloor:true,
     Result:Stone,
@@ -1057,9 +1204,38 @@ recipe Mine Stone
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
+/* Копать камень */
 recipe Mine Stone
     {
-    keep HCQuarrystone2/bigquarry,
+    HCQuarrystone2D,
+    keep PickAxe,
+    CanBeDoneFromFloor:true,
+    Result:Stone,
+    OnCreate:HCMineStone,        
+    NeedToBeLearn:true,
+    Time:400,
+    Category:Stoneworking,
+    OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+/* Копать камень */
+recipe Mine Stone
+    {
+    keep bigquarry,
+    HCMiningdrillpowered/HCMiningchiselpowered,
+    CanBeDoneFromFloor:true,
+    Result:Stone,
+    OnCreate:HCMineStone, 
+    NeedToBeLearn:true,
+    Time:75,
+    Category:Stoneworking,
+    OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+/* Копать камень */
+recipe Mine Stone
+    {
+    HCQuarrystone2D,
     HCMiningdrillpowered/HCMiningchiselpowered,
     CanBeDoneFromFloor:true,
     Result:Stone,
