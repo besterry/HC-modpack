@@ -1,6 +1,7 @@
 if not isClient() then return end
 
 local function setOwner(item)
+    if isAdmin() then return; end
     local owner = item:getModData()["Owner"]
     local currentUser = getOnlineUsername()
     if owner == currentUser then return; end
@@ -8,6 +9,7 @@ local function setOwner(item)
 end
 
 local function checkContainer(item)
+    if isAdmin() then return; end
     -- print(item:getModData()["Owner"])
     if item:getModData()["Owner"] == getOnlineUsername() then return; end    
     local container = item:getContainer()
@@ -29,8 +31,7 @@ end
 
 local oldRender = ISToolTipInv.render
 function ISToolTipInv:render()
-    if not ISContextMenu.instance or not ISContextMenu.instance.visibleCheck then
-        if isAdmin() then return; end
+    if (not ISContextMenu.instance or not ISContextMenu.instance.visibleCheck) then
         local item = self.item
         checkContainer(item)
         -- if isAdmin() then
