@@ -1,41 +1,41 @@
 
 require "ISUI/ISPanel"
 
-ModDataDebugPanel = ISPanel:derive("ModDataDebugPanel");
-ModDataDebugPanel.instance = nil;
-ModDataDebugPanel.modDataList = {}
+ItemModDataPanel = ISPanel:derive("ItemModDataPanel");
+ItemModDataPanel.instance = nil;
+ItemModDataPanel.modDataList = {}
 
 local function roundstring(_val)
     return tostring(ISDebugUtils.roundNum(_val,2));
 end
 
-function ModDataDebugPanel.OnOpenPanel(obj)
-    if ModDataDebugPanel.instance==nil then
-        ModDataDebugPanel.modDataList = {}
-        table.insert(ModDataDebugPanel.modDataList, obj)
+function ItemModDataPanel.OnOpenPanel(obj)
+    if ItemModDataPanel.instance==nil then
+        ItemModDataPanel.modDataList = {}
+        table.insert(ItemModDataPanel.modDataList, obj)
 
-        ModDataDebugPanel.instance = ModDataDebugPanel:new (100, 100, 840, 600, "Car ModData");
-        ModDataDebugPanel.instance:initialise();
-        ModDataDebugPanel.instance:instantiate();
+        ItemModDataPanel.instance = ItemModDataPanel:new (100, 100, 840, 600, "Car ModData");
+        ItemModDataPanel.instance:initialise();
+        ItemModDataPanel.instance:instantiate();
     else
-        table.insert(ModDataDebugPanel.modDataList, obj)
+        table.insert(ItemModDataPanel.modDataList, obj)
     end
 
-    ModDataDebugPanel.instance:addToUIManager();
-    ModDataDebugPanel.instance:setVisible(true);
+    ItemModDataPanel.instance:addToUIManager();
+    ItemModDataPanel.instance:setVisible(true);
 
-    ModDataDebugPanel.instance:onClickRefresh()
+    ItemModDataPanel.instance:onClickRefresh()
 
-    return ModDataDebugPanel.instance;
+    return ItemModDataPanel.instance;
 end
 
-function ModDataDebugPanel:initialise()
+function ItemModDataPanel:initialise()
     ISPanel.initialise(self);
 
     self.firstTableData = false;
 end
 
-function ModDataDebugPanel:createChildren()
+function ItemModDataPanel:createChildren()
     ISPanel.createChildren(self);
 
     ISDebugUtils.addLabel(self, {}, 10, 20, "Car ModData", UIFont.Medium, true)
@@ -49,7 +49,7 @@ function ModDataDebugPanel:createChildren()
     self.tableNamesList.font = UIFont.NewSmall;
     self.tableNamesList.doDrawItem = self.drawTableNameList;
     self.tableNamesList.drawBorder = true;
-    self.tableNamesList.onmousedown = ModDataDebugPanel.OnTableNamesListMouseDown;
+    self.tableNamesList.onmousedown = ItemModDataPanel.OnTableNamesListMouseDown;
     self.tableNamesList.target = self;
     self:addChild(self.tableNamesList);
 
@@ -64,44 +64,44 @@ function ModDataDebugPanel:createChildren()
     self.infoList.drawBorder = true;
     self:addChild(self.infoList);
 
-    local y, obj = ISDebugUtils.addButton(self,"close",self.width-200,self.height-40,180,20,getText("IGUI_CraftUI_Close"),ModDataDebugPanel.onClickClose);
-    y, obj = ISDebugUtils.addButton(self,"refresh",self.width-400,self.height-40,180,20,getText("IGUI_Refresh"),ModDataDebugPanel.onClickRefresh);
+    local y, obj = ISDebugUtils.addButton(self,"close",self.width-200,self.height-40,180,20,getText("IGUI_CraftUI_Close"),ItemModDataPanel.onClickClose);
+    y, obj = ISDebugUtils.addButton(self,"refresh",self.width-400,self.height-40,180,20,getText("IGUI_Refresh"),ItemModDataPanel.onClickRefresh);
 
     self:populateList();
 end
 
-function ModDataDebugPanel:onClickClose()
+function ItemModDataPanel:onClickClose()
     self:close();
 end
 
-function ModDataDebugPanel:onClickRefresh()
+function ItemModDataPanel:onClickRefresh()
     self:populateList();
 end
 
-function ModDataDebugPanel:OnTableNamesListMouseDown(item)
+function ItemModDataPanel:OnTableNamesListMouseDown(item)
     self:populateInfoList(self.tableNamesList.items[self.tableNamesList.selected].item);
 end
 
-function ModDataDebugPanel:populateList()
+function ItemModDataPanel:populateList()
     self.tableNamesList:clear();
 
-    if #ModDataDebugPanel.modDataList == 0 then
+    if #ItemModDataPanel.modDataList == 0 then
         self:populateInfoList(nil);
         return;
     end
 
-    --print("haha", #ModDataDebugPanel.modDataList)
+    --print("haha", #ItemModDataPanel.modDataList)
 
-    for i, obj in ipairs(ModDataDebugPanel.modDataList) do
+    for i, obj in ipairs(ItemModDataPanel.modDataList) do
         self.tableNamesList:addItem(tostring(obj), obj);
     end
 
-    self.firstTableData=ModDataDebugPanel.modDataList[1];
+    self.firstTableData=ItemModDataPanel.modDataList[1];
 
     self:populateInfoList(self.firstTableData);
 end
 
-function ModDataDebugPanel:drawTableNameList(y, item, alt)
+function ItemModDataPanel:drawTableNameList(y, item, alt)
     local a = 0.9;
 
     self:drawRectBorder(0, (y), self:getWidth(), self.itemheight - 1, a, self.borderColor.r, self.borderColor.g, self.borderColor.b);
@@ -115,11 +115,11 @@ function ModDataDebugPanel:drawTableNameList(y, item, alt)
     return y + self.itemheight;
 end
 
-function ModDataDebugPanel:formatVal(_value, _func, _func2)
+function ItemModDataPanel:formatVal(_value, _func, _func2)
     return _func2 and (_func2(_func(_value))) or (_func(_value));
 end
 
-function ModDataDebugPanel:parseTable(_t, _ident)
+function ItemModDataPanel:parseTable(_t, _ident)
     if not _ident then
         _ident = "";
     end
@@ -136,10 +136,12 @@ function ModDataDebugPanel:parseTable(_t, _ident)
     end
 end
 
-function ModDataDebugPanel:populateInfoList(obj)
+function ItemModDataPanel:populateInfoList(obj)
     self.infoList:clear();
-
-    local modData = obj:getModData() or {}
+    -- print(obj)
+    local modData
+    if obj and obj:getModData() then modData = obj:getModData() else return; end
+     
 
     if modData then
         self:parseTable(modData, "");
@@ -156,7 +158,7 @@ function ModDataDebugPanel:populateInfoList(obj)
 end
 
 
-function ModDataDebugPanel:drawInfoList(y, item, alt)
+function ItemModDataPanel:drawInfoList(y, item, alt)
     local a = 0.9;
 
     self:drawRectBorder(0, (y), self:getWidth(), self.itemheight - 1, a, self.borderColor.r, self.borderColor.g, self.borderColor.b);
@@ -170,22 +172,22 @@ function ModDataDebugPanel:drawInfoList(y, item, alt)
     return y + self.itemheight;
 end
 
-function ModDataDebugPanel:prerender()
+function ItemModDataPanel:prerender()
     ISPanel.prerender(self);
     --self:populateList();
 end
 
-function ModDataDebugPanel:update()
+function ItemModDataPanel:update()
     ISPanel.update(self);
 end
 
-function ModDataDebugPanel:close()
+function ItemModDataPanel:close()
     self:setVisible(false);
     self:removeFromUIManager();
-    ModDataDebugPanel.instance = nil
+    ItemModDataPanel.instance = nil
 end
 
-function ModDataDebugPanel:new(x, y, width, height, title)
+function ItemModDataPanel:new(x, y, width, height, title)
     local o = {};
     o = ISPanel:new(x, y, width, height);
     setmetatable(o, self);
