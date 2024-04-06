@@ -412,16 +412,18 @@ item HCMiningdrill
 		DisplayCategory	= CraftMine,
     }
 
+/* Буровое долото заряженное  Base delta 0.250, [0.005 - 200]*/
 item HCMiningdrillpowered
     {
 	Weight				=	4,
 	Type				=	Drainable,
-	UseDelta			=	0.250,
+	UseDelta			=	0.005,
 	DisplayName			=	Mining Drill with Power,
 	ReplaceOnDeplete		=	HCMiningdrilldead,
 	Icon				=	HCMiningdrillpowered,
 		DisplayCategory	= CraftMine,
     }
+
 
 item HCMiningdrilldead
     {
@@ -488,11 +490,12 @@ item HCMiningchisel
 		DisplayCategory	= CraftMine,
     }
 
+/* Горн. добывающий бур с батареей Base Delta = 0.125 [0.004 - 250]*/
 item HCMiningchiselpowered
     {
 	Weight				=	4,
 	Type				=	Drainable,
-	UseDelta			=	0.125,
+	UseDelta			=	0.004,
 	DisplayName			=	Mining Chisel with Power,
 	ReplaceOnDeplete		=	HCMiningchiseldead,
 	Icon				=	HCMiningchiselpowered,
