@@ -109,7 +109,7 @@ item HCTongswood
 
 item HCWoodblock
     {
-        Weight          = 1.0,
+        Weight          = 0.1,
         Type            = Normal,
         DisplayName     = Wood Block,
         icon            = HCWoodblock,

@@ -38,7 +38,7 @@ end
 function ItemModDataPanel:createChildren()
     ISPanel.createChildren(self);
 
-    ISDebugUtils.addLabel(self, {}, 10, 20, "Car ModData", UIFont.Medium, true)
+    ISDebugUtils.addLabel(self, {}, 10, 20, "ModData", UIFont.Medium, true)
 
     self.tableNamesList = ISScrollingListBox:new(10, 50, 200, self.height - 100);
     self.tableNamesList:initialise();

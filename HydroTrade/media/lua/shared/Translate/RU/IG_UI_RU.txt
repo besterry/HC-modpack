@@ -139,5 +139,7 @@ IGUI_RU =
 	IGUI_RenameContainers_RenameTooltip = "Нажмите, чтобы переименовать этот контейнер",
     IGUI_RenameContainers_RenameModal = "Переименуйте этот контейнер",
 	IGUI_Show_Data_Item = "Мод дата",
+	IGUI_Show_IsoObject_modData = "Моддата объекта",
+	IGUI_Show_player_modData = "Моддата игрока",
 	
 }
