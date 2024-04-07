@@ -1,0 +1,11 @@
+name=Automeh
+poster=poster.png
+id=Automeh
+description=Add Automeh in game
+versionMin=41.56
+
+pack=automeh
+tiledef=automeh 1421
+
+pack=blackmarket
+tiledef=blackmarket 1422

@@ -1,4 +1,5 @@
 Items_RU = {
+	Recipe_Expand_the_mine = "Искать новые жилы",
 	Recipe_Bury_a_mine = "Закопать шахту",
 	Recipe_Make_Double_improved_freezer = "Сделать сдвоенный улучшенный морозильник",
 	Recipe_Make_Improved_freezer = "Сделать улучшенный морозильник",
@@ -3109,7 +3110,7 @@ Items_RU = {
 	Recipe_Upgrade_Detonator_MK3_To_MK3_with_HMTD = "Модернизировать детонатор МК3 до МК3 c ГМТД",
 	Recipe_Upgrade_IBC_Storage = "Улучшить контейнер",
 	Recipe_Upgrade_Loom = "Улучшить ткацкий станок",
-	Recipe_Upgrade_Mine = "Обновить шахту",
+	Recipe_Upgrade_Mine = "Улучшить шахту",
 	Recipe_Upgrade_Stamp_Mill = "Улучшить мельничное колесо",
 	Recipe_Upgrade_To_Charging_Unit = "Улучшить зарядное устройство",
 	Recipe_Upgrade_To_Large_Junkyard = "Обновить до большой свалки",

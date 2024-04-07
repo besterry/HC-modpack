@@ -1,0 +1,58 @@
+Sandbox_RU = {
+
+    Sandbox_NPC = "Неигровые персонажи",
+
+    Sandbox_AutomehRepairActivate = "Услуги починки авто",
+    Sandbox_AutomehRepairActivate_tooltip = "Если TRUE - игроки смогут пользоваться услугами атомеханика",
+    
+    Sandbox_ParkingPenaltyActivate = "Штрафстоянка",
+    Sandbox_ParkingPenaltyActivate_tooltip = "Включение и отключение панели автомеханики у автомеханика",
+
+    Sandbox_AutomehRepairZone = "Зона починки автомеханика",
+    Sandbox_AutomehRepairZone_tooltip = "Координаты зоны починки автомеханика, только одно значение. Пример x1/x2/y1/y2 [8693/8697/7060/7071]",
+
+    Sandbox_AutomehRegistration = "Услуги регистрации автотранспорта",
+    Sandbox_AutomehRegistration_tooltip = "Если вкл - услуги регистрации и добавления в доверенности активны",
+    
+    Sandbox_AutomehRegistrationZone = "Зона регистрации",
+    Sandbox_AutomehRegistrationZone_tooltip = "Зона регистрации ТС, только одно значение. Пример x1/x2/y1/y2 [8693/8697/7060/7071]",
+    
+    Sandbox_AutomehRegisterDock = "Документ для регистрации авто",
+    Sandbox_AutomehRegisterDock_tooltip = "Укажите документ необходимый для постановки ТС на учет, в формате Base.CarSellTicket",
+
+    Sandbox_AutoMehPriceRepair = "Цена починки",
+    Sandbox_AutoMehPriceRepair_tooltip = "Список partId и цены починки на эту запчасть. Пример Engine=600;Muffler=500;GasTank=250",
+
+    Sandbox_AutoMehDefaultPrice = "Цена для других категорий",
+    Sandbox_AutoMehDefaultPrice_tooltip = "Будет применен к запчастям, которых не в категории Цена починки",
+
+    Sandbox_AutoMehcoefPrice = "Коэффициент повышения цена за починки",
+    Sandbox_AutoMehcoefPrice_tooltip = "Форума рассчета (цена починки*кол-во % починки)*(Число ремонтов*Коэффициент)",
+
+    Sandbox_AutoMehMaxRepairPart = "Максимальное число починок до замены",
+    Sandbox_AutoMehMaxRepairPart_tooltip = "Сколько починок можно сделать, пока не потребуется замена. Формула рассчета цены замены детали (цена починки*100)*(Максимальное число починок*Коэффициент повышения цена за починки)",
+
+    Sandbox_AutoMehMaxDistanceUse = "Дистанция взаимодействи",
+    Sandbox_AutoMehMaxDistanceUse_tooltip = "Максимальная дистанция взаимодействия с автомехаником, если больше - закрывать окна",
+
+    Sandbox_AutomehCreateKeyPrice = "Цена создания ключа",
+
+    Sandbox_ParkingPenaltyPricePerDay = "Цена штрафстоянки за день",
+
+    Sandbox_ParkingPenaltyCoordinateSpawn = "Координаты спавна с штрафстоянки",
+    Sandbox_ParkingPenaltyCoordinateSpawn_tooltip = "Координата в формате x,y [8693,7061] в которой будут появляться ТС",
+
+    Sandbox_BlackmarketAuto = "Услуги черного рынка",
+    Sandbox_BlackmarketAutoZone = "Зона автохака",
+    Sandbox_BlackmarketAutoZone_tooltip = "Зона взаимодействия с авто для подпольного делеца. Пример x1/x2/y1/y2 [8693/8697/7060/7071]",
+
+    Sandbox_PriceMultiplierBlackMarketCreateKey = "Множитель цены создания ключа ТД",
+    Sandbox_PriceMultiplierBlackMarketCreateKey_tooltip = "Множитель цены создания ключа у темного дельца относительно услуг автомеханика",
+
+    Sandbox_PriceDeleteRegisterBlackMarket = "Цена снятия регистрации у ТД",
+    Sandbox_PriceDeleteRegisterBlackMarket_tooltip = "Цена снятия регистрации автомобиля у темного дельца",
+
+    Sandbox_PriceDeleteHotwireBlackMarket = "Цена снятия взлома у ТД",
+    Sandbox_PriceDeleteHotwireBlackMarket_tooltip = "Цена ремонта замка зажигания у темного дельца",
+
+}

@@ -1,5 +1,8 @@
 Items_RU = {
-
+	DisplayName_End_Coal_Mine_Hole = "Изработанная угольная шахта",
+	DisplayName_End_Iron_Mine_Hole = "Изработанная железная шахта",
+	DisplayName_End_Mine_Hole_with_Pully = "Изработанная шахта со шкивом",
+	DisplayName_End_Mine_Hole = "Изработанная шахта",
 	DisplayName_Old_Coal_Mine = "Обветшалая угольная шахта",
 	DisplayName_Old_Iron_Mine = "Обветшалая железная шахта",
 	DisplayName_Old_Mine_Hole_with_Pully = "Обветшалая шахта со шкивом",

@@ -7,15 +7,24 @@ end
 local function ContextMenu(player, context, worldobjects, test)
     if not isAdmin() then return; end
 	local sq = nil
+    local addedObjects = {}  -- Таблица для отслеживания уже добавленных объектов
 
     for i,v in ipairs(worldobjects) do
         local square = v:getSquare();
         if square and sq == nil then
             sq = square
         end
-        if instanceof(v, "IsoObject") then
-            print(v)
-            context:addOption(getText("IGUI_Show_IsoObject_modData"), v, showModdata)
+        if instanceof(v, "IsoObject") and v:hasModData() then
+            local objectIndex = v:getObjectIndex()
+            if not addedObjects[objectIndex] then --Исключаем дубли
+                addedObjects[objectIndex] = true
+                print(v:getObjectIndex())
+                -- getTextureName playershop_0
+                --getSpriteName nil
+                --getScriptName None
+                --getObjectName возвращает IsoObject, Trumpable
+                context:addOption(getText("IGUI_Show_IsoObject_modData").. " "..v:getTextureName(), v, showModdata)
+            end
         end
     end
 
@@ -35,7 +44,7 @@ local function ContextMenu(player, context, worldobjects, test)
             end
         end
         if clickedPlayer then
-            context:addOption(getText("IGUI_Show_player_modData"), clickedPlayer, showModdata)
+            context:addOption(getText("IGUI_Show_player_modData") .. clickedPlayer:getUsername(), clickedPlayer, showModdata)
         end
     end
 end

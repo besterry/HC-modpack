@@ -1,0 +1,152 @@
+VERSION = 1,
+
+option NPC.AutomehRepairActivate {
+  type        = boolean,
+  default     = true,
+  page        = NPC,
+  translation = AutomehRepairActivate,
+}
+
+option NPC.ParkingPenaltyActivate {
+  type        = boolean,
+  default     = false,
+  page        = NPC,
+  translation = ParkingPenaltyActivate,
+}
+
+option NPC.AutomehRegistration {
+  type        = boolean,
+  default     = true,
+  page        = NPC,
+  translation = AutomehRegistration,
+}
+
+option NPC.AutomehRegisterDock {
+  type        = string,
+  default     = Base.CarSellTicket,
+  page        = NPC,
+  translation = AutomehRegisterDock,
+}
+
+option NPC.AutomehRepairZone {
+  type        = string,
+  default     = 8693/8697/7060/7071,
+  page        = NPC,
+  translation = AutomehRepairZone,
+}
+
+option NPC.AutomehRegistrationZone {
+  type = string,
+  default = 8693/8697/7060/7071,   
+  page = NPC, 
+  translation = AutomehRegistrationZone,
+  }
+
+option NPC.Price {
+  type = string,
+  default = Engine=600;Muffler=500,   
+  page = NPC, 
+  translation = AutoMehPriceRepair,
+}
+
+option NPC.DefaultPrice {
+  type = integer,
+  default = 250,   
+  min = 0,
+  max = 10000,
+  page = NPC, 
+  translation = AutoMehDefaultPrice,
+}
+
+option NPC.AutomehcoefPrice {
+  type = double,   
+  min = 0,
+  max = 100,
+  default = 0.5,   
+  page = NPC, 
+  translation = AutoMehcoefPrice,
+}
+
+option NPC.MaxRepairPart {
+  type = integer, 
+  min = 0,
+  max = 100,
+  default = 10,   
+  page = NPC, 
+  translation = AutoMehMaxRepairPart,
+}
+
+option NPC.MaxDistanceUse {
+  type = integer, 
+  min = 0,
+  max = 100,
+  default = 8,   
+  page = NPC, 
+  translation = AutoMehMaxDistanceUse,
+}
+
+option NPC.AutomehCreateKeyPrice {
+  type = integer, 
+  min = 0,
+  max = 500000,
+  default = 10000,   
+  page = NPC, 
+  translation = AutomehCreateKeyPrice,
+}
+
+option NPC.ParkingPenaltyPricePerDay {
+  type = integer, 
+  min = 0,
+  max = 500000,
+  default = 1000,   
+  page = NPC, 
+  translation = ParkingPenaltyPricePerDay,
+}
+
+option NPC.ParkingPenaltyCoordinateSpawn {
+  type = string,
+  default = 8695,7062,   
+  page = NPC, 
+  translation = ParkingPenaltyCoordinateSpawn,
+}
+
+option NPC.BlackmarketAuto {
+  type        = boolean,
+  default     = false,
+  page        = NPC,
+  translation = BlackmarketAuto,
+}
+
+option NPC.BlackmarketAutoZone {
+  type = string,
+  default = 8693/8697/7060/7071, 
+  page = NPC, 
+  translation = BlackmarketAutoZone,
+}
+
+option NPC.PriceMultiplierBlackMarketCreateKey {
+  type = integer, 
+  min = 0,
+  max = 500000,
+  default = 3,   
+  page = NPC, 
+  translation = PriceMultiplierBlackMarketCreateKey,
+}
+
+option NPC.PriceDeleteRegisterBlackMarket {
+  type = integer, 
+  min = 0,
+  max = 500000,
+  default = 25000,   
+  page = NPC, 
+  translation = PriceDeleteRegisterBlackMarket,
+}
+
+option NPC.PriceDeleteHotwireBlackMarket {
+  type = integer, 
+  min = 0,
+  max = 500000,
+  default = 15000,   
+  page = NPC, 
+  translation = PriceDeleteHotwireBlackMarket,
+}

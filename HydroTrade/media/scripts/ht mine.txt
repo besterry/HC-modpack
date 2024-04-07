@@ -1,5 +1,16 @@
 module Base
 {
+    
+    /* Изработанная шахта */
+    item HTMineF
+    {
+        Weight    		= 1000,
+        Type    		= Normal,
+        DisplayName     = End Mine Hole,
+        icon 			= HCMinehole,
+		DisplayCategory	= CraftMine,		
+    }
+
     /* Первая шахта 0.001 - 2000 копок */
     item HCMineholeBD
     {
@@ -7,6 +18,36 @@ module Base
         Type    		= Drainable,
         UseDelta 		   = 0.0005,
         DisplayName     = Mine Hole,
+        ReplaceOnUse = HTMineF,
+        icon 			= HCMinehole,
+		DisplayCategory	= CraftMine,		
+    }
+
+    recipe Expand the mine
+    {
+        HTMineF,
+        HCAuger,        
+        HCRopethick,
+        HCWoodenladder,
+        PetrolCan,
+        keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+        Result:HCMineholeBD,
+        Time:1000,
+        Category:Stoneworking,
+        NeedToBeLearn:false,
+        CanBeDoneFromFloor:true,        
+    }
+
+
+
+
+
+    /* Изработанная шахта со шкивом */
+    item HTMinePullyF
+    {
+        Weight    		= 1000,
+        Type    		= Normal,
+        DisplayName     = End Mine Hole with Pully,
         icon 			= HCMinehole,
 		DisplayCategory	= CraftMine,		
     }
@@ -18,7 +59,37 @@ module Base
         Type    		= Drainable,
         UseDelta 		   = 0.00025,
         DisplayName     = Mine Hole with Pully,
+        ReplaceOnUse = HTMinePullyF,
         icon 			= HCMinehole2,
+		DisplayCategory	= CraftMine,		
+    }
+
+    recipe Expand the mine
+    {
+        HTMinePullyF,
+        HCAuger,
+        HCWoodenladder,
+        HCRopethick=2,
+        PetrolCan=2,
+        keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+        Result:HCMinehole2BD,
+        Time:1000,
+        Category:Stoneworking,
+        NeedToBeLearn:false,
+        CanBeDoneFromFloor:true,        
+    }
+
+
+
+
+
+    /* Изработанная Железная шахта */
+    item HTIronMineF
+    {
+        Weight    		= 1000,
+        Type    		= Normal,
+        DisplayName     = End Iron Mine Hole,
+        icon 			= HCMinehole,
 		DisplayCategory	= CraftMine,		
     }
 
@@ -29,7 +100,38 @@ module Base
         Type    		= Drainable,
         UseDelta 		   = 0.001,
         DisplayName     = Iron Mine,
+        ReplaceOnUse = HTIronMineF,
         icon            = HCMinehole2,
+		DisplayCategory	= CraftMine,		
+    }
+
+    recipe Expand the mine
+    {
+        HTIronMineF,
+        HCAuger,
+        HCWoodenladder,
+        HCRopethick,
+        HCWoodbeam=4,
+        PetrolCan=4,
+        keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+        Result:HCIronMineBD,
+        Time:1000,
+        Category:Stoneworking,
+        NeedToBeLearn:false,
+        CanBeDoneFromFloor:true,        
+    }
+
+
+
+
+
+    /* Изработанная угольная шахта */
+    item HTCoalMineF
+    {
+        Weight    		= 1000,
+        Type    		= Normal,
+        DisplayName     = End Coal Mine Hole,
+        icon 			= HCMinehole,
 		DisplayCategory	= CraftMine,		
     }
 
@@ -39,10 +141,33 @@ module Base
         Weight          = 1000,
         Type    		= Drainable,
         UseDelta 		   = 0.001,
-        DisplayName     = Coal Mine,
+        DisplayName     = Coal Mine,        
+        ReplaceOnUse = HTCoalMineF,
         icon            = HCMinehole2,
 		DisplayCategory	= CraftMine,		
     }
+
+    recipe Expand the mine
+    {
+        HTCoalMineF,
+        HCAuger,
+        HCWoodenladder,
+        HCWoodbeam=4,
+        PetrolCan=4,
+        keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+        Result:HCCoalMineBD,
+        Time:1000,
+        Category:Stoneworking,
+        NeedToBeLearn:false,
+        CanBeDoneFromFloor:true,        
+    }
+
+
+
+
+
+
+
 
     /* Темная шахта */
     item HCDarkmineBD
