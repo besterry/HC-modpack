@@ -1100,6 +1100,7 @@ recipe Mine
 
 /*other mining*/
 
+/* Копать железо в железной шахте */
 recipe Mine Iron
     {
         HCIronMineBD,
@@ -1112,6 +1113,20 @@ recipe Mine Iron
         OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
+/* Копать железо в железной шахте электро */
+recipe Mine Iron
+    {
+        HCIronMineBD,
+        HCMiningdrillpowered/HCMiningchiselpowered,
+        CanBeDoneFromFloor:true,
+        Result:HCIronore,
+        NeedToBeLearn:true,
+        Time:600,
+        Category:Stoneworking,
+        OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+/* Копать уголь в угольной шахте */
 recipe Mine Coal
     {
         HCCoalMineBD,
@@ -1124,7 +1139,20 @@ recipe Mine Coal
         OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
-/*Добыча железа в большом карьере*/
+/* Копать уголь в угольной шахте электро */
+recipe Mine Coal
+    {
+        HCCoalMineBD,
+        HCMiningdrillpowered/HCMiningchiselpowered,
+        CanBeDoneFromFloor:true,
+        Result:HCCoal,
+        NeedToBeLearn:true,
+        Time:600,
+        Category:Stoneworking,
+        OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+/* Добыча железа в большом карьере киркой */
 recipe Mine iron
 	{
 		keep PickAxe,
@@ -1132,23 +1160,48 @@ recipe Mine iron
 		keep HCWorkgloves,
         Result:HCIronore,	
 		CanBeDoneFromFloor:true,
-        Time:300,
+        Time:600,
         Category:Stoneworking,
 		OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
-/*Добыча угля в большом карьере*/
+/* Добыча железа в большом карьере электро */
+recipe Mine iron
+	{
+		HCMiningdrillpowered/HCMiningchiselpowered,
+		keep bigquarry,
+        Result:HCIronore,	
+		CanBeDoneFromFloor:true,
+        Time:150,
+        Category:Stoneworking,
+		OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+/* Добыча угля в большом карьере киркой */
 recipe Mine Coal
     {
         keep bigquarry,
         keep PickAxe,
         CanBeDoneFromFloor:true,
         Result:HCCoal,
-        Time:300,
+        Time:600,
         Category:Stoneworking,
         OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
+/* Добыча угля в большом карьере электро */
+recipe Mine Coal
+    {
+        keep bigquarry,
+        HCMiningdrillpowered/HCMiningchiselpowered,
+        CanBeDoneFromFloor:true,
+        Result:HCCoal,
+        Time:150,
+        Category:Stoneworking,
+        OnGiveXP:HCPlantScavenging_OnGiveXP,
+    }
+
+/* Просеять землю */
 recipe Sift Dirt
     {
     Dirtbag/HCDirt,
@@ -1162,7 +1215,7 @@ recipe Sift Dirt
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
-/* Копать глину */
+/* Копать глину в большом карьере */
 recipe Shovel Clay
     {
         keep bigquarry,
@@ -1170,13 +1223,13 @@ recipe Shovel Clay
         CanBeDoneFromFloor:true,
         Result:Shovel2,
         RemoveResultItem:true,        
-        Time:175,
+        Time:100,
         Category:Stoneworking,
         OnGiveXP:HCPlantScavenging_OnGiveXP,
         OnCreate:HCShovelClay,
     }
 
-/* Копать глину */
+/* Копать глину в карьере */
 recipe Shovel Clay
     {
         HCQuarrystone2D,
@@ -1190,7 +1243,7 @@ recipe Shovel Clay
         OnCreate:HCShovelClay,
     }
 
-/* Копать камень */
+/* Копать камень большом карьере киркой */
 recipe Mine Stone
     {
     keep bigquarry,
@@ -1204,7 +1257,7 @@ recipe Mine Stone
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
-/* Копать камень */
+/* Копать камень в карьере киркой */
 recipe Mine Stone
     {
     HCQuarrystone2D,
@@ -1218,7 +1271,7 @@ recipe Mine Stone
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
-/* Копать камень */
+/* Копать камень в большом карьере электро */
 recipe Mine Stone
     {
     keep bigquarry,
@@ -1227,12 +1280,12 @@ recipe Mine Stone
     Result:Stone,
     OnCreate:HCMineStone, 
     NeedToBeLearn:true,
-    Time:75,
+    Time:45,
     Category:Stoneworking,
     OnGiveXP:HCPlantScavenging_OnGiveXP,
     }
 
-/* Копать камень */
+/* Копать камень в карьере электро */
 recipe Mine Stone
     {
     HCQuarrystone2D,
