@@ -558,9 +558,10 @@ recipe Rip Clothing
         Time:100.0,
     }
 
+/* Mov_AntiqueStove */
 recipe Disassemble Antique Stove
     {
-        Mov_AntiqueStove,
+        Mov_AntiqueStove/Moveables.appliances_cooking_01_16,
         BlowTorch,
         keep WeldingMask,
         Result:SheetMetal=6,

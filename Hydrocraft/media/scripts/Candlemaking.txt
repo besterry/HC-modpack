@@ -103,11 +103,12 @@ item HCMininghatlamp
   DisplayCategory =   ClothP,
   }
 
+/* 0.3 */
 item HCMininghatlamppowered
     {
     Weight    		    = 0.5,
     Type			        = Drainable,
-	  UseDelta		      = 0.3,
+	  UseDelta		      = 0.1, 
 	  ReplaceOnDeplete	= HCMininghatlampdead,
     DisplayName       = Flashlight Mining Hat with Power,
     icon 			        = HCMininghat2,

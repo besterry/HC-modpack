@@ -44,7 +44,7 @@ local function ContextMenu(player, context, worldobjects, test)
             end
         end
         if clickedPlayer then
-            context:addOption(getText("IGUI_Show_player_modData") .. clickedPlayer:getUsername(), clickedPlayer, showModdata)
+            context:addOption(getText("IGUI_Show_player_modData") .. " " .. clickedPlayer:getUsername(), clickedPlayer, showModdata)
         end
     end
 end

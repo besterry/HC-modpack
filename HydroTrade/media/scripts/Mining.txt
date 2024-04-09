@@ -729,7 +729,7 @@ recipe Expand Mine to Coal Mine
 /** Закрепление угольной шахты **/
 recipe Anchor Mine
     {
-    HCCoalMine/HCCoalMine,
+    HCCoalMine/HCCoalMine/HCCoalMineB,
     CanBeDoneFromFloor:true,
     Result:HCCoalMineBD,
     Time:100,
