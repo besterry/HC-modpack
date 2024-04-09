@@ -47,7 +47,7 @@ recipe Make Simple homemade freezer
 	    HCIcechest, /* Переносной холодильник (20 вместимость) */
         Plank=2, /* Доски */
         Nails=2, /* Гвозди HCThermometer,Термометр */
-        HCElectromotorsmall, /* Маленький электромотор */
+        HCElectromotor, /* Большой электромотор */
         HCSoldergunpowered, /* Заряженный паяльник */
         HCSolder=5 /* Припой */,
     	keep Hammer, /* молоток */
@@ -67,7 +67,7 @@ recipe Make Simple homemade freezer
     {
 	    HCIcechest, /* Переносной холодильник (20 вместимость) */
         HCWoodencrate, /* Деревянный ящик HCThermometer, Термометр */
-        HCElectromotorsmall, /* Маленький электромотор */
+        HCElectromotor, /* Большой электромотор Маленький электромотор HCElectromotorsmall, */ 
         HCSoldergunpowered, /* Заряженный паяльник */
         HCSolder=5, /* Припой */,
         keep Saw/GardenSaw, /* Пилы */
@@ -88,7 +88,7 @@ recipe Make homemade freezer
 	    Plank=4, /* Доска */
         Nails=4, /*Гвоздь */        
         CraftFreezer1, /* первый морозильник */
-        HCElectromotorsmall, /* Маленький электромотор */
+        HCElectromotor, /* Большой электромотор */ 
         HCSoldergunpowered, /* Заряженный паяльник */
         HCSolder=2, /* Припой */,
     	keep Hammer,
@@ -110,12 +110,12 @@ recipe Make Improved freezer
         Cooler, /* Термосумка */
         Coldpack=2, /* Гипотермический пакет */ 
         HCWirethermocouple=2, /* Термопарный провод */
-        HCIronsheet = 4, /* Железный лист */
+        HCIronsheet=4, /* Железный лист */
         BlowTorch=5, /* Пропановая горелка */    
         HCElectromotor, /* Большой электромотор */ 
         HCSolder=3, /* Припой */,  
         HCSoldergunpowered, /* Заряженный паяльник */
-        Keep WeldingMask, /* Сварочная маска */
+        keep WeldingMask, /* Сварочная маска */
         keep Screwdriver/Multitool/Leatherdad,
     	CanBeDoneFromFloor:false,
    	    Result:CraftFreezer3,
@@ -135,7 +135,7 @@ recipe Make Double improved freezer
         HCElectromotor, /* Большой электромотор */ 
         HCSolder=4, /* Припой */,  
         HCSoldergunpowered, /* Заряженный паяльник */
-        Keep WeldingMask, /* Сварочная маска */
+        keep WeldingMask, /* Сварочная маска */
         keep Screwdriver/Multitool/Leatherdad,
     	CanBeDoneFromFloor:true, /* Можно крафтить не в инвентаре */
    	    Result:CraftFreezer4,
