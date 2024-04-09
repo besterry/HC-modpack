@@ -6,6 +6,23 @@ module Hydrocraft
 
     }
 
+/* Сделать связку травы */
+recipe Make bunch grass
+    {
+    HCGrass=50,
+    Result:HTBunchGrass,
+    Time:100,
+    Category:Farming,
+    }
+
+recipe Unravel bunch grass
+    {
+    HTBunchGrass,
+    Result:HCGrass=50,
+    Time:100,
+    Category:Farming,
+    }
+
 recipe Play With
     {
     falloimitator,

@@ -1,4 +1,6 @@
 Items_RU = {
+	Recipe_Unravel_bunch_grass = "Распустить пучок травы",
+	Recipe_Make_bunch_grass = "Сделать пучок травы",
 	Recipe_Expand_the_mine = "Искать новые жилы",
 	Recipe_Bury_a_mine = "Закопать шахту",
 	Recipe_Make_Double_improved_freezer = "Сделать сдвоенный улучшенный морозильник",

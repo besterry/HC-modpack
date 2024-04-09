@@ -1,0 +1,14 @@
+module Base
+{
+
+/* Пучок травы */
+item HTBunchGrass
+    {
+        Weight    		= 0.8,
+        Type    		= Normal,
+        DisplayName     = Bunch of grass,
+        icon 			= HTBunchGrass,
+		DisplayCategory	= Craft,		
+    }
+
+}
