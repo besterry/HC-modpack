@@ -46,8 +46,7 @@ recipe Make Simple homemade freezer
     {
 	    HCIcechest, /* Переносной холодильник (20 вместимость) */
         Plank=2, /* Доски */
-        Nails=2, /* Гвозди */
-        HCThermometer /* Термометр */
+        Nails=2, /* Гвозди HCThermometer,Термометр */
         HCElectromotorsmall, /* Маленький электромотор */
         HCSoldergunpowered, /* Заряженный паяльник */
         HCSolder=5 /* Припой */,
@@ -67,8 +66,7 @@ recipe Make Simple homemade freezer
 recipe Make Simple homemade freezer
     {
 	    HCIcechest, /* Переносной холодильник (20 вместимость) */
-        HCWoodencrate, /* Деревянный ящик */
-        HCThermometer /* Термометр */
+        HCWoodencrate, /* Деревянный ящик HCThermometer, Термометр */
         HCElectromotorsmall, /* Маленький электромотор */
         HCSoldergunpowered, /* Заряженный паяльник */
         HCSolder=5, /* Припой */,
