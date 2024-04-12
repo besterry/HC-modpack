@@ -81,9 +81,9 @@ local function onShowData(item)
         if ItemModDataPanel.OnOpenPanel then
             ItemModDataPanel.OnOpenPanel(itemfind)
         else
-            print("Function ModDataDebugPanel.OnOpenPanel is not defined!")
+            print("item No mod data")
         end
-    elseif  item and item:getModData() then
+    elseif  item and item:hasModData() then
         ItemModDataPanel.OnOpenPanel(item)
     end
 end
@@ -98,7 +98,9 @@ local function AddShowDataOption(player, context, items)
     --     end
     -- end
     for i, item in ipairs(items) do
-        context:addOption(getText("IGUI_Show_Data_Item"), player, function() onShowData(item) end)
+        if item and item.items and item.items[1] and item.items[1]:hasModData() then
+            context:addOption(getText("IGUI_Show_Data_Item")..": "..item.items[1]:getDisplayName(), player, function() onShowData(item) end)
+        end
     end
 end
 Events.OnFillInventoryObjectContextMenu.Add(AddShowDataOption)

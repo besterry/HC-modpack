@@ -2525,6 +2525,7 @@ recipe Upgrade IBC Storage
         OnGiveXP:HCWoodwork_OnGiveXP,
     }
 
+/**
 recipe Make Vending Stand
     {
         HCWoodsheet=2,
@@ -2541,7 +2542,7 @@ recipe Make Vending Stand
         Time:50,
         Category:Carpentry,
         OnGiveXP:HCWoodwork_OnGiveXP,
-    }
+    } 
 
 recipe Upgrade Vending Stand
     {
@@ -2559,6 +2560,7 @@ recipe Upgrade Vending Stand
         Category:Carpentry,
         OnGiveXP:HCWoodwork_OnGiveXP,
     }
+    **/
 
 recipe Make Folding Sign
     {

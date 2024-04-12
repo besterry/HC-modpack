@@ -393,8 +393,14 @@ function recipe_hcpallet(items, result, player)
 	HCAddManySameItem("Hydrocraft.HCWoodenpallet", 0, player);
 end 
 
---Tool Stuff
+--Pallets
 
+function Recipe.OnTest.Putpalletlog(item)
+    if item:getType() == "HTpalletLogs" then
+        if item:getUsedDelta() == 1 then return false; end
+    end
+    return true;
+end
 
 function recipe_hcaddpallet(items, result, player)
 	for i=0, items:size()-1 do
@@ -406,13 +412,32 @@ function recipe_hcaddpallet(items, result, player)
 	end
 end
 
-function Recipe.OnTest.Putpalletlog(item)
-    if item:getType() == "HTpalletLogs" then
-        if item:getUsedDelta() == 1 then return false; end
-    end
-    return true;
+-- HT 
+
+function HCSawdust(items, result, player) --Стружка
+	local countHCSawdust = ZombRand(2)
+	HCAddManySameItem("Hydrocraft.HCSawdust", countHCSawdust, player);	
 end
 
+function HT_DisassembleTire(items, result, player) --Разбор колеса
+	local hammer = items:get(0):getType();
+	if hammer == "V102Tire2" then
+		HCAddManySameItem("Hydrocraft.HCHubcap", 1, player); --Автомобильный колпак
+	end
+end
+
+function HT_DisassembleHammer(items, result, player) --Разбор молотка
+	local hammer = items:get(0):getType();
+	if hammer == "Hammer" or hammer == "BallPeenHammer" or	hammer == "Rake" or hammer == "LeafRake" then
+		local countHCSawdust = ZombRand(3)
+		local countTwigst = ZombRand(2)
+		HCAddManySameItem("Hydrocraft.HCSawdust", countHCSawdust, player); --Стружка
+		HCAddManySameItem("Base.Twigs", countTwigst, player); --Мелкие ветки
+	end
+end
+
+
+--Tool Stuff
 function recipe_hcportableminingmachine(items, result, player)
 	local inv = player:getInventory();
 	inv:AddItem("Hydrocraft.HCPortableminingmachine");

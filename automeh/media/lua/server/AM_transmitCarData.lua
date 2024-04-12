@@ -4,6 +4,7 @@ commands.SetPart = function(player, args) --Ремонт автомобиля
     if vehicle then
         local part = vehicle:getPartByIndex(args.partId)
         local item
+        local currentCondition = part:getCondition()
         if args.condition then    
             part:setCondition(args.condition)
         end
@@ -14,7 +15,7 @@ commands.SetPart = function(player, args) --Ремонт автомобиля
         --Log:
         if part:getItemType() then item = part:getItemType():get(0) else item = "No" end
         local coord = math.floor(player:getX()) .. ',' .. math.floor(player:getY()) .. ',0'
-        local msg = player:getUsername() .." [" .. coord .."]" .. " repair car, sqlid:" .. vehicle:getModData().sqlId .. ", part:" .. args.partId .. ", Item:".. item .. ", condition:" .. part:getCondition() .. " -> " .. args.condition .. " Price:"..args.coast
+        local msg = player:getUsername() .." [" .. coord .."]" .. " repair car, sqlid:" .. vehicle:getModData().sqlId .. ", part:" .. args.partId .. ", Item:".. item .. ", condition:" .. currentCondition .. " -> " .. args.condition .. " Price:"..args.coast
         writeLog("Automeh",msg)
     end
 end

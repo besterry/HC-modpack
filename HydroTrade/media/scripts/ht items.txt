@@ -1,6 +1,26 @@
 module Base
 {
 
+/* Пустой тюбик */
+item HTEmptyTube
+    {
+        Weight    		= 0.01,
+        Type    		= Normal,
+        DisplayName     = Empty Tube,
+        icon 			= HTEmptyTube,
+		DisplayCategory	= Craft,		
+    }
+
+/* Головка молотка */
+item HTHeadHammer
+    {
+        Weight    		= 0.5,
+        Type    		= Normal,
+        DisplayName     = Head hammer,
+        icon 			= HTHeadHammer,
+		DisplayCategory	= Craft,		
+    }
+
 /* Пучок травы */
 item HTBunchGrass
     {

@@ -10,13 +10,14 @@ module Base
 		DisplayCategory	= Craft,
 	}
 
+    /** Добавить HCOakLog **/
     recipe Create pallet log
     {
-        Log/HCOakLog=50,
+        Log=50,
         Result:HTpalletLogs,
         CanBeDoneFromFloor:true,
         Time:200,
-        Sound:BreakGlassItem,
+        Sound:PZ_Hammer,
     }
 
 	recipe Get pallet log
@@ -24,7 +25,6 @@ module Base
         HTpalletLogs=1,
         Result:Log,
         Time:10,
-        Sound:BreakGlassItem,
     }	
 
 	recipe Put pallet log
@@ -35,7 +35,6 @@ module Base
 		OnTest:Recipe.OnTest.Putpalletlog,
         OnCreate:recipe_hcaddpallet,
         Time:10,
-        Sound:BreakGlassItem,
     }
 	
 }

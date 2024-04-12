@@ -783,11 +783,26 @@ recipe Make Glue
    	 	OnGiveXP:HCCooking_OnGiveXP,
     	}
 
+recipe Make Glue
+    	{
+    		DoorsRepairKitEpoxy,
+		    HCGlueempty,
+    		Charcoal,
+    		Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
+    		Water,
+    		keep HCClaycauldron/HCCauldroniron,
+    		CanBeDoneFromFloor:true,
+    		Result:Glue,
+    		NeedToBeLearn:true,
+    		Time:50,
+    		Category:Chemistry,
+   	 		OnGiveXP:HCCooking_OnGiveXP,
+    	}
+
 recipe Make Wood Glue
     	{
-    		HCBonepowder=10,
-		HCWoodglueempty,
-		HCCandleberrywax/HCRefinedbeeswax/HCWaxrecycled,
+    		DoorsRepairKitEpoxy=2,
+			HCWoodglueempty,
     		Charcoal,
     		Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
     		Water,
@@ -797,14 +812,31 @@ recipe Make Wood Glue
     		NeedToBeLearn:true,
     		Time:50,
     		Category:Chemistry,
-   	 	OnGiveXP:HCCooking_OnGiveXP,
+   	 		OnGiveXP:HCCooking_OnGiveXP,
     	}
 
 recipe Make Wood Glue
     	{
     		HCBonepowder=10,
-		HCClayjarsmall,
-		HCCandleberrywax/HCRefinedbeeswax/HCWaxrecycled,
+			HCWoodglueempty,
+			HCCandleberrywax/HCRefinedbeeswax/HCWaxrecycled,
+    		Charcoal,
+    		Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
+    		Water,
+    		keep HCClaycauldron/HCCauldroniron,
+    		CanBeDoneFromFloor:true,
+    		Result:Woodglue,
+    		NeedToBeLearn:true,
+    		Time:50,
+    		Category:Chemistry,
+   	 		OnGiveXP:HCCooking_OnGiveXP,
+    	}
+
+recipe Make Wood Glue
+    	{
+    		HCBonepowder=10,
+			HCClayjarsmall,
+			HCCandleberrywax/HCRefinedbeeswax/HCWaxrecycled,
     		Charcoal,
     		Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
     		Water,
@@ -814,7 +846,7 @@ recipe Make Wood Glue
     		NeedToBeLearn:true,
     		Time:50,
     		Category:Chemistry,
-   	 	OnGiveXP:HCCooking_OnGiveXP,
+   	 		OnGiveXP:HCCooking_OnGiveXP,
     	}
 
 recipe Make Super Glue

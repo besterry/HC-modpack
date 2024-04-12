@@ -39,6 +39,24 @@ recipe Recycle Rubber
     OnGiveXP:HCWelding_OnGiveXP,
     }
 
+recipe Recycle Rubber
+    {
+    HCRubberscrap=20,
+    Charcoal=2,
+    Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
+    HCIngotmold,
+    keep Tongs,
+    keep HCWorkgloves/HCGlovesHardLeather/HCFiresuit,
+    keep HCFurnace2/HCBlastfurnace2,
+    CanBeDoneFromFloor:true,
+    Result:HCRubbervulcanized,
+    NeedToBeLearn:true,
+    Time:1500,
+    Category:Chemistry,
+    OnCreate:getBurned,
+    OnGiveXP:HCWelding_OnGiveXP,
+    }
+
 
 recipe Recycle Rubber
     {

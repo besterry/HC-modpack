@@ -100,7 +100,6 @@ recipe Make Rubber
     {
     HCWoodenbucketrubber=4,
     Charcoal,
-
     Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
     HCIngotmold,
     keep Tongs,

@@ -3,10 +3,474 @@ module Hydrocraft
     imports
     {
         Base, farming, Engineer, Survivalist
-
     }
 
-/* Сделать связку травы */
+/* Фонари для крыши */
+recipe Disassemble
+    {
+    ATARoofLightItem,
+    keep HCPliers,
+    Result:LightBulb=4,
+    Time:175,
+    Category:Survivalist,
+    }
+
+/* Коврик для комп. мышки */
+recipe Disassemble
+    {
+    HCMousepad,
+    keep Scissors,
+    Result:HCSilkcloth,
+    Time:175,
+    Category:Survivalist,
+    }
+
+/* Клещи для труб */
+recipe Disassemble
+    {
+    HCPipebender,
+    keep HCSawmetal,
+    Result:MetalBar=2,
+    Time:175,
+    Category:Survivalist,
+    }
+
+/* Игрушка для собак - канат */
+recipe Disassemble
+    {
+    HCDogropetoy,
+    keep HCPliers,
+    Result:Rope,
+    Time:50,
+    Category:Survivalist,
+    }
+
+/* Светодиод */
+recipe Disassemble
+    {
+    HCLedyellow/HCLedgreen,
+    keep HCPliers,
+    Result:LightBulb,
+    Time:50,
+    Category:Survivalist,
+    }
+
+/* Держатель для пробирки */
+recipe Disassemble
+    {
+    HCTesttubeholder,
+    keep HCPliers,
+    Result:MetalBar,
+    Time:100,
+    Category:Survivalist,
+    }
+
+/* Деревянный ящик для инструментов */
+recipe Disassemble
+    {
+    HCWoodentoolbox,
+    keep Saw,
+    Result:Plank=2,
+    Time:175,
+    OnCreate:HT_GetHCSawdust,
+    Category:Survivalist,
+    }
+
+/* Деревянное весло */
+recipe Disassemble
+    {
+    HCPaddlewood,
+    keep Saw,
+    Result:Plank=3,
+    Time:175,
+    OnCreate:HT_GetHCSawdust,
+    Category:Survivalist,
+    }
+
+/* Деревянная киянка */
+recipe Disassemble
+    {
+    WoodenMallet,
+    keep Saw,
+    Result:Plank,
+    Time:175,
+    OnCreate:HT_GetHCSawdust,
+    Category:Survivalist,
+    }
+
+/* Горелка Бунзена */
+recipe Disassemble
+    {
+    HCBunsenburner,
+    keep Hammer,
+    Result:MatShatteredGlass=2,
+    Time:100,
+    Category:Survivalist,
+    Sound:BreakGlassItem,
+    }
+
+/* Грабли */
+recipe Disassemble
+    {
+    Rake/LeafRake,
+    keep Saw,
+    Result:MetalBar=2,
+    Time:175,
+    OnCreate:HT_DisassembleHammer,
+    Category:Survivalist,
+    }
+
+/* Баллоны */
+recipe Disassemble
+    {
+    HCHydrogentank/HCWeldingtank/HCOxygentank,
+    keep HCSawmetal,
+    Result:SmallSheetMetal=2,
+    Time:175,
+    Category:Survivalist,
+    }
+
+/* Брелок-канистра */
+recipe Break Fuelcanister
+    {
+    HCFuelcanister,
+    keep Hammer,
+    Result:MatShatteredGlass,
+    Time:100,
+    Category:Survivalist,
+    Sound:BreakGlassItem,
+    }
+    
+/* Большая стеклянная колба */
+recipe Break Jar
+    {
+    HCGlassballoon,
+    keep Hammer,
+    Result:MatShatteredGlass=2,
+    Time:100,
+    Category:Survivalist,
+    Sound:BreakGlassItem,
+    }
+
+/* Барабанная палочка */ 
+recipe Disassemble
+    {
+    Drumstick,
+    Result:WoodenStick=2,
+    Time:75,
+    Category:Survivalist,
+    }
+
+/* Кисть */ 
+recipe Disassemble
+    {
+    HCPaintbrush,
+    Result:WoodenStick,
+    Time:25,
+    Category:Survivalist,
+    }
+
+/* Разбить банку с крышкой */
+recipe Break Jar
+    {
+    HCJar/EmptyJar,
+    keep Hammer,
+    Result:MatShatteredGlass,
+    Time:100,
+    Category:Survivalist,
+    Sound:BreakGlassItem,
+    }
+
+/* Антистеплер */
+recipe Disassemble
+    {
+    HCStapleremover,
+    keep Hammer,
+    Result:ScrapMetal,
+    Time:75,
+    Category:Survivalist,
+    }
+
+/* Разбить Аквариум */
+recipe Break Fishtank
+    {
+    HCFishtank,
+    keep Hammer,
+    Result:MatShatteredGlass=5,
+    Time:100,
+    Category:Survivalist,
+    Sound:BreakGlassItem,
+    }
+
+/* M998 брызговики */
+recipe Disassemble
+    {
+    M998Mudflaps1_Item,
+    keep Multitool/Leatherdad/SAK/HCKnifeiron/HCKnifesteel,
+    Result:HCRubberscrap=2,
+    Time:100,
+    Category:Survivalist,
+    }
+
+/* M998 двери и броня передней двери */
+recipe Disassemble
+    {
+    M998CarFrontDoor2/M998CarRearDoor2/M998CarFrontDoorArmor1_Item/M998CarRearDoorArmor1_Item,
+    keep HCSawmetal,
+    Result:SheetMetal=4,
+    Time:800,
+    Category:Survivalist,
+    }
+
+/* M998 Кронштейн для запасного колеса */
+recipe Disassemble
+    {
+    M998SpareMount_Item,
+    keep HCSawmetal,
+    Result:MetalBar=3,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/* M998 Малый кенгурятник */
+recipe Disassemble
+    {
+    M998Bullbar1_Item,
+    keep HCSawmetal,
+    Result:MetalPipe=2,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/* M998 Большой кенгурятник */
+recipe Disassemble
+    {
+    M998Bullbar2_Item,
+    keep HCSawmetal,
+    Result:MetalPipe=4,
+    Time:500,
+    Category:Survivalist,
+    }
+
+/* Пустой тюбик */
+recipe Disassemble
+    {
+    HCPlastic=3,
+    HCSoldergunpowered,
+    Result:HTEmptyTube,
+    Time:200,
+    Sound:BlowTorch,
+    Category:Survivalist,
+    }
+
+/* Резиновый клей из обрезков резины */
+recipe Make Rubber Cement
+    {
+    HCRubberscrap=10,
+    Disinfectant/HCHomedisinfectant=4,
+    HTEmptyTube,
+    keep HCSafetyglasses,
+    keep HCLatexgloves/HCRubberglove,
+    keep HCFunnel/HCGlassfunnel,
+    keep HCLab2,
+    CanBeDoneFromFloor:true,
+    Result:HCRubbercement,
+    NeedToBeLearn:true,
+    Time:50,
+    Category:Chemistry,
+    OnGiveXP:HCCooking_OnGiveXP,
+    }
+
+/* M151A2 запасная шина */
+recipe Disassemble
+    {
+    V102Tire2,
+    keep Multitool/Leatherdad/SAK/HCKnifeiron/HCKnifesteel,
+    Result:HCRubberscrap=20,
+    Time:300,
+    OnCreate:HT_DisassembleTire,
+    Category:Survivalist,
+    }
+
+/* Jaap Wrungel - шноркель */
+recipe Disassemble
+    {
+    ATAJeepSnorkelItem,
+    keep HCSawmetal,
+    Result:MetalPipe=2,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/* Jaap Wrungel - рейлинги */
+recipe Disassemble
+    {
+    ATAJeepRoofBaseItem,
+    keep HCSawmetal,
+    Result:MetalPipe=2,
+    Time:300,
+    Category:Survivalist,
+    }
+    
+/* Jaap Wrungel - кенгурятник */
+recipe Disassemble
+    {
+    ATAJeepBumper3Item/ATAJeepBumper2Item/ATAJeepBumper1Item,
+    keep HCSawmetal,
+    Result:MetalPipe=3,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/* Jaap Wrungel - багажник над запасным колесом */
+recipe Disassemble
+    {
+    ATAJeepInteractiveTrunkWheelRackItem,
+    keep HCSawmetal,
+    Result:MetalPipe=2,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/* Jaap Wrungel - багажник для крыши */
+recipe Disassemble
+    {
+    ATAJeepInteractiveTrunkRoofRackItem,
+    keep HCSawmetal,
+    Result:MetalPipe=4,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/* Вентиль */
+recipe Disassemble
+    {
+    HCValve,
+    keep HCPliers,
+    Result:MetalBar,
+    Time:100,
+    Category:Survivalist,
+    }
+
+/** Цепь ATA **/
+recipe Disassemble
+    {
+    ATAProtectionWheelsChain,
+    keep HCPliers,
+    Result:Wire,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/** Пустая синяя бочка **/
+recipe Disassemble
+    {
+    HCBarrelblueempty,
+    keep HCSawmetal,
+    Result:SheetMetal=2,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/** Разобрать Вспомогательный зажим **/
+recipe Disassemble
+    {
+    HCUtilityclamp,
+    keep HCPliers,
+    Result:ScrapMetal,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/** Разобрать ветерок**/
+recipe Disassemble
+    {
+    HCWindchimes/HCCashregister/HCFramesquare,
+    keep Screwdriver,
+    Result:HCPlastic=3,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/** Разобрать Багаж/багажник на колесиках **/
+recipe Break Luggage
+    {
+    HCLuggage/HCLuggage2,
+    keep Screwdriver,
+    Result:HCPlastic=4,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/** Разобрать паяльник **/
+recipe Break Soldergun
+    {
+    HCSoldergun,
+    keep Screwdriver,
+    Result:HCPlastic=2,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/** Разбить Люминесцентная лампа **/
+recipe Break Fluorescent Lamp
+    {
+    HCFlorescentlightbulb,
+    keep Hammer,
+    keep Saw/GardenSaw,
+    keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+    Result:MatShatteredGlass=2,
+    Time:200,
+    Category:Survivalist,
+    Sound:BreakGlassItem,
+    }
+
+/** Разобрать молоток **/
+recipe Disassemble hammer
+    {
+    Hammer/BallPeenHammer/ClubHammer,
+    keep Saw/GardenSaw,
+    keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+    Result:HTHeadHammer,
+    OnCreate:HT_DisassembleHammer,
+    Time:500,
+    Category:Survivalist,
+    }
+
+/** Сделать молоток **/
+recipe Make hammer
+    {
+    HTHeadHammer,
+    WoodenStick,
+    keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+    Result:Hammer,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/** Раздробить головку молотка **/
+recipe Break the hammer head
+    {
+    HTHeadHammer,
+    keep Sledgehammer/Sledgehammer2,
+    keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+    Result:HCIronpowder=2,
+    Time:300,
+    Category:Survivalist,
+    }
+
+/** Разобрать ведро **/
+recipe Disassemble bucket
+    {
+    BucketEmpty,
+    keep HCSawmetal,
+    keep HCWorkgloves/Gloves_LeatherGloves/Gloves_LeatherGlovesBlack,
+    Result:SmallSheetMetal,
+    Time:500,
+    Category:Survivalist,
+    }
+
+/** Сделать связку травы **/
 recipe Make bunch grass
     {
     HCGrass=50,
@@ -240,6 +704,22 @@ recipe Make glue empty
         Result:HCGlueempty,
         Time:200,
         Category:Survivalist,
+    }
+
+recipe Detachment
+    {
+    	SkillRequired:Woodwork=4,
+		HCAnvil2,
+        keep Crowbar,
+        AllowDestroyedItem:false,
+        CanBeDoneFromFloor:true,
+        NeedToBeLearn:false,
+    	Result:HCAnvil,
+    	Time:1500,
+    	Category:Engineer,
+        AnimNode:Disassemble,
+        Prop1:Crowbar,
+        Sound:Dismantle,
     }
 
 recipe Detachment
@@ -1105,6 +1585,8 @@ recipe Make Mead
         Category:Survivalist,
     }	
 	
+/* Нужно изготовление яблочного сидра? */    
+
 recipe Make barrel vinegar
 	{
         HCApplecider=3,

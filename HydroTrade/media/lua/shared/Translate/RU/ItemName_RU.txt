@@ -1,4 +1,5 @@
 ItemName_RU = {
+	ItemName_Base.HTHeadHammer = "Головка молотка",
 	ItemName_Base.falloimitator = "Игрушка для взрослых",
 	ItemName_Base.leatherface = "Кожаное лицо",
 	ItemName_Base.Treatedpieceofleather = "Обработанный кусок кожи",
