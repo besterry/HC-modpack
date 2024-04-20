@@ -84,7 +84,7 @@ recipe Make Simple homemade freezer
 
 recipe Make homemade freezer
     {
-        Cooler, /* Термосумка */
+        Cooler/HCCooler, /* Термосумка */
 	    Plank=4, /* Доска */
         Nails=4, /*Гвоздь */        
         CraftFreezer1, /* первый морозильник */
@@ -107,7 +107,7 @@ recipe Make homemade freezer
 recipe Make Improved freezer
     {
         CraftFreezer2, /* 2й морозильник */
-        Cooler, /* Термосумка */
+        Cooler/HCCooler, /* Термосумка */
         Coldpack=2, /* Гипотермический пакет */ 
         HCWirethermocouple=2, /* Термопарный провод */
         HCIronsheet=4, /* Железный лист */

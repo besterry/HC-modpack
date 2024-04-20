@@ -84,7 +84,7 @@ recipe Recycle Glass
 
 recipe Recycle Glass
     {
-    HCFishtank,
+    HCFishtank/HCGlassgraduatedcylinder,
     Charcoal,
     Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
     HCIngotmold,

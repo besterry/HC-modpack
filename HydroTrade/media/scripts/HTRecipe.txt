@@ -7,6 +7,141 @@ module Hydrocraft
 
 /* Масляный фильтр HCOilfilter */
 
+/* Крестовидный ключ  */
+recipe Wipe Tube
+    {
+    LugWrench,
+    keep HCSawmetal,
+    Result:MetalPipe=2,
+    Time:150,
+    Category:Survivalist,
+    }
+
+/* Стеклянная пробирка */
+recipe Wipe Tube
+    {
+    HCGlasstesttube,
+    keep Sponge,
+    Result:LabTestTube,
+    Time:50,
+    Category:Survivalist,
+    }
+
+/* пробирка */
+recipe Wipe Tube
+    {
+    LabTestTube,
+    keep Sponge,
+    Result:HCGlasstesttube,
+    Time:50,
+    Category:Survivalist,
+    } 
+
+/*Коробка с кубиками твердого топлива*/
+recipe Burn in the kiln
+    {
+    HCSolidfuelbox,
+    keep Screwdriver,
+    OnTest:HCNearKiln,
+    CanBeDoneFromFloor:true, 
+    Result:Charcoal,
+    Category:Firecraft,
+    Time:200,
+    }
+
+/* Компьютерный блок питания */
+recipe Disassemble
+    {
+    HCComputerPSU,
+    keep Screwdriver,
+    Result:ElectronicsScrap=2,
+    Category:Electrical,
+    OnCreate:recipe_hcelectronics02,
+    Time:200,
+    OnGiveXP:HCElectricity_OnGiveXP,
+    }
+
+/*Корзина для рыбы, Мешочек для семян */
+recipe Disassemble
+    {
+    HCFishingbasket/SeedBag,
+    keep Scissors,
+    Result:HCStraw=5,
+    Time:200,
+    Category:Survivalist,
+    }
+
+/*Шиномонтажный насос*/
+recipe Disassemble
+    {
+    TirePump,
+    keep HCPliers,
+    Result:MetalPipe=2,
+    Time:200,
+    Category:Survivalist,
+    }
+
+/*Солнечная панель*/
+recipe Disassemble
+    {
+    HCSolarpanel,
+    keep HCSawmetal,
+    Result:HCSolarcell=5,
+    Time:200,
+    Category:Survivalist,
+    }
+
+/* Сменный бур/Буровая насадка */
+recipe Disassemble
+    {
+    HCChiselhead/HCDrillhead,
+    keep HCSawmetal,
+    Result:ScrapMetal=2,
+    Time:200,
+    Category:Survivalist,
+    }
+
+/* Сигнальная ракета */
+recipe Disassemble
+    {
+    destroy HCRoadflare/HCRoadflareon,
+    keep HCSawmetal,
+    Result:GunPowder,
+    OnCreate:RecipegetGunPowder,
+    RemoveResultItem:true,
+    Time:200,
+    Category:Survivalist,
+    }
+
+/* Портативная горн. доб. машина */
+recipe Disassemble
+    {
+    HCPortableminingmachine/HCPortableminingmachinepowered/HCPortableminingmachinedead,
+    keep Screwdriver,
+    Result:EngineParts,
+    Time:400,
+    Category:Survivalist,
+    }
+
+/* Сундук, Ящик для инструментов, Металлический ящик*/
+recipe Disassemble
+    {
+    HCTrunk/Toolbox/HCMetalbox,
+    keep HCSawmetal,
+    Result:SmallSheetMetal=4,
+    Time:500,
+    Category:Survivalist,
+    }
+
+/* Лейка, Масляный фильтр */
+recipe Disassemble
+    {
+    WateredCan/HCBugsprayer/HCBugsprayerempty/HCWashboard/HCOilfilter,
+    keep HCSawmetal,
+    Result:SmallSheetMetal=2,
+    Time:400,
+    Category:Survivalist,
+    }
 
 /* Рамы велосипеда */
 recipe Disassemble Bicycle Frame
@@ -15,6 +150,16 @@ recipe Disassemble Bicycle Frame
     keep HCSawmetal,
     Result:MetalPipe=6,
     Time:400,
+    Category:Survivalist,
+    }
+
+/* Шар для боулинга */
+recipe Disassemble
+    {
+    HCBowlingball/HCTypewriter,
+    keep Hammer/BallPeenHammer,
+    Result:ScrapMetal=5,
+    Time:200,
     Category:Survivalist,
     }
 
@@ -28,10 +173,10 @@ recipe Disassemble
     Category:Survivalist,
     }
 
-/* Листовая подвеска */
+/* Листовая подвеска,Круглая подставка */
 recipe Disassemble
     {
-    leafSuspension2,
+    leafSuspension2/HCRingstand,
     keep HCSawmetal,
     Result:MetalBar=2,
     Time:100,
@@ -51,7 +196,7 @@ recipe Disassemble
 /* Садовая вилка */
 recipe Disassemble
     {
-    HandFork,
+    HandFork/HandScythe,
     keep Saw,
     Result:UnusableMetal,
     Time:175,
@@ -71,7 +216,7 @@ recipe Disassemble
 /* Лопата для снега */
 recipe Disassemble
     {
-    SnowShovel,
+    SnowShovel/Shovel/Shovel2/HCHandpump,
     keep Saw,
     Result:SmallSheetMetal,
     Time:175,
@@ -124,7 +269,7 @@ recipe Disassemble
 /* Светодиод */
 recipe Disassemble
     {
-    HCLedyellow/HCLedgreen,
+    HCLedyellow/HCLedgreen/HCLedblue/HCLedred,
     keep HCPliers,
     Result:LightBulb,
     Time:50,
@@ -220,7 +365,7 @@ recipe Break Fuelcanister
 /* Большая стеклянная колба */
 recipe Break Jar
     {
-    HCGlassballoon,
+    HCGlassballoon/HCGlassflask,
     keep Hammer,
     Result:MatShatteredGlass=2,
     Time:100,
@@ -246,10 +391,10 @@ recipe Disassemble
     Category:Survivalist,
     }
 
-/* Разбить банку с крышкой */
+/* Разбить банку с крышкой, лупу */
 recipe Break Jar
     {
-    HCJar/EmptyJar,
+    HCJar/EmptyJar/HCMagnifyglass,
     keep Hammer,
     Result:MatShatteredGlass,
     Time:100,
@@ -257,10 +402,10 @@ recipe Break Jar
     Sound:BreakGlassItem,
     }
 
-/* Антистеплер */
+/* Антистеплер, Компас, Ледовая пила */
 recipe Disassemble
     {
-    HCStapleremover,
+    HCStapleremover/HCCompass/HCIcesaw,
     keep Hammer,
     Result:ScrapMetal,
     Time:75,
@@ -293,7 +438,7 @@ recipe Disassemble
     {
     M998CarFrontDoor2/M998CarRearDoor2/M998CarFrontDoorArmor1_Item/M998CarRearDoorArmor1_Item,
     keep HCSawmetal,
-    Result:SheetMetal=4,
+    Result:SheetMetal=2,
     Time:800,
     Category:Survivalist,
     }
@@ -443,7 +588,7 @@ recipe Disassemble
     {
     HCBarrelblueempty,
     keep HCSawmetal,
-    Result:SheetMetal=2,
+    Result:SheetMetal,
     Time:300,
     Category:Survivalist,
     }
@@ -458,6 +603,16 @@ recipe Disassemble
     Category:Survivalist,
     }
 
+
+/* Флакон для промывки, Контейнер для фотопленки, фотоаппарат, Линейка, Маленькое пластиковое мусорное ведро. Миска для животных */
+recipe Disassemble
+    {
+    HCCamera/HCWashbottle/HCFilmcanister/GCRuler/HCPlasticbin2/HCDogbowl,
+    Result:HCPlastic,
+    Time:70,
+    Category:Survivalist,
+    }
+
 /** Разобрать ветерок**/
 recipe Disassemble
     {
@@ -468,10 +623,10 @@ recipe Disassemble
     Category:Survivalist,
     }
 
-/** Разобрать Багаж/багажник на колесиках **/
+/** Разобрать Багаж/багажник на колесиках, Большое пластиковое мусорное ведро**/
 recipe Break Luggage
     {
-    HCLuggage/HCLuggage2,
+    HCLuggage/HCLuggage2/HCIBC/HCSuitcase/HCPlasticbin,
     keep Screwdriver,
     Result:HCPlastic=4,
     Time:300,

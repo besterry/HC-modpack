@@ -414,6 +414,11 @@ end
 
 -- HT 
 
+function RecipegetGunPowder(items, result, player)
+	local gunPowder = player:getInventory():AddItem("Base.GunPowder");
+	gunPowder:setDelta(0.1);
+end
+
 function HCSawdust(items, result, player) --Стружка
 	local countHCSawdust = ZombRand(2)
 	HCAddManySameItem("Hydrocraft.HCSawdust", countHCSawdust, player);	
