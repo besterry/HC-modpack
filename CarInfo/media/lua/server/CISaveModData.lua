@@ -1,5 +1,7 @@
 local commands = {} --Команды приходящие на сервер
-commands.writeSeat = function(player, args)    
+commands.writeSeat = function(player, args)
+    -- print("Acess:",player:getAccessLevel())
+    -- if player:getAccessLevel() ~= 'Admin' or player:getAccessLevel() ~= 'admin' then return end
     local vehicle = getVehicleById(args.vehicleId)
 	local modData = vehicle:getModData()['playerLog'] or {}
 	local playerIndex

@@ -7,6 +7,17 @@ module Hydrocraft
 
 /* Масляный фильтр HCOilfilter */
 
+
+/* Рамы велосипеда */
+recipe Disassemble Bicycle Frame
+    {
+    BicycleFrameMTB/BicycleFrameRegular/BicycleFrameRegularScrap/BicycleFrameMTBScrap,
+    keep HCSawmetal,
+    Result:MetalPipe=6,
+    Time:400,
+    Category:Survivalist,
+    }
+
 /* Манильский конверт */
 recipe Disassemble
     {

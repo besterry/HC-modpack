@@ -1,4 +1,5 @@
 Items_RU = {
+	Recipe_Disassemble_Bicycle_Frame = "Распилить раму",
 	Recipe_Craft_Empty_Tube = "Сделать пустой тюбик",
 	Recipe_Remove_Dead_Small_Battery = "Извлечь севшую батарейку",
 	Recipe_Break_Fuelcanister = "Разбить брелок",
