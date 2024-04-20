@@ -908,19 +908,34 @@ function recipe_hcdismantleforklift(items, result, player)
 end
 
 function recipe_hcdismantlescissorlift(items, result, player)  
-    HCAddManySameItem("Hydrocraft.HCLargesheetmetal", 5, player);
+    HCAddManySameItem("Hydrocraft.HCLargesheetmetal", 1, player);
     HCAddManySameItem("Hydrocraft.HCCablecopper,", 0, player);
     HCAddManySameItem("Hydrocraft.HCLedred", 0, player);
     HCAddManySameItem("Hydrocraft.HCLedgreen", 0, player);
     HCAddManySameItem("Hydrocraft.HCLedyellow", 0, player);
-    HCAddManySameItem("Base.SheetMetal", 3, player);
-    HCAddManySameItem("Base.ElectronicsScrap", 19, player);
-    HCAddManySameItem("Base.MetalBar", 54, player);
+    HCAddManySameItem("Base.SheetMetal", 1, player);
+    HCAddManySameItem("Base.ElectronicsScrap", 9, player);
+    HCAddManySameItem("Base.MetalBar", 7, player);
     HCAddManySameItem("Base.EngineParts", 9, player);
     HCAddManySameItem("Base.MetalPipe", 0, player);
     HCAddManySameItem("Base.CarBattery1", 0, player);
     HCAddManySameItem("Base.RemoteCraftedV3", 0, player);
 end
+
+-- function recipe_hcdismantlescissorlift(items, result, player)  
+--     HCAddManySameItem("Hydrocraft.HCLargesheetmetal", 3, player);
+--     HCAddManySameItem("Hydrocraft.HCCablecopper,", 0, player);
+--     HCAddManySameItem("Hydrocraft.HCLedred", 0, player);
+--     HCAddManySameItem("Hydrocraft.HCLedgreen", 0, player);
+--     HCAddManySameItem("Hydrocraft.HCLedyellow", 0, player);
+--     HCAddManySameItem("Base.SheetMetal", 3, player);
+--     HCAddManySameItem("Base.ElectronicsScrap", 11, player);
+--     HCAddManySameItem("Base.MetalBar", 21, player);
+--     HCAddManySameItem("Base.EngineParts", 6, player);
+--     HCAddManySameItem("Base.MetalPipe", 0, player);
+--     HCAddManySameItem("Base.CarBattery1", 0, player);
+--     HCAddManySameItem("Base.RemoteCraftedV3", 0, player);
+-- end
 
 function recipe_hcdismantleteslamachine(items, result, player)  
     HCAddManySameItem("Hydrocraft.HCAluminumscrap", 1, player);

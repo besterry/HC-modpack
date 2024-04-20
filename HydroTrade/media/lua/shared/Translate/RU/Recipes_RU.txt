@@ -1,4 +1,5 @@
 Items_RU = {
+	Recipe_Craft_Empty_Tube = "Сделать пустой тюбик",
 	Recipe_Remove_Dead_Small_Battery = "Извлечь севшую батарейку",
 	Recipe_Break_Fuelcanister = "Разбить брелок",
 	Recipe_Break_Jar = "Разбить банку",
@@ -1103,7 +1104,7 @@ Items_RU = {
 	Recipe_Kill_Wild_Boar = "Убить дикого кабана",
 	Recipe_Kill_Wood_Duck = "Убить лесную утку",
 	Recipe_Kill_Yourself = "Убить себя",
-	Recipe_Knead_Pizza_Dough = "Замесить теста для пиццу",
+	Recipe_Knead_Pizza_Dough = "Замесить тесто для пиццы",
 	Recipe_Knead_Raw_Opium = "Замесить сырой опиум",
 	Recipe_Label_Empty_Blue_Barrel_With_Ammonia_Label = "Наклеить этикетку аммиака на пустую синюю бочку",
 	Recipe_Label_Empty_Blue_Barrel_With_Methylamin_Label = "Наклеить этикетку метиламина на пустую синюю бочку",

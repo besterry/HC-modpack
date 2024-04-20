@@ -597,7 +597,7 @@ recipe Anchor Oil Press
 recipe Make Stone Wheel
     {
     	HCMiningchiselpowered=2,
-        keep HCQuarrystone2,
+        keep HCQuarrystone2/HCQuarrystone2D,
         CanBeDoneFromFloor:true,
     	Result:HCStonewheel,
     	NeedToBeLearn:true,

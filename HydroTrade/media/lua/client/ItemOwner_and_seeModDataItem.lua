@@ -99,7 +99,11 @@ local function AddShowDataOption(player, context, items)
     -- end
     for i, item in ipairs(items) do
         if item and item.items and item.items[1] and item.items[1]:hasModData() then
-            context:addOption(getText("IGUI_Show_Data_Item")..": "..item.items[1]:getDisplayName(), player, function() onShowData(item) end)
+            local owner = ""
+            if item.items[1]:getModData() and item.items[1]:getModData()["Owner"] then
+                owner = " ["..item.items[1]:getModData()["Owner"] .."]"
+            end
+            context:addOption(getText("IGUI_Show_Data_Item")..": "..item.items[1]:getDisplayName() .. owner, player, function() onShowData(item) end)
         end
     end
 end

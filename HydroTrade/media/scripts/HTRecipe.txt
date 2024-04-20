@@ -5,6 +5,71 @@ module Hydrocraft
         Base, farming, Engineer, Survivalist
     }
 
+/* Масляный фильтр HCOilfilter */
+
+/* Манильский конверт */
+recipe Disassemble
+    {
+    HCManilaenvelope/HCManilaenvelope2,
+    keep Scissors,
+    Result:SheetPaper2=4,
+    Time:100,
+    Category:Survivalist,
+    }
+
+/* Листовая подвеска */
+recipe Disassemble
+    {
+    leafSuspension2,
+    keep HCSawmetal,
+    Result:MetalBar=2,
+    Time:100,
+    Category:Engineer,
+    }
+ 
+/* Садовая мотыга, Садовые вилы, Серп */
+recipe Disassemble
+    {
+    GardenHoe/GardenFork,
+    keep Saw,
+    Result:UnusableMetal=2,
+    Time:100,
+    Category:Survivalist,
+    }
+
+/* Садовая вилка */
+recipe Disassemble
+    {
+    HandFork,
+    keep Saw,
+    Result:UnusableMetal,
+    Time:175,
+    Category:Survivalist,
+    }
+
+/* Металлическая лопатка */
+recipe Disassemble
+    {
+    HCPaddlemetal,
+    keep HCPliers,
+    Result:UnusableMetal,
+    Time:175,
+    Category:Survivalist,
+    }
+
+/* Лопата для снега */
+recipe Disassemble
+    {
+    SnowShovel,
+    keep Saw,
+    Result:SmallSheetMetal,
+    Time:175,
+    OnCreate:HT_GetHCSawdust,
+    Category:Survivalist,
+    }
+
+/**************** 13.04 ****************/
+
 /* Фонари для крыши */
 recipe Disassemble
     {
@@ -20,7 +85,7 @@ recipe Disassemble
     {
     HCMousepad,
     keep Scissors,
-    Result:HCSilkcloth,
+    Result:RippedSheets=2,
     Time:175,
     Category:Survivalist,
     }
@@ -152,7 +217,7 @@ recipe Break Jar
     Sound:BreakGlassItem,
     }
 
-/* Барабанная палочка */ 
+/* Барабанная палочка, Трость */ 
 recipe Disassemble
     {
     Drumstick,
@@ -164,7 +229,7 @@ recipe Disassemble
 /* Кисть */ 
 recipe Disassemble
     {
-    HCPaintbrush,
+    HCPaintbrush/HCCane,
     Result:WoodenStick,
     Time:25,
     Category:Survivalist,
@@ -253,7 +318,7 @@ recipe Disassemble
     }
 
 /* Пустой тюбик */
-recipe Disassemble
+recipe Craft Empty Tube
     {
     HCPlastic=3,
     HCSoldergunpowered,
@@ -284,7 +349,7 @@ recipe Make Rubber Cement
 /* M151A2 запасная шина */
 recipe Disassemble
     {
-    V102Tire2,
+    V102Tire2/V101Tire2/CUDAtire3,
     keep Multitool/Leatherdad/SAK/HCKnifeiron/HCKnifesteel,
     Result:HCRubberscrap=20,
     Time:300,
@@ -1770,8 +1835,25 @@ recipe Unpack Swatpack
 		keep HCCombatknife/HCKnifeiron/KitchenKnife/HuntingKnife/Multitool/Leatherdad,
         Result:bowllatex,
 		CanBeDoneFromFloor:true,
-        Time:5000,
+        Time:3600,
         Category:Survivalist,
+		OnGiveXP:HTFarming_OnGiveXP,
+    }
+
+	/*Выжимка латекса из костюма*/
+	recipe Collect rubber
+	{
+        destroy Bowl=5,
+        destroy HazmatSuit,
+        Charcoal,
+        Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
+		keep HCClaycauldron/HCCauldroniron,
+		keep HCRubberglove/Gloves_Surgical/HCGardengloves,
+        Result:bowllatex=5,
+		CanBeDoneFromFloor:true,
+        AllowDestroyedItem:true,
+        Time:4200,
+        Category:Chemistry,
 		OnGiveXP:HTFarming_OnGiveXP,
     }
 	
@@ -1800,7 +1882,7 @@ recipe Unpack Swatpack
 		keep HCCrank,
         Result:Oilbarrel,
 		CanBeDoneFromFloor:true,
-        Time:5000,
+        Time:3600,
         Category:Survivalist,
     }
 	
@@ -1956,7 +2038,7 @@ recipe Unpack Swatpack
 		PetrolCan/LargePetrolCanFull,		
         Result:HazmatSuit,
 		CanBeDoneFromFloor:true,
-        Time:10000,
+        Time:5000,
         Category:Survivalist,
     }
 
@@ -1975,7 +2057,7 @@ recipe Unpack Swatpack
 		PetrolCan/LargePetrolCanFull,		
         Result:HazmatSuit,
 		CanBeDoneFromFloor:true,
-        Time:10000,
+        Time:5000,
         Category:Survivalist,
     }
 	
