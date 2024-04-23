@@ -161,15 +161,15 @@ FC4UseTreadmillMenu.onUseTreadmill = function(worldobjects, player, machine, sou
 		end
 		
 		if player:getMoodles():getMoodleLevel(MoodleType.Endurance) > 2 then
-			player:Say("Too exhausted to use")
+			player:Say(getText("IGUI_Too_exhausted_to_use")) --Too exhausted to use
 			return
 		end
 		if player:getMoodles():getMoodleLevel(MoodleType.HeavyLoad) > 2 then
-			player:Say("Too heavy to use")
+			player:Say(getText("IGUI_Too_heavy_to_use")) --Too heavy to use
 			return
 		end
 		if player:getMoodles():getMoodleLevel(MoodleType.Pain) > 3 then
-			player:Say("Too much pain to use")
+			player:Say(getText("IGUI_Too_much_pain_to_use")) --Too much pain to use
 			return
 		end
 		ISTimedActionQueue.add(FC4UseTreadmill:new(player, machine, soundFile, soundEnd, actionType, length))

@@ -1,5 +1,8 @@
 IGUI_RU =
 {
+	IGUI_Too_much_pain_to_use = "Невыносимая боль, не могу использовать",
+	IGUI_Too_heavy_to_use = "Слишком тяжелый для использования",
+	IGUI_Too_exhausted_to_use = "Слишком устал, чтобы использовать",
 	IGUI_FC4UseTreadmill_NoElectricity = "Для использования нужен подключенный генератор поблизости",
 	IGUI_I_found_nothing = "Я ничего не нашел",
 	IGUI_There_are_no_dung_indoors = "В помещении нет навоза",

@@ -1,5 +1,8 @@
 IGUI_EN =
 {
+	IGUI_Too_much_pain_to_use = "Too much pain to use",
+	IGUI_Too_heavy_to_use = "Too heavy to use",
+	IGUI_Too_exhausted_to_use = "Too exhausted to use",
 	IGUI_FC4UseTreadmill_NoElectricity = "Requires a connected generator nearby to use",
 	IGUI_I_found_nothing = "I didn't find anything"
 	IGUI_There_are_no_dung_indoors = "There is no dung in the room",
