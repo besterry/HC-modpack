@@ -44,7 +44,7 @@ FC4UseTreadmillMenu.doBuildMenu = function(player, context, worldobjects)
 				-- Normally can use only Group Name for treadmill but I use it to be able change object easily
 				if customName == "Hamster Wheel" then
 					if not ((SandboxVars.ElecShutModifier > -1 and GameTime:getInstance():getNightsSurvived() < SandboxVars.ElecShutModifier) or thisObject:getSquare():haveElectricity()) then
-						getSpecificPlayer(player):Say("The treadmill needs electricity to run")
+						getSpecificPlayer(player):Say(getText("IGUI_FC4UseTreadmill_NoElectricity")) --The treadmill needs electricity to run
 						return
 					end
 					

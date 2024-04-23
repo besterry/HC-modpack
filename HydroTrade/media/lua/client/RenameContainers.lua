@@ -60,7 +60,7 @@ end
 function ISInventoryPage:onRenameContainerClick(button, inventory)
     if button.internal == "OK" then
         if button.parent.entry:getText() and button.parent.entry:getText() ~= "" then
-            print("rename container to " .. button.parent.entry:getText())
+            --print("rename container to " .. button.parent.entry:getText())
             inventory:getParent():getModData().RenameContainer_CustomName = button.parent.entry:getText()
             inventory:getParent():transmitModData() -- sync moddata for MP
         end

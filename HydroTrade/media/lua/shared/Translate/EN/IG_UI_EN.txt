@@ -1,5 +1,6 @@
 IGUI_EN =
 {
+	IGUI_FC4UseTreadmill_NoElectricity = "Requires a connected generator nearby to use",
 	IGUI_I_found_nothing = "I didn't find anything"
 	IGUI_There_are_no_dung_indoors = "There is no dung in the room",
 	IGUI_Use_Bench = "Use bench",

@@ -1,5 +1,6 @@
 IGUI_RU =
 {
+	IGUI_FC4UseTreadmill_NoElectricity = "Для использования нужен подключенный генератор поблизости",
 	IGUI_I_found_nothing = "Я ничего не нашел",
 	IGUI_There_are_no_dung_indoors = "В помещении нет навоза",
 	IGUI_Use_Bench = "Использовать скамейку",
