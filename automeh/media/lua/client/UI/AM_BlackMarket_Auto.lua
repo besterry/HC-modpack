@@ -1,9 +1,10 @@
 BlackMarketAuto = ISPanelJoypad:derive("BlackMarketAuto")
 AutoMeh = AutoMeh or {}
 local td = getTexture("media/textures/TD.png")
-
+local x1car,x2car,y1car,y2car
 function BlackMarketAuto:initialise() --Создание элементов окна
     ISPanelJoypad.initialise(self)
+    x1car,x2car,y1car,y2car = AutoMeh.CheckZone("blackmarketauto") --Получение координат зоны
     self.player = getPlayer()
     local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
     local fontHgt = FONT_HGT_SMALL
@@ -80,7 +81,7 @@ function BlackMarketAuto:CheckCar()
     end
 end
 
-local x1car,x2car,y1car,y2car = AutoMeh.CheckZone("blackmarketauto") --Получение координат зоны
+
 function BlackMarketAuto:CheckCarAh() --Получение ТС и вызов функции заполнения комбобокса    
     self.textEntry = tonumber(self.ItemEntry:getText()) --Введеный номер
     self.vehicle = AutoMeh.CheckCarZone(x1car,x2car,y1car,y2car,self.textEntry) --Получение экземпляра авто по указанному номеру
