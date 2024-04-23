@@ -1,4 +1,5 @@
 Items_RU = {
+	Recipe_Burn_in_the_kiln = "Обжечь в печи",
 	Recipe_Wipe_Tube = "Протереть",
 	Recipe_Burn_in_the_oven = "Обжечь в печи",
 	Recipe_Disassemble_Bicycle_Frame = "Распилить раму",

@@ -5,10 +5,8 @@ module Hydrocraft
         Base, farming, Engineer, Survivalist
     }
 
-/* Масляный фильтр HCOilfilter */
-
 /* Крестовидный ключ  */
-recipe Wipe Tube
+recipe Disassemble
     {
     LugWrench,
     keep HCSawmetal,
@@ -41,7 +39,7 @@ recipe Wipe Tube
 recipe Burn in the kiln
     {
     HCSolidfuelbox,
-    keep Screwdriver,
+    Lighter/Matches/PercedWood/HCMagnesiumstriker/HCBowdrill,
     OnTest:HCNearKiln,
     CanBeDoneFromFloor:true, 
     Result:Charcoal,
@@ -608,6 +606,7 @@ recipe Disassemble
 recipe Disassemble
     {
     HCCamera/HCWashbottle/HCFilmcanister/GCRuler/HCPlasticbin2/HCDogbowl,
+    keep Screwdriver,
     Result:HCPlastic,
     Time:70,
     Category:Survivalist,
