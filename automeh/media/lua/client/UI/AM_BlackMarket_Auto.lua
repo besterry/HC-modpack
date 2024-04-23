@@ -122,6 +122,11 @@ function BlackMarketAuto:onClick(button)
             local broken = false
             sendClientCommand(self.player, "vehicle", "cheatHotwire", { vehicle = self.vehicle:getId(), hotwired = hotwired, broken = broken})
             sendClientCommand("BS", "Withdraw", {SandboxVars.NPC.PriceDeleteHotwireBlackMarket,0})
+            local args = {}
+            args.action = "delete car hotwired"
+            args.price = SandboxVars.NPC.PriceDeleteHotwireBlackMarket
+            args.vehiclesqlid = self.vehicle:getModData().sqlId
+            sendClientCommand(self.player, "AutoMeh", "logserver", args) --логирование на сервере
             self.delhotwire:setEnable(false)
         else
             self.player:Say(getText("IGUI_AM_No_Money"))
@@ -134,7 +139,7 @@ function BlackMarketAuto:onClick(button)
             self.vehicle:getModData().register = nil
             self.vehicle:getModData().Confidant = nil
             sendClientCommand("BS", "Withdraw", {SandboxVars.NPC.PriceDeleteRegisterBlackMarket,0})
-            sendClientCommand(getPlayer(), 'RegisterCar', 'DelRegister', args)
+            sendClientCommand(self.player, 'RegisterCar', 'DelRegister', args) --Есть логирование на стороне сервера
             self.delreg:setEnable(false)
         else
             self.player:Say(getText("IGUI_AM_No_Money"))
@@ -148,6 +153,11 @@ function BlackMarketAuto:onClick(button)
                 itemKey:setName(NameKey)
                 self.player:getInventory():AddItem(itemKey)
                 sendClientCommand("BS", "Withdraw", {SandboxVars.NPC.AutomehCreateKeyPrice*SandboxVars.NPC.PriceMultiplierBlackMarketCreateKey,0})
+                local args = {}
+                args.action = "create car key"
+                args.price = SandboxVars.NPC.PriceDeleteHotwireBlackMarket
+                args.vehiclesqlid = self.vehicle:getModData().sqlId
+                sendClientCommand(self.player, "AutoMeh", "logserver", args)
             else
                 self.player:Say(getText("IGUI_AM_No_Money"))
             end

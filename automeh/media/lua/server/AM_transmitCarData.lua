@@ -20,6 +20,11 @@ commands.SetPart = function(player, args) --Ремонт автомобиля
     end
 end
 
+commands.logserver = function (player,args) --логирование
+    local msg = player:getUsername() .."[" .. player:getX() .. "," .. player:getY() .. "]" .. " vehicle sqlid:" .. args.vehiclesqlid .. " action:" .. args.action .. ", price: " .. args.price
+    writeLog("Automeh",msg)
+end
+
 commands.getCarPP = function (player,args) --Получение списка транспорта на штрафстоянке игрока
     local Username = player:getUsername()
     local globalModData = ModData.get("ParkingPenalty")
@@ -147,7 +152,7 @@ local setVehicleData = function (vehicle,data,sq,player) --Восстановл�
                 vehicle:transmitPartCondition(part)
             end
         end
-    end    
+    end
     local coords = math.floor(player:getX()) .. ',' .. math.floor(player:getY()) .. ',0'
     local msg = "RESTORE PenaltyParking: " .. player:getUsername() .. " " ..
     "[" .. coords .. "]" ..
