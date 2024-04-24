@@ -73,5 +73,107 @@ ZipContainer.sprites = {
 	},
     Boxes = {
 		"ZipContainer_01_27",
+	},    
+    Conserve = {
+		"ZipContainer_01_28",
+	},
+    Weaponkits = {
+		"ZipContainer_01_29",
+	},
+    Pistol = {
+		"ZipContainer_01_30",
+	},
+    rifle = {
+		"ZipContainer_01_31",
+	},
+    cloth = {
+		"ZipContainer_01_32",
+	},
+    jewelry = {
+		"ZipContainer_01_33",
+	},
+    wristwatch = {
+		"ZipContainer_01_34",
+	},
+    gardening = {
+		"ZipContainer_01_35",
+	},
+    Fertilizers = {
+		"ZipContainer_01_36",
+	},
+    Electronics = {
+		"ZipContainer_01_37",
+	},
+    Batteries = {
+		"ZipContainer_01_38",
+	},
+    wire = {
+		"ZipContainer_01_39",
+	},
+    craft = {
+		"ZipContainer_01_40",
+	},
+    colors = {
+		"ZipContainer_01_41",
+	},
+    cement = {
+		"ZipContainer_01_42",
+	},
+    magazine = {
+		"ZipContainer_01_43",
+	},
+    Herbs = {
+		"ZipContainer_01_44",
+	},
+    medicine = {
+		"ZipContainer_01_45",
+	},
+    Rags = {
+		"ZipContainer_01_46",
+	},
+    Bandage = {
+		"ZipContainer_01_47",
+	},
+    flour = {
+		"ZipContainer_01_48",
+	},
+    alcohol = {
+		"ZipContainer_01_49",
+	},
+    grass = {
+		"ZipContainer_01_50",
+	},
+    armor = {
+		"ZipContainer_01_51",
+	},
+    sheet = {
+		"ZipContainer_01_52",
+	},
+    pallets = {
+		"ZipContainer_01_53",
+	},
+    bee = {
+		"ZipContainer_01_54",
+	},
+    ingots = {
+		"ZipContainer_01_55",
+	},
+    ore = {
+		"ZipContainer_01_56",
+	},
+    Coal = {
+		"ZipContainer_01_57",
+	},
+    trash = {
+		"ZipContainer_01_58",
+	},
+    sandstone = {
+		"ZipContainer_01_59",
+	},
+    clay = {
+		"ZipContainer_01_60",
+	},
+    pipes = {
+		"ZipContainer_01_61",
 	},
 }
