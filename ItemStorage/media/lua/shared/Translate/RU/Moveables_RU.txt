@@ -1,4 +1,5 @@
 Moveables_RU = {
+	ZipCell_ZipContainer = "Подвал 3",
 	ZipContainer = "Подвал",
     ZipContainerBox = "Ящик",
     }
