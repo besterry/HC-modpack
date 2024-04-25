@@ -18,7 +18,7 @@ local function ContextMenu(player, context, worldobjects, test)
             local objectIndex = v:getObjectIndex()
             if not addedObjects[objectIndex] then --Исключаем дубли
                 addedObjects[objectIndex] = true
-                print(v:getObjectIndex())
+                -- print(v:getObjectIndex())
                 -- getTextureName playershop_0
                 --getSpriteName nil
                 --getScriptName None

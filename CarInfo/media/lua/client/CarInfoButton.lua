@@ -29,7 +29,7 @@ local vehicle
 --Отслеживания последних садившихся игроков
 local function OnEnterVehicleOnModData(player)
     if isAdmin then print("Exit, admin"); return end
-    print("No admin")
+    -- print("No admin")
     local args = {}    
     local time = getTimestamp()
     local name = player:getUsername()
@@ -43,7 +43,7 @@ Events.OnEnterVehicle.Add(OnEnterVehicleOnModData)
 
 --Отслеживания последних выходивших игроков
 local function OnExitVehicleOnModData(player)
-    if isAdmin then print("Exit, admin"); return end
+    if isAdmin then return end
     local args = {}    
     local time = getTimestamp()
     local name = player:getUsername()
