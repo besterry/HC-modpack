@@ -25,5 +25,15 @@ IGUI_RU = {
     IGUI_editshopTB = "Режим установки",
     IGUI_editshopTBdisable = "Режим установки отключен, достигнут лимит магазинов",
     IGUI_PM_TooltipExpandCoin = "Максимум",
-    IGUI_PMShop = "Магазин"
+    IGUI_PMShop = "Магазин",
+    IGUI_My_Garage = "Мой гараж",
+    IGUI_Not_in_safehouse_or_not_owner = "Доступно только в убежище и владельцу",
+    IGUI_GarageAlreadyExists = "В убежище уже есть гараж",
+    IGUI_set_Garage = "Разместить гараж",
+    IGUI_ChangeGarageSide = "Изменить точку",
+    IGUI_Garage = "Гараж",
+    IGUI_Put_in_garage = "Поставить в гараж ",
+    IGUI_MyGarage = "В гараже",
+    IGUI_DeleteGarageCheckBox = "Режим удаления",
+    IGUI_DeleteGarage = "Удалить гараж",
 }
