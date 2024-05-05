@@ -22,7 +22,7 @@ local function seekZipTiles(worldobject,spritePrefix)
     local sprite = wo:getSprite()
     local spriteName = sprite:getName()
     if spriteName then
-        if(string.find(spriteName,spritePrefix)) then
+        if(string.find(spriteName,spritePrefix)) and not (spriteName == "ZipContainer_01_3" or spriteName == "ZipContainer_01_4") then
             found = true
         end
     end

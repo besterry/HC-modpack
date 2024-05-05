@@ -185,6 +185,35 @@ function ISSafehouseUI:initialise()
 
 end
 
+
+-- ==================================БЛОК ДЛЯ УДАЛЕНИЯ УБЕЖИЩА ЕСЛИ НЕТ ГАРАЖА==============================================
+local waitingForServerResponse = false -- Состояние ожидания ответа от сервера
+local function getDataUser()
+    local player = getPlayer()
+    sendClientCommand(player,"Garage","getModDataGarage",{nil})
+    waitingForServerResponse = true -- Устанавливаем флаг ожидания
+end
+local function receiveServerCommandCreateGarage (module, command, args)--Получение ответа от сервера, есть ли у игрока гараж
+    if module ~= "Garage"  then return; end
+    if command ~= "onGetModData" then return end
+    if args[1] ~= nil then
+        waitingForServerResponse = false -- Сбрасываем флаг ожидания
+        local hasGarage = args[1] or false -- Получаем информацию о наличии гаража        
+        if not hasGarage then -- Если нет гаража
+            -- Если у игрока нет гаража, создаем модальное окно для подтверждения удаления убежища
+            local modal = ISModalDialog:new(0, 0, 350, 150, getText("IGUI_SafehouseUI_ReleaseConfirm", ISSafehouseUI.instance.selectedPlayer), true, nil, ISSafehouseUI.onReleaseSafehouse)
+            modal:initialise()
+            modal:addToUIManager()
+            modal.ui = ISSafehouseUI.instance
+            modal.moveWithMouse = true
+        else
+            getPlayer():Say(getText("IGUI_SafeHouseHasGarage"))
+        end
+    end
+end
+Events.OnServerCommand.Add(receiveServerCommandCreateGarage)
+-- ==================================БЛОК ДЛЯ УДАЛЕНИЯ УБЕЖИЩА ЕСЛИ НЕТ ГАРАЖА==============================================
+
 function ISSafehouseUI:onClickRefreshTime()
     local dayInMillis = 24 * 60 * 60 * 1000
     -- Обновление значения времени до удаления привата    
@@ -322,12 +351,16 @@ function ISSafehouseUI:onClick(button)
         self:close();
     end
     if button.internal == "RELEASE" then
-        local modal = ISModalDialog:new(0,0, 350, 150, getText("IGUI_SafehouseUI_ReleaseConfirm", self.selectedPlayer), true, nil, ISSafehouseUI.onReleaseSafehouse);
-        modal:initialise()
-        modal:addToUIManager()
-        modal.ui = self;
-        modal.moveWithMouse = true;
+        if not waitingForServerResponse then
+            getDataUser()
+        end
     end
+        -- Оригинал всей фунцкции if button.internal == "RELEASE" then  ниже
+        -- local modal = ISModalDialog:new(0,0, 350, 150, getText("IGUI_SafehouseUI_ReleaseConfirm", self.selectedPlayer), true, nil, ISSafehouseUI.onReleaseSafehouse);
+        -- modal:initialise()
+        -- modal:addToUIManager()
+        -- modal.ui = self;
+        -- modal.moveWithMouse = true;
     if button.internal == "REMOVEPLAYER" then
         local modal = ISModalDialog:new(0,0, 350, 150, getText("IGUI_SafehouseUI_RemoveConfirm", self.selectedPlayer), true, nil, ISSafehouseUI.onRemovePlayerFromSafehouse);
         modal:initialise()

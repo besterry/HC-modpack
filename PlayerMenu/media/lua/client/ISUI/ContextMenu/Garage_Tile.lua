@@ -31,7 +31,6 @@ PM.EditGarage = PM.EditGarage or false
 --     o.name = name;
 --     return o;
 -- end
-
 local function addGarageSprite(x, y)
     local square = getCell():getGridSquare(x, y, 0) -- Здесь 0 предполагается как Z-координата, корректируйте по необходимости
     local spriteName = "garage_0"
@@ -51,7 +50,11 @@ local function addGarageSprite(x, y)
         square:AddTileObject(newSprite)
         -- Синхронизируем объект с сервером
         newSprite:transmitCompleteItemToServer()
-        PM.EditGarage = false
+        PM.EditGarage = false        
+        newSprite:getModData()["GarageOwner"] = getPlayer():getUsername()
+        newSprite:transmitModData()
+
+        sendClientCommand(getPlayer(), "Garage", "GarageLog", {x, y, "add", newSprite:getModData()})
     end
 end
 
@@ -92,6 +95,7 @@ local function checkSafeHouse(player, x, y, z) --Проверка существ
         return true
     else
         player:Say(getText("IGUI_Not_in_safehouse_or_not_owner"))
+        PM.EditGarage = false
         return false
     end
 end
@@ -103,16 +107,16 @@ local function setGarage(worldobjects, playerNum, sprites) --Создание г
     local z = worldobjects[1]:getZ()
     if not checkSafeHouse(player, x, y, z) then return end
 
-    -- Вызов функции проверки на наличие спрайта в убежище:
-    if hasGarageSpriteInSafehouse(player, "garage_0") then
+    if hasGarageSpriteInSafehouse(player, "garage_0") then -- Вызов функции проверки на наличие спрайта в убежище
         player:Say(getText("IGUI_GarageAlreadyExists"))
         PM.EditGarage = false
         return
     end
 
-    local north = false     -- Булево значение: true, если гараж должен быть направлен на север.
-    local sprite = sprites; -- Название спрайта гаража.
-    addGarageSprite(x, y)
+    -- local north = false     -- Булево значение: true, если гараж должен быть направлен на север.
+    -- local sprite = sprites; -- Название спрайта гаража.
+    -- getData(x,y)
+    addGarageSprite(x,y)
     -- local garage = ISGarage:new("Garage", player, sprite, sprite);
     -- garage:create(x, y, z, north, sprite);
 end

@@ -1,0 +1,8 @@
+name=Garage
+poster=poster.png
+id=garage
+description=garage for server hydrocraft
+versionMin=41.78
+
+pack=garage
+tiledef=garage 1450

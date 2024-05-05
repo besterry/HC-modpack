@@ -252,7 +252,7 @@ function PM_ISMenu:onClick(button)
             PM_Garage.instance:close()
             PM_Garage.instance = nil
         else
-            local ui = PM_Garage:new(50, 50, 200, 150, getPlayer());
+            local ui = PM_Garage:new(50, 50, 220, 270, getPlayer());
             ui:initialise();
             ui:addToUIManager();
         end

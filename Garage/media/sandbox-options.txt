@@ -1,0 +1,8 @@
+VERSION = 1,
+
+option NPC.Garage {
+  type        = boolean,
+  default     = false,
+  page        = NPC,
+  translation = GarageActivate,
+}

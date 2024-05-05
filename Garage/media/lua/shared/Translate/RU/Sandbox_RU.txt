@@ -1,0 +1,4 @@
+Sandbox_RU = {
+    Sandbox_GarageActivate = "Персональный гараж",
+    Sandbox_GarageActivate_tooltip  = "Включить или отключить функционал персонального гаража",
+}
