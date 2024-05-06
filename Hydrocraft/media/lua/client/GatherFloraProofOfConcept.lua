@@ -290,7 +290,7 @@ local function EveryOneMinute()
 	
 	if(found) then
 		thePlayer:getXp():AddXP(Perks.PlantScavenging, 2); -- 0.5xp, with no buffs
-		thePlayer:Say("+1")
+		--thePlayer:Say("+1")
 	end
 	
 	--thePlayer:Say(minutes .. " / " .. count)
