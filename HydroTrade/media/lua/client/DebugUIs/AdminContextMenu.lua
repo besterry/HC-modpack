@@ -95,7 +95,7 @@ AdminContextMenu.onTeleportUI = function(playerObj)
 end
 
 AdminContextMenu.onDestroyUI = function(playerObj)
-    local ui = RemoverItemAndBuildsTool:new(0, 0, 350, 200, playerObj);
+    local ui = RemoverItemAndBuildsTool:new(0, 0, 350, 230, playerObj);
     ui:initialise();
     ui:addToUIManager();
 end

@@ -46,7 +46,7 @@ SurvivalGuideEntries.addSurvivalGuideEntry(6);
 
 SurvivalGuideEntries.addSurvivalGuideEntry(7);
 
---SurvivalGuideEntries.addSurvivalGuideEntry(8);
+SurvivalGuideEntries.addSurvivalGuideEntry(8);
 
 --SurvivalGuideEntries.addSurvivalGuideEntry(9);
 

@@ -45,7 +45,9 @@ function RemoverItemAndBuildsTool:initialise()
     self.itemType:addOption(getText("IGUI_RemoveBuilds"))
     self.itemType:addOption(getText("IGUI_RemoveAll"))
     self.itemType:addOption(getText("IGUI_ChangeToRoad"))
-    self.itemType:addOption(getText("IGUI_ChangeToGrass"))    
+    self.itemType:addOption(getText("IGUI_ChangeToGrass"))
+    self.itemType:addOption(getText("IGUI_AddRandomGrass"))
+    self.itemType:addOption(getText("IGUI_AddRandomTrees"))
     -- self.itemType:addOption(getText("IGUI_ClearSnow"))
     self.itemType:setSelected(1)
 end
@@ -162,9 +164,51 @@ function RemoverItemAndBuildsTool:onClick(button)
                                         --building:transmitUpdatedSpriteToServer()
                                         --building:setSprite(getSprite("blends_street_01_86"))
                                     end
-
                                 end
-                            -- elseif self.itemType:isSelected(6) then --Если очистка от снего
+                            elseif self.itemType:isSelected(6) then --Заполнение травой
+                                local tileSet = {"e_newgrass_1_45", "e_newgrass_1_0", "e_newgrass_1_4", "e_newgrass_1_5", "e_newgrass_1_6", "e_newgrass_1_7", "e_newgrass_1_8",  "e_newgrass_1_15", "e_newgrass_1_39", "e_newgrass_1_45", "d_generic_1_80",
+                                                 "d_generic_1_81", "d_generic_1_49", "d_plants_1_34",
+                                                 "d_plants_1_38"}
+                                local hasOnlyBlendsOrEmpty = true
+                                for i = 0, sq:getObjects():size() - 1 do
+                                    local object = sq:getObjects():get(i)
+                                    if object and instanceof(object, "IsoObject") then
+                                        if string.find(object:getTextureName(), "^blends_natural_01") ~= 1 then
+                                            hasOnlyBlendsOrEmpty = false
+                                            break
+                                        end
+                                    end
+                                end
+                                
+                                if hasOnlyBlendsOrEmpty then -- Если клетка подходит, случайным образом размещаем на ней тайл
+                                    local chanse = ZombRand(1,10)
+                                    if chanse >= 5 then -- % заполения тайлами 5 - 50%
+                                        local tileName = tileSet[ZombRand(1, #tileSet + 1)] -- Выбираем случайный тайл из списка                                    
+                                        self:addTileToSquare(tileName, sq) -- Функция для добавления тайла на клетку
+                                    end
+                                end
+                            elseif self.itemType:isSelected(7) then --Заполнение деревьями
+                                local tileSet = {"e_canadianhemlock_1_0","e_canadianhemlock_1_1", "e_canadianhemlock_1_2", "e_canadianhemlock_1_3",
+                                                "e_americanholly_1_0", "e_americanholly_1_1", "e_americanholly_1_2", "e_americanholly_1_3",
+                                                "e_virginiapine_1_0", "e_virginiapine_1_1", "e_virginiapine_1_2", "e_virginiapine_1_3",}
+                                local hasOnlyBlendsOrEmpty = true
+                                for i = 0, sq:getObjects():size() - 1 do
+                                    local object = sq:getObjects():get(i)
+                                    if object and instanceof(object, "IsoObject") then
+                                        if string.find(object:getTextureName(), "^blends_natural_01") ~= 1 then
+                                            hasOnlyBlendsOrEmpty = false
+                                            break
+                                        end
+                                    end
+                                end
+                                if hasOnlyBlendsOrEmpty then -- Если клетка подходит, случайным образом размещаем на ней тайл
+                                    local chanse = ZombRand(1,10)
+                                    if chanse >= 7 then -- % заполения тайлами 5 - 50%
+                                        local tileName = tileSet[ZombRand(1, #tileSet + 1)] -- Выбираем случайный тайл из списка                                    
+                                        self:addTileToSquare(tileName, sq) -- Функция для добавления тайла на клетку
+                                    end
+                                end
+                            -- elseif self.itemType:isSelected(8) then --Если очистка от снего
                             --     for i = sq:getObjects():size() - 1, 0 , -1 do
                             --         local Cell = sq:getCell()
                             --         --print("Floor: ", sq:getCell():gridSquareIsSnow(x,y,z))
@@ -197,6 +241,20 @@ function RemoverItemAndBuildsTool:onClick(button)
         self:destroy();
         return;
     end
+end
+
+function RemoverItemAndBuildsTool:addTileToSquare(tileName, square)
+    -- Создаем новый IsoObject с использованием спрайта, имя которого указано в tileName
+    local object = IsoObject.new(square:getCell(), square, tileName)
+
+    -- Добавляем объект на клетку
+    square:AddTileObject(object)
+    object:transmitCompleteItemToServer()
+    -- square:RecalcProperties()
+    -- square:InvalidateIsoObjects()
+    -- Обновляем данные о клетке, если это необходимо
+    -- square:RecalcAllWithNeighbours()
+    -- square:RecalcProperties() -- если нужно пересчитать свойства клетки
 end
 
 function RemoverItemAndBuildsTool:titleBarHeight()

@@ -1,5 +1,7 @@
 IGUI_RU =
 {
+	IGUI_AddRandomTrees = "«аполнение деревь€ми (свободные клетки)",
+	IGUI_AddRandomGrass = "«аполнение травой (свободные клетки)",
 	IGUI_Too_much_pain_to_use = "Ќевыносима€ боль, не могу использовать",
 	IGUI_Too_heavy_to_use = "—лишком т€желый дл€ использовани€",
 	IGUI_Too_exhausted_to_use = "—лишком устал, чтобы использовать",

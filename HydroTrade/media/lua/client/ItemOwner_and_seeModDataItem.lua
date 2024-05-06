@@ -1,5 +1,13 @@
 if not isClient() then return end
 
+local function setTime (item)
+    if isAdmin() then return; end
+    local time = item:getModData()["TimeUsed"]
+    local currentTime = getWorld():getWorldAgeDays()
+    if time == currentTime then return; end
+    item:getModData()["TimeUsed"] = getWorld():getWorldAgeDays()
+end
+
 local function setOwner(item)
     if isAdmin() then return; end
     local owner = item:getModData()["Owner"]
@@ -11,10 +19,11 @@ end
 local function checkContainer(item)
     if isAdmin() then return; end
     -- print(item:getModData()["Owner"])
-    if item:getModData()["Owner"] == getOnlineUsername() then return; end    
+    if item:getModData()["Owner"] == getOnlineUsername() then return; end
     local container = item:getContainer()
     if container and container:isInCharacterInventory(getPlayer()) then
-        setOwner(item)
+        setOwner(item) --Установка владельца
+        setTime (item) --Установка времени использования
     end
 end
 
@@ -34,9 +43,6 @@ function ISToolTipInv:render()
     if (not ISContextMenu.instance or not ISContextMenu.instance.visibleCheck) then
         local item = self.item
         checkContainer(item)
-        -- if isAdmin() then
-        --     self.item:setTooltip(tooltipInfo(item))
-        -- end
     end
     oldRender(self)
 end
@@ -44,12 +50,14 @@ end
 local oldPerfom = ISInventoryTransferAction.perform
 function ISInventoryTransferAction:perform()
     setOwner(self.item)
+    setTime (self.item)
     oldPerfom(self)
 end
 
 local dropItem = ISInventoryPaneContextMenu.dropItem
 ISInventoryPaneContextMenu.dropItem = function(item, player)
     setOwner(item)
+    setTime (item)
     dropItem(item,player)
 end
 
@@ -88,6 +96,10 @@ local function onShowData(item)
     end
 end
 
+-- local function convertTimeFromNeedFormat(time)
+--     return (os.date("%H:%M:%S", time))
+-- end
+
 local function AddShowDataOption(player, context, items)
     if not isAdmin() then return; end
     -- for key, value in pairs(items[1]) do
@@ -97,13 +109,32 @@ local function AddShowDataOption(player, context, items)
     --         end
     --     end
     -- end
+    local CurrentTime = getWorld():getWorldAgeDays() -- Получаем текущее игровое время в днях
     for i, item in ipairs(items) do
         if item and item.items and item.items[1] and item.items[1]:hasModData() then
             local owner = ""
+            local Time = ""
             if item.items[1]:getModData() and item.items[1]:getModData()["Owner"] then
                 owner = " ["..item.items[1]:getModData()["Owner"] .."]"
             end
-            context:addOption(getText("IGUI_Show_Data_Item")..": "..item.items[1]:getDisplayName() .. owner, player, function() onShowData(item) end)
+            if item.items[1]:getModData() and item.items[1]:getModData()["TimeUsed"] then
+                local timeUsed = item.items[1]:getModData()["TimeUsed"] -- Получаем игровое время в днях, когда предмет был использован                
+                local timeDifferenceInDays = CurrentTime - timeUsed -- Вычисляем разницу в игровых днях между текущим временем и временем использования предмета
+                local timeDifferenceInGameHours = timeDifferenceInDays * 24
+                local totalRealMinutes = timeDifferenceInGameHours * 60 / 8  -- Преобразуем в минуты сразу, для удобства расчета
+                local days = math.floor(totalRealMinutes / (24 * 60))
+                local hours = math.floor((totalRealMinutes % (24 * 60)) / 60)
+                local minutes = math.floor(totalRealMinutes % 60)
+                if days > 0 then
+                    Time = string.format("%d day%s", days, days == 1 and "" or "s") -- Добавляем "s" к слову "day", если дней больше одного
+                end
+                if hours > 0 then
+                    Time = Time .. string.format(" %d hour%s", hours, hours == 1 and "" or "s")
+                end
+                Time = Time .. string.format(" %d min ago", minutes) -- Форматирование для часов и минут (минуты с ведущим нулем)
+                Time = " [" .. Time .. "]"
+            end
+            context:addOption(getText("IGUI_Show_Data_Item")..": "..item.items[1]:getDisplayName() .. owner .. Time , player, function() onShowData(item) end)
         end
     end
 end
