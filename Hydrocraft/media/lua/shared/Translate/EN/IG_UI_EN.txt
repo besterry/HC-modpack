@@ -1,5 +1,5 @@
 IGUI_EN = {
-
+	IGUI_BeehiveEmpty = "Beehive empty",
 	IGUI_This_is_too_difficult = "This is too difficult!",
 	IGUI_I_bagged_one = "I bagged one!",
 	IGUI_Darn_it_got_away = "Darn, it got away!",

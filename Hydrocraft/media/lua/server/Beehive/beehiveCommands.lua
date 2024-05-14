@@ -18,7 +18,7 @@ end
 
 function Commands.harvest(player, args)
     local beehive = getBeehiveAt(args.x, args.y, args.z)
-    print('beehive harvest called')
+    -- print('beehive harvest called')
     if beehive and beehive:canHarvest() then
         beehive:harvest(beehive, player)
     else
@@ -28,7 +28,7 @@ end
 
 function Commands.syncAll(player, args)
     local beehive = getBeehiveAt(args.x, args.y, args.z)
-    print('beehive syncAll called')
+    -- print('beehive syncAll called')
     if beehive then
         beehive:syncAll()
     else
@@ -38,7 +38,7 @@ end
 
 function Commands.addPollen(player, args)
     local beehive = getBeehiveAt(args.x, args.y, args.z)
-    print('beehive addPollen called')
+    -- print('beehive addPollen called')
     if beehive then
         beehive:addPollen(beehive, player)
     else

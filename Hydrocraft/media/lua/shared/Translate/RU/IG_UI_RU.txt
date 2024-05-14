@@ -1,4 +1,5 @@
 IGUI_RU = {
+	IGUI_BeehiveEmpty = "Кажется пчелы покинули улей",
 	IGUI_I_found_seeds = "Нашел семена",
 	IGUI_Nothing_seeds = "Ничего...",
 	IGUI_Ouch_that_burns = "Ой, горячо!",

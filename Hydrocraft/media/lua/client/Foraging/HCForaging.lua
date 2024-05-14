@@ -6,7 +6,46 @@ local _player = nil
 --local readTreeGuide = false
 
 local FLOWERS = {
-	"Hydrocraft.HCBleedingheart", "Hydrocraft.HCTetterwort", "Hydrocraft.HCMazus", "Hydrocraft.HCCamellia", "Hydrocraft.HCMorningglory", "Hydrocraft.HCStrelitzia", "Hydrocraft.HCColumbine", "Hydrocraft.HCCinquefoils","Hydrocraft.HCChrysanthemum", "Hydrocraft.HCSunflower", "Hydrocraft.HCRhododendron", "Hydrocraft.HCCalily","Hydrocraft.HCMagnolia","Hydrocraft.HCCarnation", "Hydrocraft.HCBluedaisy", "Hydrocraft.HCAnemome", "Hydrocraft.HCDaffodil","Hydrocraft.HCTulip", "Hydrocraft.HCPansy", "Hydrocraft.HCDaisy", "Hydrocraft.HCIris", "Hydrocraft.HCWolfsbane","Hydrocraft.HCMandrake", "Hydrocraft.HCBelladonna", "Hydrocraft.HCValerian", "Hydrocraft.HCCamomile", "Hydrocraft.HCLavender","Hydrocraft.HCSpeedwell", "Hydrocraft.HCDogwood", "Hydrocraft.HCChicory", "Hydrocraft.HCKvann", "Hydrocraft.HCHolly","Hydrocraft.HCJutestems", "Hydrocraft.HCThistle", "Base.Violets", "Hydrocraft.HCRosebud", "Hydrocraft.HCFlaxflower", "Hydrocraft.HCFlax", "Hydrocraft.HCClover", "Hydrocraft.HCNettles", "Hydrocraft.HCBirchcatkin"
+	"Hydrocraft.HCBleedingheart", --Кровоточащее сердце
+	"Hydrocraft.HCTetterwort", --Чистотел
+	"Hydrocraft.HCMazus",  --Мазус
+	"Hydrocraft.HCCamellia", --Камелия
+	"Hydrocraft.HCMorningglory", --Ипомея
+	"Hydrocraft.HCStrelitzia", --Стрелиция
+	"Hydrocraft.HCColumbine", --Колумбайн
+	"Hydrocraft.HCCinquefoils", -- Лапчатка
+	"Hydrocraft.HCChrysanthemum", --Хризантема
+	"Hydrocraft.HCSunflower", --Подсолнечник
+	"Hydrocraft.HCRhododendron", --Рододендрон
+	"Hydrocraft.HCCalily", --Калла
+	"Hydrocraft.HCMagnolia", --Магнолия
+	"Hydrocraft.HCCarnation", --Гвоздика
+	"Hydrocraft.HCBluedaisy", --Синяя маргаритка
+	"Hydrocraft.HCAnemome", --Анемон
+	"Hydrocraft.HCDaffodil", --Нарцисс
+	"Hydrocraft.HCTulip", --Тюльпан
+	"Hydrocraft.HCPansy", --Анютины глазки
+	"Hydrocraft.HCDaisy", --Маргаритка
+	"Hydrocraft.HCIris", -- Ирис
+	"Hydrocraft.HCWolfsbane",--Аконит (Борец)
+	"Hydrocraft.HCMandrake",--Корень мандрагоны
+	"Hydrocraft.HCBelladonna", --Белладонна
+	"Hydrocraft.HCValerian", 
+	"Hydrocraft.HCCamomile", 
+	"Hydrocraft.HCLavender",
+	"Hydrocraft.HCSpeedwell", 
+	"Hydrocraft.HCDogwood", 
+	"Hydrocraft.HCChicory", 
+	"Hydrocraft.HCKvann", 
+	"Hydrocraft.HCHolly",
+	"Hydrocraft.HCJutestems", 
+	"Hydrocraft.HCThistle", 
+	"Base.Violets", 
+	"Hydrocraft.HCRosebud", 
+	"Hydrocraft.HCFlaxflower", 
+	"Hydrocraft.HCFlax", 
+	"Hydrocraft.HCClover", 
+	"Hydrocraft.HCNettles"
 }
 
 local NUTS = {
@@ -18,7 +57,7 @@ local BARK = {
 }
 
 local LEAVES = {
-	"Hydrocraft.HCHickoryleaves", "Hydrocraft.HCOakleaves", "Hydrocraft.HCMapleleaf", "Hydrocraft.HCFern", "Hydrocraft.HCFiddleheadfern", "Hydrocraft.HCMulberryleaf"
+	"Hydrocraft.HCHickoryleaves", "Hydrocraft.HCOakleaves", "Hydrocraft.HCMapleleaf", "Hydrocraft.HCFern", "Hydrocraft.HCFiddleheadfern", "Hydrocraft.HCMulberryleaf","Hydrocraft.HCBirchcatkin"
 }
 
 --lazy randomness

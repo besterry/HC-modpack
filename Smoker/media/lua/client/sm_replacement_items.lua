@@ -293,6 +293,7 @@ function Eat_Nicorette()
 			counter = 0
 			DATAPlayer.OnEat_Nicorette = false;
 			DATAPlayer.OnEat_Nicorette_Time = 0;
+			player:Say(getText("IGUI_IWantToSmoke"));
 		end
 	end
 end

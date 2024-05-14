@@ -22,15 +22,21 @@ ISBeehiveMenu.doBeehiveMenus = function(_player, _context, _worldObjects)
 
     -- test for new beehive in square
     beehive_lua = nil
-    for i,v in ipairs(worldobjects) do
-        if CBeehiveSystem.instance:isValidIsoObject(v) then
+    for i,v in ipairs(worldobjects) do        
+        if CBeehiveSystem.instance:isValidIsoObject(v) then            
+            -- print("beehive_lua check:",CBeehiveSystem.instance:getLuaObjectOnSquare(v:getSquare()))
             beehive_lua = CBeehiveSystem.instance:getLuaObjectOnSquare(v:getSquare())
-            local args = { x = beehive_lua.x, y = beehive_lua.y, z = beehive_lua.z}
-            local playerObj = getSpecificPlayer(0)
-            sendClientCommand(playerObj, 'Beehive','syncAll', args)
+            if beehive_lua then
+                local args = { x = beehive_lua.x, y = beehive_lua.y, z = beehive_lua.z}
+                local playerObj = getSpecificPlayer(0)
+                sendClientCommand(playerObj, 'Beehive','syncAll', args)
+            else
+                getPlayer():Say(getText("IGUI_BeehiveEmpty"))
+            end
         end
     end
 
+    -- print("beehive_lua:",beehive_lua)
     if beehive_lua then
         local HcMenuOption = context:addOption(getText('ContextMenu_beehive'), worldobjects);
         HcbeeSubMenu = ISContextMenu:getNew(context);

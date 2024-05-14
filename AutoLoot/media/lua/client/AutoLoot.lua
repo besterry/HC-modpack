@@ -54,7 +54,7 @@ Events.EveryTenMinutes.Add(calculateTime)
 -- end
 -- Events.OnGameStart.Add(GetTimeActivateAutoLootForcalculateTime)
 
-function GetTimeActivateAutoLootForcalculateTime() --Получение времени покупки
+function GetTimeActivateAutoLootForcalculateTime() --Получение времени покупки при заходе игрока
     local player = getPlayer()
     if not player then return end
     --print("GETPLAYER:",player)

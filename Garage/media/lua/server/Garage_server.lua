@@ -60,7 +60,7 @@ commands.getCar = function(player, args) --Получение автомобил
         local cell = getCell()
         local x, y = tonumber(spawnX + 1), tonumber(geoY)
         local sq = cell:getGridSquare(x, y, 0)
-        local newVehicle = addVehicleDebug(car.scriptName, car.dir, car.skinIdx, sq)
+        local newVehicle = addVehicleDebug(car.vehicleFullName, car.dir, car.skinIdx, sq) --используется vehicleFullName вместо scriptName (в scriptName запист car, а в vehicleFullName Base.car)
         Garage.setVehicleData(newVehicle, car, sq, player)
         local newSqlID = newVehicle:getSqlId()
         local msg = player:getUsername() .. " GET car " .. car.scriptName ..

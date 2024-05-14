@@ -25,6 +25,21 @@ end
 
 CGlobalObjectSystem.RegisterSystemClass(CBeehiveSystem)
 
+-- Попытки исправления
+
+-- function CBeehiveSystem:getLuaObjectOnSquare(square)
+-- 	if not square then return nil end
+--     print(square:getX(),",", square:getY(),",", square:getZ())
+-- 	return self:getLuaObjectAt(square:getX(), square:getY(), square:getZ())
+-- end
+
+-- function CBeehiveSystem:getLuaObjectAt(x, y, z)
+-- 	local globalObject = CBeehiveSystem.instance:getObjectAt(x, y, z)
+--     print("globalObject:",globalObject)
+-- 	return globalObject and globalObject:getModData() or nil
+-- end
+
+-- Попытки исправления
 
 local function DoSpecialTooltip(tooltipUI, square)
 

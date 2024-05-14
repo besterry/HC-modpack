@@ -26,7 +26,7 @@ local function parseSeatAnimationSelection(input)
 			local selection = parsedWeightedInput[ZombRand(#parsedWeightedInput)+1]
 			return selection
 		else
-			print("SC_ANIM: DEBUG ERROR: parsedWeightedInput not populated. (input:"..tostring(input)..")")
+			-- print("SC_ANIM: DEBUG ERROR: parsedWeightedInput not populated. (input:"..tostring(input)..")")
 		end
 	else
 		return input
@@ -68,10 +68,10 @@ local function Vehicle_Enter(player)
     if not vehicle then return end
 
     local vehicleName = vehicle:getScriptName()
-    print("SC_ANIM: DEBUG: "..vehicleName)
+    -- print("SC_ANIM: DEBUG: "..vehicleName)
 
     local seat = vehicle:getSeat(player)
-    print(" -- Seat: "..seat)
+    -- print(" -- Seat: "..seat)
     if not seat then return end
 
     local vehicleAnimation = vehicleToSeatAnimations[vehicleName]
@@ -79,7 +79,7 @@ local function Vehicle_Enter(player)
 
     local fetchedAnimation = vehicleAnimation["seat"..seat] or vehicleAnimation["passenger"]
     fetchedAnimation = parseSeatAnimationSelection(fetchedAnimation)
-    print(" ---- Anim Selected: "..fetchedAnimation)
+    -- print(" ---- Anim Selected: "..fetchedAnimation)
 
     if fetchedAnimation then
         player:SetVariable("VehicleScriptName", fetchedAnimation)
