@@ -3271,5 +3271,5 @@ local electrician_counter_items = {
 }
 insertItemListsInProcDistribution( "CrateElectronics", { electrician_counter_items } );
 
-print (">>alive");
+-- print (">>alive");
 -- distributioncsv();

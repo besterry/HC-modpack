@@ -443,7 +443,7 @@ item HCArmarmorcopper
         Type    		= Normal,
         DisplayName         	= Copper Arm Guards,
         icon 			= HCArmarmorcopper,
-	Tooltip 		= Tooltip_HCArmor,
+		Tooltip 		= Tooltip_HCArmor,
 		DisplayCategory          =   ClothP,
     	}
 

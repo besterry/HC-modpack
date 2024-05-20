@@ -1,0 +1,6 @@
+ContextMenu_EN =
+{
+    ContextMenu_UseGarage = "Garage",
+    ContextMenu_DeleteGarage = "Remove",
+    ContextMenu_ChangeGarageSideTooltip = "Change side",
+}

@@ -1,3 +1,9 @@
 Tooltip_EN = {
 	Tooltip_MaxSize = "Maximum size",
+	Tooltip_Need_Car = "Drive the car to the marker to park it or get the car from the garage",
+	Tooltip_DeleteGarage = "The garage is not empty, destruction is only available for empty garages",
+	Tooltip_ChangeGarageSideTooltip = "Changing the side allows you to select the point of delivery and receipt of transport. 2 points available: +3 cells to the south or east",
+	Tooltip_ChangeGarageCheckBox_TT = "Available through the garage menu (installed), changing the side allows you to select the point of delivery and receipt of transport. 2 points available: +3 cells to the south or east",
+	Tooltip_DeleteGarageCheckBox_TT = "Only an empty garage can be deleted. RMB on a garage - Destroy garage",
+	Tooltip_SetGarageCheckBox_TT = "Activation and installation is possible only in the shelter, by the owner. RMB on a cell in the shelter - Place a garage. Interaction with the garage is available within a radius of 6 cells",
 }

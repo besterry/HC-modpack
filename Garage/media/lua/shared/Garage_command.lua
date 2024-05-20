@@ -16,8 +16,8 @@ Garage.setVehicleData = function (vehicle,data,sq,player) --Восстановл
     vehicle:setBloodIntensity("Right", bRight)
     vehicle:setBloodIntensity("Rear", bRear)
     vehicle:setBloodIntensity("Left", bLeft)
-    vehicle:transmitBlood()
-    vehicle:setKeyId(data.keyid)
+    vehicle:transmitBlood() --Установка загрязнения
+    vehicle:setKeyId(data.keyid) --Установка старого id ключей, что бы ключи подходили
     --Моддата: частичное восстановление--
     vehicle:getModData().register = data.modData.register
     vehicle:getModData().sqlId = vehicle:getSqlId()
@@ -25,12 +25,13 @@ Garage.setVehicleData = function (vehicle,data,sq,player) --Восстановл
     if data.modData.Confidant then vehicle:getModData().Confidant = data.modData.Confidant end
     vehicle:transmitModData()
     --Моддата--
-    if data.isKeysInIgnition then
+    if data.isKeysInIgnition then --Если ключ установлен в замок зажигания
         vehicle:setKeysInIgnition(data.isKeysInIgnition)
         local key = vehicle:createVehicleKey()
         vehicle:putKeyInIgnition(key)
     else 
-        vehicle:setKeysInIgnition(data.isKeysInIgnition)
+        -- vehicle:setKeysInIgnition(false)
+        vehicle:removeKeyFromIgnition()
     end
     if not data.isKeysInIgnition and data.isHotwired then
         vehicle:setHotwired(data.isHotwired)
@@ -79,12 +80,6 @@ Garage.setVehicleData = function (vehicle,data,sq,player) --Восстановл
                         vehicle:transmitPartDoor(part)
                     end
                 end
-                local container = part:getItemContainer()--Очистка контейнеров
-                if container then
-                    if container:getItems():size() ~= 0 then
-                        container:removeAllItems()
-                    end
-                end
                 if partData.condition then --Сохраняем состояние
                     part:setCondition(partData.condition)
                     vehicle:transmitPartCondition(part)
@@ -95,6 +90,12 @@ Garage.setVehicleData = function (vehicle,data,sq,player) --Восстановл
             else --Если деталь была демонтирована
                 part:setInventoryItem(nil)
                 vehicle:transmitPartItem(part)
+            end
+        end
+        local container = part:getItemContainer()--Очистка контейнеров
+        if container then
+            if container:getItems():size() ~= 0 then
+                container:removeAllItems()
             end
         end
     end

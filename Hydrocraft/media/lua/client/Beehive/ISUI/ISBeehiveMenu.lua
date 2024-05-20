@@ -22,6 +22,7 @@ ISBeehiveMenu.doBeehiveMenus = function(_player, _context, _worldObjects)
 
     -- test for new beehive in square
     beehive_lua = nil
+    local messageCount = 0
     for i,v in ipairs(worldobjects) do        
         if CBeehiveSystem.instance:isValidIsoObject(v) then            
             -- print("beehive_lua check:",CBeehiveSystem.instance:getLuaObjectOnSquare(v:getSquare()))
@@ -31,7 +32,10 @@ ISBeehiveMenu.doBeehiveMenus = function(_player, _context, _worldObjects)
                 local playerObj = getSpecificPlayer(0)
                 sendClientCommand(playerObj, 'Beehive','syncAll', args)
             else
-                getPlayer():Say(getText("IGUI_BeehiveEmpty"))
+                if messageCount == 0 then
+                    getPlayer():Say(getText("IGUI_BeehiveEmpty"))
+                    messageCount = messageCount + 1
+                end
             end
         end
     end

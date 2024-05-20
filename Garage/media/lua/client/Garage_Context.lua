@@ -30,16 +30,18 @@ local function seekShopTiles(worldobject, spritePrefix) --Функция пои�
     local found = false
     local sprite = wo:getSprite()
     local spriteName = sprite:getName()
-    if spriteName and string.find(spriteName, spritePrefix) then
+    if spriteName == spritePrefix then --and string.find(spriteName, spritePrefix)
         found = true
     end
     return wo, found, spriteName, sprite
 end
 
 local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранение ТС (отправка в гараж)
+    getPlayer():StopAllActionQueue() --Остановить выполнение всех действий characters/ILuaGameCharacter
+    local vehicleZone = CheckCar(worldobjecs[1]:getModData().spawnX, worldobjecs[1]:getModData().spawnY) --Проверка что игрок не отъехал за зону
     local checkContainersCar = false
     local player = getPlayer()
-    if vehicle then
+    if vehicle then --Проверка что автомобиль пустой
         for i = 0, vehicle:getPartCount() - 1 do
             local part = vehicle:getPartByIndex(i)
             local container = part:getItemContainer() --Очистка контейнеров
@@ -53,7 +55,7 @@ local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранен�
         end
         checkContainersCar = true
     end
-    if vehicle and checkContainersCar then        
+    if vehicle and checkContainersCar and vehicle==vehicleZone then
         local player = getPlayer()
         vehicle:exit(player)
         triggerEvent("OnExitVehicle", player)
@@ -70,7 +72,8 @@ local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранен�
 end
 
 local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE: Восстановление ТС (получение)
-    if not vehicle then
+    local vehicleZone = CheckCar(spawnX, geoY)
+    if not vehicle and not vehicleZone then
         local player = getPlayer()
         local modDataGarage = worldobjecs[1]:getModData()["Garage"]
         local owner = worldobjecs[1]:getModData()["GarageOwner"]
@@ -78,7 +81,7 @@ local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE:
         for i, vehicleData in ipairs(modDataGarage) do
             if vehicleData.oldSqlid == v.oldSqlid and vehicleData.vehicleFullName == v.vehicleFullName then
                 car = vehicleData
-                table.remove(modDataGarage, i) -- Удаление подтаблицы из modDataUser
+                table.remove(modDataGarage, i) -- Удаление подтаблицы автомобиля из гаража
                 worldobjecs[1]:transmitModData()
                 break
             end
@@ -111,7 +114,7 @@ local function removeSpawnSprite(x, y, spriteName,modData)
 end
 
 local function addSpawnSprite(x, y, spriteName)
-    local square = getCell():getGridSquare(x, y, 0) -- Здесь 0 предполагается как Z-координата, корректируйте по необходимости
+    local square = getCell():getGridSquare(x, y, 0) -- Всегда на 0 этаже
     if square then        
         local objects = square:getObjects()-- Проверяем, не содержит ли клетка уже этот спрайт
         for i = 0, objects:size() - 1 do
@@ -135,7 +138,7 @@ local function deleteSpawnSprite(worldobject) --Удаление люка при
 end
 
 
-local function change(worldobject)
+local function change(worldobject) --Смена стороны спавна
     local GarageX = worldobject[1]:getX()
     local GarageY = worldobject[1]:getY()
     if GarageX ~= worldobject[1]:getModData().spawnX or GarageY + 3 ~= worldobject[1]:getModData().spawnY then --Если Х+3
@@ -180,8 +183,9 @@ local function checkSafeHouse()
 end
 
 local function chekUserSafeHouse() --Проверка на участника убежища
+    if isAdmin() then return true end --Админ имеет доступ к гаражам
     local player = getPlayer()
-    local square = player:getCurrentSquare()       -- Получаем текущую клетку игрока.
+    local square = player:getCurrentSquare()       -- Получаем текущую клетку игрока.    
     if not square then return false end
     local safehouse = SafeHouse.getSafeHouse(square) -- Получаем объект убежища для текущей клетки.    
     if safehouse then
@@ -198,7 +202,7 @@ local function chekUserSafeHouse() --Проверка на участника у
 end
 
 local function GarageContextMenu(playerNum, context, worldobjects)
-    local wo, found, spriteName, sprite = seekShopTiles(worldobjects[1], "garage")
+    local wo, found, spriteName, sprite = seekShopTiles(worldobjects[1], "garage_0")
     local checkSH
     if found then checkSH = chekUserSafeHouse() end
     if found and SandboxVars.NPC.Garage and checkSH then
@@ -210,7 +214,8 @@ local function GarageContextMenu(playerNum, context, worldobjects)
         local playerX = player:getX()
         local playerY = player:getY()
         local vehicle = CheckCar(spawnCoordX, spawnCoordY)
-        if geoX > playerX - 6 and geoX < playerX + 6 and geoY > playerY - 6 and geoY < playerY + 6 then
+        local distace = SandboxVars.NPC.GarageDistance
+        if geoX > (playerX - distace) and geoX < (playerX + distace) and geoY > (playerY - distace) and geoY < (playerY + distace) then
             local garageOption = context:addOption(getText("IGUI_Garage"), worldobjects, nil) --Гараж
 
             local subMenu = context:getNew(context)

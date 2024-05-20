@@ -1,0 +1,6 @@
+Sandbox_EN = {
+    Sandbox_GarageActivate = "Personal Garage",
+    Sandbox_GarageActivate_tooltip  = "Activate Garage options",
+	Sandbox_GarageDistance = "Garage interaction distance",
+	Sandbox_GarageDistance_tooltip = "The distance in tiles at which a player can interact with their garage",
+}

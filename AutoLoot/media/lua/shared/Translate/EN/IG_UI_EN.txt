@@ -1,5 +1,6 @@
 IGUI_EN = {
 	IGUI_Bag_is_full = "Bag is full",
+	IGUI_Bag_UnEquipped = "Bag removed, switched to main inventory",
 	IGUI_No_Bag_Equipped = "No bags equipped",
 	IGUI_AutoLoot = "AutoLoot",
 	IGUI_InventoryBag = "Select bag",
@@ -15,7 +16,17 @@ IGUI_EN = {
 	IGUI_WeaponPart = "Weapon Parts",
 	IGUI_Cloth = "Clothes",
 	IGUI_TimeLeftActivate = "Active:"
-	IGUI_Hour = "h.",
-	IGUI_Minute = "min.",
-	IGUI_Second = "sec.",
+	IGUI_Day = "d",
+	IGUI_Hour = "h",
+	IGUI_Minute = "m",
+	IGUI_Second = "from",
+	IGUI_Buy = "Buy",
+	IGUI_BuyInfo = "Subscription ",
+	IGUI_BuyInfoDay = " day: ",
+	IGUI_IGAutoLootAdminPanel = "List of players with an active AutoCollection subscription",
+	IGUI_ActivateMessage = "Notification",
+	IGUI_AutolootActivate = "Autoloot activated!",
+	IGUI_AutolootDeActivate = "Auto-collection is disabled!",
+	IGUI_AutolootMessageActivate = "Showing collected items is enabled",
+	IGUI_AutolootMessageDeActivate = "Showing collected items is disabled",
 }

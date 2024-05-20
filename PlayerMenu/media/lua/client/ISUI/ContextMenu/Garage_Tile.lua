@@ -1,39 +1,9 @@
 PM = PM or {} -- Глобальный контейнер PlayerMenu
 PM.EditGarage = PM.EditGarage or false
 
--- require "BuildingObjects/ISBuildingObject"
--- ISGarage = ISBuildingObject:derive("ISGarage");
-
--- -- Функция для создания гаража.
--- function ISGarage:create(x, y, z, north, sprite)
---     local cell = getWorld():getCell();
---     self.sq = cell:getGridSquare(x, y, z);
---     self.javaObject = IsoThumpable.new(cell, self.sq, sprite, north, self);
---     self.javaObject:setName("Garage");
---     self.sq:AddSpecialObject(self.javaObject);
---     self.javaObject:transmitCompleteItemToServer();
---     PM.EditGarage = false
--- end
-
--- -- Функция возвращает новый объект гаража.
--- function ISGarage:new(name, character, sprite, northSprite)
---     local o = {};
---     setmetatable(o, self);
---     self.__index = self;
---     o:init();
---     o:setSprite(sprite);
---     o.character = character;
---     o:setNorthSprite(northSprite);
---     -- Остальные свойства объекта, например:
---     -- o.noNeedHammer = true;
---     -- o.blockAllTheSquare = true;
---     -- o.canBeAlwaysPlaced = true;
---     o.name = name;
---     return o;
--- end
 local function addGarageSprite(x, y)
     local square = getCell():getGridSquare(x, y, 0) -- Здесь 0 предполагается как Z-координата, корректируйте по необходимости
-    local spriteName = "garage_0"
+    local spriteName = "garage_0" --garage_0
     if square then
         -- Проверяем, не содержит ли клетка уже этот спрайт
         local objects = square:getObjects()
@@ -50,12 +20,17 @@ local function addGarageSprite(x, y)
         square:AddTileObject(newSprite)
         -- Синхронизируем объект с сервером
         newSprite:transmitCompleteItemToServer()
-        PM.EditGarage = false        
+        PM.EditGarage = false
         newSprite:getModData()["GarageOwner"] = getPlayer():getUsername()
         newSprite:transmitModData()
 
         sendClientCommand(getPlayer(), "Garage", "GarageLog", {x, y, "add", newSprite:getModData()})
     end
+    -- if square then
+    --     local cursor = BrushGarageTile:new(spriteName, spriteName, getPlayer())
+    --     getCell():setDrag(cursor, 0)
+    --     sendClientCommand(getPlayer(), "Garage", "GarageLog", {x, y, "add", newSpsarite:getModData()})
+    -- end
 end
 
 local function hasGarageSpriteInSafehouse(player, spriteName) --Проверка есть ли тайл гаража в убежище

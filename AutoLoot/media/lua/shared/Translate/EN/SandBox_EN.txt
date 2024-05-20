@@ -1,0 +1,6 @@
+Sandbox_EN = {
+   Sandbox_AutoLoot = "Autoloot",
+	Sandbox_AutoLoot_PriceAutoLoot = "AutoLoot price",
+	Sandbox_AutoLoot_DurabilityAutoLoot = "AutoLoot activation time in days",
+	Sandbox_AutoLoot_Buy = "Buy",
+}

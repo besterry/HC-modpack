@@ -1,0 +1,220 @@
+SurvivalGuide_EN = {
+	SurvivalGuide_WindowTitle = "Server Information",
+
+	SurvivalGuide_entrie1title = "#1 - Server Rules",
+	SurvivalGuide_entrie1txt = "<CENTRE> "<SIZE:large> #2 - Rules <LINE> <IMAGECENTRE:media/ui/spiffoJudge.png> <LINE>" ..
+	"<SIZE:medium> Not knowing the rules, <LINE> does not relieve you of responsibility!",
+	SurvivalGuide_entrie1moreinfo = "<H1> Server Rules <BR> " ..
+	"<TEXT><RGB:1.0,0.01,0.24><SIZE:large> 1. General rules <BR><RGB:1.0,1.0,1.0><SIZE:medium>"..
+	"<SIZE:medium><RGB:1.0,1.0,1.0> 1.1. Swearing is acceptable in small quantities, abuse of obscene language is prohibited. <BR>" ..
+	"1.2. Disputes on political topics are prohibited. <BR>"..
+	"1.3. It is prohibited to impersonate another person, including the server administration. <BR>" ..
+	"1.4. Distribution of pornography and other NSFW content is prohibited. <BR>" ..
+	"1.5. Inciting ethnic hatred, threats of violence in real life, discrimination on religious or other grounds and propaganda of Nazism are prohibited. <BR>" ..
+	"1.6. Advertising and spam in any form are prohibited. <BR>" ..
+	"1.7. The use of a server mod pack for implementation on another server, as well as transfer to third parties is prohibited. <BR><LINE>" ..
+	"<RGB:1.0,0.01,0.24><SIZE:large> 2. PVP Rules <RGB:1.0,1.0,1.0><BR>" ..
+	"2.1. It is prohibited to block exits from safe zones. (All bridges leading from PVE zones). <BR>" ..
+	"2.2. It is prohibited to set up ambushes in the immediate vicinity of the bridges of the trade zone (the distance from the bridge is at least 500 cells) <BR>" ..
+	" <IMAGE:media/ui/maps.png> <LINE><LINE>" ..
+	"<TEXT><SIZE:medium><RGB:1.0,1.0,1.0> 3.1. Use of cheats and bugs of the game. Discussion, dissemination of information on their use, encouraging other players to do so. <BR>" ..
+	"3.2. Penetration into other people's private spaces. (pushing out vehicles is not prohibited, with the exception of clause 3.3) <BR>" ..
+	"3.3. Theft of vehicles from the territory of the trading zone, from private parties located on the territory of the PVE community. <BR>" ..
+	"3.4. Bypassing restrictions on the number of characters per account on Steam and creating additional Steam accounts to benefit. <BR>" ..
+	"3.5. Use of third-party programs, scripts. <BR>" ..
+	"3.6. Playing in Split Screen mode with two people on one Steam account. <BR>" ..
+	"3.7. Sale of game items for real money or other non-game funds. (RMT) <BR>" ..
+	"3.8. Robbery, damage to property in any way on the territory of the trading zone. <BR>" ..
+	"3.9. Massive or regular damage to loot spawn points, leading to deterioration of the gameplay. <BR>" ..
+	"3.10. Construction of roads (complete blocking of roads with obstacles without the possibility of avoiding obstacles) outside the boundaries of your private area. <BR>" ..
+	"3.11. Use provocative and offensive nicknames. <BR>" ..
+	"3.12. Disassemble/move containers in which loot can spawn (containers in stores, schools, police stations, fire stations, etc.). <BR>" ..
+	"By playing on our server, you agree that you have read these rules and agree to comply with them. <BR> You also agree that the server administration is not responsible for the loss of game progress.",
+	SurvivalGuide_entrie2title = "#2 - Trading Rules",
+SurvivalGuide_entrie2txt = "<CENTRE> <SIZE:large> #2 Trading Area Rules"..
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/traderule.png>"..
+" <LINE> <SIZE:medium> Learn the rules - don't get banned",
+SurvivalGuide_entrie2moreinfo = "<RGB:1.0,0.01,0.24><H1> Trade zone rules <LINE><LINE>"..
+" <TEXT><RGB:1.0,1.0,1.0><SPACE><SIZE:medium> Throughout the trading post <RGB:1.0,0.01,0.24><SPACE> PROHIBITED: <RGB:1.0,1.0,1.0>< SPACE><BR>" ..
+" - Break, destroy, disassemble, move, take with you any <RGB:1.0,0.75,0.0><SPACE>buildings and objects <RGB:1.0,1.0,1.0><SPACE> of the trading platform (except those purchased) <LINE> "..
+" - steal, move <RGB:1.0,0.75,0.0><SPACE>loot of other players <RGB:1.0,1.0,1.0><SPACE> from cars and trailers <LINE>" ..
+" - Scatter loot throughout the trading area and not remove it later ( <RGB:1.0,0.75,0.0><SPACE> litter <RGB:1.0,1.0,1.0><SPACE> ) <LINE>" ..
+" - Hack, disassemble, change, move <RGB:1.0,0.75,0.0><SPACE> cars and vehicles <RGB:1.0,1.0,1.0><SPACE> of other players, without their consent <LINE>" ..
+" - <RGB:1.0,0.75,0.0><SPACE> Build bases <RGB:1.0,1.0,1.0><SPACE> in the immediate vicinity of the trade zone (minimum 1000 cells from the TP bridges) <LINE>" ..
+" - Block, block and ambush <RGB:1.0,0.75,0.0><SPACE> on the bridges <RGB:1.0,1.0,1.0><SPACE> that lead to the trading post <LINE>" ..
+" - <RGB:1.0,0.75,0.0><SPACE> remove stores <RGB:1.0,1.0,1.0><SPACE> outside the market <LINE><LINE>" ..
+"<RGB:1.0,0.01,0.24><SPACE> Penalty <RGB:1.0,1.0,1.0><SPACE> for these actions: <LINE>" ..
+" 1. <RGB:1.0,0.75,0.0><SPACE> Warning <RGB:1.0,1.0,1.0><SPACE> (depending on the severity of the act) <LINE>" ..
+" 2. <RGB:1.0,0.01,0.24><SPACE> Relapse <RGB:1.0,1.0,1.0><SPACE> - access blocking ( <RGB:1.0,0.01,0.24><SPACE> ban <RGB:1.0, 1.0,1.0><SPACE> ) <LINE><LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Please pay special attention. <RGB:1.0,1.0,1.0><SPACE> <LINE>" ..
+" - Selling items to the store for $1 may cause errors, we recommend selling 1 piece <LINE>" ..
+" - When leaving your vehicle at a trading post for more than 3 days, BE SURE to leave notes with your in-game nickname in the glove compartments of your cars (bike trunks). <LINE>" ..
+" - Vehicles abandoned at the TP for 7 days will be moved to the impound lot, after 14 days - the vehicle will be deleted. <LINE>" ..
+" - The return of transport occurs by contacting the Help section by creating a Ticket. <LINE> <LINE>" ..
+"<RGB:0.0,1.0,0.0><SPACE> TRADING POST TERRITORY - PVE! <LINE><LINE>" ..
+"<RGB:0.0,0.5,1.0><SPACE> A special request to ALL players located on the territory of the trading platform: <LINE>" ..
+"<RGB:1.0,1.0,1.0><SPACE> - Be mutually <RGB:1.0,0.75,0.0><SPACE> polite <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+" - Do not litter in the territory <RGB:1.0,0.75,0.0><SPACE> <RGB:1.0,1.0,1.0><SPACE> (trash bins installed) <LINE>" ..
+" - <RGB:1.0,0.75,0.0><SPACE> Prices <RGB:1.0,1.0,1.0><SPACE> for goods are formed by players, according to their <RGB:1.0,0.75,0.0><SPACE> rarity <RGB: 1.0,1.0,1.0>. <LINE> <LINE> "..
+"Prices and products in the admin store will change periodically (buying/selling) <LINE><LINE>" ..
+"If there are not enough shops for everyone, the shopping area will be expanded.",	
+									
+									
+	SurvivalGuide_entrie3title = "#3 - Trade",
+SurvivalGuide_entrie3txt = "<CENTRE> <SIZE:large> #3 Trade - the engine of progress.".
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/trade.png>"..
+" <LINE> <SIZE:medium> Learn trade - increase your wealth",
+SurvivalGuide_entrie3moreinfo = "<H1> Trading and Trading Zone Rules <BR>"..
+"<TEXT><SIZE:medium><RGB:1.0,1.0,1.0>" ..
+"To <RGB:0.0,0.5,1.0><SPACE> start trading <RGB:1.0,1.0,1.0><SPACE> you will need the following items: <LINE>" ..
+"<RGB:1.0,0.75,0.0><SPACE> 1. Pen/pencil <LINE>" ..
+"2. Wallet (RMB -> Link) <LINE>" ..
+"3. Money (for purchases, in wallet) <LINE>" ..
+" 4. Item for sale <LINE><LINE> " ..
+"<RGB:0.0,0.5,1.0><SPACE> Crediting paper dollars to the balance <RGB:1.0,1.0,1.0><SPACE> in the store (sale section). <LINE><LINE>" ..
+"<RGB:0.0,1.0,0.0><SPACE> Installing and using a point of sale (Client -> Player Menu -> My Counter): <BR>" ..
+" <RGB:1.0,1.0,1.0><SPACE> 1. Installation of <RGB:0.0,0.5,1.0><SPACE> point of sale in the shopping center <RGB:1.0,1.0,1.0><SPACE> (select any free area ). 1.0,0.0><LINE> To install, enable installation mode <LINE>" ..
+" <LINE><IMAGECENTRE:media/ui/utemsfs.png><LINE> " ..
+"<RGB:0.0,0.5,1.0><SPACE><SIZE:medium> 2. Installing stores <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+" <SIZE:small> RMB on the ground - add player store <LINE> " ..
+" <LINE><IMAGECENTRE:media/ui/installshop.png><LINE> " ..
+"Rotate - R key (default) <LINE>" ..
+" <LINE><IMAGECENTRE:media/ui/installshoptile.png><LINE> " ..
+" <RGB:0.0,0.5,1.0><SPACE> Store control <RGB:1.0,1.0,1.0><SPACE> via right mouse button <LINE> " ..
+" <LINE><IMAGECENTRE:media/ui/controlshop.png><LINE> " ..
+"<RGB:0.0,0.5,1.0><SPACE> View store <RGB:1.0,1.0,1.0><SPACE> - an option available to all players, this is how goods are purchased in the store <LINE>" ..
+"<RGB:0.0,0.5,1.0><SPACE> Store management <RGB:1.0,1.0,1.0><SPACE> - option available to the owner: <LINE>" ..
+"<RGB:0.0,0.5,1.0><SPACE> Lock the store <RGB:1.0,1.0,1.0><SPACE> - the option prohibits any players from looking into the store as a container, while the trading interface continues to work <LINE>" . .
+"<RGB:0.0,0.5,1.0><SPACE> Change sign <RGB:1.0,1.0,1.0><SPACE> - this option allows you to change the icon on the front side of the store (not available for refrigerators) <LINE>" ..
+"<RGB:0.0,0.5,1.0><SPACE> View income <RGB:1.0,1.0,1.0><SPACE> - an option to receive money from sales of this store <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Raise magazine <RGB:1.0,1.0,1.0><SPACE> - option for removing a magazine (to inventory), while the magazine must be empty <LINE><LINE>" ..
+"<RGB:0.0,0.5,1.0><SPACE><SIZE:medium> 3. Product display: <LINE>" ..
+" <RGB:1.0,1.0,1.0><SPACE><SIZE:small>For this you will need a pen/pencil and the product. <LINE> RMB for the product - <RGB:0.0,0.5,1.0><SPACE> Set price < RGB:1.0,1.0,1.0><SPACE><LINE> " ..
+" <LINE><IMAGECENTRE:media/ui/setprice.png><LINE> " ..
+" Set a price, the price has been applied to the product. You can select several items and set the same price on them. <LINE> " ..
+" <LINE><IMAGE:media/ui/setpricecar.png> <IMAGE:media/ui/pricecar.png> <LINE><LINE> " ..
+"Moving the product to the store (container) <LINE>" ..
+" <LINE><IMAGECENTRE:media/ui/carinshop.png><LINE> " ..
+"Item is for sale <LINE><LINE>" ..
+" For all questions <RGB:0.0,0.5,1.0><SPACE> opening a retail outlet <RGB:1.0,1.0,1.0><SPACE>, contact the administration ( <RGB:0.0,0.5,1.0><SPACE> Discord - section #Help <RGB:1.0,1.0,1.0><SPACE> ) <LINE> <LINE>" ..
+,
+									
+SurvivalGuide_entrie4title = "#4 - Money",
+SurvivalGuide_entrie4txt = "<CENTRE> <SIZE:large> #4 Money is the basis of trade.".
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/money.png>"..
+" <LINE> <SIZE:medium>They say money solves all problems",
+SurvivalGuide_entrie4moreinfo = "<H1> Money <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+" Financial transactions: <LINE> For this you will need a <RGB:0.0,0.5,1.0><SPACE> wallet <RGB:1.0,1.0,1.0> , which can be found in the world or walking, and some cunning merchants are ready to sell them , but where they got them remains a question. <LINE><RGB:1.0,0.75,0.0><SPACE> For all financial transactions, the wallet must be in the main inventory (not in the backpack) <BR>" ..
+" <LINE><IMAGECENTRE:media/ui/wallet.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Having received the wallet, do not rush to open it, an open wallet will not hide money, so you can use <RGB:0.0,0.5,1.0><SPACE>only with a closed wallet < RGB:1.0,1.0,1.0><SPACE>.<LINE> Opening an account: RMB on wallet - <RGB:0.0,0.5,1.0><SPACE>Link <RGB:1.0,1.0,1.0>, after which the wallet is linked to to your character and you can make financial transactions."...
+" <LINE><LINE> <IMAGECENTRE:media/ui/linkwallet.png> <LINE><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> By pointing at the wallet, you will see the current balance and the nickname of who owns the wallet. (If the wallet falls into the hands of another player, he will only see the nickname. Balance and interactions for others players are not available). . <LINE> Tab <RGB:0.0,0.5,1.0><SPACE>Transfer <SPACE><RGB:1.0,1.0,1.0> allows you to transfer money to other players." ..
+" <LINE><LINE> <IMAGE:media/ui/unlinkwallet.png><IMAGE:media/ui/transfer.png> <LINE><LINE> " ..
+" <BR><TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Where to get money? <LINE> <RGB:0.0,0.5,1.0><SPACE> Get money <RGB:1.0,1.0,1.0 ><SPACE> can be credited to your account in several ways: <BR> 1. <RGB:0.0,0.5,1.0><SPACE> By selling goods to the store <RGB:1.0,1.0,1.0><SPACE> (for example, jewelry with zombies are very valuable merchants) <LINE> To do this, find the merchant and press <RGB:0.0,0.5,1.0><SPACE> RMB - Shop tab <LINE> " ..
+" <LINE><IMAGE:media/ui/shop.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> <RGB:0.0,0.5,1.0><SPACE> Sales tab <RGB:1.0,1.0,1.0><SPACE> and select products that you want to sell: <LINE> Items to be sold must be in <RGB:0.0,0.5,1.0><SPACE> main inventory <LINE> " ..
+" <LINE><IMAGE:media/ui/sellshop.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> To exclude an item from the sale list, add it to <RGB:1.0,0.75,0.0><SPACE> Favorites or move <RGB:1.0,1.0, 1.0><SPACE> to another container (backpack) <LINE> Money for the sale is immediately credited to the wallet account "..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> 2. Find/get <RGB:0.0,0.5,1.0><SPACE>Gold, Silver coins <RGB:1.0,1.0,1.0 ><SPACE> (coins are issued when exchanging currency with merchants) <LINE> "..
+" <LINE><IMAGECENTRE:media/ui/coins.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Credit to the account via <RGB:0.0,0.5,1.0><SPACE> right mouse button <RGB:1.0,1.0,1.0><SPACE> ( wallet must be in inventory) <LINE> "..
+" <LINE><IMAGECENTRE:media/ui/coinadd.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0>The world is built on economics.",
+									
+SurvivalGuide_entrie5title = "#5 - Map",
+SurvivalGuide_entrie5txt = "<CENTRE> <SIZE:large> #5 Map - help with orientation.".
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/maphelp.png>"..
+"<LINE> <SIZE:medium> With a map - good <LINE> With GPS - ideal",
+SurvivalGuide_entrie5moreinfo = "<H1>Orientation <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+" Today's orientation lesson: <LINE><LINE> There are 2 main ways of orientation: <RGB:0.0,0.5,1.0><SPACE> map and GPS <RGB:1.0,1.0,1.0><SPACE> <LINE><LINE> The map is most often found in libraries, bookcases <LINE><LINE> With GPS everything is a little more complicated, this is a rather rare device, found in police stations, fire stations, electronics stores, etc., you can also assemble it yourself if you have the skill allows. <LINE>" ..
+" <LINE><IMAGECENTRE:media/ui/gpsmap.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> When you find a card, pick it up and you can look <RGB:0.0,0.5,1.0><SPACE> (M key) <RGB:1.0, 1.0,1.0><SPACE> . <LINE> The map will show you the area, but will not indicate where exactly you are "..
+" <LINE><LINE> <IMAGECENTRE:media/ui/itemmap.png> <LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> If you are lucky enough to have a GPS device, then feel free to pick it up, turn it on (F key) and open the map (to open the map, just attach it to your belt) or minimap <RGB:0.0,0.5,1.0><SPACE> (on the left is the map icon, hover over it and a pop-up minimap window appears) <RGB:1.0,1.0,1.0><SPACE>. The minimap will show your exact position, and the entire map is open on GPS. card. "..
+" <LINE><LINE> <IMAGECENTRE:media/ui/minimapgps.png><LINE> " ..
+" <BR><TEXT><SIZE:medium><RGB:1.0,1.0,1.0> But not everything is so simple... <LINE> <RGB:0.0,0.5,1.0><SPACE> GPS is discharged when working <RGB :1.0,1.0,1.0><SPACE> so you need to get spare batteries or a charging cord, you can usually find it in the same place as the GPS itself or assemble it if your skill allows it <BR> You can charge it in the front seat of the car by pressing. pkm via GPS - Connect GPS to charging (cable) <RGB:0.0,0.5,1.0><SPACE> GPS charging cable must be in inventory <LINE> "..
+" <LINE><IMAGE:media/ui/chargegps.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> <RGB:0.0,0.5,1.0><SPACE> Wait a while, the battery will charge <RGB:1.0,1.0,1.0><SPACE > and GPS will automatically turn off after charging",
+
+SurvivalGuide_entrie6title = "#6 - Voting and Shop",
+SurvivalGuide_entrie6txt = "<CENTRE> <SIZE:large> #6 Wargm - help yourself and the project.".
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/vote.png>"..
+" <LINE> <SIZE:medium> Come in and get goodies every day!",
+SurvivalGuide_entrie6moreinfo = "<H1>Vote <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+"Take a minute, <SPACE><RGB:0.0,0.5,1.0> vote for the server <RGB:1.0,1.0,1.0><SPACE> and get bonuses on the website wargm.ru/server/60709 <LINE> " ..
+" <LINE> Tab <RGB:0.0,0.5,1.0><SPACE> Free <RGB:1.0,1.0,1.0><SPACE> will be especially useful <RGB:0.0,0.75,0.0><SPACE> for beginners <RGB:1.0 ,1.0,1.0><SPACE> to get <RGB:0.0,0.5,1.0><SPACE> Starter set and daily cases <RGB:1.0,1.0,1.0><SPACE> that will make survival easier" ..
+" <LINE> <LINE> <RGB:0.0,0.5,1.0><SPACE> Products for votes: <RGB:1.0,1.0,1.0><SPACE><LINE> - Transport <LINE> - Tool <LINE> - Warm clothing <LINE> - Medicine <LINE> - Sets <LINE> and much more... <LINE> Especially tasty in the tab <RGB:0.0,0.5,1.0><SPACE> 'Limited offer' <RGB:1.0,1.0, 1.0> "..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> You can also support the development of the project on the site by making a <RGB:0.0,0.5,1.0><SPACE> donation <RGB:1.0, 1.0,1.0><SPACE>, or in Discord tab #Project-Support ",
+SurvivalGuide_entrie5title = "#5 - Map",
+SurvivalGuide_entrie5txt = "<CENTRE> <SIZE:large> #5 Map - help with orientation.".
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/maphelp.png>"..
+"<LINE> <SIZE:medium> With a map - good <LINE> With GPS - ideal",
+SurvivalGuide_entrie5moreinfo = "<H1>Orientation <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+" Today's orientation lesson: <LINE><LINE> There are 2 main ways of orientation: <RGB:0.0,0.5,1.0><SPACE> map and GPS <RGB:1.0,1.0,1.0><SPACE> <LINE><LINE> The map is most often found in libraries, bookcases <LINE><LINE> With GPS everything is a little more complicated, this is a rather rare device, found in police stations, fire stations, electronics stores, etc., you can also assemble it yourself if you have the skill allows. <LINE>" ..
+" <LINE><IMAGECENTRE:media/ui/gpsmap.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> When you find a card, pick it up and you can look <RGB:0.0,0.5,1.0><SPACE> (M key) <RGB:1.0, 1.0,1.0><SPACE> . <LINE> The map will show you the area, but will not indicate where exactly you are "..
+" <LINE><LINE> <IMAGECENTRE:media/ui/itemmap.png> <LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> If you are lucky enough to have a GPS device, then feel free to pick it up, turn it on (F key) and open the map (to open the map, just attach it to your belt) or minimap <RGB:0.0,0.5,1.0><SPACE> (on the left is the map icon, hover over it and a pop-up minimap window appears) <RGB:1.0,1.0,1.0><SPACE>. The minimap will show your exact position, and the entire map is open on GPS. card. "..
+" <LINE><LINE> <IMAGECENTRE:media/ui/minimapgps.png><LINE> " ..
+" <BR><TEXT><SIZE:medium><RGB:1.0,1.0,1.0> But not everything is so simple... <LINE> <RGB:0.0,0.5,1.0><SPACE> GPS is discharged when working <RGB :1.0,1.0,1.0><SPACE> so you need to get spare batteries or a charging cord, you can usually find it in the same place as the GPS itself or assemble it if your skill allows it <BR> You can charge it in the front seat of the car by pressing. pkm via GPS - Connect GPS to charging (cable) <RGB:0.0,0.5,1.0><SPACE> GPS charging cable must be in inventory <LINE> "..
+" <LINE><IMAGE:media/ui/chargegps.png><LINE> " ..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> <RGB:0.0,0.5,1.0><SPACE> Wait a while, the battery will charge <RGB:1.0,1.0,1.0><SPACE > and GPS will automatically turn off after charging",
+
+SurvivalGuide_entrie6title = "#6 - Voting and Shop",
+SurvivalGuide_entrie6txt = "<CENTRE> <SIZE:large> #6 Wargm - help yourself and the project.".
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/vote.png>"..
+" <LINE> <SIZE:medium> Come in and get goodies every day!",
+SurvivalGuide_entrie6moreinfo = "<H1>Vote <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+"Take a minute, <SPACE><RGB:0.0,0.5,1.0> vote for the server <RGB:1.0,1.0,1.0><SPACE> and get bonuses on the website wargm.ru/server/60709 <LINE> " ..
+" <LINE> Tab <RGB:0.0,0.5,1.0><SPACE> Free <RGB:1.0,1.0,1.0><SPACE> will be especially useful <RGB:0.0,0.75,0.0><SPACE> for beginners <RGB:1.0 ,1.0,1.0><SPACE> to get <RGB:0.0,0.5,1.0><SPACE> Starter set and daily cases <RGB:1.0,1.0,1.0><SPACE> that will make survival easier" ..
+" <LINE> <LINE> <RGB:0.0,0.5,1.0><SPACE> Products for votes: <RGB:1.0,1.0,1.0><SPACE><LINE> - Transport <LINE> - Tool <LINE> - Warm clothing <LINE> - Medicine <LINE> - Sets <LINE> and much more... <LINE> Especially tasty in the tab <RGB:0.0,0.5,1.0><SPACE> 'Limited offer' <RGB:1.0,1.0, 1.0> "..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> You can also support the development of the project on the site by making a <RGB:0.0,0.5,1.0><SPACE> donation <RGB:1.0, 1.0,1.0><SPACE>, or in Discord tab #Project-Support ",
+
+SurvivalGuide_entrie7title = "#7 - Private",
+SurvivalGuide_entrie7txt = "<CENTRE> <SIZE:large> #7 Home sweet home.".
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/CarpenterSpiffo.png>"..
+" <LINE> <SIZE:medium> My home is my state and I am the head of it.",
+SurvivalGuide_entrie7moreinfo = "<TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, Survivor! <BR>" ..
+"Have you been wandering in this world for a long time? It's time to create your own <SPACE><RGB:0.0,0.75,0.0> shelter <RGB:1.0,1.0,1.0><SPACE> that will warm you on cold winter evenings... <LINE>" ..
+" <LINE> Each survivor who has lived <RGB:0.0,0.5,1.0><SPACE> 24 hours (game day - 3 hours) <RGB:1.0,1.0,1.0><SPACE> has the opportunity to create <RGB:0.0 ,0.75,0.0><SPACE> shelter <RGB:1.0,1.0,1.0><SPACE> , you can select the standard structure <RGB:0.0,0.5,1.0><SPACE> (Vanilla) <RGB:1.0,1.0,1.0> <SPACE>, or you can build the house of your dreams in the place you like!
+"<LINE><LINE><IMAGECENTRE:media/ui/SGaddsh.png>"..
+" <LINE> To occupy the <RGB:0.0,0.5,1.0><SPACE> vanilla building <RGB:1.0,1.0,1.0><SPACE> you don’t need anything, go into the house, press RMB and occupy the house as a shelter <LINE> <RGB:1.0,0.01,0.24><SPACE> Prohibited: living in public places <RGB:1.0,1.0,1.0><SPACE> (shops, gas stations, police stations, fire stations, etc.) <LINE>< LINE><RGB:1.0,1.0,1.0><SPACE> But the project administration does not recommend moving into such buildings for a long time, since the server is positioned 'Without wipes' - point restoration takes place <RGB:1.0,1.0,1.0> ..
+" <RGB:1.0,1.0,1.0> When performing a spot restoration (all cities are cleared), there is a chance that your shelter will be affected. Try <RGB:0.0,0.5,1.0><SPACE> to settle outside of cities. <RGB:1.0, 1.0,1.0><LINE> " ..
+" <RGB:1.0,1.0,1.0> Each player is provided with <RGB:0.0,0.5,1.0><SPACE> private 25x25 cells. <RGB:1.0,1.0,1.0><SPACE> to create such a private you must select a place in <RGB:0.0,0.5,1.0><SPACE> рClient -> Create a shelter <RGB:1.0,1.0,1.0><SPACE>, select the desired area with the character and create a shelter <LINE> In winter, the green highlight is not visible due to snow. <LINE> "..
+"<LINE><IMAGECENTRE:media/ui/SGSelectSH.png>"..
+" <LINE><TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Available to expand the size of the created private in <RGB:0.0,0.75,0.0><SPACE> Player menu <RGB:1.0,1.0,1.0> , the maximum private size is 35x35 cells. <LINE> The extension can also be received as a reward for participating in events."
+"<LINE><IMAGECENTRE:media/ui/SGTimeSH.png>"..
+" <LINE><TEXT>SIZE:medium><RGB:1.0,1.0,1.0><RGB:1.0,1.0,1.0> In the shelter menu you can see <RGB:0.0,0.5,1.0><SPACE> lifetime <RGB :1.0,1.0,1.0><SPACE> shelters, is updated automatically when the participating player approaches/moves away from the shelter, or the player can extend <RGB:0.0,0.5,1.0><SPACE> manually, button Extend <LINE> ". .
+" <LINE><RGB:1.0,1.0,1.0> Shelters whose time has expired <RGB:0.0,0.5,1.0><SPACE> are removed from the map along with the transport and stored on the server <RGB:1.0,1.0,1.0>< SPACE> 30 days (further at the discretion of the administration). <LINE> Restoration of such shelters through the Discord ticket system (#Help) <LINE> ",
+
+SurvivalGuide_entrie8title = "#8 - Player Menu",
+SurvivalGuide_entrie8txt = "<CENTRE> <SIZE:large> #8 Player Menu"..
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/SGPlayerMenuSpiffo.png>"..
+" <LINE> <SIZE:medium> Player menu - a menu for controlling many functions.",
+SurvivalGuide_entrie8moreinfo = "<H1> Player Menu <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+"The player menu is accessed via <SPACE><RGB:0.0,0.75,0.0> Client -> Player Menu <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+" <LINE> <IMAGECENTRE:media/ui/SGPM.png>"..
+" <LINE> Balance: <RGB:0.0,0.5,1.0><SPACE> coins and votes <RGB:1.0,1.0,1.0><SPACE>, replenishment via the website <RGB:0.0,0.5,1.0><SPACE> wargm .ru/server/60709 <RGB:1.0,1.0,1.0><SPACE>, coins are credited automatically within 1 minute (replenishment is a voluntary donation to the server) <LINE>" ..
+" <LINE> <IMAGECENTRE:media/ui/SGSupport.png>"..
+"<TEXT><SIZE:medium><RGB:1.0,1.0,1.0> The functionality is being expanded and supplemented",
+
+SurvivalGuide_entrie9title = "#9 - Auto Collection",
+SurvivalGuide_entrie9txt = "<CENTRE> <SIZE:large> #9 Auto Collection"..
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/Spiffo_Foil-badge.png>"..
+" <LINE> <SIZE:medium> Auto-collection - functionality for auto-collection with zombies.",
+SurvivalGuide_entrie9moreinfo = "<H1> Automatic loot collection from zombies <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+"Auto-collection - <SPACE><RGB:0.0,0.75,0.0> automatic collection of items from killed zombies into the selected inventory, according to the selected categories. <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+"This functionality is designed for players who are tired of looting every zombie and <RGB:0.0,0.5,1.0><SPACE> is optional. <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+"<LINE><IMAGECENTRE:media/ui/SGAutoloot.png>"..
+"<LINE> The auto collection list is formed <RGB:0.0,0.5,1.0><SPACE> based on the list of purchased items <RGB:1.0,1.0,1.0><SPACE> (the price of the item for purchase is more than 1 dollar)" ..
+" <LINE><LINE> After acquisition, the player can activate or disable auto-collection and notification of collected items <RGB:0.0,0.5,1.0><LINE> (Activation - turns on auto-collection, turning off does not stop the activation time) <RGB:1.0,1.0 ,1.0><LINE>" ..
+"<LINE><IMAGECENTRE:media/ui/SGAutolootDemonstration.png>" ..
+" <LINE> The list of collected items can be changed by the <LINE> administration",
+}

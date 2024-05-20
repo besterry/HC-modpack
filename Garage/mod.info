@@ -6,3 +6,6 @@ versionMin=41.78
 
 pack=garage
 tiledef=garage 1450
+
+pack=fencing_garage
+tiledef=fencing_garage 8950
