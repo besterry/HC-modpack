@@ -20,7 +20,7 @@ function reinfHeavyCarWin(items, result, player, selectedItem)
 end
 
 function fixWindshield1(items, result, player)
-	player:Say("We can make it!");
+	-- player:Say("We can make it!");
 	local inv = player:getInventory();
 	--inv:FindAndReturn("Windshield1"):setConditionMax(500);
 	inv:FindAndReturn("Windshield1"):setCondition(100);
@@ -29,13 +29,13 @@ end
 function RenewCarDoor(items, result, player)
 	local torepair = ""
 	for i = items:size() - 1, 0, -1 do
-		print(items:get(i):getType())
+		-- print(items:get(i):getType())
 		if string.find(items:get(i):getType(), "CarDoor") then
 			torepair = items:get(i)
 		end
 	end
-	print("---")
-	print(torepair:getType())
+	-- print("---")
+	-- print(torepair:getType())
 	if player:getInventory():contains("HCWorkgloves") then
 		print("es ist da.")
 	end
@@ -389,53 +389,6 @@ end
 function recipe_hcpallet(items, result, player)
 	HCAddManySameItem("Hydrocraft.HCRopethick", 0, player);
 	HCAddManySameItem("Hydrocraft.HCWoodenpallet", 0, player);
-end
-
---Pallets
-
-function Recipe.OnCreate.HTCreatePallet(items, result, player) --Создание паллет
-	local pallet = player:getInventory():AddItem("Base.HTpalletLogs");
-	pallet:setDelta(0.02);
-end
-
-function Recipe.OnTest.HTCheckPutPalletLogs(item) --Проверка что дельта не = 1 или число бревен не больше 50
-	if item:getType() == "HTpalletLogs" then
-		if item:getUsedDelta() >= 1 or math.floor(item:getUsedDelta() / 0.02 + 0.1) >= 50 then return false; end
-	end
-	return true;
-end
-
-function Recipe.OnCreate.HTAddLogToPallet(items, result, player) --Положить на палету
-	for i = 0, items:size() - 1 do
-		if items:get(i):getType() == "HTpalletLogs" then
-			local newWeight = items:get(i):getWeight() + 0.3
-			local name = string.gsub(result:getName(), "%[.*%]", "")
-			name = string.gsub(name, "%s*%[.*", "")
-			local newUseDelta = items:get(i):getDelta() + items:get(i):getUseDelta()
-			result:setCustomWeight(true)
-			result:setName(name .. " [" .. math.floor(newUseDelta / 0.02 + 0.1) .. "/50]")
-			result:setDelta(newUseDelta)
-			result:setWeight(newWeight)
-			result:setActualWeight(newWeight)
-			return
-		end
-	end
-end
-
-function Recipe.OnCreate.HTGetLogWithPallet(items, result, player)  --взять с палеты
-	for i = 0, items:size() - 1 do
-		if items:get(i):getType() == "HTpalletLogs" then
-			local newWeight = items:get(i):getWeight() - 0.3
-			local newUseDelta = items:get(i):getDelta() - items:get(i):getUseDelta()
-			local name = string.gsub(result:getName(), "%s*%[.*", "")
-			name = string.gsub(name, "%s+$", "") -- удаляет пробелы в конце строки
-			items:get(i):setCustomWeight(true)
-			items:get(i):setName(name .. " [" .. math.floor(newUseDelta / 0.02 + 0.1) .. "/50]")
-			items:get(i):setWeight(newWeight)
-			items:get(i):setActualWeight(newWeight)
-			return
-		end
-	end
 end
 
 -- HT
@@ -2817,7 +2770,7 @@ function HCEmptyContainerOnRecipe(item, resultItem, player)
 	for i = 0, (item:size() - 1) do               --item = number of items required for recipe
 		dItem = item:get(i);
 		if dItem:getCategory() == "Container" then --if any items in recipe are bags...
-			print("Container detected")
+			-- print("Container detected")
 			if player:getClothingItem_Back() == dItem then --...and are equiped on the back...
 				player:setClothingItem_Back(nil);
 			end
@@ -2833,14 +2786,14 @@ function HCEmptyContainerOnRecipe(item, resultItem, player)
 				for i2 = 0, (dInvItems:size() - 1) do --if not, iterate over each item
 					invItem = dInvItems:get(i2);
 					table.insert(iTab2, invItem)  --add each item to empty table
-					print(invItem:getType());
+					-- print(invItem:getType());
 				end
 			end
 		end
 	end
 
 	for i3, k3 in ipairs(iTab2) do
-		print(k3:getType() .. ": removing from container.")
+		-- print(k3:getType() .. ": removing from container.")
 		dInv:Remove(k3); --remove items from container in recipe
 		pInv:AddItem(k3); --add items to player inventory
 	end
@@ -2873,7 +2826,7 @@ function HCgatherSeeds(items, resultItem, player)
 				vegetableName = string.gsub(vegetableName, "farming.", "");
 				vegetableName = string.gsub(vegetableName, "Hydrocraft.", "");
 				if (itemName == vegetableName) then
-					print(vegetableName)
+					-- print(vegetableName)
 					if props.gatherSeed ~= nil then
 						HCAddManySameItem(props.gatherSeed, props.seedCollect, player)
 					else
