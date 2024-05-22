@@ -1,0 +1,17 @@
+Farming_RU = {
+    -- Надпись при наведении на грядку "Молодой Лён"ыв
+    Farming_Flax = "Лён",
+    Farming_Lemontree = "Лимонное дерево",
+    Farming_Sunflower = "Подсолнечник",
+    Farming_Hemp = "Конопля",
+    Farming_Corn = "Кукуруза",
+    Farming_Wheat = "Пшеница",
+    Farming_Peanut = "Арахис",
+    Farming_Grapes = "Виноград",
+    Farming_CoffeeBeans = "Кофе",
+    Farming_Lettuce = "Латук",
+    Farming_Onion = "Лук",
+    Farming_Candleberries = "Свечное дерево",
+    Farming_SoyBeans = "Соевые бобы",
+    Farming_Mulberries = "Шелковица",
+}

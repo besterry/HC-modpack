@@ -1,4 +1,9 @@
 ContextMenu_RU = {
+	--Server Tweaks
+	ContextMenu_Vehicle_AttachVehicle = "Подцепить",
+	ContextMenu_Vehicle_AttachTrailer = "Подцепить прицеп",
+	ContextMenu_Vehicle_DetachTrailer = "Отцепить",
+
 	ContextMenu_Sow_Trellis_Seed = "Посеять на шпалере",
 	ContextMenu_RemoverTools = "Редактор мира",
 	ContextMenu_Sniff = "Вдохнуть",

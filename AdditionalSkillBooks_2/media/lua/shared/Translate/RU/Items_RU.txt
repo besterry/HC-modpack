@@ -1,4 +1,10 @@
 Items_RU = {
+
+	DisplayName_AB2_Lockpick_1 = "Курсы взлома. Том 1",
+	DisplayName_AB2_Lockpick_2 = "Курсы взлома. Том 2",
+	DisplayName_AB2_Lockpick_3 = "Курсы взлома. Том 3",
+	DisplayName_AB2_Lockpick_4 = "Курсы взлома. Том 4",
+	DisplayName_AB2_Lockpick_5 = "Курсы взлома. Том 5",
 	
     DisplayName_AB2_Guns_Aim_1                 = "Огнестрельное оружие. Том 1. Точность",
 	DisplayName_AB2_Guns_Aim_2                 = "Огнестрельное оружие. Том 2. Точность",
@@ -11,8 +17,6 @@ Items_RU = {
 	DisplayName_AB2_Guns_Rel_3                 = "Огнестрельное оружие. Том 3. Перезарядка",
 	DisplayName_AB2_Guns_Rel_4                 = "Огнестрельное оружие. Том 4. Перезарядка",
 	DisplayName_AB2_Guns_Rel_5                 = "Огнестрельное оружие. Том 5. Перезарядка",
-
-
 	
     DisplayName_AB2_Melee_Axe_1                = "Холодное оружие. Том 1. Топоры",
 	DisplayName_AB2_Melee_Axe_2                = "Холодное оружие. Том 2. Топоры",
@@ -55,8 +59,6 @@ Items_RU = {
 	DisplayName_AB2_Melee_Mai_3                = "Холодное оружие. Том 3. Прочность",
 	DisplayName_AB2_Melee_Mai_4                = "Холодное оружие. Том 4. Прочность",
 	DisplayName_AB2_Melee_Mai_5                = "Холодное оружие. Том 5. Прочность",
-
-
 	
 	DisplayName_AB2_Athl_Spr_1                 = "Атлетика. Том 1. Скорость бега",
 	DisplayName_AB2_Athl_Spr_2                 = "Атлетика. Том 2. Скорость бега",

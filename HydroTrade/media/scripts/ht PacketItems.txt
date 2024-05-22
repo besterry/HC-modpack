@@ -2,39 +2,51 @@ module Base
 {
 	item HTpalletLogs
 	{
-		Weight             = 20,
+		Weight             = 1,
 		Type			   = Drainable,
 		UseDelta 		   = 0.02,
 		DisplayName		   = Pallet of logs,
 		Icon			   = HTPallete,
-		DisplayCategory	= Craft,
+        ReplaceOnUse       = Hydrocraft.HCWoodenpallet,
+		DisplayCategory    = Craft,
 	}
 
     /** Добавить HCOakLog **/
-    recipe Create pallet log
+    /*recipe Create pallet log
     {
         Log=50,
         Result:HTpalletLogs,
         CanBeDoneFromFloor:true,
         Time:200,
         Sound:PZ_Hammer,
-    }
+    }*/
 
 	recipe Get pallet log
     {
         HTpalletLogs=1,
+        OnCreate:Recipe.OnCreate.HTGetLogWithPallet,
         Result:Log,
         Time:10,
     }	
 
 	recipe Put pallet log
 	 {
-        destroy HTpalletLogs=1,
+        destroy HTpalletLogs,
 		Log,
 		Result:HTpalletLogs,
-		OnTest:Recipe.OnTest.Putpalletlog,
-        OnCreate:recipe_hcaddpallet,
+		OnTest:Recipe.OnTest.HTCheckPutPalletLogs,
+        OnCreate:Recipe.OnCreate.HTAddLogToPallet,
         Time:10,
     }
 	
+    recipe Create pallet log
+    {
+        Log,
+        HCWoodenpallet,
+        Result:HTpalletLogs,
+        RemoveResultItem:true,
+        CanBeDoneFromFloor:true,
+        OnCreate:Recipe.OnCreate.HTCreatePallet,
+        Time:10,
+    }
 }

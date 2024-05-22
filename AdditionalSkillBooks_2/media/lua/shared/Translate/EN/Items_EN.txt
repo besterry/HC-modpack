@@ -1,4 +1,11 @@
 Items_EN = {
+
+	DisplayName_AB2_Lockpick_1 = "Lockpicking. Vol 1",
+	DisplayName_AB2_Lockpick_2 = "Lockpicking. Vol 2",
+	DisplayName_AB2_Lockpick_3 = "Lockpicking. Vol 3",
+	DisplayName_AB2_Lockpick_4 = "Lockpicking. Vol 4",
+	DisplayName_AB2_Lockpick_5 = "Lockpicking. Vol 5",
+
     DisplayName_AB2_Guns_Aim_1                 = "Guns Vol. 1. (Aiming) - Beginner",
 	DisplayName_AB2_Guns_Aim_2                 = "Guns Vol. 2. (Aiming) - Intermediate",
 	DisplayName_AB2_Guns_Aim_3                 = "Guns Vol. 3. (Aiming) - Advanced",

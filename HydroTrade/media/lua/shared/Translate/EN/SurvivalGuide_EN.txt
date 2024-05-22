@@ -148,32 +148,6 @@ SurvivalGuide_entrie6moreinfo = "<H1>Vote <BR>"..
 " <LINE> Tab <RGB:0.0,0.5,1.0><SPACE> Free <RGB:1.0,1.0,1.0><SPACE> will be especially useful <RGB:0.0,0.75,0.0><SPACE> for beginners <RGB:1.0 ,1.0,1.0><SPACE> to get <RGB:0.0,0.5,1.0><SPACE> Starter set and daily cases <RGB:1.0,1.0,1.0><SPACE> that will make survival easier" ..
 " <LINE> <LINE> <RGB:0.0,0.5,1.0><SPACE> Products for votes: <RGB:1.0,1.0,1.0><SPACE><LINE> - Transport <LINE> - Tool <LINE> - Warm clothing <LINE> - Medicine <LINE> - Sets <LINE> and much more... <LINE> Especially tasty in the tab <RGB:0.0,0.5,1.0><SPACE> 'Limited offer' <RGB:1.0,1.0, 1.0> "..
 " <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> You can also support the development of the project on the site by making a <RGB:0.0,0.5,1.0><SPACE> donation <RGB:1.0, 1.0,1.0><SPACE>, or in Discord tab #Project-Support ",
-SurvivalGuide_entrie5title = "#5 - Map",
-SurvivalGuide_entrie5txt = "<CENTRE> <SIZE:large> #5 Map - help with orientation.".
-" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/maphelp.png>"..
-"<LINE> <SIZE:medium> With a map - good <LINE> With GPS - ideal",
-SurvivalGuide_entrie5moreinfo = "<H1>Orientation <BR>"..
-" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
-" Today's orientation lesson: <LINE><LINE> There are 2 main ways of orientation: <RGB:0.0,0.5,1.0><SPACE> map and GPS <RGB:1.0,1.0,1.0><SPACE> <LINE><LINE> The map is most often found in libraries, bookcases <LINE><LINE> With GPS everything is a little more complicated, this is a rather rare device, found in police stations, fire stations, electronics stores, etc., you can also assemble it yourself if you have the skill allows. <LINE>" ..
-" <LINE><IMAGECENTRE:media/ui/gpsmap.png><LINE> " ..
-" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> When you find a card, pick it up and you can look <RGB:0.0,0.5,1.0><SPACE> (M key) <RGB:1.0, 1.0,1.0><SPACE> . <LINE> The map will show you the area, but will not indicate where exactly you are "..
-" <LINE><LINE> <IMAGECENTRE:media/ui/itemmap.png> <LINE> " ..
-" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> If you are lucky enough to have a GPS device, then feel free to pick it up, turn it on (F key) and open the map (to open the map, just attach it to your belt) or minimap <RGB:0.0,0.5,1.0><SPACE> (on the left is the map icon, hover over it and a pop-up minimap window appears) <RGB:1.0,1.0,1.0><SPACE>. The minimap will show your exact position, and the entire map is open on GPS. card. "..
-" <LINE><LINE> <IMAGECENTRE:media/ui/minimapgps.png><LINE> " ..
-" <BR><TEXT><SIZE:medium><RGB:1.0,1.0,1.0> But not everything is so simple... <LINE> <RGB:0.0,0.5,1.0><SPACE> GPS is discharged when working <RGB :1.0,1.0,1.0><SPACE> so you need to get spare batteries or a charging cord, you can usually find it in the same place as the GPS itself or assemble it if your skill allows it <BR> You can charge it in the front seat of the car by pressing. pkm via GPS - Connect GPS to charging (cable) <RGB:0.0,0.5,1.0><SPACE> GPS charging cable must be in inventory <LINE> "..
-" <LINE><IMAGE:media/ui/chargegps.png><LINE> " ..
-" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> <RGB:0.0,0.5,1.0><SPACE> Wait a while, the battery will charge <RGB:1.0,1.0,1.0><SPACE > and GPS will automatically turn off after charging",
-
-SurvivalGuide_entrie6title = "#6 - Voting and Shop",
-SurvivalGuide_entrie6txt = "<CENTRE> <SIZE:large> #6 Wargm - help yourself and the project.".
-" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/vote.png>"..
-" <LINE> <SIZE:medium> Come in and get goodies every day!",
-SurvivalGuide_entrie6moreinfo = "<H1>Vote <BR>"..
-" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
-"Take a minute, <SPACE><RGB:0.0,0.5,1.0> vote for the server <RGB:1.0,1.0,1.0><SPACE> and get bonuses on the website wargm.ru/server/60709 <LINE> " ..
-" <LINE> Tab <RGB:0.0,0.5,1.0><SPACE> Free <RGB:1.0,1.0,1.0><SPACE> will be especially useful <RGB:0.0,0.75,0.0><SPACE> for beginners <RGB:1.0 ,1.0,1.0><SPACE> to get <RGB:0.0,0.5,1.0><SPACE> Starter set and daily cases <RGB:1.0,1.0,1.0><SPACE> that will make survival easier" ..
-" <LINE> <LINE> <RGB:0.0,0.5,1.0><SPACE> Products for votes: <RGB:1.0,1.0,1.0><SPACE><LINE> - Transport <LINE> - Tool <LINE> - Warm clothing <LINE> - Medicine <LINE> - Sets <LINE> and much more... <LINE> Especially tasty in the tab <RGB:0.0,0.5,1.0><SPACE> 'Limited offer' <RGB:1.0,1.0, 1.0> "..
-" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0><BR> You can also support the development of the project on the site by making a <RGB:0.0,0.5,1.0><SPACE> donation <RGB:1.0, 1.0,1.0><SPACE>, or in Discord tab #Project-Support ",
 
 SurvivalGuide_entrie7title = "#7 - Private",
 SurvivalGuide_entrie7txt = "<CENTRE> <SIZE:large> #7 Home sweet home.".
@@ -189,7 +163,7 @@ SurvivalGuide_entrie7moreinfo = "<TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings,
 "<LINE><IMAGECENTRE:media/ui/SGSelectSH.png>"..
 " <LINE><TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Available to expand the size of the created private in <RGB:0.0,0.75,0.0><SPACE> Player menu <RGB:1.0,1.0,1.0> , the maximum private size is 35x35 cells. <LINE> The extension can also be received as a reward for participating in events."
 "<LINE><IMAGECENTRE:media/ui/SGTimeSH.png>"..
-" <LINE><TEXT>SIZE:medium><RGB:1.0,1.0,1.0><RGB:1.0,1.0,1.0> In the shelter menu you can see <RGB:0.0,0.5,1.0><SPACE> lifetime <RGB :1.0,1.0,1.0><SPACE> shelters, is updated automatically when the participating player approaches/moves away from the shelter, or the player can extend <RGB:0.0,0.5,1.0><SPACE> manually, button Extend <LINE> ". .
+" <LINE><TEXT><SIZE:medium><RGB:1.0,1.0,1.0><RGB:1.0,1.0,1.0> In the shelter menu you can see <RGB:0.0,0.5,1.0><SPACE> lifetime <RGB :1.0,1.0,1.0><SPACE> shelters, is updated automatically when the participating player approaches/moves away from the shelter, or the player can extend <RGB:0.0,0.5,1.0><SPACE> manually, button Extend <LINE> ". .
 " <LINE><RGB:1.0,1.0,1.0> Shelters whose time has expired <RGB:0.0,0.5,1.0><SPACE> are removed from the map along with the transport and stored on the server <RGB:1.0,1.0,1.0>< SPACE> 30 days (further at the discretion of the administration). <LINE> Restoration of such shelters through the Discord ticket system (#Help) <LINE> ",
 
 SurvivalGuide_entrie8title = "#8 - Player Menu",

@@ -47,7 +47,7 @@ item HCGPS
 
 item HCCanteen
     	{
-        Weight    		= 	1,
+        Weight    		= 	0.3,
 	CanStoreWater		= 	TRUE,
         Type    		= 	Normal,
         DisplayName         	= 	Canteen,
@@ -61,7 +61,7 @@ item HCCanteen
 item HCCanteenfull
     	{
 	IsWaterSource		=	TRUE,
-	Weight			=	2,
+	Weight			=	1,
 	CanStoreWater		=	TRUE,
 	Type			=	Drainable,
 	UseWhileEquipped	=	FALSE,
@@ -78,7 +78,7 @@ item HCCanteenfull
 
 item HCStrappedcanteen
     	{
-        Weight    		= 	1,
+        Weight    		= 	0.5,
 	CanStoreWater		= 	TRUE,
         Type    		= 	Normal,
         DisplayName         	= 	Strapped Canteens,
@@ -92,7 +92,7 @@ item HCStrappedcanteen
 item HCStrappedcanteenfull
     	{
 	IsWaterSource		=	TRUE,
-	Weight			=	2,
+	Weight			=	1.5,
 	CanStoreWater		=	TRUE,
 	Type			=	Drainable,
 	UseWhileEquipped	=	FALSE,

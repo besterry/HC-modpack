@@ -1,0 +1,15 @@
+Tooltip_EN = {
+    Tooltip_BookTitle_Nimble = "Nimble Courses",
+    Tooltip_BookTitle_Sprinting = "Sprinting Courses",
+    Tooltip_BookTitle_Lightfooted = "Lightfooted Courses",
+    Tooltip_BookTitle_Sneaking = "Sneaking Courses",
+    Tooltip_BookTitle_Reloading = "Reloading Courses",
+    Tooltip_BookTitle_Aiming = "Aiming Courses",
+    Tooltip_BookTitle_Blunt = "Blunt Courses",
+    Tooltip_BookTitle_LongBlade = "Long Blade Courses",
+    Tooltip_BookTitle_Spear = "Spear courses",
+    Tooltip_BookTitle_SmallBlunt = "Small Blunt Courses",
+    Tooltip_BookTitle_SmallBlade = "Small Blade courses",
+    Tooltip_BookTitle_Maintenance = "Maintenance Courses",
+    Tooltip_BookTitle_Axe = "Axe Courses",
+}

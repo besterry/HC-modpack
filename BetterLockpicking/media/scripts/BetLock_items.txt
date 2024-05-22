@@ -46,4 +46,80 @@ module BetLock
 		StaticModel = Magazine,
 		Tooltip = Tooltip_BetLock_AlarmMag
 	}
+	
+	
+    item BookLockpicking1
+    {
+		DisplayCategory = SkillBook,
+        NumberOfPages	=	220,
+        Weight	=	0.8,
+        Type	=	Literature,
+        DisplayName	=	AB2_Lockpick_1,
+        Icon	=	ABBookgun,
+        SkillTrained = Lockpicking,
+        LvlSkillTrained = 1,
+        NumLevelsTrained = 2,
+        StaticModel = Book,
+		WorldStaticModel = BookClosedGrey_Ground, 
+    }
+	
+	item BookLockpicking2
+    {
+		DisplayCategory = SkillBook,
+        NumberOfPages	=	260,
+        Weight	=	0.8,
+        Type	=	Literature,
+        DisplayName	=	AB2_Lockpick_2,
+        Icon	=	ABBookgun,
+        SkillTrained = Lockpicking,
+        LvlSkillTrained = 3,
+        NumLevelsTrained = 2,
+        StaticModel = Book,
+		WorldStaticModel = BookClosedGrey_Ground, 
+    }
+	
+	item BookLockpicking3
+    {
+		DisplayCategory = SkillBook,
+        NumberOfPages	=	300,
+        Weight	=	0.8,
+        Type	=	Literature,
+        DisplayName	=	AB2_Lockpick_3,
+        Icon	=	ABBookgun,
+        SkillTrained = Lockpicking,
+        LvlSkillTrained = 5,
+        NumLevelsTrained = 2,
+        StaticModel = Book,
+		WorldStaticModel = BookClosedGrey_Ground, 
+    }
+	
+	item BookLockpicking4
+    {
+		DisplayCategory = SkillBook,
+        NumberOfPages	=	340,
+        Weight	=	0.8,
+        Type	=	Literature,
+        DisplayName	=	AB2_Lockpick_4,
+        Icon	=	ABBookgun,
+        SkillTrained = Lockpicking,
+        LvlSkillTrained = 7,
+        NumLevelsTrained = 2,
+        StaticModel = Book,
+		WorldStaticModel = BookClosedGrey_Ground, 
+    }
+	
+	item BookLockpicking5
+    {
+		DisplayCategory = SkillBook,
+        NumberOfPages	=	380,
+        Weight	=	0.8,
+        Type	=	Literature,
+        DisplayName	=	AB2_Lockpick_5,
+        Icon	=	ABBookgun,
+        SkillTrained = Lockpicking,
+        LvlSkillTrained = 9,
+        NumLevelsTrained = 2,
+        StaticModel = Book,
+		WorldStaticModel = BookClosedGrey_Ground, 
+    }
 }

@@ -1,0 +1,15 @@
+Tooltip_RU = {
+    Tooltip_BookTitle_Nimble = "Курсы проворности",
+    Tooltip_BookTitle_Sprinting = "Курсы бега",
+    Tooltip_BookTitle_Lightfooted = "Курсы легкого шага",
+    Tooltip_BookTitle_Sneaking = "Курсы скрытности",
+    Tooltip_BookTitle_Reloading = "Курсы перезарядки",
+    Tooltip_BookTitle_Aiming = "Курсы точности",
+    Tooltip_BookTitle_Blunt = "Курсы длин. дробящего",
+    Tooltip_BookTitle_LongBlade = "Курсы длин. режущего",
+    Tooltip_BookTitle_Spear = "Курсы копий",
+    Tooltip_BookTitle_SmallBlunt = "Курсы коротк. дробящего",
+    Tooltip_BookTitle_SmallBlade = "Курсы коротк. режущего",
+    Tooltip_BookTitle_Maintenance = "Курсы прочности",
+    Tooltip_BookTitle_Axe = "Курсы топоров",
+}
