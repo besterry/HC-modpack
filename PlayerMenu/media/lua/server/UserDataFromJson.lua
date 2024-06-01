@@ -121,7 +121,7 @@ commands.saveData = function(player, args)
         SaveJsonItems(UserData, filename)
     end
     
-    local msg = "nickname: " .. nickname .. ", delta: " .. (balanceNew - balanceOld) .. ", oldBalance:" ..  balanceOld .. ", newBalance:" .. balanceNew .. ", oldSafehouseSize:" .. UserData.safehouse .. ", newSafehouseSize:" .. safehouse
+    local msg = nickname .. ", delta: " .. (balanceNew - balanceOld) .. ", oldBalance:" ..  balanceOld .. ", newBalance:" .. balanceNew .. ", oldSafehouseSize:" .. UserData.safehouse .. ", newSafehouseSize:" .. safehouse
     writeLog("PlayerMenuActions", msg)
 end
 
@@ -147,7 +147,7 @@ commands.saveUserData = function (player, args)
     else
         action = ""
     end
-    local msg = nickname .. action .. "balance:" .. UserData["balance"] .. ", bonus:" .. UserData["bonus"] .. ", safehouse:" .. UserData["safehouse"] .. ", ShopCount:" ..UserData["ShopCount"] .. ", MaxShopCount:" ..UserData["MaxShopCount"]
+    local msg = nickname .. " " .. action .. "balance:" .. UserData["balance"] .. ", bonus:" .. UserData["bonus"] .. ", safehouse:" .. UserData["safehouse"] .. ", ShopCount:" ..UserData["ShopCount"] .. ", MaxShopCount:" ..UserData["MaxShopCount"]
     writeLog("PlayerMenuActions", msg)
 end
 
