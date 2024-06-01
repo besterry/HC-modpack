@@ -1,3 +1,4 @@
 Recipes_RU {
 	Recipe_Make_ZipContainer = "Make basement",
+	Recipe_Make_ZipContainerBox = "Make box",
 }

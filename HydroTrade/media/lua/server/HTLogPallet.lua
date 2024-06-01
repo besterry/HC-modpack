@@ -7,6 +7,7 @@ Recipe.OnTest = Recipe.OnTest or {}
 function Recipe.OnCreate.HTCreatePallet(items, result, player) --Создание паллет
 	local pallet = player:getInventory():AddItem("Base.HTpalletLogs");
 	pallet:setDelta(0.02);
+	player:getInventory():Remove("Log")
 end
 
 function Recipe.OnTest.HTCheckPutPalletLogs(item) --Проверка что дельта не = 1 или число бревен не больше 50
@@ -20,14 +21,15 @@ function Recipe.OnCreate.HTAddLogToPallet(items, result, player) --Положи�
 	for i = 0, items:size() - 1 do
 		if items:get(i):getType() == "HTpalletLogs" then
 			local newWeight = items:get(i):getWeight() + 0.3
-			local name = string.gsub(result:getName(), "%[.*%]", "")
+			local name = string.gsub(items:get(i):getName(), " %[.*%]", "")
 			name = string.gsub(name, "%s*%[.*", "")
 			local newUseDelta = items:get(i):getDelta() + items:get(i):getUseDelta()
-			result:setCustomWeight(true)
-			result:setName(name .. " [" .. math.floor(newUseDelta / 0.02 + 0.1) .. "/50]")
-			result:setDelta(newUseDelta)
-			result:setWeight(newWeight)
-			result:setActualWeight(newWeight)
+			items:get(i):setCustomWeight(true)
+			items:get(i):setName(name .. " [" .. math.floor(newUseDelta / 0.02 + 0.1) .. "/50]")
+			items:get(i):setDelta(newUseDelta)
+			items:get(i):setWeight(newWeight)
+			items:get(i):setActualWeight(newWeight)
+			player:getInventory():Remove("Log")
 			return
 		end
 	end
@@ -38,9 +40,10 @@ function Recipe.OnCreate.HTGetLogWithPallet(items, result, player)  --взять
 		if items:get(i):getType() == "HTpalletLogs" then
 			local newWeight = items:get(i):getWeight() - 0.3
 			local newUseDelta = items:get(i):getDelta() - items:get(i):getUseDelta()
-			local name = string.gsub(result:getName(), "%s*%[.*", "")
+			local name = string.gsub(items:get(i):getName(), "%s*%[.*", "")
 			name = string.gsub(name, "%s+$", "") -- удаляет пробелы в конце строки
 			items:get(i):setCustomWeight(true)
+			if newUseDelta == 0 then newUseDelta = 0.02 end
 			items:get(i):setName(name .. " [" .. math.floor(newUseDelta / 0.02 + 0.1) .. "/50]")
 			items:get(i):setWeight(newWeight)
 			items:get(i):setActualWeight(newWeight)

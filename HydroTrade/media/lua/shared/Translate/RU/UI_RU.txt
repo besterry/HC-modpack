@@ -1,4 +1,5 @@
 UI_RU = {
+	UI_ZombieKills = "сАХРН ГНЛАХ: ",
 	-- Main screen (lua) :
 	UI_mainscreen_laststand = "онякедмхи псаеф",
 	UI_mainscreen_option = "мюярпнийх",

@@ -30,14 +30,10 @@ TweakEquippedItem.prerender = function(self)
         local maxX = getCore():getScreenWidth();
         local statusData = getMPStatus()
 
-        if NonPvpZone.getNonPvpZone(self.chr:getX(), self.chr:getY()) then
-            self:drawTextRight(getText("IGUI_PvpZone_NonPvpZone"), maxX-50, maxY-80, 0, 1, 0, 1, UIFont.Small);
-        end
-
         local tmpY = 40
 
         if isShowConnectionInfo() then
-            self:drawTextRight(getServerOptions():getOption("PublicName").." - Build "..statusData.version, maxX-50, maxY-40, 0.8, 0.8, 0.8, 1, UIFont.NewMedium);
+            self:drawTextRight(getServerOptions():getOption("PublicName").." - "..statusData.version, maxX-50, maxY-40, 0.8, 0.8, 0.8, 1, UIFont.NewMedium);
             tmpY = tmpY + 20
         end
 
@@ -58,6 +54,18 @@ TweakEquippedItem.prerender = function(self)
             end
             self:drawTextRight(getText("UI_Ping", tostring(lastPing)), maxX-50, maxY-tmpY , r, g, b, 1, UIFont.NewMedium);
             tmpY = tmpY + 20
+        end
+        if ClientTweaker.Options.GetBool("Show_Kills") then
+            local character = getPlayer()
+            if not character then
+                return
+            end
+            local lastkills = character:getZombieKills();
+            self:drawTextRight(getText("UI_ZombieKills")..tostring(lastkills), maxX-50, maxY-tmpY , 0.8, 0.8, 0.8, 1, UIFont.NewMedium);
+            tmpY = tmpY + 20
+        end
+        if NonPvpZone.getNonPvpZone(self.chr:getX(), self.chr:getY()) then
+            self:drawTextRight(getText("IGUI_PvpZone_NonPvpZone"), maxX-50, maxY-tmpY, 0, 1, 0, 1, UIFont.Small);
         end
     end
 end

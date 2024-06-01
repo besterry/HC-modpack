@@ -8,6 +8,16 @@ module Hydrocraft
 
 /************************ITEMS************************/
 
+item WoodenStick
+{
+    DisplayCategory = Material,
+    Type = Normal,
+    DisplayName = Sturdy Stick,
+    Icon = TZ_WoodenStick,
+    Weight = 0.25,
+    WorldStaticModel = WoodenStick,
+}
+
 item HCInfiniteLogpile
 {
 	Weight			= 9.0,

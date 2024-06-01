@@ -7,6 +7,7 @@
 ClientTweaker = {
     Version = openutils.Version,
     Options = OpenOptions:new("client-options", {
+        ["Show_Kills"] = {type = "bool", value = "false"},
         ["highlight_safehouse"] = {type = "bool", value = "false"},
         ["show_ping"] = {type = "bool", value = "true"},
     }),

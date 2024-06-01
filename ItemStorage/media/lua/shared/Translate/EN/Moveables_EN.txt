@@ -1,3 +1,6 @@
 Moveables_EN = {
 	ZipContainer = "Basement",
+    ZipCell_ZipContainer = "Basement",
+	ZipContainer = "Basement",
+    ZipContainerBox = "Box",
     }

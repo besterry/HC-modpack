@@ -1,5 +1,6 @@
 IGUI_RU =
 {
+	IGUI_UserPanel_ShowKills = "Показ счетчика убийств",
 	IGUI_AddRandomTrees = "Заполнение деревьями (свободные клетки)",
 	IGUI_AddRandomGrass = "Заполнение травой (свободные клетки)",
 	IGUI_Too_much_pain_to_use = "Невыносимая боль, не могу использовать",

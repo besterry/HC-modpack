@@ -11,16 +11,6 @@ module Base
 		DisplayCategory    = Craft,
 	}
 
-    /** Добавить HCOakLog **/
-    /*recipe Create pallet log
-    {
-        Log=50,
-        Result:HTpalletLogs,
-        CanBeDoneFromFloor:true,
-        Time:200,
-        Sound:PZ_Hammer,
-    }*/
-
 	recipe Get pallet log
     {
         HTpalletLogs=1,
@@ -31,9 +21,10 @@ module Base
 
 	recipe Put pallet log
 	 {
-        destroy HTpalletLogs,
-		Log,
+        keep HTpalletLogs,
+		keep Log,
 		Result:HTpalletLogs,
+        RemoveResultItem:true,
 		OnTest:Recipe.OnTest.HTCheckPutPalletLogs,
         OnCreate:Recipe.OnCreate.HTAddLogToPallet,
         Time:10,
@@ -41,11 +32,11 @@ module Base
 	
     recipe Create pallet log
     {
-        Log,
+        keep Log,
         HCWoodenpallet,
         Result:HTpalletLogs,
         RemoveResultItem:true,
-        CanBeDoneFromFloor:true,
+        CanBeDoneFromFloor:false,
         OnCreate:Recipe.OnCreate.HTCreatePallet,
         Time:10,
     }

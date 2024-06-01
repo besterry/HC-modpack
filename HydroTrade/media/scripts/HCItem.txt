@@ -55,7 +55,7 @@ module Base
 
 	item RubberTree
     {
-        Weight	=	80,
+        Weight	=	8000,
         Type	=	Normal,
         DisplayName	=	Rubber Tree,
         Icon	=	rubberTree,

@@ -21,14 +21,14 @@ local TOOLS_NAMES = {
 }
 
 local FAIL_CHANCES = {}
-FAIL_CHANCES[3] = 50 --90
-FAIL_CHANCES[4] = 40 --80
-FAIL_CHANCES[5] = 35 --70
-FAIL_CHANCES[6] = 30 --60
+FAIL_CHANCES[3] = 45 --90
+FAIL_CHANCES[4] = 35 --80
+FAIL_CHANCES[5] = 30 --70
+FAIL_CHANCES[6] = 35 --60
 FAIL_CHANCES[7] = 25 --55
-FAIL_CHANCES[8] = 20 --50
-FAIL_CHANCES[9] = 15 --45
-FAIL_CHANCES[10] = 10 --40
+FAIL_CHANCES[8] = 16 --50
+FAIL_CHANCES[9] = 12 --45
+FAIL_CHANCES[10] = 7 --40
 
 local function getDisplayName(nameStr)
 	return SM_INST:FindItem(nameStr):getDisplayName()
