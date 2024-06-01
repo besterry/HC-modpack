@@ -37,56 +37,71 @@ local function seekShopTiles(worldobject, spritePrefix) --Функция пои�
 end
 
 local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранение ТС (отправка в гараж)
-    getPlayer():StopAllActionQueue() --Остановить выполнение всех действий characters/ILuaGameCharacter
-    local vehicleZone = CheckCar(worldobjecs[1]:getModData().spawnX, worldobjecs[1]:getModData().spawnY) --Проверка что игрок не отъехал за зону
-    local checkContainersCar = false
-    local player = getPlayer()
-    if vehicle then --Проверка что автомобиль пустой
-        for i = 0, vehicle:getPartCount() - 1 do
-            local part = vehicle:getPartByIndex(i)
-            local container = part:getItemContainer() --Очистка контейнеров
-            if container then
-                if container:getItems():size() ~= 0 then
-                    checkContainersCar = false
-                    player:Say(getText("IGUI_ContainerIsNotEmpty"))
-                    return checkContainersCar
+    sendClientCommand(getPlayer(), "Garage", "getSkinIdx", {vehicle = vehicle:getId()}) --Отправка запроса на сервер для поиска skinIdx  
+    local receiveServerCommand
+    receiveServerCommand = function(module, command, args) --Получив ответ продолжаем выполнение кода
+        if module == "Garage" and command == "getSkinIdx" then
+            Events.OnServerCommand.Remove(receiveServerCommand)
+            local skinIdx = args.skinIdx
+            local vehicleZone = CheckCar(worldobjecs[1]:getModData().spawnX, worldobjecs[1]:getModData().spawnY) --Проверка что игрок не отъехал за зону
+            local checkContainersCar = false
+            local player = getPlayer()
+            player:StopAllActionQueue() --Остановить выполнение всех действий characters/ILuaGameCharacter
+            if vehicle then --Проверка что автомобиль пустой
+                for i = 0, vehicle:getPartCount() - 1 do
+                    local part = vehicle:getPartByIndex(i)
+                    local container = part:getItemContainer() --Получение контейнера детали с содержимым (предметы)
+                    if container then
+                        if container:getItems():size() ~= 0 then
+                            checkContainersCar = false
+                            player:Say(getText("IGUI_ContainerIsNotEmpty"))
+                            return checkContainersCar
+                        end
+                    end
                 end
+                checkContainersCar = true
+            end
+            if vehicle and checkContainersCar and vehicle==vehicleZone then
+                local player = getPlayer()
+                vehicle:exit(player)
+                triggerEvent("OnExitVehicle", player)
+                local vehicleData = Garage.getVehicleData(vehicle, player, skinIdx) --Получаем таблицу с данными автомобиля
+                local modDataGarage = worldobjecs[1]:getModData()
+                modDataGarage["Garage"] = modDataGarage["Garage"] or {}    --Формирование таблицы гаража
+                table.insert(modDataGarage["Garage"], vehicleData)
+                worldobjecs[1]:transmitModData()
+                sendClientCommand(player, "vehicle", "remove", { vehicle = vehicle:getId() })
+                sendClientCommand(player, "Garage", "putCar", { vehicleData, worldobjecs[1]:getX(), worldobjecs[1]:getY(),modDataGarage.GarageOwner })
+            else
+                getPlayer():Say(getText("IGUI_Car_not_found"))
             end
         end
-        checkContainersCar = true
     end
-    if vehicle and checkContainersCar and vehicle==vehicleZone then
-        local player = getPlayer()
-        vehicle:exit(player)
-        triggerEvent("OnExitVehicle", player)
-        local vehicleData = Garage.getVehicleData(vehicle, player) --Получаем таблицу с данными автомобиля
-        local modDataGarage = worldobjecs[1]:getModData()
-        modDataGarage["Garage"] = modDataGarage["Garage"] or {}    --Формирование таблицы гаража
-        table.insert(modDataGarage["Garage"], vehicleData)
-        worldobjecs[1]:transmitModData()
-        sendClientCommand(player, "vehicle", "remove", { vehicle = vehicle:getId() })
-        sendClientCommand(player, "Garage", "putCar", { vehicleData, worldobjecs[1]:getX(), worldobjecs[1]:getY(),modDataGarage.GarageOwner })
-    else
-        getPlayer():Say(getText("IGUI_Car_not_found"))
-    end
+    Events.OnServerCommand.Add(receiveServerCommand)
 end
 
-local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE: Восстановление ТС (получение)
+local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE: Восстановление ТС (получение из гаража)
     local vehicleZone = CheckCar(spawnX, geoY)
     if not vehicle and not vehicleZone then
         local player = getPlayer()
         local modDataGarage = worldobjecs[1]:getModData()["Garage"]
         local owner = worldobjecs[1]:getModData()["GarageOwner"]
         local car = {}
+        local checkCarInGarage = false --Чек на наличие авто в гараже (чтобы второй игрок не смог дублировать авто)
         for i, vehicleData in ipairs(modDataGarage) do
             if vehicleData.oldSqlid == v.oldSqlid and vehicleData.vehicleFullName == v.vehicleFullName then
                 car = vehicleData
                 table.remove(modDataGarage, i) -- Удаление подтаблицы автомобиля из гаража
                 worldobjecs[1]:transmitModData()
+                checkCarInGarage = true
                 break
+            else
+                checkCarInGarage = false
             end
         end
-        sendClientCommand(player, "Garage", "getCar", { car, spawnX, geoY, owner})
+        if checkCarInGarage then
+            sendClientCommand(player, "Garage", "getCar", { car, spawnX, geoY, owner})
+        end
     else
         getPlayer():Say(getText("IGUI_PlaceForCarBusy"))
     end
@@ -183,7 +198,7 @@ local function checkSafeHouse()
 end
 
 local function chekUserSafeHouse() --Проверка на участника убежища
-    if isAdmin() then return true end --Админ имеет доступ к гаражам
+    if isAdmin() then return true end --Админ имеет доступ к гаражу как член убежища (достать, убрать авто)
     local player = getPlayer()
     local square = player:getCurrentSquare()       -- Получаем текущую клетку игрока.    
     if not square then return false end
@@ -226,8 +241,9 @@ local function GarageContextMenu(playerNum, context, worldobjects)
                 local myGarageSubMenu = subMenu:getNew(subMenu)
                 context:addSubMenu(myGarageOption, myGarageSubMenu)
                 for k, v in pairs(worldobjects[1]:getModData()["Garage"]) do
+                    print("k:",k)
                     if not v.owner then v.owner = "" end
-                    myGarageSubMenu:addOption(
+                    myGarageSubMenu:addOption( k .. ". " .. 
                         getText("IGUI_VehicleName" .. getText(v.scriptName)) ..
                         " [H " .. v.oldSqlid .. " KT] " .. v.owner,
                         worldobjects, getCar, playerNum, v, vehicle, spawnCoordX, spawnCoordY)

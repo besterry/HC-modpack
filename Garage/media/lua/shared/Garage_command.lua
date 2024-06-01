@@ -45,13 +45,14 @@ Garage.setVehicleData = function (vehicle,data,sq,player) --Восстановл
                     for k, v in pairs(partData.partModData) do
                         part:setModData(k, v)
                     end
-                end            
+                end
                 if partData.installItem then ---Сохраняем предмет установленный
                     local partItem = InventoryItemFactory.CreateItem(partData.installItem)
+                    partItem:setMaxCapacity(partData.containerCapacity)
                     part:setInventoryItem(partItem)
                     vehicle:transmitPartItem(part)
                 end
-                if partData.containerAmount then --Сохраняем вместимость (бензобак)
+                if partData.containerAmount then --Восстановление кол-ва бензина
                     part:setContainerContentAmount(partData.containerAmount)
                 end
                 if partData.delta then --Сохраняем использование предмета (аккумулятор) ОК
@@ -86,6 +87,11 @@ Garage.setVehicleData = function (vehicle,data,sq,player) --Восстановл
                 end
             elseif partData.condition then --Если у детали нет предмета (мигалки и т.п.)
                 part:setCondition(partData.condition)
+                
+                -- if partData.containerCapacity then
+                --     print("Part:", part:getId(), "Capacity:", partData.containerCapacity)
+                --     part:setContainerCapacity(partData.containerCapacity) 
+                -- end
                 vehicle:transmitPartCondition(part)
             else --Если деталь была демонтирована
                 part:setInventoryItem(nil)
@@ -101,8 +107,12 @@ Garage.setVehicleData = function (vehicle,data,sq,player) --Восстановл
     end
 end
 
+Garage.onGetSkinIdx = function(player, args)
+    local ServerSkinIdx = args[1]
+end
+Events.OnServerCommand.Add(Garage.onGetSkinIdx)
 
-Garage.getVehicleData = function (vehicle,player) --Сохранение ТС (отправка на парковку)
+Garage.getVehicleData = function (vehicle,player,index) --Сохранение ТС (отправка на парковку)
     local result = {
         owner = player:getUsername(),
         startDay = getWorld():getWorldAgeDays(), --День постановки на парковку
@@ -112,7 +122,7 @@ Garage.getVehicleData = function (vehicle,player) --Сохранение ТС (�
         vehicleFullName = vehicle:getScript():getFullName(), --Полное имя
         scriptName = vehicle:getScript():getName(), --Display Name
         dir = vehicle:getDir(), --угол направления ТС
-        skinIdx = vehicle:getSkinIndex(), --Номер скина
+        skinIdx = index, --Номер скина
         coords = { vehicle:getX(), vehicle:getY(), vehicle:getZ() }, --Координаты
         angles = { vehicle:getAngleX(), vehicle:getAngleY(), vehicle:getAngleZ() }, --Угол поворота
         rust = vehicle:getRust(), --Ржавчина
@@ -142,16 +152,17 @@ Garage.getVehicleData = function (vehicle,player) --Сохранение ТС (�
         local partId = part:getId() -- ID детали
         local partCondition = part:getCondition() --состояние детали
 
-        partData[partId] = {} --Формирование таблицы информации детали
-        local partModData = part:getModData() --Чтение моддаты детали моддату детали
+        partData[partId] = {} --Формирование таблицы информации о детали
+        local partModData = part:getModData() --Чтение моддаты детали
         local modDataCount = 0
-        for k, v in pairs(partModData) do
+        for k, v in pairs(partModData) do --считаем кол-во записей в моддате детали
             modDataCount = modDataCount + 1
         end
-        if modDataCount > 0 then
-            partData[partId].modData = partModData --Запись моддаты детали, если она есть ОК
+        if modDataCount > 0 then --Запись моддаты детали, если она есть
+            partData[partId].modData = partModData 
         end
         if partItem then
+            partData[partId].containerCapacity = partItem:getMaxCapacity() --Сохраняем максимальную вместимость
             partData[partId].condition = partItem:getCondition() --Сохраняем состояние ОК
             partData[partId].installItem = partItem:getFullType() --Сохраняем предмет установленный ОК
             local haveBeenRepaired = partItem:getHaveBeenRepaired() -- Число починок предмета ОК
@@ -159,7 +170,7 @@ Garage.getVehicleData = function (vehicle,player) --Сохранение ТС (�
                 partData[partId].haveBeenRepaired = haveBeenRepaired
             end
             if part:isContainer() and not part:getItemContainer() then
-                partData[partId].containerAmount = part:getContainerContentAmount() --Сохраняем вместимость (бензобак) ОК
+                partData[partId].containerAmount = part:getContainerContentAmount() --Сохраняем количество бензина (бензобак) ОК
             end
             if partItem:IsDrainable() then
                 partData[partId].delta = partItem:getUsedDelta() --Сохраняем использование предмета (аккумулятор) ОК

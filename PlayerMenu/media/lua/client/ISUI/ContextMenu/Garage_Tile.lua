@@ -49,7 +49,7 @@ local function hasGarageSpriteInSafehouse(player, spriteName) --Проверка
                 local objects = square:getObjects()
                 for i = 0, objects:size() - 1 do
                     local object = objects:get(i)
-                    if object:getTextureName() and string.find(string.lower(object:getTextureName()), string.lower(spriteName)) then
+                    if object:getTextureName() == spriteName then --and string.find(string.lower(object:getTextureName()), string.lower(spriteName)) then
                         return true
                     end
                 end
