@@ -75,7 +75,8 @@ commands.getCar = function(player, args) --Получение автомобил
         local sq = cell:getGridSquare(x, y, 0)
         local newVehicle = addVehicleDebug(car.vehicleFullName, car.dir, car.skinIdx, sq) --используется vehicleFullName вместо scriptName (в scriptName запист car, а в vehicleFullName Base.car)
         local oldKeyID = newVehicle:getKeyId() --запоминаем id заспавненой авто для поиска ключей и удаления
-        Garage.setVehicleData(newVehicle, car, sq, player)
+        newVehicle:removeKeyFromIgnition()
+        Garage.setVehicleData(newVehicle, car, sq, player) --Применение всех переменных к новому авто
         sendServerCommand(player, "Garage", "findKeyCarEvent", { keyId = oldKeyID, x=newVehicle:getX(), y=newVehicle:getY() })
         local newSqlID = newVehicle:getSqlId()
         local msg = player:getUsername() .. " GET car " .. car.scriptName ..

@@ -46,7 +46,7 @@ local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранен�
             local vehicleZone = CheckCar(worldobjecs[1]:getModData().spawnX, worldobjecs[1]:getModData().spawnY) --Проверка что игрок не отъехал за зону
             local checkContainersCar = false
             local player = getPlayer()
-            player:StopAllActionQueue() --Остановить выполнение всех действий characters/ILuaGameCharacter
+            --player:StopAllActionQueue() --Остановить выполнение всех действий characters/ILuaGameCharacter
             if vehicle then --Проверка что автомобиль пустой
                 for i = 0, vehicle:getPartCount() - 1 do
                     local part = vehicle:getPartByIndex(i)
@@ -241,7 +241,6 @@ local function GarageContextMenu(playerNum, context, worldobjects)
                 local myGarageSubMenu = subMenu:getNew(subMenu)
                 context:addSubMenu(myGarageOption, myGarageSubMenu)
                 for k, v in pairs(worldobjects[1]:getModData()["Garage"]) do
-                    print("k:",k)
                     if not v.owner then v.owner = "" end
                     myGarageSubMenu:addOption( k .. ". " .. 
                         getText("IGUI_VehicleName" .. getText(v.scriptName)) ..
