@@ -231,7 +231,9 @@ local function GarageContextMenu(playerNum, context, worldobjects)
         local vehicle = CheckCar(spawnCoordX, spawnCoordY)
         local distace = SandboxVars.NPC.GarageDistance
         if geoX > (playerX - distace) and geoX < (playerX + distace) and geoY > (playerY - distace) and geoY < (playerY + distace) then
-            local garageOption = context:addOption(getText("IGUI_Garage"), worldobjects, nil) --Гараж
+            local Garage_text = getText("IGUI_Garage")
+            if isAdmin() then Garage_text = getText("IGUI_Admin_Garage") end
+            local garageOption = context:addOption(Garage_text, worldobjects, nil) --Гараж
 
             local subMenu = context:getNew(context)
             context:addSubMenu(garageOption, subMenu)
