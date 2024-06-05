@@ -1,0 +1,47 @@
+-- local original_ISUninstallVehiclePart_perform = ISUninstallVehiclePart.perform
+-- function ISUninstallVehiclePart:perform()
+--     local o = original_ISUninstallVehiclePart_perform(self)
+--     local msg = "Player: " ..
+--     self.character:getUsername() ..
+--     " [" ..
+--     math.floor(self.character:getX()) ..
+--     "," ..
+--     math.floor(self.character:getY()) ..
+--     ",0]" ..
+--     " vehicle: " ..
+--     self.vehicle:getScriptName() ..
+--     "[" ..
+--     math.floor(self.vehicle:getX()) ..
+--     "," ..
+--     math.floor(self.vehicle:getY()) ..
+--     ",0]" ..
+--     " SqlId: " ..
+--     self.vehicle:getModData().sqlId ..
+--     " Uninstall part:" .. self.part:getId() .. " -> Item:" .. self.part:getInventoryItem():getFullType() .. ", Condition:" .. self.part:getInventoryItem():getCondition()
+--     writeLog("VehiclePart", msg)
+--     return o
+-- end
+
+-- local original_ISInstallVehiclePart_perform = ISInstallVehiclePart.perform
+-- function ISInstallVehiclePart:perform()
+--     local o = original_ISInstallVehiclePart_perform(self)
+--     local msg = "Player: " ..
+--     self.character:getUsername() ..
+--     " [" ..
+--     math.floor(self.character:getX()) ..
+--     "," ..
+--     math.floor(self.character:getY()) ..
+--     ",0]" ..
+--     " vehicle: " ..
+--     self.vehicle:getScriptName() ..
+--     "[" ..
+--     math.floor(self.vehicle:getX()) ..
+--     "," ..
+--     math.floor(self.vehicle:getY()) ..
+--     ",0]" ..
+--     " SqlId: " ..
+--     self.vehicle:getModData().sqlId ..
+--     " Install part:" .. self.part:getId() .. " -> Item:" .. self.item:getFullType() .. ", Condition:" .. self.item:getCondition()
+--     writeLog("VehiclePart", msg)
+--     return o
+-- end

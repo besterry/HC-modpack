@@ -19,8 +19,7 @@ ISWoodenWall.new = wrapFunction(original_ISWoodenWall_new)
 local original_ISSimpleFurniture_new = ISSimpleFurniture.new --(name, sprite, northSprite)
 ISSimpleFurniture.new = wrapFunction(original_ISSimpleFurniture_new)
 
-local original_ISWoodenStairs_new = ISWoodenStairs
-.new                                                   --(sprite1, sprite2, sprite3, northSprite1, northSprite2, northSprite3, pillar, pillarNorth)
+local original_ISWoodenStairs_new = ISWoodenStairs.new --(sprite1, sprite2, sprite3, northSprite1, northSprite2, northSprite3, pillar, pillarNorth)
 ISWoodenStairs.new = wrapFunction(original_ISWoodenStairs_new)
 
 local original_ISDoubleDoor_new = ISDoubleDoor.new --(sprite, spriteIndex)
@@ -44,8 +43,7 @@ ISBSFurnace.new = wrapFunction(original_ISBSFurnace_new)
 local original_ISCompost_new = ISCompost.new --(name, sprite)
 ISCompost.new = wrapFunction(original_ISCompost_new)
 
-local original_ISDoubleTileFurniture_new = ISDoubleTileFurniture
-.new                                                                 --(name, sprite1, sprite2, northSprite1, northSprite2)
+local original_ISDoubleTileFurniture_new = ISDoubleTileFurniture.new --(name, sprite1, sprite2, northSprite1, northSprite2)
 ISDoubleTileFurniture.new = wrapFunction(original_ISDoubleTileFurniture_new)
 
 local original_ISLightSource_new = ISLightSource.new --(sprite, northSprite, player)
@@ -63,15 +61,15 @@ RainCollectorBarrel.new = wrapFunction(original_RainCollectorBarrel_new)
 local original_ISWoodenContainer_new = ISWoodenContainer.new --(sprite, northSprite)
 ISWoodenContainer.new = wrapFunction(original_ISWoodenContainer_new)
 
-local original_WaterPump_new = WaterPump.new --(player, sprite, waterMax) Hydrocraft
-WaterPump.new = wrapFunction(original_WaterPump_new)
+-- local original_WaterPump_new = WaterPump.new --(player, sprite, waterMax) Hydrocraft
+-- WaterPump.new = wrapFunction(original_WaterPump_new)
 
-local original_Beehive_new = Beehive.new --(sprite, northSprite)
-Beehive.new = wrapFunction(original_Beehive_new)
+-- local original_Beehive_new = Beehive.new --(sprite, northSprite)
+-- Beehive.new = wrapFunction(original_Beehive_new)
 
 
 
---Старый код для 1 объекта
+
 -- local original_ISWoodenWall_create = ISWoodenWall.new --(sprite, northSprite, corner)
 -- function ISWoodenWall:new(sprite, northSprite, corner)
 --     local o = original_ISWoodenWall_create(self, sprite, northSprite, corner)
