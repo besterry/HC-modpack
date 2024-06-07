@@ -24,7 +24,6 @@ commands.uninstallPart  = function(player, args) --args = { vehicle = self.vehic
     else
         itemMsg = " -> Item:" .. item:getFullType() .. ", Condition:" .. item:getCondition()
     end
-    print("item ======> ",item)
     local msg = "Player: " .. player:getUsername() .. " [" .. math.floor(player:getX()) .. "," ..  math.floor(player:getY()) .. ",0]" ..
     " vehicle: " .. vehicle:getScriptName() .. "[" .. math.floor(vehicle:getX()) .. "," .. math.floor(vehicle:getY()) .. ",0]" ..
     " SqlId: " .. vehicle:getModData().sqlId ..

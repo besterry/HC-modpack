@@ -134,7 +134,7 @@ recipe Disassemble
 /* Лейка, Масляный фильтр */
 recipe Disassemble
     {
-    WateredCan/HCBugsprayer/HCBugsprayerempty/HCWashboard/HCOilfilter,
+    destroy WateredCan/HCBugsprayer/HCBugsprayerempty/HCWashboard/HCOilfilter,
     keep HCSawmetal,
     Result:SmallSheetMetal=2,
     Time:400,
@@ -342,7 +342,7 @@ recipe Disassemble
 /* Баллоны */
 recipe Disassemble
     {
-    HCHydrogentank/HCWeldingtank/HCOxygentank,
+    HCHydrogentank/HCWeldingtank/HCOxygentank/HCHeliumtank/HCHeliumtankempty/HCHclgastank/HCHclgastankempty,
     keep HCSawmetal,
     Result:SmallSheetMetal=2,
     Time:175,
