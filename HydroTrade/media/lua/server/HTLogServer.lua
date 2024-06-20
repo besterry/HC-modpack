@@ -8,7 +8,7 @@ commands.installPart  = function(player, args) -- args = { vehicle = self.vehicl
     " vehicle: " ..  vehicle:getScriptName() .. "[" .. math.floor(vehicle:getX()) ..  "," .. math.floor(vehicle:getY()) .. ",0]" ..
     " SqlId: " .. vehicle:getModData().sqlId ..
     " Install part: " .. part:getId() .. " -> Item:" .. item:getFullType() .. ", Condition:" .. args.item:getCondition()
-    writeLog("VehiclePart", msg)
+    writeLog("vehicle-Parts", msg)
 end
 
 commands.uninstallPart  = function(player, args) --args = { vehicle = self.vehicle:getId(), part = self.part:getId(), perks = perksTable, mechanicSkill = self.character:getPerkLevel(Perks.Mechanics), contentAmount = self.part:getContainerContentAmount() }
@@ -28,7 +28,7 @@ commands.uninstallPart  = function(player, args) --args = { vehicle = self.vehic
     " vehicle: " .. vehicle:getScriptName() .. "[" .. math.floor(vehicle:getX()) .. "," .. math.floor(vehicle:getY()) .. ",0]" ..
     " SqlId: " .. vehicle:getModData().sqlId ..
     " Uninstall part: " .. part:getId() .. itemMsg
-    writeLog("VehiclePart", msg)
+    writeLog("vehicle-Parts", msg)
 end
 
 commands.setContainerContentAmount = function (player, args) -- args = { vehicle = self.vehicle:getId(), part = self.part:getId(), amount = self.tankTarget }
@@ -41,8 +41,9 @@ commands.setContainerContentAmount = function (player, args) -- args = { vehicle
     " vehicle: " .. vehicle:getScriptName() .. "[" .. math.floor(vehicle:getX()) .. "," .. math.floor(vehicle:getY()) .. ",0]" ..
     " SqlId: " .. vehicle:getModData().sqlId ..
     " Part: " .. part:getId() .. " -> GASOLINE -> " .. math.floor(args.amount) .. "/" .. part:getContainerCapacity()
-    writeLog("VehiclePart", msg)
+    writeLog("vehicle-FuelChange", msg)
 end
+
 
 local function BalanceAndSH_OnClientCommand(module, command, player, args)
     if module == "vehicle" and commands[command] then

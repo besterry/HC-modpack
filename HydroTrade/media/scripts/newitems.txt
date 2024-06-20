@@ -2400,7 +2400,7 @@ module Base
         Type = Normal,
         DisplayName = Sturdy Stick,
         Icon = TZ_WoodenStick,
-        Weight = 1,
+        Weight = 0.25,
         WorldStaticModel = WoodenStick,
     }
 

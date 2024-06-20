@@ -23,10 +23,14 @@ function Recipe.OnCreate.HTAddLogToPallet(items, result, player) --Положи�
 			local newWeight = items:get(i):getWeight() + 0.3
 			local name = string.gsub(items:get(i):getName(), " %[.*%]", "")
 			name = string.gsub(name, "%s*%[.*", "")
-			local newUseDelta = items:get(i):getDelta() + items:get(i):getUseDelta()
+			local oldDelta = items:get(i):getDelta()
+			local newUseDelta = oldDelta + items:get(i):getUseDelta()
 			items:get(i):setCustomWeight(true)
-			items:get(i):setName(name .. " [" .. math.floor(newUseDelta / 0.02 + 0.1) .. "/50]")
+			print("OldDelta: ", oldDelta, " + ", items:get(i):getUseDelta()," = ", newUseDelta)
+			local count = math.floor((newUseDelta / 0.02) + 0.001)
+			items:get(i):setName(name .. " [" .. count .. "/50]")
 			items:get(i):setDelta(newUseDelta)
+			if newWeight < 1.3 then newWeight = 1+(count*0.3) end
 			items:get(i):setWeight(newWeight)
 			items:get(i):setActualWeight(newWeight)
 			player:getInventory():Remove("Log")
@@ -39,12 +43,16 @@ function Recipe.OnCreate.HTGetLogWithPallet(items, result, player)  --взять
 	for i = 0, items:size() - 1 do
 		if items:get(i):getType() == "HTpalletLogs" then
 			local newWeight = items:get(i):getWeight() - 0.3
-			local newUseDelta = items:get(i):getDelta() - items:get(i):getUseDelta()
+			local oldDelta = items:get(i):getDelta() -- 0.03999999910593033
+			local newUseDelta = oldDelta - items:get(i):getUseDelta() -- 0.03999999910593033 - 0.019999999552965164
 			local name = string.gsub(items:get(i):getName(), "%s*%[.*", "")
 			name = string.gsub(name, "%s+$", "") -- удаляет пробелы в конце строки
 			items:get(i):setCustomWeight(true)
-			if newUseDelta == 0 then newUseDelta = 0.02 end
-			items:get(i):setName(name .. " [" .. math.floor(newUseDelta / 0.02 + 0.1) .. "/50]")
+			print("OldDelta: ", oldDelta, " - ", items:get(i):getUseDelta()," = ",newUseDelta)
+			if newUseDelta <= 0 then newUseDelta = 0.02 end
+			local count = math.floor((newUseDelta / 0.02) + 0.001)
+			items:get(i):setName(name .. " [" .. count .. "/50]")
+			if newWeight < 1.3 then newWeight = 1+(count*0.3) end
 			items:get(i):setWeight(newWeight)
 			items:get(i):setActualWeight(newWeight)
 			return

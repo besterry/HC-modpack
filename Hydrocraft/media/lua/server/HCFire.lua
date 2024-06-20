@@ -64,8 +64,8 @@ function getBurned(items, result, player)
 		burnPower = burnPower + ZombRand(15);
 	end
 
-	if player:getDescriptor():getProfession() == "fireofficer" then burnPower = burnPower - 30;end
-	if player:getDescriptor():getProfession() == "metalworker" then burnPower = burnPower - 30;end
+	if player:getDescriptor():getProfession() == "fireofficer" then burnPower = burnPower - 20;end --default 30
+	if player:getDescriptor():getProfession() == "metalworker" then burnPower = burnPower - 25;end --default 30
 
 	--print ("Burnpower after proffesion/trait/random: " .. burnPower);
 	if burnPower >= 100 then burnPower = 100;end

@@ -13,6 +13,7 @@ commands.GarageLog = function(player, args)                         --Устан
         elseif args[3] and args[3] == "delete" and GlobalModData.PersonalGarage[Owner] then
             GlobalModData.PersonalGarage[Owner] = nil  -- Если гараж удаляется, удаляем информацию о владельце из хранилища данных
         end
+        writeLog("Garage-server", msg)
     end
 end
 
@@ -77,7 +78,7 @@ commands.getCar = function(player, args) --Получение автомобил
         local oldKeyID = newVehicle:getKeyId() --запоминаем id заспавненой авто для поиска ключей и удаления
         newVehicle:removeKeyFromIgnition()
         Garage.setVehicleData(newVehicle, car, sq, player) --Применение всех переменных к новому авто
-        sendServerCommand(player, "Garage", "findKeyCarEvent", { keyId = oldKeyID, x=newVehicle:getX(), y=newVehicle:getY() })
+        sendServerCommand(player, "Garage", "findKeyCarEvent", { keyId = oldKeyID, x=newVehicle:getX(), y=newVehicle:getY() }) --Удаление ключей возле машины
         local newSqlID = newVehicle:getSqlId()
         local msg = player:getUsername() .. " GET car " .. car.scriptName ..
             " from Garage: [" .. args[2] - 2 .. "," .. args[3] .. ",0 ->" ..
@@ -85,7 +86,7 @@ commands.getCar = function(player, args) --Получение автомобил
             " (oldsqlid:" .. car.oldSqlid ..
             ", newsqlid:" .. newSqlID .. ")" ..
             " startDay:" .. string.format("%.2f", car.startDay) ..
-            ", currentDay:" .. string.format("%.2f", getWorld():getWorldAgeDays()) .. "."
+            ", currentDay:" .. string.format("%.2f", getWorld():getWorldAgeDays()) .. " (" .. string.format("%.2f",(getWorld():getWorldAgeDays()-car.startDay)) .. " game days)"
         writeLog("Garage-server", msg)
     end
 end
