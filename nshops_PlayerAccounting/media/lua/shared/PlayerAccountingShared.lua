@@ -1,7 +1,7 @@
 ETOMARAT = ETOMARAT or {}
 ETOMARAT.Utils = ETOMARAT.Utils or {}
 ETOMARAT.PlayerAccounting = ETOMARAT.PlayerAccounting or {}
-ETOMARAT.PlayerAccounting.MOD_NAME = 'PlayerAccounting'
+ETOMARAT.PlayerAccounting.MOD_NAME = 'PlayerAccountingNew'
 ---@enum event_type
 ETOMARAT.PlayerAccounting.EVENT_TYPES = {
     Create = 'Create',
