@@ -1,10 +1,10 @@
 PM = PM or {}
-PM.desiredItemsSet = PM.desiredItemsSet or {}
-PM.AutolootDisplayCategory = PM.AutolootDisplayCategory or {}
-PM.InventorySelected = PM.InventorySelected or {}
-PM.AutolootDurationAction = PM.AutolootDurationAction or {}
+PM.desiredItemsSet = PM.desiredItemsSet or {} --Список собираемых предметов, формируется из Shop.Sell
+PM.AutolootDisplayCategory = PM.AutolootDisplayCategory or {} --Категории собираемоего лута (["Ammo"]: boolean = true, ["Junk"]: boolean = false и т.д.)
+PM.InventorySelected = PM.InventorySelected or {} --Выбранный инвентарь для автолута
+PM.AutolootDurationAction = PM.AutolootDurationAction or {} --Время действия автолута в днях (настройка песочницы SandboxVars.AutoLoot.DurabilityAutoLoot)
 PM.TimeActivateAutoLoot = PM.TimeActivateAutoLoot or {} --Когда был куплен автолут
-PM.AutoLootMessage = PM.AutoLootMessage or {}
+PM.AutoLootMessage = PM.AutoLootMessage or {} --True/false включено ли "оповещение о собираемых предметах над головой игрока"
 
 local function reloadSell() --Обновление списка предметов кажды игровой час
     PM.desiredItemsSet = {}
@@ -34,26 +34,6 @@ local function calculateTime() --Рассчет оставшегося врем�
 end
 Events.EveryTenMinutes.Add(calculateTime)
 
--- function GetTimeActivateAutoLootForcalculateTime() --Получение времени покупки
---     print("GETPLAYER:",getPlayer())
---     sendClientCommand(getPlayer(), 'BalanceAndSH', 'getDataAutoLoot', nil)
---     local receiveServerCommand
---     receiveServerCommand = function(module, command, args)
---         if module ~= 'BalanceAndSH' then return; end
---         if command == 'onGetDataAutoLoot' then
---             if args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
---                 PM.TimeActivateAutoLoot = args['UserData'].autoloot
---                 print("PM.TimeActivateAutoLoot on DB:",PM.TimeActivateAutoLoot)
---             end          
---             calculateTime()
---             reloadSell()
---             Events.OnServerCommand.Remove(receiveServerCommand)
---         end
---     end
---     Events.OnServerCommand.Add(receiveServerCommand)
--- end
--- Events.OnGameStart.Add(GetTimeActivateAutoLootForcalculateTime)
-
 function GetTimeActivateAutoLootForcalculateTime() --Получение времени покупки при заходе игрока
     local player = getPlayer()
     if not player then return end
@@ -76,12 +56,10 @@ function GetTimeActivateAutoLootForcalculateTime() --Получение врем
     Events.OnTick.Remove(GetTimeActivateAutoLootForcalculateTime)
 end
 Events.OnTick.Add(GetTimeActivateAutoLootForcalculateTime)
--- GetTimeActivateAutoLootForcalculateTime()
 
 
 local function AutoLoot(zombie) --автолут
     if PM.Autoloot and checkTimeActivate then
-        --print("AUTOLOOTING START")
         local player = getPlayer()
         local zombieInventory = zombie:getInventory()
         local inv
@@ -140,11 +118,10 @@ local function AutoLoot(zombie) --автолут
                 end
             end
         end
-    --zombie:DoDeath()
     end
 end
 --Events.OnZombieDead.Add(onZombieKill)
-local old_event_trigger = Events.OnZombieDead.Add--переопределение функции OnZombieDead
+local old_event_trigger = Events.OnZombieDead.Add--переопределение функции OnZombieDead, что бы код выполнялся после срабатывания всех зависимых функций
 Events.OnZombieDead.Add = function (fn_handler)
     local custom_handler = function (zombie)
         fn_handler(zombie)
