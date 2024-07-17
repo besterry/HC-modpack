@@ -319,7 +319,7 @@ recipe Extract Blue Pigment
 
 recipe Mix Can of Pink Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -335,7 +335,7 @@ recipe Mix Can of Pink Paint
 
 recipe Mix Can of Red Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -350,7 +350,7 @@ recipe Mix Can of Red Paint
 
 recipe Mix Can of Orange Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -366,7 +366,7 @@ recipe Mix Can of Orange Paint
 
 recipe Mix Can of Brown Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -381,7 +381,7 @@ recipe Mix Can of Brown Paint
 
 recipe Mix Can of Light Brown Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -397,7 +397,7 @@ recipe Mix Can of Light Brown Paint
 
 recipe Mix Can of Yellow Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -412,7 +412,7 @@ recipe Mix Can of Yellow Paint
 
 recipe Mix Can of Green Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -427,7 +427,7 @@ recipe Mix Can of Green Paint
 
 recipe Mix Can of Turquoise Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -443,7 +443,7 @@ recipe Mix Can of Turquoise Paint
 
 recipe Mix Can of Cyan Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -459,7 +459,7 @@ recipe Mix Can of Cyan Paint
 
 recipe Mix Can of Light Blue Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -475,7 +475,7 @@ recipe Mix Can of Light Blue Paint
 
 recipe Mix Can of Blue Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -490,7 +490,7 @@ recipe Mix Can of Blue Paint
 
 recipe Mix Can of Purple Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -506,7 +506,7 @@ recipe Mix Can of Purple Paint
 
 recipe Mix Can of Black Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -521,7 +521,7 @@ recipe Mix Can of Black Paint
 
 recipe Mix Can of Grey Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -537,7 +537,7 @@ recipe Mix Can of Grey Paint
 
 recipe Mix Can of White Paint
     {
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Glue/HCGluejar,
     Water=2,
@@ -553,7 +553,7 @@ recipe Mix Can of White Paint
 recipe Mix Jar of White Paint
     {
     HCJar,
-    HCPaintcan,
+    HCPaintcan/PaintbucketEmpty,
     Glue/HCGluejar,
     Water,
     HCWhitepigment,
