@@ -12,7 +12,7 @@ local toolTipcheck = function(option) --Функция для создания �
     return _tooltip
 end
 
-local function CheckCar(x, y) --Функция для получения авто из зоны по координатам и гос.номеру
+local function CheckCar(x, y) --Функция для получения авто из зоны по координатам
     local cell = getCell()
     local sq = cell:getGridSquare(x, y, 0)
     if sq then
@@ -216,6 +216,21 @@ local function chekUserSafeHouse() --Проверка на участника у
     end
 end
 
+local checkBuilding = function(worldobject)
+    local cell = getCell()
+    local sq = cell:getGridSquare(worldobject:getModData().spawnX, worldobject:getModData().spawnY, 0)
+    if sq then
+        local building = sq:getBuilding()
+        if building then
+            print("Found building")
+            return true
+        end
+    end
+    print("Not Found building")
+    return false
+end
+
+
 local function GarageContextMenu(playerNum, context, worldobjects)
     local wo, found, spriteName, sprite = seekShopTiles(worldobjects[1], "garage_0")
     local checkSH
@@ -230,6 +245,34 @@ local function GarageContextMenu(playerNum, context, worldobjects)
         local playerY = player:getY()
         local vehicle = CheckCar(spawnCoordX, spawnCoordY)
         local distace = SandboxVars.NPC.GarageDistance
+
+        if found and PM.DeleteGarage then --Удаление гаража
+            local geoX = worldobjects[1]:getX() --Координаты гаража (нпс)
+            local geoY = worldobjects[1]:getY()
+            local player = getPlayer()
+            local playerX = player:getX()
+            local playerY = player:getY()
+            local checkSafeHouse = checkSafeHouse()
+            if geoX > playerX - 6 and geoX < playerX + 6 and geoY > playerY - 6 and geoY < playerY + 6 and checkSafeHouse then
+                if worldobjects[1]:getModData()["Garage"] and #worldobjects[1]:getModData()["Garage"] > 0 then
+                    local delete = context:addOption(getText("IGUI_DeleteGarage"), worldobjects, nil)
+                    local tooltip = toolTipcheck(delete)
+                    tooltip:setName(getText('ContextMenu_DeleteGarage'))
+                    local rgb = "<RGB:1,0,0>"
+                    tooltip.description = rgb .. getText('Tooltip_DeleteGarage')
+                else
+                    local spriteName = "garage_0"
+                    local x = worldobjects[1]:getX()
+                    local y = worldobjects[1]:getY()
+                    local modData = worldobjects[1]:getModData() or {}
+                    local delete = context:addOption(getText("IGUI_DeleteGarage"), worldobjects, function()
+                        removeSpawnSprite(x, y, spriteName,modData)
+                        deleteSpawnSprite(worldobjects)
+                    end)
+                end
+            end
+        end
+
         if geoX > (playerX - distace) and geoX < (playerX + distace) and geoY > (playerY - distace) and geoY < (playerY + distace) then
             local Garage_text = getText("IGUI_Garage")
             if isAdmin() then Garage_text = getText("IGUI_Admin_Garage") end
@@ -237,6 +280,21 @@ local function GarageContextMenu(playerNum, context, worldobjects)
 
             local subMenu = context:getNew(context)
             context:addSubMenu(garageOption, subMenu)
+
+            if PM.ChangeSideGarage then --Кнопка изменения стороны
+                if not checkSafeHouse() then return end
+                local changeCM = subMenu:addOption(getText("IGUI_ChangeGarageSide"), worldobjects, change, playerNum, vehicle)
+                local tooltip = toolTipcheck(changeCM)
+                tooltip:setName(getText('ContextMenu_ChangeGarageSideTooltip'))
+                tooltip.description = getText('Tooltip_ChangeGarageSideTooltip')
+            end
+
+            if checkBuilding(worldobjects[1]) then --Проверка что гараж нахожится вне ванильного строения
+                local garageOption1 = toolTipcheck(garageOption)
+                garageOption1:setName(getText('ContextMenu_UseGarage'))
+                garageOption1.description = getText('Tooltip_Inside_building')
+                return
+            end
 
             if worldobjects[1]:getModData()["Garage"] and #worldobjects[1]:getModData()["Garage"] > 0 then -- Добавляем опции для каждого автомобиля в гараже (считываем все авто в моддате гаража)
                 local myGarageOption = subMenu:addOption(getText("IGUI_MyGarage"), worldobjects, nil)    --В гараже
@@ -262,39 +320,7 @@ local function GarageContextMenu(playerNum, context, worldobjects)
                     " (H " .. vehicle:getModData().sqlId .. " KT)"
                 subMenu:addOption(NameCar, worldobjects, putCar, playerNum, vehicle)
             end
-            if PM.ChangeSideGarage then --Кнопка изменения стороны
-                if not checkSafeHouse() then return end
-                local changeCM = subMenu:addOption(getText("IGUI_ChangeGarageSide"), worldobjects, change, playerNum, vehicle)
-                local tooltip = toolTipcheck(changeCM)
-                tooltip:setName(getText('ContextMenu_ChangeGarageSideTooltip'))
-                tooltip.description = getText('Tooltip_ChangeGarageSideTooltip')
-            end
-        end
-    end
-    if found and PM.DeleteGarage then --Удаление гаража
-        local geoX = worldobjects[1]:getX() --Координаты гаража (нпс)
-        local geoY = worldobjects[1]:getY()
-        local player = getPlayer()
-        local playerX = player:getX()
-        local playerY = player:getY()
-        local checkSafeHouse = checkSafeHouse()
-        if geoX > playerX - 6 and geoX < playerX + 6 and geoY > playerY - 6 and geoY < playerY + 6 and checkSafeHouse then
-            if worldobjects[1]:getModData()["Garage"] and #worldobjects[1]:getModData()["Garage"] > 0 then
-                local delete = context:addOption(getText("IGUI_DeleteGarage"), worldobjects, nil)
-                local tooltip = toolTipcheck(delete)
-                tooltip:setName(getText('ContextMenu_DeleteGarage'))
-                local rgb = "<RGB:1,0,0>"
-                tooltip.description = rgb .. getText('Tooltip_DeleteGarage')
-            else
-                local spriteName = "garage_0"
-                local x = worldobjects[1]:getX()
-                local y = worldobjects[1]:getY()
-                local modData = worldobjects[1]:getModData() or {}
-                local delete = context:addOption(getText("IGUI_DeleteGarage"), worldobjects, function()
-                    removeSpawnSprite(x, y, spriteName,modData)
-                    deleteSpawnSprite(worldobjects)
-                end)
-            end
+            
         end
     end
 end
