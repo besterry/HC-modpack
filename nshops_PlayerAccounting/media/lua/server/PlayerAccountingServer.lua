@@ -58,6 +58,11 @@ function ServerAccaunting:insert(player, event_type, coin, specialCoin, recipien
         specialCoin,
         recipient
     })
+
+    while #old_table > 50 do
+        table.remove(old_table, 1)  -- Remove the oldest record
+    end
+
     self.data[username] = old_table
     self:transmit()
 end

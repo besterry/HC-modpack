@@ -24,7 +24,7 @@ local function render()
         local minZ = math.max(0, square:getZ() - 3)
         local maxZ = math.min(8, square:getZ() + 3)
         
-        print("rendering")
+        --print("rendering")
         statusWindow.currMarkers = {} -- Add a new variable for this. Otherwise overwrite the original.
         for zIterator = minZ, maxZ - 1 do
             local newSq = getCell():getOrCreateGridSquare(currX, currY, zIterator);
@@ -50,7 +50,7 @@ local function clearMarkers()
             while not removedSuccessfully do
                 removedSuccessfully = getWorldMarkers():removeGridSquareMarker(markers[i])
             end
-            print("Removed: "..tostring(removedSuccessfully))
+            --print("Removed: "..tostring(removedSuccessfully))
             table.remove(markers, i)
         end
     end
@@ -64,7 +64,7 @@ function statusWindow:render()
     if luaObject then
         local isOn = luaObject.on and luaObject.charge > 0
         if isOn ~= wasOn and self:getIsVisible() then
-            print("change Detected")
+            --print("change Detected")
             statusWindow.instance.generatorOnLastUpdate = isOn
             clearMarkers()
             render()
@@ -96,13 +96,13 @@ local classicOpenPanel = statusWindow.OnOpenPanel
 function statusWindow.OnOpenPanel(...)
     classicOpenPanel(...)
     --if visible then
-    print("Visible! Fetching lua object..")
+    -- print("Visible! Fetching lua object..")
     local luaObject = statusWindow.instance.luaPB
-    print(luaObject)
+    -- print(luaObject)
     if luaObject then
         local isOn = luaObject.on and luaObject.charge > 0
         statusWindow.instance.generatorOnLastUpdate = isOn
-        print("starting render..")
+        -- print("starting render..")
         clearMarkers()
         render()
     end

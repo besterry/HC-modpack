@@ -261,7 +261,7 @@ if isServer() then -- отслеживаем удаление машины и у
 		local vehicleObj = getVehicleById(vehicleId)
 		local keyId = vehicleObj:getKeyId()
 		if CarShop.Data.CarShop[keyId] then
-			CarShop.Data.CarShop[keyId] = {}
+			CarShop.Data.CarShop[keyId] = nil
 			ModData.add(MOD_NAME, CarShop.Data.CarShop)
 			ModData.transmit(MOD_NAME)
 			sendServerCommand(MOD_NAME, "UpdateCarShopData", {vehicleKeyId = keyId})

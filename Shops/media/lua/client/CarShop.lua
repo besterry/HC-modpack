@@ -125,6 +125,10 @@ end
 ---@param _offerInfo offerInfo
 function ISVehicleMenu.onSendCommandRemoveCarSellTicket(playerObj, _offerInfo)
 	local offerInfo = copyTable(_offerInfo)
+	--print("========REMOVE SELL CAR========")
+	--print("vehicleKeyId", offerInfo.vehicleKeyId)
+	CarShop.Data.CarShop[offerInfo.vehicleKeyId] = nil
+	--print("After remove:",CarShop.Data.CarShop[offerInfo.vehicleKeyId])
 	playerObj:getInventory():AddItems(TICKET_NAME, 1);
     playerObj:Say(getText('IGUI_CarShop_Remove_Car_For_Sale'))
 	offerInfo.vehicle = nil
@@ -149,6 +153,24 @@ function ISVehicleMenu.buyCar(playerObj, _carInfo)
 	sendClientCommand(playerObj, MOD_NAME, 'onBuyCar', offerInfo)
 end
 
+local function isModDataTableEmpty(modDataTable)
+    if modDataTable == nil then
+		--print("Table empty")
+        return true
+	end
+
+	local count = 0
+    for _ in pairs(modDataTable) do
+        count = count + 1
+        if count > 0 then
+			--print("Table not empty")
+            return false
+        end
+    end
+        
+	return true
+end
+
 local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 ---@param playerObj IsoPlayer
 function ISVehicleMenu.showRadialMenu(playerObj)
@@ -170,30 +192,39 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	local vehicle = ISVehicleMenu.getVehicleToInteractWith(playerObj)
 
 	if vehicle then
-
 		local vehicleKeyId = vehicle:getKeyId()
+		local carname = vehicle:getScript():getName()
+		local carId = vehicle:getModData().sqlId
+		local X = vehicle:getX()
+		local Y = vehicle:getY()
         local offerInfo = {
             username = username,
 			vehicleKeyId = vehicleKeyId,
-			vehicle = vehicle
+			vehicle = vehicle,
+			carname = carname,
+			carid = carId,
+			x = X,
+			y = Y
         }
 		local carInfo = CarUtils:init(offerInfo)
 		local playerHasCarTicket = playerObj:getInventory():contains(TICKET_NAME)
 		local vehicleIsOnSale = carInfo:isCarOnSale()
+		local globalModDataTable = ModData.get(MOD_NAME)[vehicleKeyId]
+		local isEmptyTable = isModDataTableEmpty(globalModDataTable)
 		local playerIsCarOwner = carInfo:isCarOwner()
 
-		if vehicleIsOnSale and BravensBikeUtils.isBike(vehicle) then
+		if vehicleIsOnSale and globalModDataTable and BravensBikeUtils.isBike(vehicle) then
 			menu:clear()
 		end
 
-		if playerHasCarTicket and not vehicleIsOnSale then
+		if playerHasCarTicket and (not vehicleIsOnSale or not globalModDataTable or isEmptyTable) then
         	menu:addSlice(
 				getText('IGUI_CarShop_Offer_For_Sale'), 
 				getTexture('media/textures/ShopUI_Cart_Add.png'), 
 				ISVehicleMenu.onSendCommandAddCarSellTicket, playerObj, offerInfo
 			)
 		end
-		if vehicleIsOnSale and playerIsCarOwner then
+		if vehicleIsOnSale and globalModDataTable and playerIsCarOwner then
 			local price = carInfo:getPrice()
 			menu:addSlice(
 				getText('IGUI_CarShop_Remove_Car_For_Sale_W_Price')..price..'$', 
@@ -201,7 +232,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 				ISVehicleMenu.onSendCommandRemoveCarSellTicket, playerObj, offerInfo
 			)
 		end
-		if vehicleIsOnSale and not playerIsCarOwner then
+		if vehicleIsOnSale and globalModDataTable and not playerIsCarOwner then
 			local price = carInfo:getPrice()
 			menu:addSlice(
 				getText('IGUI_CarShop_Buy_Car_For')..price..'$', 
@@ -210,7 +241,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 			)
 		end
 
-		if vehicleIsOnSale and not playerIsCarOwner then
+		if vehicleIsOnSale and globalModDataTable and not playerIsCarOwner then
 			local ownerUsername = carInfo:getOwner()
 			menu:addSlice(
 				getText('IGUI_CarShop_Seller') .. ownerUsername, 
@@ -219,7 +250,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 			)
 		end
 
-		if vehicleIsOnSale and (ISVehicleMechanics.cheat or playerObj:getAccessLevel() ~= 'None') then
+		if vehicleIsOnSale and globalModDataTable and (ISVehicleMechanics.cheat or playerObj:getAccessLevel() ~= 'None') then
 			menu:addSlice(
 				'CHEAT: remove from sale', 
 				getTexture('media/ui/BugIcon.png'), 

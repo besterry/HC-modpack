@@ -63,6 +63,9 @@ end
 				if roomName == "kitchen" then
 					numberApartments = numberApartments + 1
 				end
+				if roomName == "grocery" or roomName == "toolstore" or roomName == "poststorage" or roomName == "post" or roomName == "bank" or roomName == "storage" or roomName == "office" then
+					numberApartments = numberApartments + 3
+				end
 				--если счётчик больше N, говорим фразу над головой
 				--и прерываем выполнение скрипта
 				if numberApartments > _n then

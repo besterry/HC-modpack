@@ -16,8 +16,16 @@ local logger = CarShop.logger
 function logger:addForSale(player, offerInfo)
 	local username = player:getUsername()
 	local price = offerInfo.price
-	local keyId = offerInfo.vehicleKeyId
-	local result = 'Player "'..username..'" add car for sale. keyId: '..keyId..', price: '..price..'$'
+	local keyId = offerInfo.vehicleKeyId	
+	local carname = offerInfo.carname or ''
+	local carId = offerInfo.carid --5
+	local serverID
+	if carId then
+		serverID = carId
+	else
+		serverID = "-1"
+	end
+	local result = 'Player "'..username..'" add car for sale. keyId: '..keyId..', price: '..price..'$' .. ', carname: '..carname .. ', carId: '..serverID .. ', coords: ['..math.floor(offerInfo.x) .. ','..math.floor(offerInfo.y) .. ',0]'
     writeLog(MOD_NAME, result);
 	-- self:log(result)
 end
@@ -26,8 +34,16 @@ end
 function logger:removeFromSale(player, offerInfo)
 	local username = player:getUsername()
 	local keyId = offerInfo.vehicleKeyId
-	local price = offerInfo.price
-	local result = 'Player "'..username..'" remove car from sale. keyId: '..keyId
+	local price = offerInfo.price or 0
+	local carname = offerInfo.carname
+	local carId = offerInfo.carid
+	local serverID
+	if carId then
+		serverID = carId
+	else
+		serverID = "-1"
+	end
+	local result = 'Player "'..username..'" remove car from sale. keyId: '..keyId .. '$, carname: '..carname .. ', carId: '..serverID .. ', coords: ['..math.floor(offerInfo.x) .. ','..math.floor(offerInfo.y) .. ',0]'
 	writeLog(MOD_NAME, result);
 	-- self:log(result)
 end
@@ -52,7 +68,7 @@ function Commands.onAddCarSellTicket(player, offerInfo)
 end
 
 function Commands.onRemoveFromSale(player, offerInfo)
-	CarShop.Data.CarShop[offerInfo.vehicleKeyId] = {}
+	CarShop.Data.CarShop[offerInfo.vehicleKeyId] = nil
 	ModData.add(MOD_NAME, CarShop.Data.CarShop)
 	ModData.transmit(MOD_NAME)
 	sendServerCommand(MOD_NAME, "UpdateCarShopData", {vehicleKeyId = offerInfo.vehicleKeyId})

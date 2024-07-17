@@ -14,7 +14,7 @@ local function ContextMenu(player, context, worldobjects, test)
         if square and sq == nil then
             sq = square
         end
-        if instanceof(v, "IsoObject") and v:hasModData() then
+        if v:hasModData() then --instanceof(v, "IsoObject") and
             local objectIndex = v:getObjectIndex()
             if not addedObjects[objectIndex] then --Исключаем дубли
                 addedObjects[objectIndex] = true
