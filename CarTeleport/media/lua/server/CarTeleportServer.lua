@@ -35,6 +35,7 @@ end
 local getVehicleData = function(vehicle)
     local result = {
         scriptName = vehicle:getScript():getName(),
+        vehicleFullName = vehicle:getScript():getFullName(),
         dir = vehicle:getDir(),
         skinIdx = vehicle:getSkinIndex(),
         coords = { vehicle:getX(), vehicle:getY(), vehicle:getZ() },
@@ -210,7 +211,9 @@ Commands.spawn = function(player, args)
         local x, y, z = unpack(vehicleData.coords)
 
         local sq = cell:getGridSquare(x-xDif, y-yDif, z)
-        local newVehicle = addVehicleDebug(vehicleData.scriptName, vehicleData.dir, vehicleData.skinIdx, sq)
+        local nameCar = vehicleData.vehicleFullName or vehicleData.scriptName
+        --print("use vehicleFullName", vehicleData.vehicleFullName, " scriptName:", vehicleData.scriptName)
+        local newVehicle = addVehicleDebug(vehicleData.vehicleFullName, vehicleData.dir, vehicleData.skinIdx, sq) -- NOTE: Заменено vehicleData.scriptName на vehicleData.vehicleFullName (в scriptName запись "car", а в vehicleFullName "Base.car")        
         
         setVehicleData(newVehicle, vehicleData, sq)
     end
