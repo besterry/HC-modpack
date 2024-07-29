@@ -19,13 +19,15 @@ function logger:addForSale(player, offerInfo)
 	local keyId = offerInfo.vehicleKeyId	
 	local carname = offerInfo.carname or ''
 	local carId = offerInfo.carid --5
+	local x = offerInfo.x or player:getX()
+	local y = offerInfo.y or player:getY()
 	local serverID
 	if carId then
-		serverID = carId
+		serverID = tostring(carId)
 	else
 		serverID = "-1"
 	end
-	local result = 'Player "'..username..'" add car for sale. keyId: '..keyId..', price: '..price..'$' .. ', carname: '..carname .. ', carId: '..serverID .. ', coords: ['..math.floor(offerInfo.x) .. ','..math.floor(offerInfo.y) .. ',0]'
+	local result = 'Player "'..username..'" add car for sale. keyId: '..keyId..', price: '..price..'$' .. ', carname: '..carname .. ', carId: '..serverID .. ', coords: ['..math.floor(x) .. ','..math.floor(y) .. ',0]'
     writeLog(MOD_NAME, result);
 	-- self:log(result)
 end
@@ -37,13 +39,15 @@ function logger:removeFromSale(player, offerInfo)
 	local price = offerInfo.price or 0
 	local carname = offerInfo.carname
 	local carId = offerInfo.carid
+	local x = offerInfo.x or player:getX()
+	local y = offerInfo.y or player:getY()
 	local serverID
 	if carId then
-		serverID = carId
+		serverID = tostring(carId)
 	else
 		serverID = "-1"
 	end
-	local result = 'Player "'..username..'" remove car from sale. keyId: '..keyId .. '$, carname: '..carname .. ', carId: '..serverID .. ', coords: ['..math.floor(offerInfo.x) .. ','..math.floor(offerInfo.y) .. ',0]'
+	local result = 'Player "'..username..'" remove car from sale. keyId: '..keyId .. '$, carname: '..carname .. ', carId: '..serverID .. ', coords: ['..math.floor(x) .. ','..math.floor(y) .. ',0]'
 	writeLog(MOD_NAME, result);
 	-- self:log(result)
 end
