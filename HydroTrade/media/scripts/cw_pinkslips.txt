@@ -3,6 +3,7 @@ module PinkSlip {
     {
         Base
     }
+    
     item toyotahilux89singlecab
     {
         DisplayCategory = CarWanna,
@@ -17,6 +18,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item toyotahilux89extracab
     {
         DisplayCategory = CarWanna,
@@ -31,6 +33,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item toyotahilux89dualcab
     {
         DisplayCategory = CarWanna,
@@ -45,6 +48,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item rx7fc
     {
         DisplayCategory = CarWanna,
@@ -59,6 +63,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+    
     item hondacrv95
     {
         DisplayCategory = CarWanna,
@@ -73,6 +78,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en93-900Turbo
     {
         DisplayCategory = CarWanna,
@@ -87,6 +93,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en91_Talon
     {
         DisplayCategory = CarWanna,
@@ -101,6 +108,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en91_EclipseTuner
     {
         DisplayCategory = CarWanna,
@@ -115,6 +123,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en91_Eclipse
     {
         DisplayCategory = CarWanna,
@@ -129,6 +138,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en91Legacy
     {
         DisplayCategory = CarWanna,
@@ -143,6 +153,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en85Wagovan
     {
         DisplayCategory = CarWanna,
@@ -157,6 +168,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en85Fiero
     {
         DisplayCategory = CarWanna,
@@ -171,6 +183,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en83Bronco2
     {
         DisplayCategory = CarWanna,
@@ -185,6 +198,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en82BratSport
     {
         DisplayCategory = CarWanna,
@@ -199,6 +213,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en82Brat
     {
         DisplayCategory = CarWanna,
@@ -213,6 +228,7 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
     item en79450SL
     {
         DisplayCategory = CarWanna,
@@ -317,7 +333,6 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
-
 
     item FJ75PC
     {

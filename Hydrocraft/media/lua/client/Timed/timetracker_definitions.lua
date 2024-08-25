@@ -19,7 +19,7 @@ if(SandboxVars.Hydrocraft.AnimalStarvation ~= nil and SandboxVars.Hydrocraft.Ani
 	STARVATION = false
 end
 
---Hamster
+--Hamster (хомяк)
 --Without Food 2 Days
 
 ItemTimeTrackerMod["HCHamstermale"] = {};   
@@ -46,7 +46,7 @@ elseif(ItemTimeTrackerMod["HCHamsterfemalehungry"] ~= nil) then
 	ItemTimeTrackerMod["HCHamsterfemalehungry"] = nil
 end
 
---Rabbit
+--Rabbit (кролик)
 --Without Food 2 Days
 
 ItemTimeTrackerMod["HCRabbitmale"] = {};   
@@ -89,7 +89,7 @@ ItemTimeTrackerMod["HCRabbithutchtired"] = {};
 ItemTimeTrackerMod["HCRabbithutchtired"]["Life"] = 168.0;
 ItemTimeTrackerMod["HCRabbithutchtired"]["TurnInto"] = "Hydrocraft.HCRabbithutchfull";
 
---Chicken
+--Chicken (курица)
 --Without Food 2 Days
 
 ItemTimeTrackerMod["HCChickenmale"] = {};   
@@ -841,7 +841,7 @@ ItemTimeTrackerMod["HCJellochocolatepuddinghot"]["TurnInto"] = "Hydrocraft.HCJel
 --Plants ===========================================================================
 --HCPottedwheat
 
---HCPottedbananatree
+--HCPottedbananatree (банан)
 ItemTimeTrackerMod["HCPottedbananatreesmall"] = {};
 ItemTimeTrackerMod["HCPottedbananatreesmall"]["Life"] = 168.0;
 ItemTimeTrackerMod["HCPottedbananatreesmall"]["TurnInto"] = "Hydrocraft.HCPottedbananatree";
@@ -854,7 +854,7 @@ ItemTimeTrackerMod["HCPottedbananatreeready"] = {};
 ItemTimeTrackerMod["HCPottedbananatreeready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedbananatreeready"]["TurnInto"] = "Hydrocraft.HCPottedbananatree";
 
---HCPottedlimetree
+--HCPottedlimetree (лайм)
 ItemTimeTrackerMod["HCPottedlimetreesmall"] = {};
 ItemTimeTrackerMod["HCPottedlimetreesmall"]["Life"] = 168.0;
 ItemTimeTrackerMod["HCPottedlimetreesmall"]["TurnInto"] = "Hydrocraft.HCPottedlimetree";
@@ -867,7 +867,7 @@ ItemTimeTrackerMod["HCPottedlimetreeready"] = {};
 ItemTimeTrackerMod["HCPottedlimetreeready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedlimetreeready"]["TurnInto"] = "Hydrocraft.HCPottedlimetree";
 
---HCPottedorangetree
+--HCPottedorangetree (апельсин)
 ItemTimeTrackerMod["HCPottedorangetreesmall"] = {};
 ItemTimeTrackerMod["HCPottedorangetreesmall"]["Life"] = 168.0;
 ItemTimeTrackerMod["HCPottedorangetreesmall"]["TurnInto"] = "Hydrocraft.HCPottedorangetree";
@@ -881,7 +881,7 @@ ItemTimeTrackerMod["HCPottedorangetreeready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedorangetreeready"]["TurnInto"] = "Hydrocraft.HCPottedorangetree";
 
 
---HCPottedpumpkin
+--HCPottedpumpkin (тыква)
 ItemTimeTrackerMod["HCPottedpumpkinsmall"] = {};
 ItemTimeTrackerMod["HCPottedpumpkinsmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedpumpkinsmall"]["TurnInto"] = "Hydrocraft.HCPottedpumpkin";
@@ -895,7 +895,7 @@ ItemTimeTrackerMod["HCPottedpumpkinready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedpumpkinready"]["TurnInto"] = "Hydrocraft.HCPottedpumpkindead";
 
 
---HCPottedtea
+--HCPottedtea (чай)
 ItemTimeTrackerMod["HCPottedteasmall"] = {};
 ItemTimeTrackerMod["HCPottedteasmall"]["Life"] = 168.0;
 ItemTimeTrackerMod["HCPottedteasmall"]["TurnInto"] = "Hydrocraft.HCPottedtea";
@@ -908,7 +908,7 @@ ItemTimeTrackerMod["HCPottedteaready"] = {};
 ItemTimeTrackerMod["HCPottedteaready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedteaready"]["TurnInto"] = "Hydrocraft.HCPottedtea";
 
---HCPottedtobacco
+--HCPottedtobacco (табак)
 ItemTimeTrackerMod["HCPottedtobaccosmall"] = {};
 ItemTimeTrackerMod["HCPottedtobaccosmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedtobaccosmall"]["TurnInto"] = "Hydrocraft.HCPottedtobacco";
@@ -921,7 +921,7 @@ ItemTimeTrackerMod["HCPottedtobaccoready"] = {};
 ItemTimeTrackerMod["HCPottedtobaccoready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedtobaccoready"]["TurnInto"] = "Hydrocraft.HCPottedtobaccodead";
 
---HCPottedginger
+--HCPottedginger (имбирь)
 ItemTimeTrackerMod["HCPottedgingersmall"] = {};
 ItemTimeTrackerMod["HCPottedgingersmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedgingersmall"]["TurnInto"] = "Hydrocraft.HCPottedginger";
@@ -934,7 +934,7 @@ ItemTimeTrackerMod["HCPottedgingerready"] = {};
 ItemTimeTrackerMod["HCPottedgingerready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedgingerready"]["TurnInto"] = "Hydrocraft.HCPottedgingerdead";
 
---HCPottedgarlic
+--HCPottedgarlic (чеснок)
 ItemTimeTrackerMod["HCPottedgarlicsmall"] = {};
 ItemTimeTrackerMod["HCPottedgarlicsmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedgarlicsmall"]["TurnInto"] = "Hydrocraft.HCPottedgarlic";
@@ -947,7 +947,7 @@ ItemTimeTrackerMod["HCPottedgarlicready"] = {};
 ItemTimeTrackerMod["HCPottedgarlicready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedgarlicready"]["TurnInto"] = "Hydrocraft.HCPottedgarlicdead";
 
---HCPottedjute
+--HCPottedjute (джут)
 ItemTimeTrackerMod["HCPottedjutesmall"] = {};
 ItemTimeTrackerMod["HCPottedjutesmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedjutesmall"]["TurnInto"] = "Hydrocraft.HCPottedjute";
@@ -960,7 +960,7 @@ ItemTimeTrackerMod["HCPottedjuteready"] = {};
 ItemTimeTrackerMod["HCPottedjuteready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedjuteready"]["TurnInto"] = "Hydrocraft.HCPottedjutedead";
 
---HCPottedchilipepperplant
+--HCPottedchilipepperplant (чили)
 ItemTimeTrackerMod["HCPottedchilipepperplantsmall"] = {};
 ItemTimeTrackerMod["HCPottedchilipepperplantsmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedchilipepperplantsmall"]["TurnInto"] = "Hydrocraft.HCPottedchilipepperplant";
@@ -973,7 +973,7 @@ ItemTimeTrackerMod["HCPottedchilipepperplantready"] = {};
 ItemTimeTrackerMod["HCPottedchilipepperplantready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedchilipepperplantready"]["TurnInto"] = "Hydrocraft.HCPottedchilipepperplantdead";
 
---HCPottedpoppy
+--HCPottedpoppy (свекла)
 ItemTimeTrackerMod["HCPottedpoppysmall"] = {};
 ItemTimeTrackerMod["HCPottedpoppysmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedpoppysmall"]["TurnInto"] = "Hydrocraft.HCPottedpoppy";
@@ -987,7 +987,7 @@ ItemTimeTrackerMod["HCPottedpoppyready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedpoppyready"]["TurnInto"] = "Hydrocraft.HCPottedpoppydead";
 
 
---HCPottedcottonplant
+--HCPottedcottonplant (хлопок)
 ItemTimeTrackerMod["HCPottedcottonplantsmall"] = {};
 ItemTimeTrackerMod["HCPottedcottonplantsmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedcottonplantsmall"]["TurnInto"] = "Hydrocraft.HCPottedcottonplant";
@@ -1000,7 +1000,7 @@ ItemTimeTrackerMod["HCPottedcottonplantready"] = {};
 ItemTimeTrackerMod["HCPottedcottonplantready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedcottonplantready"]["TurnInto"] = "Hydrocraft.HCPottedcottonplantdead";
 
---HCPottedrice
+--HCPottedrice (рис)
 ItemTimeTrackerMod["HCPottedricesmall"] = {};
 ItemTimeTrackerMod["HCPottedricesmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedricesmall"]["TurnInto"] = "Hydrocraft.HCPottedrice";
@@ -1013,7 +1013,7 @@ ItemTimeTrackerMod["HCPottedriceready"] = {};
 ItemTimeTrackerMod["HCPottedriceready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedriceready"]["TurnInto"] = "Hydrocraft.HCPottedricedead";
 
---HCPottedrubbertree
+--HCPottedrubbertree (каучук)
 ItemTimeTrackerMod["HCPottedrubbertreesmall"] = {};
 ItemTimeTrackerMod["HCPottedrubbertreesmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedrubbertreesmall"]["TurnInto"] = "Hydrocraft.HCPottedrubbertree";
@@ -1027,7 +1027,7 @@ ItemTimeTrackerMod["HCPottedrubbertreeready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedrubbertreeready"]["TurnInto"] = "Hydrocraft.HCPottedrubbertree";
 
 
---HCPottedbasil
+--HCPottedbasil (базилик)
 ItemTimeTrackerMod["HCPottedbasilsmall"] = {};
 ItemTimeTrackerMod["HCPottedbasilsmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedbasilsmall"]["TurnInto"] = "Hydrocraft.HCPottedbasil";
@@ -1040,7 +1040,7 @@ ItemTimeTrackerMod["HCPottedbasilready"] = {};
 ItemTimeTrackerMod["HCPottedbasilready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedbasilready"]["TurnInto"] = "Hydrocraft.HCPottedbasilsmalldead";
 
---HCPottedoregano
+--HCPottedoregano (орегано)
 ItemTimeTrackerMod["HCPottedoreganosmall"] = {};
 ItemTimeTrackerMod["HCPottedoreganosmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedoreganosmall"]["TurnInto"] = "Hydrocraft.HCPottedoregano";
@@ -1054,7 +1054,7 @@ ItemTimeTrackerMod["HCPottedoreganoready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedoreganoready"]["TurnInto"] = "Hydrocraft.HCPottedoreganosmalldead";
 
 
---HCPottedalfalfa
+--HCPottedalfalfa (люцерна)
 ItemTimeTrackerMod["HCPottedalfalfasmall"] = {};
 ItemTimeTrackerMod["HCPottedalfalfasmall"]["Life"] = 72.0;
 ItemTimeTrackerMod["HCPottedalfalfasmall"]["TurnInto"] = "Hydrocraft.HCPottedalfalfa";
@@ -1067,3 +1067,16 @@ ItemTimeTrackerMod["HCPottedalfalfaready"] = {};
 ItemTimeTrackerMod["HCPottedalfalfaready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedalfalfaready"]["TurnInto"] = "Hydrocraft.HCPottedalfalfadead";
 
+
+--HCPottedhemp (конопля)
+ItemTimeTrackerMod["HCPottedhempsmall"] = {};
+ItemTimeTrackerMod["HCPottedhempsmall"]["Life"] = 72.0;
+ItemTimeTrackerMod["HCPottedhempsmall"]["TurnInto"] = "Hydrocraft.HCPottedhemp";
+
+ItemTimeTrackerMod["HCPottedhemp"] = {};
+ItemTimeTrackerMod["HCPottedhemp"]["Life"] = 72.0;
+ItemTimeTrackerMod["HCPottedhemp"]["TurnInto"] = "Hydrocraft.HCPottedhempready";
+
+ItemTimeTrackerMod["HCPottedhempready"] = {};
+ItemTimeTrackerMod["HCPottedhempready"]["Life"] = 48.0;
+ItemTimeTrackerMod["HCPottedhempready"]["TurnInto"] = "Hydrocraft.HCPottedhempsmalldead";

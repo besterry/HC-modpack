@@ -9,7 +9,7 @@ function recipe_HCMRE_OpenPackage(items, result, player)
 	inv:AddItem("Hydrocraft.HCMREcrackers"); --Крекер
 	inv:AddItem("Hydrocraft.HCMREbread"); --Галеты
 	inv:AddItem("Hydrocraft.HCPurifyingtablets"); --Обеззараживающие таблетки
-	inv:AddItem("Hydrocraft.HCPurifyingtablets");
+	inv:AddItem("Hydrocraft.HCPurifyingtablets"); --Обеззараживающие таблетки
 	inv:AddItem("Hydrocraft.AlcoholWipes"); --Спирт. салфетки
 
 	--Вкусняшка

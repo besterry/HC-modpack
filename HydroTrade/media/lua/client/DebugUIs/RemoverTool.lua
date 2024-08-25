@@ -70,6 +70,51 @@ local function removeAllButFloor(square)
 	end
 end
 
+local function addTreeToSquare(sprite, square)
+    --square:AddTileObject(IsoObject.new(square, treeName));
+    local objs = square:getObjects()
+
+    local tileAlreadyOnSquare = false
+    for i=0, objs:size() - 1 do
+        if objs:get(i):getSprite() ~= nil and objs:get(i):getSprite():getName() == sprite then
+            tileAlreadyOnSquare = true
+        end
+    end
+    if not tileAlreadyOnSquare then
+        local props = ISMoveableSpriteProps.new(IsoObject.new(square, sprite):getSprite())
+        props.rawWeight = 10
+        props:placeMoveableInternal(square, InventoryItemFactory.CreateItem("Base.Plank"), sprite)
+    end
+    
+    -- local tree = IsoTree.new(treeName)    
+    -- if tree then
+    --     -- Установка позиции дерева
+    --     tree:setSquare(square)
+    --     -- Добавление дерева на клетку
+    --     square:AddSpecialObject(tree)
+        
+    --     -- Передача мод данных для объекта
+    --     tree:transmitModData()
+    -- else
+    --     print("Error: Could not create IsoTree with name:", treeName)
+    -- end
+
+    -- local tree = IsoTree.new(cell, square, sprite)
+    -- tree:setName("Tree")
+    -- tree:setType(IsoObjectType.tree)
+    -- square:AddTileObject(tree)
+    
+    -- if tree:getProperties():Is("IsTree") then
+    --     local isoTree = IsoTree.new(tree)
+    --     square:transmitAddObjectToSquare(isoTree)
+    --     square:AddTileObject(isoTree)
+    --     if tree:getContainer() then
+    --         isoTree:setContainer(tree:getContainer())
+    --     end
+    --     tree:removeFromSquare()
+    -- end
+end
+
 function RemoverItemAndBuildsTool:onClick(button)
     if button.internal == "SELECT" then
         self.selectEnd = false
@@ -204,8 +249,9 @@ function RemoverItemAndBuildsTool:onClick(button)
                                 if hasOnlyBlendsOrEmpty then -- Если клетка подходит, случайным образом размещаем на ней тайл
                                     local chanse = ZombRand(1,10)
                                     if chanse >= 7 then -- % заполения тайлами 5 - 50%
-                                        local tileName = tileSet[ZombRand(1, #tileSet + 1)] -- Выбираем случайный тайл из списка                                    
-                                        self:addTileToSquare(tileName, sq) -- Функция для добавления тайла на клетку
+                                        local tileName = tileSet[ZombRand(1, #tileSet + 1)] -- Выбираем случайный тайл из списка  
+                                        addTreeToSquare(tileName, sq)
+                                        --self:addTileToSquare(tileName, sq) -- Функция для добавления тайла на клетку
                                     end
                                 end
                             -- elseif self.itemType:isSelected(8) then --Если очистка от снего

@@ -1,0 +1,19 @@
+VERSION = 1,
+
+option WipedZone.WipeZoneList
+{
+	type = string,
+	default = 1087 1229 664 717;,
+	page = Wiped,
+	translation = Wiped_WipeZoneList,
+}
+
+option WipedZone.AreaProtection
+{
+	type = integer,
+	min         = 0,
+	max         = 10,
+	default     = 0,
+	page = Wiped,
+	translation = Wiped_AreaProtection,
+}

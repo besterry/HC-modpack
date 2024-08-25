@@ -1,0 +1,7 @@
+Sandbox_RU = {
+    Sandbox_Wiped = "Wipe зоны",
+    Sandbox_Wiped_WipeZoneList = "Список зон вайпа",
+    Sandbox_Wiped_WipeZoneList_tooltip = "Указывать координаты x1 x2 y1 y2; разделитель между зонами ; при этом x1<x2 и y1<y2, например 1087 1229 664 717;",
+    Sandbox_Wiped_AreaProtection = "Отступ от убежищ",
+    Sandbox_Wiped_AreaProtection_tooltip = "Количество чанков защищенных от вайпа вокруг убежища (чанк 10х10 клеток). По умолчанию 0, менять только по острой необходимости",
+}

@@ -35,7 +35,7 @@ function recipe_NDPlantsHarvest(items, result, player)
 		namespace = "Hydrocraft.HC";
 	end
 	
-	--Get Alternative Name and Alternative Seed Name if applicable
+	--Get Alternative Name and Alternative Seed Name if applicable (Получите альтернативное имя и альтернативное имя семени, если применимо)
 	if plantName == "Agaveblue" then
 		altName = "Agavebluecut";
 	elseif plantName == "Artichokes" then

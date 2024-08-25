@@ -313,3 +313,12 @@ option SafeHouseClose.CloseZone
    page = SafeHouse_CloseRoom_Base, 
    translation = SafeHouse_CloseZone,
 }
+
+option SafeHouseClose.OwnerListForUpdate
+{
+   type = string, 
+   default = admin,
+   
+   page = SafeHouse_CloseRoom_Base, 
+   translation = SafeHouse_OwnerListForUpdate,
+}

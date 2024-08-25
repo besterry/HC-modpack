@@ -1,5 +1,6 @@
 IGUI_RU =
 {
+	IGUI_Show_Floor_modData = "Моддата пола: ",
 	IGUI_UserPanel_ShowKills = "Показ счетчика убийств",
 	IGUI_AddRandomTrees = "Заполнение деревьями (свободные клетки)",
 	IGUI_AddRandomGrass = "Заполнение травой (свободные клетки)",

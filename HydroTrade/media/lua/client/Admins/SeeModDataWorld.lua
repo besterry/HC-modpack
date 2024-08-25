@@ -23,12 +23,20 @@ local function ContextMenu(player, context, worldobjects, test)
                 --getSpriteName nil
                 --getScriptName None
                 --getObjectName возвращает IsoObject, Trumpable
-                context:addOption(getText("IGUI_Show_IsoObject_modData").. " "..v:getTextureName(), v, showModdata)
+                local text = v:getTextureName() or v:getSpriteName() or v:getScriptName() or v:getName() or "No name"
+                context:addOption(getText("IGUI_Show_IsoObject_modData").. " "..text, v, showModdata)
             end
         end
     end
 
     if sq ~= nil then
+        -- Для пола отключено, т.к. пол является isoObject и определяется в функции выше
+        -- local floor = sq:getFloor() -- Получаем объект пола на текущем квадрате
+        -- if floor and floor:hasModData() then
+        --     local text = floor:getTextureName() or floor:getSpriteName() or floor:getScriptName() or "Wooden Floor"
+        --     context:addOption(getText("IGUI_Show_Floor_modData")..text, floor, showModdata)
+        -- end
+
         local clickedPlayer = nil
         
         for x=sq:getX()-1, sq:getX()+1 do

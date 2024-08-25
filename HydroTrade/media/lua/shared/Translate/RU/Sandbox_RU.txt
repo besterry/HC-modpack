@@ -1,5 +1,7 @@
 Sandbox_RU = {
     -- Fix
+    Sandbox_SafeHouse_OwnerListForUpdate = "Владельцы убежищ на продление",
+    Sandbox_SafeHouse_OwnerListForUpdate_tooltip = "Убежища этих игроков будут автоматически продлеваться каждый игровой день и не будут сброшены сервером.<br>Значения без даты продлеваются бесконечно.<br>Перечисление через запятую. Пример: admin,player1,player2=21.06.2025,player3",
 
     -- New
     Sandbox_ServerTweaker = "Серверные твики",
@@ -82,7 +84,7 @@ Sandbox_RU = {
 	Sandbox_VehicleRecycling_ActionTimeMultiplier = "Множитель времени разборки",
 	Sandbox_VehicleRecycling = "Разбор автомобилей",
 	
-	Sandbox_SafeHouse_CloseRoom_Base = "Запреты для убежищ игроков",
+	Sandbox_SafeHouse_CloseRoom_Base = "Убежища",
     Sandbox_SafeHouse_CloseRoom = "Список запрещенных комнат",
     Sandbox_SafeHouse_CloseRoom_tooltip = "Названия комнат, перечисленных через разделитель ; без пробелов. <LINE> Полный список комнат pzwiki.net/wiki/Room_definitions",
     Sandbox_SafeHouse_CloseZone = "Список запрещенных локаций",

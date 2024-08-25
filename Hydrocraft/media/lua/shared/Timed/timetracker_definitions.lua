@@ -1052,6 +1052,19 @@ ItemTimeTrackerMod["HCPottedoreganoready"] = {};
 ItemTimeTrackerMod["HCPottedoreganoready"]["Life"] = 48.0;
 ItemTimeTrackerMod["HCPottedoreganoready"]["TurnInto"] = "Hydrocraft.HCPottedoreganosmalldead";
 
+--HCPottedhemp (конопля)
+ItemTimeTrackerMod["HCPottedhempsmall"] = {};
+ItemTimeTrackerMod["HCPottedhempsmall"]["Life"] = 72.0;
+ItemTimeTrackerMod["HCPottedhempsmall"]["TurnInto"] = "Hydrocraft.HCPottedhemp";
+
+ItemTimeTrackerMod["HCPottedhemp"] = {};
+ItemTimeTrackerMod["HCPottedhemp"]["Life"] = 72.0;
+ItemTimeTrackerMod["HCPottedhemp"]["TurnInto"] = "Hydrocraft.HCPottedhempready";
+
+ItemTimeTrackerMod["HCPottedhempready"] = {};
+ItemTimeTrackerMod["HCPottedhempready"]["Life"] = 48.0;
+ItemTimeTrackerMod["HCPottedhempready"]["TurnInto"] = "Hydrocraft.HCPottedhempsmalldead";
+
 --HCPottedalfalfa
 ItemTimeTrackerMod["HCPottedalfalfasmall"] = {};
 ItemTimeTrackerMod["HCPottedalfalfasmall"]["Life"] = 72.0;

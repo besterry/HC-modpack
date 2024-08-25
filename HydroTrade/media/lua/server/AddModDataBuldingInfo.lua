@@ -77,3 +77,19 @@ ISWoodenContainer.new = wrapFunction(original_ISWoodenContainer_new)
 --     o.modData["Date"] = os.date("%d/%m/%Y") --День/Месяц/Год
 --     return o
 -- end
+
+
+
+local original_ISWoodenFloor_create = ISWoodenFloor.create
+function ISWoodenFloor:create(x, y, z, north, sprite) --Перенос моддаты объекта пола (выбранного в меню строительства) в создаваемый спрайт пола
+    original_ISWoodenFloor_create(self, x, y, z, north, sprite)
+    if self.javaObject then
+        if self.javaObject:getModData() then
+            -- Поэлементное копирование данных
+            for key, value in pairs(self.modData) do
+                self.javaObject:getModData()[key] = value
+            end
+            self.javaObject:transmitModData()
+        end
+    end
+end

@@ -37,7 +37,7 @@ local function render(currGenInstance)
                 end
             end
         end]]
-        print("rendering")
+        --print("rendering")
         currGenInstance.currMarkers = {} -- Add a new variable for this. Otherwise overwrite the original.
         for zIterator = minZ, maxZ - 1 do
             local newSq = getCell():getOrCreateGridSquare(currX, currY, zIterator);
@@ -60,7 +60,7 @@ local function clearMarkers(currGenInstance)
             while not removedSuccessfully do
                 removedSuccessfully = getWorldMarkers():removeGridSquareMarker(markers[i])
             end
-            print("Removed: "..tostring(removedSuccessfully))
+            --print("Removed: "..tostring(removedSuccessfully))
             table.remove(markers, i)
         end
     end
@@ -79,7 +79,7 @@ function ISGeneratorInfoWindow:update()
     --if self:getIsVisible() then
     local wasOn = self.generatorOnLastUpdate
     if self.object:isActivated() ~= wasOn and self:getIsVisible() then
-        print("change Detected")
+        --print("change Detected")
         self.generatorOnLastUpdate = self.object:isActivated()
         clearMarkers(self)
         render(self)
@@ -90,10 +90,10 @@ end
 
 local classicVisible = ISGeneratorInfoWindow.setVisible
 function ISGeneratorInfoWindow:setVisible(visible, joypadData)
-    print("Turning visible: "..tostring(visible))
+    --print("Turning visible: "..tostring(visible))
     if visible then
         self.generatorOnLastUpdate = self.object:isActivated()
-        print("starting render..")
+        --print("starting render..")
         clearMarkers(self)
         render(self)
     end

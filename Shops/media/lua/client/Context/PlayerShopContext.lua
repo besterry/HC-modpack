@@ -90,7 +90,8 @@ function PlayerShop.PickupShop(worldobjects,player,shop)
     end
     player:getInventory():AddItem(item)
 	--if PM.ShopCount > 0 then PM.ShopCount = PM.ShopCount-1 end
-    PlayerShop.toggleBusy(shop,player:getUsername(),false)
+    local name = shop:getModData().owner or player:getUsername()
+    PlayerShop.toggleBusy(shop,name,false)
 end
 
 function PlayerShop.getShopID(shop)
@@ -156,7 +157,7 @@ function PlayerShop.PlayerShopContextMenu(playerNum, context, worldobjects)
         local viewPS = context:addOption(optionView, worldobjects, PlayerShop.playerShopUI, playerNum,clickedSquare,wo);
         local isBusy = PlayerShop.isBusy(wo) 
         if isBusy then viewPS.notAvailable = isBusy end
-        if player:getUsername() == owner then
+        if player:getUsername() == owner or isAdmin() then
             local shop = context:addOption(UIText.ManagePlayerShop,worldobjects,nil);
             local subShop = context:getNew(context);
             context:addSubMenu(shop, subShop);

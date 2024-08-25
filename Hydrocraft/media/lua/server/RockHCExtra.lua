@@ -80,7 +80,7 @@ end
 
 --Randomize findings for Mine
 function HCMine(items, result, player)
-print("==========ITEMS:",items)
+--print("==========ITEMS:",items)
 local pl = getPlayer();
 pl:getXp():AddXP(Perks.Strength, 2);
 pl:getXp():AddXP(Perks.Fitness, 2);  
