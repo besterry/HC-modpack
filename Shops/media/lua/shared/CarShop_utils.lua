@@ -47,6 +47,7 @@ function CarUtils:initByPlayerObj(playerObj)
 	if not vehicle then
 		return nil
 	end
+	if ModData.get(MOD_NAME)[vehicle:getKeyId()] == nil then return nil end --Проверка есть ли запись об авто на продажу
 	return self:init({
 		username = playerObj:getUsername(),
 		vehicleKeyId = vehicle:getKeyId(),
