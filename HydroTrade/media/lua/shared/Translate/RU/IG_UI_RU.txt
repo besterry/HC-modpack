@@ -1,5 +1,9 @@
 IGUI_RU =
 {
+	IGUI_Tree_Looting = "Обобрать дерево",
+	IGUI_You_cannot_loot_this_tree_again_so_soon_Please_wait = "Кажется тут ничего нет, похоже кто-то уже собрал все.<br> Вернусь позже.",
+	IGUI_Tree_Already_Looting = "Обобрать дерево",
+	IGUI_Found_TreeLooting = "Нашел ",
 	IGUI_Show_Floor_modData = "Моддата пола: ",
 	IGUI_UserPanel_ShowKills = "Показ счетчика убийств",
 	IGUI_AddRandomTrees = "Заполнение деревьями (свободные клетки)",
