@@ -322,3 +322,11 @@ option SafeHouseClose.OwnerListForUpdate
    page = SafeHouse_CloseRoom_Base, 
    translation = SafeHouse_OwnerListForUpdate,
 }
+
+option LootingSystem.TreeLooting
+{
+	type = boolean, 
+  default = true,
+	page = LootingSystem, 
+  translation = LootingSystem_TreeLooting,
+}

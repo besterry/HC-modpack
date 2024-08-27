@@ -141,7 +141,7 @@ end
 
 --выдача миски
 function recipe_htgiveBowl(items, result, player)
-    HCAddManySameItem("Base.Bowl", 0, player);
+    HCAddManySameItem("Base.Bowl", 9, player);
 end
 
 --выдача пустой металлической бочки

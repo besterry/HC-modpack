@@ -1,5 +1,11 @@
 Sandbox_RU = {
     -- Fix
+
+    -- LootingSystem
+    Sandbox_LootingSystem = "Системы лутания",
+    Sandbox_LootingSystem_TreeLooting = "Обирать деревья",
+
+    -- SafeHouse 
     Sandbox_SafeHouse_OwnerListForUpdate = "Владельцы убежищ на продление",
     Sandbox_SafeHouse_OwnerListForUpdate_tooltip = "Убежища этих игроков будут автоматически продлеваться каждый игровой день и не будут сброшены сервером.<br>Значения без даты продлеваются бесконечно.<br>Перечисление через запятую. Пример: admin,player1,player2=21.06.2025,player3",
 

@@ -495,7 +495,7 @@ live_rabbit_male.type = "live_rabbit_male";
 -- after how many hour the animal will start to destroy the cage/escape
 live_rabbit_male.strength = 24;
 -- item given to the player
-live_rabbit_male.item = "Hydrocraft.HCRabbitmale";
+live_rabbit_male.item = "Base.DeadRabbit"; --Hydrocraft.HCRabbitmale
 -- hour this animal will be out and when you can catch it
 live_rabbit_male.minHour = 19;
 live_rabbit_male.maxHour = 5;
@@ -528,27 +528,27 @@ live_rabbit_male.baits["Hydrocraft.HCGrass"] = 20;
 
 local live_rabbit_female = {};
 live_rabbit_female.type = "live_rabbit_female";
--- after how many hour the animal will start to destroy the cage/escape
+-- after how many hour the animal will start to destroy the cage/escape [через сколько часов животное начнет крушить клетку/сбегать]
 live_rabbit_female.strength = 24;
 -- item given to the player
-live_rabbit_female.item = "Hydrocraft.HCRabbitfemale";
--- hour this animal will be out and when you can catch it
+live_rabbit_female.item = "Base.DeadRabbit"; --Hydrocraft.HCRabbitfemale
+-- hour this animal will be out and when you can catch it [в какое время попадается животное, с 19 вечера до 5 утра]
 live_rabbit_female.minHour = 19;
 live_rabbit_female.maxHour = 5;
--- min and max "size" (understand hunger reduction) of the animal
+-- min and max "size" (understand hunger reduction) of the animal [минимальный и максимальный «размер» (понимаете, уменьшение голода) животного]
 live_rabbit_female.minSize = 30;
 live_rabbit_female.maxSize = 100;
--- chance to get the animals per zone
+-- chance to get the animals per zone [шанс получить животных в каждой зоне]
 live_rabbit_female.zone = {};
 live_rabbit_female.zone["TownZone"] = 2;
 live_rabbit_female.zone["TrailerPark"] = 2;
 live_rabbit_female.zone["Vegitation"] = 10;
 live_rabbit_female.zone["Forest"] = 12;
 live_rabbit_female.zone["DeepForest"] = 15;
--- chance to get animals for each trap
+-- chance to get animals for each trap [шанс получить животных за каждую ловушку]
 live_rabbit_female.traps = {};
 live_rabbit_female.traps["Base.TrapCage"] = 40;
--- chance to attract animal per bait
+-- chance to attract animal per bait [вероятность привлечения животного на приманку]
 live_rabbit_female.baits = {};
 live_rabbit_female.baits["Base.Carrots"] = 45;
 live_rabbit_female.baits["Base.Apple"] = 35;

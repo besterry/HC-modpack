@@ -2,7 +2,10 @@ require "TimedActions/ISBaseTimedAction"
 ISTreeLootAction = ISBaseTimedAction:derive("ISTreeLootAction")
 
 function ISTreeLootAction:isValid()
-    return self.character ~= nil and self.tree ~= nil
+    local lastLootTime = self.tree:getModData().TimeLoot or 0
+    local respawnTime = self.tree:getModData().TimeRespawn or 0
+    local currentTime = getGameTime():getWorldAgeHours()
+    return lastLootTime + respawnTime <= currentTime
 end
 
 function ISTreeLootAction:perform()
