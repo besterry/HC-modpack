@@ -1236,9 +1236,16 @@ item HCRedfeather
 item HCGooseegg
     {
         Weight    		= 	0.1,
-        Type    		= 	Normal,
+        Type    		= 	Food,
         DisplayName         	= 	Goose Egg,
         icon 			= 	HCGooseegg,
+        DangerousUncooked = TRUE,
+        FoodType = Egg,
+        HungerChange = -9,
+        Calories = 73,
+        Carbohydrates = 0.32,
+		Lipids = 4.18,
+		Proteins = 5.55,
 		DisplayCategory	=   SurFor,
 		Tags			=	Egg,
     }
@@ -1246,9 +1253,16 @@ item HCGooseegg
 item HCTurkeyegg
     {
         Weight    		= 	0.1,
-        Type    		= 	Normal,
+        Type    		= 	Food,
         DisplayName         	= 	Turkey Egg,
         icon 			= 	HCTurkeyegg,
+        DangerousUncooked = TRUE,
+        FoodType = Egg,
+        HungerChange = -6,
+        Calories = 67,
+        Carbohydrates = 0.32,
+		Lipids = 4.18,
+		Proteins = 5.55,
 		DisplayCategory	=   SurFor,
 		Tags			=	Egg,
     }
@@ -1256,9 +1270,16 @@ item HCTurkeyegg
 item HCChickenegg
     {
         Weight    		= 	0.1,
-        Type    		= 	Normal,
+        Type    		= 	Food,
         DisplayName         	= 	Chicken Egg,
         icon 			= 	HCChickenegg,
+        DangerousUncooked = TRUE,
+        FoodType = Egg,
+        HungerChange = -8,
+        Calories = 75,
+        Carbohydrates = 0.32,
+		Lipids = 4.18,
+		Proteins = 5.55,
 		DisplayCategory	=   SurFor,
 		Tags			=	Egg,
     }

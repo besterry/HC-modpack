@@ -105,32 +105,32 @@ local treeLoot = { --Всех деревьев 8 типов (0-3 лето, 4-7 �
         ["e_virginiapine_1_7"] = {{ item = "Hydrocraft.HCPinenuts", chance = 40},{ item = "Hydrocraft.HCPinebough", chance = 40},{ item = "Base.Pinecone", chance = 40}},
 
         --Кладрастис кентуккийский, или жёлтый — вид реликтовых листопадных деревьев семейства Бобовые, произрастающих в юго-восточной части Северной Америки.
-        ["e_yellowwood_1_0"] = {{ item = "Hydrocraft.HCAcorn", chance = 20},{ item = "Hydrocraft.HCOakleaves", chance = 20},{ item = "Base.Acorn", chance = 20},{ item = "Hydrocraft.HCOakLog", chance = 10}}, --HCAcorn - желудь
-        ["e_yellowwood_1_1"] = {{ item = "Hydrocraft.HCAcorn", chance = 30},{ item = "Hydrocraft.HCOakleaves", chance = 30},{ item = "Base.Acorn", chance = 30},{ item = "Hydrocraft.HCOakLog", chance = 20}}, --HCOakleaves листья дуба
-        ["e_yellowwood_1_2"] = {{ item = "Hydrocraft.HCAcorn", chance = 40},{ item = "Hydrocraft.HCOakleaves", chance = 40},{ item = "Base.Acorn", chance = 40},{ item = "Hydrocraft.HCOakLog", chance = 30}}, --Base.Acorn - Жёлудь (свежее)
-        ["e_yellowwood_1_3"] = {{ item = "Hydrocraft.HCAcorn", chance = 50},{ item = "Hydrocraft.HCOakleaves", chance = 50},{ item = "Base.Acorn", chance = 50},{ item = "Hydrocraft.HCOakLog", chance = 40}}, --Hydrocraft.HCOakLog - Дубовое бревно
-        ["e_yellowwood_1_4"] = {{ item = "Hydrocraft.HCAcorn", chance = 10},{ item = "Hydrocraft.HCOakleaves", chance = 10},{ item = "Base.Acorn", chance = 10},{ item = "Hydrocraft.HCOakLog", chance = 10}},
-        ["e_yellowwood_1_5"] = {{ item = "Hydrocraft.HCAcorn", chance = 20},{ item = "Hydrocraft.HCOakleaves", chance = 20},{ item = "Base.Acorn", chance = 20},{ item = "Hydrocraft.HCOakLog", chance = 20}},
-        ["e_yellowwood_1_6"] = {{ item = "Hydrocraft.HCAcorn", chance = 30},{ item = "Hydrocraft.HCOakleaves", chance = 30},{ item = "Base.Acorn", chance = 30},{ item = "Hydrocraft.HCOakLog", chance = 30}},
-        ["e_yellowwood_1_7"] = {{ item = "Hydrocraft.HCAcorn", chance = 40},{ item = "Hydrocraft.HCOakleaves", chance = 40},{ item = "Base.Acorn", chance = 40},{ item = "Hydrocraft.HCOakLog", chance = 40}},
+        ["e_yellowwood_1_0"] = {{ item = "Hydrocraft.HCAcorn", chance = 20},{ item = "Hydrocraft.HCOakleaves", chance = 20},{ item = "Base.Acorn", chance = 20},{ item = "Hydrocraft.HCOakLog", chance = 40},{ item = "Base.Apple", chance = 20}}, --HCAcorn - желудь
+        ["e_yellowwood_1_1"] = {{ item = "Hydrocraft.HCAcorn", chance = 30},{ item = "Hydrocraft.HCOakleaves", chance = 30},{ item = "Base.Acorn", chance = 30},{ item = "Hydrocraft.HCOakLog", chance = 50},{ item = "Base.Apple", chance = 40}}, --HCOakleaves листья дуба
+        ["e_yellowwood_1_2"] = {{ item = "Hydrocraft.HCAcorn", chance = 40},{ item = "Hydrocraft.HCOakleaves", chance = 40},{ item = "Base.Acorn", chance = 40},{ item = "Hydrocraft.HCOakLog", chance = 60},{ item = "Base.Apple", chance = 50}}, --Base.Acorn - Жёлудь (свежее)
+        ["e_yellowwood_1_3"] = {{ item = "Hydrocraft.HCAcorn", chance = 50},{ item = "Hydrocraft.HCOakleaves", chance = 50},{ item = "Base.Acorn", chance = 50},{ item = "Hydrocraft.HCOakLog", chance = 70},{ item = "Base.Apple", chance = 60}}, --Hydrocraft.HCOakLog - Дубовое бревно
+        ["e_yellowwood_1_4"] = {{ item = "Hydrocraft.HCAcorn", chance = 10},{ item = "Hydrocraft.HCOakleaves", chance = 10},{ item = "Base.Acorn", chance = 10},{ item = "Hydrocraft.HCOakLog", chance = 40},{ item = "Base.Apple", chance = 10}}, --Base.Apple яблоко
+        ["e_yellowwood_1_5"] = {{ item = "Hydrocraft.HCAcorn", chance = 20},{ item = "Hydrocraft.HCOakleaves", chance = 20},{ item = "Base.Acorn", chance = 20},{ item = "Hydrocraft.HCOakLog", chance = 50},{ item = "Base.Apple", chance = 20}},
+        ["e_yellowwood_1_6"] = {{ item = "Hydrocraft.HCAcorn", chance = 30},{ item = "Hydrocraft.HCOakleaves", chance = 30},{ item = "Base.Acorn", chance = 30},{ item = "Hydrocraft.HCOakLog", chance = 60},{ item = "Base.Apple", chance = 30}},
+        ["e_yellowwood_1_7"] = {{ item = "Hydrocraft.HCAcorn", chance = 40},{ item = "Hydrocraft.HCOakleaves", chance = 40},{ item = "Base.Acorn", chance = 40},{ item = "Hydrocraft.HCOakLog", chance = 70},{ item = "Base.Apple", chance = 40}},
 }
 
 local defaultLoot = { --Лут который будет падать со всех деревьев
-    { item = "Base.Log", chance = 5 },  -- 5% шанс выпадения бревна
-    { item = "Base.TreeBranch", chance = 30 },  -- 30% шанс выпадения древесной ветви
-    { item = "Base.Twigs", chance = 60 },   -- 60% шанс выпадения маленьких веток
-    { item = "Hydrocraft.HCQuill", chance = 5 },  -- 5% шанс выпадения пера
-    { item = "Hydrocraft.HCWhitefeathers", chance = 5 },  -- 5% шанс выпадения белого пера
-    { item = "Hydrocraft.HCBlackfeathers", chance = 5 }  -- 5% шанс выпадения черного пера
+    { item = "Base.Log", chance = 1 },  -- % шанс выпадения бревна
+    { item = "Base.TreeBranch", chance = 20 },  -- % шанс выпадения древесной ветви
+    { item = "Base.Twigs", chance = 40 },   -- % шанс выпадения маленьких веток
+    --{ item = "Hydrocraft.HCQuill", chance = 5 },  -- % шанс выпадения пера
+    { item = "Hydrocraft.HCWhitefeathers", chance = 2 },  -- % шанс выпадения белого пера HCWhitefeathers
+    { item = "Hydrocraft.HCBlackfeathers", chance = 2 },  -- % шанс выпадения черного пера  HCBlackfeathers
+    { item = "Hydrocraft.HCBrownfeathers", chance = 2 },  -- % шанс выпадения коричневого пера HCBrownfeathers
+    { item = "Hydrocraft.HCRedfeather", chance = 2 },  -- % шанс выпадения красного пера HCRedfeather
+    { item = "Hydrocraft.HCBluejayfeather", chance = 2 },  -- % шанс выпадения синего пера HCBluejayfeather
+    { item = "Hydrocraft.HCStripedfeather", chance = 2 },  -- % шанс выпадения полосатого пера HCStripedfeather
+    { item = "Base.Egg", chance = 1 },  -- % шанс выпадения яйца Base.Egg
+    { item = "Hydrocraft.HCGooseegg", chance = 1 },  -- % шанс выпадения гусиного яйца
+    { item = "Hydrocraft.HCTurkeyegg", chance = 1 },  -- % шанс выпадения индюшачьего яйца
+    { item = "Hydrocraft.HCChickenegg", chance = 1 },  -- % шанс выпадения куринного яйца
 }
-
-local function CreateLootAction(obj, player) -- Создаём действие для выполнения анимации и лутания
-    --luautils.walkAdj(player, obj:getSquare(),1)
-    -- ISTimedActionQueue.add(ISWalkToTimedAction:new(player, square))
-    if luautils.walkAdj(player, obj:getSquare(), true) then
-        ISTimedActionQueue.add(ISTreeLootAction:new(player, obj, 200))
-    end
-end
 
 ISWorldObjectContextMenu.onLootTree = function(worldobjects, playerObj, tree) --Создание элемента выделения дерева для лута
     local bo = ISLootTreeCursor:new(nil, nil, playerObj)
@@ -143,50 +143,56 @@ function LootingTree(obj, player)
     local lastLootTime = obj:getModData().TimeLoot or 0
     local respawnTime = obj:getModData().TimeRespawn or 0
     local currentTime = getGameTime():getWorldAgeHours()
-    print( lastLootTime + respawnTime ," <= " , currentTime)
+    --print( lastLootTime + respawnTime ," <= " , currentTime)
     if lastLootTime~=0 and lastLootTime + respawnTime >= currentTime then return end
 
     local treeName = tostring(obj:getSprite():getName()) -- Получаем имя спрайта
+    -- print("Original treeName:", treeName)
+    treeName = string.gsub(treeName, "JUMBO", "")
+    -- print("treeName:", treeName, " treeLoot[treeName]:" ,treeLoot[treeName])
     local lootTable = treeLoot[treeName] or {} -- Получаем таблицу лута для конкретного типа дерева или пустую таблицу
     local foragingLevel = player:getPerkLevel(Perks.PlantScavenging) -- Уровень собирательства игрока
     local isLucky = player:HasTrait("Lucky")
     local isUnlucky = player:HasTrait("Unlucky")
     local luckModifier = 0
-    local count = 0    
-    -- Учитываем навыки удачи/неудачи
+    local count = 0
+    local maxCount = ZombRand(1, 4)
     if isLucky then
-        luckModifier = 5 -- Увеличиваем шанс выпадения на 5%
+        luckModifier = 3 -- Увеличиваем шанс выпадения на %
+        maxCount = maxCount + ZombRand(0,1)
     elseif isUnlucky then
-        luckModifier = -5 -- Уменьшаем шанс выпадения на 5%
+        luckModifier = -3 -- Уменьшаем шанс выпадения на %
     end
-
-    -- Лут для конкретного типа дерева
-    for _, loot in ipairs(lootTable) do
+    for _, loot in ipairs(lootTable) do -- Лут для конкретного типа дерева
+        if count >= maxCount then break end
         local adjustedChance = loot.chance + foragingLevel + luckModifier -- Модифицируем шанс в зависимости от навыка и удачи/неудачи
-        if ZombRand(0, 100) < adjustedChance then
-            -- print("FAV lucky:", luckModifier," foragingLevel:", foragingLevel , " adjustedChance defaultLoot:", adjustedChance, " item:",loot.item)
+        local random = ZombRand(0, 100)
+        -- print("SL adjustedChance:", adjustedChance,"<= ", random ,adjustedChance >= random , " item:",loot.item)
+        if random <= adjustedChance then
+            -- print("SL:", loot.item, " chance:", adjustedChance, " random:", random)
             player:getInventory():AddItem(loot.item)
             count = count + 1
         end
     end
 
-    -- Лут по умолчанию для всех деревьев
-    for _, loot in ipairs(defaultLoot) do
-        local adjustedChance = loot.chance + foragingLevel + luckModifier -- Модифицируем шанс для лута по умолчанию        
-        if ZombRand(0, 100) < adjustedChance then
-            -- print("DEFAULT lucky:", luckModifier," foragingLevel:", foragingLevel , " adjustedChance:", adjustedChance, " item:",loot.item)
-            local item = player:getInventory():AddItem(loot.item)
+    for _, loot in ipairs(defaultLoot) do -- Лут по умолчанию для всех деревьев
+        if count >= maxCount then break end
+        local adjustedChance = loot.chance + foragingLevel + luckModifier -- Модифицируем шанс для лута по умолчанию (если 1% шанса дропа вещи: 1% + уроень собирательства (max=10%) + удача/неудача(+-3%) = 0-13% шанса дропа вещи со всеми модификаторами)       
+        local random = ZombRand(0, 100)
+        --print("SL adjustedChance:", adjustedChance,"<= ", random , adjustedChance >= random , " item:",loot.item)
+        if random <= adjustedChance then
+            -- print("DL:", loot.item, " chance:", adjustedChance, " random:", random)
+            player:getInventory():AddItem(loot.item)
             count = count + 1
         end
     end
-
-    -- Добавляем опыт за каждый найденный предмет
+    -- print("ALL:",count)
     local xpAmount = 0.1 * count + (foragingLevel * 0.2) -- Базовое количество опыта с учетом уровня собирательства
     if xpAmount == 0 then xpAmount = 0.2 end --Даём гарантированный опыт
     player:getXp():AddXP(Perks.PlantScavenging, xpAmount)
 
-    -- Обновляем информацию о лутании
-    local interval = ZombRand(1, 3) -- Респ 2-11 дней
+    -- Обновление информацию о лутании
+    local interval = ZombRand(1, 2) -- Респ 6-48 часов
     obj:getModData().TimeRespawn = interval
     obj:getModData().TimeLoot = getGameTime():getWorldAgeHours() -- Получаем текущее время в игровых часах
     obj:getModData().PlayerLooter = player:getUsername()
@@ -200,21 +206,28 @@ function OnTreeClick(playerNum, context, worldObjects)
         if instanceof(obj, "IsoTree") and not alreadyHandled then
             -- print("Tree: ", obj:getSprite():getName())      
             alreadyHandled = true -- Устраняем дублирование контекстного меню
-            local lastLootTime = obj:getModData().TimeLoot or 0
-            local respawnTime = obj:getModData().TimeRespawn or 0
-            if lastLootTime + respawnTime > getGameTime():getWorldAgeHours() then --Если дерево уже луталось за LootTime часов
-                local option = context:addOption(getText(getText("IGUI_Tree_Already_Looting")), obj, nil, nil)
-                option.notAvailable = true
-                local toolTip = ISToolTip:new()
-                toolTip:initialise()
-                toolTip:setVisible(false)
-                toolTip.description = getText(getText("IGUI_You_cannot_loot_this_tree_again_so_soon_Please_wait"))
-                option.toolTip = toolTip
-            else
+            -- local lastLootTime = obj:getModData().TimeLoot or 0
+            -- local respawnTime = obj:getModData().TimeRespawn or 0
+            -- if lastLootTime + respawnTime > getGameTime():getWorldAgeHours() then --Если дерево уже луталось за LootTime часов
+            --     local option = context:addOption(getText(getText("IGUI_Tree_Already_Looting")), obj, nil, nil)
+            --     option.notAvailable = true
+            --     local toolTip = ISToolTip:new()
+            --     toolTip:initialise()
+            --     toolTip:setVisible(false)
+            --     toolTip.description = getText(getText("IGUI_You_cannot_loot_this_tree_again_so_soon_Please_wait"))
+            --     option.toolTip = toolTip
+            -- else
                 context:addOption(getText("IGUI_Tree_Looting"), obj, ISWorldObjectContextMenu.onLootTree , player) --CreateLootAction
-            end
+            -- end
         end
     end
 end
-
 Events.OnFillWorldObjectContextMenu.Add(OnTreeClick)
+
+
+
+-- local function CreateLootAction(obj, player) -- Создаём действие для выполнения анимации и лутания
+--     if luautils.walkAdj(player, obj:getSquare(), true) then
+--         ISTimedActionQueue.add(ISTreeLootAction:new(player, obj, 200))
+--     end
+-- end

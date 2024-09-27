@@ -95,11 +95,13 @@ Commands.moveCar = function(args)
     local username = player:getUsername()
     local vehicleList = CacheMap[username]
     for k,vehicle in pairs(vehicleList) do
-        local id = vehicle:getId()
-        local keyId = vehicle:getKeyId()
-        local thisVehicle = getVehicleById(id)
-        if thisVehicle and thisVehicle:getKeyId() == keyId then
-            CarTeleport.moveCar(player, vehicle, xDif, yDif)
+        if vehicle then
+            local id = vehicle:getId()
+            local keyId = vehicle:getKeyId()
+            local thisVehicle = getVehicleById(id)
+            if thisVehicle and thisVehicle:getKeyId() == keyId then
+                CarTeleport.moveCar(player, vehicle, xDif, yDif)
+            end
         end
     end
 end

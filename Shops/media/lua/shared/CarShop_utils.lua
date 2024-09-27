@@ -248,10 +248,12 @@ function CarUtils:stopConstraints()
 	if not vehicle then
 		vehicle = self:getVehicleByKeyId(self.vehicleKeyId)
 	end
-	vehicle:setMass(vehicle:getInitialMass())
-	vehicle:updateTotalMass()
-	vehicle:setMaxSpeed(vehicle:getMaxSpeed())
-	CarShop.isAllowGetKey = true
+	if vehicle then
+		vehicle:setMass(vehicle:getInitialMass())
+		vehicle:updateTotalMass()
+		vehicle:setMaxSpeed(vehicle:getMaxSpeed())
+		CarShop.isAllowGetKey = true
+	end
 end
 
 

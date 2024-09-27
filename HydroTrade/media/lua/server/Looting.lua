@@ -9,6 +9,8 @@ function ISLootTreeCursor:create(x, y, z, north, sprite)
         local currentTime = getGameTime():getWorldAgeHours()
         if lastLootTime + respawnTime <= currentTime then
             ISWorldObjectContextMenu.doLootTree(self.character, tree)
+        else
+            self.character:Say(getText('IGUI_Already_LootTree'))
         end
     end
 end
