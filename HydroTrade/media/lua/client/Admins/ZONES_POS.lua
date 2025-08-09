@@ -125,22 +125,24 @@ local function getZombieCount(player, radius)
     
     -- Получаем всех зомби в мире
     local zombies = getCell():getZombieList()
-    if zombies then
-        for i = 0, zombies:size() - 1 do
-            local zombie = zombies:get(i)
-            if zombie and not zombie:isDead() then
-                local zombieX = zombie:getX()
-                local zombieY = zombie:getY()
+	zombieCount = zombies:size()
+    -- if zombies then
+    --     for i = 0, zombies:size() - 1 do
+    --         local zombie = zombies:get(i)
+    --         if zombie and not zombie:isDead() then
+    --             local zombieX = zombie:getX()
+    --             local zombieY = zombie:getY()
                 
-                -- Проверяем расстояние до зомби
-                local distance = math.sqrt((playerX - zombieX)^2 + (playerY - zombieY)^2)
-                if distance <= radius then
-                    zombieCount = zombieCount + 1
-                end
-            end
-        end
-    end
-    return "Zombies: " .. zombieCount .. " (radius:" .. radius .. ")"
+    --             -- Проверяем расстояние до зомби
+    --             local distance = math.sqrt((playerX - zombieX)^2 + (playerY - zombieY)^2)
+    --             if distance <= radius then
+    --                 zombieCount = zombieCount + 1
+    --             end
+    --         end
+    --     end
+	-- 	print("zombieCount: " .. zombies:size())
+    -- end	
+    return "Zombies: " .. zombieCount
 end
 
 local function getCoords()
@@ -165,12 +167,12 @@ local function getCoords()
         textManager:DrawString(UIFont.Large, screenX, screenY, cache_pos, 0.1, 0.8, 1, 1);
         textManager:DrawString(UIFont.Large, screenX, screenY + 20, cache_zone, 0.1, 0.8, 1, 1);
 		textManager:DrawString(UIFont.Large, screenX, screenY + 40, cache_zombies, 0.1, 0.8, 1, 1);
-		--textManager:DrawString(UIFont.Large, screenX, screenY + 40, cache_online, 0.1, 0.8, 1, 1);
     end
 end
 
 Events.OnGameStart.Add(function()
 	Events.OnPostUIDraw.Add(getCoords);
+	Events.EveryOneMinute.Add(getCoords);
 end)
 
 Events.OnCreatePlayer.Add(function()

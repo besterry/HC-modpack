@@ -196,6 +196,8 @@ function LootingTree(obj, player)
     obj:getModData().TimeRespawn = interval
     obj:getModData().TimeLoot = getGameTime():getWorldAgeHours() -- Получаем текущее время в игровых часах
     obj:getModData().PlayerLooter = player:getUsername()
+    -- Трансмиттим моддату
+    obj:transmitModData()
 end
 
 function OnTreeClick(playerNum, context, worldObjects)
