@@ -117,6 +117,32 @@ local function getOnlineInfo()
     return "Online ?/?"
 end
 
+local function getZombieCount(player, radius)
+    radius = radius or 50 -- радиус по умолчанию 50 клеток
+    local playerX = player:getX()
+    local playerY = player:getY()
+    local zombieCount = 0
+    
+    -- Получаем всех зомби в мире
+    local zombies = getCell():getZombieList()
+    if zombies then
+        for i = 0, zombies:size() - 1 do
+            local zombie = zombies:get(i)
+            if zombie and not zombie:isDead() then
+                local zombieX = zombie:getX()
+                local zombieY = zombie:getY()
+                
+                -- Проверяем расстояние до зомби
+                local distance = math.sqrt((playerX - zombieX)^2 + (playerY - zombieY)^2)
+                if distance <= radius then
+                    zombieCount = zombieCount + 1
+                end
+            end
+        end
+    end
+    return "Zombies: " .. zombieCount .. " (radius:" .. radius .. ")"
+end
+
 local function getCoords()
 	if player then 
 		admin = player:getAccessLevel()=="Admin"
@@ -134,9 +160,11 @@ local function getCoords()
 			cache_online = getOnlineInfo()
             cache_pos = playerX .. " x " .. playerY .. " | " .. cache_online
             cache_zone = "Zone: " .. getZone(player, playerX, playerY)			
+			cache_zombies = getZombieCount(player, 50)
         end
         textManager:DrawString(UIFont.Large, screenX, screenY, cache_pos, 0.1, 0.8, 1, 1);
         textManager:DrawString(UIFont.Large, screenX, screenY + 20, cache_zone, 0.1, 0.8, 1, 1);
+		textManager:DrawString(UIFont.Large, screenX, screenY + 40, cache_zombies, 0.1, 0.8, 1, 1);
 		--textManager:DrawString(UIFont.Large, screenX, screenY + 40, cache_online, 0.1, 0.8, 1, 1);
     end
 end
