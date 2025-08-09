@@ -154,5 +154,5 @@ IGUI_RU =
 	IGUI_Show_Data_Item = "Мод дата",
 	IGUI_Show_IsoObject_modData = "Моддата объекта",
 	IGUI_Show_player_modData = "Моддата игрока",
-	
+	IGUI_Tree_Looting_Item = "Собрано ",
 }

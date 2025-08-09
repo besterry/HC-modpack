@@ -170,7 +170,8 @@ function LootingTree(obj, player)
         -- print("SL adjustedChance:", adjustedChance,"<= ", random ,adjustedChance >= random , " item:",loot.item)
         if random <= adjustedChance then
             -- print("SL:", loot.item, " chance:", adjustedChance, " random:", random)
-            player:getInventory():AddItem(loot.item)
+            local item = player:getInventory():AddItem(loot.item)
+            player:Say(getText("IGUI_Tree_Looting_Item") .. item:getDisplayName())
             count = count + 1
         end
     end
@@ -182,7 +183,8 @@ function LootingTree(obj, player)
         --print("SL adjustedChance:", adjustedChance,"<= ", random , adjustedChance >= random , " item:",loot.item)
         if random <= adjustedChance then
             -- print("DL:", loot.item, " chance:", adjustedChance, " random:", random)
-            player:getInventory():AddItem(loot.item)
+            local item = player:getInventory():AddItem(loot.item)
+            player:Say(getText("IGUI_Tree_Looting_Item") .. item:getDisplayName())
             count = count + 1
         end
     end
@@ -192,12 +194,11 @@ function LootingTree(obj, player)
     player:getXp():AddXP(Perks.PlantScavenging, xpAmount)
 
     -- Обновление информацию о лутании
-    local interval = ZombRand(1, 2) -- Респ 6-48 часов
+    local interval = ZombRand(6, 48) -- Респ 6-48 часов
     obj:getModData().TimeRespawn = interval
     obj:getModData().TimeLoot = getGameTime():getWorldAgeHours() -- Получаем текущее время в игровых часах
     obj:getModData().PlayerLooter = player:getUsername()
-    -- Трансмиттим моддату
-    obj:transmitModData()
+    obj:transmitModData() -- Трансмиттим моддату
 end
 
 function OnTreeClick(playerNum, context, worldObjects)

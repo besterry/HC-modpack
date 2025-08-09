@@ -172,7 +172,6 @@ end
 
 Events.OnGameStart.Add(function()
 	Events.OnPostUIDraw.Add(getCoords);
-	Events.EveryOneMinute.Add(getCoords);
 end)
 
 Events.OnCreatePlayer.Add(function()

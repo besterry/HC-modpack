@@ -10,8 +10,8 @@ end
 
 function ISTreeLootAction:perform()
     --LootingTreeAfterAnimation(self.character, self.tree) --Функция для выполнения лутания после окончания анимации.
-    LootingTree(self.obj,self.character) -- Не забудьте определить эту функцию
-    ISBaseTimedAction.perform(self) -- Завершаем действие
+    LootingTree(self.obj,self.character)
+    ISBaseTimedAction.perform(self) -- Завершение действия
 end
 
 function ISTreeLootAction:waitToStart() -- Ожидание начала действия
