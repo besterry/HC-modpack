@@ -103,6 +103,19 @@ local cache_player_y = nil
 local cache_pos = ""
 local cache_zone = ""
 local floor = math.floor
+local cache_online = ""
+
+local function getOnlineInfo()
+    if isClient() then
+        local onlinePlayers = getOnlinePlayers()
+        if onlinePlayers then
+            local currentPlayers = onlinePlayers:size()
+            local maxPlayers = getServerOptions():getOptionByName("MaxPlayers"):getValue()
+            return "Online " .. currentPlayers .. "/" .. maxPlayers
+        end
+    end
+    return "Online ?/?"
+end
 
 local function getCoords()
 	if player then 
@@ -118,11 +131,13 @@ local function getCoords()
         if playerX ~= cache_player_x or playerY ~= cache_player_y then
             cache_player_x = playerX
             cache_player_y = playerY
-            cache_pos = playerX .. " x " .. playerY
-            cache_zone = getZone(player, playerX, playerY)
+			cache_online = getOnlineInfo()
+            cache_pos = playerX .. " x " .. playerY .. " | " .. cache_online
+            cache_zone = "Zone: " .. getZone(player, playerX, playerY)			
         end
         textManager:DrawString(UIFont.Large, screenX, screenY, cache_pos, 0.1, 0.8, 1, 1);
         textManager:DrawString(UIFont.Large, screenX, screenY + 20, cache_zone, 0.1, 0.8, 1, 1);
+		--textManager:DrawString(UIFont.Large, screenX, screenY + 40, cache_online, 0.1, 0.8, 1, 1);
     end
 end
 
