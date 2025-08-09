@@ -55,20 +55,20 @@ local treeLoot = { --Всех деревьев 8 типов (0-3 лето, 4-7 �
         ["e_cockspurhawthorn_1_7"] = {{ item = "Hydrocraft.HCChestnut", chance = 40 },{ item = "Hydrocraft.HCElmbough", chance = 50 }},
 
         --Кизи́л, или Дёрен, — род растений семейства Кизиловые, включающий более 50 видов. В основном это древесные листопадные растения, жизненная форма которых — деревья или кустарники. Некоторые виды — травянистые многолетние растения, несколько видов — древесные вечнозелёные
-        ["e_dogwood_1_0"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 20 }}, --HCMulberryleaf листья шелковицы
-        ["e_dogwood_1_1"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 30 }},
-        ["e_dogwood_1_2"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 40 }},
-        ["e_dogwood_1_3"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 50 }},
-        ["e_dogwood_1_4"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 10 }},
-        ["e_dogwood_1_5"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 20 }},
-        ["e_dogwood_1_6"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 30 }},
-        ["e_dogwood_1_7"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 40 }},
+        ["e_dogwood_1_0"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 20 },{ item = "Hydrocraft.HCMulberry", chance = 20 }}, --HCMulberryleaf листья шелковицы
+        ["e_dogwood_1_1"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 30 },{ item = "Hydrocraft.HCMulberry", chance = 30 }},
+        ["e_dogwood_1_2"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 40 },{ item = "Hydrocraft.HCMulberry", chance = 40 }},
+        ["e_dogwood_1_3"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 50 },{ item = "Hydrocraft.HCMulberry", chance = 50 }},
+        ["e_dogwood_1_4"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 10 },{ item = "Hydrocraft.HCMulberry", chance = 10 }},
+        ["e_dogwood_1_5"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 20 },{ item = "Hydrocraft.HCMulberry", chance = 20 }},
+        ["e_dogwood_1_6"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 30 },{ item = "Hydrocraft.HCMulberry", chance = 30 }},
+        ["e_dogwood_1_7"] = {{ item = "Hydrocraft.HCMulberryleaf", chance = 40 },{ item = "Hydrocraft.HCMulberry", chance = 40 }},
 
         --Багрянник канадский, или Церцис канадский — деревья, вид рода Церцис семейства Бобовые
-        ["e_easternredbud_1_0"] = {{ item = "Base.Cherry", chance = 30},{ item = "Hydrocraft.HCAlderboug", chance = 20}}, --Base.Cherry вишня
-        ["e_easternredbud_1_1"] = {{ item = "Base.Cherry", chance = 40},{ item = "Hydrocraft.HCAlderboug", chance = 30}}, -- Hydrocraft.HCAlderboug - Ветвь ольхи
-        ["e_easternredbud_1_2"] = {{ item = "Base.Cherry", chance = 50},{ item = "Hydrocraft.HCAlderboug", chance = 40}},
-        ["e_easternredbud_1_3"] = {{ item = "Base.Cherry", chance = 60},{ item = "Hydrocraft.HCAlderboug", chance = 50}},
+        ["e_easternredbud_1_0"] = {{ item = "Base.Cherry", chance = 30},{ item = "Hydrocraft.HCAlderboug", chance = 20},{ item = "Base.Lemon", chance = 10}},
+        ["e_easternredbud_1_1"] = {{ item = "Base.Cherry", chance = 40},{ item = "Hydrocraft.HCAlderboug", chance = 30},{ item = "Base.Lemon", chance = 15}},
+        ["e_easternredbud_1_2"] = {{ item = "Base.Cherry", chance = 50},{ item = "Hydrocraft.HCAlderboug", chance = 40},{ item = "Base.Lemon", chance = 20}},
+        ["e_easternredbud_1_3"] = {{ item = "Base.Cherry", chance = 60},{ item = "Hydrocraft.HCAlderboug", chance = 50},{ item = "Base.Lemon", chance = 25}},
         ["e_easternredbud_1_4"] = {{ item = "Base.Cherry", chance = 20},{ item = "Hydrocraft.HCAlderboug", chance = 20}},
         ["e_easternredbud_1_5"] = {{ item = "Base.Cherry", chance = 25},{ item = "Hydrocraft.HCAlderboug", chance = 30}},
         ["e_easternredbud_1_6"] = {{ item = "Base.Cherry", chance = 30},{ item = "Hydrocraft.HCAlderboug", chance = 40}},
