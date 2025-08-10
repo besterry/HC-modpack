@@ -10,4 +10,7 @@ Sandbox_RU =
 	
 	Sandbox_UdderlySafeLogin_UseInvisibility = "Невидимость при подключении",
 	Sandbox_UdderlySafeLogin_UseInvisibility_tooltip = "Использовать невидимость вместо защиты от удара зомби. Это не позволяет им замечать вас или следовать за вами, но может быть использовано другими игроками.",
+
+	Sandbox_UdderlySafeLogin_Protection = "Защита новичков",
+	Sandbox_UdderlySafeLogin_Protection_tooltip = "Время с создания персонажа в игровых часах, пока зомби не атакуют новых игроков",
 }

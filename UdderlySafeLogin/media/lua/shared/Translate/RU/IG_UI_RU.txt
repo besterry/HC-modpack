@@ -1,5 +1,8 @@
 IG_UI_RU = 
 {
-IGUI_Halo_SafetyDisengaged = "Вы больше не в безопасности, будьте осторожны!",
-IGUI_Halo_YouAreSafeFor = "Вы в безопасности на %1 секунд, если начнете движение безопасность отключится.",
+    IGUI_Halo_SafetyDisengaged = "Вы больше не в безопасности, будьте осторожны!",
+    IGUI_Halo_YouAreSafeFor = "Вы в безопасности на %1 секунд, если начнете движение безопасность отключится.",
+    IGUI_Protection_activated = "Защита от зомби ",
+    IGUI_Protection_deactivated = "Защита новичка от зомби отключена",
+    IGUI_Protection_will_activated = "Включена защита новичка от зомби",
 }

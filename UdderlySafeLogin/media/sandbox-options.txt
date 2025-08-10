@@ -27,3 +27,13 @@ option UdderlySafeLogin.UseInvisbiility =
 	page = UdderlySafeLogin,
 	translation = UdderlySafeLogin_UseInvisibility,
 }
+
+option UdderlySafeLogin.Protection =
+{
+	type = double,
+	default = 1,
+	min = 0,
+	max = 24,
+	page = UdderlySafeLogin,
+	translation = UdderlySafeLogin_Protection,
+}

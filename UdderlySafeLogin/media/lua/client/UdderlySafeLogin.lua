@@ -1,33 +1,33 @@
 --UdderlySafeLogin by UdderlyEvelyn
 local safeStart = 0
-local safeTime = SandboxVars.UdderlySafeLogin.SafeTime --Default 20, mind a lot of this can be eaten up trying to log in after hitting "Click To Start".
+local safeTime = SandboxVars.UdderlySafeLogin.SafeTime --По умолчанию 20, помните, что много этого может быть съедено, пытаясь войти после нажатия "Начать". (Default 20, mind a lot of this can be eaten up trying to log in after hitting "Click To Start".)
 local originalX = 0
 local originalY = 0
 local playerMoved = false
 local useInvisibility = SandboxVars.UdderlySafeLogin.UseInvisibility
 
 local function playerIsAdmin()
-	--return false --For testing in SP uncomment this and comment the below line.
+	--return false --For testing in SP uncomment this and comment the below line. (Для тестирования в SP раскомментируйте эту строку и закомментируйте следующую)
 	return isAdmin() or getAccessLevel() == "admin" or getAccessLevel() == "Admin"
 end
 
-local function halo(player, msg)
+local function halo(player, msg) 
 	player:setHaloNote(msg, 236, 131, 190, 50)
 end
 
 local function makeSafe(player)
 	if playerIsAdmin() then
-		return --Admins don't need safety, they log in with invis/godmode already.
+		return --Admins don't need safety, they log in with invis/godmode already. (Администраторы не нуждаются в безопасности, они входят с invis/godmode уже)
 	end
-	originalX = player:getX()
-	originalY = player:getY()
+	originalX = player:getX() -- Исходная X координата игрока
+	originalY = player:getY() -- Исходная Y координата игрока
 	if useInvisibility then
-		player:setInvisible(true)
+		player:setInvisible(true) -- Скрываем игрока
 	else
-		player:setZombiesDontAttack(true)
+		player:setZombiesDontAttack(true) -- Игрока не атакуют зомби
 	end
 	safeStart = getTimestamp()
-	print("[UdderlySafeLogin] Safety engaged.")
+	-- print("[UdderlySafeLogin] Safety engaged.")
 end
 
 local function makeUnsafe(player)
@@ -38,18 +38,18 @@ local function makeUnsafe(player)
 	end
 	Events.OnPlayerUpdate.Remove(UdderlySafeLogin_OnPlayerUpdate)
 	halo(player, getText("IGUI_Halo_SafetyDisengaged"))
-	print("[UdderlySafeLogin] Safety disengaged.")
+	-- print("[UdderlySafeLogin] Safety disengaged.")
 end
 
 function UdderlySafeLogin_OnPlayerUpdate(player)
-	if safeStart == 0 then --If we didn't set something then don't bother, means they were an admin probably.
+	if safeStart == 0 then --If we didn't set something then don't bother, means they were an admin probably. (Если мы ничего не настроили, то не беспокойтесь, вероятно, это был администратор)
 		return
 	end
-	print("safeTime Type: "..type(safeTime))
+	-- print("safeTime Type: "..type(safeTime))
 	if not playerMoved then
 		if player:getX() ~= originalX or player:getY() ~= originalY then
 			playerMoved = true
-			safeTime = safeTime * SandboxVars.UdderlySafeLogin.MovementMultiplier --Default .5, so 10s if you move, round to keep it ints just in case it isn't.
+			safeTime = safeTime * SandboxVars.UdderlySafeLogin.MovementMultiplier --По умолчанию .5, так что 10 секунд, если вы двигаетесь, округляем до целых, чтобы в случае, если это не так, осталось целым (Default .5, so 10s if you move, round to keep it ints just in case it isn't.)
 		end
 	end
 	local elapsedSafeTime = getTimestamp() - safeStart
