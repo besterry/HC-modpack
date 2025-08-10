@@ -41,7 +41,7 @@ Events.EveryTenMinutes.Add(function()
         md.lastHordeTime = 1 -- Просто флаг что пауза активна
         md.ZombieSiegestationaryTime = 0 -- сброс после орды        
         player:transmitModData()
-        player:Say("Ohh...") -- для атмосферы (Вы слышите приближающийся гул...)
+        player:Say(getText("IGUI_ZombieSiege_Horde_Start")) -- для атмосферы (Вы слышите приближающийся гул...)
     else 
         if md.lastHordeTime > 0 then
             md.lastHordeTime = md.lastHordeTime + 10

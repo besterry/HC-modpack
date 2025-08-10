@@ -157,4 +157,5 @@ IGUI_RU =
 	IGUI_Tree_Looting_Item = "Собрано ",
 	IGUI_Already_LootBush = "На растении ничего не осталось, проверю позже",
 	IGUI_Bush_Looting = "Сбор растений",
+	IGUI_ZombieSiege_Horde_Start = "Что за шум?",
 }
