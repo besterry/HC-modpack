@@ -80,6 +80,10 @@ IGUI_EN =
 	IGUI_Show_Data_Item = "Mod date",
 	IGUI_Show_IsoObject_modData = "Object moddata",
 	IGUI_Show_player_modData = "Player ModData",
-
+	IGUI_Tree_Looting = "Tree Looting",
+	IGUI_Tree_Looting_Item = "Found a ",
+	IGUI_Already_LootTree = "Nothing left here. Try again later",
+	IGUI_Already_LootBush = "Nothing left here. Try again later",
+	IGUI_Bush_Looting = "Harvesting bushes",
 
 }
