@@ -8,6 +8,7 @@ local protectionDeactivated = false
 
 local function newPlayerDeffenceCheck() --Проверка на время защиты
     local player = getPlayer()
+    protectionTime = SandboxVars.UdderlySafeLogin.Protection
     if player then
         local hoursSurvived = player:getHoursSurvived()
         if hoursSurvived > protectionTime then
@@ -32,6 +33,7 @@ local function ShowProtectionTime()
     local player = getPlayer()
     local hoursSurvived = player:getHoursSurvived()
     newPlayerDeffenceCheck()
+    protectionTime = SandboxVars.UdderlySafeLogin.Protection
     -- if not player or isAdmin() then return end
     local time = protectionTime - hoursSurvived --Часы 0.125122231, нужны часы и минуты
     local hours = math.floor(time)
