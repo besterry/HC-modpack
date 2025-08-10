@@ -15,6 +15,7 @@ function DTEveryOneMinuteMain()
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
+        if not player then return end
         -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryOneMinute EVENT
         traitsGainsByBodyConditions(player);
         traitsByMoods(player);
@@ -50,6 +51,7 @@ function DTEveryTenMinutesMain()
 
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
+        if not player then return end
         -- CALL TO OTHER METHODS THAT RUNS BASED ON THE EveryTenMinutes EVENT
         if player:HasTrait("Agoraphobic") or player:HasTrait("Claustophobic") then
             luckyUnluckyEffectsForAgoraClaustroTraits(player);

@@ -58,6 +58,7 @@ function ISMiniScoreboardUI:doPlayerListContextMenu(player, x,y)
     context:addOption(getText("UI_Scoreboard_Invisible"), self, ISMiniScoreboardUI.onCommand, player, "INVISIBLE");
     context:addOption(getText("UI_Scoreboard_GodMod"), self, ISMiniScoreboardUI.onCommand, player, "GODMOD");
     context:addOption(getText("UI_Check_Stats"), self, ISMiniScoreboardUI.onCommand, player, "STATS");
+    context:addOption(getText("UI_Check_Health"), self, ISMiniScoreboardUI.onCommand, player, "CHECK_HEALTH");
 end
 
 function ISMiniScoreboardUI:onCommand(player, command)
@@ -76,6 +77,8 @@ function ISMiniScoreboardUI:onCommand(player, command)
         ui:initialise();
         ui:addToUIManager();
         ui:setVisible(true);
+    elseif command == "CHECK_HEALTH" then
+        AdminHealthPanel.openFor(player)
     end
 end
 

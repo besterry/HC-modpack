@@ -1516,4 +1516,5 @@ UI_RU = {
     UI_VehicleRecycling_DropJunk_Tooltip = "Оставлять вещи из багажника, бардачка, сидений.",
 	UI_StackToAll = "Все",
 	UI_StackToSelected = "+",
+	UI_Check_Health = "Информация",
 }

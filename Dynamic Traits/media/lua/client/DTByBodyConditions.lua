@@ -1,5 +1,6 @@
 -- Traits gains based on body conditions are going to be handled in this function.
 function traitsGainsByBodyConditions(player)
+    if not player then return end
     --------------- TRAITS APPLIED/REMOVED FOR "EMACIATED" ---------------
     if player:HasTrait("Emaciated") then
         --

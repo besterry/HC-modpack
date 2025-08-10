@@ -1,5 +1,6 @@
 -- Gain trait "Herbalist" when the "Herbalist" recipe is read.
 function traitsByRecipes(player)
+    if not player then return end
     local playerRecipes = player:getKnownRecipes();
     if playerRecipes:contains("Herbalist") and not player:HasTrait("Herbalist") then
         player:getTraits():add("Herbalist");

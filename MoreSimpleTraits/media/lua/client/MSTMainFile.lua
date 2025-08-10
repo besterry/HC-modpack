@@ -247,7 +247,7 @@ function MSTWeatherSensitiveTrait()
 	
 	local todayforecast = forecaster:getForecast(0);
 	local tomorrowforecast = forecaster:getForecast(1);		
-	
+	if not player then return end
 	local Head = player:getBodyDamage():getBodyPart(BodyPartType.FromString("Head"));		
 
 	-- one hour = 6

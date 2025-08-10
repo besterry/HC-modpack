@@ -1,4 +1,5 @@
 function traitsByMoods(player)
+    if not player then return end
     -- Gain trait "Needs More Sleep" when Bored Moodle is Lv2 or more and remove it otherwise.
     if player:getMoodles():getMoodleLevel(MoodleType.Bored) >= 2 then
         if not player:HasTrait("NeedsMoreSleep") then

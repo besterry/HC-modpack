@@ -77,6 +77,7 @@ end
 function DURGAM_fluBETA(zombie)
     for playerIndex = 0, getNumActivePlayers()-1 do
         local player = getSpecificPlayer(playerIndex);
+		if not player then return end
         local stats = player:getStats();
 --      SEVERE COLD ADDS FEVER START		
 		if player:getBodyDamage():getColdStrength() >= 75 then
