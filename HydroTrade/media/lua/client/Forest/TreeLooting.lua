@@ -3,6 +3,7 @@
 -- Hydrocraft.HCRhododendron - Рододендрон (в цветы)
 -- Hydrocraft.HCHawthornfruit - Плоды боярышника (в ягоды/кусты)
 
+
 local treeLoot = { --Всех деревьев 8 типов (0-3 лето, 4-7 зима) 0 - молодое, 3 - старое
         --американский падуб (листовой)
         ["e_americanholly_1_0"] = {{ item = "Hydrocraft.HCBark", chance = 10 },{ item = "Hydrocraft.HCSprucebough", chance = 10 }, { item = "Hydrocraft.HCFirbough", chance = 10 }}, --Ель
@@ -204,6 +205,7 @@ end
 function OnTreeClick(playerNum, context, worldObjects)
     if SandboxVars.LootingSystem.TreeLooting == false then return end
     local player = getSpecificPlayer(playerNum)
+    local canBeRemoved = nil
     local alreadyHandled = false
     for i, obj in ipairs(worldObjects) do
         if instanceof(obj, "IsoTree") and not alreadyHandled then

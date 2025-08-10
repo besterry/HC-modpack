@@ -1,0 +1,57 @@
+require "TimedActions/ISBaseTimedAction"
+ISBushLootAction = ISBaseTimedAction:derive("ISBushLootAction")
+
+function ISBushLootAction:isValid()
+    local lastLootTime = self.tree:getModData().TimeLoot or 0
+    local respawnTime = self.tree:getModData().TimeRespawn or 0
+    local currentTime = getGameTime():getWorldAgeHours()
+    return lastLootTime + respawnTime <= currentTime
+end
+
+function ISBushLootAction:perform()
+    --LootingTreeAfterAnimation(self.character, self.tree) --Функция для выполнения лутания после окончания анимации.
+    LootingBush(self.obj,self.character)
+    ISBaseTimedAction.perform(self) -- Завершение действия
+end
+
+function ISBushLootAction:waitToStart() -- Ожидание начала действия
+	self.character:faceLocation(self.tree:getX(), self.tree:getY())
+	return self.character:shouldBeTurning()
+end
+
+function ISBushLootAction:update() -- Обновление состояния во время действия
+	self.character:faceLocation(self.tree:getX(), self.tree:getY())
+    self.character:setMetabolicTarget(Metabolics.LightWork);
+end
+
+
+function ISBushLootAction:start() -- Запуск действия
+    self:setActionAnim("Loot");
+    self.character:SetVariable("LootPosition", "Mid")
+    -- self:setOverrideHandModels("Broom", nil);
+    self.character:getEmitter():playSound("SowSeeds")
+    self.character:reportEvent("EventLootItem");
+    -- self.character:reportEvent("EventLootingTree");
+end
+
+function ISBushLootAction:stop()
+    ISBaseTimedAction.stop(self);
+end
+
+function ISBushLootAction:new(character, obj, time)
+    local o = {}
+    -- o = ISBaseTimedAction:new(o, character)
+    setmetatable(o, self)
+    self.__index = self
+    o.stopOnWalk = true;
+    o.stopOnRun = true;
+    o.tree = obj
+    o.obj = obj
+    o.character = character
+    o.maxTime = time
+    o.caloriesModifier = 5;
+    -- if character:isTimedActionInstant() then
+    --     o.maxTime = 1;
+    -- end
+    return o
+end

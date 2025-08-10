@@ -155,4 +155,6 @@ IGUI_RU =
 	IGUI_Show_IsoObject_modData = "Моддата объекта",
 	IGUI_Show_player_modData = "Моддата игрока",
 	IGUI_Tree_Looting_Item = "Собрано ",
+	IGUI_Already_LootBush = "На растении ничего не осталось, проверю позже",
+	IGUI_Bush_Looting = "Сбор растений",
 }
