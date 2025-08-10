@@ -28,6 +28,7 @@ end
 function ISLootPlantCursor:create(x, y, z, north, sprite) -- Лутание куста
 	local square = getWorld():getCell():getGridSquare(x, y, z) -- Получаем квадрат
     local bush = getBushObject(square)
+	if not bush then return end
     local lastLootTime = bush:getModData().TimeLoot or 0
     local respawnTime = bush:getModData().TimeRespawn or 0
     local currentTime = getGameTime():getWorldAgeHours()

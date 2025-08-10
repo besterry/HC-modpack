@@ -330,3 +330,31 @@ option LootingSystem.TreeLooting
 	page = LootingSystem, 
   translation = LootingSystem_TreeLooting,
 }
+
+option LootingSystem.BushLooting
+{
+	type = boolean, 
+  default = true,
+	page = LootingSystem, 
+  translation = LootingSystem_BushLooting,
+}
+
+option SafeHouse.HordeInterval
+{
+  type = integer,
+  min = 0,
+  max = 999999,
+  default = 1440,
+	page = SafeHouseHorde, 
+  translation = SafeHouse_HordeInterval,
+}
+
+option SafeHouse.HordeIntervalPause
+{
+  type = integer,
+  min = 0,
+  max = 999999,
+  default = 2880,
+	page = SafeHouseHorde, 
+  translation = SafeHouse_HordeInterval_Pause,
+}
