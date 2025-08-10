@@ -78,7 +78,9 @@ function ISMiniScoreboardUI:onCommand(player, command)
         ui:addToUIManager();
         ui:setVisible(true);
     elseif command == "CHECK_HEALTH" then
-        AdminHealthPanel.openFor(player)
+        local playerObj = getPlayerFromUsername(player.username)
+        if not playerObj then return end -- player hasn't been encountered yet
+        AdminHealthPanel.openFor(playerObj)
     end
 end
 
