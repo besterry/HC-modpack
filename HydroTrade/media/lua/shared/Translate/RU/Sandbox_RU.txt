@@ -97,9 +97,13 @@ Sandbox_RU = {
     Sandbox_SafeHouse_CloseZone = "Список запрещенных локаций",
     Sandbox_SafeHouse_CloseZone_tooltip = "Координаты запрещенных локация для создания убежища, каждая координата отделяется символом /, перечисление через разделитель ; без пробелов. <LINE> 117/144/9/39 - координаты луисвиля, это 4 координаты Cell (без двух нулей): 11700,14400,900,3900 <LINE> Так первый угол это 11700,900,0 второй угол 14400,3900,0 - вместе образуют квадрат запрета",
     
+    -- Осады убежек
     Sandbox_SafeHouseHorde = "Орды на убежки",
     Sandbox_SafeHouse_HordeInterval = "Интервал нападений",
     Sandbox_SafeHouse_HordeInterval_tooltip = "Сколько игровых минут игрок должен быть на базе перед спавном орд (координаты не меняются более чем на 100 клеток)",
     Sandbox_SafeHouse_HordeInterval_Pause = "Паузы в игровых минутах между осадами",
+    Sandbox_SafeHouse_Horde = "Включить осады",
+    Sandbox_SafeHouse_HordeExclude = "Отключить осады для",
+    Sandbox_SafeHouse_HordeExclude_Tooltip = "Список игровых ников через запятую, для которых осады будут отключены",
 
 }

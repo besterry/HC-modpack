@@ -339,6 +339,14 @@ option LootingSystem.BushLooting
   translation = LootingSystem_BushLooting,
 }
 
+option SafeHouse.Horde
+{
+	type = boolean, 
+  default = false,
+	page = SafeHouseHorde, 
+  translation = SafeHouse_Horde,
+}
+
 option SafeHouse.HordeInterval
 {
   type = integer,
@@ -357,4 +365,13 @@ option SafeHouse.HordeIntervalPause
   default = 2880,
 	page = SafeHouseHorde, 
   translation = SafeHouse_HordeInterval_Pause,
+}
+
+option SafeHouse.HordeExclude
+{
+   type = string, 
+   default = admin,
+   
+   page = SafeHouse_HordeExclude, 
+   translation = SafeHouse_HordeExclude,
 }

@@ -1,9 +1,41 @@
 local SafeHouse_HordeInterval = SandboxVars.SafeHouse.HordeInterval
 local SafeHouse_HordeIntervalPause = SandboxVars.SafeHouse.HordeIntervalPause
+local SafeHouse_Horde = SandboxVars.SafeHouse.Horde
+
+local function isPlayerExcluded(playerName)
+    if not SafeHouse_HordeExclude or SafeHouse_HordeExclude == "" then return false end
+    
+    -- Приводим имя игрока к нижнему регистру
+    local playerNameLower = string.lower(playerName)
+    
+    -- Разбиваем строку по запятым
+    for excludedName in string.gmatch(SafeHouse_HordeExclude, "([^,]+)") do
+        -- Убираем пробелы и приводим к нижнему регистру
+        excludedName = string.lower(string.gsub(excludedName, "^%s*(.-)%s*$", "%1"))
+        if excludedName == playerNameLower then
+            return true
+        end
+    end
+    return false
+end
+
 
 Events.EveryTenMinutes.Add(function()
+    if isAdmin() then return end
+
+    -- Обновляем переменные
+    SafeHouse_HordeInterval = SandboxVars.SafeHouse.HordeInterval
+    SafeHouse_HordeIntervalPause = SandboxVars.SafeHouse.HordeIntervalPause
+    SafeHouse_Horde = SandboxVars.SafeHouse.Horde or false
+    SafeHouse_HordeExclude = SandboxVars.SafeHouse.HordeExclude or ""
+
+    if SafeHouse_Horde == false then return end
+
     local player = getPlayer()
     if not player then return end
+    local playerName = player:getUsername()
+
+    if isPlayerExcluded(playerName) then return end
     local md = player:getModData()
 
     -- Инициализация данных (если нет записи предыдущей)
@@ -12,13 +44,11 @@ Events.EveryTenMinutes.Add(function()
         md.ZombieSiegelastCheckY = player:getY()
         md.ZombieSiegestationaryTime = 0
         md.lastHordeTime = 0
-        player:transmitModData()
     end
 
     -- Защита от отсутствующих полей
     if not md.lastHordeTime then
         md.lastHordeTime = 0
-        player:transmitModData()
     end
     
     -- Считаем дистанцию
@@ -32,24 +62,23 @@ Events.EveryTenMinutes.Add(function()
         md.ZombieSiegestationaryTime = 0
         md.ZombieSiegelastCheckX = player:getX()
         md.ZombieSiegelastCheckY = player:getY()
-        player:transmitModData()
     end
 
     -- Проверка на 1 игровой день (24*60 минут = 1440 минут)
     if md.ZombieSiegestationaryTime >= SafeHouse_HordeInterval and md.lastHordeTime == 0 then
-        sendClientCommand("ZombieSiege", "spawnHorde", {}) -- Спавн орды 
+        sendClientCommand("ZombieSiege", "spawnHorde", {}) -- Спавн орды
         md.lastHordeTime = 1 -- Просто флаг что пауза активна
         md.ZombieSiegestationaryTime = 0 -- сброс после орды        
-        player:transmitModData()
         player:Say(getText("IGUI_ZombieSiege_Horde_Start")) -- для атмосферы (Вы слышите приближающийся гул...)
     else 
         if md.lastHordeTime > 0 then
             md.lastHordeTime = md.lastHordeTime + 10
+            md.ZombieSiegestationaryTime = 0 -- Сброс таймера осады
+            
             if md.lastHordeTime >= SafeHouse_HordeIntervalPause then
-                md.lastHordeTime = 0 -- Сброс таймера паузы
-                md.ZombieSiegestationaryTime = 0 -- Сброс таймера осады
-                player:transmitModData()
-            end
+                md.lastHordeTime = 0 -- Сброс таймера паузы        
+            end            
         end
     end
+    -- player:transmitModData()
 end)
