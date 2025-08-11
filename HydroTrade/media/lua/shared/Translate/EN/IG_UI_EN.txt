@@ -86,4 +86,5 @@ IGUI_EN =
 	IGUI_Already_LootBush = "Nothing left here. Try again later",
 	IGUI_Bush_Looting = "Harvesting bushes",
 	IGUI_ZombieSiege_Horde_Start = "What's that noise?",
+	IGUI_Check_sqlId = "Need check vehicle",
 }

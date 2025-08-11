@@ -315,6 +315,7 @@ local function GarageContextMenu(playerNum, context, worldobjects)
             end
 
             if vehicle then --Опции для отправки авто в гараж
+                if not vehicle:getModData().sqlId then player:Say(getText("IGUI_Check_sqlId")) return end
                 local NameCar = getText("IGUI_Put_in_garage") ..
                     getText("IGUI_VehicleName" .. getText(vehicle:getScript():getName())) ..
                     " (H " .. vehicle:getModData().sqlId .. " KT)"
