@@ -55,7 +55,8 @@ end
 Events.OnServerCommand.Add(function(module, command, args)
     if module == "Notify" and command == "chat" then
         args = args or {}
-        addLineToChat(tostring(args.msg or ""), args.color, args.author, { showTime=false })
+        text = getText(args.msg or "")
+        addLineToChat(tostring(text or ""), args.color, args.author, { showTime=false })
     end
 end)
 
