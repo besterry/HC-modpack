@@ -98,17 +98,19 @@ local function AutoLoot(zombie) --автолут
 
         --Автолут, если есть место
         local lootCount = zombieInventory:getItems():size()
-        --print("LOOT SIZE:",lootCount)
+        -- print("LOOT SIZE:",lootCount)
         for i = lootCount, 1, -1 do
             local item = zombieInventory:getItems():get(i - 1)
-            --print("LOL ITEM:",i," - ",item:getFullType())
-            if isDesiredItem(item) then
-               
+            -- print("LOL ITEM:",i," - ",item:getFullType())
+            if isDesiredItem(item) then               
                 if inv ~= nil then
                     if (inv:getCapacityWeight() + item:getWeight()) <= capacitybag then
                         local itemName = item:getDisplayName()
                         if PM.AutoLootMessage then
                             player:Say("+" .. itemName)
+                        end
+                        if instanceof(item, "AlarmClockClothing") and item:isAlarmSet() then
+                            item:setAlarmSet(false)
                         end
                         inv:AddItem(item)
                     else
