@@ -38,7 +38,7 @@ if not isServer() then return end
 -- ================== КОНФИГ ==================
 local CFG = {
     -- Сколько недель минимум между событиями (гарантированная редкость)
-    minWeeksBetween = 2, --3
+    minWeeksBetween = 0, --3
     -- Доп. шанс запланировать событие на этой неделе (после проверки редкости)
     weeklyChance    = 0.35,    -- 35% (можешь снизить до 0.2–0.25)
     -- Вероятность затронуть сразу и воду, и электричество
@@ -65,16 +65,16 @@ local OPT = {
     water = "WaterShutModifier",
 }
 
-local function md() return ModData.getOrCreate(MDKEY) end
-local function worldH() return GameTime:getInstance():getWorldAgeHours() end
-local function weekIndex() return math.floor(worldH() / WEEK_H) end
+local function md() return ModData.getOrCreate(MDKEY) end -- получаем или создаём ModData
+local function worldH() return GameTime:getInstance():getWorldAgeHours() end -- получаем текущее время существования мира в часах
+local function weekIndex() return math.floor(worldH() / WEEK_H) end -- получаем текущую игровую неделю 
 
-local function isOn(which)
+local function isOn(which) -- проверяем, включено ли электричество или вода
     local opt = getSandboxOptions():getOptionByName(OPT[which])
     return opt and (opt:getValue() > -1) or false
 end
 
-local function setState(which, turnOn)
+local function setState(which, turnOn) -- включаем или выключаем электричество или воду
     local options = SandboxOptions.new()
     options:copyValuesFrom(getSandboxOptions())
     local v = turnOn and 2147483647 or -1
@@ -84,29 +84,29 @@ local function setState(which, turnOn)
     getSandboxOptions():toLua()
 end
 
-local function notify(msg)
+local function notify(msg) -- уведомляем игроков
     if Notify and Notify.broadcast then
         Notify.broadcast(msg, { color = CFG.notifyColor })
     end
 end
 
-local function randInt(minI, maxI) -- [min,max], с ванильным RNG
+local function randInt(minI, maxI) -- [min,max], с ванильным RNG (рандом)
     return ZombRand(minI, maxI + 1)
 end
 
 -- ================== ПЛАНИРОВАНИЕ НЕДЕЛИ ==================
-local function makeEmptyPlan(w)
+local function makeEmptyPlan(w) -- создаём пустой план
     return { week=w, start=nil, power=nil, water=nil }
 end
 
-local function planThisWeekAllowed(w)
+local function planThisWeekAllowed(w) -- проверяем, можно ли запланировать событие на этой неделе
     local d = md()
     local last = d.lastEventWeek or -9999
     if w - last < CFG.minWeeksBetween then return false end
     return (ZombRand(1000000)/1000000.0) < CFG.weeklyChance
 end
 
-local function buildWeekPlan(w)
+local function buildWeekPlan(w) -- строим план на неделю
     local plan = makeEmptyPlan(w)
     if not planThisWeekAllowed(w) then return plan end
 
@@ -140,11 +140,11 @@ local function buildWeekPlan(w)
     return plan
 end
 
-local function ensurePlan()
-    local d = md()
-    local w = weekIndex()
-    if not d.plan or d.plan.week ~= w then
-        d.plan = buildWeekPlan(w)
+local function ensurePlan() -- проверяем, есть ли план на неделю
+    local d = md() -- получаем ModData
+    local w = weekIndex() -- получаем текущую неделю
+    if not d.plan or d.plan.week ~= w then -- если нет плана или план не на этой неделе
+        d.plan = buildWeekPlan(w) -- строим план на неделю
         ModData.transmit(MDKEY)
     end
     -- print("[WPDynamic] plan:", tostring(md().plan and md().plan.start), "week", weekIndex())
@@ -152,11 +152,11 @@ local function ensurePlan()
 end
 
 -- ================== РАНТАЙМ ==================
-local function inWindow(nowInWeek, startH, durH)
+local function inWindow(nowInWeek, startH, durH) -- проверяем, находится ли в окне
     return startH and durH and nowInWeek >= startH and nowInWeek < (startH + durH)
 end
 
-local function enterWindow(which, slot)
+local function enterWindow(which, slot) -- входим в окно
     -- Запоминаем прежнее состояние
     slot.prevOn = isOn(which)
     -- Применяем режим (только если реально меняется)
@@ -177,7 +177,7 @@ local function enterWindow(which, slot)
     ModData.transmit(MDKEY)
 end
 
-local function exitWindow(which, slot)
+local function exitWindow(which, slot) -- выходим из окна
     if slot.prevOn ~= nil then
         local target = slot.prevOn
         if isOn(which) ~= target then
@@ -195,7 +195,7 @@ local function exitWindow(which, slot)
     ModData.transmit(MDKEY)
 end
 
-local function forcePlanNowIfTest()
+local function forcePlanNowIfTest() -- принудительно запускаем план на текущую неделю
     if not CFG.testForceNow then return end
     local d = md()
     local w = weekIndex()
@@ -212,18 +212,18 @@ local function forcePlanNowIfTest()
 end
 
 
-local function tick()
-    local plan = ensurePlan()
-    local wH = worldH()
-    local nowInWeek = wH - plan.week * WEEK_H
+local function tick() -- тик (каждые 10 минут)
+    local plan = ensurePlan() -- получаем план на неделю
+    local wH = worldH() -- получаем текущее время существования мира в часах
+    local nowInWeek = wH - plan.week * WEEK_H -- получаем текущее время в неделе
 
     -- POWER
-    if plan.power then
-        local shouldActive = inWindow(nowInWeek, plan.start, plan.power.dur)
-        if shouldActive and (not plan.power.active) then
-            enterWindow("power", plan.power)
-        elseif (not shouldActive) and plan.power.active then
-            exitWindow("power", plan.power)
+    if plan.power then -- если есть план на электричество
+        local shouldActive = inWindow(nowInWeek, plan.start, plan.power.dur) -- проверяем, находится ли в окне
+        if shouldActive and (not plan.power.active) then -- если окно активно и не активен
+            enterWindow("power", plan.power) -- входим в окно
+        elseif (not shouldActive) and plan.power.active then -- если окно не активно и активен
+            exitWindow("power", plan.power) -- выходим из окна
         end
     end
 
@@ -239,7 +239,7 @@ local function tick()
 end
 
 Events.OnServerStarted.Add(function() 
-    -- print("[WPDynamic] server file loaded")
+    print("[WPDynamic] loaded")
     ensurePlan()
     -- forcePlanNowIfTest()
  end)

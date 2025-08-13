@@ -19,6 +19,21 @@ local function isPlayerExcluded(playerName)
     return false
 end
 
+local function checkSafeHouse(player)
+    local square = player:getCurrentSquare()         -- Получаем текущую клетку игрока.
+    if not square then return false end
+    local safehouse = SafeHouse.getSafeHouse(square) -- Получаем объект убежища для текущей клетки
+    if safehouse then  -- Проверяем, существует ли убежище
+        --Вычисляем координаты убежища
+        local x = safehouse:getX()
+        local x2 =safehouse:getX2()
+        local y = safehouse:getY()
+        local y2 = safehouse:getY2()
+        return x,x2,y,y2
+    else
+        return false
+    end
+end
 
 Events.EveryTenMinutes.Add(function()
     if isAdmin() then return end
@@ -34,6 +49,9 @@ Events.EveryTenMinutes.Add(function()
     local player = getPlayer()
     if not player then return end
     local playerName = player:getUsername()
+    
+    local x,x2,y,y2 = checkSafeHouse(player)
+    if not x then return end
 
     if isPlayerExcluded(playerName) then return end
     local md = player:getModData()
@@ -54,6 +72,7 @@ Events.EveryTenMinutes.Add(function()
     -- Считаем дистанцию
     local dist = math.sqrt((player:getX() - md.ZombieSiegelastCheckX)^2 + (player:getY() - md.ZombieSiegelastCheckY)^2)
 
+
     if dist < 100 then
         -- игрок не отходил далеко — увеличиваем таймер
         md.ZombieSiegestationaryTime = (md.ZombieSiegestationaryTime or 0) + 10
@@ -66,7 +85,8 @@ Events.EveryTenMinutes.Add(function()
 
     -- Проверка на 1 игровой день (24*60 минут = 1440 минут)
     if md.ZombieSiegestationaryTime >= SafeHouse_HordeInterval and md.lastHordeTime == 0 then
-        sendClientCommand("ZombieSiege", "spawnHorde", {}) -- Спавн орды
+        local args = {x,x2,y,y2}
+        sendClientCommand("ZombieSiege", "spawnHorde", args) -- Спавн орды
         md.lastHordeTime = 1 -- Просто флаг что пауза активна
         md.ZombieSiegestationaryTime = 0 -- сброс после орды        
         player:Say(getText("IGUI_ZombieSiege_Horde_Start")) -- для атмосферы (Вы слышите приближающийся гул...)
