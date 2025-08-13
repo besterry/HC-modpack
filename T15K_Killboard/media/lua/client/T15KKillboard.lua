@@ -17,6 +17,7 @@ local T15KKillboard = getT15KKillboardInstance()
 
 -- send updated player rank
 local function updatePlayerRank(onDead)
+    if isAdmin() then return end -- Админы не получают ранг
     local _player = getPlayer()
     if _player:getZombieKills() < T15KKillboard.getSandboxVar("MinKills") and not onDead then
         return

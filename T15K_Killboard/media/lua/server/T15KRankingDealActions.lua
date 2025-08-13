@@ -99,6 +99,7 @@ local function OnClientCommandT15KRank(module, command, player, args)
         getGameTime():getModData().T15KKillboard = {}
         serverUpdateT15KRankTable()
     else
+        if player and isAdmin() then return end -- Админы не получают ранг (не попадают в топ)
         local rankTable = getGameTime():getModData().T15KKillboard
         if rankTable == nil then
             getGameTime():getModData().T15KKillboard = {}
