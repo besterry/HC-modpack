@@ -30,42 +30,66 @@ local FLOWERS = {
 	"Hydrocraft.HCWolfsbane",--Аконит (Борец)
 	"Hydrocraft.HCMandrake",--Корень мандрагоны
 	"Hydrocraft.HCBelladonna", --Белладонна
-	"Hydrocraft.HCValerian", 
-	"Hydrocraft.HCCamomile", 
-	"Hydrocraft.HCLavender",
-	"Hydrocraft.HCSpeedwell", 
-	"Hydrocraft.HCDogwood", 
-	"Hydrocraft.HCChicory", 
-	"Hydrocraft.HCKvann", 
-	"Hydrocraft.HCHolly",
-	"Hydrocraft.HCJutestems", 
-	"Hydrocraft.HCThistle", 
-	"Base.Violets", 
-	"Hydrocraft.HCRosebud", 
-	"Hydrocraft.HCFlaxflower", 
-	"Hydrocraft.HCFlax", 
-	"Hydrocraft.HCClover", 
-	"Hydrocraft.HCNettles"
+	"Hydrocraft.HCValerian",  --Вальеран
+	"Hydrocraft.HCCamomile",  --Коммифора
+	"Hydrocraft.HCLavender", --Лаванда
+	"Hydrocraft.HCSpeedwell", --Скорость
+	"Hydrocraft.HCDogwood", --Дерево-собака
+	"Hydrocraft.HCChicory", --Хикория
+	"Hydrocraft.HCKvann", --Кван
+	"Hydrocraft.HCHolly", --Холли
+	"Hydrocraft.HCJutestems", --Стебли джута
+	"Hydrocraft.HCThistle", --Тысячелистник
+	"Base.Violets", --Фиалки
+	"Hydrocraft.HCRosebud", --Роза
+	"Hydrocraft.HCFlaxflower", --Лен
+	"Hydrocraft.HCFlax", --Лен
+	"Hydrocraft.HCClover", --Клевер
+	"Hydrocraft.HCNettles" --Крапива
 }
 
 local NUTS = {
-	"Hydrocraft.HCAcorn", "Hydrocraft.HCBeechnut", "Hydrocraft.HCFircone", "Hydrocraft.HCPinenuts", "Hydrocraft.HCChestnut", "Hydrocraft.HCHickorynuts"
+	"Hydrocraft.HCAcorn", --Арахис
+	"Hydrocraft.HCBeechnut", --Бук
+	"Hydrocraft.HCFircone", --Сосна
+	"Hydrocraft.HCPinenuts", --Пихта
+	"Hydrocraft.HCChestnut", --Каштан
+	"Hydrocraft.HCHickorynuts", --Грецкий орех
 }
 
 local BARK = {
-	"Hydrocraft.HCBark", "Hydrocraft.HCBirchbark", "Hydrocraft.HCWillowbark"
+	"Hydrocraft.HCBark", --Трава
+	"Hydrocraft.HCBirchbark", --Берёза
+	"Hydrocraft.HCWillowbark" --Ольха
 }
 
 local LEAVES = {
-	"Hydrocraft.HCHickoryleaves", "Hydrocraft.HCOakleaves", "Hydrocraft.HCMapleleaf", "Hydrocraft.HCFern", "Hydrocraft.HCFiddleheadfern", "Hydrocraft.HCMulberryleaf","Hydrocraft.HCBirchcatkin"
+	"Hydrocraft.HCHickoryleaves", --Грецкий орех
+	"Hydrocraft.HCOakleaves", --Дуб
+	"Hydrocraft.HCMapleleaf", --Клён
+	"Hydrocraft.HCFern", --Феномер
+	"Hydrocraft.HCFiddleheadfern", --Феномер
+	"Hydrocraft.HCMulberryleaf", --Мульберри
+	"Hydrocraft.HCBirchcatkin" --Берёзовый коготь
 }
 
 --lazy randomness
-local FOREST_DUNG = {"Hydrocraft.HCBearpoop", "Hydrocraft.HCCougarpoop", "Hydrocraft.HCBoarpoop", "Hydrocraft.HCDeerpoop","Hydrocraft.HCSmallgamepoop", "Hydrocraft.HCSmallgamepoop", "Hydrocraft.HCSmallgamepoop", "Hydrocraft.HCSmallgamepoop", "Hydrocraft.HCSmallgamepoop", "Hydrocraft.HCSmallgamepoop", "Hydrocraft.HCSmallgamepoop", "Hydrocraft.HCSmallgamepoop"
+local FOREST_DUNG = {
+	"Hydrocraft.HCBearpoop", --Кал медведя
+	"Hydrocraft.HCCougarpoop", --Кал пума 
+	"Hydrocraft.HCBoarpoop", --Кал кабана
+	"Hydrocraft.HCDeerpoop", --Кал оленя
+	"Hydrocraft.HCSmallgamepoop", --Кал маленькой дичи
 }
 
 --more lazy randomness
-local FARM_DUNG = {"Hydrocraft.HCHorsepoopferal", "Hydrocraft.HCDonkeypoopferal", "Hydrocraft.HCPigpoopferal", "Hydrocraft.HCGoatpoopferal", "Hydrocraft.HCSheeppoopferal", "Hydrocraft.HCCowpoopferal"
+local FARM_DUNG = {
+	"Hydrocraft.HCHorsepoopferal", --Кал лошади
+	"Hydrocraft.HCDonkeypoopferal", --Кал козла
+	"Hydrocraft.HCPigpoopferal", --Кал свиньи
+	"Hydrocraft.HCGoatpoopferal", --Кал козы
+	"Hydrocraft.HCSheeppoopferal", --Кал овечки
+	"Hydrocraft.HCCowpoopferal" --Кал коровы
 }
 
 --copied from vanilla, do not change.
@@ -140,6 +164,7 @@ local berryBushes = {
 local hcForageDefs = {}
 
 --tweaked from vanilla, but with just HC berries.
+-- генерация определений для ягод
 local function generateHCBerryDefs()
 	local items = {
 		specific = {
@@ -205,6 +230,7 @@ local function generateHCBerryDefs()
 	end;
 end
 
+-- генерация определений для грибов
 local function generateHCMushroomDefs()
 	local items = {
 		generic = {
@@ -258,6 +284,7 @@ local function generateHCMushroomDefs()
 	end;
 end
 
+-- генерация определений для древесины
 local function generateWoodDefs()
 
 	hcForageDefs["HCOakLog"] = {
@@ -434,6 +461,7 @@ local function generateWoodDefs()
 	
 end
 
+-- генерация определений для глины
 local function generateClayDefs()
 	hcForageDefs["HCRedclay"] = {
 		type = "Hydrocraft.HCRedclay",
@@ -478,6 +506,7 @@ local function generateClayDefs()
 	}	
 end
 
+-- генерация определений для категорий
 local function createHCCategories()
 
 	local flowersCatDef = { --1052

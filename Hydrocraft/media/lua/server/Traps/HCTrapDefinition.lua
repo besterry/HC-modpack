@@ -1,6 +1,7 @@
 --
  require "Traps/TrapDefinition"
 
+ -- Охотничьи ловушки
 local sparrow = {};
 sparrow.type = "sparrow";
 sparrow.item = "Hydrocraft.HCSparrowdead";
