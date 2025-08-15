@@ -13,12 +13,4 @@ UI_EN = {
     UI_VehicleRecycling_DropJunk_Tooltip = "Drop items from the vehicle's trunk, glove box, seats.",
 	UI_StackToAll = "To All",
 	UI_StackToSelected = "Stack",
-	
-
-
-
-	-- SafeHouseMenu
-	IGUI_SafehouseUI_Players = "Players:",
-	IGUI_SafehouseUI_Size = "Current size:",
-	IGUI_SafehouseUI_MaxSize = "Maximum size:",
 }

@@ -94,7 +94,7 @@ IGUI_EN =
 	IGUI_Vote_For_Server = "Vote for the server, get bonuses! wargm.ru/server/60709",
 	IGUI_Sale_AutoLoot = "Promotion: free AutoLoot! Client > Player menu",
 
-
+	-- SafeHouseMenu
 	IGUI_SafehouseUI_Players = "Players:",
 	IGUI_SafehouseUI_Size = "Current Size:",
 	IGUI_SafehouseUI_MaxSize = "Max Size:",
