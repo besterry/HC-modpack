@@ -15,48 +15,58 @@ local FONT_HGT_MEDIUM = getTextManager():getFontHeight(UIFont.Medium)
 
 function ISSafehousesList:initialise()
     ISPanel.initialise(self);
-    local btnWid = 100
-    local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2)
-    local padBottom = 10
+    local btnWid = 120
+    local btnHgt = math.max(28, FONT_HGT_SMALL + 4 * 2)
+    local padBottom = 12
 
+    -- Улучшенная кнопка закрытия
     self.no = ISButton:new(10, self:getHeight() - padBottom - btnHgt, btnWid, btnHgt, getText("IGUI_CraftUI_Close"), self, ISSafehousesList.onClick);
     self.no.internal = "CANCEL";
     self.no.anchorTop = false
     self.no.anchorBottom = true
     self.no:initialise();
     self.no:instantiate();
-    self.no.borderColor = {r=1, g=1, b=1, a=0.1};
+    self.no.borderColor = {r=0.8, g=0.2, b=0.2, a=0.8};
+    self.no.backgroundColor = {r=0.8, g=0.2, b=0.2, a=0.6};
+    self.no.backgroundColorMouseOver = {r=0.9, g=0.3, b=0.3, a=0.8};
     self:addChild(self.no);
 
     local listY = 20 + FONT_HGT_MEDIUM + 20
-    self.datas = ISScrollingListBox:new(10, listY, self.width - 20, self.height - padBottom - btnHgt - padBottom - listY);
+    self.datas = ISScrollingListBox:new(15, listY, self.width - 30, self.height - padBottom - btnHgt - padBottom - listY);
     self.datas:initialise();
     self.datas:instantiate();
-    self.datas.itemheight = FONT_HGT_SMALL + 2 * 2;
+    self.datas.itemheight = FONT_HGT_SMALL * 3 + 8;
     self.datas.selected = 0;
     self.datas.joypadParent = self;
     self.datas.font = UIFont.NewSmall;
     self.datas.doDrawItem = self.drawDatas;
     self.datas.drawBorder = true;
+    self.datas.borderColor = {r=0.6, g=0.6, b=0.6, a=0.8};
     self:addChild(self.datas);
 
+    -- Улучшенная кнопка телепорта
     self.teleportBtn = ISButton:new(self:getWidth() - btnWid - 10,  self:getHeight() - padBottom - btnHgt, btnWid, btnHgt, getText("IGUI_PlayerStats_Teleport"), self, ISSafehousesList.onClick);
     self.teleportBtn.internal = "TELEPORT";
     self.teleportBtn.anchorTop = false
     self.teleportBtn.anchorBottom = true
     self.teleportBtn:initialise();
     self.teleportBtn:instantiate();
-    self.teleportBtn.borderColor = {r=1, g=1, b=1, a=0.1};
+    self.teleportBtn.borderColor = {r=0.2, g=0.6, b=0.8, a=0.8};
+    self.teleportBtn.backgroundColor = {r=0.2, g=0.6, b=0.8, a=0.6};
+    self.teleportBtn.backgroundColorMouseOver = {r=0.3, g=0.7, b=0.9, a=0.8};
     self:addChild(self.teleportBtn);
     self.teleportBtn.enable = false;
 
-    self.viewBtn = ISButton:new(self.teleportBtn.x - self.teleportBtn.width - 10,  self:getHeight() - padBottom - btnHgt, btnWid, btnHgt, getText("IGUI_PlayerStats_View"), self, ISSafehousesList.onClick);
+    -- Улучшенная кнопка просмотра
+    self.viewBtn = ISButton:new(self.teleportBtn.x - self.teleportBtn.width - 12,  self:getHeight() - padBottom - btnHgt, btnWid, btnHgt, getText("IGUI_PlayerStats_View"), self, ISSafehousesList.onClick);
     self.viewBtn.internal = "VIEW";
     self.viewBtn.anchorTop = false
     self.viewBtn.anchorBottom = true
     self.viewBtn:initialise();
     self.viewBtn:instantiate();
-    self.viewBtn.borderColor = {r=1, g=1, b=1, a=0.1};
+    self.viewBtn.borderColor = {r=0.2, g=0.7, b=0.4, a=0.8};
+    self.viewBtn.backgroundColor = {r=0.2, g=0.7, b=0.4, a=0.6};
+    self.viewBtn.backgroundColorMouseOver = {r=0.3, g=0.8, b=0.5, a=0.8};
     self:addChild(self.viewBtn);
     self.viewBtn.enable = false;
 
@@ -73,16 +83,26 @@ function ISSafehousesList:populateList()
 end
 
 function ISSafehousesList:drawDatas(y, item, alt)
-    local a = 0.9;
+    local a = 0.95;
 
+    -- Улучшенная граница элемента
     self:drawRectBorder(0, (y), self:getWidth(), self.itemheight - 1, a, self.borderColor.r, self.borderColor.g, self.borderColor.b);
 
     if self.selected == item.index then
-        self:drawRect(0, (y), self:getWidth(), self.itemheight - 1, 0.3, 0.7, 0.35, 0.15);
+        -- Улучшенный фон выбранного элемента
+        self:drawRect(0, (y), self:getWidth(), self.itemheight - 1, 0.4, 0.7, 0.35, 0.25);
+        -- Дополнительная подсветка
+        self:drawRectBorder(0, (y), self:getWidth(), self.itemheight - 1, 0.8, 0.9, 0.5, 0.6);
         self.parent.teleportBtn.enable = true;
         self.parent.viewBtn.enable = true;
         self.parent.selectedSafehouse = item.item;
+    else
+        -- Альтернативный фон для четных элементов
+        if item.index % 2 == 0 then
+            self:drawRect(0, (y), self:getWidth(), self.itemheight - 1, 0.1, 0.1, 0.1, 0.1);
+        end
     end
+    
     daysUntilDeletion = getServerOptions():getInteger("SafeHouseRemovalTime")
     -- Получение времени до удаления привата
     local dayInMillis = 24 * 60 * 60 * 1000
@@ -93,10 +113,45 @@ function ISSafehousesList:drawDatas(y, item, alt)
     local timeLeftHours = math.floor((timeLeftMillis % (dayInMillis)) / (1000 * 60 * 60))
     local timeLeftMinutes = math.floor((timeLeftMillis % (1000 * 60 * 60)) / (1000 * 60))
     
-    -- Отображение информации о времени до удаления привата
-    local timeLeftText = item.item:getTitle() .. " - " .. getText("IGUI_FactionUI_FactionsListPlayers", item.item:getPlayers():size() + 1, item.item:getOwner()) .. " - " ..
-                        getText("IGUI_TimeLeftSHLUI") .. " " .. timeLeftDays ..  getText("IGUI_daysLeft") .. timeLeftHours ..  getText("IGUI_hoursLeft") .. timeLeftMinutes ..  getText("IGUI_minLeft")
-    self:drawText(timeLeftText, 10, y + 2, 1, 1, 1, a, self.font);
+    -- Улучшенное отображение информации
+    local safehouseName = item.item:getTitle()
+    local playerCount = item.item:getPlayers():size() + 1
+    local ownerName = item.item:getOwner()
+    
+    -- Определение цвета для времени (красный если мало времени)
+    local timeColor = {r=0.7, g=0.9, b=0.7, a=a}
+    if timeLeftDays <= 3 then
+        timeColor = {r=0.9, g=0.6, b=0.6, a=a}
+    elseif timeLeftDays <= 7 then
+        timeColor = {r=0.9, g=0.8, b=0.6, a=a}
+    end
+    
+    local textColor = {r=0.9, g=0.9, b=0.9, a=a}
+    if self.selected == item.index then
+        textColor = {r=1, g=1, b=1, a=a}
+    end
+    
+    -- Отображение названия убежища
+    self:drawText(safehouseName, 10, y + 1, 0.9, 0.95, 1, textColor.a, self.font);
+    
+    -- Отображение информации об игроках и владельце с подсветкой владельца
+    local playerText = getText("IGUI_FactionUI_FactionsListPlayers", playerCount, "")
+    local ownerText = " - владелец: "
+    
+    -- Сначала рисуем текст с игроками
+    self:drawText(playerText, 10, y + 1 + FONT_HGT_SMALL, 0.8, 0.8, 0.8, textColor.a, self.font);
+    
+    -- Затем рисуем "владелец:" серым цветом
+    local playerTextWidth = getTextManager():MeasureStringX(self.font, playerText)
+    self:drawText(ownerText, 10 + playerTextWidth, y + 1 + FONT_HGT_SMALL, 0.8, 0.8, 0.8, textColor.a, self.font);
+    
+    -- И наконец рисуем имя владельца ярким цветом
+    local ownerLabelWidth = getTextManager():MeasureStringX(self.font, ownerText)
+    self:drawText(ownerName, 10 + playerTextWidth + ownerLabelWidth, y + 1 + FONT_HGT_SMALL, 1, 0.8, 0.4, textColor.a, self.font);
+    
+    -- Отображение времени до удаления
+    local timeText = getText("IGUI_TimeLeftSHLUI") .. " " .. timeLeftDays .. getText("IGUI_daysLeft") .. timeLeftHours .. getText("IGUI_hoursLeft") .. timeLeftMinutes .. getText("IGUI_minLeft")
+    self:drawText(timeText, 10, y + 1 + FONT_HGT_SMALL * 2, timeColor.r, timeColor.g, timeColor.b, timeColor.a, self.font);
 
     return y + self.itemheight;
 end
@@ -106,10 +161,29 @@ function ISSafehousesList:prerender()
     local z = 20;
     local splitPoint = 100;
     local x = 10;
+    
+    -- Основной фон с улучшенной прозрачностью
     self:drawRect(0, 0, self.width, self.height, self.backgroundColor.a, self.backgroundColor.r, self.backgroundColor.g, self.backgroundColor.b);
+    
+    -- Простой заголовок без градиента
+    self:drawRect(0, 0, self.width, 40, 0.2, 0.3, 0.5, 0.8);
+    
+    -- Улучшенная граница
     self:drawRectBorder(0, 0, self.width, self.height, self.borderColor.a, self.borderColor.r, self.borderColor.g, self.borderColor.b);
-    self:drawText(getText("IGUI_AdminPanel_SeeSafehouses"), self.width/2 - (getTextManager():MeasureStringX(UIFont.Medium, getText("IGUI_AdminPanel_SeeSafehouses")) / 2), z, 1,1,1,1, UIFont.Medium);
-    z = z + 30;
+    
+    -- Заголовок с количеством убежищ
+    local titleText = getText("IGUI_AdminPanel_SeeSafehouses")
+    local safehouseCount = SafeHouse.getSafehouseList():size()
+    local countText = " (" .. safehouseCount .. ")"
+    
+    -- Рисуем основной заголовок
+    self:drawText(titleText, self.width/2 - (getTextManager():MeasureStringX(UIFont.Medium, titleText) / 2), 12, 1, 1, 1, 1, UIFont.Medium);
+    
+    -- Рисуем счетчик убежищ
+    local titleWidth = getTextManager():MeasureStringX(UIFont.Medium, titleText)
+    self:drawText(countText, self.width/2 + (titleWidth / 2), 12, 0.8, 0.9, 0.6, 1, UIFont.Medium);
+    
+    z = 40;
 end
 
 function ISSafehousesList:onClick(button)
@@ -149,8 +223,8 @@ function ISSafehousesList:new(x, y, width, height, player)
     setmetatable(o, self)
     self.__index = self
 
-    o.borderColor = {r=0.4, g=0.4, b=0.4, a=1};
-    o.backgroundColor = {r=0, g=0, b=0, a=0.8};
+    o.borderColor = {r=0.5, g=0.5, b=0.5, a=0.9};
+    o.backgroundColor = {r=0.05, g=0.05, b=0.08, a=0.92};
     o.width = width;
     o.height = height;
     o.player = player;
