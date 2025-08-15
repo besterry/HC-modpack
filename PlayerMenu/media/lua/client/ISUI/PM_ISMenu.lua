@@ -73,7 +73,7 @@ function PM_ISMenu:initialise()
 
     --Надпись баланс
     self.balancetext = ISLabel:new(x, y, FONT_HGT_MEDIUM, getText("IGUI_Balance"), 1, 1, 1, 1, UIFont.Medium, true)
-    self.balancetext.tooltip = "IGUI_SafehouseUI_RemoveConfirm_for_Support_Server"
+    self.balancetext.tooltip = getText("IGUI_RemoveConfirm_for_Support_Server")
     self.balancetext:initialise()
     self.balancetext:instantiate()
     self:addChild(self.balancetext)
