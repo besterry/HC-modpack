@@ -168,9 +168,11 @@ IGUI_RU =
 	IGUI_WPDynamic_Water_Off1 = "[Штаб ГО/ЧС] Давление упало ниже порога. Подача воды прекращена.",
 	IGUI_WPDynamic_Power_On1 = "[Штаб ГО/ЧС] Работы завершены. Электроснабжение восстановлено.",
 	IGUI_WPDynamic_Water_On1 = "[Штаб ГО/ЧС] Работы завершены. Водоснабжение восстановлено.",
-
+	
+	--Оповещения
 	IGUI_Vote_For_Server = "Голосуй за сервер, получай бонусы! wargm.ru/server/60709",
 	IGUI_Sale_AutoLoot = "Акция: бесплатный автосбор! Client > Меню игрока",
+	IGUI_Notify_Garage = "Паркуй авто в гараж — меньше лагов, выше защита!  Client > Меню игрока"
 
 	IGUI_SafehouseUI_Players = "Игроки:",
 	IGUI_SafehouseUI_Size = "Текущий размер:",
