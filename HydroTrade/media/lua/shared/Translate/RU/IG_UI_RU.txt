@@ -170,4 +170,9 @@ IGUI_RU =
 	IGUI_WPDynamic_Water_On1 = "[Штаб ГО/ЧС] Работы завершены. Водоснабжение восстановлено.",
 
 	IGUI_Vote_For_Server = "Голосуй за сервер, получай бонусы! wargm.ru/server/60709",
+	IGUI_Sale_AutoLoot = "Акция: бесплатный автосбор! Client > Меню игрока",
+
+	IGUI_SafehouseUI_Players = "Численность:",
+	IGUI_SafehouseUI_Size = "Текущий размер:",
+	IGUI_SafehouseUI_MaxSize = "Максимальный размер:",
 }

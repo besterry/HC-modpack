@@ -87,4 +87,8 @@ IGUI_EN =
 	IGUI_Bush_Looting = "Harvesting bushes",
 	IGUI_ZombieSiege_Horde_Start = "What's that noise?",
 	IGUI_Check_sqlId = "Need check vehicle",
+
+	IGUI_SafehouseUI_Players = "Players:",
+	IGUI_SafehouseUI_Size = "Current Size:",
+	IGUI_SafehouseUI_MaxSize = "Max Size:",
 }

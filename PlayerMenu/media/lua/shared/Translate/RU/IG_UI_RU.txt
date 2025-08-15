@@ -1,7 +1,7 @@
 IGUI_RU = {
 	IGUI_PlayerMenu = "Меню игрока",
     IGUI_Balance = "Баланс:",
-    IGUI_SafehouseUI_RemoveConfirm_for_Support_Server = "Монеты за поддержку проекта",
+    IGUI_RemoveConfirm_for_Support_Server = "Монеты за поддержку проекта",
     IGUI_SafeHouseLabel = "Моё убежище",
     IGUI_SafeHouseSize = "Текущий размер:",
     IGUI_SafeHouseButton = "Моё убежище",
