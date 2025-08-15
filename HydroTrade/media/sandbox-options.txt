@@ -370,8 +370,25 @@ option SafeHouse.HordeIntervalPause
 option SafeHouse.HordeExclude
 {
    type = string, 
-   default = admin,
-   
-   page = SafeHouse_HordeExclude, 
+   default = admin,   
+   page = SafeHouseHorde, 
    translation = SafeHouse_HordeExclude,
+}
+
+option Notify.Enable
+{
+	type = boolean, 
+  default = true,
+	page = Notify, 
+  translation = Notify_Enable,
+}
+
+option Notify.Regular
+{
+  type = integer,
+  min = 1,
+  max = 23,
+  default = 4,
+	page = Notify, 
+  translation = Notify_Regular,
 }
