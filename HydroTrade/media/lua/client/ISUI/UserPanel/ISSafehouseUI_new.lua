@@ -42,11 +42,11 @@ function ISSafehouseUI:initialise()
     self.title:instantiate()
     self:addChild(self.title)
 
-    self.changeTitle = ISButton:new(0, nameLbl.y, 70, btnHgt2, getText("IGUI_PlayerStats_Change"), self, ISSafehouseUI.onClick);
+    self.changeTitle = ISButton:new(self.title:getRight() + 10, nameLbl.y, 70, btnHgt2, getText("IGUI_PlayerStats_Change"), self, ISSafehouseUI.onClick);
     self.changeTitle.internal = "CHANGETITLE";
     self.changeTitle:initialise();
     self.changeTitle:instantiate();
-    self.changeTitle.borderColor = self.buttonBorderColor;
+    self.changeTitle.borderColor = {r=0.3, g=0.7, b=0.3, a=1};
     self:addChild(self.changeTitle);
 
     local ownerLbl = ISLabel:new(10, nameLbl:getBottom() + 10, FONT_HGT_SMALL, getText("IGUI_SafehouseUI_Owner"), 1, 1, 1, 1, UIFont.Small, true)
@@ -66,32 +66,84 @@ function ISSafehouseUI:initialise()
 
     --Отображение времени до слета привата
 
-    self.refreshTimeButton = ISButton:new(ownerLbl:getBottom() + 210, posLbl.y + 17, 70, btnHgt2, getText("IGUI_servers_refresh"), self, ISSafehouseUI.onClickRefreshTime)
-    self.refreshTimeButton.internal = "REFRESHTIME"
-    self.refreshTimeButton.tooltip = getText("IGUI_CreateSH_REFRESHTIME")
-    self.refreshTimeButton:initialise()
-    self.refreshTimeButton:instantiate()
-    self.refreshTimeButton.borderColor = self.buttonBorderColor
-    self:addChild(self.refreshTimeButton)
+    self.timeLeftLabel = ISLabel:new(10, posLbl.y + 17, FONT_HGT_SMALL, "", 1.0, 0.8, 0.8, 1.0, UIFont.Small, true)
+    self.timeLeftLabel:initialise()
+    self.timeLeftLabel:instantiate()
+    self:addChild(self.timeLeftLabel)
 
-    self.resettimebtn = ISButton:new(ownerLbl:getBottom() + 300, posLbl.y + 17, 70, btnHgt2, getText("IGUI_servers_resetime"), self, ISSafehouseUI.onClickResetTime)
+    self.resettimebtn = ISButton:new(self:getWidth() - 70 - 10, posLbl.y + 17, 70, btnHgt2, getText("IGUI_servers_resetime"), self, ISSafehouseUI.onClick)
     self.resettimebtn.internal = "RESETTIME"
     self.resettimebtn.tooltip = getText("IGUI_CreateSH_RESETTIME") .. daysUntilDeletion/24
     self.resettimebtn:initialise()
     self.resettimebtn:instantiate()
-    self.resettimebtn.borderColor = self.buttonBorderColor
+    self.resettimebtn.borderColor = {r=0.6, g=0.4, b=0.2, a=1}
+    self.resettimebtn:setWidthToTitle(70)
     self:addChild(self.resettimebtn)
 
-    self.timeLeftLabel = ISLabel:new(10, posLbl.y+17, FONT_HGT_SMALL, "", 0.6, 0.6, 0.8, 1.0, UIFont.Small, true)
-    self.timeLeftLabel:initialise()
-    self.timeLeftLabel:instantiate()
-    self:addChild(self.timeLeftLabel)
+    self.refreshTimeButton = ISButton:new(self.resettimebtn.x - 70 - 30, posLbl.y + 17, 70, btnHgt2, getText("IGUI_servers_refresh"), self, ISSafehouseUI.onClick)
+    self.refreshTimeButton.internal = "REFRESHTIME"
+    self.refreshTimeButton.tooltip = getText("IGUI_CreateSH_REFRESHTIME")
+    self.refreshTimeButton:initialise()
+    self.refreshTimeButton:instantiate()
+    self.refreshTimeButton.borderColor = {r=0.3, g=0.6, b=0.3, a=1}
+    self.refreshTimeButton:setWidthToTitle(70)
+    self:addChild(self.refreshTimeButton)
 
 
     self.pos = ISLabel:new(posLbl:getRight() + 8, posLbl.y, FONT_HGT_SMALL, getText("IGUI_SafehouseUI_Pos2", self.safehouse:getX(), self.safehouse:getY()), 0.6, 0.6, 0.8, 1.0, UIFont.Small, true)
     self.pos:initialise()
     self.pos:instantiate()
     self:addChild(self.pos)
+
+    -- Панель статистики убежища
+    local statsPanel = ISPanel:new(10, self.resettimebtn:getBottom() + 10, self.width - 20, 40)
+    statsPanel.backgroundColor = {r=0.05, g=0.1, b=0.05, a=0.8}
+    statsPanel.borderColor = {r=0.2, g=0.4, b=0.2, a=1}
+    self:addChild(statsPanel)
+
+    -- Количество игроков
+    local playerCountLbl = ISLabel:new(10, 10, FONT_HGT_SMALL, getText("IGUI_SafehouseUI_Players"), 1, 1, 1, 1, UIFont.Small, true)
+    playerCountLbl:initialise()
+    playerCountLbl:instantiate()
+    statsPanel:addChild(playerCountLbl)
+
+    self.playerCount = ISLabel:new(playerCountLbl:getRight() + 8, playerCountLbl.y, FONT_HGT_SMALL, "0", 0.8, 1.0, 0.8, 1.0, UIFont.Small, true)
+    self.playerCount:initialise()
+    self.playerCount:instantiate()
+    statsPanel:addChild(self.playerCount)
+
+    -- Размер территории
+    local sizeLbl = ISLabel:new(120, 10, FONT_HGT_SMALL, getText("IGUI_SafehouseUI_Size"), 1, 1, 1, 1, UIFont.Small, true)
+    sizeLbl:initialise()
+    sizeLbl:instantiate()
+    statsPanel:addChild(sizeLbl)
+
+    self.territorySize = ISLabel:new(sizeLbl:getRight() + 8, sizeLbl.y, FONT_HGT_SMALL, "0", 0.8, 1.0, 0.8, 1.0, UIFont.Small, true)
+    self.territorySize:initialise()
+    self.territorySize:instantiate()
+    statsPanel:addChild(self.territorySize)
+
+    -- Максимальный размер (только для владельца)
+    if self:isOwner() then
+        local maxSizeLbl = ISLabel:new(statsPanel:getWidth() - 200, 10, FONT_HGT_SMALL, getText("IGUI_SafehouseUI_MaxSize"), 1, 1, 1, 1, UIFont.Small, true)
+        maxSizeLbl:initialise()
+        maxSizeLbl:instantiate()
+        statsPanel:addChild(maxSizeLbl)
+
+        self.maxSize = ISLabel:new(maxSizeLbl:getRight() + 8, maxSizeLbl.y, FONT_HGT_SMALL, "0", 0.8, 1.0, 0.8, 1.0, UIFont.Small, true)
+        self.maxSize:initialise()
+        self.maxSize:instantiate()
+        statsPanel:addChild(self.maxSize)
+
+        -- Кнопка расширения убежища
+        self.expandSafehouseBtn = ISButton:new(self.maxSize:getRight() + 20, maxSizeLbl.y, 20, 20, "+", self, ISSafehouseUI.onClick)
+        self.expandSafehouseBtn.internal = "EXPANDSAFEHOUSE"
+        self.expandSafehouseBtn:initialise()
+        self.expandSafehouseBtn:instantiate()
+        self.expandSafehouseBtn.borderColor = {r=1, g=0.8, b=0.2, a=1}
+        self.expandSafehouseBtn.backgroundColor = {r=0.2, g=0.15, b=0.1, a=0.8}
+        statsPanel:addChild(self.expandSafehouseBtn)
+    end
 
     self.releaseSafehouse = ISButton:new(10, 0, 70, btnHgt, getText("IGUI_SafehouseUI_Release"), self, ISSafehouseUI.onClick);
     self.releaseSafehouse.internal = "RELEASE";
@@ -102,16 +154,16 @@ function ISSafehouseUI:initialise()
     self.releaseSafehouse.parent = self;
     self.releaseSafehouse:setVisible(false);
 
-    self.changeOwnership = ISButton:new(0, ownerLbl.y, 70, btnHgt2, getText("IGUI_SafehouseUI_ChangeOwnership"), self, ISSafehouseUI.onClick);
+    self.changeOwnership = ISButton:new(self.owner:getRight() + 10, ownerLbl.y, 70, btnHgt2, getText("IGUI_SafehouseUI_ChangeOwnership"), self, ISSafehouseUI.onClick);
     self.changeOwnership.internal = "CHANGEOWNERSHIP";
     self.changeOwnership:initialise();
     self.changeOwnership:instantiate();
-    self.changeOwnership.borderColor = self.buttonBorderColor;
+    self.changeOwnership.borderColor = {r=0.7, g=0.5, b=0.2, a=1};
     self:addChild(self.changeOwnership);
     self.changeOwnership.parent = self;
     self.changeOwnership:setVisible(false);
 
-    local playersLbl = ISLabel:new(10, posLbl:getBottom() + 20, FONT_HGT_SMALL, getText("IGUI_SafehouseUI_Players"), 1, 1, 1, 1, UIFont.Small, true)
+    local playersLbl = ISLabel:new(10, statsPanel:getBottom() + 10, FONT_HGT_SMALL, getText("IGUI_SafehouseUI_Players"), 1, 1, 1, 1, UIFont.Small, true)
     playersLbl:initialise()
     playersLbl:instantiate()
     self:addChild(playersLbl)
@@ -120,10 +172,10 @@ function ISSafehouseUI:initialise()
     self.refreshPlayerList.internal = "REFRESHLIST";
     self.refreshPlayerList:initialise();
     self.refreshPlayerList:instantiate();
-    self.refreshPlayerList.borderColor = self.buttonBorderColor;
+    self.refreshPlayerList.borderColor = {r=0.3, g=0.6, b=0.3, a=1};
     self:addChild(self.refreshPlayerList);
 
-    self.playerList = ISScrollingListBox:new(10, playersLbl:getBottom(), self.width - 20, (FONT_HGT_SMALL + 2 * 2) * 8);
+    self.playerList = ISScrollingListBox:new(10, playersLbl:getBottom() + 10, self.width - 20, (FONT_HGT_SMALL + 2 * 2) * 8);
     self.playerList:initialise();
     self.playerList:instantiate();
     self.playerList.itemheight = FONT_HGT_SMALL + 2 * 2;
@@ -132,6 +184,8 @@ function ISSafehouseUI:initialise()
     self.playerList.font = UIFont.NewSmall;
     self.playerList.doDrawItem = self.drawPlayers;
     self.playerList.drawBorder = true;
+    self.playerList.backgroundColor = {r=0.02, g=0.02, b=0.05, a=0.9}
+    self.playerList.borderColor = {r=0.3, g=0.3, b=0.5, a=1}
     self:addChild(self.playerList);
 
     self.removePlayer = ISButton:new(0, self.playerList.y + self.playerList.height + 5, 70, btnHgt2, getText("ContextMenu_Remove"), self, ISSafehouseUI.onClick);
@@ -139,7 +193,7 @@ function ISSafehouseUI:initialise()
     self.removePlayer.internal = "REMOVEPLAYER";
     self.removePlayer:initialise();
     self.removePlayer:instantiate();
-    self.removePlayer.borderColor = self.buttonBorderColor;
+    self.removePlayer.borderColor = {r=0.6, g=0.2, b=0.2, a=1};
     self.removePlayer:setWidthToTitle(70)
     self.removePlayer:setX(self.playerList:getRight() - self.removePlayer.width)
     self:addChild(self.removePlayer);
@@ -150,7 +204,7 @@ function ISSafehouseUI:initialise()
     self.quitSafehouse.internal = "QUITSAFE";
     self.quitSafehouse:initialise();
     self.quitSafehouse:instantiate();
-    self.quitSafehouse.borderColor = self.buttonBorderColor;
+    self.quitSafehouse.borderColor = {r=0.6, g=0.4, b=0.2, a=1};
     self.quitSafehouse:setWidthToTitle(70)
     self.quitSafehouse:setX(self.playerList:getRight() - self.quitSafehouse.width)
     if self:hasPrivilegedAccessLevel() then
@@ -163,7 +217,7 @@ function ISSafehouseUI:initialise()
     self.addPlayer.internal = "ADDPLAYER";
     self.addPlayer:initialise();
     self.addPlayer:instantiate();
-    self.addPlayer.borderColor = self.buttonBorderColor;
+    self.addPlayer.borderColor = {r=0.2, g=0.6, b=0.2, a=1};
     self:addChild(self.addPlayer);
 
     self.respawn = ISTickBox:new(10, self.addPlayer:getBottom() + 10, getTextManager():MeasureStringX(UIFont.Small, getText("IGUI_SafehouseUI_Respawn")) + 20, 18, "", self, ISSafehouseUI.onClickRespawn);
@@ -182,7 +236,7 @@ function ISSafehouseUI:initialise()
     self:setHeight(self.no:getBottom() + padBottom)
     self:onClickRefreshTime()
     self:populateList();
-
+    self:updateStats();
 end
 
 
@@ -270,20 +324,27 @@ function ISSafehouseUI:drawPlayers(y, item, alt)
 --    self:drawRect(240, y-1, 1, self.itemheight,1,self.borderColor.r, self.borderColor.g, self.borderColor.b);
 
     if self.selected == item.index then
-        self:drawRect(0, (y), self:getWidth(), self.itemheight - 1, 0.3, 0.7, 0.35, 0.15);
+        self:drawRect(0, (y), self:getWidth(), self.itemheight - 1, 0.3, 0.4, 0.7, 0.3);
 --        if self.parent.isOwner then
 --            self.parent.removePlayer.enable = true;
 --        end
 --        self.parent.selectedPlayer = item.item.name;
     end
 
-    self:drawText(item.item.name, 10, y + 2, 1, 1, 1, a, self.font);
+    -- Цветовое выделение владельца
+    local textColor = {r=1, g=1, b=1, a=a}
+    if item.item.name == self.parent.safehouse:getOwner() then
+        textColor = {r=1, g=0.8, b=0.2, a=a} -- Владелец выделен золотым
+    end
+
+    self:drawText(item.item.name, 10, y + 2, textColor.r, textColor.g, textColor.b, textColor.a, self.font);
 
     return y + self.itemheight;
 end
 
 function ISSafehouseUI:render()
     self:updateButtons();
+    self:updateStats();
 
     self.removePlayer.enable = false;
     if self.playerList.selected > 0 then
@@ -297,6 +358,29 @@ function ISSafehouseUI:render()
     end
 
     self:updatePlayerList();
+end
+
+-- Функция обновления статистики
+function ISSafehouseUI:updateStats()
+    -- Обновляем количество игроков
+    local playerCount = self.safehouse:getPlayers():size()
+    if self.playerCount then
+        self.playerCount:setName(tostring(playerCount))
+    end
+    
+    -- Обновляем размер территории
+    if self.territorySize then
+        local width = self.safehouse:getX2() - self.safehouse:getX()
+        local height = self.safehouse:getY2() - self.safehouse:getY()
+        local area = width * height
+        self.territorySize:setName(tostring(area))
+    end
+
+    -- Обновляем максимальный размер (только для владельца)
+    if self.maxSize and self:isOwner() then
+        local maxSize = PM.SafeHouseSize or "0x0"
+        self.maxSize:setName(tostring(maxSize))
+    end
 end
 
 function ISSafehouseUI:prerender()
@@ -397,6 +481,16 @@ function ISSafehouseUI:onClick(button)
     end
     if button.internal == "REFRESHLIST" then
         self:populateList();
+    end;
+    if button.internal == "EXPANDSAFEHOUSE" then
+        if PM_SafeHouseMenu.instance then
+            PM_SafeHouseMenu.instance:close()
+            PM_SafeHouseMenu.instance = nil
+        else
+            local ui = PM_SafeHouseMenu:new(self.x + self:getWidth() + 10, self.y, 200, 160, getPlayer());
+            ui:initialise();
+            ui:addToUIManager();
+        end
     end;
 end
 
