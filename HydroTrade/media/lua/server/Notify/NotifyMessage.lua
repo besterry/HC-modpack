@@ -7,6 +7,13 @@
 --         {255, 255, 0}, -- Жёлтый
 --         {255, 0, 255}, -- Пурпурный
 --         {0, 255, 255} -- Бирюзовый
+--         {255, 165, 0} -- Оранжевый
+--         {128, 0, 128} -- Фиолетовый
+--         {128, 128, 128} -- Серый
+--         {128, 0, 0} -- Тёмно-красный
+--         {128, 128, 0} -- Тёмно-жёлтый
+--         {0, 128, 0} -- Тёмно-зелёный
+--         {0, 0, 128} -- Тёмно-синий
 --     }
 --     return colors[ZombRand(1, #colors)]
 -- end
@@ -18,8 +25,8 @@ local function getNextMessage()
     
     -- Базовое сообщение всегда добавляется
     table.insert(messages, { message = "IGUI_Vote_For_Server", color = {0, 128, 255} }) -- Голубой
-    table.insert(messages, { message = "IGUI_Notify_Garage", color = {0, 128, 255} }) -- Голубой
-    table.insert(messages, { message = "IGUI_Dont_create_sh_in_town", color = {255, 255, 0} }) -- Жёлтый
+    table.insert(messages, { message = "IGUI_Notify_Garage", color = {255, 165, 0} }) -- Оранжевый
+    table.insert(messages, { message = "IGUI_Dont_create_sh_in_town", color = {255, 165, 0} }) -- Оранжевый
     
     -- Условное сообщение добавляется только при выполнении условий
     if SandboxVars.AutoLoot.PriceAutoLoot == 0 and SandboxVars.AutoLoot.Buy then
