@@ -90,9 +90,10 @@ IGUI_EN =
 	UGUI_UserPanel_ShowKills = "Show kills,
 	
 	--Notify
-	IGUI_Notify_Garage = "Park your car in the garage — less lag, better protection!  Client > Player Menu"
+	IGUI_Notify_Garage = "Park your car in the garage — less lag, better protection! Client > Player Menu"
 	IGUI_Vote_For_Server = "Vote for the server, get bonuses! wargm.ru/server/60709",
 	IGUI_Sale_AutoLoot = "Promotion: free AutoLoot! Client > Player menu",
+	IGUI_Dont_create_sh_in_town = "[Attention] Authorities periodically clear towns — all safehouses will be demolished. Settle outside town."
 
 	-- SafeHouseMenu
 	IGUI_SafehouseUI_Players = "Players:",

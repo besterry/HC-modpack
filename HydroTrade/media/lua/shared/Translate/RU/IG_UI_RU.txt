@@ -173,6 +173,8 @@ IGUI_RU =
 	IGUI_Vote_For_Server = "Голосуй за сервер, получай бонусы! wargm.ru/server/60709",
 	IGUI_Sale_AutoLoot = "Акция: бесплатный автосбор! Client > Меню игрока",
 	IGUI_Notify_Garage = "Паркуй авто в гараж — меньше лагов, выше защита!  Client > Меню игрока"
+	IGUI_Dont_create_sh_in_town = "[Внимание] Власти периодически расчищают города — все убежища будут снесены. Обустраивайтесь за городом."
+
 
 	IGUI_SafehouseUI_Players = "Игроки:",
 	IGUI_SafehouseUI_Size = "Текущий размер:",

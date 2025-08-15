@@ -19,6 +19,7 @@ local function getNextMessage()
     -- Базовое сообщение всегда добавляется
     table.insert(messages, { message = "IGUI_Vote_For_Server", color = {0, 128, 255} }) -- Голубой
     table.insert(messages, { message = "IGUI_Notify_Garage", color = {0, 128, 255} }) -- Голубой
+    table.insert(messages, { message = "IGUI_Dont_create_sh_in_town", color = {255, 255, 0} }) -- Жёлтый
     
     -- Условное сообщение добавляется только при выполнении условий
     if SandboxVars.AutoLoot.PriceAutoLoot == 0 and SandboxVars.AutoLoot.Buy then
