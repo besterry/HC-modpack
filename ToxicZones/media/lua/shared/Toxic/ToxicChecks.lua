@@ -1,13 +1,13 @@
---local GeigerRange = SandboxVars.ToxicZonesStalker.GeigerCounterRange or 2;
+--local GeigerRange = SandboxVars.ToxicZonesStalker.GeigerCounterRange or 2; -- Дистанция для звука счетчика
 
 local core = getCore()
-local width = core:getScreenWidth();
-local height = core:getScreenHeight();
-local toxicOverlay = getTexture("media/textures/UI/ToxicOverlay.png");
-local toxicAlpha = 0;
-local toxicOvCap = false;
+local width = core:getScreenWidth(); -- Ширина экрана
+local height = core:getScreenHeight(); -- Высота экрана
+local toxicOverlay = getTexture("media/textures/UI/ToxicOverlay.png"); -- Текстура для эффекта токсичности
+local toxicAlpha = 0; -- Прозрачность эффекта токсичности
+local toxicOvCap = false; -- Флаг для отображения эффекта токсичности
 
-ProtectiveMasks = {
+ProtectiveMasks = { -- Список масок 
 	"Exohelm",
 	"ExohelmBandit",
 	"ExohelmCS",
@@ -62,30 +62,30 @@ ProtectiveMasks = {
 	"RespiratorMonolith",
 }
 
---Simplified from planetalgol's Toxic Fog version
+--Simplified from planetalgol's Toxic Fog version (упрощенная версия из Toxic Fog версии planetalgol)
 function protectiveMaskEquipped(player)
-	if player:isGodMod() then return true end
-	local inventory = player:getInventory()	
-	local it = inventory:getItems()		
+	if player:isGodMod() then return true end -- Если игрок бог, то возвращаем true
+	local inventory = player:getInventory()	-- Получаем инвентарь игрока
+	local it = inventory:getItems()			-- Получаем предметы в инвентаре
 	if player and inventory then
 		for i = 0, it:size()-1 do
-			local item = it:get(i)
+			local item = it:get(i) -- Получаем предмет
 			if player:isEquippedClothing(item) then
-				local iType = item:getType()		
+				local iType = item:getType()			-- Получаем тип предмета
 				for i = 1, #ProtectiveMasks do
 					if ProtectiveMasks[i] == iType then
-						local percent = 1
+						local percent = 1 -- Целостность фильтра
 						if item:getModData().percent then
-							percent = item:getModData().percent;
+							percent = item:getModData().percent; -- Получаем прозрачность фильтра
 						end
 						if percent > 0 then
-							item:getModData().percent = percent - 0.00001;
+							item:getModData().percent = percent - 0.00001; -- Уменьшаем целостность фильтра
 							if item:getModData().percent < 0 then
-								item:getModData().percent = 0;
+								item:getModData().percent = 0; -- Если целостность меньше 0, то устанавливаем её в 0
 							end
 							return true
 						else
-							return false
+							return false 
 						end
 					end
 				end	
@@ -96,34 +96,34 @@ function protectiveMaskEquipped(player)
 end
 
 
-function shouldTakeToxicDamage(player)
-	if not isInToxicZone(player) then return false end
-	if protectiveMaskEquipped(player) then return false end
+function shouldTakeToxicDamage(player) -- Функция для получения урона от токсичности
+	if not isInToxicZone(player) then return false end -- Если игрок не в токсической зоне, то возвращаем false
+	if protectiveMaskEquipped(player) then return false end -- Если маска надета, то возвращаем false
 
-	local toxic_Fog = ( 0.15 * ( GameTime.getInstance():getMultiplier() / 1.6) )
-	local stats = player:getStats()
-	local fatigue = stats:getFatigue()
-	local isOnline = (isClient() or isServer()) 
-	local sleepOK = isOnline and getServerOptions():getBoolean("SleepAllowed") and getServerOptions():getBoolean("SleepNeeded")
+	local toxic_Fog = ( 0.15 * ( GameTime.getInstance():getMultiplier() / 1.6) ) -- Получаем уровень токсичности
+	local stats = player:getStats() -- Получаем статистику игрока
+	local fatigue = stats:getFatigue() -- Получаем усталость игрока
+	local isOnline = (isClient() or isServer()) -- Получаем статус онлайна
+	local sleepOK = isOnline and getServerOptions():getBoolean("SleepAllowed") and getServerOptions():getBoolean("SleepNeeded") -- Получаем статус сна
 
 	if fatigue < 1 and (sleepOK or not isOnline) then
-		stats:setFatigue( fatigue + ( 0.001 * toxic_Fog ) )
+		stats:setFatigue( fatigue + ( 0.001 * toxic_Fog ) ) -- Устанавливаем усталость игрока
 	end	
-	toxic_Fog = (toxic_Fog * SandboxVars.ToxicZonesStalker.ToxicDamageMultiplier / 2)
-	local damage = player:getBodyDamage()
-	damage:getBodyPart(BodyPartType.Head):ReduceHealth(0.1 * toxic_Fog); 
-    damage:getBodyPart(BodyPartType.Torso_Upper):ReduceHealth(0.1 * toxic_Fog);
-    damage:getBodyPart(BodyPartType.Neck):ReduceHealth(0.1 * toxic_Fog);
-	damage:ReduceGeneralHealth(0.015 * toxic_Fog)
+	toxic_Fog = (toxic_Fog * SandboxVars.ToxicZonesStalker.ToxicDamageMultiplier / 2) -- Умножаем уровень токсичности на множитель
+	local damage = player:getBodyDamage() -- Получаем урон игрока
+	damage:getBodyPart(BodyPartType.Head):ReduceHealth(0.1 * toxic_Fog); -- Уменьшаем здоровье головы игрока
+    damage:getBodyPart(BodyPartType.Torso_Upper):ReduceHealth(0.1 * toxic_Fog); -- Уменьшаем здоровье верхней части туловища игрока
+    damage:getBodyPart(BodyPartType.Neck):ReduceHealth(0.1 * toxic_Fog); -- Уменьшаем здоровье шеи игрока
+	damage:ReduceGeneralHealth(0.015 * toxic_Fog) -- Уменьшаем общее здоровье игрока
 	--print("HEAD -- " .. tostring( damage:getBodyPart(BodyPartType.Head):getHealth()))
-	if damage:getBodyPart(BodyPartType.Head):getHealth() < 1 then 
-		damage:getBodyPart(BodyPartType.Head):setHealth(0)
+	if damage:getBodyPart(BodyPartType.Head):getHealth() < 1 then  -- Если здоровье головы игрока меньше 1, то устанавливаем его в 0
+		damage:getBodyPart(BodyPartType.Head):setHealth(0) -- Устанавливаем здоровье головы игрока в 0
 	end
-	if damage:getBodyPart(BodyPartType.Torso_Upper):getHealth() < 1 then 
-		damage:getBodyPart(BodyPartType.Torso_Upper):setHealth(0)
+	if damage:getBodyPart(BodyPartType.Torso_Upper):getHealth() < 1 then  -- Если здоровье верхней части туловища игрока меньше 1, то устанавливаем его в 0
+		damage:getBodyPart(BodyPartType.Torso_Upper):setHealth(0) -- Устанавливаем здоровье верхней части туловища игрока в 0
 	end
-	if damage:getBodyPart(BodyPartType.Neck):getHealth() < 1 then 
-		damage:getBodyPart(BodyPartType.Neck):setHealth(0)
+	if damage:getBodyPart(BodyPartType.Neck):getHealth() < 1 then  -- Если здоровье шеи игрока меньше 1, то устанавливаем его в 0
+		damage:getBodyPart(BodyPartType.Neck):setHealth(0) -- Устанавливаем здоровье шеи игрока в 0
 	end
 end
 

@@ -1,7 +1,7 @@
 require "ISUI/ISToolTipInv"
 
 function ISToolTipInv:render()
-	-- we render the tool tip for inventory item only if there's no context menu showed
+	-- мы рендерим тултип для предмета в инвентаре только если нет контекстного меню
 	if not ISContextMenu.instance or not ISContextMenu.instance.visibleCheck then
 
      local mx = getMouseX() + 24;
