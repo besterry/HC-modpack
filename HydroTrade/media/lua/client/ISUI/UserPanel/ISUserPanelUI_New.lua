@@ -80,8 +80,16 @@ function ISUserPanelUI:create()
         self.factionBtn:setWidthToTitle(self.factionBtn.width)
     end
 
-    y = 70;
+    self.pvpzoneBtn = ISButton:new(10, y, btnWid, btnHgt, getText("IGUI_PlayerMenu"), self, ISUserPanelUI.onOptionMouseDownPM);
+    self.pvpzoneBtn.internal = "PMenu";
+    self.pvpzoneBtn:initialise();
+    self.pvpzoneBtn:instantiate();    
+    self.pvpzoneBtn.borderColor = self.buttonBorderColor;
+    self:addChild(self.pvpzoneBtn);
+    y = y + btnHgt + 5;
 
+    y = 70;
+    -- Информация о подключении к серверу
     self.showConnectionInfo = ISTickBox:new(10 + btnWid + 20, y, btnWid, btnHgt, getText("IGUI_UserPanel_ShowConnectionInfo"), self, ISUserPanelUI.onShowConnectionInfo);
     self.showConnectionInfo:initialise();
     self.showConnectionInfo:instantiate();
@@ -90,6 +98,7 @@ function ISUserPanelUI:create()
     self:addChild(self.showConnectionInfo);
     y = y + btnHgt + 5;
 
+    -- Информация о сервере
     self.showServerInfo = ISTickBox:new(10 + btnWid + 20, y, btnWid, btnHgt, getText("IGUI_UserPanel_ShowServerInfo"), self, ISUserPanelUI.onShowServerInfo);
     self.showServerInfo:initialise();
     self.showServerInfo:instantiate();
@@ -122,6 +131,17 @@ function ISUserPanelUI:create()
     self.cancel:instantiate();
     self.cancel.borderColor = self.buttonBorderColor;
     self:addChild(self.cancel);
+end
+
+function ISUserPanelUI:onOptionMouseDownPM()
+    if PM_ISMenu.instance then
+        PM_ISMenu.instance:close()
+        PM_ISMenu.instance = nil
+    else
+        local ui = PM_ISMenu:new(50,50,600,600, getPlayer());
+        ui:initialise();
+        ui:addToUIManager();
+    end
 end
 
 function ISUserPanelUI:onShowConnectionInfo(option, enabled)

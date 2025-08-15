@@ -1,3 +1,5 @@
+-- Код вшит в файл ISUserPanelUI_New.lua
+--[[
 local old_ISUserPanelUI_create = ISUserPanelUI.create
 
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
@@ -9,8 +11,8 @@ function ISUserPanelUI:create()
     local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2)
     local btnGapY = 5
     local x = 0;
-    local y = 0;
-    
+    local y = 0;    
+
     local last_btn = self.children[self.IDMax - 1]
     if last_btn.internal == "CANCEL" then
         last_btn = self.children[self.IDMax - 2]
@@ -29,10 +31,12 @@ function ISUserPanelUI:create()
 
     
     -- print(self.IDMax)
-    local btn_count = 0
-    for i in pairs(self.children) do
-        btn_count = btn_count + 1
-    end
+    -- local btn_count = 0
+    -- for i in pairs(self.children) do
+    --     if i.visible then
+    --         btn_count = btn_count + 1
+    --     end
+    -- end
     -- self.children[#self.children]
     
 end
@@ -46,4 +50,4 @@ function ISUserPanelUI:onOptionMouseDownPM()
         ui:initialise();
         ui:addToUIManager();
     end
-end
+end ]]--
