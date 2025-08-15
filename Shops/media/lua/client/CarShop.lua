@@ -394,21 +394,21 @@ local userPanelHooks = function()
 	function ISUserPanelUI:create()
 		base_ISUserPanelUI_create(self)
 		local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
-		local btnWid = 150 --Ширина кнопок
-		local btnHgt = math.max(25, FONT_HGT_SMALL + 3 * 2) --Высота кнопок
+		local btnWid = 160 --Ширина кнопок
+		local btnHgt = math.max(30, FONT_HGT_SMALL + 8) --Высота кнопок
 		
-		self:removeChild(self.showServerInfo) -- Удаляем галочку "информация о сервере"
-		self:removeChild(self.showConnectionInfo) -- Удаляем галочку "информация о соединении"
+		-- self:removeChild(self.showServerInfo) -- Удаляем галочку "информация о сервере"
+		-- self:removeChild(self.showConnectionInfo) -- Удаляем галочку "информация о соединении"
 		
-		local y = 70
+		local y = 60
 		
 		if not self.sellingCarsCount then
-			self.sellingCarsCount = ISLabel:new(10 + btnWid + 20, y, btnHgt, '',1,1,1,1,UIFont.Small, true); -- Вставляем текст с количеством тачек на прродаже
+			self.sellingCarsCount = ISLabel:new(15 + btnWid + 30, y, btnHgt, '',1,1,1,1,UIFont.Small, true); -- Вставляем текст с количеством тачек на прродаже
 			self:addChild(self.sellingCarsCount);
 		end
 		self:renderCarOnSale(countCarsOnSale()) -- Отрисовываем количество машин в продаже
 		
-		y = y + btnHgt + 8;
+		y = y + btnHgt;
 		self.showPingInfo:setY(y) -- Передвигаем чекбокс повыше
 
 		self.onCarSaleChange_handler = function(carsOnSaleNum)
