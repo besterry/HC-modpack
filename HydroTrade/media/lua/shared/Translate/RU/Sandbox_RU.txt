@@ -105,5 +105,9 @@ Sandbox_RU = {
     Sandbox_SafeHouse_Horde = "Включить осады",
     Sandbox_SafeHouse_HordeExclude = "Отключить осады для",
     Sandbox_SafeHouse_HordeExclude_Tooltip = "Список игровых ников через запятую, для которых осады будут отключены",
-
+    
+    Sandbox_Notify = "Оповещения",
+    Sandbox_Notify_Enable = "Оповещения",
+    Sandbox_Notify_Regular = "Частота отправки",
+    Sandbox_Notify_Regular_Tooltip = "В игровых часах",
 }
