@@ -38,4 +38,13 @@ UI_EN = {
 	IGUI_CreateSH_REFRESHTIME = "Refresh current time",
 	IGUI_CreateSH_RESETTIME = "Reset timer to maximum value in days: ",
 	IGUI_CreateSH_ExceedsMaxLength = "Max length of an Exceeds side is 40 tiles",
+
+	-- Notify
+	IGUI_Vote_For_Server = "Vote for the server, get bonuses! wargm.ru/server/60709",
+	IGUI_Sale_AutoLoot = "Promotion: free AutoLoot! Client > Player menu",
+
+	-- SafeHouseMenu
+	IGUI_SafehouseUI_Players = "Players:",
+	IGUI_SafehouseUI_Size = "Current size:",
+	IGUI_SafehouseUI_MaxSize = "Maximum size:",
 }
