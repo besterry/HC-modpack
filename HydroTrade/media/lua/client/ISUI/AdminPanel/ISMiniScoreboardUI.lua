@@ -1,16 +1,7 @@
---***********************************************************
---**              	  ROBERT JOHNSON                       **
---***********************************************************
-
 ISMiniScoreboardUI = ISPanel:derive("ISMiniScoreboardUI");
 ISMiniScoreboardUI.messages = {};
 
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
-
---************************************************************************--
---** ISMiniScoreboardUI:initialise
---**
---************************************************************************--
 
 function ISMiniScoreboardUI:initialise()
     ISPanel.initialise(self);
@@ -107,9 +98,11 @@ function ISMiniScoreboardUI:populateList()
             
             -- Получаем время выживания игрока
             local survivalHours = 0
-            local playerObj = getPlayerFromUsername(username)
-            if playerObj then
-                survivalHours = playerObj:getHoursSurvived()
+            if username then
+                local playerObj = getPlayerFromUsername(username)
+                if playerObj then
+                    survivalHours = playerObj:getHoursSurvived()
+                end
             end
             
             -- Форматируем время выживания
@@ -117,8 +110,12 @@ function ISMiniScoreboardUI:populateList()
             local years = survivalHours / 24 / 30 / 12 -- 12 = 1 year
             local months = survivalHours /24 / 30 -- 30 = 1 month -745/24/30 = 1
             local days = survivalHours / 24 -- 24 = 1 day
-            local hours = survivalHours % 24 -- 1 = 1 hour
-            local minutes = survivalHours % 60 --715.254616132 => 15
+            local hours = survivalHours -- 1 = 1 hour (% - остаток от деления) 25 % 24 = 1 (целое от деления?) 
+            local minutes = survivalHours*60 --0.45 часа = 27 минут (0.45*60 = 27)
+            -- print("years ",years, "months ", months, "days ", days, "hours ", hours, "minutes ", minutes, "survivalHours ", survivalHours)
+            -- years 	5.250876747427187E-5	months 	6.301052096912625E-4	
+            -- days 	0.018903156290737872	hours 	0.018903156290737872	
+            -- minutes 	0.007561262516295149	survivalHours 	0.45367575097770896.
             if years >= 1 then
                 survivalText = string.format(" [%.1fy]", years)
             elseif months >= 1 then
@@ -128,7 +125,7 @@ function ISMiniScoreboardUI:populateList()
             elseif hours >= 1 then
                 survivalText = string.format(" [%dh]", hours)
             elseif minutes > 0 then
-                survivalText = string.format(" [%dm]", minutes)
+                survivalText = string.format(" [%dmin]", minutes)
             end
             
             -- Обрабатываем длинные ники
@@ -140,6 +137,7 @@ function ISMiniScoreboardUI:populateList()
             
             name = processedName .. survivalText
             item.username = username
+            item.text = name
             item.displayName = displayName
             item.survivalHours = survivalHours
             item.originalName = displayName -- Сохраняем оригинальное имя для тултипа
@@ -319,5 +317,6 @@ ISMiniScoreboardUI.OnMiniScoreboardUpdate = function()
     end
 end
 
+-- Events.EveryTenMinutes.Add(ISMiniScoreboardUI.onScoreboardUpdate)
 Events.OnScoreboardUpdate.Add(ISMiniScoreboardUI.onScoreboardUpdate)
 Events.OnMiniScoreboardUpdate.Add(ISMiniScoreboardUI.OnMiniScoreboardUpdate)
