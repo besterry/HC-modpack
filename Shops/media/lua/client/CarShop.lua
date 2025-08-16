@@ -171,6 +171,23 @@ local function isModDataTableEmpty(modDataTable)
 	return true
 end
 
+local function getOverallCondition(vehicle)
+    if not vehicle then return 0 end
+    local total, count = 0, 0
+    for i = 0, vehicle:getPartCount() - 1 do
+        local part = vehicle:getPartByIndex(i)
+        if part then
+            local partCondition = part:getCondition()
+            if partCondition and partCondition > 0 then
+                total = total + partCondition
+                count = count + 1
+            end
+        end
+    end
+    if count == 0 then return 0 end
+    return total / count
+end
+
 local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 ---@param playerObj IsoPlayer
 function ISVehicleMenu.showRadialMenu(playerObj)
@@ -197,6 +214,11 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 		local carId = vehicle:getModData().sqlId
 		local X = vehicle:getX()
 		local Y = vehicle:getY()
+		local md = vehicle:getModData()
+		local date = getGameTime():getDay() .. "." .. getGameTime():getMonth() .. "." .. getGameTime():getYear()
+		local condition = math.floor(getOverallCondition(vehicle)*100)/100 -- Округление до 2х знаков после запятой
+		local hp = vehicle:getEnginePower()/10
+		local typeCar = vehicle:getScript():getMechanicType()
         local offerInfo = {
             username = username,
 			vehicleKeyId = vehicleKeyId,
@@ -204,7 +226,11 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 			carname = carname,
 			carid = carId,
 			x = X,
-			y = Y
+			y = Y,
+			date = date, -- Дата выставления на продажу
+			condition = condition, -- Состояние машины
+			hp = hp, -- Мощность двигателя
+			typeCar = typeCar, -- Тип машины
         }
 		local carInfo = CarUtils:init(offerInfo)
 		local playerHasCarTicket = playerObj:getInventory():contains(TICKET_NAME)

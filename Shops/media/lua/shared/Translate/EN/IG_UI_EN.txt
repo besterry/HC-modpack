@@ -1,4 +1,15 @@
 IGUI_EN = {
+
+    IGUI_CarMarket_Title = "Car Market",
+    IGUI_CarMarket_Subtitle = "Daily car sales announcements",
+    IGUI_CarMarket_Seller = "Seller: ",
+    IGUI_CarMarket_Lot = "Lot: ",
+    IGUI_CarMarket_Listings = "listings",
+    IGUI_CarMarket_Anonymous = "Anonymous",
+    IGUI_CarMarket_Vehicle = "Vehicle",
+    IGUI_CarMarket_NoListings = "No listings yet",
+    IGUI_Close = "Close",
+    IGUI_CarMarket_CarId = "Gov.sign:",
     
     IGUI_Loot_All_Coins = "Loot All Coins",
     IGUI_Coins_To_Account = "Move Coins to Account",

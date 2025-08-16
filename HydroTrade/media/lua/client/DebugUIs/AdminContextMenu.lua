@@ -39,13 +39,14 @@ AdminContextMenu.doMenu = function(player, context, worldobjects, test)
     local debugOption = context:addDebugOption(getText("ContextMenu_Tools"), worldobjects, nil);
     local subMenu = ISContextMenu:getNew(context);
     context:addSubMenu(debugOption, subMenu);
-
+    
     subMenu:addOption(getText("ContextMenu_Teleport"), playerObj, AdminContextMenu.onTeleportUI);
     subMenu:addOption(getText("ContextMenu_RemoverTools"), playerObj, AdminContextMenu.onDestroyUI);
     subMenu:addOption(getText("ContextMenu_Remove_item_tool"), playerObj, AdminContextMenu.onRemoveItemTool)
     subMenu:addOption(getText("ContextMenu_Spawn_Vehicle"), playerObj, AdminContextMenu.onSpawnVehicle);
     subMenu:addOption(getText("ContextMenu_Horde_Manager"), square, AdminContextMenu.onHordeManager, playerObj);
     subMenu:addOption(getText("ContextMenu_Trigger_Thunder"), playerObj, AdminContextMenu.onTriggerThunderUI)
+    subMenu:addOption(getText("ContextMenu_Car_Magazine"), playerObj, AdminContextMenu.onCarMagazineUI)
 
     local noiseOption = subMenu:addOption(getText("ContextMenu_Make_noise"), worldobjects, nil);
     local noiseSubMenu = subMenu:getNew(subMenu);
@@ -87,6 +88,11 @@ AdminContextMenu.doMenu = function(player, context, worldobjects, test)
     end
 end
 Events.OnFillWorldObjectContextMenu.Add(AdminContextMenu.doMenu);
+
+local CarMagazine = require "cars/Magazine"
+AdminContextMenu.onCarMagazineUI = function()
+    CarMagazine.show()
+end
 
 AdminContextMenu.onTeleportUI = function(playerObj)
     local ui = ISTeleportDebugUI:new(0, 0, 300, 200, playerObj, nil, DebugContextMenu.onTeleportValid);
