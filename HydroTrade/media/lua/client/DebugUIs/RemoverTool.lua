@@ -48,8 +48,16 @@ function RemoverItemAndBuildsTool:initialise()
     self.itemType:addOption(getText("IGUI_ChangeToGrass"))
     self.itemType:addOption(getText("IGUI_AddRandomGrass"))
     self.itemType:addOption(getText("IGUI_AddRandomTrees"))
+    self.itemType:addOption(getText("IGUI_RemoveFloors"))
+    self.itemType:addOption(getText("IGUI_SetSelectedFloors"))
     -- self.itemType:addOption(getText("IGUI_ClearSnow"))
     self.itemType:setSelected(1)
+
+    self.spriteNameEntry = ISTextEntryBox:new("", self:getWidth()/2 , 200, 150, fontHgt + 6)
+    self.spriteNameEntry:initialise()
+    self.spriteNameEntry:instantiate()
+    self.spriteNameEntry.borderColor = {r=1, g=1, b=1, a=0.3}
+    self:addChild(self.spriteNameEntry)
 end
 
 function RemoverItemAndBuildsTool:destroy()
@@ -254,6 +262,13 @@ function RemoverItemAndBuildsTool:onClick(button)
                                         --self:addTileToSquare(tileName, sq) -- Функция для добавления тайла на клетку
                                     end
                                 end
+                            elseif self.itemType:isSelected(8) then --Удаление полов
+                                for i = sq:getObjects():size() - 1, 0 , -1 do
+                                    local building = sq:getObjects():get(i)
+                                    if building:isFloor() and z==0 then
+                                        building:getSquare():RemoveTileObject(building)
+                                    end
+                                end
                             -- elseif self.itemType:isSelected(8) then --Если очистка от снего
                             --     for i = sq:getObjects():size() - 1, 0 , -1 do
                             --         local Cell = sq:getCell()
@@ -265,6 +280,18 @@ function RemoverItemAndBuildsTool:onClick(button)
                             --             print("This no snow")
                             --         end
                             --     end
+                            elseif self.itemType:isSelected(9) then --Установка полов 0 этажа
+                                local spriteName = self.spriteNameEntry:getText()
+                                if spriteName == "" then
+                                    spriteName = "blends_natural_01_22"
+                                end
+                                for i = sq:getObjects():size() - 1, 0 , -1 do
+                                    local building = sq:getObjects():get(i)
+                                    if building:isFloor() and z==0 then
+                                        building:getSquare():getFloor():setSprite(getSprite(spriteName))
+                                        building:transmitUpdatedSprite()
+                                    end
+                                end
                             end
                         end
                     end
@@ -448,6 +475,7 @@ function RemoverItemAndBuildsTool:new(x, y, width, height, player)
     o.startPos = nil
     o.endPos = nil
     o.zPos = 0
+    o.spriteNameEntry = nil
 
     return o;
 end
