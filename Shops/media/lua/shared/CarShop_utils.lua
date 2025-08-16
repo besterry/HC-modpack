@@ -28,6 +28,7 @@ CarShop.CarUtils = CarUtils
 ---@field vehicle BaseVehicle | nil
 ---@field price number | nil
 
+
 ---@param offerInfo offerInfo
 ---@return CarUtils
 function CarUtils:init(offerInfo)
@@ -177,6 +178,31 @@ function CarUtils:getPrice()
 		return CarShop.Data.CarShop[self.vehicleKeyIdStr].price
 	end
 	return nil
+end
+
+--@param price integer
+---@return string
+function CarUtils:formatPrice(price)
+    if not price then return "0" end
+    
+    local formatted = tostring(price)
+    local result = ""
+    local len = #formatted
+    
+    for i = 1, len do
+        if i > 1 and (len - i + 1) % 3 == 0 then
+            result = result .. "."
+        end
+        result = result .. formatted:sub(i, i)
+    end
+    
+    return result
+end
+
+---@return string
+function CarUtils:getFormattedPrice()
+    local price = self:getPrice()
+    return self:formatPrice(price)
 end
 
 ---@return string | nil

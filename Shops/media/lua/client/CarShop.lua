@@ -225,7 +225,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 			)
 		end
 		if vehicleIsOnSale and globalModDataTable and playerIsCarOwner then
-			local price = carInfo:getPrice()
+			local price = carInfo:getFormattedPrice() --getPrice()
 			menu:addSlice(
 				getText('IGUI_CarShop_Remove_Car_For_Sale_W_Price')..price..'$', 
 				getTexture('media/textures/ShopUI_Cart_Remove.png'), 
@@ -233,7 +233,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 			)
 		end
 		if vehicleIsOnSale and globalModDataTable and not playerIsCarOwner then
-			local price = carInfo:getPrice()
+			local price = carInfo:getFormattedPrice() --getPrice()
 			menu:addSlice(
 				getText('IGUI_CarShop_Buy_Car_For')..price..'$', 
 				getTexture('media/textures/ShopUI_Cart.png'), 
