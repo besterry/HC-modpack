@@ -114,15 +114,21 @@ function ISMiniScoreboardUI:populateList()
             
             -- Форматируем время выживания
             local survivalText = ""
-            if survivalHours > 0 then
-                if survivalHours >= 24 then
-                    local years = math.floor(survivalHours / 8760)
-                    local days = math.floor(survivalHours % 8760 / 24)
-                    local hours = survivalHours % 24
-                    survivalText = string.format(" [%dy %dd %dh]", years, days, hours)
-                else
-                    survivalText = string.format(" [%dh]", survivalHours)
-                end
+            local years = survivalHours / 24 / 30 / 12 -- 12 = 1 year
+            local months = survivalHours /24 / 30 -- 30 = 1 month -745/24/30 = 1
+            local days = survivalHours / 24 -- 24 = 1 day
+            local hours = survivalHours % 24 -- 1 = 1 hour
+            local minutes = survivalHours % 60 --715.254616132 => 15
+            if years >= 1 then
+                survivalText = string.format(" [%.1fy]", years)
+            elseif months >= 1 then
+                survivalText = string.format(" [%.1fm]", months)
+            elseif days >= 1 then
+                survivalText = string.format(" [%dd]", days)
+            elseif hours >= 1 then
+                survivalText = string.format(" [%dh]", hours)
+            elseif minutes > 0 then
+                survivalText = string.format(" [%dm]", minutes)
             end
             
             -- Обрабатываем длинные ники
@@ -174,32 +180,10 @@ function ISMiniScoreboardUI:drawPlayers(y, item, alt)
         self:drawRect(2, (y + 2), self:getWidth() - 4, self.itemheight - 5, 0.2, 0.8, 0.6, 0.1);
     end
     
-    -- Цветовое выделение для зараженных игроков
-    local textColor = {r=1, g=1, b=1, a=a}
-    if item.survivalHours and item.survivalHours > 0 then
-        local playerObj = getPlayerFromUsername(item.username)
-        if playerObj then
-            local infected = playerObj:getBodyDamage():getInfectionLevel()
-            if infected > 0 then
-                if infected >= 0.5 then
-                    textColor = {r=1, g=0.3, b=0.3, a=a} -- Красный для сильно зараженных
-                    -- Дополнительный фон для зараженных
-                    self:drawRect(2, (y + 2), self:getWidth() - 4, self.itemheight - 5, 0.3, 0.1, 0.1, 0.1);
-                elseif infected >= 0.2 then
-                    textColor = {r=1, g=0.7, b=0.3, a=a} -- Оранжевый для зараженных
-                    self:drawRect(2, (y + 2), self:getWidth() - 4, self.itemheight - 5, 0.3, 0.2, 0.1, 0.1);
-                else
-                    textColor = {r=1, g=1, b=0.5, a=a} -- Желтый для группы риска
-                    self:drawRect(2, (y + 2), self:getWidth() - 4, self.itemheight - 5, 0.3, 0.3, 0.1, 0.1);
-                end
-            end
-        end
-    end
-
     -- Адаптивное позиционирование текста
     local textX = 10
     local textY = y + 2
-    
+    local textColor = {r=1, g=1, b=1, a=a}
     -- Проверяем, нужно ли обрезать текст из-за ширины
     local availableWidth = self:getWidth() - 20 -- 10px отступы с каждой стороны
     local textWidth = getTextManager():MeasureStringX(self.font, item.text)
