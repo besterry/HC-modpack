@@ -1,7 +1,7 @@
 local minutes = 10
 local shopLockTime = minutes * 60 * 1000
 
-local function seekShopTiles(worldobject,spritePrefix)
+local function seekShopTiles(worldobject,spritePrefix) -- Ищем объекты магазина
     local wo = worldobject
     local found = false
     if not wo then return wo,found end
@@ -15,7 +15,7 @@ local function seekShopTiles(worldobject,spritePrefix)
     return wo, found
 end
 
-function PlayerShop.playerShopUI(worldobjects,playerNum,clickedSquare,shop)
+function PlayerShop.playerShopUI(worldobjects,playerNum,clickedSquare,shop) -- Открываем UI магазина
     local player = getSpecificPlayer(playerNum)
     clickedSquare = luautils.getCorrectSquareForWall(player, clickedSquare);
     local adjacent = AdjacentFreeTileFinder.Find(clickedSquare, player);
@@ -33,7 +33,7 @@ function PlayerShop.playerShopUI(worldobjects,playerNum,clickedSquare,shop)
 end
 
 	--print ("2Players cord: " .. x .. "," .. y .. ",0")
-local function checkShopZones(x,y,x1,x2,y1,y2)
+local function checkShopZones(x,y,x1,x2,y1,y2) -- Проверяем координаты на возможность размещения магазина
 	
 	for xVal = x1, x2-1 do
         for yVal = y1, y2-1 do
@@ -47,7 +47,7 @@ local function checkShopZones(x,y,x1,x2,y1,y2)
 	return false;
 end
 
-function PlayerShop.addPlayerShop(worldobjects, playerNum,sprites)
+function PlayerShop.addPlayerShop(worldobjects, playerNum,sprites) -- Добавляем магазин
 	
 	local x = math.floor((getPlayer():getX())/100)
 	local y = math.floor((getPlayer():getY())/100)	
@@ -64,15 +64,15 @@ function PlayerShop.addPlayerShop(worldobjects, playerNum,sprites)
 	getPlayer():Say(getText("IGUI_Not_correct_place_for_shop"))    
 end
 
-function PlayerShop.LockUnlockPlayerShop(worldobjects, shop, lock)
+function PlayerShop.LockUnlockPlayerShop(worldobjects, shop, lock) -- Закрываем/открываем магазин
     shop:setLockedByPadlock(lock);
 end
 
-function PlayerShop.ViewIncome(worldobjects,shop)
+function PlayerShop.ViewIncome(worldobjects,shop) -- Показываем доход магазина
     IncomeUI:show(player,shop)
 end
 
-function PlayerShop.PickupShop(worldobjects,player,shop)
+function PlayerShop.PickupShop(worldobjects,player,shop) -- Поднимаем магазин
     local items = shop:getContainer():getItems()
     if items and items:size() > 0 then
         player:setHaloNote(UIText.RemoveItemsPlayerShop, 255,255,255,400);
@@ -94,18 +94,18 @@ function PlayerShop.PickupShop(worldobjects,player,shop)
     PlayerShop.toggleBusy(shop,name,false)
 end
 
-function PlayerShop.getShopID(shop)
+function PlayerShop.getShopID(shop) -- Получаем координаты магазина
     return shop:getX() .."-".. shop:getY()
 end
 
-function PlayerShop.isBlockByUser(shop,username)
+function PlayerShop.isBlockByUser(shop,username) -- Проверяем занят ли магазин
     local id = PlayerShop.getShopID(shop)
     local shopStatus = PlayerShop.status[id]
     if not shopStatus then return false end
     return shopStatus.buyer == username
 end
 
-function PlayerShop.isBusy(shop)
+function PlayerShop.isBusy(shop) -- Проверяем занят ли магазин
     local id = PlayerShop.getShopID(shop)
     local shopStatus = PlayerShop.status[id]
     if shopStatus then
@@ -120,7 +120,7 @@ function PlayerShop.isBusy(shop)
     end
 end
 
-function PlayerShop.toggleBusy(shop,username,busy)
+function PlayerShop.toggleBusy(shop,username,busy) -- Переключаем статус магазина
 	local shopId = PlayerShop.getShopID(shop)
     local data = {
         busy = busy,
@@ -130,7 +130,7 @@ function PlayerShop.toggleBusy(shop,username,busy)
     sendClientCommand("PS", "ToggleBusy", {shopId,data})
 end
 
-function PlayerShop.ChangeSprite(worldobjects, playerNum, sprites,shop)
+function PlayerShop.ChangeSprite(worldobjects, playerNum, sprites,shop) -- Меняем спрайт магазина
     local sprite = shop:getSprite():getName()
     local spriteNum = string.gsub(sprite,PlayerShop.spritePrefix,"")
     local coords = {x=shop:getX(),y=shop:getY(),z=shop:getZ()}
@@ -147,7 +147,7 @@ function PlayerShop.ChangeSprite(worldobjects, playerNum, sprites,shop)
     end
 end
 
-function PlayerShop.PlayerShopContextMenu(playerNum, context, worldobjects)
+function PlayerShop.PlayerShopContextMenu(playerNum, context, worldobjects) -- Контекстное меню магазина
     local player = getSpecificPlayer(playerNum)
     local wo, found = seekShopTiles(worldobjects[1],PlayerShop.spritePrefix)
     local owner = ""
@@ -192,12 +192,12 @@ function PlayerShop.PlayerShopContextMenu(playerNum, context, worldobjects)
     end
 end
 
-function PlayerShop.PlayerShopSetPrice(worldobjects,playerNum,items,container)
+function PlayerShop.PlayerShopSetPrice(worldobjects,playerNum,items,container) -- Устанавливаем цену на предметы
     local player = getSpecificPlayer(playerNum)
     SetPriceUI:show(player,items,container)
 end
 
-function PlayerShop.ItemsSellPrice(playerNum, context, items)
+function PlayerShop.ItemsSellPrice(playerNum, context, items) -- Устанавливаем цену на предметы
     items = ISInventoryPane.getActualItems(items)
     if not items then return end
     if #items< 1 then return end 
