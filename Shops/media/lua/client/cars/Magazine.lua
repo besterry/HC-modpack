@@ -10,7 +10,7 @@ local function getVehicleDisplayName(vehicleType)
 end
 
 local function createNewspaperStyle()
-    -- Палитра в стиле старой газеты
+    -- Палитра в стиле старой газеты (тёмно-коричневая)
     local COL_BG    = {r=0.78,g=0.68,b=0.58,a=1.0}
     local COL_MARK  = {r=0.75,g=0.65,b=0.55,a=1.0}
     local COL_PANEL = {r=0.82,g=0.72,b=0.62,a=1.0}
@@ -24,8 +24,24 @@ local function createNewspaperStyle()
     local COL_INK   = {r=0.0,g=0.0,b=0.0,a=1.0}
     local COL_HEADER = {r=0.25,g=0.15,b=0.05,a=1.0}
     local COL_SUBHEADER = {r=0.35,g=0.25,b=0.15,a=1.0}
+    
+    -- Палитра для статусов
+    local COL_GOOD = {r=0.12,g=0.55,b=0.27,a=1.0}  -- зелёный для хорошего
+    local COL_WARN = {r=0.75,g=0.55,b=0.15,a=1.0}  -- оранжевый для среднего
+    local COL_BAD  = {r=0.70,g=0.20,b=0.20,a=1.0}  -- красный для плохого
 
     local SEP = " · "
+
+    -- Helper-функция для раздельного рендера текста
+    local function drawInline(self, x, y, font, chunks)
+        local tm = getTextManager()
+        local dx = x
+        for _, ch in ipairs(chunks) do
+            local txt, col = ch[1], ch[2]
+            self:drawText(txt, dx, y, col.r, col.g, col.b, 1, font)
+            dx = dx + tm:MeasureStringX(font, txt)
+        end
+    end
 
     local function fmt1000(n)
         local s = tostring(math.floor(tonumber(n) or 0))
@@ -115,47 +131,53 @@ local function createNewspaperStyle()
                 COL_SELLER.r, COL_SELLER.g, COL_SELLER.b, 1, UIFont.Small)
         end
 
-        -- Дополнительная информация в центре карточки с подписями
+        -- Дополнительная информация в центре карточки с цветовым кодированием
         local centerY = y + 35 -- середина карточки по вертикали
         local centerX = pad + 200 -- отступ от левого края для центра
-        
-        -- Собираем все параметры в одну строку с подписями
-        local infoParts = {}
-        
+        local chunks = {} -- { {"текст", color}, {" | ", color}, ... }
+
         -- Лошадиные силы
         if hp and hp ~= "" and hp ~= "nil" then
-            table.insert(infoParts, getText("IGUI_CarMarket_HP")..": "..hp.."hp")
+            local hpNum = tonumber(hp) or 0
+            local hpCol = (hpNum >= 440) and COL_GOOD or (hpNum >= 250 and COL_WARN or COL_BAD)
+            table.insert(chunks, {getText("IGUI_CarMarket_HP")..": ", COL_MUTED})
+            table.insert(chunks, {tostring(hpNum).."hp", hpCol})
+            table.insert(chunks, {" | ", COL_MUTED})
         end
-        
+
         -- Состояние
         if condition and condition ~= "" and condition ~= "nil" then
-            table.insert(infoParts, getText("IGUI_CarMarket_Condition")..": "..condition.."%")
+            local cNum = tonumber(condition) or 0
+            local cCol = (cNum >= 80) and COL_GOOD or (cNum >= 50 and COL_WARN or COL_BAD)
+            table.insert(chunks, {getText("IGUI_CarMarket_Condition")..": ", COL_MUTED})
+            table.insert(chunks, {string.format("%.0f%%", cNum), cCol})
+            table.insert(chunks, {" | ", COL_MUTED})
         end
-        
+
         -- Тип автомобиля
         if typeCar and typeCar ~= "" and typeCar ~= "nil" then
-            local typeText = ""
-            if typeCar == "1" or typeCar == 1 then
-                typeText = getText("IGUI_CarMarket_TypeStandard")
-            elseif typeCar == "2" or typeCar == 2 then
-                typeText = getText("IGUI_CarMarket_TypeHeavy")
-            elseif typeCar == "3" or typeCar == 3 then
-                typeText = getText("IGUI_CarMarket_TypeElite")
-            end
+            local typeText = (typeCar == "1" or typeCar == 1) and getText("IGUI_CarMarket_TypeStandard")
+                          or (typeCar == "2" or typeCar == 2) and getText("IGUI_CarMarket_TypeHeavy")
+                          or (typeCar == "3" or typeCar == 3) and getText("IGUI_CarMarket_TypeElite")
+                          or ""
             if typeText ~= "" then
-                table.insert(infoParts, getText("IGUI_CarMarket_Type")..": "..typeText)
+                table.insert(chunks, {getText("IGUI_CarMarket_Type")..": ", COL_MUTED})
+                table.insert(chunks, {typeText, COL_MUTED})
+                table.insert(chunks, {" | ", COL_MUTED})
             end
         end
-        
+
         -- Дата выставления
         if date and date ~= "" and date ~= "nil" then
-            table.insert(infoParts, getText("IGUI_CarMarket_Date")..": "..date)
+            table.insert(chunks, {getText("IGUI_CarMarket_Date")..": ", COL_MUTED})
+            table.insert(chunks, {date, COL_MUTED})
         end
-        
-        -- Отображаем все параметры в центре одной строкой с подписями
-        if #infoParts > 0 then
-            local infoText = table.concat(infoParts, " | ")
-            self:drawText(infoText, centerX, centerY, COL_MUTED.r, COL_MUTED.g, COL_MUTED.b, 1, UIFont.Small)
+
+        -- Рисуем с цветовым кодированием
+        if #chunks > 0 then
+            -- убираем возможный завершающий разделитель
+            if chunks[#chunks][1] == " | " then table.remove(chunks, #chunks) end
+            drawInline(self, centerX, centerY, UIFont.Small, chunks)
         end
     
         -- цена в плашке
@@ -259,8 +281,8 @@ local function createNewspaperStyle()
         end
     end
 
-    -- Сортировка по цене (дороже выше) — можно убрать
-    table.sort(items, function(a,b) return (a._sortPrice or 0) > (b._sortPrice or 0) end)
+    -- Сортировка по цене (дороже ниже) — можно убрать
+    table.sort(items, function(a,b) return (a._sortPrice or 0) < (b._sortPrice or 0) end)
 
     list:clear()
     for _, it in ipairs(items) do
