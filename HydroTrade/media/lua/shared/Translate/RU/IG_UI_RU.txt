@@ -182,10 +182,6 @@ IGUI_RU =
 	IGUI_SafehouseUI_Size = "Текущий размер:",
 	IGUI_SafehouseUI_MaxSize = "Максимальный размер:",
 
-
-
-
-
 	--Транспорт
 	IGUI_VehicleName1979rastrojero       = "1979 Rastrojero",
 	IGUI_VehicleName1979rastrojeroCarni = "1979 Rastrojero Carnicero",
@@ -255,10 +251,10 @@ IGUI_RU =
 	IGUI_VehicleNameCarTaxi          = "Taxi",
 	IGUI_VehicleNameCarTaxi2             = "Taxi II",
 	IGUI_VehicleNameChevalier_Rhino_TowT = "Chevalier Rhino Tow Truck",
-	IGUI_VehicleNameCytMercEvo           = "Cyt Mercedes Evolution",
-	IGUI_VehicleNameCytAstraHB           = "Cyt Astra Hatchback",
-	IGUI_VehicleNameCytVHB5DAstra        = "Cyt Astra VHB 5-Door",
-	IGUI_VehicleNameCytVST5DAstra        = "Cyt Astra VST 5-Door",
+	IGUI_VehicleNameCytMercEvo           = "'90 Mercedes Benz 190E 2.5-16 Evolution II",
+	IGUI_VehicleNameCytAstraHB           = "Astra Hatchback",
+	IGUI_VehicleNameCytVHB5DAstra        = "Astra VHB 5-Door",
+	IGUI_VehicleNameCytVST5DAstra        = "Astra VST 5-Door",
 	IGUI_VehicleNameFJ75PC               = "Toyota Land Cruiser FJ75 PC",
 	IGUI_VehicleNameModernCar            = "Modern Car",
 	IGUI_VehicleNameModernCar_Martin   = "Modern Car Martin",
@@ -278,8 +274,6 @@ IGUI_RU =
 	IGUI_VehicleNameStepVanMail      = "Chevalier Step Van (Mail)",
 	IGUI_VehicleNameStepVan_Heralds  = "Chevalier Step Van (Heralds)",
 	IGUI_VehicleNameStepVan_Scarlet  = "Chevalier Step Van (Scarlet)",
-
-	-- Официальные модели (связанные с реальными внутриигровыми названиями)
 	IGUI_VehicleNameCarNormal = "Chevalier Nyala",
 	IGUI_VehicleNameSportsCar = "Chevalier Cossette",
 	IGUI_VehicleNamePickUpTruck = "Chevalier D6",
@@ -328,7 +322,7 @@ IGUI_RU =
 	IGUI_VehicleNameen82BratSport       = "1982 Subaru Brat Sport",
 	IGUI_VehicleNameen83Bronco2         = "1983 Ford Bronco II",
 	IGUI_VehicleNameen85Fiero           = "1985 Pontiac Fiero",
-	IGUI_VehicleNameen85Wagovan         = "1985 Pontiac Wagovan",
+	IGUI_VehicleNameen85Wagovan         = "1985 Honda Wagovan",
 	IGUI_VehicleNameen88_F40             = "1988 Ferrari F40",
 	IGUI_VehicleNameen91Legacy           = "1991 Subaru Legacy",
 	IGUI_VehicleNameen91_Eclipse         = "1991 Mitsubishi Eclipse",
@@ -342,7 +336,7 @@ IGUI_RU =
 	IGUI_VehicleNameisoContainer3tanker   = "ISO Tanker Container",
 	IGUI_VehicleNameisoContainer4         = "ISO Container 4",
 	IGUI_VehicleNameisoContainer5         = "ISO Container 5",
-	IGUI_VehicleNamerx7fc                 = "Mazda RX-7 FC",
+	IGUI_VehicleNamerx7fc                 = "Mazda RX-7 FC 1989",
 	IGUI_VehicleNametoyotahilux89dualcab  = "1989 Toyota Hilux Dual Cab",
 	IGUI_VehicleNametoyotahilux89extracab = "1989 Toyota Hilux Extra Cab",
 	IGUI_VehicleNametoyotahilux89singlecab = "1989 Toyota Hilux Single Cab",
