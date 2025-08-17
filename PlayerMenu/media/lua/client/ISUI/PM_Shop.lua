@@ -19,8 +19,8 @@ end
 
 function PM_Shop:new(x, y, width, height, player) --Функция создания окна
     local o = {} -- Создаем новый объект
-    x = PM_ISMenu.instance.x + PM_ISMenu.instance.height;  
-    y = PM_ISMenu.instance.y;
+    -- x = PM_ISMenu.instance.x + PM_ISMenu.instance.height;  
+    -- y = PM_ISMenu.instance.y;
     o = ISPanel:new(x, y, width, height); -- Создание объекта окна с заданными размерами
     setmetatable(o, self) -- Устанавка текущего объект o как экземпляр класса PM_ISMenu
     self.__index = self -- Устанавка индекса текущего объекта как self
