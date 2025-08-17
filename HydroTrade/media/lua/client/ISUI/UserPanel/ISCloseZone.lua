@@ -119,7 +119,8 @@ FDSE = FDSE or {}
 --     return false
 -- end
 
-function FDSE.checkTownZones(x, y)
+--Используется в PM_ISMenu, передаем координаты и список запретных зон
+function FDSE.checkTownZones(x, y, sandboxZones) 
     local townZones = {}
     
     for _, zoneString in ipairs(sandboxZones) do
