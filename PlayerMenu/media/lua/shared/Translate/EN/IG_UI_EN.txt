@@ -1,5 +1,6 @@
 IGUI_EN = {
-	 IGUI_PlayerMenu = "Player Menu",
+     IGUI_AutoMarket = "Car Market",
+     IGUI_PlayerMenu = "Player Menu",
      IGUI_Balance = "Balance:",
      IGUI_SafehouseUI_RemoveConfirm_for_Support_Server = "Coins for project support",
      IGUI_SafeHouseLabel = "My Safe House",

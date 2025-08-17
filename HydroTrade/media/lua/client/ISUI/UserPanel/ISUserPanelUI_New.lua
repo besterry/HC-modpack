@@ -187,7 +187,7 @@ function ISUserPanelUI:onOptionMouseDownPM()
         PM_ISMenu.instance:close()
         PM_ISMenu.instance = nil
     else
-        local ui = PM_ISMenu:new(50,50,600,600, getPlayer());
+        local ui = PM_ISMenu:new(50,50,380,420, getPlayer());
         ui:initialise();
         ui:addToUIManager();
     end
