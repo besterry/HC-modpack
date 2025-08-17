@@ -327,10 +327,27 @@ end
 
 function CarMagazine:show()
     if getCore():isDedicated() then return end
+    
+    -- Проверяем, не открыто ли уже окно
+    if CarMagazine.instance then
+        CarMagazine.instance:removeFromUIManager()
+        CarMagazine.instance = nil
+        return
+    end
+    
     local panel = createNewspaperStyle()
+    CarMagazine.instance = panel -- Сохраняем ссылку на открытое окно
     panel:addToUIManager()
+    
     -- на всякий случай запросим актуальную моддату
     if ModData and ModData.request then ModData.request("CarShop") end
+end
+
+function CarMagazine:close()
+    if CarMagazine.instance then
+        CarMagazine.instance:removeFromUIManager()
+        CarMagazine.instance = nil
+    end
 end
 
 -- При старте клиента попросим CarShop
