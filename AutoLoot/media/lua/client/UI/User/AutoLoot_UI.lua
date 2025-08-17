@@ -414,8 +414,8 @@ end
 
 function UI_AutoLoot:new(x, y, width, height, player) --Функция создания окна
 	local o = {} -- Создаем новый объект
-	x = getCore():getScreenWidth() / 2 - (width / 2);
-	y = getCore():getScreenHeight() / 2 - (height / 2);
+	-- x = getCore():getScreenWidth() / 2 - (width / 2);
+	-- y = getCore():getScreenHeight() / 2 - (height / 2);
 	o = ISPanel:new(x, y, width, height); -- Создание объекта окна с заданными размерами
 	setmetatable(o, self) -- Устанавка текущего объект o как экземпляр класса PM_ISMenu
 	self.__index = self -- Устанавка индекса текущего объекта как self
