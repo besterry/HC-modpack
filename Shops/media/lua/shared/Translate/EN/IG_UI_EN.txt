@@ -10,6 +10,13 @@ IGUI_EN = {
     IGUI_CarMarket_NoListings = "No listings yet",
     IGUI_Close = "Close",
     IGUI_CarMarket_CarId = "Gov.sign:",
+    IGUI_CarMarket_TypeStandard = "standart",
+    IGUI_CarMarket_TypeHeavy = "heavy",
+    IGUI_CarMarket_TypeElite = "elite",
+    IGUI_CarMarket_HP = "Engine",
+    IGUI_CarMarket_Condition = "Condition",
+    IGUI_CarMarket_Type = "Type",
+    IGUI_CarMarket_Date = "Date",
     
     IGUI_Loot_All_Coins = "Loot All Coins",
     IGUI_Coins_To_Account = "Move Coins to Account",
