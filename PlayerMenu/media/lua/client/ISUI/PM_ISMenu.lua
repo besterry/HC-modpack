@@ -1,7 +1,10 @@
 -- Author: FD --
+-- require "PM_ISMenu"
+-- сохраняем оригинал на всякий
 
 require "ISUI/UserPanel/ISAddSHUI"
 PM_ISMenu = ISPanel:derive("PM_ISMenu");
+require "ISUI/UserPanel/ISCloseZone"
 local mods = getActivatedMods();
 local dontLoad = false;
 for i = 0, mods:size() - 1, 1 do
@@ -83,7 +86,7 @@ function PM_ISMenu:initialise()
     self:addChild(balancePanel)
 
     --Надпись баланс по центру
-    self.balancetext = ISLabel:new(0, 18, FONT_HGT_MEDIUM, getText("IGUI_Balance"), 0.9, 0.9, 0.9, 1, UIFont.Medium, true)
+    self.balancetext = ISLabel:new(90, 18, FONT_HGT_MEDIUM, getText("IGUI_Balance"), 0.9, 0.9, 0.9, 1, UIFont.Medium, true)
     self.balancetext.tooltip = getText("IGUI_RemoveConfirm_for_Support_Server")
     self.balancetext:initialise()
     self.balancetext:instantiate()
@@ -234,7 +237,7 @@ function PM_ISMenu:initialise()
 
     --Сбрасываем Y для чекбоксов (второй столбец)
     local y_checkboxes = 60;
-    y_checkboxes = y_checkboxes + 60 + 8;
+    y_checkboxes = y_checkboxes + 30; -- Уменьшаем отступ с 8 до 5
 
     -- Современные чекбоксы
     self.showPingInfo = ISTickBox:new(x + btnWid + 15, y_checkboxes, 70, btnHgt, getText("IGUI_UserPanel_ShowPingInfo"), self, PM_ISMenu.onShowPingInfo);
@@ -246,7 +249,7 @@ function PM_ISMenu:initialise()
     self.showPingInfo.borderColor = {r=0.4, g=0.6, b=0.8, a=0.9};
     self:addChild(self.showPingInfo);
 
-    y_checkboxes = y_checkboxes + btnHgt + 8;
+    y_checkboxes = y_checkboxes + btnHgt; -- Уменьшаем отступ с 8 до 3
 
     self.showkills = ISTickBox:new(x + btnWid + 15, y_checkboxes, 70, btnHgt, getText("IGUI_UserPanel_ShowKills"), self, PM_ISMenu.onShowKillsUI);
     self.showkills:initialise();
@@ -257,7 +260,7 @@ function PM_ISMenu:initialise()
     self.showkills.backgroundColor = {r=0.12, g=0.15, b=0.2, a=0.95};
     self.showkills.borderColor = {r=0.4, g=0.6, b=0.8, a=0.9};
     self:addChild(self.showkills);
-    y_checkboxes = y_checkboxes + btnHgt + 8;
+    y_checkboxes = y_checkboxes + btnHgt; -- Уменьшаем отступ с 8 до 3
 
     self.highlightSafehouse = ISTickBox:new(x + btnWid + 15, y_checkboxes, 70, btnHgt, getText("IGUI_UserPanel_HighlightSafehouse"), self, PM_ISMenu.onHighlightSafehouse);
     self.highlightSafehouse:initialise();
@@ -498,7 +501,7 @@ function PM_ISMenu:onClick(button)
         --Проверка на запретную зону
         local x = math.floor((getPlayer():getX()) / 100)
         local y = math.floor((getPlayer():getY()) / 100)
-        if FDSE and FDSE.checkTownZones and FDSE.checkTownZones(x, y) then
+        if FDSE and FDSE.checkTownZones and FDSE.checkTownZones(x, y, sandboxZones) then
             getPlayer():Say(getText('IGUI_Close_Zone'))
             return;
         end
@@ -546,7 +549,9 @@ function PM_ISMenu:onClick(button)
             PM_SafeHouseMenu.instance:close()
             PM_SafeHouseMenu.instance = nil
         else
-            local ui = PM_SafeHouseMenu:new(50, 50, 200, 160, getPlayer());
+            local x = self:getX() + self:getWidth() + 10
+            local y = self:getY()
+            local ui = PM_SafeHouseMenu:new(x, y, 200, 160, getPlayer());
             ui:initialise();
             ui:addToUIManager();
         end
@@ -556,7 +561,9 @@ function PM_ISMenu:onClick(button)
             PM_ShopMenu.instance:close()
             PM_ShopMenu.instance = nil
         else
-            local ui = PM_ShopMenu:new(50, 50, 200, 250, getPlayer());
+            local x = self:getX() + self:getWidth() + 10
+            local y = self:getY()
+            local ui = PM_ShopMenu:new(x, y, 200, 250, getPlayer());
             ui:initialise();
             ui:addToUIManager();
         end
@@ -566,7 +573,10 @@ function PM_ISMenu:onClick(button)
             PM_Garage.instance:close()
             PM_Garage.instance = nil
         else
-            local ui = PM_Garage:new(50, 50, 220, 270, getPlayer());
+            --Получаем координаты текущего окна + ширина и высота
+            local x = self:getX() + self:getWidth() + 10
+            local y = self:getY()
+            local ui = PM_Garage:new(x, y, 220, 270, getPlayer());
             ui:initialise();
             ui:addToUIManager();
         end
@@ -576,7 +586,9 @@ function PM_ISMenu:onClick(button)
             PM_Shop.instance:close()
             PM_Shop.instance = nil
         else
-            local ui = PM_Shop:new(50, 50, 600, 600, getPlayer());
+            local x = self:getX() + self:getWidth() + 10
+            local y = self:getY()
+            local ui = PM_Shop:new(x, y, 600, 600, getPlayer());
             ui:initialise();
             ui:addToUIManager();
         end
@@ -586,7 +598,9 @@ function PM_ISMenu:onClick(button)
             UI_AutoLoot.instance:close()
             UI_AutoLoot.instance = nil
         else
-            local ui = UI_AutoLoot:new(50, 50, 400, 250, getPlayer());
+            local x = self:getX() + self:getWidth() + 10
+            local y = self:getY()
+            local ui = UI_AutoLoot:new(x, y, 400, 250, getPlayer());
             ui:initialise();
             ui:addToUIManager();
         end
@@ -604,8 +618,8 @@ function PM_ISMenu:new(x, y, width, height, player)
     width = width or 380
     height = height or 420
     -- Получение для x и y центра экрана
-    x = getCore():getScreenWidth() / 2 - (width / 2);
-    y = getCore():getScreenHeight() / 2 - (height / 2);
+    -- x = getCore():getScreenWidth() / 2 - (width / 2);
+    -- y = getCore():getScreenHeight() / 2 - (height / 2);
     o = ISPanel:new(x, y, width, height);                -- Создание объекта окна с заданными размерами
     setmetatable(o, self)                                -- Устанавка текущего объект o как экземпляр класса PM_ISMenu
     self.__index = self                                  -- Устанавка индекса текущего объекта как self
@@ -618,4 +632,28 @@ function PM_ISMenu:new(x, y, width, height, player)
     PM_ISMenu.instance = o;                              -- Устанавливаем текущий объект как инстанс PM_ISMenu
     o.buttonBorderColor = { r = 0.4, g = 0.6, b = 0.8, a = 0.9 }; -- Современный синий цвет границы кнопки
     return o;                                            -- Возвращаем созданный объект
+end
+
+local original_ISUserPanelUI_new = ISUserPanelUI.new
+-- подмена конструктора: вместо ISUserPanelUI возвращаем наш UI
+ISUserPanelUI.new = function (x, y, width, height, player)
+    if PM_ISMenu.instance then -- если уже открыто, закрываем
+        PM_ISMenu.instance:close()
+        PM_ISMenu.instance = nil
+        -- Возвращаем объект-заглушку, чтобы избежать ошибки
+        local dummy = {}
+        dummy.initialise = function() end
+        dummy.addToUIManager = function() end
+        return dummy
+    end
+    local x,y = 150,200
+    local w,h = 380,420
+    local ui = PM_ISMenu:new(
+        x,
+        y,
+        w, h, getPlayer()
+    )
+    ui:initialise()
+    ui:addToUIManager()
+    return ui
 end
