@@ -127,10 +127,10 @@ end
 
 function PM_SafeHouseMenu:new(x, y, width, height, player) --Функция создания окна
     local o = {} -- Создаем новый объект
-    if PM_ISMenu.instance then
-        x = PM_ISMenu.instance.x + PM_ISMenu.instance.height / 2 - (height / 2);  
-        y = PM_ISMenu.instance.y +PM_ISMenu.instance.width / 2 - (width / 2);
-    end
+    -- if PM_ISMenu.instance then
+    --     x = PM_ISMenu.instance.x + PM_ISMenu.instance.height / 2 - (height / 2);  
+    --     y = PM_ISMenu.instance.y +PM_ISMenu.instance.width / 2 - (width / 2);
+    -- end
     o = ISPanel:new(x, y, width, height); -- Создание объекта окна с заданными размерами
     setmetatable(o, self) -- Устанавка текущего объект o как экземпляр класса PM_ISMenu
     self.__index = self -- Устанавка индекса текущего объекта как self
