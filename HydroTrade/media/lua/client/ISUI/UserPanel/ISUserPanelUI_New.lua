@@ -3,7 +3,7 @@
 -- Date: 8/06/23
 -- Time: 6:00
 --
-
+--[[
 require "ISUI/ISPanel"
 require "ISUI/UserPanel/ISAddSHUI"
 require "ISUI/UserPanel/ISCloseZone"
@@ -295,3 +295,4 @@ function ISUserPanelUI:new(x, y, width, height, player)
     ISUserPanelUI.instance = o
     return o;
 end
+]]--
