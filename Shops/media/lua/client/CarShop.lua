@@ -409,47 +409,90 @@ function ISVehicleDashboard:onClickKeys()
 	return o
 end
 
-local userPanelHooks = function()
-	-- NOTE: делаем хук для панели юзера.
-	function ISUserPanelUI:renderCarOnSale(carsOnSaleNum)
-		local resultStr = getText('IGUI_CarShop_Vehicles_On_Sale') .. carsOnSaleNum .. '/' .. SandboxVars.Shops.CarSellsByPlayer
-		self.sellingCarsCount:setName(resultStr)
-	end
-
-	local base_ISUserPanelUI_create = ISUserPanelUI.create
-	function ISUserPanelUI:create()
-		base_ISUserPanelUI_create(self)
-		local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
-		local btnWid = 160 --Ширина кнопок
-		local btnHgt = math.max(30, FONT_HGT_SMALL + 8) --Высота кнопок
-		
-		-- self:removeChild(self.showServerInfo) -- Удаляем галочку "информация о сервере"
-		-- self:removeChild(self.showConnectionInfo) -- Удаляем галочку "информация о соединении"
-		
-		local y = 60
-		
-		if not self.sellingCarsCount then
-			self.sellingCarsCount = ISLabel:new(15 + btnWid + 30, y, btnHgt, '',1,1,1,1,UIFont.Small, true); -- Вставляем текст с количеством тачек на прродаже
-			self:addChild(self.sellingCarsCount);
-		end
-		self:renderCarOnSale(countCarsOnSale()) -- Отрисовываем количество машин в продаже
-		
-		y = y + btnHgt;
-		self.showPingInfo:setY(y) -- Передвигаем чекбокс повыше
-
-		self.onCarSaleChange_handler = function(carsOnSaleNum)
-			self:renderCarOnSale(carsOnSaleNum) -- обновляем счётчик по событию
-		end
-		Events.onCarSaleChange.Add(self.onCarSaleChange_handler) -- Подписываемся на событие чтоб можно было обновлять счётчик во время того как окно открыто
-	end
-
-	local base_ISUserPanelUI_close = ISUserPanelUI.close
-	function ISUserPanelUI:close()
-		Events.onCarSaleChange.Remove(self.onCarSaleChange_handler) -- Незабываем отписаться от события
-		base_ISUserPanelUI_close(self)
-	end
+-- УБИРАЕМ старый хук и создаем новый
+local function installCarShopHook()
+    -- Ждем полной загрузки PM_ISMenu
+    if not PM_ISMenu or not PM_ISMenu.initialise then
+        return false
+    end
+    
+    -- Проверяем, не установлен ли уже хук
+    if PM_ISMenu._carShopHookInstalled then
+        return true
+    end
+    
+    -- Сохраняем оригинальные функции
+    local original_initialise = PM_ISMenu.initialise
+    local original_close = PM_ISMenu.close
+    
+    -- Переопределяем initialise
+    function PM_ISMenu:initialise()
+        -- Вызываем оригинальную функцию
+        original_initialise(self)
+        
+        -- Добавляем счетчик машин ПОСЛЕ инициализации
+        local btnWid = 170
+        local btnHgt = 30
+        local y = 60
+        
+        -- Создаем счетчик
+        self.sellingCarsCount = ISLabel:new(15 + btnWid + 15, y, btnHgt, '', 1, 1, 1, 1, UIFont.Medium, true)
+        self.sellingCarsCount:initialise()
+        self.sellingCarsCount:instantiate()
+        self:addChild(self.sellingCarsCount)
+        
+        -- Инициализируем счетчик
+        if CarShop.Data and CarShop.Data.CarShop then
+            self:renderCarOnSale(countCarsOnSale())
+        else
+            self:renderCarOnSale(0)
+        end
+        
+        -- Создаем обработчик события
+        self.onCarSaleChange_handler = function(carsOnSaleNum)
+            if self and self.renderCarOnSale then
+                self:renderCarOnSale(carsOnSaleNum)
+            end
+        end
+        
+        -- Добавляем событие ТОЛЬКО если обработчик создан
+        if self.onCarSaleChange_handler then
+            Events.onCarSaleChange.Add(self.onCarSaleChange_handler)
+        end
+    end
+    
+    -- Добавляем метод renderCarOnSale
+    function PM_ISMenu:renderCarOnSale(carsOnSaleNum)
+        if self.sellingCarsCount then
+            local resultStr = getText('IGUI_CarShop_Vehicles_On_Sale') .. carsOnSaleNum .. '/' .. SandboxVars.Shops.CarSellsByPlayer
+            self.sellingCarsCount:setName(resultStr)
+        end
+    end
+    
+    -- Переопределяем close
+    function PM_ISMenu:close()
+        if self.onCarSaleChange_handler then
+            Events.onCarSaleChange.Remove(self.onCarSaleChange_handler)
+        end
+        original_close(self)
+    end
+    
+    -- Отмечаем, что хук установлен
+    PM_ISMenu._carShopHookInstalled = true
+    return true
 end
-userPanelHooks()
 
-Events.OnCreateUI.Add(userPanelHooks) -- NOTE: меняем интерфейс в этом событии потому что иначе ГитроТрейд по неизвестно причине загружается раньше и всё портит. Код будет работать и в случие использования ванильных функций (напр. отключения гидротрейда)
+-- Пытаемся установить хук сразу
+if not installCarShopHook() then
+    -- Если не получилось, пробуем позже
+    Events.OnTick.Add(function()
+        if installCarShopHook() then
+            Events.OnTick.Remove(self)
+        end
+    end)
+end
+
+-- Убираем все старые события
 Events.OnEnterVehicle.Add(carShopEventHandler.onEnterVehicle)
+
+
