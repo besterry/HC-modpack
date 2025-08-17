@@ -323,7 +323,7 @@ function ISAddSHUI:onClick(button)
 		--Проверка города
 		local x = math.floor((getPlayer():getX()) / 100)
 		local y = math.floor((getPlayer():getY()) / 100)
-		if FDSE.checkTownZones(x, y) then
+		if FDSE.checkTownZones(x, y, sandboxZones) then
 			getPlayer():Say(getText('IGUI_Close_Zone'))
 			return;
 		end
