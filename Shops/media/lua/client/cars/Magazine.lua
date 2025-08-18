@@ -139,7 +139,7 @@ local function createNewspaperStyle()
         -- Лошадиные силы
         if hp and hp ~= "" and hp ~= "nil" then
             local hpNum = tonumber(hp) or 0
-            local hpCol = (hpNum >= 440) and COL_GOOD or (hpNum >= 250 and COL_WARN or COL_BAD)
+            local hpCol = (hpNum >= 400) and COL_GOOD or (hpNum >= 250 and COL_WARN or COL_BAD)
             table.insert(chunks, {getText("IGUI_CarMarket_HP")..": ", COL_MUTED})
             table.insert(chunks, {tostring(hpNum).."hp", hpCol})
             table.insert(chunks, {" | ", COL_MUTED})
@@ -148,7 +148,7 @@ local function createNewspaperStyle()
         -- Состояние
         if condition and condition ~= "" and condition ~= "nil" then
             local cNum = tonumber(condition) or 0
-            local cCol = (cNum >= 80) and COL_GOOD or (cNum >= 50 and COL_WARN or COL_BAD)
+            local cCol = (cNum >= 70) and COL_GOOD or (cNum >= 45 and COL_WARN or COL_BAD)
             table.insert(chunks, {getText("IGUI_CarMarket_Condition")..": ", COL_MUTED})
             table.insert(chunks, {string.format("%.0f%%", cNum), cCol})
             table.insert(chunks, {" | ", COL_MUTED})
