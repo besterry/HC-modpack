@@ -96,5 +96,5 @@ IGUI_RU = {
     IGUI_CarMarket_HP = "Двигатель",
     IGUI_CarMarket_Condition = "Состояние",
     IGUI_CarMarket_Type = "Тип",
-    IGUI_CarMarket_Date = "Дата",
+    IGUI_CarMarket_Date = "Размещено",
 }
