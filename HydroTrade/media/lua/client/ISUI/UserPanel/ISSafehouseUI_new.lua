@@ -481,8 +481,13 @@ function ISSafehouseUI:onClick(button)
     end
     if button.internal == "REFRESHLIST" then
         self:populateList();
-        self:onClickResetTime();
     end;
+    if button.internal == "REFRESHTIME" then
+        self:onClickRefreshTime();
+    end;
+    if button.internal == "RESETTIME" then
+        self:onClickResetTime();
+    end;    
     if button.internal == "EXPANDSAFEHOUSE" then
         if PM_SafeHouseMenu.instance then
             PM_SafeHouseMenu.instance:close()
