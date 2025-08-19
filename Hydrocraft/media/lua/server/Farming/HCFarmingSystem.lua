@@ -18,7 +18,7 @@ function SFarmingSystem:initSystem()
 		'state', 'nbOfGrow', 'typeOfSeed', 'fertilizer', 'mildewLvl',
 		'aphidLvl', 'fliesLvl', 'waterLvl', 'waterNeeded', 'waterNeededMax',
 		'lastWaterHour', 'nextGrowing', 'hasSeed', 'hasVegetable',
-		'health', 'badCare', 'exterior', 'spriteName', 'objectName'})
+		'health', 'badCare', 'exterior', 'spriteName', 'objectName', 'hasWindow'})
 
 	self:convertOldModData()
 end
@@ -75,6 +75,7 @@ end
 function SFarmingSystem:changeHealth() -- функция для изменения здоровья растения
 	-- local gameTime = getGameTime()
 	-- print("gameTime " , gameTime:getHours(),':',gameTime:getMinutes())
+	print(" =============================== new cycle =============================== ")
 	--Инициализация переменных
 	local lightStrength = ClimateManager.getInstance():getDayLightStrength() --Солнечный свет
 	-- print("lightStrength: " , lightStrength)
@@ -104,7 +105,7 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 			minWater = props.waterLvl --Минимальный уровень воды
 			maxWater = props.waterLvlMax --Максимальный уровень воды
 
-			-- Система полива растений из бочки
+			-- Система перелива воды из дождеприёмника в бочку
 			waterbarrel=self:findbarrel(luaObject:getSquare()) --Находим бочку с водой
 			if waterbarrel ~= nil then
 				raingutter = self:findRainGutter(waterbarrel:getSquare()) -- Находим дождеприёмник
@@ -129,13 +130,26 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 
 				-- print ("plant:" ..  availableWater ..   " barrel: ".. waterbarrel:getWaterAmount()) -- количество воды, которое есть у растения и количество воды в бочке
 				-- полив растения из бочки
-				if availableWater < maxWater then
-					waterNeeded = maxWater - availableWater 
-					if waterNeeded < waterbarrel:getWaterAmount() then
-						waterbarrel:setWaterAmount(waterbarrel:getWaterAmount()- (waterNeeded / 4)) -- 
-						availableWater=100
-						luaObject.waterLvl=100
-					end
+				--availableWater - текущий уровень воды у растения
+				--maxWater - максимальный уровень воды у растения
+				--waterbarrel:getWaterAmount() - количество воды в бочке
+				--waterNeeded - количество воды, которое нужно растению
+				if availableWater < maxWater then -- если уровень воды меньше максимального уровня воды
+					local currentWaterbarrel = waterbarrel:getWaterAmount() -- количество воды в бочке
+					local waterNeeded = maxWater - availableWater -- сколько воды нужно растению
+					local waterToTransfer = math.min(waterNeeded, currentWaterbarrel) -- сколько воды нужно перелить из бочки в растение
+					print ("waterToTransfer: " , waterToTransfer)
+					waterbarrel:setWaterAmount(currentWaterbarrel - waterToTransfer) -- устанавливаем количество воды в бочке после полива
+					availableWater = availableWater + waterToTransfer -- устанавливаем количество воды в растении после полива
+					luaObject.waterLvl = availableWater -- устанавливаем количество воды в растении после полива
+
+
+					-- waterNeeded = maxWater - availableWater -- сколько воды нужно растению, максимальный уровень у растения - текущий уровень воды
+					-- if waterNeeded < waterbarrel:getWaterAmount() then -- если количество воды, которое нужно растению, меньше количества воды в бочке
+					-- 	waterbarrel:setWaterAmount(waterbarrel:getWaterAmount()- (waterNeeded / 4)) -- устанавливаем количество воды в бочке после полива
+					-- 	availableWater=maxWater
+					-- 	luaObject.waterLvl=maxWater
+					-- end
 				end
 				-- print("waterbarrel:" , waterbarrel:getWaterAmount(), " waterNeeded: " , waterNeeded) -- количество воды в бочке и количество воды, которое нужно растению
 				-- waterbarrel:setWaterAmount(300) -- устанавливаем количество воды в бочке (для отладки)
@@ -154,18 +168,30 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 			if not luaObject.exterior then -- ***indoors*** (внутри)			
 				if square ~= nil then 
 					luaObject.hasWindow = self:checkWindowsAndGreenhouse(square) 
-					-- print ("hasWindow: " , luaObject.hasWindow)
 				end -- проверяем, есть ли окна и теплица			
+				print ("hasWindow: " , luaObject.hasWindow)
 				if luaObject.hasWindow then --indoors with greenhouse: no negative effects on weather (внутри с теплицей: нет отрицательного влияния на погоду)
-					-- print (luaObject.typeOfSeed .. " + [TEPLICA] plant is indoors with greenhouse at: " .. cX .. "," .. cY .. "," .. cZ)
-					luaObject.health = luaObject.health + (lightStrength*3) 
+					print (luaObject.typeOfSeed .. " + [TEPLICA] plant is indoors with greenhouse")
+
+					-- Сезонные модификаторы
+					local season = getGameTime():getMonth()
+					print ("season: " , season)
+					local seasonMultiplier = 1.0
+					if season == 12 or season == 1 or season == 2 then seasonMultiplier = 0.8      -- Зима
+					elseif season == 3 or season == 4 or season == 5 then seasonMultiplier = 1.2  -- Весна
+					elseif season == 6 or season == 7 or season == 8 then seasonMultiplier = 1.5  -- Лето
+					elseif season == 9 or season == 10 or season == 11 then seasonMultiplier = 1.0  -- Осень
+					end
+					print ("seasonMultiplier: " , seasonMultiplier)
+					-- Применить к росту в теплице
+					luaObject.health = luaObject.health + (lightStrength*3 * seasonMultiplier)
 				else 
-					-- print (luaObject.typeOfSeed .. " - [NO TEPLICA] plant is indoors without a greenhouse at: " .. cX .. "," .. cY .. "," .. cZ)
+					print (luaObject.typeOfSeed .. " - [NO TEPLICA] plant is indoors without a greenhouse")
 					luaObject.health = luaObject.health - 10 -- no indoor growing without a greenhouse plant will die (без теплицы растение умрёт)
 				end -- greenhouse check
 
 			else -- **** Outdoors ***	 (на улице)
-				-- print (luaObject.typeOfSeed .. " ~ [OUTSIDE] - storm and frost handling at: " .. cX .. "," .. cY .. "," .. cZ)
+				print (luaObject.typeOfSeed .. " ~ [OUTSIDE] - storm and frost handling")
 				if temperature < 0 then  availableWater = 0 -- no available Water if outdoors and frozen (если температура ниже 0, то нет доступной воды)
 				end
 				
@@ -183,32 +209,52 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 
 			end -- indoors/outdoors	 (внутри/снаружи)
 
-
+			print ("health: ".. luaObject.health.. "+".. lightStrength/5 .. " lightStrength = " .. luaObject.health + lightStrength/5)
 			-- sunlight (солнечный свет)
 			luaObject.health = luaObject.health + lightStrength / 5 -- только среднее ~0.1/ч внутри
-		
+			
+			local water = farming_vegetableconf.calcWater(luaObject.waterNeeded, availableWater) --
+			local waterMax = farming_vegetableconf.calcWater(availableWater, luaObject.waterNeededMax)
+			print ("water: ".. water.. " waterMax: ".. waterMax)
 			-- water levels (уровень воды)
-			if availableWater < minWater then 
-				luaObject.health = luaObject.health - 0.5 - (minWater - availableWater) / 50 -- минимум 0.5 - максимум ~1.4/2.1, в зависимости от растения
-			elseif availableWater > maxWater then 
-				luaObject.health = luaObject.health - (availableWater - maxWater) / 50 -- максимум ~0.3 урона для большинства растений
-			else 
-				luaObject.health = luaObject.health + 1 - math.abs(minWater + (maxWater-minWater)/2 - availableWater)/(maxWater-minWater)/2 -- 0-1 прирост
+			if water >= 0 and waterMax >= 0 then -- вода в норме
+				luaObject.health = luaObject.health + 0.4
+				print ("water bonus: +0.4")
+			elseif water == -1 then -- воды мало
+				luaObject.health = luaObject.health - 0.2
+				print ("water damage: -0.2")
+			elseif water == -2 then -- воды очень мало
+				luaObject.health = luaObject.health - 0.5
+				print ("water damage: -0.5")
+			elseif waterMax == -1 and luaObject.health > 20 then -- воды мало и растение здоровое
+				luaObject.health = luaObject.health - 0.2
+				print ("water max damage: -0.2")
+			elseif waterMax == -2 and luaObject.health > 20 then -- воды очень мало и растение здоровое
+				luaObject.health = luaObject.health - 0.5
+				print ("water max damage: -0.5")
 			end
 
 			-- mildew disease (грибки)
 			if luaObject.mildewLvl > 0 then 
-				luaObject.health = luaObject.health - 0.2 - luaObject.mildewLvl/50 -- 0.2 - 2.2 урона
+				local mildewDamage = 0.2 - luaObject.mildewLvl/50 -- 0.2 - 2.2 урона
+				luaObject.health = luaObject.health - mildewDamage
+				print ("mildew damage: ",mildewDamage)
 			end
 			if luaObject.aphidLvl > 0 then 
-				luaObject.health = luaObject.health - 0.15 - luaObject.mildewLvl/75 -- 0.15 - 1.6 урона
+				local aphidDamage = 0.15 - luaObject.mildewLvl/75 -- 0.15 - 1.6 урона
+				luaObject.health = luaObject.health - aphidDamage
+				print ("aphid damage: ",aphidDamage)
 			end
 			if luaObject.fliesLvl > 0 then 
-				luaObject.health = luaObject.health - 0.1 - luaObject.mildewLvl/100 -- 0.1 - 1.1 урона
+				local fliesDamage = 0.1 - luaObject.mildewLvl/100 -- 0.1 - 1.1 урона
+				luaObject.health = luaObject.health - fliesDamage
+				print ("flies damage: ",fliesDamage)
 			end
+			print ("final health: ".. luaObject.health)
 
 			-- plant dies (растение умирает)
 			if luaObject.health <= 0 then
+				print ("plant dies: ",luaObject.health)
 				if luaObject.exterior and rainStrength > 0.7 and windStrength > 0.7 then luaObject:destroyThis()
 				elseif luaObject.exterior and temperature <= 0 then luaObject:dryThis()
 				elseif luaObject.waterLvl <= 0 then luaObject:dryThis()
@@ -312,4 +358,47 @@ function SFarmingSystem:findRainGutter(sq)
 		end
 	end 
 	return nil
+end  
+
+-- Переопределяем ванильную функцию checkPlant для защиты теплиц
+function SFarmingSystem:checkPlant()
+    for i=1,self:getLuaObjectCount() do -- цикл по всем растениям
+        local luaObject = self:getLuaObjectByIndex(i) -- получаем растение
+        local square = luaObject:getSquare()
+        if square then luaObject.exterior = square:isOutside() end
+        
+        local hasWindow = luaObject.hasWindow
+        -- Проверяем теплицу только если квадрат загружен
+        local inGreenhouse = false
+        if square and not luaObject.exterior then
+            inGreenhouse = self:checkWindowsAndGreenhouse(square)
+            -- Обновляем hasWindow только если квадрат доступен
+            luaObject.hasWindow = inGreenhouse
+        end
+        
+        -- Остальная логика...
+        if luaObject.state ~= "plow" and luaObject:isAlive() then -- если растение не вспахано и живое
+            if RainManager.isRaining() then -- если идёт дождь
+                if luaObject.exterior then -- если растение на улице
+                    luaObject.waterLvl = luaObject.waterLvl + 3 -- увеличиваем уровень воды на 3
+                    if luaObject.waterLvl > 100 then -- если уровень воды больше 100, то устанавливаем 100
+                        luaObject.waterLvl = 100 
+                    end
+                    luaObject.lastWaterHour = self.hoursElapsed -- устанавливаем время последнего полива
+                end
+            elseif season.weather == "sunny" then -- если солнце светит
+                -- НЕ снижаем воду для растений в теплице
+                if not inGreenhouse and not hasWindow then
+                    luaObject.waterLvl = luaObject.waterLvl - 0.1
+                    if luaObject.waterLvl < 0 then
+                        luaObject.waterLvl = 0
+                    end
+                end
+            end
+        end
+        
+        luaObject:addIcon()
+        luaObject:checkStat()
+        luaObject:saveData()
+    end
 end  
