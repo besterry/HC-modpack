@@ -27,7 +27,7 @@ local function createNewspaperStyle()
     
     -- Палитра для статусов
     local COL_GOOD = {r=0.12,g=0.55,b=0.27,a=1.0}  -- зелёный для хорошего
-    local COL_WARN = {r=0.75,g=0.55,b=0.15,a=1.0}  -- оранжевый для среднего
+    local COL_WARN = {r=0.8,g=0.4,b=0.1,a=1.0}  -- оранжевый для среднего
     local COL_BAD  = {r=0.70,g=0.20,b=0.20,a=1.0}  -- красный для плохого
 
     local SEP = " · "
