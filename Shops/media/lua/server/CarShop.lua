@@ -11,6 +11,21 @@ local Commands = {}
 -- ---@type TheLogger
 local logger = CarShop.logger
 
+-- Временная функция для удаления пустых ключей
+function cleanupEmptyKeys()
+	local carShop = CarShop.Data.CarShop
+	for key, value in pairs(carShop) do
+		if not value.username then
+			carShop[key] = nil
+			ModData.add(MOD_NAME, carShop)
+			ModData.transmit(MOD_NAME)
+			print("CarShop: remove empty key: ", key)
+		end
+	end
+end
+
+Events.OnServerStarted.Add(cleanupEmptyKeys)
+
 ---@param player IsoPlayer
 ---@param offerInfo offerInfo
 function logger:addForSale(player, offerInfo)
