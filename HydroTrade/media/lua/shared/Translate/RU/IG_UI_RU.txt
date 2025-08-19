@@ -175,7 +175,7 @@ IGUI_RU =
 	IGUI_Vote_For_Server = "Голосуй за сервер, получай бонусы! wargm.ru/server/60709",
 	IGUI_Sale_AutoLoot = "Акция: бесплатный автосбор! Client > Автосбор",
 	IGUI_Notify_Garage = "[Внимание] Оставленные на улице авто угоняют и портят. Держите транспорт в гараже.  Client > Мой гараж",
-	IGUI_Dont_create_sh_in_town = "[Внимание] Власти периодически расчищают города — все убежища будут снесены. Обустраивайтесь за городом",
+	IGUI_Dont_create_sh_in_town = "[Внимание] Власти периодически расчищают города - все убежища будут снесены. Обустраивайтесь за городом",
 
 
 	IGUI_SafehouseUI_Players = "Игроки:",
@@ -244,7 +244,7 @@ IGUI_RU =
 	IGUI_VehicleNameCarLightsStatepolice = "Emergency Lights (State Police)",
 	IGUI_VehicleNameCarLuxury            = "Luxury Car",
 	IGUI_VehicleNameCarNormalPoncho  = "Sedan Poncho",
-	IGUI_VehicleNameCarOldWagon      = "Old Wagon",
+	IGUI_VehicleNameCarOldWagon      = "Chevalier Cerise Wagon",
 	IGUI_VehicleNameCarOldsFull      = "Oldsmobile Fullsize",
 	IGUI_VehicleNameCarPonchoWagon   = "Poncho Wagon",
 	IGUI_VehicleNameCarStationWagon2 = "Station Wagon II",
