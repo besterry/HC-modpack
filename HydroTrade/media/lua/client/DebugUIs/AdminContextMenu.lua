@@ -89,9 +89,9 @@ AdminContextMenu.doMenu = function(player, context, worldobjects, test)
 end
 Events.OnFillWorldObjectContextMenu.Add(AdminContextMenu.doMenu);
 
-local CarMagazine = require "cars/Magazine"
+
 AdminContextMenu.onCarMagazineUI = function()
-    CarMagazine.show()
+    print("Empty function")
 end
 
 AdminContextMenu.onTeleportUI = function(playerObj)
