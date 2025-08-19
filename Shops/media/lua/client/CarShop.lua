@@ -73,7 +73,7 @@ end
 ---@param playerObj IsoPlayer
 ---@param _offerInfo offerInfo
 function ISVehicleMenu.onSendCommandAddCarSellTicket(playerObj, _offerInfo)
-	if not checkIsCarSellAllowed() then
+	if not checkIsCarSellAllowed() and not isAdmin() then
 		playerObj:Say(getText('IGUI_CarShop_Is_Maximum'));
 		return
 	end
@@ -111,15 +111,79 @@ function ISVehicleMenu.onPriceEntered(target, button, playerObj, _offerInfo)
             playerObj:Say(getText('IGUI_CarShop_Is_Too_Low_Price'));
             return
         else
-			playerObj:getInventory():RemoveOneOf(TICKET_NAME);
-            playerObj:Say(getText('IGUI_CarShop_Adding_Car_For_Sale'))
             offerInfo.price = priceValue
-			offerInfo.vehicle = nil
-            sendClientCommand(playerObj, MOD_NAME, 'onAddCarSellTicket', offerInfo)
-			ISTimedActionQueue.add(ISExitVehicle:new(playerObj))
+            
+            -- Если админ, спрашиваем ник продавца
+            if isAdmin() then
+                local modal = ISModalDialog:new(0, 0, 300, 150, "Username", false, nil, nil);
+                modal:initialise();
+                modal:addToUIManager();
+                modal.moveWithMouse = true;
+                
+                local textEntry = ISTextEntryBox:new("", 20, 50, 260, 25);
+                textEntry:initialise();
+                textEntry:instantiate();
+                modal:addChild(textEntry);
+                
+                local okBtn = ISButton:new(20, 100, 80, 25, "OK", modal, function(button)
+                    local sellerUsername = textEntry:getInternalText();
+                    -- Если админ не ввел имя, используем его собственный ник
+                    if not sellerUsername or sellerUsername:len() == 0 then
+                        sellerUsername = playerObj:getUsername();
+                    end
+                    
+                    offerInfo.username = sellerUsername;
+                    playerObj:getInventory():RemoveOneOf(TICKET_NAME);
+                    playerObj:Say(getText('IGUI_CarShop_Adding_Car_For_Sale'))
+                    offerInfo.vehicle = nil
+                    sendClientCommand(playerObj, MOD_NAME, 'onAddCarSellTicket', offerInfo)
+                    ISTimedActionQueue.add(ISExitVehicle:new(playerObj))
+                    
+                    modal:setVisible(false);
+                    modal:removeFromUIManager();
+                end);
+                okBtn:initialise();
+                okBtn:instantiate();
+                modal:addChild(okBtn);
+                
+                local cancelBtn = ISButton:new(120, 100, 80, 25, "Cancel", modal, function(button)
+                    modal:setVisible(false);
+                    modal:removeFromUIManager();
+                end);
+                cancelBtn:initialise();
+                cancelBtn:instantiate();
+                modal:addChild(cancelBtn);
+                
+                textEntry:focus();
+            else
+                -- Обычный игрок
+                playerObj:getInventory():RemoveOneOf(TICKET_NAME);
+                playerObj:Say(getText('IGUI_CarShop_Adding_Car_For_Sale'))
+                offerInfo.vehicle = nil
+                sendClientCommand(playerObj, MOD_NAME, 'onAddCarSellTicket', offerInfo)
+                ISTimedActionQueue.add(ISExitVehicle:new(playerObj))
+            end
         end
     end
 end
+-- function ISVehicleMenu.onPriceEntered(target, button, playerObj, _offerInfo)
+-- 	local offerInfo = copyTable(_offerInfo)
+--     if button.internal == "OK" then
+--         local priceValue = tonumber(button.parent.entry:getText())
+-- 		local length = button.parent.entry:getInternalText():len()
+--         if length == 0 or priceValue <= 0 then
+--             playerObj:Say(getText('IGUI_CarShop_Is_Too_Low_Price'));
+--             return
+--         else
+-- 			playerObj:getInventory():RemoveOneOf(TICKET_NAME);
+--             playerObj:Say(getText('IGUI_CarShop_Adding_Car_For_Sale'))
+--             offerInfo.price = priceValue
+-- 			offerInfo.vehicle = nil
+--             sendClientCommand(playerObj, MOD_NAME, 'onAddCarSellTicket', offerInfo)
+-- 			ISTimedActionQueue.add(ISExitVehicle:new(playerObj))
+--         end
+--     end
+-- end
 
 ---@param playerObj IsoPlayer
 ---@param _offerInfo offerInfo
