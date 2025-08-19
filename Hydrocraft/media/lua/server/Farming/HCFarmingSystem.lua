@@ -75,7 +75,7 @@ end
 function SFarmingSystem:changeHealth() -- функция для изменения здоровья растения
 	-- local gameTime = getGameTime()
 	-- print("gameTime " , gameTime:getHours(),':',gameTime:getMinutes())
-	print(" =============================== new cycle =============================== ")
+	--print(" =============================== new cycle =============================== ")
 	--Инициализация переменных
 	local lightStrength = ClimateManager.getInstance():getDayLightStrength() --Солнечный свет
 	-- print("lightStrength: " , lightStrength)
@@ -138,7 +138,7 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 					local currentWaterbarrel = waterbarrel:getWaterAmount() -- количество воды в бочке
 					local waterNeeded = maxWater - availableWater -- сколько воды нужно растению
 					local waterToTransfer = math.min(waterNeeded, currentWaterbarrel) -- сколько воды нужно перелить из бочки в растение
-					print ("waterToTransfer: " , waterToTransfer)
+					-- print ("waterToTransfer: " , waterToTransfer)
 					waterbarrel:setWaterAmount(currentWaterbarrel - waterToTransfer) -- устанавливаем количество воды в бочке после полива
 					availableWater = availableWater + waterToTransfer -- устанавливаем количество воды в растении после полива
 					luaObject.waterLvl = availableWater -- устанавливаем количество воды в растении после полива
@@ -169,29 +169,29 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 				if square ~= nil then 
 					luaObject.hasWindow = self:checkWindowsAndGreenhouse(square) 
 				end -- проверяем, есть ли окна и теплица			
-				print ("hasWindow: " , luaObject.hasWindow)
+				-- print ("hasWindow: " , luaObject.hasWindow)
 				if luaObject.hasWindow then --indoors with greenhouse: no negative effects on weather (внутри с теплицей: нет отрицательного влияния на погоду)
-					print (luaObject.typeOfSeed .. " + [TEPLICA] plant is indoors with greenhouse")
+					-- print (luaObject.typeOfSeed .. " + [TEPLICA] plant is indoors with greenhouse")
 
 					-- Сезонные модификаторы
 					local season = getGameTime():getMonth()
-					print ("season: " , season)
+					-- print ("season: " , season)
 					local seasonMultiplier = 1.0
 					if season == 12 or season == 1 or season == 2 then seasonMultiplier = 0.8      -- Зима
 					elseif season == 3 or season == 4 or season == 5 then seasonMultiplier = 1.2  -- Весна
 					elseif season == 6 or season == 7 or season == 8 then seasonMultiplier = 1.5  -- Лето
 					elseif season == 9 or season == 10 or season == 11 then seasonMultiplier = 1.0  -- Осень
 					end
-					print ("seasonMultiplier: " , seasonMultiplier)
+					-- print ("seasonMultiplier: " , seasonMultiplier)
 					-- Применить к росту в теплице
 					luaObject.health = luaObject.health + (lightStrength*3 * seasonMultiplier)
 				else 
-					print (luaObject.typeOfSeed .. " - [NO TEPLICA] plant is indoors without a greenhouse")
+					-- print (luaObject.typeOfSeed .. " - [NO TEPLICA] plant is indoors without a greenhouse")
 					luaObject.health = luaObject.health - 10 -- no indoor growing without a greenhouse plant will die (без теплицы растение умрёт)
 				end -- greenhouse check
 
 			else -- **** Outdoors ***	 (на улице)
-				print (luaObject.typeOfSeed .. " ~ [OUTSIDE] - storm and frost handling")
+				-- print (luaObject.typeOfSeed .. " ~ [OUTSIDE] - storm and frost handling")
 				if temperature < 0 then  availableWater = 0 -- no available Water if outdoors and frozen (если температура ниже 0, то нет доступной воды)
 				end
 				
@@ -209,52 +209,52 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 
 			end -- indoors/outdoors	 (внутри/снаружи)
 
-			print ("health: ".. luaObject.health.. "+".. lightStrength/5 .. " lightStrength = " .. luaObject.health + lightStrength/5)
+			-- print ("health: ".. luaObject.health.. "+".. lightStrength/5 .. " lightStrength = " .. luaObject.health + lightStrength/5)
 			-- sunlight (солнечный свет)
 			luaObject.health = luaObject.health + lightStrength / 5 -- только среднее ~0.1/ч внутри
 			
 			local water = farming_vegetableconf.calcWater(luaObject.waterNeeded, availableWater) --
 			local waterMax = farming_vegetableconf.calcWater(availableWater, luaObject.waterNeededMax)
-			print ("water: ".. water.. " waterMax: ".. waterMax)
+			-- print ("water: ".. water.. " waterMax: ".. waterMax)
 			-- water levels (уровень воды)
 			if water >= 0 and waterMax >= 0 then -- вода в норме
 				luaObject.health = luaObject.health + 0.4
-				print ("water bonus: +0.4")
+				-- print ("water bonus: +0.4")
 			elseif water == -1 then -- воды мало
 				luaObject.health = luaObject.health - 0.2
-				print ("water damage: -0.2")
+				-- print ("water damage: -0.2")
 			elseif water == -2 then -- воды очень мало
 				luaObject.health = luaObject.health - 0.5
-				print ("water damage: -0.5")
+				-- print ("water damage: -0.5")
 			elseif waterMax == -1 and luaObject.health > 20 then -- воды мало и растение здоровое
 				luaObject.health = luaObject.health - 0.2
-				print ("water max damage: -0.2")
+				-- print ("water max damage: -0.2")
 			elseif waterMax == -2 and luaObject.health > 20 then -- воды очень мало и растение здоровое
 				luaObject.health = luaObject.health - 0.5
-				print ("water max damage: -0.5")
+				-- print ("water max damage: -0.5")
 			end
 
 			-- mildew disease (грибки)
 			if luaObject.mildewLvl > 0 then 
 				local mildewDamage = 0.2 - luaObject.mildewLvl/50 -- 0.2 - 2.2 урона
 				luaObject.health = luaObject.health - mildewDamage
-				print ("mildew damage: ",mildewDamage)
+				-- print ("mildew damage: ",mildewDamage)
 			end
 			if luaObject.aphidLvl > 0 then 
 				local aphidDamage = 0.15 - luaObject.mildewLvl/75 -- 0.15 - 1.6 урона
 				luaObject.health = luaObject.health - aphidDamage
-				print ("aphid damage: ",aphidDamage)
+				-- print ("aphid damage: ",aphidDamage)
 			end
 			if luaObject.fliesLvl > 0 then 
 				local fliesDamage = 0.1 - luaObject.mildewLvl/100 -- 0.1 - 1.1 урона
 				luaObject.health = luaObject.health - fliesDamage
-				print ("flies damage: ",fliesDamage)
+				-- print ("flies damage: ",fliesDamage)
 			end
-			print ("final health: ".. luaObject.health)
+			-- print ("final health: ".. luaObject.health)
 
 			-- plant dies (растение умирает)
 			if luaObject.health <= 0 then
-				print ("plant dies: ",luaObject.health)
+				-- print ("plant dies: ",luaObject.health)
 				if luaObject.exterior and rainStrength > 0.7 and windStrength > 0.7 then luaObject:destroyThis()
 				elseif luaObject.exterior and temperature <= 0 then luaObject:dryThis()
 				elseif luaObject.waterLvl <= 0 then luaObject:dryThis()
