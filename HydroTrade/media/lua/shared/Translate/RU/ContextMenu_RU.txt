@@ -3,7 +3,7 @@ ContextMenu_RU = {
 	ContextMenu_Vehicle_AttachVehicle = "Подцепить",
 	ContextMenu_Vehicle_AttachTrailer = "Подцепить прицеп",
 	ContextMenu_Vehicle_DetachTrailer = "Отцепить",
-	ContextMenu_Car_Magazine = "Пустая функция (временная)",
+	ContextMenu_ForTestCM = "Пустая функция (временная)",
 
 	ContextMenu_Sow_Trellis_Seed = "Посеять на шпалере",
 	ContextMenu_RemoverTools = "Редактор мира",
