@@ -29,7 +29,7 @@ farming_vegetableconf.icons["Lemontree"] = "Item_Lemon"
 farming_vegetableconf.props = {};
 
 
--- Carrots (12 to 16 weeks to grow)
+-- Морковь (12-16 недель созревания)
 farming_vegetableconf.props["Carrots"] = {};
 farming_vegetableconf.props["Carrots"].seedsRequired = 12;
 farming_vegetableconf.props["Carrots"].texture = "vegetation_farming_01_38";
@@ -45,8 +45,8 @@ farming_vegetableconf.props["Carrots"].seedName = "farming.CarrotSeed";
 farming_vegetableconf.props["Carrots"].seedCollect = 0;
 farming_vegetableconf.props["Carrots"].seedPerVeg = 3;
 farming_vegetableconf.props["Carrots"].minTemp = 3;
-farming_vegetableconf.props["Carrots"].bestTemp = 3;
-farming_vegetableconf.props["Carrots"].maxTemp = 3;
+farming_vegetableconf.props["Carrots"].bestTemp = 18;
+farming_vegetableconf.props["Carrots"].maxTemp = 30;
 farming_vegetableconf.props["Carrots"].damageFromStorm = false;
 farming_vegetableconf.props["Carrots"].plantWithFruit = true;
 farming_vegetableconf.props["Carrots"].multiHarvest = false;
