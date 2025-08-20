@@ -51,19 +51,118 @@ Events.OnGameStart.Add(function()
 end)
 
 
--- local function newPlayerDeffence() --Включение защиты для нового игрока
---     local player = getPlayer()
---     if player then
---         local modData = player:getModData()
---         -- Добавляем в моддату игрока время, когда он зашел в игру
---         if not modData.newPlayerDeffence then
---             modData.newPlayerDeffence = true
---             modData.newPlayerDeffenceTime = getGameTime():getWorldAgeHours()
---             player:setZombiesDontAttack(true)
---             player:transmitModData()
+-- Спавн лута для нового игрока
+-- Если контейнер не лутался 24 часа и пустой, то заполняем его для нового игрока (проверка на часы выживания будет добавлена позже)
+-- local function newPlayerLoot()
+--     print("START LOOTING")
+--     local playerObj = getPlayer()
+--     if not playerObj then return end
+
+    -- local hoursSurvived = playerObj:getHoursSurvived()
+    -- -- print("hoursSurvived:", hoursSurvived)
+    -- if hoursSurvived >= 0.1 then return end -- если игрок выжил больше 0.1 часа, то не заполняем контейнер
+    -- print("fill containers")
+    -- local playerSquare = playerObj:getCurrentSquare()
+    -- if not playerSquare then return end
+    
+    -- local building = playerSquare:getBuilding()
+    -- if building then
+    --     building:FillContainers()
+    -- end
+
+    -- Ищем контейнеры в радиусе 3 клеток
+--     for x = -10, 10 do
+--         for y = -10, 10 do
+--             local square = getSquare(playerSquare:getX() + x, playerSquare:getY() + y, playerSquare:getZ()) -- квадрат, в котором игрок
+--             if square then
+--                 local objects = square:getObjects() -- объекты на квадрате
+--                 for i = 0, objects:size() - 1 do
+--                     local obj = objects:get(i) -- объект
+--                     if instanceof(obj, "IsoObject") and obj:getContainerCount() > 0 then -- если объект - контейнер и в контейнере есть предметы
+--                         for j = 0, obj:getContainerCount() - 1 do
+--                             local container = obj:getContainerByIndex(j)
+--                             if container and container:getItems():size() == 0 and 
+--                                not instanceof(container:getParent(), "BaseVehicle") and 
+--                                not (container:getType() == "inventorymale" or container:getType() == "inventoryfemale") and
+--                                container:getSourceGrid() and container:getSourceGrid():getRoom() and 
+--                                container:getSourceGrid():getRoom():getRoomDef() and 
+--                                container:getSourceGrid():getRoom():getRoomDef():getProceduralSpawnedContainer() then
+--                                 -- Проверяем время последнего спавна
+--                                 -- print("obj:", obj:getObjectName())
+--                                 local md = obj:getModData()
+--                                 if not md then md = {} end
+--                                 local lastSpawnTime = md["lastSpawnTime"] or 0
+--                                 local currentTime = getGameTime():getWorldAgeHours() -- текущее время в часах
+                                
+--                                 -- Если прошло больше 24 игровых часов
+--                                 if currentTime - lastSpawnTime >= 24 then
+--                                     print("time to fill container")
+--                                     if isClient() then
+--                                          -- Заполняем контейнер пока не будет хотя бы 1 предмет
+--                                         local attempts = 0
+--                                         local maxAttempts = 50 -- Максимум попыток заполнения
+                                        
+--                                         while container:getItems():size() < 1 and attempts < maxAttempts do
+--                                             attempts = attempts + 1
+--                                             print("attempts:", attempts)
+--                                             local items = container:getItems()
+--                                             local tItems = {}
+--                                             for i = items:size()-1, 0, -1 do
+--                                                 table.insert(tItems, items:get(i))
+--                                             end
+
+--                                             for i, v in ipairs(tItems) do
+--                                                 ISRemoveItemTool.removeItem(v, playerObj)
+--                                             end
+
+--                                             local sq = container:getSourceGrid()
+--                                             local cIndex = -1
+--                                             for i = 0, container:getParent():getContainerCount()-1 do
+--                                                 if container:getParent():getContainerByIndex(i) == container then
+--                                                     cIndex = i
+--                                                 end
+--                                             end
+--                                             local args = { x = sq:getX(), y = sq:getY(), z = sq:getZ(), index = container:getParent():getObjectIndex(), containerIndex = cIndex }
+--                                             sendClientCommand(playerObj, 'object', 'clearContainerExplore', args)
+--                                             container:removeItemsFromProcessItems()
+--                                             container:clear()
+--                                             container:requestServerItemsForContainer()
+--                                             container:setExplored(true)
+--                                             sendClientCommand(playerObj, 'object', 'updateOverlaySprite', args)
+--                                         end
+                                        
+--                                         -- Обновляем время последнего спавна
+--                                         md["lastSpawnTime"] = currentTime
+--                                     else
+--                                         -- Заполняем контейнер пока не будет хотя бы 1 предмет
+--                                         local attempts = 0
+--                                         local maxAttempts = 50 -- Максимум попыток заполнения
+                                        
+--                                         while container:getItems():size() < 1 and attempts < maxAttempts do
+--                                             attempts = attempts + 1
+                                            
+--                                             container:getSourceGrid():getRoom():getRoomDef():getProceduralSpawnedContainer():clear()
+--                                             container:removeItemsFromProcessItems()
+--                                             container:clear()
+--                                             ItemPicker.fillContainer(container, playerObj)
+--                                             if container:getParent() then
+--                                                 ItemPicker.updateOverlaySprite(container:getParent())
+--                                             end
+--                                             container:setExplored(true)
+--                                         end
+                                        
+--                                         -- Обновляем время последнего спавна
+--                                         md["lastSpawnTime"] = currentTime
+--                                      end
+--                                 end
+--                             end
+--                         end
+--                     end
+--                 end
+--             end
 --         end
---         Events.OnPlayerUpdate.Remove(newPlayerDeffence)
 --     end
+--     Events.OnPlayerUpdate.Remove(newPlayerLoot) -- удаляем событие после заполнения контейнера (сработает только 1 раз при спавне игрока)
 -- end
--- -- Events.OnGameStart.Add(newPlayerDeffence)
--- Events.OnPlayerUpdate.Add(newPlayerDeffence)
+
+-- Events.OnPlayerUpdate.Add(newPlayerLoot)
