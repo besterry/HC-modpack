@@ -42,7 +42,7 @@ local CFG = {
     -- Доп. шанс запланировать событие на этой неделе (после проверки редкости)
     weeklyChance    = 0.35,    -- 35% (можешь снизить до 0.2–0.25)
     -- Вероятность затронуть сразу и воду, и электричество
-    pickBothChance  = 0.10,
+    pickBothChance  = 0.25, -- 10%
     -- Режимы: "restore_on" (временно включить), "blackout" (временно отключить)
     modePower = "restore_on",
     modeWater = "restore_on",
@@ -95,8 +95,8 @@ local function randInt(minI, maxI) -- [min,max], с ванильным RNG (ра
 end
 
 -- ================== ПЛАНИРОВАНИЕ НЕДЕЛИ ==================
-local function makeEmptyPlan(w) -- создаём пустой план
-    return { week=w, start=nil, power=nil, water=nil }
+local function makeEmptyPlan(w)
+    return { week=w, power=nil, water=nil }
 end
 
 local function planThisWeekAllowed(w) -- проверяем, можно ли запланировать событие на этой неделе
@@ -119,22 +119,31 @@ local function buildWeekPlan(w) -- строим план на неделю
         wantWater = not wantPower
     end
 
-    local maxDur = 0
     if wantPower then
         local durP = randInt(CFG.durPowerHours.min, CFG.durPowerHours.max)
-        plan.power = { dur=durP, mode=CFG.modePower, active=false, prevOn=nil }
-        maxDur = math.max(maxDur, durP)
+        local latestStartP = math.max(0, WEEK_H - durP - CFG.startGuardHours)
+        plan.power = { 
+            dur=durP, 
+            mode=CFG.modePower, 
+            active=false, 
+            prevOn=nil,
+            start=randInt(0, latestStartP)  -- Отдельное время для электричества
+        }
     end
+    
     if wantWater then
         local durW = randInt(CFG.durWaterHours.min, CFG.durWaterHours.max)
-        plan.water = { dur=durW, mode=CFG.modeWater, active=false, prevOn=nil }
-        maxDur = math.max(maxDur, durW)
+        local latestStartW = math.max(0, WEEK_H - durW - CFG.startGuardHours)
+        plan.water = { 
+            dur=durW, 
+            mode=CFG.modeWater, 
+            active=false, 
+            prevOn=nil,
+            start=randInt(0, latestStartW)  -- Отдельное время для воды
+        }
     end
 
-    if maxDur > 0 then
-        local latestStart = math.max(0, WEEK_H - maxDur - CFG.startGuardHours)
-        plan.start = randInt(0, latestStart)
-        -- фиксируем неделю с событием (для minWeeksBetween)
+    if wantPower or wantWater then
         local d = md(); d.lastEventWeek = w; ModData.transmit(MDKEY)
     end
     return plan
@@ -178,19 +187,24 @@ local function enterWindow(which, slot) -- входим в окно
 end
 
 local function exitWindow(which, slot) -- выходим из окна
-    if slot.prevOn ~= nil then
-        local target = slot.prevOn
-        if isOn(which) ~= target then
-            setState(which, target)
-            if slot.mode == "restore_on" then
-                notify(which=="power" and "IGUI_WPDynamic_Power_Off1"
-                                     or  "IGUI_WPDynamic_Water_Off1")
-            else
+    -- Принудительно отключаем в конце окна
+    if slot.mode == "restore_on" then
+        -- Если это было временное включение - принудительно выключаем
+        setState(which, false)
+        notify(which=="power" and "IGUI_WPDynamic_Power_Off1"
+                             or  "IGUI_WPDynamic_Water_Off1")
+    else
+        -- Если это был blackout - восстанавливаем предыдущее состояние
+        if slot.prevOn ~= nil then
+            local target = slot.prevOn
+            if isOn(which) ~= target then
+                setState(which, target)
                 notify(which=="power" and "IGUI_WPDynamic_Power_On1"
                                      or  "IGUI_WPDynamic_Water_On1")
             end
         end
     end
+    
     slot.active, slot.prevOn = false, nil
     ModData.transmit(MDKEY)
 end
@@ -217,19 +231,19 @@ local function tick() -- тик (каждые 10 минут)
     local wH = worldH() -- получаем текущее время существования мира в часах
     local nowInWeek = wH - plan.week * WEEK_H -- получаем текущее время в неделе
 
-    -- POWER
-    if plan.power then -- если есть план на электричество
-        local shouldActive = inWindow(nowInWeek, plan.start, plan.power.dur) -- проверяем, находится ли в окне
-        if shouldActive and (not plan.power.active) then -- если окно активно и не активен
-            enterWindow("power", plan.power) -- входим в окно
-        elseif (not shouldActive) and plan.power.active then -- если окно не активно и активен
-            exitWindow("power", plan.power) -- выходим из окна
+    -- POWER - используем plan.power.start
+    if plan.power then
+        local shouldActive = inWindow(nowInWeek, plan.power.start, plan.power.dur)
+        if shouldActive and (not plan.power.active) then
+            enterWindow("power", plan.power)
+        elseif (not shouldActive) and plan.power.active then
+            exitWindow("power", plan.power)
         end
     end
 
-    -- WATER
+    -- WATER - используем plan.water.start
     if plan.water then
-        local shouldActive = inWindow(nowInWeek, plan.start, plan.water.dur)
+        local shouldActive = inWindow(nowInWeek, plan.water.start, plan.water.dur)
         if shouldActive and (not plan.water.active) then
             enterWindow("water", plan.water)
         elseif (not shouldActive) and plan.water.active then
