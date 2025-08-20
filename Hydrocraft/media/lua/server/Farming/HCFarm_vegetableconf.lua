@@ -796,43 +796,45 @@ farming_vegetableconf.sprite["Lemontree"] = {
 
 
 
-farming_vegetableconf.HCgrowAllPlants = function(planting, nextGrowing, updateNbOfGrow)
-	local nbOfGrow = planting.nbOfGrow;
-	local water = farming_vegetableconf.calcWater(planting.waterNeeded, planting.waterLvl);
-	local waterMax = farming_vegetableconf.calcWater(planting.waterLvl, planting.waterNeededMax);
-	local diseaseLvl = farming_vegetableconf.calcDisease(planting.mildewLvl);
-	if nbOfGrow == 0 then -- young
-		planting = growNext(planting, farming_vegetableconf.getSpriteName(planting), farming_vegetableconf.getObjectName(planting), nextGrowing, farming_vegetableconf.props[planting.typeOfSeed].timeToGrow + water + waterMax + diseaseLvl);
-		planting.waterNeeded = 70;
-	elseif (nbOfGrow <= 4) then -- young
-		if water >= 0 and waterMax >= 0 and diseaseLvl >= 0 then
-			planting = growNext(planting, farming_vegetableconf.getSpriteName(planting), farming_vegetableconf.getObjectName(planting), nextGrowing, farming_vegetableconf.props[planting.typeOfSeed].timeToGrow + water + waterMax + diseaseLvl);
-			planting.waterNeeded = farming_vegetableconf.props[planting.typeOfSeed].waterLvl;
-			planting.waterNeededMax = farming_vegetableconf.props[planting.typeOfSeed].waterLvlMax;
+farming_vegetableconf.HCgrowAllPlants = function(planting, nextGrowing, updateNbOfGrow) -- растит растение
+	local nbOfGrow = planting.nbOfGrow; -- урожай
+	local water = farming_vegetableconf.calcWater(planting.waterNeeded, planting.waterLvl); -- кол-во воды необходимое для роста
+	local waterMax = farming_vegetableconf.calcWater(planting.waterLvl, planting.waterNeededMax); -- кол-во воды до максимума
+	local diseaseLvl = farming_vegetableconf.calcDisease(planting.mildewLvl); -- уровень болезни
+	if nbOfGrow == 0 then -- young (молодое)
+		planting = growNext(planting, farming_vegetableconf.getSpriteName(planting), farming_vegetableconf.getObjectName(planting), nextGrowing, farming_vegetableconf.props[planting.typeOfSeed].timeToGrow + water + waterMax + diseaseLvl); -- растит растение
+		planting.waterNeeded = 70; -- устанавливает необходимое количество воды
+	elseif (nbOfGrow <= 4) then -- young (молодое)
+		-- print("water: " , water, "waterMax: " , waterMax, "diseaseLvl: " , diseaseLvl)
+		if water >= 0 and waterMax >= 0 and diseaseLvl >= 0 then -- если вода больше 0 и максимальная вода больше 0 и болезнь больше 0
+			planting = growNext(planting, farming_vegetableconf.getSpriteName(planting), farming_vegetableconf.getObjectName(planting), nextGrowing, farming_vegetableconf.props[planting.typeOfSeed].timeToGrow + water + waterMax + diseaseLvl); -- растит растение
+			planting.waterNeeded = farming_vegetableconf.props[planting.typeOfSeed].waterLvl; -- устанавливает необходимое количество воды
+			planting.waterNeededMax = farming_vegetableconf.props[planting.typeOfSeed].waterLvlMax; -- устанавливает максимальное количество воды
 		else
-			badPlant(water, waterMax, diseaseLvl, planting, nextGrowing, updateNbOfGrow);
+			-- print("badPlant")
+			badPlant(water, waterMax, diseaseLvl, planting, nextGrowing, updateNbOfGrow); -- плохое растение
 		end
-	elseif (nbOfGrow == 5) then -- mature
-		if(water >= 0 and waterMax >= 0 and diseaseLvl >= 0) then
-			planting.nextGrowing = calcNextGrowing(nextGrowing, farming_vegetableconf.props[planting.typeOfSeed].timeToGrow + water + waterMax + diseaseLvl);
-			planting:setObjectName(farming_vegetableconf.getObjectName(planting))
-			planting:setSpriteName(farming_vegetableconf.getSpriteName(planting))
-			planting.hasVegetable = true;
+	elseif (nbOfGrow == 5) then -- mature (зрелое)
+		if(water >= 0 and waterMax >= 0 and diseaseLvl >= 0) then -- если вода больше 0 и максимальная вода больше 0 и болезнь больше 0
+			planting.nextGrowing = calcNextGrowing(nextGrowing, farming_vegetableconf.props[planting.typeOfSeed].timeToGrow + water + waterMax + diseaseLvl); -- рассчитывает следующий рост
+			planting:setObjectName(farming_vegetableconf.getObjectName(planting)) -- устанавливает имя растения
+			planting:setSpriteName(farming_vegetableconf.getSpriteName(planting)) -- устанавливает спрайт растения
+			planting.hasVegetable = true; -- есть овощ
 		else
-			badPlant(water, waterMax, diseaseLvl, planting, nextGrowing, updateNbOfGrow);
+			badPlant(water, waterMax, diseaseLvl, planting, nextGrowing, updateNbOfGrow); -- плохое растение
 		end
-	elseif (nbOfGrow == 6) then -- mature with seed
-		if(water >= 0 and waterMax >= 0 and diseaseLvl >= 0) then
-			planting.nextGrowing = calcNextGrowing(nextGrowing, 248);
-			planting:setObjectName(farming_vegetableconf.getObjectName(planting))
-			planting:setSpriteName(farming_vegetableconf.getSpriteName(planting))
-			planting.hasVegetable = true;
-			planting.hasSeed = true;
+	elseif (nbOfGrow == 6) then -- mature with seed (зрелое с семенами)
+		if(water >= 0 and waterMax >= 0 and diseaseLvl >= 0) then -- если вода больше 0 и максимальная вода больше 0 и болезнь больше 0	
+			planting.nextGrowing = calcNextGrowing(nextGrowing, 248); -- рассчитывает следующий рост
+			planting:setObjectName(farming_vegetableconf.getObjectName(planting)) -- устанавливает имя растения
+			planting:setSpriteName(farming_vegetableconf.getSpriteName(planting)) -- устанавливает спрайт растения
+			planting.hasVegetable = true; -- есть овощ
+			planting.hasSeed = true; -- есть семена
 		else
-			badPlant(water, waterMax, diseaseLvl, planting, nextGrowing, updateNbOfGrow);
+			badPlant(water, waterMax, diseaseLvl, planting, nextGrowing, updateNbOfGrow); -- плохое растение
 		end
-	elseif (planting.state ~= "rotten") then -- rotten
-		planting:rottenThis()
+	elseif (planting.state ~= "rotten") then -- rotten (гнилое)	
+		planting:rottenThis() -- гнилое растение
 	end
-	return planting;
+	return planting; -- возвращает растение
 end
