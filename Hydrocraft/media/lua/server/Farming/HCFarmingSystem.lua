@@ -2,7 +2,7 @@
 
 if isClient() then return end
 
-local debug = false -- для отладки
+local debug = true -- для отладки
 local function debugLog(message)
 	if debug then
 		print(message)
@@ -192,33 +192,37 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 					debugLog("+ teplitsa health= ".. luaObject.health .. " + " .. lightStrength*3 * seasonMultiplier)
 					luaObject.health = luaObject.health + (lightStrength*3 * seasonMultiplier)
 				else 
-					debugLog(luaObject.typeOfSeed .. " - [NO TEPLICA] plant is indoors without a greenhouse")
+					debugLog(luaObject.typeOfSeed .. " - [NO TEPLICA] plant is indoors without a greenhouse") -- растение находится в помещении, но не в теплице
 					luaObject.health = luaObject.health - 10 -- no indoor growing without a greenhouse plant will die (без теплицы растение умрёт)
 				end -- greenhouse check
 
 			else -- **** Outdoors ***	 (на улице)
-				debugLog(luaObject.typeOfSeed .. " ~ [OUTSIDE] - storm and frost handling")
-				if temperature < 0 then  availableWater = 0 -- no available Water if outdoors and frozen (если температура ниже 0, то нет доступной воды)
+				debugLog("[OUTSIDE] ".. luaObject.typeOfSeed .. ", temp:"..temperature)
+				if temperature < 0 then  
+					availableWater = 0 -- если температура ниже 0, то нет доступной воды
+					debugLog("temp<0 -> water=0")
 				end
-				
 				-- temp handling (обработка температуры)
 				if temperature < props.bestTemp then 
-					luaObject.health = luaObject.health + 0.5 - (props.bestTemp - temperature) / (props.bestTemp - props.minTemp) * 1.5 -- +0.5 at best temp, -1 at min temp
+					luaObject.health = luaObject.health + 0.5 - (props.bestTemp - temperature) / (props.bestTemp - props.minTemp) * 1.5 -- +0.5 при лучшей температуре, -1 при минимальной температуре
+					debugLog("1temp damage: ".. (0.5 - (props.bestTemp - temperature) / (props.bestTemp - props.minTemp) * 1.5 ))
 				else 
-					luaObject.health = luaObject.health + 0.5 - (props.bestTemp - temperature) / (props.bestTemp - props.maxTemp)  -- -0.5 at max temp
+					luaObject.health = luaObject.health + 0.5 - (props.bestTemp - temperature) / (props.bestTemp - props.maxTemp)  -- -0.5 при максимальной температуре
+					debugLog("2temp damage: ".. (0.5 - (props.bestTemp - temperature) / (props.bestTemp - props.maxTemp)))
 				end
 
 				-- storm handling (обработка шторма)
 				if props.damageFromStorm and luaObject.nbOfGrow >= 3 and rainStrength > 0.5 and windStrength > 0.5 then 
-					luaObject.health = luaObject.health - (16 * rainStrength * windStrength -3) -- 1-13 damage
+					debugLog("storm damage: -".. (16 * rainStrength * windStrength -3))
+					luaObject.health = luaObject.health - (16 * rainStrength * windStrength -3) -- 1-13 урона
 				end
 
 			end -- indoors/outdoors	 (внутри/снаружи)
 
-			debugLog("health: ".. luaObject.health.. "+".. lightStrength/5 .. " lightStrength = " .. luaObject.health + lightStrength/5)
+			debugLog("light: +".. lightStrength/5)
 			-- sunlight (солнечный свет)
 			luaObject.health = luaObject.health + lightStrength / 5 -- только среднее ~0.1/ч внутри
-			
+			-- debugLog("light bonus outside: ".. lightStrength / 5)
 			local water = farming_vegetableconf.calcWater(luaObject.waterNeeded, availableWater) --
 			local waterMax = farming_vegetableconf.calcWater(availableWater, luaObject.waterNeededMax)
 			-- debugLog("water: ".. water.. " waterMax: ".. waterMax)
@@ -240,16 +244,16 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 				debugLog("water level is very low: -0.5")
 			end
 
-			-- mildew disease (грибки)
+			-- mildew disease (плесень)
 			if luaObject.mildewLvl > 0 then 
 				local mildewDamage = 0.2 - luaObject.mildewLvl/50 -- 0.2 - 2.2 урона
 				luaObject.health = luaObject.health - mildewDamage
-				debugLog("mildew damage: ".. mildewDamage)
+				debugLog("mildew damage: -".. mildewDamage)
 			end
 			if luaObject.aphidLvl > 0 then 
 				local aphidDamage = 0.15 - luaObject.mildewLvl/75 -- 0.15 - 1.6 урона
 				luaObject.health = luaObject.health - aphidDamage
-				debugLog("aphid damage: ".. aphidDamage)
+				debugLog("aphid damage: -".. aphidDamage)
 			end
 			if luaObject.fliesLvl > 0 then 
 				local fliesDamage = 0.1 - luaObject.mildewLvl/100 -- 0.1 - 1.1 урона
