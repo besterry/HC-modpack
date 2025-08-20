@@ -2,13 +2,13 @@
 
 if isClient() then return end
 
-local debug = true -- для отладки
+local debug = false -- для отладки
 local function debugLog(message)
 	if debug then
 		print(message)
 	end
 end
--- adding a few more fields for other timed actions here.
+-- adding a few more fields for other timed actions here. (добавляем несколько полей для других действий с временными интервалами)
 
 function SFarmingSystem:initSystem()
 	SGlobalObjectSystem.initSystem(self)
@@ -177,8 +177,7 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 				end -- проверяем, есть ли окна и теплица			
 				-- print ("hasWindow: " , luaObject.hasWindow)
 				if luaObject.hasWindow then --indoors with greenhouse: no negative effects on weather (внутри с теплицей: нет отрицательного влияния на погоду)
-					debugLog(luaObject.typeOfSeed .. " + [TEPLICA] plant is indoors with greenhouse")
-
+					debugLog(" [TEPLICA] " .. luaObject.typeOfSeed)
 					-- Сезонные модификаторы
 					local season = getGameTime():getMonth()
 					-- debugLog("season: " .. season)
@@ -189,10 +188,10 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 					elseif season == 9 or season == 10 or season == 11 then seasonMultiplier = 0.02  -- Осень (3*0.02 = +0.06)
 					end
 					--Это только бонус для теплицы за сезон + основной бонус от солнца
-					debugLog("+ teplitsa health= ".. luaObject.health .. " + " .. lightStrength*3 * seasonMultiplier)
+					debugLog("+ light teplitsa:" .. lightStrength*3 * seasonMultiplier)
 					luaObject.health = luaObject.health + (lightStrength*3 * seasonMultiplier)
 				else 
-					debugLog(luaObject.typeOfSeed .. " - [NO TEPLICA] plant is indoors without a greenhouse") -- растение находится в помещении, но не в теплице
+					debugLog(" - [NO TEPLICA] " .. luaObject.typeOfSeed .." -10 hp") -- растение находится в помещении, но не в теплице
 					luaObject.health = luaObject.health - 10 -- no indoor growing without a greenhouse plant will die (без теплицы растение умрёт)
 				end -- greenhouse check
 
