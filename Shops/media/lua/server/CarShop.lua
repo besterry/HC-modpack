@@ -24,7 +24,7 @@ function cleanupEmptyKeys()
 	end
 end
 
-Events.OnServerStarted.Add(cleanupEmptyKeys)
+-- Events.OnServerStarted.Add(cleanupEmptyKeys)
 
 ---@param player IsoPlayer
 ---@param offerInfo offerInfo
