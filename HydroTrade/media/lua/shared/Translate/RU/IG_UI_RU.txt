@@ -1,5 +1,8 @@
 IGUI_RU =
 {
+	IGUI_AdminPanel_TZone = "Зараженные зоны",
+	IGUI_ToggleTZone = "Переключение активности выбранной зоны",
+	IGUI_TZone_Title = "Список зараженных зон",
 	IGUI_Already_LootTree = "На дереве ничего нет. Проверю позже",
 	IGUI_Tree_Looting = "Обобрать дерево",
 	IGUI_You_cannot_loot_this_tree_again_so_soon_Please_wait = "Кажется тут ничего нет, похоже кто-то уже собрал все.<br> Вернусь позже.",
