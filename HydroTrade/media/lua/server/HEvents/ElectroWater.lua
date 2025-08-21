@@ -216,10 +216,21 @@ local function forcePlanNowIfTest() -- принудительно запуска
     local nowInWeek = worldH() - w * WEEK_H
 
     d.plan = {
-        week  = w,
-        start = nowInWeek + 0.01,  -- начнётся практически сразу (на следующем тике)
-        power = { dur = randInt(1,2), mode = CFG.modePower, active=false, prevOn=nil },
-        water = { dur = randInt(1,2), mode = CFG.modeWater, active=false, prevOn=nil },
+        week = w,
+        power = { 
+            dur = randInt(1,2), 
+            mode = CFG.modePower, 
+            active=false, 
+            prevOn=nil,
+            start = nowInWeek + 0.01  -- Добавляем start для power
+        },
+        water = { 
+            dur = randInt(1,2), 
+            mode = CFG.modeWater, 
+            active=false, 
+            prevOn=nil,
+            start = nowInWeek + 0.01  -- Добавляем start для water
+        },
     }
     d.lastEventWeek = w
     ModData.transmit(MDKEY)
