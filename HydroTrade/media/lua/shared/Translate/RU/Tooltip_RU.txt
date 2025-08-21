@@ -1,5 +1,6 @@
 Tooltip_RU = {
 -- Item tooltip
+	Tooltip_clothing_Filter = "Воздушный фильтр",
 	Tooltip_HCArmor = "Нажмите P (англ.), чтобы узнать какую броню вы носите.",	
 	Tooltip_HCBluebarrelcorpse = "Будет превращаться в токсичные отходы.",
 	Tooltip_HCFeedme = "Кормите, чтобы оставался в живых.",
