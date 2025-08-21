@@ -145,7 +145,7 @@ function SFarmingSystem:changeHealth() -- функция для изменени
 					local waterNeeded = maxWater - availableWater -- сколько воды нужно растению
 					local waterToTransfer = math.min(waterNeeded, currentWaterbarrel) -- сколько воды нужно перелить из бочки в растение
 					--debugLog ("waterToTransfer: " , waterToTransfer)
-					waterbarrel:setWaterAmount(currentWaterbarrel - waterToTransfer) -- устанавливаем количество воды в бочке после полива
+					waterbarrel:setWaterAmount(currentWaterbarrel - waterToTransfer/4) -- устанавливаем количество воды в бочке после полива
 					availableWater = availableWater + waterToTransfer -- устанавливаем количество воды в растении после полива
 					luaObject.waterLvl = availableWater -- устанавливаем количество воды в растении после полива
 
