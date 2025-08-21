@@ -1,8 +1,30 @@
 IGUI_RU =
-{
+{	
+	-- Сообщения при входе в токсичную зону
+	IGUI_TZoneEnteredNoProtection = "Хм... воздух здесь какой-то странный. Лучше надеть маску.",
+	IGUI_TZoneEnteredWithProtection = "Хорошо, что у меня есть защита. Воздух здесь отравлен.",
+	IGUI_TZoneEnteredDangerous = "Блять! Здесь что-то не так с воздухом! Нужна защита!",
+	IGUI_TZoneEnteredCaution = "Чувствую химический запах... Опасно без защиты.",
+
+	-- Сообщения о состоянии фильтра
+	IGUI_TZoneFilterWarning = "Фильтр начинает забиваться...",
+	IGUI_TZoneFilterCritical = "Фильтр почти забит! Нужно менять!",
+	IGUI_TZoneFilterBroken = "Фильтр сломан! Защиты нет!",
+
+	-- Сообщения о выходе из зоны
+	IGUI_TZoneExited = "Наконец-то свежий воздух...",
+	IGUI_TZoneExitedRelief = "Дышать стало легче",
+
+	-- Сообщения о повреждениях
+	IGUI_TZoneDamageCough = "*кашляет* Этот воздух...",
+	IGUI_TZoneDamageDizzy = "Голова кружится...",
+	IGUI_TZoneDamageNausea = "Тошнит от этих паров...",
+	
 	IGUI_AdminPanel_TZone = "Зараженные зоны",
 	IGUI_ToggleTZone = "Переключение активности выбранной зоны",
 	IGUI_TZone_Title = "Список зараженных зон",
+
+
 	IGUI_Already_LootTree = "На дереве ничего нет. Проверю позже",
 	IGUI_Tree_Looting = "Обобрать дерево",
 	IGUI_You_cannot_loot_this_tree_again_so_soon_Please_wait = "Кажется тут ничего нет, похоже кто-то уже собрал все.<br> Вернусь позже.",
