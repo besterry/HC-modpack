@@ -16,6 +16,7 @@ local lastZoneState = nil -- последнее состояние зоны
 local lastZoneCheckTime = 0 -- последнее время проверки зоны
 local zoneCheckInterval = 1000 -- интервал проверки зоны
 local currentZoneTitle = nil -- текущее название зоны
+local NotificationOnEntered = false -- уведомление о входе в зараженную зону
 
 -- Защитные маски от тумана
 ProtectiveMasks = {
@@ -30,7 +31,6 @@ ProtectiveMasks = {
     "Hat_NBCmask",
     "HazmatSuit",
 }
-
 
 -- Функция проверки защитного снаряжения
 function protectiveTZoneEquipped(player)
@@ -75,7 +75,7 @@ function shouldTakeToxicDamage(player)
         return false 
     end  
 
-    local toxic_Fog = ( 0.15 * ( GameTime.getInstance():getMultiplier() / 1.6) )
+    local toxic_Fog = ( 0.15 * ( GameTime.getInstance():getMultiplier() / 1.6) ) 
     local stats = player:getStats()
     local fatigue = stats:getFatigue()
     local isOnline = (isClient() or isServer())
@@ -86,7 +86,7 @@ function shouldTakeToxicDamage(player)
         stats:setFatigue(newFatigue)
     end
     
-    toxic_Fog = (toxic_Fog * (SandboxVars.ToxicZonesStalker and SandboxVars.ToxicZonesStalker.ToxicDamageMultiplier or 1.0) / 2)
+    toxic_Fog = (toxic_Fog * 1.0 / 2) -- Уменьшаем урон в 2 раза
     
     local damage = player:getBodyDamage()
     
@@ -110,6 +110,15 @@ function shouldTakeToxicDamage(player)
     end
     if damage:getBodyPart(BodyPartType.Neck):getHealth() < 1 then
         damage:getBodyPart(BodyPartType.Neck):setHealth(0)
+    end
+    -- Очень редко выводим сообщение о повреждении
+    if ZombRand(1, 800) == 1 then
+        local messages = {
+            getText("IGUI_TZoneDamageCough"),
+            getText("IGUI_TZoneDamageDizzy"),
+            getText("IGUI_TZoneDamageNausea")
+        }
+        player:Say(messages[ZombRand(1, #messages+1)])
     end
 end
 
@@ -286,6 +295,22 @@ local function checkZone(player)
     if zone ~= lastZoneState then
         lastZoneState = zone
         currentZoneTitle = zone
+        if zone and not NotificationOnEntered and not protectiveTZoneEquipped(player) then -- Если игрок в зоне и уведомление не отправлено
+            NotificationOnEntered = true
+            local messages = {
+                getText("IGUI_TZoneEnteredDangerous"),
+                getText("IGUI_TZoneEnteredCaution"),
+                getText("IGUI_TZoneEnteredNoProtection")
+            }
+            player:Say(messages[ZombRand(1, #messages+1)]) -- +1 для корректного выбора
+        else -- Если игрок вышел из зоны
+            NotificationOnEntered = false     
+            local messages = {
+                getText("IGUI_TZoneExited"),
+                getText("IGUI_TZoneExitedRelief")
+            }
+            player:Say(messages[ZombRand(1, #messages+1)]) -- +1 для корректного выбора
+        end
     end
     
     -- Обновляем туман
