@@ -1,4 +1,5 @@
 Tooltip_EN = {
+	Tooltip_clothing_Filter = "Air filter",
 	Tooltip_ClaimOutSide = "It can only be claimed outside, on the ground.",	
 	Tooltip_itemworldmap1 = "World map, to open it, take it in your hand and press M",
 	Tooltip_Reset_Trip_Odometer = "Set the trip odometer to zero. <LINE> Cannot be undone.",
