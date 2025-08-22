@@ -22,6 +22,7 @@ local currentMessageIndex = 1
 
 local function getTZoneMessage(messages)
     local md = ModData.getOrCreate("TZone")
+    if not md then return messages end
     for title, data in pairs(md) do
         if data.enable then
             table.insert(messages, { message = "IGUI_Notify_TZone_Active", color = {255, 0, 0}, title = title }) -- красный
