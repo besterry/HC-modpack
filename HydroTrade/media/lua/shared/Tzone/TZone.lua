@@ -7,6 +7,7 @@ local lastPlayerPos = {x = 0, y = 0} -- последняя позиция игр
 local lastZoneCheck = nil -- последнее состояние зоны
 local zoneCheckCooldown = 1000 -- миллисекунды между проверками
 
+local enable = SandboxVars.ToxicZone.Enable or false
 -- Переменные тумана
 local tzoneOverlay = getTexture("media/ui/ToxicOverlay.png") -- текстура тумана
 local tzoneAlpha = 0 -- прозрачность тумана
@@ -17,6 +18,7 @@ local lastZoneCheckTime = 0 -- последнее время проверки з
 local zoneCheckInterval = 1000 -- интервал проверки зоны
 local currentZoneTitle = nil -- текущее название зоны
 local NotificationOnEntered = false -- уведомление о входе в зараженную зону
+local multiplier = SandboxVars.ToxicZone.FilterDurationMultiplier or 1
 
 -- Защитные маски от тумана
 ProtectiveMasks = {
@@ -32,6 +34,7 @@ ProtectiveMasks = {
     "HazmatSuit",
 }
 
+local warningSent1, warningSent2, warningSent3 = false, false, false
 -- Функция проверки защитного снаряжения
 function protectiveTZoneEquipped(player)
 	if player:isGodMod() then return true end -- Если игрок бог, то возвращаем true
@@ -49,12 +52,26 @@ function protectiveTZoneEquipped(player)
                         if not modData.percent then modData.percent = 1 end --Используем именно 1, а не 100%
                         local percent = modData.percent
 						if percent > 0 then
-							modData.percent = percent - 0.00001 -- Уменьшаем целостность фильтра, используем setModData() для изменения значения в ModData
-							if modData.percent < 0 then
+							modData.percent = percent - 0.00001*multiplier -- Уменьшаем целостность фильтра, используем setModData() для изменения значения в ModData
+                            if modData.percent > 0.5 then warningSent1 = false end -- Сбрасываем флаг, если фильтр больше 50% или сменился фильтр/маска
+                            if modData.percent < 0.5 and not warningSent1 then
+                                player:Say(getText("IGUI_TZoneFilterWarning")) -- Фильтр начинает забиваться...
+                                warningSent1 = true
+                            end
+                            if modData.percent > 0.1 then warningSent2 = false end -- Сбрасываем флаг, если фильтр больше 10%
+                            if modData.percent < 0.1 and not warningSent2 then
+                                player:Say(getText("IGUI_TZoneFilterCritical")) -- Фильтр почти забит! Нужно менять!
+                                warningSent2 = true
+                            end
+                            if modData.percent > 0 then warningSent3 = false end -- Сбрасываем флаг, если фильтр больше 0%
+							if modData.percent < 0 and not warningSent3 then
 								modData.percent = 0 -- Если целостность меньше 0, то устанавливаем её в 0
+                                player:Say(getText("IGUI_TZoneFilterBroken")) -- Черт, фильтру хана!
+                                warningSent3 = true
 							end
 							return true
 						else
+                            warningSent1, warningSent2, warningSent3 = false, false, false
 							return false 
 						end
 					end
@@ -114,9 +131,9 @@ function shouldTakeToxicDamage(player)
     -- Очень редко выводим сообщение о повреждении
     if ZombRand(1, 800) == 1 then
         local messages = {
-            getText("IGUI_TZoneDamageCough"),
-            getText("IGUI_TZoneDamageDizzy"),
-            getText("IGUI_TZoneDamageNausea")
+            getText("IGUI_TZoneDamageCough"), -- *кашляет* Этот воздух...
+            getText("IGUI_TZoneDamageDizzy"), -- Голова кружится...
+            getText("IGUI_TZoneDamageNausea") -- Тошнит от этих паров...
         }
         player:Say(messages[ZombRand(1, #messages+1)])
     end
@@ -132,6 +149,7 @@ local function getTZonesFromModData()
     -- Фильтруем только активные зоны
     local activeZones = {}
     for title, zone in pairs(tzones) do
+        -- print("zone:" .. title .. " => enable:" .. tostring(zone.enable))
         if zone.enable ~= false then -- проверяем что зона не отключена
             activeZones[title] = zone
         end
@@ -142,7 +160,8 @@ end
 -- Группировка зон по регионам (каждые 100x100 тайлов)
 local function buildZoneCache()
     local tzones = getTZonesFromModData()
-    TZoneCache = {}
+    if not tzones then return end -- если нет зон, то выходим
+    TZoneCache = {} -- очищаем кэш
     
     for title, zone in pairs(tzones) do
         local startRegionX = math.floor(zone.x / 100)
@@ -298,18 +317,22 @@ local function checkZone(player)
         if zone and not NotificationOnEntered and not protectiveTZoneEquipped(player) then -- Если игрок в зоне и уведомление не отправлено
             NotificationOnEntered = true
             local messages = {
-                getText("IGUI_TZoneEnteredDangerous"),
-                getText("IGUI_TZoneEnteredCaution"),
-                getText("IGUI_TZoneEnteredNoProtection")
+                getText("IGUI_TZoneEnteredDangerous"), -- Блять! Здесь что-то не так с воздухом! Нужна защита!
+                getText("IGUI_TZoneEnteredCaution"), -- Чувствую химический запах... Опасно без защиты.
+                getText("IGUI_TZoneEnteredNoProtection") -- Хм... воздух здесь какой-то странный. Лучше надеть маску.
             }
             player:Say(messages[ZombRand(1, #messages+1)]) -- +1 для корректного выбора
-        else -- Если игрок вышел из зоны
+        elseif not zone and NotificationOnEntered then -- Если игрок вышел из зоны
             NotificationOnEntered = false     
             local messages = {
-                getText("IGUI_TZoneExited"),
-                getText("IGUI_TZoneExitedRelief")
+                getText("IGUI_TZoneExited"), -- Наконец-то свежий воздух...
+                getText("IGUI_TZoneExitedRelief") -- Дышать стало легче
             }
             player:Say(messages[ZombRand(1, #messages+1)]) -- +1 для корректного выбора
+        else
+            if not zone then
+                NotificationOnEntered = false
+            end
         end
     end
     
@@ -321,15 +344,37 @@ end
 -- Инициализация кэша при загрузке (получаем список зон с сервера)
 Events.OnReceiveGlobalModData.Add(function(module, packet)
     if module == "TZone" then
-        buildZoneCache()
+        -- print("OnReceiveGlobalModData")
+        buildZoneCache()        
     end
 end)
+
+local MOD_NAME = "TZone"
+local Commands = {}
+Commands.onRemoveTZone = function(player, args)
+    -- print("onRemoveTZone")
+    buildZoneCache()
+    
+end
+Commands.onToggleTZone = function(player, args)
+    -- print("onToggleTZone")
+    buildZoneCache()    
+end
+
+local OnServerCommand = function(module, command, player, args) 
+	if module == MOD_NAME and Commands[command] then
+		Commands[command](player, args)
+	end
+end
+Events.OnServerCommand.Add(OnServerCommand)
+
 -- Инициализация при старте игры
 Events.OnGameStart.Add(function()
     -- Ждем немного для загрузки ModData
     local tickHandler
     tickHandler = function()
         if ModData.get("TZone") then
+            -- print("OnGameStart")
             buildZoneCache()
             Events.OnTick.Remove(tickHandler)
         end
@@ -338,7 +383,7 @@ Events.OnGameStart.Add(function()
 end)
 
 -- Добавляем события только на клиенте
-if isClient() then
+if isClient() then    
     Events.OnPreUIDraw.Add(renderTZoneOverlay) -- Отрисовка тумана
     Events.OnPlayerUpdate.Add(checkZone) -- Проверка зоны
     Events.OnPlayerUpdate.Add(shouldTakeToxicDamage) -- Добавляем вызов функции урона
@@ -351,11 +396,10 @@ TZone.getZonesInPlayerRegion = getZonesInPlayerRegion
 TZone.buildZoneCache = buildZoneCache
 TZone.shouldTakeToxicDamage = shouldTakeToxicDamage
 TZone.protectiveTZoneEquipped = protectiveTZoneEquipped
+TZone.ProtectiveMasks = ProtectiveMasks
 
 
 local manager = ScriptManager.instance
-local multiplier = 1.0 --SandboxVars.TZone.FilterDurationMultiplier or
-local duration = tostring(multiplier * 0.00001)
 
 -- function TZone_Tweaks()
 --     -- Добавляем UseDelta ко всем защитным маскам
