@@ -20,6 +20,16 @@
 
 local currentMessageIndex = 1
 
+local function getTZoneMessage(messages)
+    local md = ModData.getOrCreate("TZone")
+    for title, data in pairs(md) do
+        if data.enable then
+            table.insert(messages, { message = "IGUI_Notify_TZone_Active", color = {255, 0, 0}, title = title }) -- красный
+        end
+    end
+    return messages
+end
+
 local function getNextMessage()
     local messages = {}
     
@@ -33,6 +43,8 @@ local function getNextMessage()
         table.insert(messages, { message = "IGUI_Sale_AutoLoot", color = {0, 255, 0} })
     end
     
+    messages = getTZoneMessage(messages)
+
     -- Получаем текущее сообщение и переходим к следующему
     local message = messages[currentMessageIndex]
     
