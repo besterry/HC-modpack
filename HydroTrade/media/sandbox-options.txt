@@ -451,7 +451,7 @@ option ToxicZone.FilterDurationMultiplier
 
 option Injectors.ConfigNotice {
     type = boolean,
-    default = true,
-    page = Injectors,
+    default = false,
+    page = TZone,
     translation = Injectors_config_notice,
 }
