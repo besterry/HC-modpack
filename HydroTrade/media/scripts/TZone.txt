@@ -1,0 +1,50 @@
+module Hydrocraft
+{
+    imports
+    {
+        Base
+    }
+
+item GasFilter
+    {
+    Weight			= 0.2,
+    Type			= Normal,
+    DisplayName		= Gas Filter,
+    icon			= cleanfilter,
+    DisplayCategory	= Craft,
+    }
+
+item GasFilterUsed
+    {
+    Weight			= 0.2,
+    Type			= Normal,
+    DisplayName		= Used Gas Filter,
+    icon			= dirtyfilter,
+    DisplayCategory	= Craft,
+    }
+
+
+recipe Clean Air Filter
+    {
+    GasFilterUsed,
+    Charcoal,
+    CanBeDoneFromFloor:true,
+    Result:GasFilter,
+    NeedToBeLearn:false,
+    Time:500,
+    Category:Crafting,
+    }
+
+recipe Change Filter
+    {
+    GasFilter,
+    keep , 
+    OnTest:TZoneCheckGasMask, 
+    OnCreate:TZoneGasMask,
+    CanBeDoneFromFloor:true,
+    Result:GasFilterUsed,
+    NeedToBeLearn:false,
+    Time:500,    
+    Category:Crafting,
+    }
+}
