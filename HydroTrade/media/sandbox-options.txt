@@ -392,3 +392,66 @@ option Notify.Regular
 	page = Notify, 
   translation = Notify_Regular,
 }
+
+option ToxicZone.Enable
+{
+	type = boolean, 
+  default = true,
+	page = TZone, 
+  translation = TZone_Enable,
+}
+
+option ToxicZone.ZombieSprinter
+{
+	type = boolean, 
+  default = true,
+	page = TZone, 
+  translation = TZone_ZombieSprinter,
+}
+
+option ToxicZone.SprinterChance
+{
+  type = integer,
+  min = 0,
+  max = 100,
+  default = 1,
+	page = TZone, 
+  translation = TZone_SprinterChance,
+}
+
+option ToxicZone.SprinterRadius
+{
+  type = integer,
+  min = 1,
+  max = 75,
+  default = 30,
+	page = TZone, 
+  translation = TZone_SprinterRadius,
+}
+
+option ToxicZone.SprinterMax 
+{
+  type = integer,
+  min = 1,
+  max = 99,
+  default = 1,
+	page = TZone, 
+  translation = TZone_SprinterMax,
+}
+
+option ToxicZone.FilterDurationMultiplier 
+{
+  type = integer,
+  min = 1,
+  max = 99,
+  default = 1,
+	page = TZone, 
+  translation = TZone_FilterDurationMultiplier,
+}
+
+option Injectors.ConfigNotice {
+    type = boolean,
+    default = true,
+    page = Injectors,
+    translation = Injectors_config_notice,
+}
