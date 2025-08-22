@@ -20,9 +20,20 @@ Commands.removeTZone = function(player, args) -- удаляем зону
 	sendServerCommand(MOD_NAME, "onRemoveTZone", args) -- пришлось добавить этот костыль, иначе не работает (моддата трансмитится не сразу)
 end
 
+local function sendNotification( enable, title)
+	local messageActivate = { message = "IGUI_Notify_TZone_Activate", color = {255, 0, 0} } -- красный
+	local messageDeactivate = { message = "IGUI_Notify_TZone_Deactivate", color = {0, 255, 0} } -- зелёный
+	if enable then
+		Notify.broadcast(messageActivate.message .. " " .. title, { color=messageActivate.color })
+	else
+		Notify.broadcast(messageDeactivate.message .. " " .. title, { color=messageDeactivate.color })
+	end
+end
+
 Commands.toggleTZone = function(player, args) -- переключаем состояние зоны
 	local title = args[1]
 	TZone.Data.TZone[title].enable = not TZone.Data.TZone[title].enable
+	sendNotification(TZone.Data.TZone[title].enable, title)
 	ModData.add(MOD_NAME, TZone.Data.TZone)
 	ModData.transmit(MOD_NAME)
 	sendServerCommand(MOD_NAME, "onToggleTZone", args) -- пришлось добавить этот костыль, иначе не работает (моддата трансмитится не сразу)

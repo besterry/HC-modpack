@@ -1,5 +1,33 @@
 IGUI_EN =
 {
+	-- Уведомление о переключении зоны
+	IGUI_Notify_TZone_Activate = "[Laboratory] WARNING! Dangerous chemical substances detected in zone:",
+	IGUI_Notify_TZone_Deactivate = "[Laboratory] DANGER LEVEL REDUCED! Zone is safe:",
+
+	-- Сообщения при входе в токсичную зону
+	IGUI_TZoneEnteredNoProtection = "Hmm... the air here feels strange. Better put on a mask.",
+	IGUI_TZoneEnteredWithProtection = "Good thing I have protection. The air here is poisoned.",
+	IGUI_TZoneEnteredDangerous = "Shit! Something's wrong with the air here! Need protection!",
+	IGUI_TZoneEnteredCaution = "I can smell chemicals... Dangerous without protection.",
+
+	-- Сообщения о состоянии фильтра
+	IGUI_TZoneFilterWarning = "Filter is starting to clog...",
+	IGUI_TZoneFilterCritical = "Filter is almost clogged! Need to change it!",
+	IGUI_TZoneFilterBroken = "Damn, the filter is done for!",
+
+	-- Сообщения о выходе из зоны
+	IGUI_TZoneExited = "Finally, fresh air...",
+	IGUI_TZoneExitedRelief = "Breathing became easier",
+
+	-- Сообщения о повреждениях
+	IGUI_TZoneDamageCough = "*coughs* This air...",
+	IGUI_TZoneDamageDizzy = "Head is spinning...",
+	IGUI_TZoneDamageNausea = "Feeling sick from these fumes...",
+	
+	IGUI_AdminPanel_TZone = "Contaminated Zones",
+	IGUI_ToggleTZone = "Toggle selected zone activity",
+	IGUI_TZone_Title = "List of Contaminated Zones",
+
 	IGUI_Too_much_pain_to_use = "Too much pain to use",
 	IGUI_Too_heavy_to_use = "Too heavy to use",
 	IGUI_Too_exhausted_to_use = "Too exhausted to use",
