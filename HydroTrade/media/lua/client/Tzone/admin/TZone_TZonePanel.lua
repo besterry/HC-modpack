@@ -107,7 +107,7 @@ function TZonePanel:drawList(y, item, alt) -- рисуем элемент спи
         statusText = " [INACTIVE]"
     end
     
-    self:drawText(item.item.title .. " (" .. item.item.zone.x .. "/" .. item.item.zone.y .. " - " .. item.item.zone.x2 .. "/" .. item.item.zone.y2 .. ")" .. statusText, 10, y + 2, textColor.r, textColor.g, textColor.b, a, self.font);
+    self:drawText(item.item.title .. " (" .. item.item.zone.x .. ";" .. item.item.zone.y .. " / " .. item.item.zone.x2 .. ";" .. item.item.zone.y2 .. ")" .. statusText, 10, y + 2, textColor.r, textColor.g, textColor.b, a, self.font);
     return y + self.itemheight;
 end
 
