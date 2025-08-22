@@ -1,5 +1,15 @@
 Sandbox_RU = {
-    -- Fix
+    Sandbox_Injectors = "Иньекторы",
+	Sandbox_Injectors_config_notice 		  = "Конфигурации перемещены в папку media/lua/server/Config",
+	Sandbox_Injectors_config_notice_tooltip   = ".lua С файлами гораздо проще работать, они даже содержат аннотации и подсказки для более легкого понимания",
+
+    -- TZone
+    Sandbox_TZone_Enable = "Зараженные зоны",
+    Sandbox_TZone_ZombieSprinter = "Бегуны",
+    Sandbox_TZone_SprinterChance = "Шанс бегуна при ударе",
+    Sandbox_TZone_SprinterRadius = "Радиус крика крикуна",
+    Sandbox_TZone_SprinterMax = "Максимум спринтеров за удар",
+    Sandbox_TZone_FilterDurationMultiplier = "Множитель расхода фильтра",
 
     -- LootingSystem
     Sandbox_LootingSystem = "Системы лутания",

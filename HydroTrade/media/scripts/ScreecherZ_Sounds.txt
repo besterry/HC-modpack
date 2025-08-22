@@ -3,30 +3,30 @@ module Base
 	sound Sprinter_Screech_1
 	{
         category = Vehicle, loop = false, is3D = true,
-        clip { file = media/sound/Screech_1.mp3, distanceMax = 20, volume = 0.3f }
+        clip { file = media/sound/Screech_1.mp3, distanceMax = 30, volume = 0.3f }
 	}
 
 	sound Sprinter_Screech_2
 	{
         category = Vehicle, loop = false, is3D = true,
-        clip { file = media/sound/Screech_2.mp3, distanceMax = 20, volume = 0.3f }
+        clip { file = media/sound/Screech_2.mp3, distanceMax = 30, volume = 0.3f }
 	}
 
 	sound Sprinter_Screech_3
 	{
         category = Vehicle, loop = false, is3D = true,
-        clip { file = media/sound/Screech_3.mp3, distanceMax = 20, volume = 0.3f }
+        clip { file = media/sound/Screech_3.mp3, distanceMax = 30, volume = 0.3f }
 	}
 
 	sound Sprinter_Screech_4
 	{
         category = Vehicle, loop = false, is3D = true,
-        clip { file = media/sound/Screech_4.mp3, distanceMax = 20, volume = 0.3f }
+        clip { file = media/sound/Screech_4.mp3, distanceMax = 30, volume = 0.3f }
 	}
 
 	sound Sprinter_Screech_5
 	{
         category = Vehicle, loop = false, is3D = true,
-        clip { file = media/sound/Screech_5.mp3, distanceMax = 20, volume = 0.3f }
+        clip { file = media/sound/Screech_5.mp3, distanceMax = 30, volume = 0.3f }
 	}
 }

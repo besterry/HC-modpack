@@ -1,4 +1,5 @@
 ContextMenu_EN = {
+	ContextMenu_Inject = "Inject",
 	ContextMenu_Remove = "Remove",
 	ContextMenu_Sow_Trellis_Seed = "Sow Trellis Seed",
 	ContextMenu_Sniff = "Sniff",

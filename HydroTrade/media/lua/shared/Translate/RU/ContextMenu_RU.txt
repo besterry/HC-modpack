@@ -1,4 +1,5 @@
 ContextMenu_RU = {
+	ContextMenu_Inject = "Применить",
 	--Server Tweaks
 	ContextMenu_Vehicle_AttachVehicle = "Подцепить",
 	ContextMenu_Vehicle_AttachTrailer = "Подцепить прицеп",

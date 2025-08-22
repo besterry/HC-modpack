@@ -1,4 +1,6 @@
 Items_RU = {
+	DisplayName_Gas_Filter = "Воздушный фильтр",
+	DisplayName_Used_Gas_Filter = "Использованный фильтр",
 	DisplayName_Bunch_of_grass = "Пучок травы",
 	DisplayName_M151A2_Armor_Barrier_Right = "M151A2 Правая броня кабины",
 	DisplayName_M151A2_Armor_Barrier_Left = "M151A2 Левая броня кабины",

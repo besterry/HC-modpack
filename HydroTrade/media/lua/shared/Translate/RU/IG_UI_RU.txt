@@ -9,7 +9,7 @@ IGUI_RU =
 	-- Сообщения о состоянии фильтра
 	IGUI_TZoneFilterWarning = "Фильтр начинает забиваться...",
 	IGUI_TZoneFilterCritical = "Фильтр почти забит! Нужно менять!",
-	IGUI_TZoneFilterBroken = "Фильтр сломан! Защиты нет!",
+	IGUI_TZoneFilterBroken = "Черт, фильтру хана!",
 
 	-- Сообщения о выходе из зоны
 	IGUI_TZoneExited = "Наконец-то свежий воздух...",
