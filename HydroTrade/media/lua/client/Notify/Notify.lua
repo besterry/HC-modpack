@@ -55,7 +55,20 @@ end
 Events.OnServerCommand.Add(function(module, command, args)
     if module == "Notify" and command == "chat" then
         args = args or {}
-        text = getText(args.msg or "")
+        local text = args.msg or ""
+        
+        -- Получаем базовый локализованный текст
+        text = getText(text)
+        
+        -- Добавляем параметры, если они есть
+        if args.params then
+            for key, value in pairs(args.params) do
+                if value and value ~= "" then
+                    text = text .. " " .. tostring(value)
+                end
+            end
+        end
+        
         addLineToChat(tostring(text or ""), args.color, args.author, { showTime=false })
     end
 end)
