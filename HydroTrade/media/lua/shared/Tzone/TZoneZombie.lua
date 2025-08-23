@@ -7,15 +7,15 @@ local ZombieSprinterMax = SandboxVars.ToxicZone.SprinterMax or 1 -- настро
 local tickCounter = 0   
 local unicalLoot = {
     --предмет и шанс выпадения 1 * 1/500 = 0.2%
-    {"Base.EventCoin", 15}, -- монета 3%
+    -- {"Base.EventCoin", 15}, -- монета 3%
     {"Hydrocraft.GasFilterUsed", 5}, -- использованный фильтр для газа 1%
     {"Base.HazmatSuit", 0.1}, -- хим костюм 0.2%
     {"Base.ShotgunShellsBox", 2}, -- коробка с патронами для дробовика 0.4%
-    {"injectorItems.injector_adrenaline", 0.5}, -- адреналин 0.2%
+    {"injectorItems.injector_adrenaline", 1}, -- адреналин 0.2%
     {"injectorItems.injector_ahf1", 0.5}, -- аф1 0.2%
     {"injectorItems.injector_btg2a2", 0.5}, -- бтг2а2 0.2%
     {"injectorItems.injector_btg3", 0.5}, -- бтг3 0.2%
-    {"injectorItems.injector_etg", 0.5}, -- этг 1%
+    {"injectorItems.injector_etg", 1}, -- этг 1%
     {"injectorItems.injector_meldonin", 0.5}, -- мелдонин 0.2%
     {"injectorItems.injector_morphine", 0.5}, -- морфин 0.2%
     {"injectorItems.injector_mule", 0.5}, -- муле 0.2%
@@ -25,7 +25,7 @@ local unicalLoot = {
     {"injectorItems.injector_p22", 0.5}, -- п22 0.2%
     {"injectorItems.injector_perfotoran", 0.5}, -- перфоторан 0.2%
     {"injectorItems.injector_pnb", 0.5}, -- пнб 0.2%
-    {"injectorItems.injector_propital", 0.5}, -- пропитал 1%
+    {"injectorItems.injector_propital", 1}, -- пропитал 1%
     {"injectorItems.injector_sj1", 0.5}, -- сж1 0.2%
     {"injectorItems.injector_sj6", 0.5}, -- сж6 0.2%
     {"injectorItems.injector_sj9", 0.5}, -- сж9 0.2%
@@ -90,7 +90,7 @@ local function OnHitZombie(player, zombie, bodyPart, damage) -- При удар�
     end
 end
 
-local function onZombieUpdate(zombie)
+local function onZombieUpdate(zombie) -- Возвращает зомби в нормальное состояние
     tickCounter = tickCounter + 1
     if tickCounter < 500 then
         return
@@ -107,7 +107,7 @@ local function onZombieUpdate(zombie)
     end
 end
 
-local function SpawnLoot(zombie)
+local function SpawnLoot(zombie) -- Выпадает предметы при смерти зомби
     if TZone.isPlayerInTZone(zombie) then -- проверяем, находится ли зомби в зоне
         local lootCount = ZombRand(0, #unicalLoot) -- выбираем случайное количество предметов        
         for i = 1, lootCount do
