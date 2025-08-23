@@ -1,8 +1,9 @@
 IGUI_EN =
 {
 	-- Уведомление о переключении зоны
-	IGUI_Notify_TZone_Activate = "[Laboratory] WARNING! Dangerous chemical substances detected in zone:",
-	IGUI_Notify_TZone_Deactivate = "[Laboratory] DANGER LEVEL REDUCED! Zone is safe:",
+	IGUI_Notify_TZone_Activate = "[Lab Technician] WARNING! Dangerous chemical substances detected in zone:",
+	IGUI_Notify_TZone_Deactivate = "[Lab Technician] Chemical levels in the air are normal! The area is safe:",
+	IGUI_Notify_TZone_Active = "[Lab Technician] The infection status in the zone remains:",
 
 	-- Сообщения при входе в токсичную зону
 	IGUI_TZoneEnteredNoProtection = "Hmm... the air here feels strange. Better put on a mask.",
@@ -24,7 +25,7 @@ IGUI_EN =
 	IGUI_TZoneDamageDizzy = "Head is spinning...",
 	IGUI_TZoneDamageNausea = "Feeling sick from these fumes...",
 	
-	IGUI_AdminPanel_TZone = "Contaminated Zones",
+	IGUI_AdminPanel_TZone = "Toxic Zones",
 	IGUI_ToggleTZone = "Toggle selected zone activity",
 	IGUI_TZone_Title = "List of Contaminated Zones",
 

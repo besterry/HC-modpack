@@ -1,4 +1,5 @@
 Items_RU = {
+	Recipe_Create_Air_Filter = "Изготовить простой фильтр",
 	Recipe_Change_Filter = "Установить фильтр в противогаз",
 	Recipe_Clean_Air_Filter = "Очистить фильтр",
 	Recipe_Burn_in_the_kiln = "Обжечь в печи",
