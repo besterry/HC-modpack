@@ -25,7 +25,11 @@ local function getTZoneMessage(messages)
     if not md then return messages end
     for title, data in pairs(md) do
         if data.enable then
-            table.insert(messages, { message = "IGUI_Notify_TZone_Active", color = {255, 0, 0}, title = title }) -- красный
+            table.insert(messages, { 
+                message = "IGUI_Notify_TZone_Active", 
+                color = {255, 0, 0}, 
+                params = { title = title } 
+            })
         end
     end
     return messages
@@ -63,6 +67,10 @@ Events.EveryHours.Add(function()
     local hours = getGameTime():getHour()
     if hours % SandboxVars.Notify.Regular == 0 then
         local message = getNextMessage()
-        Notify.broadcast(message.message, { color=message.color })
+        local opts = { color = message.color }
+        if message.params then
+            opts.params = message.params
+        end
+        Notify.broadcast(message.message, opts)
     end
 end)
