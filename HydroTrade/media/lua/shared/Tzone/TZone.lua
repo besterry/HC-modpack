@@ -38,7 +38,7 @@ local warningSent1, warningSent2, warningSent3 = false, false, false
 -- Функция проверки защитного снаряжения
 function protectiveTZoneEquipped(player, PlayerZone)
     local zone = PlayerZone
-	if player:isGodMod() then return true end -- Если игрок бог, то возвращаем true
+	if player:isGodMod() then return true end -- Если godmod то защита включена
 	local inventory = player:getInventory()	-- Получаем инвентарь игрока
 	local it = inventory:getItems()			-- Получаем предметы в инвентаре
 	if player and inventory then
@@ -89,11 +89,11 @@ end
 function shouldTakeToxicDamage(player)
     local PlayerZone = isPlayerInTZone(player)
 
-    if protectiveTZoneEquipped(player, PlayerZone) then  -- Проверяет защитный фильтр (отображается в тултипе)
+    if protectiveTZoneEquipped(player, PlayerZone) then  -- Если фильтр на игроке, то не наносим урон
         return false 
     end
 
-    if not PlayerZone then  -- Проверяет находится ли игрок в зоне
+    if not PlayerZone then  -- Если игрок не в зоне, то не наносим урон
         return false 
     end  
 
@@ -392,7 +392,6 @@ if isClient() then
     Events.OnPreUIDraw.Add(renderTZoneOverlay) -- Отрисовка тумана
     Events.OnPlayerUpdate.Add(checkZone) -- Проверка зоны
     Events.OnPlayerUpdate.Add(shouldTakeToxicDamage) -- Добавляем вызов функции урона
-    require "client/Tzone/TZone_craft"
 end
 
 -- Экспортируем функции для использования в других файлах
