@@ -441,10 +441,10 @@ option ToxicZone.SprinterMax
 
 option ToxicZone.FilterDurationMultiplier 
 {
-  type = integer,
-  min = 1,
-  max = 99,
-  default = 1,
+  type = double,   
+  min = 0,
+  max = 100,
+  default = 0.3,   
 	page = TZone, 
   translation = TZone_FilterDurationMultiplier,
 }
