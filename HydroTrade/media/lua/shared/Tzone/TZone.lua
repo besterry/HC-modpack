@@ -18,7 +18,7 @@ local lastZoneCheckTime = 0 -- последнее время проверки з
 local zoneCheckInterval = 1000 -- интервал проверки зоны
 local currentZoneTitle = nil -- текущее название зоны
 local NotificationOnEntered = false -- уведомление о входе в зараженную зону
-local multiplier = SandboxVars.ToxicZone.FilterDurationMultiplier or 1
+local multiplier = SandboxVars.ToxicZone.FilterDurationMultiplier or 0.1
 
 -- Защитные маски от тумана
 ProtectiveMasks = {
@@ -36,7 +36,8 @@ ProtectiveMasks = {
 
 local warningSent1, warningSent2, warningSent3 = false, false, false
 -- Функция проверки защитного снаряжения
-function protectiveTZoneEquipped(player)
+function protectiveTZoneEquipped(player, PlayerZone)
+    local zone = PlayerZone
 	if player:isGodMod() then return true end -- Если игрок бог, то возвращаем true
 	local inventory = player:getInventory()	-- Получаем инвентарь игрока
 	local it = inventory:getItems()			-- Получаем предметы в инвентаре
@@ -52,7 +53,9 @@ function protectiveTZoneEquipped(player)
                         if not modData.percent then modData.percent = 1 end --Используем именно 1, а не 100%
                         local percent = modData.percent
 						if percent > 0 then
-							modData.percent = percent - 0.00001*multiplier -- Уменьшаем целостность фильтра, используем setModData() для изменения значения в ModData
+                            if not zone then return true end -- Если игрок не в зоне, то не отнимаем целостность фильтра
+                            multiplier = SandboxVars.ToxicZone.FilterDurationMultiplier or 0.1
+							modData.percent = percent - 0.00001*multiplier -- Уменьшаем целостность фильтра, используем setModData() для изменения значения в ModData  0.00001 - 21 минута
                             if modData.percent > 0.5 then warningSent1 = false end -- Сбрасываем флаг, если фильтр больше 50% или сменился фильтр/маска
                             if modData.percent < 0.5 and not warningSent1 then
                                 player:Say(getText("IGUI_TZoneFilterWarning")) -- Фильтр начинает забиваться...
@@ -84,11 +87,13 @@ end
 
 -- Функция для получения урона от токсичности
 function shouldTakeToxicDamage(player)
-    if protectiveTZoneEquipped(player) then  -- Проверяет защитный фильтр (отображается в тултипе)
+    local PlayerZone = isPlayerInTZone(player)
+
+    if protectiveTZoneEquipped(player, PlayerZone) then  -- Проверяет защитный фильтр (отображается в тултипе)
         return false 
     end
 
-    if not isPlayerInTZone(player) then  -- Проверяет находится ли игрок в зоне
+    if not PlayerZone then  -- Проверяет находится ли игрок в зоне
         return false 
     end  
 
@@ -314,7 +319,7 @@ local function checkZone(player)
     if zone ~= lastZoneState then
         lastZoneState = zone
         currentZoneTitle = zone
-        if zone and not NotificationOnEntered and not protectiveTZoneEquipped(player) then -- Если игрок в зоне и уведомление не отправлено
+        if zone and not NotificationOnEntered and not protectiveTZoneEquipped(player, zone) then -- Если игрок в зоне и уведомление не отправлено
             NotificationOnEntered = true
             local messages = {
                 getText("IGUI_TZoneEnteredDangerous"), -- Блять! Здесь что-то не так с воздухом! Нужна защита!
@@ -387,6 +392,7 @@ if isClient() then
     Events.OnPreUIDraw.Add(renderTZoneOverlay) -- Отрисовка тумана
     Events.OnPlayerUpdate.Add(checkZone) -- Проверка зоны
     Events.OnPlayerUpdate.Add(shouldTakeToxicDamage) -- Добавляем вызов функции урона
+    require "client/Tzone/TZone_craft"
 end
 
 -- Экспортируем функции для использования в других файлах
@@ -399,7 +405,7 @@ TZone.protectiveTZoneEquipped = protectiveTZoneEquipped
 TZone.ProtectiveMasks = ProtectiveMasks
 
 
-local manager = ScriptManager.instance
+-- local manager = ScriptManager.instance
 
 -- function TZone_Tweaks()
 --     -- Добавляем UseDelta ко всем защитным маскам
