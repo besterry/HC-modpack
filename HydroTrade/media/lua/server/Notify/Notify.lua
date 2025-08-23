@@ -10,12 +10,12 @@ end
 
 function Notify.broadcast(msg, opts)
     opts = opts or {}
-    _sendToAll({ msg=tostring(msg), color=opts.color, channel=opts.channel })
+    _sendToAll({ msg=tostring(msg), color=opts.color, channel=opts.channel, params=opts.params })
 end
 
 function Notify.toPlayer(player, msg, opts)
     opts = opts or {}
-    sendServerCommand(player, "Notify", "chat", { msg=tostring(msg), color=opts.color, channel=opts.channel })
+    sendServerCommand(player, "Notify", "chat", { msg=tostring(msg), color=opts.color, channel=opts.channel, params=opts.params })
 end
 
 -- клиентский запрос → сервер рассылает
