@@ -23,6 +23,18 @@ item GasFilterUsed
     DisplayCategory	= Craft,
     }
 
+recipe Create Air Filter
+    {
+    HCCottoncloth,
+    Charcoal,
+    Aluminum,
+    HCIroningot,
+    CanBeDoneFromFloor:true,
+    Result:GasFilter,
+    NeedToBeLearn:false,
+    Time:500,
+    Category:Crafting,
+    }
 
 recipe Clean Air Filter
     {
