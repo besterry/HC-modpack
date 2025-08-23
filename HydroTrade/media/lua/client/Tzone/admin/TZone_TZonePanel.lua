@@ -13,6 +13,53 @@ local function getTZonesFromModData()
     return tzones -- возвращаем все зоны без фильтрации
 end
 
+-- Функция для форматирования времени активности/деактивации
+local function formatZoneTime(activatedTime, deactivatedTime, isEnabled)
+    if isEnabled then
+        -- Для активных зон показываем время активности
+        if not activatedTime or type(activatedTime) ~= "number" then return "" end
+        
+        local currentTime = getGameTime():getWorldAgeHours()
+        if not currentTime or type(currentTime) ~= "number" then return "" end
+        
+        local elapsedGameHours = currentTime - activatedTime
+        if elapsedGameHours < 0 then return "" end
+        
+        local elapsedRealHours = elapsedGameHours * 0.125 -- время суток 3/24 (можно получить из настроек сервера)
+        
+        if elapsedRealHours < 1 then
+            return " (< 1h active)"
+        elseif elapsedRealHours < 24 then
+            return string.format(" (%dh active)", math.floor(elapsedRealHours))
+        else
+            local days = math.floor(elapsedRealHours / 24)
+            local hours = math.floor(elapsedRealHours % 24)
+            return string.format(" (%dd %dh active)", days, hours)
+        end
+    else
+        -- Для неактивных зон показываем время с момента деактивации
+        if not deactivatedTime or type(deactivatedTime) ~= "number" then return "" end
+        
+        local currentTime = getGameTime():getWorldAgeHours()
+        if not currentTime or type(currentTime) ~= "number" then return "" end
+        
+        local elapsedGameHours = currentTime - deactivatedTime
+        if elapsedGameHours < 0 then return "" end
+        
+        local elapsedRealHours = elapsedGameHours * 0.125 -- время суток 3/24 (можно получить из настроек сервера)
+        
+        if elapsedRealHours < 1 then
+            return " (< 1h inactive)"
+        elseif elapsedRealHours < 24 then
+            return string.format(" (%dh inactive)", math.floor(elapsedRealHours))
+        else
+            local days = math.floor(elapsedRealHours / 24)
+            local hours = math.floor(elapsedRealHours % 24)
+            return string.format(" (%dd %dh inactive)", days, hours)
+        end
+    end
+end
+
 function TZonePanel:initialise()
     ISPanel.initialise(self);
     
@@ -98,16 +145,19 @@ function TZonePanel:drawList(y, item, alt) -- рисуем элемент спи
     -- Определяем цвет текста в зависимости от активности зоны
     local textColor = {r = 1, g = 1, b = 1} -- белый по умолчанию
     local statusText = ""
+    local timeText = ""
     
     if item.item.zone.enable then
         textColor = {r = 0.3, g = 1, b = 0.3} -- зеленый для активных
         statusText = " [ACTIVE]"
+        timeText = formatZoneTime(item.item.zone.activatedTime, item.item.zone.deactivatedTime, true)
     else
         textColor = {r = 1, g = 0.3, b = 0.3} -- красный для неактивных
         statusText = " [INACTIVE]"
+        timeText = formatZoneTime(item.item.zone.activatedTime, item.item.zone.deactivatedTime, false)
     end
     
-    self:drawText(item.item.title .. " (" .. item.item.zone.x .. ";" .. item.item.zone.y .. " / " .. item.item.zone.x2 .. ";" .. item.item.zone.y2 .. ")" .. statusText, 10, y + 2, textColor.r, textColor.g, textColor.b, a, self.font);
+    self:drawText(item.item.title .. " (" .. item.item.zone.x .. ";" .. item.item.zone.y .. " / " .. item.item.zone.x2 .. ";" .. item.item.zone.y2 .. ")" .. statusText .. timeText, 10, y + 2, textColor.r, textColor.g, textColor.b, a, self.font);
     return y + self.itemheight;
 end
 
