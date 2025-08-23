@@ -26,7 +26,7 @@ item GasFilterUsed
 recipe Create Air Filter
     {
     HCCottoncloth,
-    HCCharcoalPowder,
+    HCCharcoalpowder,
     Aluminum,
     HCIroningot,
     CanBeDoneFromFloor:true,
@@ -39,7 +39,7 @@ recipe Create Air Filter
 recipe Clean Air Filter
     {
     GasFilterUsed,
-    HCCharcoalPowder,
+    HCCharcoalpowder,
     CanBeDoneFromFloor:true,
     Result:GasFilter,
     NeedToBeLearn:false,
