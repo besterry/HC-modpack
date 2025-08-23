@@ -20,19 +20,30 @@ Commands.removeTZone = function(player, args) -- удаляем зону
 	sendServerCommand(MOD_NAME, "onRemoveTZone", args) -- пришлось добавить этот костыль, иначе не работает (моддата трансмитится не сразу)
 end
 
-local function sendNotification( enable, title)
-	local messageActivate = { message = "IGUI_Notify_TZone_Activate", color = {255, 0, 0} } -- красный
-	local messageDeactivate = { message = "IGUI_Notify_TZone_Deactivate", color = {0, 255, 0} } -- зелёный
-	if enable then
-		Notify.broadcast(messageActivate.message .. " " .. title, { color=messageActivate.color })
-	else
-		Notify.broadcast(messageDeactivate.message .. " " .. title, { color=messageDeactivate.color })
-	end
+local function sendNotification(enable, title)
+    local messageActivate = { message = "IGUI_Notify_TZone_Activate", color = {255, 0, 0} }
+    local messageDeactivate = { message = "IGUI_Notify_TZone_Deactivate", color = {0, 255, 0} }
+    local title = tostring(title)
+    if enable then
+        Notify.broadcast(messageActivate.message, { color=messageActivate.color, params={ title=title } })
+    else
+        Notify.broadcast(messageDeactivate.message, { color=messageDeactivate.color, params={ title=title } })
+    end
 end
 
 Commands.toggleTZone = function(player, args) -- переключаем состояние зоны
 	local title = args[1]
-	TZone.Data.TZone[title].enable = not TZone.Data.TZone[title].enable
+    local wasEnabled = TZone.Data.TZone[title].enable
+	TZone.Data.TZone[title].enable = not TZone.Data.TZone[title].enable    
+    -- Записываем время активации при включении зоны
+	if TZone.Data.TZone[title].enable and not wasEnabled then -- если зона включена и не была включена раньше
+		TZone.Data.TZone[title].activatedTime = getGameTime():getWorldAgeHours()
+		TZone.Data.TZone[title].deactivatedTime = nil -- Сбрасываем время деактивации
+	elseif not TZone.Data.TZone[title].enable and wasEnabled then
+		TZone.Data.TZone[title].deactivatedTime = getGameTime():getWorldAgeHours() -- Записываем время деактивации
+		TZone.Data.TZone[title].activatedTime = nil -- Сбрасываем время при выключении
+	end
+    
 	sendNotification(TZone.Data.TZone[title].enable, title)
 	ModData.add(MOD_NAME, TZone.Data.TZone)
 	ModData.transmit(MOD_NAME)
