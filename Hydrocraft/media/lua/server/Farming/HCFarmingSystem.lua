@@ -66,7 +66,7 @@ function SFarmingSystem:harvest(luaObject, player) -- сбор урожая
 
 	-- multiharvest option
 	if props.multiHarvest == true then
-		luaObject.nbOfGrow = 3
+		luaObject.nbOfGrow = ZombRand(2, 5)
 		luaObject.fertilizer = 0;
 		self:growPlant(luaObject, nil, true)
 		luaObject:saveData()
