@@ -18,7 +18,7 @@ local function ContextMenu(player, context, worldobjects, test)
             local objectIndex = v:getObjectIndex()
             if not addedObjects[objectIndex] then --Исключаем дубли
                 addedObjects[objectIndex] = true
-                -- print(v:getObjectIndex())
+                -- print(v:getObjectName())
                 -- getTextureName playershop_0
                 --getSpriteName nil
                 --getScriptName None
@@ -39,13 +39,35 @@ local function ContextMenu(player, context, worldobjects, test)
 
         local clickedPlayer = nil
         
-        for x=sq:getX()-1, sq:getX()+1 do
-            for y=sq:getY()-1, sq:getY()+1 do
+        for x=sq:getX(), sq:getX() do -- было sq:getX()-1, sq:getX()+1
+            for y=sq:getY(), sq:getY() do -- было sq:getY()-1, sq:getY()+1
                 local sq2 = getCell():getGridSquare(x, y, sq:getZ());
 				if sq2 then
                     for i=0,sq2:getMovingObjects():size()-1 do
                         if instanceof(sq2:getMovingObjects():get(i), "IsoPlayer") then
                             clickedPlayer = sq2:getMovingObjects():get(i)
+                        end
+                        if instanceof(sq2:getMovingObjects():get(i), "IsoZombie") then
+                            local zombie = sq2:getMovingObjects():get(i)
+                            if zombie:hasModData() then
+                                context:addOption(getText("IGUI_Show_IsoZombie_modData").. " "..zombie:getObjectName(), zombie, showModdata)
+                            end
+                        end                        
+                    end
+                    for i=0,sq2:getStaticMovingObjects():size()-1 do
+                        if instanceof(sq2:getStaticMovingObjects():get(i), "IsoDeadBody") then
+                            local corpse = sq2:getStaticMovingObjects():get(i)
+                            if corpse:hasModData() then
+                                local moddata = corpse:getModData()
+                                local killer = "[" .. moddata.zombieKilled .. "]"
+                                local currentTime = getGameTime():getWorldAgeHours()
+                                local killerTime = math.floor((currentTime - moddata.zombieKilledTime)*0.125) .. "h" -- 0.125 - время суток 3/24 (можно получить из настроек сервера)
+                                if killer and killerTime then
+                                    context:addOption(getText("IGUI_Show_IsoCorpse_modData").. " " ..killer.. " "..killerTime, corpse, showModdata)
+                                else
+                                    context:addOption(getText("IGUI_Show_IsoCorpse_modData").. " ", corpse, showModdata)
+                                end
+                            end
                         end
                     end
                 end
@@ -58,3 +80,13 @@ local function ContextMenu(player, context, worldobjects, test)
 end
 
 Events.OnFillWorldObjectContextMenu.Add(ContextMenu);
+
+
+Events.OnZombieDead.Add(function(zombie)
+    local moddata = zombie:getModData()
+    local killer = getPlayer():getUsername()
+    if killer then
+        moddata.zombieKilled = killer
+        moddata.zombieKilledTime = getGameTime():getWorldAgeHours()
+    end
+end);
