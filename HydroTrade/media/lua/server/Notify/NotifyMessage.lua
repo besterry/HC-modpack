@@ -24,9 +24,14 @@ local function getTZoneMessage(messages)
     local md = ModData.getOrCreate("TZone")
     if not md then return messages end
     local titles = ""
+    local first = true
     for title, data in pairs(md) do
         if data.enable then
-            titles = titles .. title .. ", "
+            if not first then
+                titles = titles .. ", "
+            end
+            titles = titles .. title
+            first = false
         end
     end
     if titles == "" then return messages end
