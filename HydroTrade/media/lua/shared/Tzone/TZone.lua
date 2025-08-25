@@ -373,6 +373,19 @@ local OnServerCommand = function(module, command, player, args)
 end
 Events.OnServerCommand.Add(OnServerCommand)
 
+-- Инициализация при обновлении игрока
+local function initializeTZoneOnPlayerUpdate(player)
+    if not player then return end    
+    if ModData.get("TZone") then
+        buildZoneCache()
+        for k, v in pairs(TZoneCache) do
+            Events.OnPlayerUpdate.Remove(initializeTZoneOnPlayerUpdate)
+            return
+        end
+    end
+end
+Events.OnPlayerUpdate.Add(initializeTZoneOnPlayerUpdate)
+
 -- Инициализация при старте игры
 Events.OnGameStart.Add(function()
     -- Ждем немного для загрузки ModData
