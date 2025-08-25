@@ -59,9 +59,17 @@ local function ContextMenu(player, context, worldobjects, test)
                             local corpse = sq2:getStaticMovingObjects():get(i)
                             if corpse:hasModData() then
                                 local moddata = corpse:getModData()
-                                local killer = "[" .. moddata.zombieKilled .. "]"
-                                local currentTime = getGameTime():getWorldAgeHours()
-                                local killerTime = math.floor((currentTime - moddata.zombieKilledTime)*0.125) .. "h" -- 0.125 - время суток 3/24 (можно получить из настроек сервера)
+                                if moddata.zombieKilled then
+                                    local killer = "[" .. moddata.zombieKilled .. "]"
+                                else
+                                    killer = ""
+                                end
+                                if moddata.zombieKilledTime then
+                                    local currentTime = getGameTime():getWorldAgeHours()
+                                    local killerTime = math.floor((currentTime - moddata.zombieKilledTime)*0.125) .. "h" -- 0.125 - время суток 3/24 (можно получить из настроек сервера)
+                                else
+                                    killerTime = ""
+                                end
                                 if killer and killerTime then
                                     context:addOption(getText("IGUI_Show_IsoCorpse_modData").. " " ..killer.. " "..killerTime, corpse, showModdata)
                                 else
