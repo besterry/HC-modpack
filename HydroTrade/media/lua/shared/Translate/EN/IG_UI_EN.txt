@@ -1,5 +1,6 @@
 IGUI_EN =
 {
+	IGUI_perks_Reading = "Reading",
 	-- Уведомление о переключении зоны
 	IGUI_Notify_TZone_Activate = "[Lab Technician] WARNING! Dangerous chemical substances detected in zone:",
 	IGUI_Notify_TZone_Deactivate = "[Lab Technician] Chemical levels in the air are normal! The area is safe:",
