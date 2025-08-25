@@ -13,7 +13,7 @@ function isSkillExcludedFrom.SpeedIncrease(perk) return (perk == Perks.Fitness o
 local function unBoostXP(player,perk,XP)
 
     local debugPrint = ""
-    if getDebug() then debugPrint = debugPrint.."unBoostXP: "..tostring(perk).." xp:"..XP end
+    -- if getDebug() then debugPrint = debugPrint.."unBoostXP: "..tostring(perk).." xp:"..XP end
 
     if perk == Perks.Fitness and (not player:getNutrition():canAddFitnessXp()) then return 0 end
 
@@ -23,9 +23,9 @@ local function unBoostXP(player,perk,XP)
         elseif player:getNutrition():getProteins() < -300 then exerciseMultiplier = 0.7
         end
     end
-    if getDebug() then debugPrint = debugPrint.."\n   exerciseMultiplier: "..exerciseMultiplier.."*"..XP end
+    -- if getDebug() then debugPrint = debugPrint.."\n   exerciseMultiplier: "..exerciseMultiplier.."*"..XP end
     XP = XP*exerciseMultiplier
-    if getDebug() then debugPrint = debugPrint.."= "..XP end
+    -- if getDebug() then debugPrint = debugPrint.."= "..XP end
 
 
     ---@type IsoGameCharacter.XP
@@ -37,9 +37,9 @@ local function unBoostXP(player,perk,XP)
     if player:HasTrait("FastLearner") and (not isSkillExcludedFrom.SpeedIncrease(perk)) then traitMultiplier = 1.3 end
     if player:HasTrait("SlowLearner") and (not isSkillExcludedFrom.SpeedReduction(perk)) then traitMultiplier = 0.7 end
     if player:HasTrait("Pacifist") and (perk:getParent()==Perks.Combat or perk==Perks.Aiming) then traitMultiplier = 0.75 end
-    if getDebug() then debugPrint = debugPrint.."\n   traitMultiplier: "..traitMultiplier.."*"..XP end
+    -- if getDebug() then debugPrint = debugPrint.."\n   traitMultiplier: "..traitMultiplier.."*"..XP end
     XP = XP*traitMultiplier
-    if getDebug() then debugPrint = debugPrint.."= "..XP end
+    -- if getDebug() then debugPrint = debugPrint.."= "..XP end
 
     ---sandbox multiplier
     local sandboxMultiplier = 1
@@ -48,9 +48,9 @@ local function unBoostXP(player,perk,XP)
     elseif perk:isPassiv() and SandboxVars.XpMultiplierAffectsPassive==true then
         sandboxMultiplier = SandboxVars.XpMultiplier or 1
     end
-    if getDebug() then debugPrint = debugPrint.."\n   sandboxMultiplier: "..sandboxMultiplier.."*"..XP end
+    -- if getDebug() then debugPrint = debugPrint.."\n   sandboxMultiplier: "..sandboxMultiplier.."*"..XP end
     XP = XP*sandboxMultiplier
-    if getDebug() then debugPrint = debugPrint.."= "..XP end
+    -- if getDebug() then debugPrint = debugPrint.."= "..XP end
 
     ---perks boostMap based on career and starting traits
     ---checking if it's 'not false' instead of 'true' because I want older saves before this sandbox option to get what they expect to occur
@@ -64,16 +64,16 @@ local function unBoostXP(player,perk,XP)
     elseif xpBoostID == 2 and (not isSkillExcludedFrom.SpeedIncrease(perk)) then xpBoostMultiplier = 1.33
     elseif xpBoostID == 3 and (not isSkillExcludedFrom.SpeedIncrease(perk)) then xpBoostMultiplier = 1.66
     end
-    if getDebug() then debugPrint = debugPrint.."\n   xpBoostMultiplier: "..xpBoostMultiplier.."*"..XP end
+    -- if getDebug() then debugPrint = debugPrint.."\n   xpBoostMultiplier: "..xpBoostMultiplier.."*"..XP end
     XP = XP*xpBoostMultiplier
-    if getDebug() then debugPrint = debugPrint.."= "..XP end
+    -- if getDebug() then debugPrint = debugPrint.."= "..XP end
 
     ---from reading skill books
     local skillBookMultiplier = math.max(1,pXP:getMultiplier(perk))
-    if getDebug() then debugPrint = debugPrint.."\n   skillBookMultiplier: "..skillBookMultiplier.."*"..XP end
+    -- if getDebug() then debugPrint = debugPrint.."\n   skillBookMultiplier: "..skillBookMultiplier.."*"..XP end
     XP = XP*skillBookMultiplier
-    if getDebug() then debugPrint = debugPrint.."= "..XP end
-    if getDebug() then print(debugPrint.."\n"..tostring(perk).." to be recorded: "..XP) end
+    -- if getDebug() then debugPrint = debugPrint.."= "..XP end
+    -- if getDebug() then print(debugPrint.."\n"..tostring(perk).." to be recorded: "..XP) end
 
     return XP
 end
@@ -125,12 +125,12 @@ local function catchJavaAddXP(player, perksType, XP)
         elseif xpBoostID == 2 and (not isSkillExcludedFrom.SpeedIncrease(perksType)) then xpBoostNumerator = 1.33
         elseif xpBoostID == 3 and (not isSkillExcludedFrom.SpeedIncrease(perksType)) then xpBoostNumerator = 1.66
         end
-        if getDebug() then debugPrint = debugPrint..XP.."/"..xpBoostNumerator end
+        -- if getDebug() then debugPrint = debugPrint..XP.."/"..xpBoostNumerator end
         XP = XP/xpBoostNumerator
     end
 
     if currentXP <= maxLevelXP then
-        if getDebug() then print(debugPrint.." "..tostring(perksType).." to be recorded: "..XP) end
+        -- if getDebug() then print(debugPrint.." "..tostring(perksType).." to be recorded: "..XP) end
         SRJ.recordXPGain(player, perksType, XP, {}, maxLevelXP)
     end
 end
