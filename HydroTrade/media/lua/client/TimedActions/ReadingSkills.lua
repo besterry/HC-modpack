@@ -48,9 +48,9 @@ function ISReadABook:addReadingXP()
     local baseXP = SandboxVars.Reading.SkillsEXP or 4 -- 4 = 54 опыта за 220 страниц
     -- 5 = 75.75 опыта за 220 страниц (100% + 15% + 20% - 20% = 105% = 75.75)
     
-    print("Type: " .. item:getType())
+    -- print("Type: " .. item:getType())
     -- Журналы дают 50% XP
-    if item:getType() == "Magazine" or item:getType() == "Newspaper" then
+    if item:getType() == "Magazine" or item:getType() == "Newspaper" then -- MetalworkMag1
         baseXP = baseXP * 0.5
     end
     
