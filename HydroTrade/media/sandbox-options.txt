@@ -455,3 +455,12 @@ option Injectors.ConfigNotice {
     page = TZone,
     translation = Injectors_config_notice,
 }
+
+option Reading.SkillsEXP {
+  type = double,   
+  min = 0,
+  max = 100,
+  default = 4,   
+  page = Character,
+  translation = Reading_SkillsEXP,
+}

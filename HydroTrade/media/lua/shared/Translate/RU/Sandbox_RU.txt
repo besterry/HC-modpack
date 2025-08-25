@@ -1,4 +1,7 @@
 Sandbox_RU = {
+
+    Sandbox_Reading_SkillsEXP = "Опыт за чтение",
+
     Sandbox_Injectors = "Иньекторы",
 	Sandbox_Injectors_config_notice 		  = "Конфигурации перемещены в папку media/lua/server/Config",
 	Sandbox_Injectors_config_notice_tooltip   = ".lua С файлами гораздо проще работать, они даже содержат аннотации и подсказки для более легкого понимания",
