@@ -39,14 +39,21 @@ local function SaveJsonItems(theTable,filename)
     fileWriterObj:close();
 end
 
-local function LoadAll()
-    shopItems = LoadJsonItems("ShopPrice.json")
-    forSellItems = LoadJsonItems("ForSell.json")
+local function SaveAll()
+    SaveJsonItems(FD.shopItems,"ShopPrice.json")
+    SaveJsonItems(FD.forSellItems,"ForSell.json")
 end
 
-local function SaveAll()
-    SaveJsonItems(shopItems,"ShopPrice.json")
-    SaveJsonItems(forSellItems,"ForSell.json")
+require("DynamicPricing")
+local function LoadAll()
+    FD.shopItems = LoadJsonItems("ShopPrice.json")
+    FD.forSellItems = LoadJsonItems("ForSell.json")
+
+    -- Инициализируем динамическое ценообразование после загрузки данных
+    if SandboxVars.Shops.DinamicPrice and DynamicPricing then        
+        DynamicPricing.initialize()
+        DynamicPricing.saveData = SaveAll
+    end
 end
 
 -- ˜˜˜˜˜ ˜˜˜˜˜˜˜ ˜˜˜ ˜˜˜˜˜˜ ˜˜˜˜˜˜˜
@@ -54,11 +61,11 @@ Events.OnServerStarted.Add(LoadAll)
 
 local commands = {}
 commands.getData = function(player, args)
-    sendServerCommand('shopItems', "onGetData", {shopItems = shopItems, forSellItems = forSellItems})
+    sendServerCommand('shopItems', "onGetData", {shopItems = FD.shopItems, forSellItems = FD.forSellItems})
 end
 commands.PushShopItems = function(player, args)
-    shopItems = args[1]
-    forSellItems = args[2]
+    FD.shopItems = args[1]
+    FD.forSellItems = args[2]
     SaveAll()
 end
 commands.ReloadShopItems = function(player, args)
