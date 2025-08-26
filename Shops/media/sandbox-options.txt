@@ -34,3 +34,22 @@ option Shops.CarSellsByPlayer
 	page = Shops,
 	translation = Shops_CarSellsByPlayer,
 }
+
+option Shops.DinamicPrice
+{
+	type = boolean,
+	default = false,
+	page = Shops,
+	translation = Shops_DinamicPrice,
+}
+
+option Shops.HourlyDecrease
+{
+	type = integer, 
+	default = 10,
+	min = 0,
+	max = 100,
+	page = Shops,
+	translation = Shops_HourlyDecrease,
+}
+
