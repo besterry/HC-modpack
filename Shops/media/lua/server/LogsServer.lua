@@ -1,4 +1,5 @@
 if not isServer() then return end
+require("DynamicPricing")
 local LServer = {}
 
 -- local logfile = "shops_transactions.log"
@@ -24,6 +25,7 @@ function LServer.ProcessShopTransaction(player,args)
     log = log.."]"
     writeLog("TransactionShop",log)
     -- Добавить логику динамического ценообразования
+    -- DynamicPricing.onItemSold(itemType, quantity)
 end
 
 local function LS_OnClientCommand(module, command, player, args)
