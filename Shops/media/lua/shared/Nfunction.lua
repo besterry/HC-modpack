@@ -1,6 +1,6 @@
 local Nfunction = {}
 
- function Nfunction.trimString(str,limit)
+ function Nfunction.trimString(str,limit) -- обрезает строку до limit символов
     local len = string.len(str)
     if len > limit then
         str = string.sub(str,1,limit-3) .. "..."
@@ -8,7 +8,7 @@ local Nfunction = {}
     return str
 end
 
-function Nfunction.drainablePrice(item,price)
+function Nfunction.drainablePrice(item,price) -- возвращает цену для жидкостей
     if instanceof(item, "DrainableComboItem") then
         price = math.floor(price*item:getUsedDelta())
         if price<=0 then
@@ -18,8 +18,8 @@ function Nfunction.drainablePrice(item,price)
     return price
 end
 
-local shopItems = {}
-function Nfunction.logShop(coords,action)
+local shopItems = {} -- массив для предметов при продаже или покупке
+function Nfunction.logShop(coords,action) -- логирует продажу
     local username = getPlayer():getUsername()
     if not action then
         action = "Purchase"
@@ -39,7 +39,7 @@ function Nfunction.logShop(coords,action)
     sendClientCommand("LS", "TransactionShopLog", {log})
 end
 
-function Nfunction.buildLogShop(type,quantity)
+function Nfunction.buildLogShop(type,quantity) -- строит логирование продаж
     if not shopItems[type] then
         local count = 1
         if quantity then count = quantity end
