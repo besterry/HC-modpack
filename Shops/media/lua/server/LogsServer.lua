@@ -15,6 +15,9 @@ function LServer.ProcessShopTransaction(player,args)
     local log = username .." ".. coords.x ..",".. coords.y ..",".. coords.z .." "..action.." ["
     local first = true
     for itemType, quantity in pairs(items) do
+        if SandboxVars.Shops.DinamicPrice and action == "Sell" then
+            DynamicPricing.onItemSold(itemType, quantity)
+        end
         if first then
             first = false
             log = log .. itemType.."="..quantity
@@ -24,8 +27,6 @@ function LServer.ProcessShopTransaction(player,args)
     end
     log = log.."]"
     writeLog("TransactionShop",log)
-    -- Добавить логику динамического ценообразования
-    -- DynamicPricing.onItemSold(itemType, quantity)
 end
 
 local function LS_OnClientCommand(module, command, player, args)
