@@ -1,2 +1,0 @@
---removed, file kept as I read that deleting can cause issues (Steam won't delete?).
---удален, файл сохранен, так как я прочитал, что удаление может вызвать проблемы (Steam не удалит?).
