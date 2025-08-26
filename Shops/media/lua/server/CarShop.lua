@@ -15,15 +15,20 @@ local logger = CarShop.logger
 function cleanupEmptyKeys()
 	local carShop = CarShop.Data.CarShop
 	for key, value in pairs(carShop) do
-		if not value.username then
+		if key == 75626983 or key == 57042424 then
 			carShop[key] = nil
 			ModData.add(MOD_NAME, carShop)
 			ModData.transmit(MOD_NAME)
-			print("CarShop: remove empty key: ", key)
-		end
+			print("CarShop: remove key: ", key)
+		end		
+		-- if not value.username then
+		-- 	carShop[key] = nil
+		-- 	ModData.add(MOD_NAME, carShop)
+		-- 	ModData.transmit(MOD_NAME)
+		-- 	print("CarShop: remove empty key: ", key)
+		-- end
 	end
 end
-
 -- Events.OnServerStarted.Add(cleanupEmptyKeys)
 
 ---@param player IsoPlayer
