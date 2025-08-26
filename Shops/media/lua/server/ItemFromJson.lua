@@ -2,8 +2,8 @@ if not isServer() then return end
 
 -- local Json = require("Json") -- ˜˜˜˜˜˜˜˜˜˜˜ ˜˜˜˜˜˜ ˜˜˜ ˜˜˜˜˜˜ ˜ JSON
 FD = FD or {}
-FD.shopItems = FD.shopItems or {}
-FD.forSellItems = FD.forSellItems or {}
+FD.shopItems = FD.shopItems or {} -- Таблица цен предметов в магазине
+FD.forSellItems = FD.forSellItems or {} -- Таблица цен предметов на продажу
 local shopItems = FD.shopItems
 local forSellItems = FD.forSellItems
 
