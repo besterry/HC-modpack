@@ -1,6 +1,6 @@
 -- TODO:
 -- Сделать функцию торга. 
-
+require "cars/BlockPartCarOnSale"
 CarShop = CarShop or {};
 CarShop.Data = CarShop.Data or {};
 CarShop.ServerCommands = CarShop.ServerCommands or {}

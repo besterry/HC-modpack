@@ -1,5 +1,5 @@
 IGUI_RU = {
-    
+    IGUI_CarShop_Block_CarOnSale = "Автомобиль на продаже - взаимодействие заблокировано",
     IGUI_Loot_All_Coins = "Забрать все монеты",
     IGUI_Coins_To_Account = "Перевести монеты на счет",
     IGUI_Contains = "Содержит",

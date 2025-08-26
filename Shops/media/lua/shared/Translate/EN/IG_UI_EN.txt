@@ -1,5 +1,5 @@
 IGUI_EN = {
-
+    IGUI_CarShop_Block_CarOnSale = "Vehicle is on sale - interaction blocked",
     IGUI_CarMarket_Title = "Car Market",
     IGUI_CarMarket_Subtitle = "Daily car sales announcements",
     IGUI_CarMarket_Seller = "Seller: ",
