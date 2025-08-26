@@ -252,6 +252,16 @@ local function getOverallCondition(vehicle)
     return total / count
 end
 
+local function isBicycle(name)
+	local bicycle = { "BicycleMTBScrap", "BicycleMTB", "BicycleRegular", "BicycleRegularScrap", "BicycleTrailer" }
+	for _, bikeName in ipairs(bicycle) do
+		if bikeName == name then
+			return true
+		end
+	end
+	return false
+end
+
 local base_ISVehicleMenu_showRadialMenu = ISVehicleMenu.showRadialMenu
 ---@param playerObj IsoPlayer
 function ISVehicleMenu.showRadialMenu(playerObj)
@@ -275,6 +285,7 @@ function ISVehicleMenu.showRadialMenu(playerObj)
 	if vehicle then
 		local vehicleKeyId = vehicle:getKeyId()
 		local carname = vehicle:getScript():getName()
+		if isBicycle(carname) then return end -- TODO: Велики запрещены
 		local carId = vehicle:getModData().sqlId
 		local X = vehicle:getX()
 		local Y = vehicle:getY()
