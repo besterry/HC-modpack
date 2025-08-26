@@ -19,24 +19,20 @@ function Nfunction.drainablePrice(item,price) -- возвращает цену �
 end
 
 local shopItems = {} -- массив для предметов при продаже или покупке
-function Nfunction.logShop(coords,action) -- логирует продажу
+function Nfunction.logShop(coords,action) -- логирует продажу (перенос на сервер)
     local username = getPlayer():getUsername()
     if not action then
         action = "Purchase"
     end
-    local log = username .." ".. coords.x ..",".. coords.y ..",".. coords.z .." "..action.." ["
-    local first = true
-    for k,v in pairs(shopItems) do
-        if first then
-            first = false
-            log = log .. k.."="..v
-        else
-            log = log.."," .. k.."="..v
-        end
-    end
-    log = log.."]"
-    shopItems = {}
-    sendClientCommand("LS", "TransactionShopLog", {log})
+    -- Передаем данные на сервер вместо формирования лога
+    local args = {
+        username = username,
+        coords = coords,
+        action = action,
+        items = shopItems
+    }
+    shopItems = {} -- очищаем массив
+    sendClientCommand("LS", "ProcessShopTransaction", args)    
 end
 
 function Nfunction.buildLogShop(type,quantity) -- строит логирование продаж

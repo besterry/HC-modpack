@@ -1,18 +1,29 @@
 if not isServer() then return end
-
 local LServer = {}
 
-local logfile = "shops_transactions.log"
-local msg = ""
+-- local logfile = "shops_transactions.log"
+-- local msg = ""
 
-function LServer.TransactionShopLog(player,args)
-    msg = args[1]
-    if Valhalla and Valhalla.Commands then
-        local args = {file = logfile, line = msg}
-        Valhalla.Commands.writeToLog(nil, args)
-        return
+function LServer.ProcessShopTransaction(player,args)
+    local username = args.username
+    local coords = args.coords
+    local action = args.action
+    local items = args.items
+
+    -- Логирование на сервере
+    local log = username .." ".. coords.x ..",".. coords.y ..",".. coords.z .." "..action.." ["
+    local first = true
+    for itemType, quantity in pairs(items) do
+        if first then
+            first = false
+            log = log .. itemType.."="..quantity
+        else
+            log = log.."," .. itemType.."="..quantity
+        end
     end
-    writeLog("TransactionShop",msg)
+    log = log.."]"
+    writeLog("TransactionShop",log)
+    -- Добавить логику динамического ценообразования
 end
 
 local function LS_OnClientCommand(module, command, player, args)
