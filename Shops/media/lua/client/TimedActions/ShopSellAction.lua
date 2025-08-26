@@ -70,6 +70,7 @@ function ShopSellAction:perform()
     end
     if total > 0 or totalSpecial > 0 then self.character:playSound("CashRegister") end
     self.shopUI.cartItems:clear()
+    self.shopUI:close()
     ISBaseTimedAction.perform(self)
 end
 
