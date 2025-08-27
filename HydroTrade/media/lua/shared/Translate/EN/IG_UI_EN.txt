@@ -1,5 +1,6 @@
 IGUI_EN =
 {
+	IGUI_TradeZone_Protected = "Destruction is prohibited in the trading area",
 	IGUI_perks_Reading = "Reading",
 	-- Уведомление о переключении зоны
 	IGUI_Notify_TZone_Activate = "[Lab Technician] WARNING! Dangerous chemical substances detected in zone:",
