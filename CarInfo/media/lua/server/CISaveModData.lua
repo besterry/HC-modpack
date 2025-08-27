@@ -1,44 +1,82 @@
+-- Добавляем настройку количества записей в начале файла
+local MAX_PLAYER_LOG_ENTRIES = 10 -- Можно изменить на любое число
 local commands = {} --Команды приходящие на сервер
-commands.writeSeat = function(player, args)
-    -- print("Acess:",player:getAccessLevel())
-    -- if player:getAccessLevel() ~= 'Admin' or player:getAccessLevel() ~= 'admin' then return end
-    local vehicle = getVehicleById(args.vehicleId)
-	local modData = vehicle:getModData()['playerLog'] or {}
-	local playerIndex
-	for i, entry in ipairs(modData) do if entry.name == args.name then playerIndex = i break end end -- Поиск индекса игрока в 'playerLog' по имени
-	if playerIndex then 	-- Если игрок найден, обновляем его время и перемещаем его в начало таблицы
-        if not args.timeExit then 
-		    modData[playerIndex].timeEnter = args.time
-            modData[playerIndex].timeExit = "In car"
-        else
-            modData[playerIndex].timeExit = args.timeExit
-        end
-		table.insert(modData, 1, table.remove(modData, playerIndex))
-	else
-		local currentUser = { name = args.name, timeEnter = args.time, timeExit = "In car" }-- Если игрок не найден, создаем новую запись и добавляем ее в начало таблицы
-		table.insert(modData, 1, currentUser)
-		if #modData > 5 then table.remove(modData, #modData) end -- Если таблица превысила максимальный размер, удаляем последнюю запись
-	end
-	vehicle:getModData()['playerLog'] = modData
-	args.modData = modData
-	vehicle:transmitModData()
-	sendServerCommand('CItransmitModData', "onSeatCar", args)
 
-    --Старый вариант, просто сохраняющий последние 5 посадок в авто
-    -- local vehicle = getVehicleById(args.vehicleId)
-    -- if not vehicle:getModData()['playerLog'] then
-    --     vehicle:getModData()['playerLog'] = {}
-    -- end
-    -- local modData = vehicle:getModData()['playerLog']
-    -- if #modData >= 5 then
-    --     table.remove(modData,1)
-    -- end
-    -- local currentUser = {name=args.name,time=args.time}
-    -- table.insert(modData, currentUser)
-    -- vehicle:getModData()['playerLog'] = modData
-    -- args.modData = modData
-    -- vehicle:transmitModData()
-    -- sendServerCommand('CItransmitModData', "onSeatCar", args)
+local function getServerTimestamp()
+    local time = getTimeInMillis()
+    local time = os.date("%H:%M  %d.%m", (time+10800000)/1000)
+    return time
+end
+
+commands.writeSeat = function(player, args)
+    local vehicle = getVehicleById(args.vehicleId)
+    if not vehicle then return end
+    
+    local modData = vehicle:getModData()['playerLog'] or {}
+    local playerIndex
+    
+    -- Поиск существующей записи игрока
+    for i, entry in ipairs(modData) do 
+        if entry.name == args.name then 
+            playerIndex = i 
+            break 
+        end 
+    end
+    
+    if playerIndex then
+        -- Обновление существующей записи
+        if args.action == "enter" then
+            modData[playerIndex].timeEnter = getServerTimestamp()
+            modData[playerIndex].timeExit = "In car or relogin"
+            modData[playerIndex].status = "active"
+            modData[playerIndex].enterX = args.enterX
+            modData[playerIndex].enterY = args.enterY
+            modData[playerIndex].distance = nil
+        elseif args.action == "exit" then
+            modData[playerIndex].timeExit = getServerTimestamp()
+            modData[playerIndex].status = "exited"
+            modData[playerIndex].exitX = args.exitX
+            modData[playerIndex].exitY = args.exitY
+            
+            -- Расчет времени в пути и расстояния
+            if modData[playerIndex].timeEnter and modData[playerIndex].enterX and modData[playerIndex].enterY then
+                -- Расчет расстояния
+                local distance = 0
+                if modData[playerIndex].exitX and modData[playerIndex].exitY then
+                    local dx = modData[playerIndex].exitX - modData[playerIndex].enterX
+                    local dy = modData[playerIndex].exitY - modData[playerIndex].enterY
+                    distance = math.sqrt(dx * dx + dy * dy)
+                    if distance >= 2 then
+                        modData[playerIndex].distance = math.floor(distance)
+                    end
+                end
+            end
+        end
+        
+        -- Перемещение в начало списка
+        table.insert(modData, 1, table.remove(modData, playerIndex))
+    else
+        -- Создание новой записи
+        local currentUser = { 
+            name = args.name, 
+            timeEnter = getServerTimestamp(), 
+            timeExit = "In car or relogin",
+            status = "active",
+            enterX = args.enterX,
+            enterY = args.enterY
+        }
+        table.insert(modData, 1, currentUser)
+    end
+    
+    -- Используем настраиваемое количество записей
+    while #modData > MAX_PLAYER_LOG_ENTRIES do 
+        table.remove(modData, #modData) 
+    end
+    
+    vehicle:getModData()['playerLog'] = modData
+    args.modData = modData
+    vehicle:transmitModData()
+    sendServerCommand('CItransmitModData', "onSeatCar", args)
 end
 
 local function CISeat_OnClientCommand(module, command, player, args)
@@ -46,4 +84,5 @@ local function CISeat_OnClientCommand(module, command, player, args)
         commands[command](player, args)
     end
 end
+
 Events.OnClientCommand.Add(CISeat_OnClientCommand)
