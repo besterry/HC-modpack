@@ -1,4 +1,17 @@
 IGUI_RU = {
+	IGUI_AntiTheftStatusLoading = "Статус:",
+	IGUI_AntiTheftSystem = "Противоугонная система",
+	IGUI_AntiTheft = "Сигнализация",
+	IGUI_AntiTheftInstall = "Установить",
+	IGUI_AntiTheftRemove = "Снять",
+	IGUI_AntiTheftStatusCarNotFound = "Автомобиль не найден",
+	IGUI_AntiTheftStatusInstalled = "Сигнализация установлена",
+	IGUI_AntiTheftStatusNotInstalled = "Сигнализация не установлена",
+	IGUI_AntiTheftStatusRemoved = "Сигнализация снята",
+	IGUI_AntiTheftTheftAttempt = "Мою машину взламывают!",
+	IGUI_Price_AntiTheft = "Стоимость установки: ",
+	IGUI_AntiTheftDescription = "Защити автомобиль от кражи!",
+
 	IGUI_Register_Title = "Постановка и снятие с учета",
 	IGUI_UnRegisterCar = "Снять с учета",
 	IGUI_CheckRegister = "Регистрация:",

@@ -150,3 +150,19 @@ option NPC.PriceDeleteHotwireBlackMarket {
   page = NPC, 
   translation = PriceDeleteHotwireBlackMarket,
 }
+
+option NPC.AntiTheftPrice {
+  type = integer,
+  min = 1000,
+  max = 50000,
+  default = 15000,
+  page = NPC,
+  translation = AntiTheftPrice,
+}
+
+option NPC.AntiTheftEnabled {
+  type = boolean,
+  default = true,
+  page = NPC,
+  translation = AntiTheftEnabled,
+}

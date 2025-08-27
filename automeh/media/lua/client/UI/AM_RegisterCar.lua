@@ -1,5 +1,5 @@
+require "AntiTheft/AntiTheftClient"
 -- Author FD
-
 RegisterCar = ISPanelJoypad:derive("RegisterCar");
 AutoMeh = AutoMeh or {}
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
@@ -72,10 +72,34 @@ function RegisterCar:initialise() --Создание элементов окна
     self.close:instantiate();
     self.close.borderColor = {r=1, g=1, b=1, a=0.1};
     self:addChild(self.close);
+
+    -- Кнопка противоугонки
+    self.antiTheftBtn = ISButton:new(self.close:getX(), self.close:getY() - buttonHgt - 5, buttonWid, buttonHgt, getText("IGUI_AntiTheft"), self, self.onAntiTheft)
+    self.antiTheftBtn:initialise()
+    self.antiTheftBtn:instantiate()
+    self:addChild(self.antiTheftBtn)
     
 end
 
 local vehicleForSend --Переменная, которая получает экземляр BaseVehicle и используется в дальнейшем
+
+function RegisterCar:onAntiTheft()
+    if AM_AntiTheft and AM_AntiTheft.instance then
+        AM_AntiTheft.instance:removeFromUIManager()
+        AM_AntiTheft.instance = nil
+    else
+        if vehicleForSend then
+            local x = self:getX() + self:getWidth() + 5
+            local y = self:getY()
+            local ui = AM_AntiTheft:new(x, y, 200, 200, getPlayer(), vehicleForSend)
+            ui:initialise();
+            ui:addToUIManager();
+            AM_AntiTheft.instance = ui;
+        end
+    end
+end
+
+
 local function sendcm (vehicleForSend) --Запрос на сервер регистрации ТС
     local args = {}
     local username = getPlayer():getUsername()
@@ -132,10 +156,11 @@ function RegisterCar:render() --Обработка наличия предмет
     --Проверка сесть ли регистрация
     if vehicleForSend and vehicleForSend:getModData().register then
         self:drawTextureScaledAspect(iconReg, self.CheckRegister:getX() + 80, self.ItemEntry:getY()-2, 25, 25, 1, 1, 1, 1) --Отрисовка иконки галочки
-        if vehicleForSend:getModData().register == player:getUsername() then self.deselect:setEnable(true) end --Снятие регистрации только для владельца
+        if vehicleForSend:getModData().register == player:getUsername() then self.deselect:setEnable(true) self.antiTheftBtn:setEnable(true) end --Снятие регистрации только для владельца
     else
         self:drawTextureScaledAspect(iconNoReg, self.CheckRegister:getX()+80, self.ItemEntry:getY()-2, 25, 25, 1, 1, 1, 1) --Отрисовка иконки крестика
         self.deselect:setEnable(false) --Отключение кнопки "Снять с регистрации"
+        self.antiTheftBtn:setEnable(false) --Отключение кнопки "Противоугонка"
     end
     local x = self.ItemEntry:getX()-40
     -- Отображение иконок в зависимости от результатов проверок

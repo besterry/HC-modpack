@@ -38,6 +38,29 @@ function ISVehicleMechanics:render()
         registerText = getText("IGUI_CheckRegister") .. register
         self:drawText(registerText, self.width - govSignWidth - 200, 120, 1, 1, 1, 1, UIFont.Small);
     end
+
+    -- Противоугонная сигнализация
+    local antiTheft = self.vehicle:getModData().antiTheft
+    if antiTheft and antiTheft.installed then
+        local alarmLevel1Icon = getTexture("media/textures/AlarmSystem1.png")
+        local alarmLevel2Icon = getTexture("media/textures/AlarmSystem2.png")
+        local alarmLevel3Icon = getTexture("media/textures/AlarmSystem3.png")
+        local alarmLevel4Icon = getTexture("media/textures/AlarmSystem4.png")
+        local iconX = 10  -- Позиция слева
+        local iconY = self.height - 40  -- Позиция снизу
+        local iconToDraw = alarmLevel1Icon  -- По умолчанию уровень 1
+    
+        if antiTheft.level == 2 and alarmLevel2Icon then
+            iconToDraw = alarmLevel2Icon
+        elseif antiTheft.level == 3 and alarmLevel3Icon then
+            iconToDraw = alarmLevel3Icon
+        elseif antiTheft.level == 4 and alarmLevel4Icon then
+            iconToDraw = alarmLevel4Icon
+        end        
+        if iconToDraw then
+            self:drawTextureScaled(iconToDraw, iconX, iconY, 25, 25, 1, 1, 1, 1);
+        end
+    end
     
     return o
 end
