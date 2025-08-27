@@ -2,6 +2,20 @@ function ISUnequipAction:isValid()
     return self.valid;
 end
 
+local oldFunc = ISFitnessUI.updateButtons -- не даёт выполнять упражнения, если игрок движется
+---@diagnostic disable-next-line: duplicate-set-field
+function ISFitnessUI:updateButtons(currentAction)
+	oldFunc(self, currentAction)
+	if self.player:isPlayerMoving()  then -- or self.player:pressedMovement(false)
+		self.ok.enable = false;
+	end
+end
+
+ISWorldObjectContextMenu.onTrade = function(worldobjects, player, otherPlayer) -- не даёт торговаться с игроком, если он в убежище
+	player:Say(getText("IGUI_FIX_T15K_TradeFix"))
+	player:playEmote("shrug") 		-- показывает анимацию "не знаю" распуская руки перед собой на уровне живота
+end
+
 function ISUnequipAction:new(character, item, time)
 	self.valid = true
    if character:isHeavyItem(item) and #ISTimedActionQueue.getTimedActionQueue(character).queue > 0 then
