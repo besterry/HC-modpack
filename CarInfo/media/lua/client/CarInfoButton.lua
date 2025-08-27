@@ -2,7 +2,7 @@
 local old_ISVehicleMechanicscreateChildren = ISVehicleMechanics.createChildren
 local icon = getTexture("media/textures/car_info.png")
 
-function ISVehicleMechanics:createChildren() -- Переопределение стандартной функции отрисовки интерфейса и добавление кнопки, если игрок-админ
+function ISVehicleMechanics:createChildren()
     local o = old_ISVehicleMechanicscreateChildren(self)
     if isAdmin() then
         self.IconInfo = ISButton:new(5, 20, 25, 25, "", self, ISVehicleMechanics.onClickInfo)
@@ -15,49 +15,60 @@ function ISVehicleMechanics:createChildren() -- Переопределение �
     return o
 end
 
-function ISVehicleMechanics:onClickInfo() --Событие по нажатию кнопки "Информация"
+function ISVehicleMechanics:onClickInfo()
     ModDataDebugPanel.OnOpenPanel(self.vehicle)
 end
-
-local function getTimestamp() --Блок расчета текущего времени
-    local time = getTimeInMillis()
-    local time = os.date("%H:%M  %d.%m", (time+10800000)/1000)
-    return time
-end
-
-local vehicle 
---Отслеживания последних садившихся игроков
+local currentVehicleId = nil
+-- Улучшенное отслеживание игроков
 local function OnEnterVehicleOnModData(player)
-    if isAdmin() then print("Seat admin => no logs for car moddata"); return end
-    -- print("No admin")
+    if isAdmin() then return end
+    
+    local vehicle = player:getVehicle()
+    if not vehicle then return end
+    
     local args = {}    
-    local time = getTimestamp()
     local name = player:getUsername()
-    vehicle = player:getVehicle()
-    args.time = time
+    currentVehicleId = vehicle:getId()
     args.name = name
-    args.vehicleId = vehicle:getId()
+    args.vehicleId = currentVehicleId
+    args.action = "enter"
+    args.enterX = math.floor(player:getX())
+    args.enterY = math.floor(player:getY())
+    
     sendClientCommand(getPlayer(), 'CISeat', 'writeSeat', args)
 end
-Events.OnEnterVehicle.Add(OnEnterVehicleOnModData)
 
---Отслеживания последних выходивших игроков
 local function OnExitVehicleOnModData(player)
-    if isAdmin() then print("Exit admin => no logs for car moddata"); return end
-    local args = {}    
-    local time = getTimestamp()
+    if isAdmin() then return end
+    
     local name = player:getUsername()
-    args.timeExit = time
+    local vehicle = player:getVehicle()
+    local vehicleId = nil
+    if not vehicle then
+        vehicleId = currentVehicleId
+    else
+        vehicleId = vehicle:getId()
+    end
+    -- Проверяем, есть ли сохраненный ID машины
+    if not vehicleId then return end
+    
+    local args = {}    
+
     args.name = name
-    args.vehicleId = vehicle:getId()
+    args.vehicleId = vehicleId
+    args.action = "exit"
+    args.exitX = math.floor(player:getX())
+    args.exitY = math.floor(player:getY())
+    
     sendClientCommand(getPlayer(), 'CISeat', 'writeSeat', args)
 end
+
+Events.OnEnterVehicle.Add(OnEnterVehicleOnModData)
 Events.OnExitVehicle.Add(OnExitVehicleOnModData)
 
---------------------Получение моддаты-------------------
-local receiveServerCommand
-receiveServerCommand = function(module, command, args)
-    if module ~= 'CItransmitModData' then return; end
+-- Получение моддаты
+local function receiveServerCommand(module, command, args)
+    if module ~= 'CItransmitModData' then return end
     if command == 'onSeatCar' then
         local vehicle = getVehicleById(args.vehicleId)
         if not vehicle then return end
