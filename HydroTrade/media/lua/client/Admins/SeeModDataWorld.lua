@@ -14,6 +14,14 @@ local function ContextMenu(player, context, worldobjects, test)
         if square and sq == nil then
             sq = square
         end
+        -- if instanceof(v, "IsoGenerator") then
+        --     local modData = v:getModData()
+        --     modData.fuel = 115
+        --     v:setFuel(115)
+        --     print(v:getFuel())
+        --     print(modData.fuel)
+        --     -- context:addOption(getText("IGUI_Show_IsoObject_modData").. " "..v:getObjectName(), v, showModdata)
+        -- end
         if v:hasModData() then --instanceof(v, "IsoObject") and
             local objectIndex = v:getObjectIndex()
             if not addedObjects[objectIndex] then --Исключаем дубли
@@ -26,6 +34,7 @@ local function ContextMenu(player, context, worldobjects, test)
                 local text = v:getTextureName() or v:getSpriteName() or v:getScriptName() or v:getName() or "No name"
                 context:addOption(getText("IGUI_Show_IsoObject_modData").. " "..text, v, showModdata)
             end
+            
         end
     end
 
