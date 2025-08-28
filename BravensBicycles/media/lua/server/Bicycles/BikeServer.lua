@@ -24,7 +24,7 @@ end
 commands.LiftBike = function(player, args)
     local vehicle = getVehicleById(tonumber(args.vehicleId))
     if not vehicle then return end
-    print("LiftBike - respawning vehicle")
+    -- print("LiftBike - respawning vehicle")
     
     -- Сохраняем все данные велосипеда
     local vehicleData = {}
@@ -86,11 +86,11 @@ commands.LiftBike = function(player, args)
         end
     end
     
-    print("Vehicle respawned successfully")
+    -- print("Vehicle respawned successfully")
 end
 local function onClientCommandBikeServer(module, command, player, args)
     if module == "BikeServer" and commands[command] then
-        print("onClientCommand",module,command)
+        -- print("onClientCommand",module,command)
         commands[command](player, args)
     end
 end

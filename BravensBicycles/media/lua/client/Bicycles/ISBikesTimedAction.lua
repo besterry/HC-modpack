@@ -73,7 +73,7 @@ ISBikesTimedAction.perform = function(self)
     end
 
     if self.typeTimeAction == "lift" then
-        print("LiftBike client")
+        -- print("LiftBike client")
         -- BravensBikeUtils.LiftBike(self.vehicle, self.character)
         sendClientCommand(self.character, "BikeServer", "LiftBike", { vehicleId = self.vehicle:getId() })
         BravensUtils.TirePlayer(character, 0.1)	
