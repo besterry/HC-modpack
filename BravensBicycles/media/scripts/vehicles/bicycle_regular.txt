@@ -139,7 +139,7 @@ module Base
 		engineQuality = 80,
 		brakingForce = 0,
 		rollInfluence = 0,
-		steeringClamp = 0.7,
+		steeringClamp = 0.4,
 		suspensionStiffness = 50,
 		suspensionCompression = 0,
 		suspensionDamping = 100,
@@ -157,7 +157,7 @@ module Base
 
 		area SeatFront
 		{
-			xywh = 0.8200 0.0000 0.8200 0.8200,
+			xywh = 0.2 0.0000 1.8 1.2,
 		}
 
 		area GasTank
@@ -328,7 +328,7 @@ module Base
 
 			position outside
 			{
-				offset = 0.3500 -0.5600 0.0100,
+				offset = 0.0500 -0.5600 0.0100,
 			}
 		}
 
@@ -343,7 +343,7 @@ module Base
 			model BicycleBasket
 			{
 				file = Bicycle_basket,
-				offset = 0.0 0.0 0.0,
+				offset = 0.3100 0.0 0.0,
 				scale = 1.0,
 			}
 		}
@@ -353,7 +353,7 @@ module Base
 			model BikeHeadlight
 			{
 				file = Bicycle_headlight,
-				offset = 0.0 0.0 0.0,
+				offset = 0.3100 0.0 0.0,
 				scale = 1.0,
 			}
 		}

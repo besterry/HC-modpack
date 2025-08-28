@@ -8,6 +8,6 @@
 	<m_Conditions>
 		<m_Name>BikeType</m_Name>
 		<m_Type>STRING</m_Type>
-		<m_StringValue>Base.BicycleMTB</m_StringValue>
+		<m_StringValue>Base.BicycleMTBScrap</m_StringValue>
 	</m_Conditions>
 </animNode>

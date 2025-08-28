@@ -125,14 +125,14 @@ module Base
 		mass = 100,
 		extents = 0.1600 0.9600 1.9200,
 		physicsChassisShape = 0.1800 0.9600 1.9200,
-		centerOfMassOffset = 0.0000 0.1500 0.0000,
+		centerOfMassOffset = 0.000 0.1500 0.0000,
 		shadowExtents = 2.2869 2.2875,
 		shadowOffset = 0.4325 -0.0250,
 		engineLoudness = 15,
 		engineQuality = 80,
 		brakingForce = 0,
 		rollInfluence = 0,
-		steeringClamp = 0.7,
+		steeringClamp = 0.4,
 		suspensionStiffness = 50,
 		suspensionCompression = 0,
 		suspensionDamping = 100,
@@ -150,7 +150,7 @@ module Base
 
 		area SeatFront
 		{
-			xywh = 0.8200 0.0000 0.8200 0.8200,
+			xywh = 0.2 0.0000 1.8 1.2,
 		}
 
 		area GasTank
@@ -330,14 +330,11 @@ module Base
 			position inside
 			{
 				offset = 0.3100 -0.2000 -0.2100,
-				rotate = 0.0000 0.0000 0.0000,
 			}
 
 			position outside
 			{
 				offset = 0.0500 -0.5600 0.0100,
-				area = SeatFront,
-				rotate = 0.0000 0.0000 0.0000,
 			}
 		}
 
@@ -352,11 +349,6 @@ module Base
 				file = Bicycle_headlight2,
 				offset = 0.31 0.0 0.0,
 				scale = 1.0,
-			}
-
-			lua
-			{
-				create = Vehicles.Create.Default,
 			}
 		}
 

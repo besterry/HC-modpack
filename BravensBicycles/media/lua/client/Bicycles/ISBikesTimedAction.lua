@@ -38,8 +38,16 @@ ISBikesTimedAction.perform = function(self)
         local inventory = self.character:getInventory()
         local newFrame = inventory:AddItem(self.frameName)
 
-        newFrame:getModData().frameColor = self.vehicle:getSkinIndex();
-        newFrame:getModData().rustAmount = self.vehicle:getRust();
+        newFrame:getModData().frameColor = self.vehicle:getSkinIndex(); -- Цвет рамы
+        newFrame:getModData().rustAmount = self.vehicle:getRust(); -- Ржавчина
+        -- newFrame:getModData().modData = self.vehicle:getModData(); -- Мод данные
+        -- Копируем все данные из modData, кроме frameColor и rustAmount и sqlid
+        local frameModData = newFrame:getModData()
+        for key, value in pairs(self.vehicle:getModData()) do
+            if key ~= "frameColor" and key ~= "rustAmount" and key ~= "sqlid" then
+                frameModData[key] = value
+            end
+        end
 
         BravensBikeUtils.addPartsWithCondition(self.vehicle, inventory, self.character)
 
@@ -56,6 +64,9 @@ ISBikesTimedAction.perform = function(self)
     if self.typeTimeAction == "place" then
 
         local inventory = self.character:getInventory()
+        -- local framecolor = self.item:getModData().frameColor or 0 -- Цвет рамы
+        -- local rustAmount = self.item:getModData().rustAmount or 0 -- Ржавчина
+        -- local modData = self.item:getModData() or {} -- Мод данные
         inventory:Remove(self.item)
         BikeClient.SpawnBike(self.vehicleName, self.item)
         BravensUtils.TirePlayer(self.character, 0.25)
@@ -94,8 +105,7 @@ ISBikesTimedAction.PickUpAction = function(self, character, vehicle, time, frame
     action.maxTime = time
     action.fromHotbar = false
     action.frameName = frameName
-
-    if action.character:isTimedActionInstant() then o.maxTime = 1; end
+    if action.character:isTimedActionInstant() then action.maxTime = 1; end
     return action
 end
 
@@ -110,7 +120,7 @@ ISBikesTimedAction.PlaceAction = function(self, character, item, time, vehicleNa
     action.fromHotbar = false
     action.vehicleName = vehicleName
 
-    if action.character:isTimedActionInstant() then o.maxTime = 1; end
+    if action.character:isTimedActionInstant() then action.maxTime = 1; end
     return action
 end
 
@@ -124,7 +134,7 @@ ISBikesTimedAction.LiftAction = function(self, character, vehicle, time)
     action.maxTime = time
     action.fromHotbar = false
 
-    if action.character:isTimedActionInstant() then o.maxTime = 1; end
+    if action.character:isTimedActionInstant() then action.maxTime = 1; end
     return action
 end
 
@@ -143,7 +153,7 @@ ISBikesTimedAction.LockUnlock = function(self, character, inventory, vehicle, do
     action.maxTime = time
     action.fromHotbar = false
 
-    if action.character:isTimedActionInstant() then o.maxTime = 1; end
+    if action.character:isTimedActionInstant() then action.maxTime = 1; end
     return action
 end
 

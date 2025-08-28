@@ -33,11 +33,11 @@ end
 
 -- Активация сигнализации
 local function activateAlarm(vehicle)
-    if not vehicle then return end    
-    -- Включаем сигнализацию
-    vehicle:setAlarmed(true)
-    vehicle:triggerAlarm()
-    -- Отправляем команду на сервер для логирования
+    if not vehicle then return end  
+    if checkActiveAlarm(vehicle) then
+        vehicle:setAlarmed(true)
+        vehicle:triggerAlarm()
+    end
     -- sendClientCommand("AntiTheft", "onTheftAttempt", {vehicleId = vehicle:getId()})
 end
 
@@ -75,7 +75,7 @@ local function hookWindowSmashing()
         ISSmashVehicleWindow.perform = function(self) -- Переопределяем функцию
             local vehicle = self.vehicle
             local character = self.character
-            if hasAntiTheftProtection(vehicle) and checkActiveAlarm(vehicle) then -- Проверяем защиту противоугонки
+            if hasAntiTheftProtection(vehicle) then -- Проверяем защиту противоугонки
                 activateAlarm(vehicle)
                 -- character:Say("ALARM! Anti-theft system activated!")
             end

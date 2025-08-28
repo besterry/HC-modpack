@@ -1,7 +1,5 @@
 local function onServerCommand(module, command, args)
-
     if module ~= "Braven" then return; end
-
     if command == "BikeSpawned" then
 
         local function awaitBike()
@@ -10,7 +8,8 @@ local function onServerCommand(module, command, args)
             local vehicle = getVehicleById(args.vehicleId);
 
             if vehicle then
-                BikeServer.UpdateBike(playerObj, vehicle, args.frame, playerObj:getInventory())
+                -- BikeServer.UpdateBike(playerObj, vehicle, args.frame, playerObj:getInventory())
+                -- print("args.frame: " , args.frame)
                 BravensUtils.TryPlaySoundClip(vehicle, "BikeHandle")
                 Events.OnTick.Remove(awaitBike);
             end

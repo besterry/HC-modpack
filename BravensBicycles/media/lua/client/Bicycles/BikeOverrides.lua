@@ -192,7 +192,6 @@ end
 --    /************************ Functions ************************/
 
 function PlaceBike(playerObj, bicycle)
-
 	if playerObj:isHandItem(bicycle) then
 		ISTimedActionQueue.add(ISUnequipAction:new(playerObj, bicycle, 150))
 	end
@@ -202,21 +201,19 @@ function PlaceBike(playerObj, bicycle)
 	{"Base.BicycleRegular", "Base.BicycleRegularScrap", "Base.BicycleMTB", "Base.BicycleMTBScrap"})
 
 	ISInventoryPaneContextMenu.transferIfNeeded(playerObj, bicycle)
-	ISTimedActionQueue.add(ISBikesTimedAction:PlaceAction(playerObj, bicycle, 1000, vehicleName))
+	local time = 100
+	if isAdmin() then time = 10 end
+	ISTimedActionQueue.add(ISBikesTimedAction:PlaceAction(playerObj, bicycle, time, vehicleName))
 end
 
 -- Save us a couple dozen lines of code by looking up and converting frame to vehicle and vice-versa
 function AssignName(nameToLookUp, availableList, resultList)
-
 	local match = ""
-
 	for i=0,#availableList do
-
 		if(nameToLookUp == availableList[i]) then
 			match = resultList[i]
 		end
 	end
-
 	return match
 end
 
@@ -225,22 +222,20 @@ function ToggleBikeLock(player, inventory, bicycle, door, lock)
 	ISTimedActionQueue.add(ISBikesTimedAction:LockUnlock(player, inventory, bicycle, door, lock, 100))
 end
 
-function PickupBike(player, vehicle)
-
+function PickupBike(player, vehicle) -- Получение рамы велосипеда при поднятии
 	local frameName = AssignName(vehicle:getScriptName(),
 	{"Base.BicycleRegular", "Base.BicycleRegularScrap", "Base.BicycleMTB", "Base.BicycleMTBScrap"},
 	{"Base.BicycleFrameRegular", "Base.BicycleFrameRegularScrap", "Base.BicycleFrameMTB", "Base.BicycleFrameMTBScrap"})
 
 	ISTimedActionQueue.add(ISPathFindAction:pathToVehicleAdjacent(getSpecificPlayer(player), vehicle));
-	ISTimedActionQueue.add(ISBikesTimedAction:PickUpAction(getSpecificPlayer(player), vehicle, 1000, frameName));
+	local time = 700
+	if isAdmin() then time = 10 end
+	ISTimedActionQueue.add(ISBikesTimedAction:PickUpAction(getSpecificPlayer(player), vehicle, time, frameName));
 end
 
-function LiftBike(player, vehicle)
-
+function LiftBike(player, vehicle) -- Действие по поднятию велосипеда в круговом меню
 	if vehicle:getCurrentSpeedKmHour() ~= 0 then return end
-
 	local playerObj = getSpecificPlayer(player)
-
 	ISTimedActionQueue.add(ISPathFindAction:pathToVehicleAdjacent(playerObj, vehicle));
 	ISTimedActionQueue.add(ISBikesTimedAction:LiftAction(playerObj, vehicle, 50));
 end
