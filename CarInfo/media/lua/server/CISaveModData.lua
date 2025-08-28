@@ -4,7 +4,7 @@ local commands = {} --Команды приходящие на сервер
 
 local function getServerTimestamp()
     local time = getTimeInMillis()
-    local time = os.date("%H:%M  %d.%m", (time+10800000)/1000)
+    local time = os.date("%H:%M  %d.%m.%y", (time+10800000)/1000)
     return time
 end
 
