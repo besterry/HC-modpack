@@ -717,6 +717,7 @@ function alcoholicTrait(player)
             player:getModData().DTthresholdToObtainAlcoholic = player:getModData().DTthresholdToObtainAlcoholic - DTluckyUnluckyModifier(player, 7);
         end
         -- If the player has the Alcoholic trait and haven't drinked for the latest 48 hours the effects starts.
+        -- Если игрок имеет алкогольную зависимость и не пил в течение последних 48 часов, то эффекты начинаются.
         if player:HasTrait("Alcoholic") and player:getModData().DThoursSinceLastDrink >= 48 then
             -- STRESS
             DTincreaseStress(player, 0.15);
@@ -726,7 +727,7 @@ function alcoholicTrait(player)
             DTincreaseFatigue(player, ZombRand(3), 0.05);
             -- HEADACHE
             DTapplyPain(player, ZombRand(5), "Head", ZombRand(75));
-            -- POISON
+            -- POISON -- Если игрок не пьет алкоголь, то вероятность того, что он будет болеть, увеличивается.
             DTincreasePoison(player, ZombRand(7), ZombRand(40));
         end
     end
