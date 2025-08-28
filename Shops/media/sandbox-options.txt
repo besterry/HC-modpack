@@ -38,7 +38,7 @@ option Shops.CarSellsByPlayer
 option Shops.DinamicPrice
 {
 	type = boolean,
-	default = false,
+	default = true,
 	page = Shops,
 	translation = Shops_DinamicPrice,
 }
