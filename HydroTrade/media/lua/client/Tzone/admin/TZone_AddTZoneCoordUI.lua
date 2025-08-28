@@ -1,6 +1,6 @@
 -- Панель "Добавить зону"
 
-require "TZone_ForceTZone.lua"
+require "TZone_ForceTZone"
 
 TZone_AddTZoneCoordUI = ISPanel:derive("TZone_AddTZoneCoordUI");
 

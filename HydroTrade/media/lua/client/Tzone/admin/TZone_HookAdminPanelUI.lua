@@ -1,5 +1,5 @@
 -- Хук администратора, добавляющий кнопку для открытия панели TZone
-require "TZonePanel.lua"
+require "TZonePanel"
 
 local old_ISAdminPanelUI_create = ISAdminPanelUI.create -- Сохраняем оригинальную функцию
 
