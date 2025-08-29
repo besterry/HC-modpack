@@ -103,7 +103,7 @@ end
 
 -- Обработчики ответов сервера
 local function onInstallAntiTheft(args)
-    if args.result then
+    if args.result and AM_AntiTheft.instance then
         AM_AntiTheft.instance.status = getText("IGUI_AntiTheftStatusInstalled")
         AM_AntiTheft.instance.colorStatus = {r=0, g=1, b=0, a=1} -- Зеленый
         AM_AntiTheft.instance.installBtn:setEnable(false)
@@ -121,7 +121,7 @@ local function onInstallAntiTheft(args)
 end
 
 local function onRemoveAntiTheft(args)
-    if args.result then
+    if args.result and AM_AntiTheft.instance then
         AM_AntiTheft.instance.status = getText("IGUI_AntiTheftStatusRemoved")
         AM_AntiTheft.instance.colorStatus = {r=1, g=0, b=0, a=1} -- Красный
         AM_AntiTheft.instance.installBtn:setEnable(true)
