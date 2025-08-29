@@ -17,23 +17,23 @@ BravensBikeUtils.addPartsWithCondition = function(vehicle, inventory, character)
 	end
 end
 
-BravensBikeUtils.LiftBike = function(vehicle, character)
-    print("LiftBike shared")
+-- BravensBikeUtils.LiftBike = function(vehicle, character)
+--     print("LiftBike shared")
     
-    -- Сначала отключаем физику
-    vehicle:setPhysicsActive(false)
+--     -- Сначала отключаем физику
+--     vehicle:setPhysicsActive(false)
     
-    -- Устанавливаем углы
-    vehicle:setAngles(0, 0, 0)
+--     -- Устанавливаем углы
+--     vehicle:setAngles(0, 0, 0)
     
-    -- Включаем физику обратно
-    vehicle:setPhysicsActive(true)
+--     -- Включаем физику обратно
+--     vehicle:setPhysicsActive(true)
     
-    -- Принудительно обновляем
-    vehicle:update()
+--     -- Принудительно обновляем
+--     vehicle:update()
     
-    BravensUtils.TirePlayer(character, 0.1)	
-end
+--     BravensUtils.TirePlayer(character, 0.1)	
+-- end
 -- Устанавливаем все детали в инвентаре игрока на велосипеде. Иначе, удаляем их с велосипеда.
 -- Убрано. Установка деталей вручную игроками
 -- BravensBikeUtils.setPartsToCondition = function(vehicle, inventory, character)

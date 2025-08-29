@@ -24,7 +24,6 @@ end
 commands.LiftBike = function(player, args)
     local vehicle = getVehicleById(tonumber(args.vehicleId))
     if not vehicle then return end
-    -- print("LiftBike - respawning vehicle")
     
     -- Сохраняем все данные велосипеда
     local vehicleData = {}
@@ -33,12 +32,12 @@ commands.LiftBike = function(player, args)
     vehicleData.rust = vehicle:getRust()
     vehicleData.modData = vehicle:getModData()
     
-    -- Сохраняем все установленные запчасти
+    -- Сохраняем все установленные запчасти (включая nodisplay)
     local parts = {}
     for i = 0, vehicle:getPartCount() - 1 do
         local part = vehicle:getPartByIndex(i)
-        if part:getCategory() ~= "nodisplay" then
-            local partItem = part:getInventoryItem()
+        if part and part:getCategory() ~= "nodisplay" then
+            local partItem = part:getInventoryItem()        
             if partItem then
                 parts[i] = {
                     partId = part:getId(),
@@ -76,7 +75,18 @@ commands.LiftBike = function(player, args)
     end
     newVehicle:transmitModData()
     
-    -- Устанавливаем запчасти обратно
+    -- Удаляем все детали по умолчанию с нового велосипеда
+    for i = 0, newVehicle:getPartCount() - 1 do
+        local part = newVehicle:getPartByIndex(i)
+        if part and part:getCategory() ~= "nodisplay" then
+            if part:getInventoryItem() then
+                part:setInventoryItem(nil)
+                newVehicle:transmitPartItem(part)
+            end
+        end
+    end
+    
+    -- Устанавливаем только те запчасти, которые были на старом велосипеде
     for partIndex, partData in pairs(parts) do
         local part = newVehicle:getPartByIndex(partIndex)
         if part then
@@ -85,8 +95,7 @@ commands.LiftBike = function(player, args)
             newVehicle:transmitPartItem(part)
         end
     end
-    
-    -- print("Vehicle respawned successfully")
+    BravensUtils.TirePlayer(player, 0.1)
 end
 local function onClientCommandBikeServer(module, command, player, args)
     if module == "BikeServer" and commands[command] then

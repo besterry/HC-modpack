@@ -76,7 +76,7 @@ ISBikesTimedAction.perform = function(self)
         -- print("LiftBike client")
         -- BravensBikeUtils.LiftBike(self.vehicle, self.character)
         sendClientCommand(self.character, "BikeServer", "LiftBike", { vehicleId = self.vehicle:getId() })
-        BravensUtils.TirePlayer(character, 0.1)	
+        -- BravensUtils.TirePlayer(character, 0.1)	
     end
 
     if self.typeTimeAction == "lockUnlock" then
