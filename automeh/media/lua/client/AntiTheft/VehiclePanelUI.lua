@@ -34,12 +34,15 @@ local function toggleAlarm(vehicle, player)
 end
 
 
-Events.OnServerCommand.Add(function(module, command, args)
+Events.OnServerCommand.Add(function(module, command, args) -- Команды от сервер
     if module == "AntiTheft" then
         if command == "onToggleAlarm" then
-            local vehicle = getVehicleById(args.vehicleId)
-            if vehicle then
-                vehicle:getModData().antiTheft.alarmEnabled = args.alarmEnabled
+            local vehicle = getVehicleById(args.vehicleId) -- Получаем автомобиль
+            if vehicle then -- Если автомобиль найден, то устанавливаем состояние сигнализации
+                local modData = vehicle:getModData()
+                if modData and modData.antiTheft then
+                    modData.antiTheft.alarmEnabled = args.alarmEnabled
+                end
                 -- print("DEBUG: toggleAlarm on server", args.alarmEnabled)
             end
         end
