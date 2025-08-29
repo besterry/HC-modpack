@@ -106,9 +106,9 @@ function DynamicPricing.recoverPrices() -- Восстановление цен �
             DynamicPricing.updateItemPrice(itemName, itemData) -- Обновляем цену
             if oldDemand ~= itemData.demandLevel or oldSellCount ~= itemData.sellCount then
                 local msg = string.format(
-                    "DynamicPricing: %s recovered, demand: %.2f->%.2f, sellCount: %d->%d, price: %d->%d demandThreshold(%d)", 
-                    itemName, oldDemand, itemData.demandLevel, oldSellCount, itemData.sellCount, oldPrice, itemData.price,
-                    itemData.demandThreshold
+                    "DynamicPricing: %s recovered, demand: %.2f->%.2f, sellCount: %d->%d (-%d), price: %d->%d demandThreshold(%d)", 
+                    itemName, oldDemand, itemData.demandLevel, oldSellCount, itemData.sellCount, 
+                    oldSellCount - itemData.sellCount, oldPrice, itemData.price, itemData.demandThreshold
                 )
                 writeLog("DynamicPricing", msg)
                 recoveredCount = recoveredCount + 1
