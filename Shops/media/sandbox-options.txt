@@ -53,3 +53,22 @@ option Shops.HourlyDecrease
 	translation = Shops_HourlyDecrease,
 }
 
+option Shops.DecayRate
+{
+	type = double,
+	min = 0,
+	max = 1,
+	default = 0.05,   
+	page = Shops, 
+	translation = Shops_DecayRate,
+}
+
+option Shops.DemandThreshold
+{
+	type = double,
+	min = 0,
+	max = 100,
+	default = 10,   
+	page = Shops, 
+	translation = Shops_DemandThreshold,
+}

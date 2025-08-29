@@ -6,4 +6,6 @@ Sandbox_RU = {
 	Sandbox_Shops_CarSellsByPlayer = " оличество возможных машин в продаже на одного игрока",
 	Sandbox_Shops_DinamicPrice = "ƒинамические цены",
 	Sandbox_Shops_HourlyDecrease = "—нижение продаж в час",
+	Sandbox_Shops_DecayRate = "—корость снижени€ цены при частых продажах (1=100%) за каждый порог",
+	Sandbox_Shops_DemandThreshold = "Ѕазовый порог продаж дл€ начала снижени€ цены",
 }
