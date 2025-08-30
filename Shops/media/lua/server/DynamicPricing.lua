@@ -47,12 +47,12 @@ function DynamicPricing.onItemSold(itemName, quantity) -- Обновление �
     DynamicPricing.initializeItem(itemName, itemData) -- Инициализируем если нужно    
     itemData.sellCount = itemData.sellCount + quantity -- Обновляем число продаж
     itemData.lastSold = DynamicPricing.getCurrentGameHour() -- Обновляем время последней продажи
-    local demandFactor = itemData.sellCount / itemData.demandThreshold -- Используем индивидуальный порог товара    600/49 = 12.24
+    local demandFactor = itemData.sellCount / itemData.demandThreshold -- Используем индивидуальный порог товара    600/59 = 10.16
     if demandFactor <= 1.0 then
         itemData.demandLevel = 1.0  -- Нормальный спрос до порога
     else
         itemData.demandLevel = math.max(DynamicPricing.CONFIG.DEFAULT_MIN_MULTIPLIER, 1.0 - (demandFactor - 1.0) * itemData.decayRate) -- Плавное снижение
-        -- 1.0 - (12.24 - 1.0) * 0.01 = 0.8776
+        -- 1.0 - (10.16 - 1.0) * 0.01 = 0.9084 (90%)
     end
     local oldPrice = itemData.price
     DynamicPricing.updateItemPrice(itemName, itemData) -- Обновляем цену
