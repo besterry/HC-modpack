@@ -84,7 +84,7 @@ local function addAlarmIconToDashboard()
     -- Если иконка уже существует
     if dashboard.alarmButton then
         -- Проверяем, нужно ли её скрыть
-        if not hasProtection or not isOwnerPlayer then
+        if not hasProtection or not isOwnerPlayer or not isAdmin() then
             dashboard.alarmButton:setVisible(false)
             return
         else
