@@ -41,12 +41,11 @@ end
 
 local function computeColX(w)
 	local pad = 10
-	local deltaW, nowW, baseW = 40, 70, 70
+	local deltaW, baseW = 40, 80
 	local xDelta = w - pad
-	local xNow   = xDelta - nowW
-	local xBase  = xNow - baseW
+	local xBase  = xDelta - baseW
 	local nameMax = xBase - 10
-	return { base = xBase, now = xNow, delta = xDelta, nameMax = nameMax }
+	return { base = xBase, delta = xDelta, nameMax = nameMax }
 end
 
 local function ellipsize(text, maxW)
@@ -61,7 +60,7 @@ end
 
 function MarketUI:show(player)
 	if MarketUI.instance then MarketUI.instance:close() end
-	local w, h = 800, 600
+	local w, h = 800, 650
 	local x = getCore():getScreenWidth()/2 - w/2
 	local y = getCore():getScreenHeight()/2 - h/2
 	local ui = MarketUI:new(x, y, w, h, player)
@@ -86,26 +85,26 @@ function MarketUI:initialise()
 	ISPanel.initialise(self)
 
 	-- Заголовок
-	self.title = ISLabel:new(10, 8, FONT_HGT_MEDIUM, "Smart Market - Price Analysis", 1,1,1,1, UIFont.Medium, true)
+	self.title = ISLabel:new(0, 8, FONT_HGT_MEDIUM, "Smart Market - Price Analysis", 1,1,1,1, UIFont.Medium, true)
 	self.title:initialise(); self.title:instantiate(); self:addChild(self.title)
 
-	-- Кнопки
-	local startY = 36
+	-- Статус: крупный заголовок + цветное время
+	local statusY = 36
+	self.statusTitle = ISLabel:new(0, statusY, FONT_HGT_MEDIUM, "Market status at ", 0.92,0.92,0.98,1, UIFont.Medium, true)
+	self.statusTitle:initialise(); self.statusTitle:instantiate(); self:addChild(self.statusTitle)
+	self.statusTime = ISLabel:new(0, statusY, FONT_HGT_MEDIUM, localTimeStr(), 0.5,0.9,1,1, UIFont.Medium, true)
+	self.statusTime:initialise(); self.statusTime:instantiate(); self:addChild(self.statusTime)
+
+	-- Кнопки под статусом
+	local startY = statusY + 18
 	self.refreshButton = ISButton:new(10, startY, 120, 25, "Refresh", self, MarketUI.onRefresh)
 	self.refreshButton:initialise(); self.refreshButton:instantiate(); self:addChild(self.refreshButton)
 
 	self.closeButton = ISButton:new(self.width - 130, startY, 120, 25, "Close", self, MarketUI.onClose)
 	self.closeButton:initialise(); self.closeButton:instantiate(); self:addChild(self.closeButton)
 
-	-- Инфо-панель
-	local infoY = startY + 32
-	self.infoLabel = ISButton:new(10, infoY, 320, 24, "Loading market data...", self, function() end)
-	self.infoLabel.enable = false
-	self.infoLabel.backgroundColor = {r=0.2, g=0.2, b=0.2, a=0.8}
-	self.infoLabel.borderColor = {r=0.4, g=0.4, b=0.4, a=0.8}
-	self.infoLabel:initialise(); self.infoLabel:instantiate(); self:addChild(self.infoLabel)
-
 	-- Колонки TOP Rising / TOP Falling
+	local infoY = startY + 32
 	local listsY = infoY + 30
 	local colW = math.floor((self.width - 30) / 2)
 
@@ -121,9 +120,6 @@ function MarketUI:initialise()
 		local wBase = getTextManager():MeasureStringX(UIFont.Small, "Base")
 		local hBase = ISLabel:new(rootX + cols.base - wBase, y, FONT_HGT_SMALL, "Base", 0.8,0.8,0.9,1, UIFont.Small, true)
 		hBase:initialise(); hBase:instantiate(); self:addChild(hBase)
-		local wNow = getTextManager():MeasureStringX(UIFont.Small, "Now")
-		local hNow = ISLabel:new(rootX + cols.now - wNow, y, FONT_HGT_SMALL, "Now", 0.8,0.8,0.9,1, UIFont.Small, true)
-		hNow:initialise(); hNow:instantiate(); self:addChild(hNow)
 		local wPct = getTextManager():MeasureStringX(UIFont.Small, "%")
 		local hPct = ISLabel:new(rootX + cols.delta - wPct, y, FONT_HGT_SMALL, "%", 0.8,0.8,0.9,1, UIFont.Small, true)
 		hPct:initialise(); hPct:instantiate(); self:addChild(hPct)
@@ -176,6 +172,20 @@ end
 
 function MarketUI:update()
 	ISPanel.update(self)
+	-- центрирование заголовка
+	local tm = getTextManager()
+	local tw = tm:MeasureStringX(UIFont.Medium, self.title.name)
+	self.title:setX((self.width - tw) / 2)
+	-- центрирование статуса как одной строки (две части)
+	if self.statusTitle and self.statusTime then
+		local t1w = tm:MeasureStringX(UIFont.Medium, self.statusTitle.name)
+		local t2w = tm:MeasureStringX(UIFont.Medium, self.statusTime.name)
+		local totalW = t1w + 8 + t2w
+		local sx = (self.width - totalW) / 2
+		self.statusTitle:setX(sx)
+		self.statusTime:setX(sx + t1w + 8)
+	end
+	-- кулдаун refresh
 	local now = os.time()
 	if self.nextRefreshAt and now < self.nextRefreshAt then
 		local remain = self.nextRefreshAt - now
@@ -231,15 +241,7 @@ function MarketUI.doDrawRow(list, y, v, alt)
 		list:drawTextRight(row.baseNumFmt or row.baseFmt or "-", cols.base, textY, 0.9,0.9,0.9,1, UIFont.Small)
 	end
 
-	-- Now
-	if row.isSP then
-		local spW2 = getTextManager():MeasureStringX(UIFont.Small, " SP")
-		list:drawTextRight(row.nowNumFmt or "-", cols.now - spW2 - 3, textY, 1,1,1,1, UIFont.Small)
-		list:drawTextRight(" SP", cols.now, textY, 0.5,0.9,1,1, UIFont.Small)
-	else
-		list:drawTextRight(row.nowNumFmt or row.nowFmt or "-", cols.now, textY, 1,1,1,1, UIFont.Small)
-	end
-
+	-- % только цветом текста (без Now)
 	local c = row.deltaColor or { r = 1, g = 1, b = 1, a = 1 }
 	list:drawTextRight(row.deltaTxt or "0%", cols.delta, textY, c.r, c.g, c.b, c.a, UIFont.Small)
 
@@ -270,11 +272,13 @@ function MarketUI:addTestItems()
 	}
 	self.gainersList:addItem(row.displayName, row)
 	self.newsList:addItem("news", { text = "Very High Demand: Test Item (+20%)", height = 22 })
-	if self.infoLabel then self.infoLabel:setTitle("Test items loaded") end
+	if self.statusTime then self.statusTime:setName(localTimeStr()) end
 end
 
 function MarketUI:loadMarketData()
-	if self.infoLabel then self.infoLabel:setTitle("Loading data from server...") end
+	if self.statusTime then
+		self.statusTime:setName(localTimeStr() .. " — loading...")
+	end
 	local selfRef = self
 	sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
 	local receiveServerCommand
@@ -292,13 +296,12 @@ end
 
 function MarketUI:processMarketData()
 	if not Shop or not Shop.Sell then
-		if self.infoLabel then self.infoLabel:setTitle("Error loading data") end
+		if self.statusTime then self.statusTime:setName(localTimeStr() .. " — error") end
 		return
 	end
 	self:fillListsFromSell()
-	local total = (self.gainersList:size() + self.losersList:size())
-	if self.infoLabel then
-		self.infoLabel:setTitle(string.format("Items: %d | Updated: %s", total, localTimeStr()))
+	if self.statusTime then
+		self.statusTime:setName(localTimeStr())
 	end
 end
 
