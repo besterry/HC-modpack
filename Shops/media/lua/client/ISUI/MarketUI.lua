@@ -62,7 +62,7 @@ local function ellipsize(text, maxW)
 end
 
 function MarketUI:show(player)
-	if MarketUI.instance then MarketUI.instance:close() end
+	if MarketUI.instance then MarketUI.instance:close() return end
 	local w, h = 800, 650
 	local x = getCore():getScreenWidth()/2 - w/2
 	local y = getCore():getScreenHeight()/2 - h/2
