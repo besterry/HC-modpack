@@ -35,8 +35,11 @@ local ROW_H = 22 -- компактная строка под 15 без скро�
 local REFRESH_COOLDOWN = 10 -- сек
 
 local function localTimeStr()
-	local t = os.date("*t")
-	return string.format("%02d:%02d:%02d", t.hour, t.min, t.sec)
+	-- local t = os.date("*t")
+    local hour = getGameTime():getHour()
+    local minute = getGameTime():getMinutes()
+    local second = 0 -- получаем секунды из минут
+	return string.format("%02d:%02d:%02d", hour, minute, second)
 end
 
 local function computeColX(w)
@@ -85,22 +88,22 @@ function MarketUI:initialise()
 	ISPanel.initialise(self)
 
 	-- Заголовок
-	self.title = ISLabel:new(0, 8, FONT_HGT_MEDIUM, "Smart Market - Price Analysis", 1,1,1,1, UIFont.Medium, true)
+	self.title = ISLabel:new(0, 8, FONT_HGT_MEDIUM, getText("IGUI_SmartMarket_Title"), 1,1,1,1, UIFont.Medium, true)
 	self.title:initialise(); self.title:instantiate(); self:addChild(self.title)
 
 	-- Статус: крупный заголовок + цветное время
 	local statusY = 36
-	self.statusTitle = ISLabel:new(0, statusY, FONT_HGT_MEDIUM, "Market status at ", 0.92,0.92,0.98,1, UIFont.Medium, true)
+	self.statusTitle = ISLabel:new(0, statusY, FONT_HGT_MEDIUM, getText("IGUI_SmartMarket_StatusAt"), 0.92,0.92,0.98,1, UIFont.Medium, true)
 	self.statusTitle:initialise(); self.statusTitle:instantiate(); self:addChild(self.statusTitle)
 	self.statusTime = ISLabel:new(0, statusY, FONT_HGT_MEDIUM, localTimeStr(), 0.5,0.9,1,1, UIFont.Medium, true)
 	self.statusTime:initialise(); self.statusTime:instantiate(); self:addChild(self.statusTime)
 
 	-- Кнопки под статусом
 	local startY = statusY + 18
-	self.refreshButton = ISButton:new(10, startY, 120, 25, "Refresh", self, MarketUI.onRefresh)
+	self.refreshButton = ISButton:new(10, startY, 120, 25, getText("IGUI_Refresh"), self, MarketUI.onRefresh)
 	self.refreshButton:initialise(); self.refreshButton:instantiate(); self:addChild(self.refreshButton)
 
-	self.closeButton = ISButton:new(self.width - 130, startY, 120, 25, "Close", self, MarketUI.onClose)
+	self.closeButton = ISButton:new(self.width - 130, startY, 120, 25, getText("UI_Close"), self, MarketUI.onClose)
 	self.closeButton:initialise(); self.closeButton:instantiate(); self:addChild(self.closeButton)
 
 	-- Колонки TOP Rising / TOP Falling
@@ -108,17 +111,17 @@ function MarketUI:initialise()
 	local listsY = infoY + 30
 	local colW = math.floor((self.width - 30) / 2)
 
-	self.leftLabel = ISLabel:new(10, listsY, FONT_HGT_SMALL, "Top Rising", 0.6,1,0.6,1, UIFont.Small, true)
+	self.leftLabel = ISLabel:new(10, listsY, FONT_HGT_SMALL, getText("IGUI_SmartMarket_TopRising"), 0.6,1,0.6,1, UIFont.Small, true)
 	self.leftLabel:initialise(); self.leftLabel:instantiate(); self:addChild(self.leftLabel)
-	self.rightLabel = ISLabel:new(20 + colW, listsY, FONT_HGT_SMALL, "Top Falling", 1,0.6,0.6,1, UIFont.Small, true)
+	self.rightLabel = ISLabel:new(20 + colW, listsY, FONT_HGT_SMALL, getText("IGUI_SmartMarket_TopFalling"), 1,0.6,0.6,1, UIFont.Small, true)
 	self.rightLabel:initialise(); self.rightLabel:instantiate(); self:addChild(self.rightLabel)
 
 	local function addHeaders(self, rootX, listW, y)
 		local cols = computeColX(listW)
-		local hItem = ISLabel:new(rootX, y, FONT_HGT_SMALL, "Item", 0.8,0.8,0.9,1, UIFont.Small, true)
+		local hItem = ISLabel:new(rootX, y, FONT_HGT_SMALL, getText("IGUI_SmartMarket_Item"), 0.8,0.8,0.9,1, UIFont.Small, true)
 		hItem:initialise(); hItem:instantiate(); self:addChild(hItem)
-		local wBase = getTextManager():MeasureStringX(UIFont.Small, "Base")
-		local hBase = ISLabel:new(rootX + cols.base - wBase, y, FONT_HGT_SMALL, "Base", 0.8,0.8,0.9,1, UIFont.Small, true)
+		local wBase = getTextManager():MeasureStringX(UIFont.Small, getText("IGUI_SmartMarket_Base"))
+		local hBase = ISLabel:new(rootX + cols.base - wBase, y, FONT_HGT_SMALL, getText("IGUI_SmartMarket_Base"), 0.8,0.8,0.9,1, UIFont.Small, true)
 		hBase:initialise(); hBase:instantiate(); self:addChild(hBase)
 		local wPct = getTextManager():MeasureStringX(UIFont.Small, "%")
 		local hPct = ISLabel:new(rootX + cols.delta - wPct, y, FONT_HGT_SMALL, "%", 0.8,0.8,0.9,1, UIFont.Small, true)
@@ -151,7 +154,7 @@ function MarketUI:initialise()
 
 	-- Лента новостей
 	local newsY = listTop + listH + 10
-	self.newsLabel = ISLabel:new(10, newsY, FONT_HGT_SMALL, "Market News", 0.9,0.9,1,1, UIFont.Small, true)
+	self.newsLabel = ISLabel:new(10, newsY, FONT_HGT_SMALL, getText("IGUI_SmartMarket_News"), 0.9,0.9,1,1, UIFont.Small, true)
 	self.newsLabel:initialise(); self.newsLabel:instantiate(); self:addChild(self.newsLabel)
 
 	local newsMinH = 110 -- чтобы поместилось в 600px
@@ -190,11 +193,11 @@ function MarketUI:update()
 	if self.nextRefreshAt and now < self.nextRefreshAt then
 		local remain = self.nextRefreshAt - now
 		self.refreshButton.enable = false
-		self.refreshButton:setTitle(string.format("Refresh (%ds)", remain))
+		self.refreshButton:setTitle(string.format(getText("IGUI_SmartMarket_RefreshCountdown"), remain))
 	else
 		if not self.refreshButton.enable then
 			self.refreshButton.enable = true
-			self.refreshButton:setTitle("Refresh")
+			self.refreshButton:setTitle(getText("IGUI_Refresh"))
 		end
 	end
 end
@@ -263,7 +266,7 @@ end
 function MarketUI:addTestItems()
 	self.gainersList:clear(); self.losersList:clear(); self.newsList:clear()
 	local row = {
-		displayName = "Test Item",
+		displayName = getText("IGUI_SmartMarket_TestItem"),
 		baseFmt = fmtPrice(100),
 		nowFmt = fmtPrice(120),
 		deltaTxt = "+20.0%",
@@ -271,7 +274,7 @@ function MarketUI:addTestItems()
 		height = 24
 	}
 	self.gainersList:addItem(row.displayName, row)
-	self.newsList:addItem("news", { text = "Very High Demand: Test Item (+20%)", height = 22 })
+	self.newsList:addItem("news", { text = string.format(getText("IGUI_SmartMarket_TestNews"), row.displayName, "+20%"), height = 22 })
 	if self.statusTime then self.statusTime:setName(localTimeStr()) end
 end
 
@@ -316,6 +319,10 @@ function MarketUI:fillListsFromSell()
 			local base, now = d.defaultPrice, d.price
 			local delta = ((now - base) / base) * 100.0
 			local isSP = d.specialCoin == true
+			
+			-- Отладка: выводим в консоль
+			-- print(string.format("DEBUG: %s: base=%d, now=%d, delta=%.1f%%", fullType, base, now, delta))
+			
 			local row = {
 				fullType = fullType,
 				displayName = displayName(fullType),
@@ -328,12 +335,31 @@ function MarketUI:fillListsFromSell()
 				height = ROW_H,
 				_d = d
 			}
-			if delta >= 0 then table.insert(gainers, row) else table.insert(losers, row) end
+			
+			-- Строгое разделение с отладкой
+			if delta > 0 then 
+				table.insert(gainers, row) 
+			elseif delta < 0 then 
+				table.insert(losers, row) 
+			end
 		end
 	end
 
-	table.sort(gainers, function(a,b) return a.delta > b.delta end)
-	table.sort(losers, function(a,b) return a.delta < b.delta end)
+	-- Сначала сортируем по проценту изменения для разделения на списки
+	table.sort(gainers, function(a,b) 
+		return a.delta > b.delta  -- положительные изменения
+	end)
+	table.sort(losers, function(a,b) 
+		return a.delta < b.delta  -- отрицательные изменения
+	end)
+
+	-- Потом внутри каждого списка сортируем по текущей цене (от высокой к низкой)
+	table.sort(gainers, function(a,b) 
+		return a._d.price > b._d.price  -- по убыванию цены
+	end)
+	table.sort(losers, function(a,b) 
+		return a._d.price > b._d.price  -- по убыванию цены
+	end)
 
 	for i=1, math.min(TOP_N, #gainers) do
 		local it = gainers[i]; self.gainersList:addItem(it.displayName, it)
@@ -363,11 +389,11 @@ function MarketUI:buildNewsFromSell(gainers, losers)
 			local line = nil
 
 			if d.demandLevel and d.demandLevel > 1.2 then
-				line = string.format("Very High Demand: %s (%s)", it.displayName, it.deltaTxt)
+				line = string.format(getText("IGUI_SmartMarket_VeryHighDemand"), it.displayName, it.deltaTxt)
 			elseif d.demandLevel and d.demandLevel < 0.8 then
-				line = string.format("Demand Falling: %s (%s)", it.displayName, it.deltaTxt)
+				line = string.format(getText("IGUI_SmartMarket_DemandFalling"), it.displayName, it.deltaTxt)
 			elseif d.sellCount and d.demandThreshold and d.sellCount > d.demandThreshold * 2 then
-				line = string.format("Large batch sold: %s", it.displayName)
+				line = string.format(getText("IGUI_SmartMarket_LargeBatchSold"), it.displayName)
 			end
 			addNews(line)
 		end
@@ -378,9 +404,9 @@ end
 -- Вспомогательные расчёты (оставлены для совместимости)
 function MarketUI:calculateDemandStatus(d)
 	local lvl = d.demandLevel or 1.0
-	if lvl > 1.1 then return {type="HIGH", color=DEMAND_COLORS.HIGH, text="[HIGH] High Demand"}
-	elseif lvl < 0.9 then return {type="LOW", color=DEMAND_COLORS.LOW, text="[LOW] Low Demand"}
-	else return {type="NORMAL", color=DEMAND_COLORS.NORMAL, text="[NORMAL] Normal Demand"} end
+	if lvl > 1.1 then return {type="HIGH", color=DEMAND_COLORS.HIGH, text=getText("IGUI_SmartMarket_HighDemand")}
+	elseif lvl < 0.9 then return {type="LOW", color=DEMAND_COLORS.LOW, text=getText("IGUI_SmartMarket_LowDemand")}
+	else return {type="NORMAL", color=DEMAND_COLORS.NORMAL, text=getText("IGUI_SmartMarket_NormalDemand")} end
 end
 
 function MarketUI:calculatePriceChange(d)
@@ -398,12 +424,12 @@ function MarketUI:generateMarketNews(d)
 	local lvl = d.demandLevel or 1.0
 	local cnt = d.sellCount or 0
 	local thr = d.demandThreshold or 10
-	if lvl > 1.2 then return "Very High Demand!"
-	elseif lvl > 1.1 then return "Demand Rising"
-	elseif lvl < 0.8 then return "Demand Falling"
-	elseif cnt > thr * 2 then return "High Sales"
-	elseif cnt > thr then return "Active Sales"
-	else return "Quiet Market" end
+	if lvl > 1.2 then return getText("IGUI_SmartMarket_VeryHighDemandEx")
+	elseif lvl > 1.1 then return getText("IGUI_SmartMarket_DemandRising")
+	elseif lvl < 0.8 then return getText("IGUI_SmartMarket_DemandFallingEx")
+	elseif cnt > thr * 2 then return getText("IGUI_SmartMarket_HighSales")
+	elseif cnt > thr then return getText("IGUI_SmartMarket_ActiveSales")
+	else return getText("IGUI_SmartMarket_QuietMarket") end
 end
 
 function ShowMarketUI(player) return MarketUI:show(player) end
