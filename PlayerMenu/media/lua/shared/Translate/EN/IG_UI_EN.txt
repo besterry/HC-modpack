@@ -1,4 +1,5 @@
 IGUI_EN = {
+     IGUI_Market = "Market status",
      IGUI_AutoMarket = "Car Market",
      IGUI_PlayerMenu = "Player Menu",
      IGUI_Balance = "Balance:",

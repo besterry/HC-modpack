@@ -1,4 +1,5 @@
 IGUI_RU = {
+    IGUI_Market = "Статус рынка",
     IGUI_AutoMarket = "Авторынок",
 	IGUI_PlayerMenu = "Меню игрока",
     IGUI_Balance = "Баланс:",
