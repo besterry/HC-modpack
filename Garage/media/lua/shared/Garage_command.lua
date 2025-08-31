@@ -6,23 +6,31 @@ Garage.setVehicleData = function (vehicle,data,sq,player) --Восстановл
     end
     vehicle:setAngles(unpack(data.angles)) --Установк углов
     vehicle:setColorHSV(unpack(data.HSV)) --Установка цвета
-    vehicle:transmitColorHSV()
+    vehicle:transmitColorHSV() -- Рассылка текущего цвета на клиенты
     vehicle:setEngineFeature(unpack(data.engineFeature)) --Установка качество двигателя
-    vehicle:transmitEngine()
+    vehicle:transmitEngine() -- Рассылка текущего состояния двигателя на клиенты
     vehicle:setRust(data.rust) --Установка уровня ржавчины
-    vehicle:transmitRust()
+    vehicle:transmitRust() -- Рассылка текущего состояния ржавчины на клиенты
     local bFront, bRight, bRear, bLeft = unpack(data.blood) --установка загрязнения
-    vehicle:setBloodIntensity("Front", bFront)
-    vehicle:setBloodIntensity("Right", bRight)
-    vehicle:setBloodIntensity("Rear", bRear)
-    vehicle:setBloodIntensity("Left", bLeft)
-    vehicle:transmitBlood() --Установка загрязнения
+    vehicle:setBloodIntensity("Front", bFront) --Установка загрязнения спереди
+    vehicle:setBloodIntensity("Right", bRight) --Установка загрязнения справа
+    vehicle:setBloodIntensity("Rear", bRear) --Установка загрязнения сзади
+    vehicle:setBloodIntensity("Left", bLeft) --Установка загрязнения слева
+    vehicle:transmitBlood() --Рассылка текущего состояния загрязнения на клиенты
     vehicle:setKeyId(data.keyid) --Установка старого id ключей, что бы ключи подходили
     --Моддата: частичное восстановление--
-    vehicle:getModData().register = data.modData.register
-    vehicle:getModData().sqlId = vehicle:getSqlId()
-    if data.modData.playerLog then vehicle:getModData().playerLog = data.modData.playerLog end
-    if data.modData.Confidant then vehicle:getModData().Confidant = data.modData.Confidant end
+    local savedModData = data.modData
+    local vehicleModData = vehicle:getModData()
+    -- Восстанавливаем всю сохраненную моддату
+    for k, v in pairs(savedModData) do
+        vehicleModData[k] = v
+    end
+    -- Записываем новый sqlId
+    vehicleModData.sqlId = vehicle:getSqlId()
+    -- vehicle:getModData().register = data.modData.register
+    -- vehicle:getModData().sqlId = vehicle:getSqlId()
+    -- if data.modData.playerLog then vehicle:getModData().playerLog = data.modData.playerLog end
+    -- if data.modData.Confidant then vehicle:getModData().Confidant = data.modData.Confidant end
     vehicle:transmitModData()
     --Моддата--
     if data.isKeysInIgnition then --Если ключ установлен в замок зажигания
