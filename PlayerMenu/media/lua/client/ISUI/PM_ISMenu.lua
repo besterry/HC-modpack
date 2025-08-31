@@ -235,6 +235,18 @@ function PM_ISMenu:initialise()
     self:addChild(self.AutoMarket);
     y = y + btnHgt + 8;
 
+    --кнопка Market после AutoMarket
+    self.Market = ISButton:new(x, y, btnWid, btnHgt, getText("IGUI_Market"), self, PM_ISMenu.onClick);
+    self.Market.internal = "MARKET";
+    self.Market.backgroundColor = { r = 0.12, g = 0.15, b = 0.2, a = 0.95 };
+    self.Market.textColor = { r = 0.9, g = 0.8, b = 0.6, a = 1 }; -- Приглушенный желтый
+    self.Market:initialise();
+    self.Market:instantiate();
+    self.Market.borderColor = { r = 0.4, g = 0.6, b = 0.8, a = 0.9 };
+    self.Market.font = UIFont.Medium;
+    self:addChild(self.Market);
+    y = y + btnHgt + 8;
+
     --Сбрасываем Y для чекбоксов (второй столбец)
     local y_checkboxes = 60;
     y_checkboxes = y_checkboxes + 30; -- Уменьшаем отступ с 8 до 5
@@ -608,6 +620,9 @@ function PM_ISMenu:onClick(button)
     if button.internal == "AUTOMARKET" then
         local CarMagazine = require "cars/Magazine"
         CarMagazine.show()
+    end
+    if button.internal == "MARKET" then
+        ShowMarketUI(self.player)
     end
 end
 
