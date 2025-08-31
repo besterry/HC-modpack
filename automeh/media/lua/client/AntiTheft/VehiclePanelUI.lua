@@ -76,15 +76,16 @@ local function addAlarmIconToDashboard()
     if not playerData or not playerData.vehicleDashboard then return end
     
     local dashboard = playerData.vehicleDashboard
-    
+
     -- Проверяем наличие противоугонки и владельца
     local hasProtection = hasAntiTheftProtection(vehicle)
     local isOwnerPlayer = isOwner(vehicle, player)
-    
+    local admin = isAdmin()
+    local check = hasProtection and (isOwnerPlayer or admin) -- false or false = false
     -- Если иконка уже существует
     if dashboard.alarmButton then
-        -- Проверяем, нужно ли её скрыть
-        if not hasProtection or not isOwnerPlayer or not isAdmin() then
+        -- Проверяем, нужно ли её скрыть        
+        if not check then
             dashboard.alarmButton:setVisible(false)
             return
         else
@@ -95,8 +96,8 @@ local function addAlarmIconToDashboard()
         end
     end
     
-    -- Создаем иконку только если есть противоугонка и игрок владелец
-    if not hasProtection or not isOwnerPlayer then return end
+    -- Создаем иконку только если есть противоугонка и игрок владелец или админ
+    if not check then return end -- true and (false or true) = false
     
     -- Загружаем текстуры
     local alarmActivateIcon = getTexture("media/textures/AlarmActivate.png")
