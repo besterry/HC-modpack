@@ -145,7 +145,8 @@ function shouldTakeToxicDamage(player)
 end
 
 -- Функция для получения зон из серверной ModData
-local function getTZonesFromModData()
+local function getTZonesFromModData() -- Получение списка зон из ModData на клиенте
+    if isServer() then return end
     local tzones = ModData.get("TZone")
     -- Имеем таблицу формата {title = {x = x, y = y, x2 = x2, y2 = y2}}
     if not tzones then
@@ -167,7 +168,8 @@ local function getTZonesFromModData()
 end
 
 -- Группировка зон по регионам (каждые 100x100 тайлов)
-local function buildZoneCache()
+local function buildZoneCache() 
+    if isServer() then return end -- Только на клиенте для формирования кэша зон
     local tzones = getTZonesFromModData()
     if not tzones then return end -- если нет зон, то выходим
     TZoneCache = {} -- очищаем кэш
