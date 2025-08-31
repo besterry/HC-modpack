@@ -112,8 +112,8 @@ local function onInstallAntiTheft(args)
         if vehicle then 
             vehicle:getModData().antiTheft = {
                 installed = true,
-                installer = username,
-                installDate = installDate,
+                installer = args.installer,
+                installDate = args.installDate,
                 level = 1
             }
         end

@@ -31,9 +31,9 @@ commands.InstallAntiTheft = function(player, args)
     }
     
     vehicle:transmitModData()
-    args.result = true
-    args.message = "AntiTheft successfully installed"
-    args.installed = true
+    args.result = true -- не используется на клиенте
+    args.message = "AntiTheft successfully installed" -- не используется на клиенте
+    args.installer = username
     args.installDate = installDate
     args.level = 1
     args.vehicleId = vehicleId
@@ -72,7 +72,7 @@ end
 
 --Снятие противоугона
 commands.RemoveAntiTheft = function(player, args)
-    print("RemoveAntiTheft")
+    -- print("RemoveAntiTheft")
     local vehicleId = args.vehicleId
     local vehicle = getVehicleById(vehicleId)
     local username = player:getUsername()
@@ -104,7 +104,7 @@ commands.RemoveAntiTheft = function(player, args)
     local msg = username .. " [" .. coord .. "] remove anti-theft from car:" .. vehicle:getSqlId()
     writeLog("Automeh", msg)
     
-    print("sendServerCommand onRemoveAntiTheft")
+    -- print("sendServerCommand onRemoveAntiTheft")
     sendServerCommand("AntiTheft", "onRemoveAntiTheft", args)
 end
 
