@@ -50,6 +50,14 @@ Commands.toggleTZone = function(player, args) -- переключаем сост
 	sendServerCommand(MOD_NAME, "onToggleTZone", args) -- пришлось добавить этот костыль, иначе не работает (моддата трансмитится не сразу)
 end
 
+Commands.getTZones = function(player, args)
+    print("TZONE: getTZones server")
+	args = {}
+	args.zones = TZone.Data.TZone
+	sendServerCommand(player, MOD_NAME, "onTZones", args)
+end
+
+
 local OnClientCommand = function(module, command, player, args) 
 	if module == MOD_NAME and Commands[command] then
 		Commands[command](player, args)
