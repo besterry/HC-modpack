@@ -1,6 +1,6 @@
 -- Убираем циклический require
 -- require "shared/Tzone/TZone"
-
+local MOD_NAME = "TZone"
 -- Кэш зон по регионам для оптимизации
 local TZoneCache = {} -- кэш зон
 local lastPlayerPos = {x = 0, y = 0} -- последняя позиция игрока
@@ -168,9 +168,9 @@ local function getTZonesFromModData() -- Получение списка зон 
 end
 
 -- Группировка зон по регионам (каждые 100x100 тайлов)
-local function buildZoneCache() 
+local function buildZoneCache(tzones) 
     if isServer() then return end -- Только на клиенте для формирования кэша зон
-    local tzones = getTZonesFromModData()
+    if not tzones then tzones = getTZonesFromModData() end
     if not tzones then return end -- если нет зон, то выходим
     TZoneCache = {} -- очищаем кэш
     local zoneCount = 0
@@ -358,7 +358,7 @@ end
 Events.OnReceiveGlobalModData.Add(function(module, packet)
     if module == "TZone" then
         -- print("OnReceiveGlobalModData")
-        buildZoneCache()        
+        buildZoneCache(nil)        
     end
 end)
 
@@ -366,12 +366,12 @@ local MOD_NAME = "TZone"
 local Commands = {}
 Commands.onRemoveTZone = function(player, args)
     -- print("onRemoveTZone")
-    buildZoneCache()
-    
+    buildZoneCache(nil)
 end
+
 Commands.onToggleTZone = function(player, args)
     -- print("onToggleTZone")
-    buildZoneCache()    
+    buildZoneCache(nil)    
 end
 
 local OnServerCommand = function(module, command, player, args) 
@@ -382,43 +382,57 @@ end
 Events.OnServerCommand.Add(OnServerCommand)
 
 -- Инициализация при обновлении игрока
-local function initializeTZoneOnPlayerUpdate(player)
-    if not player then return end    
-    if ModData.get("TZone") then
-        print("TZONE: initializeTZoneOnPlayerUpdate")
-        buildZoneCache()
-        -- Проверяем что кэш действительно заполнен
-        local cacheNotEmpty = false
-        for k, v in pairs(TZoneCache) do -- проверяем кэш заполнен ли
-            print("TZONE: cache success filled: " , k)
-            cacheNotEmpty = true
-            break -- выходим после первого элемента
-        end        
-        -- Удаляем событие только если кэш заполнен
-        if cacheNotEmpty then
-            print("TZONE: success remove initializeTZoneOnPlayerUpdate")
-            Events.OnPlayerUpdate.Remove(initializeTZoneOnPlayerUpdate)
-        end
-    end
-end
-Events.OnPlayerUpdate.Add(initializeTZoneOnPlayerUpdate)
-
--- Инициализация при старте игры
--- Events.OnGameStart.Add(function()
---     -- Ждем немного для загрузки ModData
---     local tickHandler
---     tickHandler = function()
---         if ModData.get("TZone") then
---             -- print("OnGameStart")
---             buildZoneCache()
---             Events.OnTick.Remove(tickHandler)
+-- local function initializeTZoneOnPlayerUpdate(player)
+--     if not player then return end    
+--     if ModData.get("TZone") then
+--         print("TZONE: initializeTZoneOnPlayerUpdate")
+--         buildZoneCache(nil)
+--         -- Проверяем что кэш действительно заполнен
+--         local cacheNotEmpty = false
+--         for k, v in pairs(TZoneCache) do -- проверяем кэш заполнен ли
+--             print("TZONE: cache success filled: " , k)
+--             cacheNotEmpty = true
+--             break -- выходим после первого элемента
+--         end        
+--         -- Удаляем событие только если кэш заполнен
+--         if cacheNotEmpty then
+--             print("TZONE: success remove initializeTZoneOnPlayerUpdate")
+--             Events.OnPlayerUpdate.Remove(initializeTZoneOnPlayerUpdate)
 --         end
 --     end
---     Events.OnTick.Add(tickHandler)
--- end)
+-- end
+-- Events.OnPlayerUpdate.Add(initializeTZoneOnPlayerUpdate)
 
--- Добавляем события только на клиенте
-if isClient() then    
+if isClient() then   
+    local Commands = {}
+    Commands.onTZones = function(args)
+        if isServer() then return end
+        print("TZONE: onTZones")
+        buildZoneCache(args.zones)
+    end
+
+    local OnServerCommand = function(module, command, player, args) 
+        if module == MOD_NAME and Commands[command] then
+            Commands[command](player, args)
+        end
+    end
+    Events.OnServerCommand.Add(OnServerCommand)
+
+    local commandsReady = false
+    local function initializeTZoneClient()    
+        local player = getPlayer()
+        if not player then return end
+        if commandsReady then
+            print("TZONE: getTZones")
+            sendClientCommand(player, MOD_NAME, "getTZones", {})
+            Events.OnTick.Remove(initializeTZoneClient)
+        else 
+            commandsReady = true
+        end
+    end
+    Events.OnTick.Add(initializeTZoneClient)
+
+    -- Добавляем события только на клиенте 
     Events.OnPreUIDraw.Add(renderTZoneOverlay) -- Отрисовка тумана
     Events.OnPlayerUpdate.Add(checkZone) -- Проверка зоны
     Events.OnPlayerUpdate.Add(shouldTakeToxicDamage) -- Добавляем вызов функции урона
@@ -432,17 +446,3 @@ TZone.buildZoneCache = buildZoneCache
 TZone.shouldTakeToxicDamage = shouldTakeToxicDamage
 TZone.protectiveTZoneEquipped = protectiveTZoneEquipped
 TZone.ProtectiveMasks = ProtectiveMasks
-
-
--- local manager = ScriptManager.instance
-
--- function TZone_Tweaks()
---     -- Добавляем UseDelta ко всем защитным маскам
---     for _, maskType in ipairs(ProtectiveMasks) do
---         local item = manager:getItem("Base." .. maskType)
---         if item then
---             item:DoParam("UseDelta = " .. duration)
---         end
---     end
--- end
--- Events.OnGameBoot.Add(TZone_Tweaks)
