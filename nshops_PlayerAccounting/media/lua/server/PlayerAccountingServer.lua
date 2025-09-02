@@ -50,7 +50,7 @@ function ServerAccaunting:insert(player, event_type, coin, specialCoin, recipien
         username = player:getUsername()
     end
     local dt = getDateTimeStr()
-    local old_table = self.data[username] or {}
+    local old_table = self.data[username] or {} -- Таблица для игрока
     table.insert(old_table, {
         dt,
         event_type,
@@ -63,8 +63,30 @@ function ServerAccaunting:insert(player, event_type, coin, specialCoin, recipien
         table.remove(old_table, 1)  -- Remove the oldest record
     end
 
-    self.data[username] = old_table
-    self:transmit()
+    self.data[username] = old_table -- Таблица для игрока
+    ModData.add(MOD_NAME, self.data) -- сохраняем данные в моддате сервера
+    local args = {
+        username = username,
+        table = old_table
+    }
+    local playerObj = nil
+    local players = getOnlinePlayers()
+    if players then
+        for i = 0, players:size() - 1 do
+            local p = players:get(i)
+            if p:getUsername() == username then
+                playerObj = p
+                break
+            end
+        end
+    end
+    
+    if playerObj then
+        sendServerCommand(playerObj, "PlayerAccounting", "Insert", args)
+    end
+    --sendServerCommand(player, "BS", "CreateAccount", {account = account})
+    -- sendServerCommand(player, "PlayerAccounting", "Insert", args)
+    -- self:transmit()
 end
 
 ---@param player IsoPlayer
