@@ -37,7 +37,7 @@ function Currency.coinsToAccount(worldobjects,items,coinQuantity)
     for k,v in pairs(items) do
         v:getContainer():Remove(v)
     end
-    sendClientCommand("BS", "Deposit", {coinQuantity.coin,coinQuantity.specialCoin})
+    sendClientCommand(getPlayer(), "BS", "Deposit", {coinQuantity.coin,coinQuantity.specialCoin})
 end
 
 function Currency.CoinsToAccountObjectContextMenu(playerNum, context, items)
@@ -82,7 +82,7 @@ function Currency.linkWallet(worldobjects,wallet,player)
     local linkedTo = username..getTimestampMs()
     wallet:getModData().belongsTo = username
     wallet:getModData().linkedTo = linkedTo
-    sendClientCommand("BS", "CreateAccount", {linkedTo})
+    sendClientCommand(player,"BS", "CreateAccount", {linkedTo})
 end
 
 function Currency.LinkWalletObjectContextMenu(playerNum, context, items)
