@@ -45,7 +45,7 @@ end
 function Silencer:useSilencer(weap)
 	
 	if weap ~= nil then
-		if weap:getCanon() ~= nil then
+		if weap.getCanon and weap:getCanon() ~= nil then
 		
 			if weap:getCanon():getType() == "Silencer" 
 			or weap:getCanon():getType() == "HMSilencer" then
