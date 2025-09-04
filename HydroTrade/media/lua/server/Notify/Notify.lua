@@ -1,5 +1,5 @@
-
 Notify = {}
+Notify.lastMessage = {} -- храним 10 последних сообщений, удаляя старые
 
 local function _sendToAll(args)
     local players = getOnlinePlayers()
@@ -8,9 +8,22 @@ local function _sendToAll(args)
     end
 end
 
+local function _sendHistoryTo(player)
+    for i=1, #Notify.lastMessage do
+        local m = Notify.lastMessage[i]
+        if m then
+            sendServerCommand(player, "Notify", "chat", { msg=tostring(m.msg or ""), color=m.color, channel=m.channel, params=m.params })
+        end
+    end
+end
+
 function Notify.broadcast(msg, opts)
     opts = opts or {}
     _sendToAll({ msg=tostring(msg), color=opts.color, channel=opts.channel, params=opts.params })
+    if #Notify.lastMessage >= 10 then
+        table.remove(Notify.lastMessage, 1)
+    end
+    table.insert(Notify.lastMessage, { msg=tostring(msg), color=opts.color, channel=opts.channel, params=opts.params })
 end
 
 function Notify.toPlayer(player, msg, opts)
@@ -28,5 +41,7 @@ Events.OnClientCommand.Add(function(module, command, player, args)
         else
             Notify.broadcast(msg, opts)
         end
+    elseif module == 'Notify' and command == 'history' then
+        _sendHistoryTo(player)
     end
 end)
