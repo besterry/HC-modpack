@@ -2,8 +2,12 @@ name=HydroTrade
 id=HydroTrade_h
 description=Trade for Hydrocraft
 poster=poster.png
+
 pack=refrigeration
 tiledef=refrigeration 1101
 
 pack=signs01
 tiledef=signs01 1102
+
+pack=signTradeZone
+tiledef=signTradeZone 1103
