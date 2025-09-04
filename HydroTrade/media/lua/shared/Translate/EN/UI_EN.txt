@@ -1,6 +1,6 @@
 UI_EN = {
     -- Fix
-
+    UI_chat_system_tab = "News",
     -- New
     UI_mapspawn_SafehouseDescription = "Safehouse <LINE> <LINE> Respawn in your safehouse.",
 	UI_optionscreen_binding_OPTION_INSPECT_WEAPON = "Inspect Weapon",

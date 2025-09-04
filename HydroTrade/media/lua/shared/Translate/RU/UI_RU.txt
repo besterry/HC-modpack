@@ -1,4 +1,5 @@
 UI_RU = {
+	UI_chat_system_tab = "Новости",
 	UI_ZombieKills = "Убито зомби: ",
 	-- Main screen (lua) :
 	UI_mainscreen_laststand = "ПОСЛЕДНИЙ РУБЕЖ",
