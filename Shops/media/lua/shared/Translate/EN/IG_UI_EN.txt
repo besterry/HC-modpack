@@ -1,4 +1,6 @@
 IGUI_EN = {
+    IGUI_ATM_Sell = "ATM Sell",
+    IGUI_Sell = "Sell", 
     IGUI_SmartMarket_Title = "Smart Market - Price Analysis",
     IGUI_SmartMarket_StatusAt = "Market status at",
     IGUI_SmartMarket_TopRising = "Top 15 Rising",

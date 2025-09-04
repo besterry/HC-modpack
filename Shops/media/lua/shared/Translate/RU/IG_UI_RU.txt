@@ -1,4 +1,6 @@
 IGUI_RU = {
+    IGUI_ATM_Sell = "Банкомат: скупка",
+    IGUI_Sell = "Продать",
     IGUI_SmartMarket_Title = "Анализатор рынка",
     IGUI_SmartMarket_StatusAt = "Статус рынка на",
     IGUI_SmartMarket_TopRising = "Топ 15 роста",
