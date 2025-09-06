@@ -34,7 +34,13 @@ local EnteredBike = function(vehicle, playerObj)
 				end
 				
 				local battery = vehicle:getPartById("Battery") -- Аккумулятор				
-				if battery then battery:setCondition(100) end
+				if battery then
+					battery:setCondition(100)
+					local itm = battery:getInventoryItem()
+					if itm and itm.setUsedDelta then itm:setUsedDelta(1.0) end
+					vehicle:transmitPartItem(battery)
+				end
+				
 				
 				local tireFrontRight = vehicle:getPartById("TireFrontRight") -- Переднее правое колесо				
 				if tireFrontRight then tireFrontRight:setCondition(100) end
