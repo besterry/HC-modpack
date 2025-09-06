@@ -53,6 +53,11 @@ commands.LiftBike = function(player, args)
     local y = vehicle:getY()
     local z = vehicle:getZ()
     local square = getSquare(x, y, z)
+
+    -- Проверяем, что это велосипед
+    if not BravensBikeUtils.isBike(vehicle) then
+        return
+    end
     
     -- Удаляем старый велосипед
     vehicle:permanentlyRemove()
