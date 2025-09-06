@@ -57,6 +57,7 @@ function logger:removeFromSale(player, offerInfo)
 	local username = player:getUsername()
 	local keyId = offerInfo.vehicleKeyId
 	local price = offerInfo.price or 0
+	local sellerUsername = offerInfo.username or 'unknown'
 	local carname = offerInfo.carname
 	local carId = offerInfo.carid
 	local x = offerInfo.x or player:getX()
@@ -67,7 +68,7 @@ function logger:removeFromSale(player, offerInfo)
 	else
 		serverID = "-1"
 	end
-	local result = 'Player "'..username..'" remove car from sale. keyId: '..keyId .. '$, carname: '..carname .. ', carId: '..serverID .. ', coords: ['..math.floor(x) .. ','..math.floor(y) .. ',0]'
+	local result = 'Player "'..username..'" remove car from sale. keyId: '..keyId .. ', carname: '..carname .. ', carId: '..serverID .. ', coords: ['..math.floor(x) .. ','..math.floor(y) .. ',0]' .. ', seller: '..sellerUsername .. ', price: '..price..'$'
 	writeLog(MOD_NAME, result);
 	-- self:log(result)
 end
