@@ -26,6 +26,7 @@ module Base
 
 	sound none
 	{
-		
+        category = Vehicle, loop = false, is3D = true,
+        clip { file = media/sound/bicycle_none.wav, distanceMax = 1, volume = 0.1, }		
 	}
 }
