@@ -51,7 +51,7 @@ Commands.toggleTZone = function(player, args) -- переключаем сост
 end
 
 Commands.getTZones = function(player, args)
-    print("TZONE: getTZones server")
+    -- print("TZONE: getTZones server")
 	args = {}
 	args.zones = TZone.Data.TZone
 	sendServerCommand(player, MOD_NAME, "onTZones", args)
