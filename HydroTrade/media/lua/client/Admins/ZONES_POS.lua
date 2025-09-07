@@ -164,9 +164,9 @@ local function getCoords()
             cache_zone = "Zone: " .. getZone(player, playerX, playerY)			
 			cache_zombies = getZombieCount(player, 50)
         end
-        textManager:DrawString(UIFont.Large, screenX, screenY, cache_pos, 0.1, 0.8, 1, 1);
-        textManager:DrawString(UIFont.Large, screenX, screenY + 20, cache_zone, 0.1, 0.8, 1, 1);
-		textManager:DrawString(UIFont.Large, screenX, screenY + 40, cache_zombies, 0.1, 0.8, 1, 1);
+        textManager:DrawString(UIFont.Medium, screenX, screenY, cache_pos, 0.1, 0.8, 1, 1);
+        textManager:DrawString(UIFont.Medium, screenX, screenY + 20, cache_zone, 0.1, 0.8, 1, 1);
+		textManager:DrawString(UIFont.Medium, screenX, screenY + 40, cache_zombies, 0.1, 0.8, 1, 1);
     end
 end
 
