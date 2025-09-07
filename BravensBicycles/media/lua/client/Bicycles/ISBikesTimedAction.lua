@@ -52,7 +52,7 @@ ISBikesTimedAction.perform = function(self)
         BravensBikeUtils.addPartsWithCondition(self.vehicle, inventory, self.character)
 
         if isClient() then
-            sendClientCommand(self.character, "vehicle", "remove", { vehicle = self.vehicle:getId() })
+            sendClientCommand(self.character, "vehicle", "rmove", { vehicle = self.vehicle:getId() })
         else
             self.vehicle:permanentlyRemove()
         end

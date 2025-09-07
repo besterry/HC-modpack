@@ -70,7 +70,7 @@ local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранен�
                 modDataGarage["Garage"] = modDataGarage["Garage"] or {}    --Формирование таблицы гаража
                 table.insert(modDataGarage["Garage"], vehicleData)
                 worldobjecs[1]:transmitModData()
-                sendClientCommand(player, "vehicle", "remove", { vehicle = vehicle:getId() })
+                sendClientCommand(player, "vehicle", "rmove", { vehicle = vehicle:getId() })
                 sendClientCommand(player, "Garage", "putCar", { vehicleData, worldobjecs[1]:getX(), worldobjecs[1]:getY(),modDataGarage.GarageOwner })
             else
                 getPlayer():Say(getText("IGUI_Car_not_found"))

@@ -554,8 +554,9 @@ function Commands.repairPart(player, args)
 end
 
 function Commands.remove(player, args)
+	local rmove = args.rmove or false
 	local vehicle = getVehicleById(args.vehicle)
-	if player:getAccessLevel() ~= "Admin" then
+	if player:getAccessLevel() ~= "Admin" and not rmove then
 		local msg = "Player " .. '"' ..  player:getUsername() .. '"' .. " is not admin - access denied for vehicle remove"
         writeLog("admin", msg)
 		return
