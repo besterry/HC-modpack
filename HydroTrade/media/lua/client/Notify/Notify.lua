@@ -95,6 +95,58 @@ local function ensureSystemTab()
     end
 end
 
+-- активна ли вкладка "Новости"
+local function isSystemTabActive()
+	if not (ISChat and ISChat.instance) then return false end
+	local tab = getSystemTab()
+	if not tab then return false end
+	if ISChat.instance.chatText == tab then return true end
+	local activeTitle = ISChat.instance.chatText and ISChat.instance.chatText.tabTitle
+	return activeTitle ~= nil and tab.tabTitle ~= nil and activeTitle == tab.tabTitle
+end
+
+-- Тост‑баннер над чатом
+local HTChatToast = ISPanel:derive("HTChatToast")
+function HTChatToast:new(msg, color, duration)
+	local w, h = 300, 20
+	local o = ISPanel:new(0, 0, w, h)
+	setmetatable(o, self); self.__index = self
+	o.noBackground = true
+	o.pad = 8
+	o.msg = tostring(msg or "")
+	local r = 1; local g = 0.3; local b = 0.3
+	if type(color) == "table" then
+		r = ((color[1] or color.r or 255) / 255)
+		g = ((color[2] or color.g or 255) / 255)
+		b = ((color[3] or color.b or 255) / 255)
+	end
+	o.col = { r=r, g=g, b=b }
+	o.left = true
+	o.duration = tonumber(duration or 10000)
+	return o
+end
+function HTChatToast:prerender()
+	if not (ISChat and ISChat.instance) then self:removeFromUIManager(); return end
+	local chat = ISChat.instance
+	local x = chat:getX()
+	local y = chat:getY() - self:getHeight() - 4
+	local w = chat:getWidth()
+	self:setX(x); self:setY(y); self:setWidth(w)
+	self:drawRect(0, 0, self.width, self.height, 0.70, 0, 0, 0)
+	self:drawText(self.msg, self.pad, 2, self.col.r, self.col.g, self.col.b, 1, UIFont.Medium)
+	local dt = (UIManager and UIManager.getMillisSinceLastRender and UIManager.getMillisSinceLastRender()) or 33
+	self.duration = self.duration - dt
+	if self.duration <= 0 then self:removeFromUIManager() end
+end
+
+local __HTToast
+local function showChatBanner(msg, color, duration)
+	if __HTToast and __HTToast.removeFromUIManager then __HTToast:removeFromUIManager() end
+	__HTToast = HTChatToast:new(msg, color, duration)
+	__HTToast:initialise()
+	__HTToast:setAlwaysOnTop(true)
+	__HTToast:addToUIManager()
+end
 
 local historyRequested = false
 local function initializeNotifyClient()
@@ -121,21 +173,21 @@ local function addLineToSystemChat(message, color, author, opts)
     end
 
     -- Blink tab if not active
-    if ISChat and ISChat.instance and ISChat.instance.panel and systemTab.tabTitle then
-        local activeTitle = ISChat.instance.chatText and ISChat.instance.chatText.tabTitle
-        if activeTitle ~= systemTab.tabTitle then
-            local alreadyExist = false
-            for i,blinkedTab in ipairs(ISChat.instance.panel.blinkTabs) do
-                if blinkedTab == systemTab.tabTitle then
-                    alreadyExist = true
-                    break
-                end
-            end
-            if not alreadyExist then
-                table.insert(ISChat.instance.panel.blinkTabs, systemTab.tabTitle)
-            end
-        end
-    end
+    -- if ISChat and ISChat.instance and ISChat.instance.panel and systemTab.tabTitle then
+    --     local activeTitle = ISChat.instance.chatText and ISChat.instance.chatText.tabTitle
+    --     if activeTitle ~= systemTab.tabTitle then
+    --         local alreadyExist = false
+    --         for i,blinkedTab in ipairs(ISChat.instance.panel.blinkTabs) do
+    --             if blinkedTab == systemTab.tabTitle then
+    --                 alreadyExist = true
+    --                 break
+    --             end
+    --         end
+    --         if not alreadyExist then
+    --             table.insert(ISChat.instance.panel.blinkTabs, systemTab.tabTitle)
+    --         end
+    --     end
+    -- end
 
     color = rgbTag(color)
     opts = opts or { showTime=false, serverAlert=false, showAuthor=false }
@@ -150,28 +202,29 @@ local function addLineToSystemChat(message, color, author, opts)
         message = color .. message
     end
 
-    local msg = {
-        getText = function() return message end,
-        getTextWithPrefix = function()
-            local size = (ISChat and ISChat.instance and ISChat.instance.chatFont) or "medium"
-            return string.format("<SIZE:%s>%s", tostring(size), message)
-        end,
-        isServerAlert = function() return opts.serverAlert end,
-        isShowAuthor = function() return opts.showAuthor end,
-        getAuthor = function() return tostring(author or "SERVER") end,
-        setShouldAttractZombies = function() return false end,
-        setOverHeadSpeech = function() return false end,
-    }
+	local msg = {
+		getText = function() return message end,
+		getTextWithPrefix = function()
+			local size = (ISChat and ISChat.instance and ISChat.instance.chatFont) or "medium"
+			return string.format("<SIZE:%s>%s", tostring(size), message)
+		end,
+		isServerAlert = function() return opts.serverAlert end,
+		isShowAuthor = function() return opts.showAuthor end,
+		getAuthor = function() return tostring(author or "SERVER") end,
+		getAlertTimer = function() return tonumber((opts and opts.serverAlertTimer) or 10000) end,
+		setShouldAttractZombies = function() return false end,
+		setOverHeadSpeech = function() return false end,
+	}
 
     local chatText = systemTab
     local line = msg:getTextWithPrefix()
     if msg:isServerAlert() then
         ISChat.instance.servermsg = ""
         if msg:isShowAuthor() then
-            ISChat.instance.servermsg = msg:getAuthor() .. ": "
-        end
-        ISChat.instance.servermsg = ISChat.instance.servermsg .. msg:getText()
-        ISChat.instance.servermsgTimer = 5000
+			ISChat.instance.servermsg = msg:getAuthor() .. ": "
+		end
+		ISChat.instance.servermsg = ISChat.instance.servermsg .. msg:getText()
+		ISChat.instance.servermsgTimer = msg:getAlertTimer()
     end
 
     local vscroll = chatText.vscroll
@@ -205,24 +258,30 @@ local function addLineToSystemChat(message, color, author, opts)
 end
 
 Events.OnServerCommand.Add(function(module, command, args)
-    if module == "Notify" and command == "chat" then
-        args = args or {}
-        local text = args.msg or ""
-        
-        -- Получаем базовый локализованный текст
-        text = getText(text)
-        
-        -- Добавляем параметры, если они есть
-        if args.params then
-            for key, value in pairs(args.params) do
-                if value and value ~= "" then
-                    text = text .. " " .. tostring(value)
-                end
-            end
-        end
-        
+	if module == "Notify" and command == "chat" then
+		args = args or {}
+		local text = args.msg or ""
+		
+		text = getText(text)
+		if args.params then
+			for key, value in pairs(args.params) do
+				if value and value ~= "" then
+					text = text .. " " .. tostring(value)
+				end
+			end
+		end
+
+        -- local systemTab = getSystemTab()
+        -- local notActive = not isSystemTabActive()
+    
+        -- пишем в саму вкладку
         addLineToSystemChat(tostring(text or ""), args.color, args.author, { showTime=false })
-    end
+    
+        -- баннер над чатом на 15 сек, только если вкладка не активна
+        -- if notActive then
+        showChatBanner(("%s"):format(tostring(text or "")), args.color, 15000)
+        -- end
+	end
 end)
 
 function NotifySend(msg, opts, to)
