@@ -506,7 +506,12 @@ function Commands.getKey(player, args)
 	end
 end
 
-function Commands.repair(player, args)
+function Commands.repair(player, args) -- Починка авто до 100% через чит меню
+	if player:getAccessLevel() ~= "Admin" then
+		local msg = '"' .. player:getUsername() .. '"' .. " -> REPAIR VEHICLE TO 100%" .. " [" .. math.floor(player:getX()) .. "," .. math.floor(player:getY()) .. ",0]" .. " vehicle: " .. vehicle:getScriptName() .. "[" .. math.floor(vehicle:getX()) .. "," .. math.floor(vehicle:getY()) .. ",0]" .. " SqlId: " .. (vehicle:getModData().sqlId or "N/A") 
+        writeLog("admin", msg)
+		return
+	end
 	local vehicle = getVehicleById(args.vehicle)
 	if vehicle then
 		vehicle:repair()

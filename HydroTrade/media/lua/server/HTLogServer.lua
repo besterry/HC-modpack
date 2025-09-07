@@ -57,17 +57,17 @@ commands.repairPart = function(player, args) -- args = { vehicle = self.vehicle:
     writeLog("admin", msg)
 end
 
--- sendClientCommand(playerObj, "vehicle", "repair", { vehicle = vehicle:getId() })
-commands.repair = function(player, args) -- args = { vehicle = self.vehicle:getId() }
-    local vehicle = getVehicleById(args.vehicle)
-    if not vehicle then
-        return
-    end    
-    local msg = '"' .. player:getUsername() .. '"' .. " -> REPAIR VEHICLE TO 100%" .. " [" .. math.floor(player:getX()) .. "," .. math.floor(player:getY()) .. ",0]" ..
-    " vehicle: " .. vehicle:getScriptName() .. "[" .. math.floor(vehicle:getX()) .. "," .. math.floor(vehicle:getY()) .. ",0]" ..
-    " SqlId: " .. (vehicle:getModData().sqlId or "N/A")    
-    writeLog("admin", msg)
-end
+-- sendClientCommand(playerObj, "vehicle", "repair", { vehicle = vehicle:getId() }) -- перенесена в VehicleCommandsOv.lua
+-- commands.repair = function(player, args) -- args = { vehicle = self.vehicle:getId() }
+--     local vehicle = getVehicleById(args.vehicle)
+--     if not vehicle then
+--         return
+--     end    
+--     local msg = '"' .. player:getUsername() .. '"' .. " -> REPAIR VEHICLE TO 100%" .. " [" .. math.floor(player:getX()) .. "," .. math.floor(player:getY()) .. ",0]" ..
+--     " vehicle: " .. vehicle:getScriptName() .. "[" .. math.floor(vehicle:getX()) .. "," .. math.floor(vehicle:getY()) .. ",0]" ..
+--     " SqlId: " .. (vehicle:getModData().sqlId or "N/A")    
+--     writeLog("admin", msg)
+-- end
 
 
 local function BalanceAndSH_OnClientCommand(module, command, player, args)
