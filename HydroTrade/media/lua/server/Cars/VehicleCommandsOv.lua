@@ -557,7 +557,7 @@ function Commands.remove(player, args)
 	local rmove = args.rmove or false
 	local vehicle = getVehicleById(args.vehicle)
 	if player:getAccessLevel() ~= "Admin" and not rmove then
-		local msg = "Player " .. '"' ..  player:getUsername() .. '"' .. " is not admin - access denied for vehicle remove"
+		local msg = "Player " .. '"' ..  player:getUsername() .. '"' .. " is not admin - access denied for vehicle remove" .. " [" .. player:getX() .. "," .. player:getY() .. ",0]" .. " vehicle: " .. vehicle:getScriptName() .. "[" .. vehicle:getX() .. "," .. vehicle:getY() .. ",0]" .. " SqlId: " .. (vehicle:getModData().sqlId or "N/A")
         writeLog("admin", msg)
 		return
 	end
