@@ -48,6 +48,7 @@ IGUI_RU = {
     IGUI_My_Garage_info7 = "размещения или удаления гаража",
     IGUI_Need_Car = "Подгони машину на маркер,что бы припарковать или получи машину из гаража",
     IGUI_MyGarage_empty = "Гараж (пустой)",
+    IGUI_Garage_full = "В гараже нет места",
     IGUI_GarageIsNotEmpty = "В гараже есть авто",
     IGUI_Car_not_found = "Автомобиль не найден",
     IGUI_PlaceForCarBusy = "Мешает другой автомобиль",
