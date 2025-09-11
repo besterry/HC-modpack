@@ -407,8 +407,9 @@ if isClient() then
     local Commands = {}
     Commands.onTZones = function(args)
         if isServer() then return end
-        print("TZONE: onTZones")
-        buildZoneCache(args.zones)
+        -- print("TZONE: onTZones")
+        buildZoneCache(args.zones) -- Обновляем кэш зон
+        ModData.add(MOD_NAME, args.zones) -- Добавляем зоны в ModData (у некоторых игроков ModData не инициализируется сразу или некорректно)
     end
 
     local OnServerCommand = function(module, command, player, args) 
@@ -418,13 +419,13 @@ if isClient() then
     end
     Events.OnServerCommand.Add(OnServerCommand)
 
-    local commandsReady = false
+    local commandsReady = false -- Задержка 1 тик для отправки запроса зон с сервера (на 1м тике не отправится запрос)
     local function initializeTZoneClient()    
         local player = getPlayer()
         if not player then return end
         if commandsReady then
-            print("TZONE: getTZones")
-            sendClientCommand(player, MOD_NAME, "getTZones", {})
+            -- print("TZONE: getTZones")
+            sendClientCommand(player, MOD_NAME, "getTZones", {}) -- Запрос зон с сервера
             Events.OnTick.Remove(initializeTZoneClient)
         else 
             commandsReady = true
