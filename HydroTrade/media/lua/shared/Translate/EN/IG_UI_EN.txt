@@ -1,5 +1,11 @@
 IGUI_EN =
 {
+	IGUI_Layers = "Layers",
+	IGUI_ToxicZones = "ToxicZones",
+	IGUI_PvpZones = "PVP",
+	IGUI_TownZones = "No SafeHouse",
+	IGUI_PveZones = "PVE",
+	
 	IGUI_TradeZone_Protected = "Destruction is prohibited in the trading area",
 	IGUI_perks_Reading = "Reading",
 	-- Уведомление о переключении зоны

@@ -1,5 +1,10 @@
 IGUI_RU =
 {	
+	IGUI_Layers = "Слои",
+	IGUI_ToxicZones = "Заражение",
+	IGUI_PvpZones = "PVP",
+	IGUI_TownZones = "Запрет убежищ",
+	IGUI_PveZones = "PVE",
 	IGUI_perks_Reading = "Скорочтение",
 	IGUI_TradeZone_Protected = "Разрушения запрещены на торговой зоне",
 
