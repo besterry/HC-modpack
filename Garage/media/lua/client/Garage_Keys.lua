@@ -35,39 +35,41 @@ function keyFind.find()
 	end
 
 	--Удаление с контейнеров со всех уровеней по этажности
-	-- for x=keyFind.x-10, keyFind.x+10 do
-	-- 	for y=keyFind.y-10, keyFind.y+10 do
-	-- 		--Вычисляем максимальный Z для этой клетки
-	-- 		local maxZ = 0
-	-- 		while cell:getGridSquare(x, y, maxZ+1) do
-	-- 			maxZ = maxZ + 1
-	-- 		end
-	-- 		for z=0, maxZ do
-	-- 			local sq = cell:getGridSquare(x, y, z)
-	-- 			if sq then
-	-- 				for i=0, sq:getObjects():size()-1 do
-	-- 					local object = sq:getObjects():get(i)
-	-- 					if object:getContainer() then
-	-- 						local container = object:getContainer()
-	-- 						local items = container:getItems()
-	-- 						if items:size()~=0 then
-	-- 							local tItems = {}
-	-- 							for i = 0, items:size()-1 do
-	-- 								local item = items:get(i)
-	-- 								if item:getType() == "CarKey" and item:getKeyId()==keyFind.keyId then
-	-- 									table.insert(tItems, item)
-	-- 								end
-	-- 							end
-	-- 							for i, v in ipairs(tItems) do
-	-- 								ISRemoveItemTool.removeItem(v, getPlayer())
-	-- 							end
-	-- 						end
-	-- 					end
-	-- 				end
-	-- 			end
-	-- 		end
-	-- 	end
-	-- end
+	for x=keyFind.x-10, keyFind.x+10 do
+		for y=keyFind.y-10, keyFind.y+10 do
+			--Вычисляем максимальный Z для этой клетки
+			local maxZ = 0
+			while cell:getGridSquare(x, y, maxZ+1) do
+				maxZ = maxZ + 1
+			end
+			for z=0, maxZ do
+				local sq = cell:getGridSquare(x, y, z)
+				if sq then
+					for i=0, sq:getObjects():size()-1 do
+						local object = sq:getObjects():get(i)
+						if object:getContainer() then
+							local container = object:getContainer()
+							local items = container:getItems()
+							if items:size()~=0 then
+								local tItems = {}
+								for i = 0, items:size()-1 do
+									local item = items:get(i)
+									local md = item:getModData()
+									local owner = md and md.Owner or nil
+									if item:getType() == "CarKey" and item:getKeyId()==keyFind.keyId and not owner then
+										table.insert(tItems, item)
+									end
+								end
+								for i, v in ipairs(tItems) do
+									ISRemoveItemTool.removeItem(v, getPlayer())
+								end
+							end
+						end
+					end
+				end
+			end
+		end
+	end
 
 	keyFind.count = keyFind.count + 1
 
