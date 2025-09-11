@@ -31,10 +31,8 @@ local function drawSafehousesOnMap(self)
 			local rh = math.abs(uiY2 - uiY1)
 
 			if rw > 0.5 and rh > 0.5 then
-				-- Fill
-				self:drawRect(rx, ry, rw, rh, 0.15, 0.0, 1.0, 0.0)
-				-- Border
-				self:drawRectBorder(rx, ry, rw, rh, 0.9, 0.0, 1.0, 0.0)
+				self:drawRect(rx, ry, rw, rh, 0.10, 0.80, 0.20, 1.00) -- фиолетовая заливка
+				self:drawRectBorder(rx, ry, rw, rh, 0.90, 0.85, 0.30, 1.00) -- фиолетовая рамка
 				-- Owner label
 				local owner = sh:getOwner() or "?"
 				self:drawText(owner, rx + 2, ry + 2, 1.0, 1.0, 1.0, 1.0, UIFont.Small)
