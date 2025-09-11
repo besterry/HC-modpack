@@ -309,7 +309,7 @@ local function getModDataSizeKB(modData)
         visited = visited or {}
         if visited[t] then return 0 end
         visited[t] = true
-        
+        if not t then return 0 end
         local size = 0
         for k, v in pairs(t) do
             if type(k) == "string" then
@@ -380,7 +380,8 @@ local function GarageContextMenu(playerNum, context, worldobjects)
             local currentSizeKB = getModDataSizeKB(modDataGarage)
             local maxSizeKB = 700
             local Garage_text = getText("IGUI_Garage")
-            local vehucleCount = #worldobjects[1]:getModData()["Garage"]
+            if not modDataGarage then modDataGarage = {} end
+            local vehucleCount = #modDataGarage
             if isAdmin() then Garage_text = getText("IGUI_Admin_Garage") .. " (" .. vehucleCount .. ")" end
             local garageOption = context:addOption(Garage_text, worldobjects, nil) --Гараж
 
