@@ -195,45 +195,6 @@ item HCPiggybankopen
         	Icon                	= 	HCPiggybank,
     	}
 
-item HCWallet
-    	{
-        	WeightReduction     	= 	25,
-        	Weight              	= 	0.2,
-        	Type                	= 	Container,
-        	Capacity            	= 	2,
-        	DisplayName        	= 	Wallet,
-        	Icon                	= 	Wallet_01,
-    	}
-
-item HCWallet2
-    	{
-        	WeightReduction     	= 	25,
-        	Weight              	= 	0.2,
-        	Type                	= 	Container,
-        	Capacity            	= 	2,
-        	DisplayName        	= 	Wallet,
-        	Icon                	= 	Wallet_02,
-    	}
-
-item HCWallet3
-    	{
-        	WeightReduction     	= 	25,
-        	Weight              	= 	0.2,
-        	Type                	= 	Container,
-        	Capacity            	= 	2,
-        	DisplayName        	= 	Wallet,
-        	Icon                	= 	Wallet_03,
-    	}
-
-item HCWallet4
-    	{
-        	WeightReduction     	= 	25,
-        	Weight              	= 	0.2,
-        	Type                	= 	Container,
-        	Capacity            	= 	2,
-        	DisplayName        	= 	Wallet,
-        	Icon                	= 	Wallet_04,
-    	} 
 
 item HCSlotmachine
 	{
@@ -495,38 +456,6 @@ recipe Make Coin Press
        		Category:Engineer,
     		OnGiveXP:HCHunger_OnGiveXP,
 	}
-
-recipe Open Wallet
-    {
-    Wallet,
-    Result:HCWallet,
-    Time:15,
-    OnCreate:recipe_hcwalletmoney,
-    }
-
-recipe Open Wallet
-    {
-    Wallet2,
-    Result:HCWallet2,
-    Time:15,
-    OnCreate:recipe_hcwalletmoney,
-    }
-
-recipe Open Wallet
-    {
-    Wallet3,
-    Result:HCWallet3,
-    Time:15,
-    OnCreate:recipe_hcwalletmoney,
-    }
-
-recipe Open Wallet
-    {
-    Wallet4,
-    Result:HCWallet4,
-    Time:15,
-    OnCreate:recipe_hcwalletmoney,
-    }
 
 recipe Open Piggy Bank
     {

@@ -496,38 +496,6 @@ recipe Make Coin Press
     		OnGiveXP:HCHunger_OnGiveXP,
 	}
 
-recipe Open Wallet
-    {
-    Wallet,
-    Result:HCWallet,
-    Time:15,
-    OnCreate:recipe_hcwalletmoney,
-    }
-
-recipe Open Wallet
-    {
-    Wallet2,
-    Result:HCWallet2,
-    Time:15,
-    OnCreate:recipe_hcwalletmoney,
-    }
-
-recipe Open Wallet
-    {
-    Wallet3,
-    Result:HCWallet3,
-    Time:15,
-    OnCreate:recipe_hcwalletmoney,
-    }
-
-recipe Open Wallet
-    {
-    Wallet4,
-    Result:HCWallet4,
-    Time:15,
-    OnCreate:recipe_hcwalletmoney,
-    }
-
 recipe Open Piggy Bank
     {
     HCPiggybank,

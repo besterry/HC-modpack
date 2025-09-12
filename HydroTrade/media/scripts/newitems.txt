@@ -4,7 +4,7 @@ module Base
 
     item Money
     {
-        DisplayCategory = Junk,
+        DisplayCategory = Money,
         Weight	=	0.01,
         Type	=	Normal,
         DisplayName	=	Money,
@@ -1894,46 +1894,90 @@ module Base
 
 	item Wallet
 	{
-	    DisplayCategory = Junk,
+	    DisplayCategory = Container,
 		Weight	=	0.2,
-		Type	=	Normal,
+		Type	=	Container,
+		Capacity = 3,
+		CanBeEquipped = Wallet,
+		BodyLocation = Wallet,
 		DisplayName	=	Wallet,
 		Tooltip = Tooltip_wallet,
 		Icon	=	Wallet_01,
-		WorldStaticModel = Wallet,
+        AcceptItemFunction = WalletContainers.AcceptItemFunc,
+        Tags = BagsFillException,
+		OpenSound = OpenWallet,
+		CloseSound = CloseWallet,
+		PutInSound = StoreItemWallet,
+        WeightReduction	=	80,
+        ClothingItem    =   Wallet_Clothes,
+        BloodLocation   =   Bag,
+        RunSpeedModifier = 1.00,
 	}
 
 	item Wallet2
 	{
-	    DisplayCategory = Junk,
+	    DisplayCategory = Container,
 		Weight	=	0.2,
-		Type	=	Normal,
+		Type	=	Container,
+		Capacity = 3,
+		CanBeEquipped = Wallet,
+		BodyLocation = Wallet,
 		DisplayName	=	Wallet,
 		Tooltip = Tooltip_wallet,
-		Icon	=	Wallet_02,
-		WorldStaticModel = Wallet2,
+		Icon	=	Wallet_01,
+        AcceptItemFunction = WalletContainers.AcceptItemFunc,
+        Tags = BagsFillException,
+		OpenSound = OpenWallet,
+		CloseSound = CloseWallet,
+		PutInSound = StoreItemWallet,
+        WeightReduction	=	80,
+        ClothingItem    =   Wallet_Clothes,
+        BloodLocation   =   Bag,
+        RunSpeedModifier = 1.00,
 	}
 
 	item Wallet3
 	{
-	    DisplayCategory = Junk,
+	    DisplayCategory = Container,
 		Weight	=	0.2,
-		Type	=	Normal,
+		Type	=	Container,
+		Capacity = 3,
+		CanBeEquipped = Wallet,
+		BodyLocation = Wallet,
 		DisplayName	=	Wallet,
 		Tooltip = Tooltip_wallet,
-		Icon	=	Wallet_03,
-		WorldStaticModel = Wallet3,
+		Icon	=	Wallet_01,
+        AcceptItemFunction = WalletContainers.AcceptItemFunc,
+        Tags = BagsFillException,
+		OpenSound = OpenWallet,
+		CloseSound = CloseWallet,
+		PutInSound = StoreItemWallet,
+        WeightReduction	=	80,
+        ClothingItem    =   Wallet_Clothes,
+        BloodLocation   =   Bag,
+        RunSpeedModifier = 1.00,
 	}
 
 	item Wallet4
 	{
-	    DisplayCategory = Junk,
+	    DisplayCategory = Container,
 		Weight	=	0.2,
-		Type	=	Normal,
+		Type	=	Container,
+		Capacity = 3,
+		CanBeEquipped = Wallet,
+		BodyLocation = Wallet,
 		DisplayName	=	Wallet,
 		Tooltip = Tooltip_wallet,
-		Icon	=	Wallet_04,
-		WorldStaticModel = Wallet4,
+		Icon	=	Wallet_01,
+        AcceptItemFunction = WalletContainers.AcceptItemFunc,
+        Tags = BagsFillException,
+		OpenSound = OpenWallet,
+		CloseSound = CloseWallet,
+		PutInSound = StoreItemWallet,
+        WeightReduction	=	80,
+        ClothingItem    =   Wallet_Clothes,
+        BloodLocation   =   Bag,
+        RunSpeedModifier = 1.00,
 	}
 
 	item WeddingRing_Man
