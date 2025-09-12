@@ -244,8 +244,8 @@ module LabRecipes {
 		OnTest:LabRecipes_IsNearWorkbench,
 	}
 	recipe DecAssembleCaduceus {
-		FrnGolgIngot=2,
-		FrnSilverIngot=2,
+		HCGoldingot=2,
+		HCSilveringot=2,
 		Wire=1,
 		WeldingRods=4,
 		BlowTorch=5,
@@ -459,7 +459,7 @@ module LabRecipes {
 	recipe FrnMakeGolgIngot {
 		FrnGolgNugget=20,
 		FrnIngotMold=1,
-		Result:FrnGolgIngot=1,
+		Result:HCGoldingot=1,
 		Sound:Blow_Torch_B,
 		Time:200.0,
 		Category:Welding,
@@ -471,7 +471,7 @@ module LabRecipes {
 	recipe FrnMakeSilverIngot {
 		FrnSilverNugget=20,
 		FrnIngotMold=1,
-		Result:FrnSilverIngot=1,
+		Result:HCSilveringot=1,
 		Sound:Blow_Torch_B,
 		Time:200.0,
 		Category:Welding,
