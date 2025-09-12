@@ -411,6 +411,7 @@ local function GarageContextMenu(playerNum, context, worldobjects)
                 for k, v in pairs(worldobjects[1]:getModData()["Garage"]) do
                     if not v.owner then v.owner = "" end
                     local carSizeKB = getModDataSizeKB(v)
+                    -- print(v.vehicleFullName .. " ".. v.oldSqlid)
                     myGarageSubMenu:addOption( k .. ". " .. 
                         getText("IGUI_VehicleName" .. getText(v.scriptName)) ..
                         " [H " .. v.oldSqlid .. " KT] " .. v.owner .. " [" .. carSizeKB .. "m2]",
@@ -429,7 +430,7 @@ local function GarageContextMenu(playerNum, context, worldobjects)
                 local carSizeKB = getModDataSizeKB(vehicleData)
                 local NameCar = getText("IGUI_Put_in_garage") ..
                     getText("IGUI_VehicleName" .. getText(vehicle:getScript():getName())) ..
-                    " (H " .. vehicle:getModData().sqlId .. " KT) [+" .. carSizeKB .. "m2]"
+                    " (H " .. vehicle:getModData().sqlId .. " KT) [~" .. carSizeKB .. "m2]"
                 if maxSizeKB - currentSizeKB - carSizeKB <= 0 then
                     subMenu:addOption(getText("IGUI_Garage_full"), worldobjects, nil, playerNum, vehicle)
                 else
