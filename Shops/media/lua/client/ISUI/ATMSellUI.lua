@@ -9,14 +9,28 @@ ATMSellUI.MEDIUM_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Medium):getL
 local width = 650
 local height = 450
 
-local function buildSellList(character)
+-- функция для получения актуального списка продажи
+local function GetSellItems(callback)
+    sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
+    local receiveServerCommand
+    receiveServerCommand = function(module, command, args)
+        if module ~= 'shopItems' then return; end
+        if command == 'onGetData' then
+            if callback then callback(args['forSellItems']) end
+            Events.OnServerCommand.Remove(receiveServerCommand)            
+        end
+    end
+    Events.OnServerCommand.Add(receiveServerCommand)
+end
+
+local function buildSellList(character, sellItems)
 	local list = {}
 	local inv = character:getInventory():getItems()
 	for i = 0, inv:size() - 1 do
 		local item = inv:get(i)
 		if not (item:isEquipped() or item:isFavorite()) then
 			local itemType = item:getFullType()
-			local itemSell = Shop.Sell[itemType]
+			local itemSell = sellItems[itemType]
 			local isBroken = item:isBroken()
 			if not (Shop.SellisBlacklist and itemSell) then
 				if not Currency.Coins[itemType] then
@@ -47,6 +61,17 @@ local function buildSellList(character)
 		end
 	end
 	return list
+end
+
+function ATMSellUI:refreshItems()
+	if not self.sellItems then return end
+	
+	self.itemsToSell = buildSellList(self.player, self.sellItems)
+	self.itemsList:clear()
+	for _, v in ipairs(self.itemsToSell) do
+		self.itemsList:addItem(v.type, v)
+	end
+	self:updateTotals()
 end
 
 local function drawSellItem(self, y, item, alt)
@@ -88,6 +113,13 @@ function ATMSellUI:show(player, atmWo)
 		ATMSellUI.instance:initialise()
 		ATMSellUI.instance:instantiate()
 	end
+	
+	-- Получаем актуальный список продажи
+	GetSellItems(function(sellItems)
+		ATMSellUI.instance.sellItems = sellItems
+		ATMSellUI.instance:refreshItems()
+	end)
+	
 	-- координаты банкомата для авто‑закрытия
 	local sq = atmWo and atmWo:getSquare() or player:getSquare()
 	ATMSellUI.instance.atmX = sq:getX()
@@ -155,6 +187,7 @@ function ATMSellUI:render()
 
 	ISCollapsableWindow.render(self);
 end
+
 function ATMSellUI:createChildren()
 	ISCollapsableWindow.createChildren(self);
 
@@ -248,11 +281,9 @@ function ATMSellUI:createChildren()
 		self.totalSpecialCoinLabel:setVisible(false)
 	end
 
-	self.itemsToSell = buildSellList(self.player)
+	-- Убираем инициализацию списка отсюда - она будет в refreshItems
+	self.itemsToSell = {}
 	self.itemsList:clear()
-	for _, v in ipairs(self.itemsToSell) do
-		self.itemsList:addItem(v.type, v)
-	end
 	self:updateTotals()
 end
 
