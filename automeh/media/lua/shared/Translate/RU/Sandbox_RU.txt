@@ -55,4 +55,7 @@ Sandbox_RU = {
     Sandbox_PriceDeleteHotwireBlackMarket = "Цена снятия взлома у ТД",
     Sandbox_PriceDeleteHotwireBlackMarket_tooltip = "Цена ремонта замка зажигания у темного дельца",
 
+    Sandbox_AntiTheftPrice = "Цена противоугонки",
+    Sandbox_AntiTheftEnabled = "Установка противоугонки",
+
 }
