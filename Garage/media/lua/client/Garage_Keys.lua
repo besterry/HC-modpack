@@ -37,7 +37,7 @@ function keyFind.find()
 	--Удаление с контейнеров со всех уровеней по этажности
 	for x=keyFind.x-10, keyFind.x+10 do
 		for y=keyFind.y-10, keyFind.y+10 do
-			local sq = cell:getGridSquare(x, y, z)
+			local sq = cell:getGridSquare(x, y, 0)
 			if sq then
 				for i=0, sq:getObjects():size()-1 do
 					local object = sq:getObjects():get(i)
