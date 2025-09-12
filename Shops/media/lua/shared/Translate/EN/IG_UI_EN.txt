@@ -1,4 +1,5 @@
 IGUI_EN = {
+    IGUI_RemovePlayerShop = "Remove Player Shop",
     IGUI_ATM_Sell = "ATM Sell",
     IGUI_Sell = "Sell", 
     IGUI_SmartMarket_Title = "Smart Market - Price Analysis",

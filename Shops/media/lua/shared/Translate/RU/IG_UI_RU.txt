@@ -1,4 +1,5 @@
 IGUI_RU = {
+    IGUI_RemovePlayerShop = "Убрать магазин",
     IGUI_ATM_Sell = "Банкомат: скупка",
     IGUI_Sell = "Продать",
     IGUI_SmartMarket_Title = "Анализатор рынка",
