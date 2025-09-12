@@ -3,9 +3,9 @@ WalletContainers_Client = WalletContainers_Client or {}
 local function isWalletItem(item)
     local itemType = item:getFullType()
     if itemType == "Base.Wallet" then return true end
-    if itemType == "Wallet2" then return true end
-    if itemType == "Wallet3" then return true end
-    if itemType == "Wallet4" then return true end
+    if itemType == "Base.Wallet2" then return true end
+    if itemType == "Base.Wallet3" then return true end
+    if itemType == "Base.Wallet4" then return true end
     return false
 end
 
