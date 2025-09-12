@@ -1,8 +1,12 @@
 WalletContainers_Client = WalletContainers_Client or {}
 
 local function isWalletItem(item)
-    if not item or not instanceof(item, "InventoryItem") then return false end
-    return item:canBeEquipped() == "Wallet" or item:getBodyLocation() == "Wallet"
+    local itemType = item:getFullType()
+    if itemType == "Base.Wallet" then return true end
+    if itemType == "Wallet2" then return true end
+    if itemType == "Wallet3" then return true end
+    if itemType == "Wallet4" then return true end
+    return false
 end
 
 local function onWearWallet(player, item)
