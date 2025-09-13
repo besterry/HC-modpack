@@ -43,21 +43,21 @@ function ZipContainer:new(container)
     local o = {}
     setmetatable(o, self)
     self.__index = self
-    if not self.isValid(container) then
+    if not ZipContainer.isValid(container) then
         return
     end
     ---@type ItemContainer
-    self.itemContainer = container
+    o.itemContainer = container
     ---@type function
-    self.base_isItemAllowed = container.isItemAllowed
+    o.base_isItemAllowed = container.isItemAllowed
     ---@type IsoObject
-    self.isoObject = container:getParent()
+    o.isoObject = container:getParent()
     if not o.isoObject:getModData()[MOD_NAME] then
         o.isoObject:getModData()[MOD_NAME] = {}
     end
     ---@type zipTable
-    self.modData = o.isoObject:getModData()[MOD_NAME]
-    return self
+    o.modData = o.isoObject:getModData()[MOD_NAME]
+    return o
 end
 
 ---@param container ItemContainer
@@ -365,89 +365,71 @@ end
 
 ---@param items InventoryItem[]
 function ZipContainer:addItems(items)
-    for key, item in pairs(items) do
-        if not self.itemContainer:contains(item) then
-            return
-        end
-        local type = item:getFullType()
-        local typeTable = self.modData[type] or {} --[[@as zipTable]]
-        local resultTable = {
-            id = item:getID(),
-            condition = item:getCondition(),
-            weight = item:getUnequippedWeight(),
-            actualWeight = item:getActualWeight(),
-            isCustomWeight = item:isCustomWeight(),
-            age = item:getAge(),
-            isBroken = item:isBroken(),
-            haveBeenRepaired = item:getHaveBeenRepaired(),
-        }
-        -- print('item:getVisual(): ', item:getVisual()) -- относится к одежде. Там много параметров. Вероятно проще запретить хранить одежду
-        -- print('item:getVisual():toString() ', item:getVisual():toString())
-        -- print('item:getColor() ', item:getColor())
-        -- print('item:getColor():toString() ', item:getColor():toString())
-        -- шина вес 10, давление 24, сцеп 1.27
-        -- print('getHaveBeenRepaired ', item:getHaveBeenRepaired())
-        -- print(':getItemCapacity()', item:getItemCapacity()) -- похоже для контейнеров
-        -- print(':getMaxCapacity()', item:getMaxCapacity()) -- макс вместимость
-        -- setItemCapacity
-        -- print(':getWeight()', item:getWeight()) -- setWeight
-        -- print(':getActualWeight()', item:getActualWeight()) -- setActualWeight
-        -- print(':getExtraItemsWeight()', item:getExtraItemsWeight()) -- 
-        -- print(':isCustomWeight()', item:isCustomWeight()) -- setCustomWeight
-        -- print(':getContentsWeight()', item:getContentsWeight()) -- 
-        -- print(':getEquippedWeight()', item:getEquippedWeight()) -- 
-        -- print(':getUnequippedWeight()', item:getUnequippedWeight()) -- 
-        -- print("mediaDataOnSave:",resultTable['mediaData'])
+    for _, item in pairs(items) do
+        if self.itemContainer:contains(item) then
+            local type = item:getFullType()
+            local typeTable = self.modData[type] or {} --[[@as zipTable]]
+            local resultTable = {
+                id = item:getID(),
+                condition = item:getCondition(),
+                weight = item:getUnequippedWeight(),
+                actualWeight = item:getActualWeight(),
+                isCustomWeight = item:isCustomWeight(),
+                age = item:getAge(),
+                isBroken = item:isBroken(),
+                haveBeenRepaired = item:getHaveBeenRepaired(),
+            }
 
-        local capacity = item:getItemCapacity()
-        local maxCapacity = item:getMaxCapacity()
+            local capacity = item:getItemCapacity()
+            local maxCapacity = item:getMaxCapacity()
 
-        resultTable['modData'] = item:getModData()
-        resultTable['mediaData'] = item:getMediaData()
-        
-        if item:getFullType() == "Base.Notebook" then
-            item = item --[[@as Literature]]
-            resultTable['displayName'] = item:getDisplayName()
-            resultTable['customPages'] =item:getCustomPages()
-        end
+            resultTable['modData'] = item:getModData()
+            resultTable['mediaData'] = item:getMediaData()
+            
+            if item:getFullType() == "Base.Notebook" then
+                item = item --[[@as Literature]]
+                resultTable['displayName'] = item:getDisplayName()
+                resultTable['customPages'] = item:getCustomPages()
+            end
 
-        if item:getFullType() == "Base.SkillRecoveryJournal" then
-            resultTable['displayName'] = item:getDisplayName()
+            if item:getFullType() == "Base.SkillRecoveryJournal" then
+                resultTable['displayName'] = item:getDisplayName()
+            end
+            if instanceof(item, 'Key') then
+                resultTable['keyId'] = item:getKeyId()
+                resultTable['displayName'] = item:getDisplayName()
+            end
+            if instanceof(item, 'AlarmClock') or instanceof(item, "AlarmClockClothing") then
+                item = item --[[@as AlarmClock]]
+                resultTable['isAlarmSet'] = item:isAlarmSet()
+                resultTable['hour'] = item:getHour()
+                resultTable['minute']= item:getMinute()
+            end
+            if capacity ~= -1 then
+                resultTable['capacity'] = capacity
+            end
+            if maxCapacity ~= -1 then
+                resultTable['maxCapacity'] = maxCapacity
+            end
+            if item:isCooked() then
+                resultTable['isCooked'] = item:isCooked()
+                resultTable['cookedString'] = item:getCookedString()
+            end
+            if item:isBurnt() then
+                resultTable['isBurnt'] = item:isBurnt()
+                resultTable['burntString'] = item:getBurntString()
+            end
+            if item:IsDrainable() then
+                local drainableItem = item --[[@as DrainableComboItem]]
+                resultTable['delta'] = drainableItem:getDelta()
+            end
+            if item:IsFood() then
+                local foodItem = item --[[@as Food]]
+                resultTable['hunger'] = foodItem:getHungChange()
+            end
+            table.insert(typeTable, resultTable)
+            self.modData[type] = typeTable
         end
-        if instanceof(item, 'Key') then
-            resultTable['keyId'] = item:getKeyId()
-            resultTable['displayName'] = item:getDisplayName()
-        end
-        if instanceof(item, 'AlarmClock') or instanceof(item, "AlarmClockClothing") then
-            item = item --[[@as AlarmClock]]
-            resultTable['isAlarmSet'] = item:isAlarmSet()
-            resultTable['hour'] = item:getHour()
-            resultTable['minute']= item:getMinute()
-        end
-        if capacity ~= -1 then
-            resultTable['capacity'] = capacity
-        end
-        if maxCapacity ~= -1 then
-            resultTable['maxCapacity'] = maxCapacity
-        end
-        if item:isCooked() then
-            resultTable['isCooked'] = item:isCooked()
-            resultTable['cookedString'] = item:getCookedString()
-        end
-        if item:isBurnt() then
-            resultTable['isBurnt'] = item:isBurnt()
-            resultTable['burntString'] = item:getBurntString()
-        end
-        if item:IsDrainable() then
-            local drainableItem = item --[[@as DrainableComboItem]]
-            resultTable['delta'] = drainableItem:getDelta()
-        end
-        if item:IsFood() then -- TODO: обрабатывать все свойства
-            local foodItem = item --[[@as Food]]
-            resultTable['hunger'] = foodItem:getHungChange()
-        end
-        table.insert(typeTable, resultTable)
-        self.modData[type] = typeTable
     end
     -- self:setModData()
 end
@@ -455,19 +437,17 @@ end
 ---@param items InventoryItem[]
 function ZipContainer:removeItems(items)
     for _, item in pairs(items) do
-        if self.itemContainer:contains(item) then
-            return
-        end
-        local type = item:getFullType()
-        local id = item:getID()
-        local typeTables = self.modData[type] or {}
-        for idx, typeTable in ipairs(typeTables) do
-            -- print('typeTable', bcUtils.dump(typeTable))
-            if typeTable and typeTable.id == id then
-                table.remove(typeTables, idx)
+        if not self.itemContainer:contains(item) then
+            local type = item:getFullType()
+            local id = item:getID()
+            local typeTables = self.modData[type] or {}
+            for idx, typeTable in ipairs(typeTables) do
+                if typeTable and typeTable.id == id then
+                    table.remove(typeTables, idx)
+                end
             end
+            self.modData[type] = typeTables
         end
-        self.modData[type] = typeTables
     end
     -- self:setModData()
 end

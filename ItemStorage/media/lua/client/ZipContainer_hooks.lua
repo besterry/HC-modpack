@@ -82,17 +82,13 @@ function ISDestroyStuffAction_patch:isValid()
 end
 
 function ISInventoryPaneContextMenu_patch.isAnyAllowed(container, items)
-    -- local zipContainer = ZipContainer:new(container)
     if ZipContainer.isValid(container) then
-        local result = nil
+        local result = true
         items = ISInventoryPane.getActualItems(items)
         for _, item in ipairs(items) do
-            if container:isItemAllowed(item) and ZipContainer.isWhiteListed(item) then
-                if result == nil then
-                    result = true
-                end
-            else
+            if not (container:isItemAllowed(item) and ZipContainer.isWhiteListed(item)) then
                 result = false
+                break
             end
         end
         return result
@@ -334,20 +330,27 @@ end
 
 ---@param ta ISInventoryTransferAction
 local function onTransferComplete(ta)
-    local threshold = 50 -- порог тиков для дебаунса (таймаут)
+    local threshold = 50
     local item, sourceContainer, targetContainer = ta.item, ta.srcContainer, ta.destContainer
     local sourceZip = ZipContainer:new(sourceContainer)
     local targetZip = ZipContainer:new(targetContainer)
+
+    local function mkKey(zip, op)
+        local o = zip and zip.isoObject
+        if not o then return 'zip:none:' .. op end
+        return string.format('zip:%d,%d,%d:%s', math.floor(o:getX()), math.floor(o:getY()), math.floor(o:getZ()), op)
+    end
+
     if sourceZip then
         sourceZip:removeItems({item})
-        utils.debounce('onTransferComplete.removeItems', threshold, function (_, acc) -- дебаунс функция, выполнится через 50 тиков после последнего переноса элемента. Чтобы записать моддату для всех элементов сразу. Иначе тормозит
+        utils.debounce(mkKey(sourceZip, 'rm'), threshold, function (_, acc)
             sourceZip:setModData()
             sourceZip:makeLog(acc, 'GET')
         end, item)
     end
     if targetZip then
         targetZip:addItems({item})
-        utils.debounce('onTransferComplete.addItems', threshold, function (_, acc)
+        utils.debounce(mkKey(targetZip, 'add'), threshold, function (_, acc)
             targetZip:setModData()
             targetZip:makeLog(acc, 'PUT')
         end, item)
