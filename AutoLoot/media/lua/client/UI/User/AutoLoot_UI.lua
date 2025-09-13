@@ -197,6 +197,14 @@ function UI_AutoLoot:initialise()
 	self:addChild(self.EnableClothCheckBox)
 	self.EnableClothCheckBox:addOption(getText("IGUI_Cloth"));
 
+	--Чекбокс Еда
+	self.EnableFoodCheckBox = ISTickBox:new(x + 240, y + 220, 10, 10, "", self, UI_AutoLoot.onEnableFoodCheckbox)
+	self.EnableFoodCheckBox:initialise()
+	self.EnableFoodCheckBox:instantiate()
+	self.EnableFoodCheckBox.selected[1] = PM.AutolootDisplayCategory["Food"]
+	self:addChild(self.EnableFoodCheckBox)
+	self.EnableFoodCheckBox:addOption(getText("IGUI_Food"));
+
 	--кнопка Закрыть
 	self.cancel = ISButton:new(self:getWidth()/4 - btnWid/2, self:getHeight() - padBottom - btnHgt-5, btnWid, btnHgt, getText("UI_Close"), self, UI_AutoLoot.onClick)
 	self.cancel.internal = "CANCEL"
@@ -277,14 +285,24 @@ function UI_AutoLoot:onEnableClothCheckbox() --Чекбокс Cloth
 	end    
 end
 
-function UI_AutoLoot:onEnableToolCheckbox() --Чекбокс Tool,FoodN
+function UI_AutoLoot:onEnableFoodCheckbox() --Чекбокс Food
+	local isCheckboxSelected = self.EnableFoodCheckBox.selected[1]
+	if isCheckboxSelected then
+		PM.AutolootDisplayCategory["Food"] = true
+		PM.AutolootDisplayCategory["FoodN"] = true --Батончики/Инъекторы
+	else
+		PM.AutolootDisplayCategory["Food"] = nil
+		PM.AutolootDisplayCategory["FoodN"] = nil  --Батончики
+	end
+	saveConfig()
+end
+
+function UI_AutoLoot:onEnableToolCheckbox() --Чекбокс Tool
 	local isCheckboxSelected = self.EnableToolCheckBox.selected[1]
 	if isCheckboxSelected then
-		PM.AutolootDisplayCategory["Tool"] = true
-		PM.AutolootDisplayCategory["FoodN"] = true --Батончики
+		PM.AutolootDisplayCategory["Tool"] = true		
 	else
-		PM.AutolootDisplayCategory["Tool"] = nil
-		PM.AutolootDisplayCategory["FoodN"] = nil  --Батончики
+		PM.AutolootDisplayCategory["Tool"] = nil		
 	end
 	saveConfig()
 end

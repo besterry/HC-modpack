@@ -15,6 +15,7 @@ IGUI_EN = {
 	IGUI_WepAmmoMag = "Weapon stores",
 	IGUI_WeaponPart = "Weapon Parts",
 	IGUI_Cloth = "Clothes",
+	IGUI_Food = "Food/Medic",
 	IGUI_TimeLeftActivate = "Active:"
 	IGUI_Day = "d",
 	IGUI_Hour = "h",
