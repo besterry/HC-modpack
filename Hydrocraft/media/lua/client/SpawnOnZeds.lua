@@ -93,11 +93,11 @@ local function OnLoadSpawnOnZeds()
 	end
 
 	-- Weapons/Tools --
-	LOOT["Base.Lighter"] = 1
-	LOOT["Base.Matches"] = 1
-	LOOT["Hydrocraft.HCSurvivalaxe"] = 0.06
-	LOOT["Base.Hammer"] = 0.3
-	LOOT["Base.Saw"] = 0.3
+	LOOT["Base.Lighter"] = 0.4
+	LOOT["Base.Matches"] = 0.6
+	LOOT["Hydrocraft.HCSurvivalaxe"] = 0.05
+	LOOT["Base.Hammer"] = 0.2
+	LOOT["Base.Saw"] = 0.2
 	LOOT["Hydrocraft.HCPliers"] = 0.05
 	LOOT["Base.TinOpener"] = 0.1
 	LOOT["Hydrocraft.HCJackknife"] = 0.05
@@ -115,11 +115,11 @@ local function OnLoadSpawnOnZeds()
 
 	if(SPAWN_HC_GUNS) then --if you edit these values, also edit the value in the else clause
 		LOOT["Hydrocraft.HCMagAA12"] = 0.05
-		LOOT["Hydrocraft.HCAA12"] = 0.06
+		LOOT["Hydrocraft.HCAA12"] = 0.01
 		LOOT["Hydrocraft.HCUziSilencer"] = 0.05
-		LOOT["Hydrocraft.HCUzi"] = 0.06
+		LOOT["Hydrocraft.HCUzi"] = 0.02
 		LOOT["Hydrocraft.HCMagUZI"] = 0.05
-		LOOT["Hydrocraft.HCShotgunSilencer"] = 0.05
+		LOOT["Hydrocraft.HCShotgunSilencer"] = 0.02
 	else
 		LOOT[NOTHING] = LOOT[NOTHING] + 0.32 --prevents disabling guns from boosting spawn rates.
 	end
