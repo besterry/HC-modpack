@@ -6,13 +6,29 @@ PM.AutolootDurationAction = PM.AutolootDurationAction or {} --Время дей�
 PM.TimeActivateAutoLoot = PM.TimeActivateAutoLoot or {} --Когда был куплен автолут
 PM.AutoLootMessage = PM.AutoLootMessage or {} --True/false включено ли "оповещение о собираемых предметах над головой игрока"
 
+
+local function GetSellItems(callback)
+    sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
+    local receiveServerCommand
+    receiveServerCommand = function(module, command, args)
+        if module ~= 'shopItems' then return; end
+        if command == 'onGetData' then
+            if callback then callback(args['forSellItems']) end
+            Events.OnServerCommand.Remove(receiveServerCommand)            
+        end
+    end
+    Events.OnServerCommand.Add(receiveServerCommand)
+end
+
 local function reloadSell() --Обновление списка предметов кажды игровой час
     PM.desiredItemsSet = {}
-    for fulltype, item in pairs(Shop.Sell) do
-        PM.desiredItemsSet[fulltype] = true
-    end
+    GetSellItems(function(forSellItems)
+        for fulltype, item in pairs(forSellItems) do
+            PM.desiredItemsSet[fulltype] = true
+        end
+    end)
 end
-Events.EveryTenMinutes.Add(reloadSell)
+Events.EveryHours.Add(reloadSell)
 
 local checkTimeActivate = false
 local function calculateTime() --Рассчет оставшегося времени активации
@@ -61,7 +77,8 @@ Events.OnTick.Add(GetTimeActivateAutoLootForcalculateTime)
 local function AutoLoot(zombie) --автолут
     if PM.Autoloot and checkTimeActivate then
         local player = getPlayer()
-        local zombieInventory = zombie:getInventory()
+        -- local zombieInventory = zombie:getInventory()
+        local zombieInventory = zombie
         local inv
         --Если не задана сумка в UI        
         if type(PM.InventorySelected) == "table" then
@@ -89,19 +106,20 @@ local function AutoLoot(zombie) --автолут
         --Проверка категории предмета с выбранными в опциях
         local function isDesiredItem(item)
             local itemDisplayCategory = item:getDisplayCategory()
-            --print("FIND ITEM:",item:getFullType()," Category:",itemDisplayCategory)
-            if PM.AutolootDisplayCategory[itemDisplayCategory] then
+            -- print("FIND ITEM:",item:getFullType()," Category:",itemDisplayCategory)
+            if PM.AutolootDisplayCategory[itemDisplayCategory] or itemDisplayCategory == nil then                
                 local itemType = item:getFullType()
+                -- print("FIND ITEM:",item:getFullType()," Category:",itemDisplayCategory)
                 return PM.desiredItemsSet[itemType] == true
             end
         end
 
         --Автолут, если есть место
         local lootCount = zombieInventory:getItems():size()
-        -- print("LOOT SIZE:",lootCount)
+        -- print("========== LOOT SIZE:",lootCount)
         for i = lootCount, 1, -1 do
             local item = zombieInventory:getItems():get(i - 1)
-            -- print("LOL ITEM:",i," - ",item:getFullType())
+            -- print("+ LOL ITEM:",i," - ",item:getFullType())
             if isDesiredItem(item) then               
                 if inv ~= nil then
                     if (inv:getCapacityWeight() + item:getWeight()) <= capacitybag then
@@ -122,12 +140,79 @@ local function AutoLoot(zombie) --автолут
         end
     end
 end
---Events.OnZombieDead.Add(onZombieKill)
-local old_event_trigger = Events.OnZombieDead.Add--переопределение функции OnZombieDead, что бы код выполнялся после срабатывания всех зависимых функций
-Events.OnZombieDead.Add = function (fn_handler)
-    local custom_handler = function (zombie)
-        fn_handler(zombie)
-        AutoLoot(zombie)
-    end
-    old_event_trigger(custom_handler)
+
+-- local function requestServerFill(corpse)
+--     if not isClient() then return end
+--     if not corpse then return end
+--     local inv = corpse:getContainer()
+--     print("requestServerFill", inv)
+-- 	inv:requestServerItemsForContainer() -- ванильный запрос, как при осмотре
+-- end
+-- --Events.OnZombieDead.Add(onZombieKill)
+-- local function AutoLoot_OnZombieDead(zombie)
+--     local zombieInventory = zombie:getInventory()
+--     local parent = zombieInventory:getParent()
+--     if parent and instanceof(parent, "IsoDeadBody") then
+--         requestServerFill(parent)
+--     end
+
+--     local tries = 20 -- ~1 секунды задержки
+--     local function waitAndLoot()
+--         if tries <= 1 then
+--             Events.OnTick.Remove(waitAndLoot)
+--             AutoLoot(zombie)
+--             return
+--         end
+--         tries = tries - 1
+--     end
+--     Events.OnTick.Add(waitAndLoot)
+-- end
+-- Events.OnZombieDead.Add(AutoLoot_OnZombieDead)
+local function requestVanillaFill(corpse)
+	if not corpse then return end
+	local inv = corpse:getContainer()
+	if not inv or inv:isExplored() then return end
+	inv:requestServerItemsForContainer() -- ванильный запрос, как при осмотре
 end
+
+local function AutoLoot_OnZombieDead(zombie)
+    if not PM.Autoloot or not checkTimeActivate then return end
+	if not zombie then return end
+	local inv = zombie:getInventory()
+	if not inv then return end
+
+    local waitCorpseCount = 0
+	local function waitCorpse() -- Ожидание появления тела
+		local parent = inv:getParent()
+		if parent and instanceof(parent, "IsoDeadBody") then
+            waitCorpseCount = waitCorpseCount + 1
+            Events.OnTick.Remove(waitCorpse)
+			-- триггерим ванильный «осмотр»/запрос спавна
+			requestVanillaFill(parent)
+			-- ждём, пока контейнер отметится explored/придут предметы
+			local waitItemsTries = 30 -- На 60 рработает, на 30 тест
+			local function waitItems()
+                local container = parent:getContainer()
+				if waitItemsTries <= 0 then -- Если нет предметов, то завершаем ожидание
+					Events.OnTick.Remove(waitItems)
+					AutoLoot(container)
+					return
+				end
+				waitItemsTries = waitItemsTries - 1
+                -- local c = container
+                -- if c and (c:isExplored() or (c:getItems() and c:getItems():size() > 0)) then
+                --     Events.OnTick.Remove(waitItems)
+                --     print("AutoLoot(c)",c)
+                --     AutoLoot(c)
+                -- end
+			end
+			Events.OnTick.Add(waitItems)
+		end
+        if waitCorpseCount > 200 then -- На всякий случай, если что-то пошло не так отпишемся, чтоб не повисло
+            Events.OnTick.Remove(waitCorpse)
+        end
+	end
+	Events.OnTick.Add(waitCorpse)
+end
+
+Events.OnZombieDead.Add(AutoLoot_OnZombieDead)
