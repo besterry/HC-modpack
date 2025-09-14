@@ -2332,4 +2332,1910 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
+    item 67gt500
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 67gt500,
+        VehicleID = Base.67gt500,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 67gt500e
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 67gt500e,
+        VehicleID = Base.67gt500e,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 69camaroSS
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 69camaroSS,
+        VehicleID = Base.69camaroSS,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 69camaroRS
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 69camaroRS,
+        VehicleID = Base.69camaroRS,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 70dodgeTA
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 70dodgeTA,
+        VehicleID = Base.70dodgeTA,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 70dodgeRT
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 70dodgeRT,
+        VehicleID = Base.70dodgeRT,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 70dodgePD
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 70dodgePD,
+        VehicleID = Base.70dodgePD,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 70dodgeOP
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 70dodgeOP,
+        VehicleID = Base.70dodgeOP,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 70dodgeBG
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 70dodgeBG,
+        VehicleID = Base.70dodgeBG,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 750il
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 750il,
+        VehicleID = Base.750il,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK30CC
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK30CC,
+        VehicleID = Base.76chevyK30CC,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK10fd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK10fd,
+        VehicleID = Base.76chevyK10fd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK30CCutility
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK30CCutility,
+        VehicleID = Base.76chevyK30CCutility,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK20BigRed
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK20BigRed,
+        VehicleID = Base.76chevyK20BigRed,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK20fd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK20fd,
+        VehicleID = Base.76chevyK20fd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK30CCfd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK30CCfd,
+        VehicleID = Base.76chevyK30CCfd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyC30CCwrecker
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyC30CCwrecker,
+        VehicleID = Base.76chevyC30CCwrecker,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK30SCdually
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK30SCdually,
+        VehicleID = Base.76chevyK30SCdually,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyC30SCwrecker
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyC30SCwrecker,
+        VehicleID = Base.76chevyC30SCwrecker,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK30CCdually
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK30CCdually,
+        VehicleID = Base.76chevyK30CCdually,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK20utility
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK20utility,
+        VehicleID = Base.76chevyK20utility,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK20
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK20,
+        VehicleID = Base.76chevyK20,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK10spirit
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK10spirit,
+        VehicleID = Base.76chevyK10spirit,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 76chevyK10
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 76chevyK10,
+        VehicleID = Base.76chevyK10,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 82jeepJ10t
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 82jeepJ10t,
+        VehicleID = Base.82jeepJ10t,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 82jeepJ10pd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 82jeepJ10pd,
+        VehicleID = Base.82jeepJ10pd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 82jeepJ10ranger
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 82jeepJ10ranger,
+        VehicleID = Base.82jeepJ10ranger,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 82jeepJ10
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 82jeepJ10,
+        VehicleID = Base.82jeepJ10,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 82porsche911turbo
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 82porsche911turbo,
+        VehicleID = Base.82porsche911turbo,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 82porsche911rwb
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 82porsche911rwb,
+        VehicleID = Base.82porsche911rwb,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 87fordF700swat
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 87fordF700swat,
+        VehicleID = Base.87fordF700swat,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 87fordF700box
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 87fordF700box,
+        VehicleID = Base.87fordF700box,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 87fordF700bank
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 87fordF700bank,
+        VehicleID = Base.87fordF700bank,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 87fordB700prison
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 87fordB700prison,
+        VehicleID = Base.87fordB700prison,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 87fordB700military
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 87fordB700military,
+        VehicleID = Base.87fordB700military,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 87fordB700school
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 87fordB700school,
+        VehicleID = Base.87fordB700school,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 87toyotaMR2c
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 87toyotaMR2c,
+        VehicleID = Base.87toyotaMR2c,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 87toyotaMR2
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 87toyotaMR2,
+        VehicleID = Base.87toyotaMR2,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 88chevyS10
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 88chevyS10,
+        VehicleID = Base.88chevyS10,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 89def110op
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 89def110op,
+        VehicleID = Base.89def110op,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 89def110
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 89def110,
+        VehicleID = Base.89def110,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 89def90op
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 89def90op,
+        VehicleID = Base.89def90op,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 89def90
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 89def90,
+        VehicleID = Base.89def90,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 90fordF350SWAT
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 90fordF350SWAT,
+        VehicleID = Base.90fordF350SWAT,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 90fordF350ambulance
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 90fordF350ambulance,
+        VehicleID = Base.90fordF350ambulance,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPItaxi
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPItaxi,
+        VehicleID = Base.92fordCVPItaxi,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPIunmarked
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPIunmarked,
+        VehicleID = Base.92fordCVPIunmarked,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPIfd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPIfd,
+        VehicleID = Base.92fordCVPIfd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPI2
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPI2,
+        VehicleID = Base.92fordCVPI2,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPI2kspst
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPI2kspst,
+        VehicleID = Base.92fordCVPI2kspst,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPIpdu
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPIpdu,
+        VehicleID = Base.92fordCVPIpdu,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPI2sup
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPI2sup,
+        VehicleID = Base.92fordCVPI2sup,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPI2so
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPI2so,
+        VehicleID = Base.92fordCVPI2so,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCV
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCV,
+        VehicleID = Base.92fordCV,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPI2ksp
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPI2ksp,
+        VehicleID = Base.92fordCVPI2ksp,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92fordCVPI
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92fordCVPI,
+        VehicleID = Base.92fordCVPI,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92jeepYJranger
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92jeepYJranger,
+        VehicleID = Base.92jeepYJranger,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92jeepYJse
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92jeepYJse,
+        VehicleID = Base.92jeepYJse,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92jeepYJs
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92jeepYJs,
+        VehicleID = Base.92jeepYJs,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92jeepYJjp
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92jeepYJjp,
+        VehicleID = Base.92jeepYJjp,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92nissanGTRlhd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92nissanGTRlhd,
+        VehicleID = Base.92nissanGTRlhd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 92nissanGTR
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 92nissanGTR,
+        VehicleID = Base.92nissanGTR,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoCClongfd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoCClongfd,
+        VehicleID = Base.93chevySilveradoCClongfd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanpdu
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanpdu,
+        VehicleID = Base.93chevySuburbanpdu,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanDually
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanDually,
+        VehicleID = Base.93chevySuburbanDually,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoSCdually
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoSCdually,
+        VehicleID = Base.93chevySilveradoSCdually,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoXC
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoXC,
+        VehicleID = Base.93chevySilveradoXC,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburban
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburban,
+        VehicleID = Base.93chevySuburban,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoSClongFossoil
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoSClongFossoil,
+        VehicleID = Base.93chevySilveradoSClongFossoil,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanksp
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanksp,
+        VehicleID = Base.93chevySuburbanksp,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanpd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanpd,
+        VehicleID = Base.93chevySuburbanpd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoK3500flatbed
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoK3500flatbed,
+        VehicleID = Base.93chevySilveradoK3500flatbed,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoCClong
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoCClong,
+        VehicleID = Base.93chevySilveradoCClong,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoXClong
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoXClong,
+        VehicleID = Base.93chevySilveradoXClong,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanfbi
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanfbi,
+        VehicleID = Base.93chevySuburbanfbi,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoXClongRanger
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoXClongRanger,
+        VehicleID = Base.93chevySilveradoXClongRanger,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanfd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanfd,
+        VehicleID = Base.93chevySuburbanfd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoXCdually
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoXCdually,
+        VehicleID = Base.93chevySilveradoXCdually,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoXClongMcCoy
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoXClongMcCoy,
+        VehicleID = Base.93chevySilveradoXClongMcCoy,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoSClong
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoSClong,
+        VehicleID = Base.93chevySilveradoSClong,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoSC
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoSC,
+        VehicleID = Base.93chevySilveradoSC,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoK3500wrecker
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoK3500wrecker,
+        VehicleID = Base.93chevySilveradoK3500wrecker,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoCCdually
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoCCdually,
+        VehicleID = Base.93chevySilveradoCCdually,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoCC
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoCC,
+        VehicleID = Base.93chevySilveradoCC,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanPoliceMPD
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanPoliceMPD,
+        VehicleID = Base.93chevySuburbanPoliceMPD,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanPoliceWPPD
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanPoliceWPPD,
+        VehicleID = Base.93chevySuburbanPoliceWPPD,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanPoliceCLPD
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanPoliceCLPD,
+        VehicleID = Base.93chevySuburbanPoliceCLPD,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanPoliceLCPD
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanPoliceLCPD,
+        VehicleID = Base.93chevySuburbanPoliceLCPD,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanPoliceMCS
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanPoliceMCS,
+        VehicleID = Base.93chevySuburbanPoliceMCS,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanPoliceBCS
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanPoliceBCS,
+        VehicleID = Base.93chevySuburbanPoliceBCS,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoPoliceMCS
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoPoliceMCS,
+        VehicleID = Base.93chevySilveradoPoliceMCS,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoPoliceBCS
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoPoliceBCS,
+        VehicleID = Base.93chevySilveradoPoliceBCS,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanPrison
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanPrison,
+        VehicleID = Base.93chevySuburbanPrison,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySuburbanAirportSec
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySuburbanAirportSec,
+        VehicleID = Base.93chevySuburbanAirportSec,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoAirport
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoAirport,
+        VehicleID = Base.93chevySilveradoAirport,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoK3500mechanic
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoK3500mechanic,
+        VehicleID = Base.93chevySilveradoK3500mechanic,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoK3500lvLandscaping
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoK3500lvLandscaping,
+        VehicleID = Base.93chevySilveradoK3500lvLandscaping,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoVoltMojo
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoVoltMojo,
+        VehicleID = Base.93chevySilveradoVoltMojo,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoPennSham
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoPennSham,
+        VehicleID = Base.93chevySilveradoPennSham,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoRiversideFab
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoRiversideFab,
+        VehicleID = Base.93chevySilveradoRiversideFab,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoStoneworksMasonry
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoStoneworksMasonry,
+        VehicleID = Base.93chevySilveradoStoneworksMasonry,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoWpCarpentry
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoWpCarpentry,
+        VehicleID = Base.93chevySilveradoWpCarpentry,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoMcCoyWoodworking
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoMcCoyWoodworking,
+        VehicleID = Base.93chevySilveradoMcCoyWoodworking,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93chevySilveradoUncloggers
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93chevySilveradoUncloggers,
+        VehicleID = Base.93chevySilveradoUncloggers,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF350fd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF350fd,
+        VehicleID = Base.93fordF350fd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF350pd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF350pd,
+        VehicleID = Base.93fordF350pd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF350dually
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF350dually,
+        VehicleID = Base.93fordF350dually,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF350utilityFd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF350utilityFd,
+        VehicleID = Base.93fordF350utilityFd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF350utility
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF350utility,
+        VehicleID = Base.93fordF350utility,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF250
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF250,
+        VehicleID = Base.93fordF250,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF350
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF350,
+        VehicleID = Base.93fordF350,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF150
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF150,
+        VehicleID = Base.93fordF150,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF350so
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF350so,
+        VehicleID = Base.93fordF350so,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93fordF350utilityDpw
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93fordF350utilityDpw,
+        VehicleID = Base.93fordF350utilityDpw,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93mustangSSPksp
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93mustangSSPksp,
+        VehicleID = Base.93mustangSSPksp,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93mustangSSPkspCol
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93mustangSSPkspCol,
+        VehicleID = Base.93mustangSSPkspCol,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93mustangSSP
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93mustangSSP,
+        VehicleID = Base.93mustangSSP,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93mustangSSPunmarked
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93mustangSSPunmarked,
+        VehicleID = Base.93mustangSSPunmarked,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item 93mustangSSPpd
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: 93mustangSSPpd,
+        VehicleID = Base.93mustangSSPpd,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item fhqV140_300SEL_Tune
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: fhqV140_300SEL_Tune,
+        VehicleID = Base.fhqV140_300SEL_Tune,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item fhqV140_300SEL
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: fhqV140_300SEL,
+        VehicleID = Base.fhqV140_300SEL,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item fhqW140_S320_CM
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: fhqW140_S320_CM,
+        VehicleID = Base.fhqW140_S320_CM,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item fhqV140_S320
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: fhqV140_S320,
+        VehicleID = Base.fhqV140_S320,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item fhqW140_300SE
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: fhqW140_300SE,
+        VehicleID = Base.fhqW140_300SE,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item fhqW140_S320
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: fhqW140_S320,
+        VehicleID = Base.fhqW140_S320,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item fhqW140_300SE_Tune
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: fhqW140_300SE_Tune,
+        VehicleID = Base.fhqW140_300SE_Tune,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+
+    item US750IL
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: US750IL,
+        VehicleID = Base.US750IL,
+        WorldStaticModel = CW.AutoTitle, 
+        Condition = 70,  
+        Tooltip = Tooltip_ClaimOutSide,        
+        HasKey = true,
+        Tags = PinkSlip,
+    }
 }
