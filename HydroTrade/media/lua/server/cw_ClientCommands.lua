@@ -88,6 +88,10 @@ function Commands.spawnVehicle(player, args)
     local car = addVehicleDebug(args.type, args.dir, nil, sq)
     
     --car:setDir(args.dir)
+
+    --Engine
+    -- vehicle:setEngineFeature(unpack(data.engineFeature)) --Установка качество двигателя
+    -- vehicle:transmitEngine() -- Рассылка текущего состояния двигателя на клиенты
     
     --This repairs all parts on vehicles and also adds all upgrades since "missing" upgrades are parts with 0 health...    
     if args.upgrade then
@@ -120,6 +124,11 @@ function Commands.spawnVehicle(player, args)
                 part:setCondition(args.condition)
             end
         end
+        local engineLoudness = car:getEngineLoudness() -- Получение громкости двигателя (не меняем)
+        local enginePower = car:getEnginePower() -- Получение мощности двигателя (не меняем)
+        -- local engineQuality = car:getEngineQuality()
+        car:setEngineFeature(args.condition, engineLoudness, enginePower) -- Установка качества двигателя (качество, громкость, мощность)
+        car:transmitEngine() -- Рассылка текущего состояния двигателя на клиенты
     end
     
     --Set battery charge
