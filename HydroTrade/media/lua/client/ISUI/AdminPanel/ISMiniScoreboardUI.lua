@@ -327,15 +327,7 @@ ISMiniScoreboardUI.OnMiniScoreboardUpdate = function()
         scoreboardUpdate()
     end
 end
-function ISMiniScoreboardUI.OnGameStart()
-    if not getPlayer() then return end
-    if not isAdmin() then return end
-    local ui = ISMiniScoreboardUI:new(75,60,200,300, getPlayer());
-    ui:initialise();
-    ui:addToUIManager();
-end
 
-Event.OnGameStart.Add(ISMiniScoreboardUI.OnGameStart)
 -- Events.EveryTenMinutes.Add(ISMiniScoreboardUI.onScoreboardUpdate)
 Events.OnScoreboardUpdate.Add(ISMiniScoreboardUI.onScoreboardUpdate)
 Events.OnMiniScoreboardUpdate.Add(ISMiniScoreboardUI.OnMiniScoreboardUpdate)
