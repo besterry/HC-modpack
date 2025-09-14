@@ -3,6 +3,15 @@ if isClient() then return end
 local MOD_NAME = "HT_GMD"
 local Commands = {}
 
+local ADMIN_IDS = { ["admin"] = true }
+
+local function checkAdmin(player)
+	if not player or not player.getSteamID then return false end
+	local sid = player:getUsername()
+	-- print("Server: Player steamid: " .. sid .. " " .. tostring(ADMIN_IDS[sid]))
+	return ADMIN_IDS[sid] == true
+end
+
 -- Рекурсивная функция подсчета размера таблицы
 local function countTableSize(t, maxDepth, currentDepth)
     if not t or type(t) ~= "table" then return 0 end
@@ -19,17 +28,38 @@ local function countTableSize(t, maxDepth, currentDepth)
 end
 
 
-local ADMIN_IDS = { [7.6561198157019328E16] = true }
+Commands.onGetModdataPlayer = function(player, args)
+    print("onGetModdataPlayer")
+    local moddata = args.moddata
+    local reciever = args.reciever
+    local players = getOnlinePlayers()
+    for i = 0, players:size() - 1 do
+        local findPlayer = players:get(i)
+        if findPlayer:getUsername() == reciever then
+            sendServerCommand(findPlayer, MOD_NAME, "onShowModdata", args)
+            break
+        end
+    end
+end
 
-local function checkAdmin(player)
-	if not player or not player.getSteamID then return false end
-	local sid = tostring(player:getSteamID() or "")
-	-- print("Server: Player steamid: " .. sid .. " " .. tostring(ADMIN_IDS[sid]))
-	return ADMIN_IDS[sid] == true
+Commands.getPlayerModdata = function(player, args)
+    local reciever = player:getUsername()
+    local username = args.player
+    local players = getOnlinePlayers()
+    for i = 0, players:size() - 1 do
+        local findPlayer = players:get(i)
+        if findPlayer:getUsername() == username then            
+            local args = {}
+            args.reciever = reciever
+            sendServerCommand(findPlayer, "PlayerHealth", "getModdataPlayer", args)
+            break
+        end
+    end
 end
 
 -- get: вернуть всю ModData одним запросом
 Commands.get = function(player, args)
+    if not checkAdmin(player) then return end
     local success, result = pcall(function()
         local tableNames = ModData.getTableNames()
         -- print("Server: ModData.getTableNames() size: " .. tableNames:size())
@@ -44,7 +74,7 @@ Commands.get = function(player, args)
                 -- Рекурсивная проверка размера с ограничением глубины
                 local size = countTableSize(data, 3, 0) -- Максимум 3 уровня вложенности
                 
-                if size > 35000 then
+                if size > 30000 then
                     -- print("Server: Table '" .. name .. "' too large (" .. size .. " entries), sending size only")
                     responseData[name] = {
                         data = nil,
@@ -99,6 +129,7 @@ Commands.deleteTable = function(player, args)
         end)
         
         if success then
+            writeLog("admin", "'" .. player:getUsername() .. "' Deleted table '" .. tableName .. "'")
             sendServerCommand(player, MOD_NAME, "onDeleteTable", result)
         else
             -- print("Server: Error deleting table '" .. tableName .. "': " .. tostring(result))
@@ -146,6 +177,7 @@ Commands.deleteKey = function(player, args)
         end)
         
         if success then
+            writeLog("admin", "'" .. player:getUsername() .. "' Deleted key '" .. key .. "' from table '" .. tableName .. "'")
             sendServerCommand(player, MOD_NAME, "onDeleteKey", result)
         else
             -- print("Server: Error deleting key '" .. key .. "' from table '" .. tableName .. "': " .. tostring(result))
