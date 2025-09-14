@@ -2414,5 +2414,35 @@ recipe Unpack Swatpack
         Category:Survivalist,
 		OnGiveXP:HTPlantScavengingGuide_OnGiveXP,
     }
+    
+	recipe Learn
+    {
+        DrivingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTDrivingGuide_OnGiveXP,
+    }
+
+    recipe Learn
+    {
+        LockpikingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTLockpikingGuide_OnGiveXP,
+    }
+
+    recipe Learn
+    {
+        ReadingGuide,
+        CanBeDoneFromFloor:true,
+        Result:Book,
+        Time:100,
+        Category:Survivalist,
+		OnGiveXP:HTReadingGuide_OnGiveXP,
+    }
 	
 }	
