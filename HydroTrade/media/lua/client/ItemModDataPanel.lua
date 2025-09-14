@@ -4,6 +4,7 @@ require "ISUI/ISPanel"
 ItemModDataPanel = ISPanel:derive("ItemModDataPanel");
 ItemModDataPanel.instance = nil;
 ItemModDataPanel.modDataList = {}
+local MOD_NAME = "HT_GMD"
 
 local function roundstring(_val)
     return tostring(ISDebugUtils.roundNum(_val,2));
@@ -62,10 +63,35 @@ function ItemModDataPanel:createChildren()
     self.infoList.font = UIFont.NewSmall;
     self.infoList.doDrawItem = self.drawInfoList;
     self.infoList.drawBorder = true;
+    self.infoList.onmousedown = ItemModDataPanel.OnInfoListMouseDown;
+    self.infoList.target = self;
     self:addChild(self.infoList);
+
+    -- Edit controls
+    ISDebugUtils.addLabel(self, {}, 225, self.height-86, "Key", UIFont.Small, true)
+    self.keyEntry = ISTextEntryBox:new("", 250, self.height-90, 150, 22)
+    self.keyEntry:initialise();
+    self:addChild(self.keyEntry)
+
+    ISDebugUtils.addLabel(self, {}, 410, self.height-86, "Value", UIFont.Small, true)
+    self.valueEntry = ISTextEntryBox:new("", 455, self.height-90, 180, 22)
+    self.valueEntry:initialise();
+    self:addChild(self.valueEntry)
+
+    ISDebugUtils.addLabel(self, {}, 655, self.height-86, "Type", UIFont.Small, true)
+    self.typeCombo = ISComboBox:new(690, self.height-90, 90, 22, nil, nil)
+    self.typeCombo:initialise();
+    self.typeCombo:addOption("string")
+    self.typeCombo:addOption("number")
+    self.typeCombo:addOption("boolean")
+    self.typeCombo:addOption("nil")
+    self.typeCombo.selected = 1
+    self:addChild(self.typeCombo)
 
     local y, obj = ISDebugUtils.addButton(self,"close",self.width-200,self.height-40,180,20,getText("IGUI_CraftUI_Close"),ItemModDataPanel.onClickClose);
     y, obj = ISDebugUtils.addButton(self,"refresh",self.width-400,self.height-40,180,20,getText("IGUI_Refresh"),ItemModDataPanel.onClickRefresh);
+    y, obj = ISDebugUtils.addButton(self,"save",self.width-600,self.height-40,180,20,getText("IGUI_SaveShop"),ItemModDataPanel.onClickSave);
+    y, obj = ISDebugUtils.addButton(self,"delete",self.width-800,self.height-40,180,20,getText("IGUI_AM_Delete"),ItemModDataPanel.onClickDelete);
 
     self:populateList();
 end
@@ -120,31 +146,39 @@ function ItemModDataPanel:formatVal(_value, _func, _func2)
 end
 
 function ItemModDataPanel:parseTable(_t, _ident)
-    if not _ident then
-        _ident = "";
-    end
-    local s;
-    for k,v in pairs(_t) do
-        if type(v)=="table" then
-            s = tostring(_ident).."["..tostring(k).."] -> ";
-            self.infoList:addItem(s, nil);
-            self:parseTable(v, _ident.."    ");
-        else
-            s = tostring(_ident).."["..tostring(k).."] -> "..tostring(v);
-            self.infoList:addItem(s, nil);
-        end
-    end
+    -- deprecated
 end
 
 function ItemModDataPanel:populateInfoList(obj)
     self.infoList:clear();
     -- print(obj)
     local modData
-    if obj and obj:getModData() then modData = obj:getModData() else return; end
+    if type(obj) == "table" then
+        modData = obj
+    elseif obj and obj:getModData() then 
+        modData = obj:getModData() 
+    else
+        return; 
+    end
      
 
     if modData then
-        self:parseTable(modData, "");
+        self.indexToPath = {}
+        local function parseRec(t, indent, path)
+            indent = indent or ""
+            path = path or ""
+            for k,v in pairs(t) do
+                local display = tostring(indent).."["..tostring(k).."] -> "
+                local newPath = path ~= "" and (path.."."..tostring(k)) or tostring(k)
+                if type(v) == "table" then
+                    local row = self.infoList:addItem(display, { path = newPath, isTable = true })
+                    parseRec(v, indent.."    ", newPath)
+                else
+                    local row = self.infoList:addItem(display..tostring(v), { path = newPath, isTable = false })
+                end
+            end
+        end
+        parseRec(modData, "", "")
         --[[
         local s;
         for k,v in pairs(modData) do
@@ -202,3 +236,130 @@ function ItemModDataPanel:new(x, y, width, height, title)
     ISDebugMenu.RegisterClass(self);
     return o;
 end
+
+-- Helpers
+local function splitPath(path)
+    local parts = {}
+    if not path or path == "" then return parts end
+    for part in string.gmatch(path, "[^%.]+") do
+        table.insert(parts, part)
+    end
+    return parts
+end
+
+local function getValueByPath(root, path)
+    if not root then return nil end
+    local current = root
+    for _, key in ipairs(splitPath(path)) do
+        if type(current) ~= "table" then return nil end
+        current = current[key]
+    end
+    return current
+end
+
+local function setValueByPath(root, path, value)
+    local keys = splitPath(path)
+    if #keys == 0 then return false end
+    local current = root
+    for i = 1, #keys - 1 do
+        local k = keys[i]
+        if type(current[k]) ~= "table" then current[k] = {} end
+        current = current[k]
+    end
+    current[keys[#keys]] = value
+    return true
+end
+
+local function deleteByPath(root, path)
+    local keys = splitPath(path)
+    if #keys == 0 then return false end
+    local current = root
+    for i = 1, #keys - 1 do
+        local k = keys[i]
+        current = type(current) == "table" and current[k] or nil
+        if current == nil then return false end
+    end
+    current[keys[#keys]] = nil
+    return true
+end
+
+function ItemModDataPanel:OnInfoListMouseDown(item)
+    local row = self.infoList.items[self.infoList.selected]
+    if not row or not row.item then return end
+    local path = row.item.path or ""
+    self.keyEntry:setText(path)
+    local obj = self.tableNamesList.items[self.tableNamesList.selected] and self.tableNamesList.items[self.tableNamesList.selected].item
+    if obj and obj.getModData then
+        local md = obj:getModData()
+        local v = getValueByPath(md, path)
+        if type(v) == "number" then
+            self.typeCombo.selected = 2
+            self.valueEntry:setText(tostring(v))
+        elseif type(v) == "boolean" then
+            self.typeCombo.selected = 3
+            self.valueEntry:setText(v and "true" or "false")
+        elseif v == nil then
+            self.typeCombo.selected = 4
+            self.valueEntry:setText("")
+        else
+            self.typeCombo.selected = 1
+            self.valueEntry:setText(tostring(v))
+        end
+    end
+end
+
+local function toTypedValue(str, vtype)
+    if vtype == "number" then return tonumber(str)
+    elseif vtype == "boolean" then return tostring(str):lower() == "true"
+    elseif vtype == "nil" then return nil
+    else return tostring(str or "") end
+end
+
+function ItemModDataPanel:onClickSave()
+    local selectedObjRow = self.tableNamesList.items[self.tableNamesList.selected]
+    if not selectedObjRow then return end
+    local obj = selectedObjRow.item
+    if not obj or not obj.getModData then return end
+
+    local path = self.keyEntry:getText()
+    if not path or path == "" then return end
+    local vtype = self.typeCombo.options[self.typeCombo.selected]
+    local value = toTypedValue(self.valueEntry:getText(), vtype)
+
+    -- Inventory items can be changed client-side
+    if instanceof(obj, "InventoryItem") then
+        local md = obj:getModData()
+        if value == nil then
+            deleteByPath(md, path)
+        else
+            setValueByPath(md, path, value)
+        end
+        self:onClickRefresh()
+        return
+    end
+
+    -- Fallback: try client-side
+    local md = obj:getModData()
+    if value == nil then
+        deleteByPath(md, path)
+    else
+        setValueByPath(md, path, value)
+    end
+    self:onClickRefresh()
+end
+
+function ItemModDataPanel:onClickDelete()
+    self.valueEntry:setText("")
+    self.typeCombo.selected = 4 -- nil
+    self:onClickSave()
+end
+
+local function onServerCommand(module, command, args)
+    if module == MOD_NAME and command == "onSetObjModData" then
+        if ItemModDataPanel.instance then
+            ItemModDataPanel.instance:onClickRefresh()
+        end
+    end
+end
+
+Events.OnServerCommand.Add(onServerCommand)
