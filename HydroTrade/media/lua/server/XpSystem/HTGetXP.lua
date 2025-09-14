@@ -72,4 +72,18 @@ function HTPlantScavengingGuide_OnGiveXP(recipe, ingredients, result, player)
 	-- player:getStats():setHunger(player:getStats():getHunger()+0.01)
 end
 
+function HTDrivingGuide_OnGiveXP(recipe, ingredients, result, player)
+    player:getXp():AddXP(Perks.Driving, 160);
+	-- player:getStats():setHunger(player:getStats():getHunger()+0.01)
+end
+
+function HTLockpikingGuide_OnGiveXP(recipe, ingredients, result, player)
+    player:getXp():AddXP(Perks.Lockpiking, 160);
+	-- player:getStats():setHunger(player:getStats():getHunger()+0.01)
+end
+
+function HTReadingGuide_OnGiveXP(recipe, ingredients, result, player)
+    player:getXp():AddXP(Perks.Reading, 160);
+	-- player:getStats():setHunger(player:getStats():getHunger()+0.01)
+end
 
