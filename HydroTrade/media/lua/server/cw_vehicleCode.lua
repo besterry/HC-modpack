@@ -58,18 +58,18 @@
 
 
 --]]
-function Recipe.GetItemTypes.PinkSlip(scriptItems)
+function Recipe.GetItemTypes.PinkSlip(scriptItems) -- Проверка тега PinkSlip
     scriptItems:addAll(getScriptManager():getItemsTag("PinkSlip"))
 end 
     
-function Recipe.OnCanPerform.CW_ClaimVehicle(recipe, playerObj, item)
+function Recipe.OnCanPerform.CW_ClaimVehicle(recipe, playerObj, item) -- Проверяем, стоит ли игрок на земле и не находится ли он в здании
     if playerObj:isOutside() and playerObj:getZ() == 0 then
         return true
     end    
     return false
 end
 
-function Recipe.OnCreate.CW_ClaimVehicle(items, result, player)
+function Recipe.OnCreate.CW_ClaimVehicle(items, result, player) -- Создание автомобиля
     local pinkslip = items:get(0)
 
     if not player:isOutside() or player:getZ() > 0 then
