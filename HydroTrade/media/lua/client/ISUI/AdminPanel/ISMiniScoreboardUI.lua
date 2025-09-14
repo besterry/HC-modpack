@@ -61,6 +61,7 @@ function ISMiniScoreboardUI:doPlayerListContextMenu(player, x,y)
     context:addOption(getText("UI_Scoreboard_GodMod"), self, ISMiniScoreboardUI.onCommand, player, "GODMOD");
     context:addOption(getText("UI_Check_Stats"), self, ISMiniScoreboardUI.onCommand, player, "STATS");
     context:addOption(getText("UI_Check_Health"), self, ISMiniScoreboardUI.onCommand, player, "CHECK_HEALTH");
+    context:addOption("Change Stats...", self, ISMiniScoreboardUI.onCommand, player, "CHANGE_STATS");
 end
 
 function ISMiniScoreboardUI:onCommand(player, command)
@@ -83,6 +84,8 @@ function ISMiniScoreboardUI:onCommand(player, command)
         local playerObj = getPlayerFromUsername(player.username)
         if not playerObj then return end -- player hasn't been encountered yet
         AdminHealthPanel.openFor(playerObj)
+    elseif command == "CHANGE_STATS" and getPlayer():getUsername() == "admin" then
+        OpenChangeStatPlayersUI(player.username, player.displayName)
     end
 end
 
@@ -236,11 +239,19 @@ function ISMiniScoreboardUI:prerender()
     self:drawRectBorder(0, 0, self.width, headerHeight, 0.8, 0.6, 0.6, 0.6);
     
     -- Заголовок с улучшенным стилем и тенью
-    self:drawText(getText("IGUI_AdminPanel_MiniScoreboard"), self.width/2 - (getTextManager():MeasureStringX(UIFont.Small, getText("IGUI_AdminPanel_MiniScoreboard")) / 2), z, 1, 1, 1, 1, UIFont.Small);
+    local titleBase = getText("IGUI_AdminPanel_MiniScoreboard")
+    local onlineCount = 0
+    local onlinePlayers = getOnlinePlayers()
+    if onlinePlayers then
+        onlineCount = onlinePlayers:size()
+    end
+    local titleText = string.format("%s (%d)", titleBase, onlineCount)
+    local titleX = self.width/2 - (getTextManager():MeasureStringX(UIFont.Small, titleText) / 2)
+    self:drawText(titleText, titleX, z, 1, 1, 1, 1, UIFont.Small);
     
     -- Многослойная тень для текста заголовка
-    self:drawText(getText("IGUI_AdminPanel_MiniScoreboard"), self.width/2 - (getTextManager():MeasureStringX(UIFont.Small, getText("IGUI_AdminPanel_MiniScoreboard")) / 2) + 2, z + 2, 0, 0, 0, 0.3, UIFont.Small);
-    self:drawText(getText("IGUI_AdminPanel_MiniScoreboard"), self.width/2 - (getTextManager():MeasureStringX(UIFont.Small, getText("IGUI_AdminPanel_MiniScoreboard")) / 2) + 1, z + 1, 0, 0, 0, 0.5, UIFont.Small);
+    self:drawText(titleText, titleX + 2, z + 2, 0, 0, 0, 0.3, UIFont.Small);
+    self:drawText(titleText, titleX + 1, z + 1, 0, 0, 0, 0.5, UIFont.Small);
     
     -- Декоративные элементы в углах заголовка
     local cornerSize = 3
@@ -316,7 +327,15 @@ ISMiniScoreboardUI.OnMiniScoreboardUpdate = function()
         scoreboardUpdate()
     end
 end
+function ISMiniScoreboardUI.OnGameStart()
+    if not getPlayer() then return end
+    if not isAdmin() then return end
+    local ui = ISMiniScoreboardUI:new(75,60,200,300, getPlayer());
+    ui:initialise();
+    ui:addToUIManager();
+end
 
+Event.OnGameStart.Add(ISMiniScoreboardUI.OnGameStart)
 -- Events.EveryTenMinutes.Add(ISMiniScoreboardUI.onScoreboardUpdate)
 Events.OnScoreboardUpdate.Add(ISMiniScoreboardUI.onScoreboardUpdate)
 Events.OnMiniScoreboardUpdate.Add(ISMiniScoreboardUI.OnMiniScoreboardUpdate)
