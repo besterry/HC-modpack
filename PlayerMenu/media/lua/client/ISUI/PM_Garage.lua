@@ -116,7 +116,7 @@ function PM_Garage:onClick(button)
     end
 end
 
-function PM_Garage:checkSafeHouse()
+function PM_Garage:checkSafeHouse() -- Проверяем, существует ли убежище и принадлежит ли оно игроку.
     local square = self.player:getCurrentSquare()        -- Получаем текущую клетку игрока.
     if not square then return false end
     local safehouse = SafeHouse.getSafeHouse(square)     -- Получаем объект убежища для текущей клетки.
@@ -129,7 +129,7 @@ function PM_Garage:checkSafeHouse()
     end
 end
 
-local function hasGarageSpriteInSafehouse(player, spriteName)
+local function hasGarageSpriteInSafehouse(player, spriteName) -- Проверяем, есть ли гараж на убежище
     local safehouse = SafeHouse.getSafeHouse(player:getCurrentSquare())
     if not safehouse then
         return false
