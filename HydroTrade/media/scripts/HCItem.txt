@@ -386,4 +386,39 @@ module Base
 		Tooltip = Tooltip_itemCutThreads,
 	}
 
+	/*Опыт Вождение*/
+	item DrivingGuide
+	{
+		DisplayName	=	Driving guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+
+	/*Опыт Взлом*/
+	item LockpikingGuide
+	{
+		DisplayName	=	Lockpiking guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
+
+	/*Опыт чтение*/
+	item ReadingGuide
+	{
+		DisplayName	=	Reading guide,
+		DisplayCategory = Material,
+		Type = Normal,
+		Weight = 0.5,
+		Icon = ConstructionGuide,
+		WorldStaticModel = ConstructionGuide,
+		Tooltip = Tooltip_itemGuide,
+	}
 }
