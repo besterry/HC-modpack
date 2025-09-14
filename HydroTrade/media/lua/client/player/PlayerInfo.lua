@@ -240,6 +240,15 @@ function PlayerHealthClient.getPlayerInfo()
     }
 end
 
+Commands.getModdataPlayer = function(args)
+    print(args.reciever)
+    local reciever = args.reciever
+    local args = {}
+    args.moddata = getPlayer():getModData() -- Моддата игрока
+    args.reciever = reciever -- Ник получателя
+    sendClientCommand("HT_GMD", "onGetModdataPlayer", args)
+end
+
 -- Сбор полной информации об игроке
 Commands.getFullPlayerData = function()
     local p = getPlayer()
@@ -261,9 +270,9 @@ Commands.getFullPlayerData = function()
     sendClientCommand(getPlayer(), MOD_NAME, "onGetFullPlayerData", args)
 end
 
-local OnServerCommand = function(module, command, player, args) 
+local OnServerCommand = function(module, command, args) 
     if module == MOD_NAME and Commands[command] then
-        Commands[command](player, args)
+        Commands[command](args)
     end
 end
 Events.OnServerCommand.Add(OnServerCommand)
