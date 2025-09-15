@@ -72,44 +72,72 @@ local function SetAdminPower()
     end
 
     local character = getPlayer();
+    if isClient() and character then
+        if openutils.HasPermission(character, "admin") then
+            character:setInvisible(ClientTweaker.AdminOptions.GetBool("Invisible"));
+            character:setGodMod(ClientTweaker.AdminOptions.GetBool("GodMode"));
+            character:setGhostMode(ClientTweaker.AdminOptions.GetBool("GhostMode"));
+            character:setNoClip(ClientTweaker.AdminOptions.GetBool("NoClip"));
+            character:setTimedActionInstantCheat(ClientTweaker.AdminOptions.GetBool("TimedActionInstantCheat"));
+            character:setUnlimitedCarry(ClientTweaker.AdminOptions.GetBool("UnlimitedCarry"));
+            character:setUnlimitedEndurance(ClientTweaker.AdminOptions.GetBool("UnlimitedEndurance"));
 
-    if isClient() and character and openutils.HasPermission(character, "observer") then
-        character:setInvisible(ClientTweaker.AdminOptions.GetBool("Invisible"));
-        character:setGodMod(ClientTweaker.AdminOptions.GetBool("GodMode"));
-        character:setGhostMode(ClientTweaker.AdminOptions.GetBool("GhostMode"));
-        character:setNoClip(ClientTweaker.AdminOptions.GetBool("NoClip"));
-        character:setTimedActionInstantCheat(ClientTweaker.AdminOptions.GetBool("TimedActionInstantCheat"));
-        character:setUnlimitedCarry(ClientTweaker.AdminOptions.GetBool("UnlimitedCarry"));
-        character:setUnlimitedEndurance(ClientTweaker.AdminOptions.GetBool("UnlimitedEndurance"));
+            ISFastTeleportMove.cheat = ClientTweaker.AdminOptions.GetBool("FastMove");
 
-        ISFastTeleportMove.cheat = ClientTweaker.AdminOptions.GetBool("FastMove");
+            ISBuildMenu.cheat = ClientTweaker.AdminOptions.GetBool("BuildCheat");
+            character:setBuildCheat(ClientTweaker.AdminOptions.GetBool("BuildCheat"));
 
-        ISBuildMenu.cheat = ClientTweaker.AdminOptions.GetBool("BuildCheat");
-        character:setBuildCheat(ClientTweaker.AdminOptions.GetBool("BuildCheat"));
+            ISFarmingMenu.cheat = ClientTweaker.AdminOptions.GetBool("FarmingCheat");
+            character:setFarmingCheat(ClientTweaker.AdminOptions.GetBool("FarmingCheat"));
 
-        ISFarmingMenu.cheat = ClientTweaker.AdminOptions.GetBool("FarmingCheat");
-        character:setFarmingCheat(ClientTweaker.AdminOptions.GetBool("FarmingCheat"));
+            ISHealthPanel.cheat = ClientTweaker.AdminOptions.GetBool("HealthCheat");
+            character:setHealthCheat(ClientTweaker.AdminOptions.GetBool("HealthCheat"));
 
-        ISHealthPanel.cheat = ClientTweaker.AdminOptions.GetBool("HealthCheat");
-        character:setHealthCheat(ClientTweaker.AdminOptions.GetBool("HealthCheat"));
+            ISVehicleMechanics.cheat = ClientTweaker.AdminOptions.GetBool("MechanicsCheat");
+            character:setMechanicsCheat(ClientTweaker.AdminOptions.GetBool("MechanicsCheat"));
 
-        ISVehicleMechanics.cheat = ClientTweaker.AdminOptions.GetBool("MechanicsCheat");
-        character:setMechanicsCheat(ClientTweaker.AdminOptions.GetBool("MechanicsCheat"));
+            ISMoveableDefinitions.cheat = ClientTweaker.AdminOptions.GetBool("MovablesCheat");
+            character:setMovablesCheat(ClientTweaker.AdminOptions.GetBool("MovablesCheat"));
 
-        ISMoveableDefinitions.cheat = ClientTweaker.AdminOptions.GetBool("MovablesCheat");
-        character:setMovablesCheat(ClientTweaker.AdminOptions.GetBool("MovablesCheat"));
+            character:setNetworkTeleportEnabled(ClientTweaker.AdminOptions.GetBool("NetworkTeleportEnabled"));
+            character:setCanSeeAll(ClientTweaker.AdminOptions.GetBool("CanSeeAll"));
+            character:setCanHearAll(ClientTweaker.AdminOptions.GetBool("CanHearAll"));
+            character:setZombiesDontAttack(ClientTweaker.AdminOptions.GetBool("ZombiesDontAttack"));
+            character:setShowMPInfos(ClientTweaker.AdminOptions.GetBool("ShowMPInfos"));
 
-        character:setNetworkTeleportEnabled(ClientTweaker.AdminOptions.GetBool("NetworkTeleportEnabled"));
-        character:setCanSeeAll(ClientTweaker.AdminOptions.GetBool("CanSeeAll"));
-        character:setCanHearAll(ClientTweaker.AdminOptions.GetBool("CanHearAll"));
-        character:setZombiesDontAttack(ClientTweaker.AdminOptions.GetBool("ZombiesDontAttack"));
-        character:setShowMPInfos(ClientTweaker.AdminOptions.GetBool("ShowMPInfos"));
+            BrushToolManager.cheat = ClientTweaker.AdminOptions.GetBool("BrushTool");
 
-        BrushToolManager.cheat = ClientTweaker.AdminOptions.GetBool("BrushTool");
+            character:setShowAdminTag(ClientTweaker.AdminOptions.GetBool("ShowAdminTag"));
 
-        character:setShowAdminTag(ClientTweaker.AdminOptions.GetBool("ShowAdminTag"));
-
-        sendPlayerExtraInfo(character);
+            sendPlayerExtraInfo(character);
+        elseif not (getAccessLevel() == "none") then --Исключаем простых игроков
+            character:setInvisible(false)
+            character:setGodMod(false)
+            character:setGhostMode(false)
+            character:setNoClip(false)
+            character:setTimedActionInstantCheat(false)
+            character:setUnlimitedCarry(false)
+            character:setUnlimitedEndurance(false)
+            ISFastTeleportMove.cheat = false
+            ISBuildMenu.cheat = false
+            character:setBuildCheat(false)
+            ISFarmingMenu.cheat = false
+            character:setFarmingCheat(false)
+            ISHealthPanel.cheat = false
+            character:setHealthCheat(false)
+            ISVehicleMechanics.cheat = false
+            character:setMechanicsCheat(false)
+            ISMoveableDefinitions.cheat = false
+            character:setMovablesCheat(false)
+            character:setNetworkTeleportEnabled(false)
+            character:setCanSeeAll(false)
+            character:setCanHearAll(false)
+            character:setZombiesDontAttack(false)
+            character:setShowMPInfos(false)
+            BrushToolManager.cheat = false
+            character:setShowAdminTag(false)
+            sendPlayerExtraInfo(character);
+        end
     end
 end
 
