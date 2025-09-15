@@ -77,3 +77,11 @@ local function BalanceAndSH_OnClientCommand(module, command, player, args)
 end
 
 Events.OnClientCommand.Add(BalanceAndSH_OnClientCommand)
+
+
+Events.OnClientCommand.Add(function(module, command, player, args) -- Изменение веса игрока
+    if module == "player" and command == "setWeight" then
+        local msg = "Player: " .. player:getUsername() .. " [" .. math.floor(player:getX()) .. "," .. math.floor(player:getY()) .. ",0] change weight: " .. args.weight .. " for OnlineID -> " .. args.id
+        writeLog("admin", msg)
+    end
+end)
