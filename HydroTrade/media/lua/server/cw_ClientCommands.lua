@@ -1,78 +1,10 @@
---[[
-    CarWanna, Multiplayer car spawning library for Project Zomboid. 
-    Copyright (C) 2022  Xyberviri
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-    TLDR Version:
-    https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)
-    
-                               //*,..       ..,*//                              
-                      .*.                               .*.                     
-   (@@@@@@@@@@@@@@#*       ,(%@@@@@@@@@@@@@@@@@@@@@%(,       *#@@@@@@@@@@@@@@#  
-   (@@@@@@@@@@@/.     *%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*.    ./@@@@@@@@@@@#  
-   (@@@@@@@@/.    *&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*     /@@@@@@@@#  
-   (@@@@@%,    *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*    ,#@@@@@#  
-   (@@@%,    %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.   .%@@@#  
-   (@&,   .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.   ,&@#  
-   (/    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#    /#  
-   *   ,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@,   *  
-  *   *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*   * 
- .   *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@/   .
- .  .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.  .
-*   %@@@@@#&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&(%@@@@@@&   
-.  ,@@@@%.    /&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@&/     *@@@@@@,  
-   /@@@&.        ,&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*         (@@@@@(  
-   (@@@#        .&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*        /@@@@@#  
-   /@@@&,       .@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@/        #@@@@@(  
-.  ,@@@@&.       .&@@@@@@@@@* /&@@@@@@@@@@@@@@@@/ .&@@@@@@@@@/        #@@@@@@,  
-*   %@@@@@(         ./(((,       .@@@@@@@@@@@,       ,((#(*         /@@@@@@@&   
- .  .@@@@@@@&*                 /&@@@@@@@@@@@@@@#,                *%@@@@@@@@@.  .
- .   *@@@@@@@@@@&%(/*,,,**#%@@@@@@@@@@@@@@@@@@@@@@@&%#/****/#%@@@@@@@@@@@@@/   .
-  *   *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*   * 
-   *   ,@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@,   *  
-   (/    #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#    /#  
-   (@&,   .%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.   ,&@#  
-   (@@@%,    %@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%.   .%@@@#  
-   (@@@@@%,    *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*    ,#@@@@@#  
-   (@@@@@@@@/.    *&@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*     /@@@@@@@@#  
-   (@@@@@@@@@@@/.     *%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%*.    ./@@@@@@@@@@@#  
-   (@@@@@@@@@@@@@@#*       ,(%@@@@@@@@@@@@@@@@@@@@@%(,       *#@@@@@@@@@@@@@@#  
-                      .*.                               .*.                     
-
-    Tips Accepted by not required Happy Modding..... 
-    
-    https://ko-fi.com/xyberviri
-    https://www.paypal.me/xyberviri
-
-
---]]
 if isClient() then return end
 CW_fueltankPartNames = {"1000FuelTank","500FuelTank"}
 local CWCommands = {}
 local Commands = {}
 
-CWCommands.wantNoise = getDebug() or false
-
-local noise = function(msg)
-	if CWCommands.wantNoise then
-		print('[CarWanna]: '..msg)
-	end
-end
-
 function Commands.spawnVehicle(player, args)
-    print('[CarWanna]: Spawning Vehicle : '..args.type..' at '..player:getX()..' x '..player:getY()..' for '..player:getUsername())    
+    writeLog("vehicle", "[CarWanna]: Spawning Vehicle : "..args.type.." at "..player:getX().." x "..player:getY().." for "..player:getUsername())    
     local sq = getCell():getGridSquare(player:getX(), player:getY(), 0)
     
     if args.dir == nil then
@@ -81,17 +13,12 @@ function Commands.spawnVehicle(player, args)
         else
             args.dir = IsoDirections.S;
         end
-    end
-    
+    end 
     
     
     local car = addVehicleDebug(args.type, args.dir, nil, sq)
     
     --car:setDir(args.dir)
-
-    --Engine
-    -- vehicle:setEngineFeature(unpack(data.engineFeature)) --Установка качество двигателя
-    -- vehicle:transmitEngine() -- Рассылка текущего состояния двигателя на клиенты
     
     --This repairs all parts on vehicles and also adds all upgrades since "missing" upgrades are parts with 0 health...    
     if args.upgrade then
@@ -123,15 +50,20 @@ function Commands.spawnVehicle(player, args)
             if part:getCondition() > 0 then
                 part:setCondition(args.condition)
             end
-        end
-        local engineLoudness = car:getEngineLoudness() -- Получение громкости двигателя (не меняем)
-        local enginePower = car:getEnginePower() -- Получение мощности двигателя (не меняем)
-        -- local engineQuality = car:getEngineQuality()
-        car:setEngineFeature(args.condition, engineLoudness, enginePower) -- Установка качества двигателя (качество, громкость, мощность)
-        car:transmitEngine() -- Рассылка текущего состояния двигателя на клиенты
+        end       
     end
     
-    --Set battery charge
+    local engineLoudness = car:getEngineLoudness() -- Получение громкости двигателя (не меняем)
+    local enginePower = car:getEnginePower() -- Получение мощности двигателя (не меняем)
+    if args.engineFeature then -- Если передали качество двигателя
+        car:setEngineFeature(args.engineFeature, engineLoudness, enginePower) -- Установка качества двигателя (качество, громкость, мощность)
+        car:transmitEngine() -- Рассылка текущего состояния двигателя на клиенты
+    elseif args.condition then -- Если нет качества двигателя, то устанавливаем качество из condition
+        car:setEngineFeature(args.condition, engineLoudness, enginePower)
+        car:transmitEngine()
+    end
+
+    --Установка заряда батареи
     if args.battery then
         local battery = car:getPartById("Battery")
         if battery then
@@ -139,7 +71,7 @@ function Commands.spawnVehicle(player, args)
         end
     end
     
-    --Create a key and send it to the player..
+    --Создание ключа и отправка его игроку
     if args.makekey then 
         local newCarKey = car:createVehicleKey()
         if newCarKey then
@@ -149,8 +81,8 @@ function Commands.spawnVehicle(player, args)
         
     end
     
-    --Change "GasTank" fill level if value exist. 
-    --IF this isnt set vehicle spawns in with random amount of gas
+    --Изменение уровня топлива бензобака
+    --Если нет уровня топлива бензобака, то ТС запускается с случайным уровнем топлива
     if args.gastank then
         local gastank = car:getPartById("GasTank")     
         if gastank then 
@@ -158,7 +90,7 @@ function Commands.spawnVehicle(player, args)
         end
     end    
     
-    --Change fuel storage container amount, this is normally used by trailers.
+    --Изменение уровня топлива цистерны
     if args.fueltank then
         for i=1, #CW_fueltankPartNames
         do          
@@ -167,6 +99,18 @@ function Commands.spawnVehicle(player, args)
              fueltank:setContainerContentAmount(args.fueltank)
           end
         end 
+    end    
+    
+    --Уровень ржавчины
+    if args.rust then
+        car:setRust(args.rust)
+        car:transmitRust()
+    end
+
+    --Цвет автомобиля
+    if args.HSV then
+        car:setColorHSV(args.HSV)
+        car:transmitColorHSV()
     end    
     
 end
@@ -178,7 +122,6 @@ CWCommands.OnClientCommand = function(module, command, player, args)
 		for k,v in pairs(args) do
 			argStr = argStr..' '..k..'='..tostring(v)
 		end
-		noise('received '..module..' '..command..' '..tostring(player)..argStr)
 		Commands[command](player, args)
 	end
 end
