@@ -2,15 +2,15 @@ Sandbox_RU =
 {
 	Sandbox_UdderlySafeLogin = "Безопасный вход в игру",
 	
-	Sandbox_UdderlySafeLogin_SafeTime = "Безопасное время",
+	Sandbox_UdderlySafeLogin_SafeTime = "Безопасный вход:время",
 	Sandbox_UdderlySafeLogin_SafeTime_tooltip = "Безопасное время в секундах, обратите внимание, что это начинается, когда игрок нажимает кнопку "Начать", а не когда они могут двигаться.",
 	
-	Sandbox_UdderlySafeLogin_MovementMultiplier = "Множитель движения",
+	Sandbox_UdderlySafeLogin_MovementMultiplier = "Безопасный вход:Множитель движения",
 	Sandbox_UdderlySafeLogin_MovementMultiplier_tooltip = "При движении время защиты уменьшается с этим множителем.",
 	
-	Sandbox_UdderlySafeLogin_UseInvisibility = "Невидимость при подключении",
+	Sandbox_UdderlySafeLogin_UseInvisibility = "Безопасный вход:Невидимость при подключении",
 	Sandbox_UdderlySafeLogin_UseInvisibility_tooltip = "Использовать невидимость вместо защиты от удара зомби. Это не позволяет им замечать вас или следовать за вами, но может быть использовано другими игроками.",
 
-	Sandbox_UdderlySafeLogin_Protection = "Защита новичков",
+	Sandbox_UdderlySafeLogin_Protection = "Безопасный вход:Защита новичков",
 	Sandbox_UdderlySafeLogin_Protection_tooltip = "Время с создания персонажа в игровых часах, пока зомби не атакуют новых игроков",
 }

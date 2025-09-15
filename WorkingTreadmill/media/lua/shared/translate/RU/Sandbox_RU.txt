@@ -1,6 +1,6 @@
 Sandbox_RU = {
 	Sandbox_FC4WorkingTreadmill = "Беговая дорожка",
-	Sandbox_FC4WorkingTreadmill_FitnessXPMultiply = "Множитель ХР фитнеса",
-	Sandbox_FC4WorkingTreadmill_StrengthXPMultiply = "Множитель XP силы",
-	Sandbox_FC4WorkingTreadmill_SprintingXPMultiply = "Множитель XP бега",
+	Sandbox_FC4WorkingTreadmill_FitnessXPMultiply = "Беговая дорожка:множитель ХР фитнеса",
+	Sandbox_FC4WorkingTreadmill_StrengthXPMultiply = "Беговая дорожка:множитель XP силы",
+	Sandbox_FC4WorkingTreadmill_SprintingXPMultiply = "Беговая дорожка:множитель XP бега",
 }

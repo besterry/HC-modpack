@@ -1,4 +1,5 @@
 Sandbox_RU = {
 	Sandbox_CarTeleport= "Телепорт транспорта",
-	Sandbox_CarTeleport_ForceKeySpawn = "Спавнить ключ, даже если его небыло в замке, если машина не взломана (только для стабильного типа лепортации)",
+	Sandbox_CarTeleport_ForceKeySpawn = "Телепорт транспорта: спавнить ключ",
+	Sandbox_CarTeleport_ForceKeySpawn_tooltip = "Спавнить ключ, даже если его небыло в замке, если машина не взломана (стабильный способ)",
 }

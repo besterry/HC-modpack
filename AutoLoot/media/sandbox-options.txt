@@ -4,7 +4,7 @@ option AutoLoot.Buy
 {
 	type = boolean,
 	default = true,
-	page = AutoLoot,
+	page = Shops,
 	translation = AutoLoot_Buy,
 }
 
@@ -14,7 +14,7 @@ option AutoLoot.PriceAutoLoot
 	min = 0,
 	max = 99999,
 	default = 100,
-	page = AutoLoot,
+	page = Shops,
 	translation = AutoLoot_PriceAutoLoot,
 }
 
@@ -24,7 +24,7 @@ option AutoLoot.DurabilityAutoLoot
 	min = 0,
 	max = 99999,
 	default = 7,
-	page = AutoLoot,
+	page = Shops,
 	translation = AutoLoot_DurabilityAutoLoot,
 }
 

@@ -6,7 +6,7 @@ option UdderlySafeLogin.SafeTime =
 	default = 10,
 	min = 1,
 	max = 120,
-	page = UdderlySafeLogin,
+	page = Character,
 	translation = UdderlySafeLogin_SafeTime,
 }
 
@@ -16,7 +16,7 @@ option UdderlySafeLogin.MovementMultiplier =
 	default = .5,
 	min = 0,
 	max = 1,
-	page = UdderlySafeLogin,
+	page = Character,
 	translation = UdderlySafeLogin_MovementMultiplier,
 }
 
@@ -24,7 +24,7 @@ option UdderlySafeLogin.UseInvisbiility =
 {
 	type = boolean,
 	default = false,
-	page = UdderlySafeLogin,
+	page = Character,
 	translation = UdderlySafeLogin_UseInvisibility,
 }
 
@@ -34,6 +34,6 @@ option UdderlySafeLogin.Protection =
 	default = 1,
 	min = 0,
 	max = 24,
-	page = UdderlySafeLogin,
+	page = Character,
 	translation = UdderlySafeLogin_Protection,
 }

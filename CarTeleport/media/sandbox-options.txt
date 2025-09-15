@@ -5,6 +5,6 @@ option CarTeleport.ForceKeySpawn
 	type = boolean,
 	default = true,
 
-	page = CarTeleport,
+	page = Vehicle,
 	translation = CarTeleport_ForceKeySpawn,
 }
