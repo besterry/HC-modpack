@@ -331,6 +331,15 @@ function RecycleVehicleAction:new(character, vehicle, propaneNeeded)
     o.maxTime = o.vArea * 60 - o.weldingLvl * o.vArea * 1.2
     o.maxTime = o.maxTime * SandboxVars.VehicleRecycling.ActionTimeMultiplier
 
+    -- print("=== VEHICLE RECYCLING DEBUG ===")
+    -- print("Vehicle:", vehicle:getScript():getName())
+    -- print("vArea (Base Time):", o.vArea)
+    -- print("weldingLvl (Perk Level):", o.weldingLvl)
+    -- print("chance (Chance to Drop Item):", o.chance)
+    -- print("ActionTimeMultiplier (Multiplier):", SandboxVars.VehicleRecycling.ActionTimeMultiplier)
+    -- print("maxTime (Max Time):", o.maxTime)
+    -- print("===============================")
+
     if character:isTimedActionInstant() then o.maxTime = 10 end
     --if ISVehicleMechanics.cheat then
     --    o.maxTime = 1
