@@ -206,20 +206,49 @@ function PlayerShopUI:onActivateView()
     if self.cartItems then
         self.cartItems:clear()
     end
+    local grouped = {}
+    local ordered = {}
     for i=0, items:size() - 1 do
-        local item = items:get(i)
-        local v = {}
-        local modData = item:getModData()
+        local invItem = items:get(i)
+        local modData = invItem:getModData()
         local VehicleID = modData.VehicleID
         if modData.price then
-            if VehicleID then v.VehicleID = VehicleID end
-            v.type = item:getFullType()
-            v.price = modData.price
-            v.specialCoin = modData.specialCoin
-            v.name = Nfunction.trimString(item:getName(),42)
-            v.invItem = item
-            shopItems:addItem(v.type,v);
+            local typeFull = invItem:getFullType()
+            local nameTrimmed = Nfunction.trimString(invItem:getName(),42)
+            local canStack = (not VehicleID) and (not invItem:IsInventoryContainer())
+            local key = typeFull.."|"..tostring(modData.price).."|"..tostring(modData.specialCoin).."|"..nameTrimmed
+            if canStack then
+                local g = grouped[key]
+                if not g then
+                    local v = {}
+                    v.type = typeFull
+                    v.price = modData.price
+                    v.specialCoin = modData.specialCoin
+                    v.name = nameTrimmed
+                    v.invItem = invItem
+                    v.count = 1
+                    v.stack = { invItem }
+                    grouped[key] = v
+                    table.insert(ordered, v)
+                else
+                    g.count = g.count + 1
+                    table.insert(g.stack, invItem)
+                    g.invItem = g.stack[#g.stack]
+                end
+            else
+                local v = {}
+                if VehicleID then v.VehicleID = VehicleID end
+                v.type = typeFull
+                v.price = modData.price
+                v.specialCoin = modData.specialCoin
+                v.name = nameTrimmed
+                v.invItem = invItem
+                table.insert(ordered, v)
+            end
         end
+    end
+    for _,v in ipairs(ordered) do
+        shopItems:addItem(v.type, v)
     end
     self.shopItemsCache[tabType] = shopItems.items
 end
@@ -340,7 +369,28 @@ function PlayerShopUI:removeFromCart(selectedRow)
     if self.actionInProgress then return end
     self:toggleTooltip(false)
     local tab = self.panel.activeView.view
-    tab.shopItems:addItem(selectedRow.item.type,selectedRow.item)
+    local item = selectedRow.item
+    local rekey = item.type.."|"..tostring(item.price).."|"..tostring(item.specialCoin).."|"..item.name
+    local items = tab.shopItems.items
+    local stacked = false
+    for _,row in ipairs(items) do
+        local ritem = row.item
+        if ritem and ritem.count and (ritem.type.."|"..tostring(ritem.price).."|"..tostring(ritem.specialCoin).."|"..ritem.name) == rekey then
+            ritem.count = ritem.count + 1
+            ritem.stack = ritem.stack or {}
+            table.insert(ritem.stack, item.invItem or item)
+            ritem.invItem = ritem.stack[#ritem.stack]
+            stacked = true
+            break
+        end
+    end
+    if not stacked then
+        if not item.VehicleID and (not (item.invItem and item.invItem:IsInventoryContainer())) then
+            item.count = 1
+            item.stack = { item.invItem or item }
+        end
+        tab.shopItems:addItem(item.type,item)
+    end
     self.cartItems:removeItem(selectedRow.text)
 end
 

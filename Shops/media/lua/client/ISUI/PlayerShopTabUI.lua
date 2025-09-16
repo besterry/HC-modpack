@@ -42,7 +42,11 @@ function PlayerShopTabUI:doDrawShopItem(y, item, alt)
         self:drawRect(0, (y), self:getWidth(), item.height - 1, 0.3, 0.7, 0.35, 0.15);
     end
     
-    self:drawText(item.item.name, 40, y + 10, 1, 1, 1, a, UIFont.Small);
+    local nameToDraw = item.item.name
+    if item.item.count and item.item.count > 1 then
+        nameToDraw = item.item.name .. "  x" .. tostring(item.item.count)
+    end
+    self:drawText(nameToDraw, 40, y + 10, 1, 1, 1, a, UIFont.Small);
     if item.item.price then
         local coinImg = Currency.CoinsTexture.Coin
         if item.item.specialCoin then coinImg = Currency.CoinsTexture.SpecialCoin end
@@ -118,12 +122,26 @@ function PlayerShopTabUI:prerender()
 end
 
 function PlayerShopTabUI:addToCart(selectedRow)
-    local item = self.shopItems.items[selectedRow]
+    local row = self.shopItems.items[selectedRow]
     if self.ShopUI.actionInProgress then return end
     self.ShopUI:toggleTooltip(false)
-    self.ShopUI.cartItems:addItem(item.text,item.item);
-    self.shopItems:removeItemByIndex(selectedRow)
-    self.ShopUI.cartItems:setYScroll(-10000);
+    if row and row.item and row.item.count and row.item.count > 1 then
+        local v = {}
+        for k,val in pairs(row.item) do v[k] = val end
+        v.count = nil
+        v.stack = nil
+        v.invItem = table.remove(row.item.stack)
+        self.ShopUI.cartItems:addItem(row.text, v)
+        row.item.count = row.item.count - 1
+        row.item.invItem = row.item.stack[#row.item.stack]
+        if row.item.count <= 1 then
+            row.item.count = nil
+        end
+    else
+        self.ShopUI.cartItems:addItem(row.text,row.item)
+        self.shopItems:removeItemByIndex(selectedRow)
+    end
+    self.ShopUI.cartItems:setYScroll(-10000)
 end
 
 function PlayerShopTabUI:filter()
