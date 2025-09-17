@@ -116,6 +116,64 @@ function BServer.Withdraw(player,args)
     sendServerCommand(player, "BS", "ChangeBalance", {coin = account.coin, specialCoin = account.specialCoin })
 end
 
+-- Списание средств по имени аккаунта (для операций магазина от имени владельца)
+function BServer.WithdrawByName(player,args)
+    local username = args[1]
+    local coin = args[2] or 0
+    local specialCoin = args[3] or 0
+    local account = ModData.get("CoinBalance")[username]
+    if not account then return end
+    if account.coin >= coin then
+        account.coin = account.coin-coin
+    else
+        coin = account.coin
+        account.coin = 0
+    end
+    if account.specialCoin >= specialCoin then
+        account.specialCoin = account.specialCoin-specialCoin
+    else
+        specialCoin = account.specialCoin
+        account.specialCoin = 0
+    end
+    msg = "%s WithdrawByName: Coin %s Special %s [newBalance: Coin: %s SpecialCoin %s]"
+    msg = string.format(msg,username,coin,specialCoin,account.coin,account.specialCoin)
+    BServer.writeLog(msg)
+    SaveCoinBalancefd()
+    -- обновим баланс, если владелец онлайн
+    local players = getOnlinePlayers()
+    local playersSize = players:size()
+    for i = 0, playersSize - 1, 1 do
+        local p = players:get(i)
+        if p:getUsername() == username then
+            sendServerCommand(p, "BS", "ChangeBalance", {coin = account.coin, specialCoin = account.specialCoin })
+            break
+        end
+    end
+end
+
+-- Зачисление средств по имени аккаунта (для операций магазина от имени владельца)
+function BServer.DepositByName(player,args)
+    local username = args[1]
+    local coin = args[2] or 0
+    local specialCoin = args[3] or 0
+    local account = ModData.get("CoinBalance")[username]
+    if not account then return end
+    account.coin = account.coin + coin
+    account.specialCoin = account.specialCoin + specialCoin
+    msg = "%s DepositByName: Coin %s Special %s [newBalance: Coin: %s SpecialCoin %s]"
+    msg = string.format(msg,username,coin,specialCoin,account.coin,account.specialCoin)
+    BServer.writeLog(msg)
+    SaveCoinBalancefd()
+    local players = getOnlinePlayers()
+    local playersSize = players:size()
+    for i = 0, playersSize - 1, 1 do
+        local p = players:get(i)
+        if p:getUsername() == username then
+            sendServerCommand(p, "BS", "ChangeBalance", {coin = account.coin, specialCoin = account.specialCoin })
+            break
+        end
+    end
+end
 local function BS_OnClientCommand(module, command, player, args)
     if module == "BS" and BServer[command] then
         BServer[command](player, args)
