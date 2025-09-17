@@ -3,31 +3,37 @@ if isServer() then return end
 ISChangeStatPlayersUI = ISPanel:derive("ISChangeStatPlayersUI")
 
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
+local function getTextOrDefault(key, default)
+    local s = getText(key)
+    return s ~= key and s or default
+end
 
 function ISChangeStatPlayersUI:initialise()
     ISPanel.initialise(self)
 
     local pad = 10
-    local y = pad
+    self.titleText = getTextOrDefault("UI_ChangePlayerStats", "Change Player Stats")
+    self.headerH = FONT_HGT_SMALL + 10
+    local y = pad + self.headerH
     local lblW = 150
     local fldW = self.width - lblW - pad * 3
     local rowH = FONT_HGT_SMALL + 8
     local btnH = math.max(22, FONT_HGT_SMALL + 4)
 
-    self:addChild(ISLabel:new(pad, y, rowH, getText("IGUI_Username") .. ":", 1,1,1,1, UIFont.Small, true))
+    self:addChild(ISLabel:new(pad, y, rowH, getTextOrDefault("IGUI_Username", "Username") .. ":", 1,1,1,1, UIFont.Small, true))
     self.lblUser = ISTextEntryBox:new(self.targetDisplayName or self.targetUsername, pad + lblW, y, fldW, rowH)
     self.lblUser:initialise(); self.lblUser:instantiate(); self.lblUser:setEditable(false)
     self:addChild(self.lblUser)
     y = y + rowH + 6
 
-    self:addChild(ISLabel:new(pad, y, rowH, "Hours Survived:", 1,1,1,1, UIFont.Small, true))
+    self:addChild(ISLabel:new(pad, y, rowH, getTextOrDefault("UI_HoursSurvived", "Hours Survived") .. ":", 1,1,1,1, UIFont.Small, true))
     self.edHours = ISTextEntryBox:new("", pad + lblW, y, fldW, rowH)
     self.edHours:initialise(); self.edHours:instantiate()
     self.edHours:setOnlyNumbers(true)
     self:addChild(self.edHours)
     y = y + rowH + 6
 
-    self:addChild(ISLabel:new(pad, y, rowH, "Zombie Kills:", 1,1,1,1, UIFont.Small, true))
+    self:addChild(ISLabel:new(pad, y, rowH, getTextOrDefault("UI_ZombieKills", "Zombie Kills") .. ":", 1,1,1,1, UIFont.Small, true))
     self.edKills = ISTextEntryBox:new("", pad + lblW, y, fldW, rowH)
     self.edKills:initialise(); self.edKills:instantiate()
     self.edKills:setOnlyNumbers(true)
@@ -36,10 +42,10 @@ function ISChangeStatPlayersUI:initialise()
 
     local btnW = math.floor((self.width - pad*3) / 3)
 
-    self.btnSet = ISButton:new(pad, y, btnW, btnH, "Set", self, ISChangeStatPlayersUI.onClick)
+    self.btnSet = ISButton:new(pad, y, btnW, btnH, getTextOrDefault("UI_Set", "Set"), self, ISChangeStatPlayersUI.onClick)
     self.btnSet.internal = "SET"; self.btnSet:initialise(); self.btnSet:instantiate(); self:addChild(self.btnSet)
 
-    self.btnAdd = ISButton:new(pad + btnW + pad, y, btnW, btnH, "Add", self, ISChangeStatPlayersUI.onClick)
+    self.btnAdd = ISButton:new(pad + btnW + pad, y, btnW, btnH, getTextOrDefault("UI_Add", "Add"), self, ISChangeStatPlayersUI.onClick)
     self.btnAdd.internal = "ADD"; self.btnAdd:initialise(); self.btnAdd:instantiate(); self:addChild(self.btnAdd)
 
     self.btnClose = ISButton:new(pad + (btnW + pad)*2, y, btnW, btnH, getText("UI_btn_close"), self, ISChangeStatPlayersUI.onClick)
@@ -70,7 +76,8 @@ end
 function ISChangeStatPlayersUI:prerender()
     ISPanel.prerender(self)
     self:drawRect(0, 0, self.width, self.height, self.backgroundColor.a, self.backgroundColor.r, self.backgroundColor.g, self.backgroundColor.b)
-    self:drawTextCentre("Change Player Stats", self.width/2, 6, 1,1,1,1, UIFont.Small)
+    local ty = math.floor((self.headerH - FONT_HGT_SMALL) / 2)
+    self:drawTextCentre(self.titleText, self.width/2, ty, 1,1,1,1, UIFont.Small)
 end
 
 function ISChangeStatPlayersUI:close()
