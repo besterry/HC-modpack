@@ -5,6 +5,74 @@ module Tsarcraft
 		Base
 	}
 /********************Generated Music Carriers********************/
+	item CassetteMix6090
+	{
+		Type			=	Normal,
+		DisplayCategory = Entertainment,
+		Weight			=	0.02,
+		Icon			=	TCTape1,
+		DisplayName		=	Cassette Mix 60-90,
+		WorldStaticModel = Tsarcraft.TCTape1,
+	}
+
+	item CassetteThe50sRevolution
+	{
+		Type			=	Normal,
+		DisplayCategory = Entertainment,
+		Weight			=	0.02,
+		Icon			=	TCTape1,
+		DisplayName		=	Cassette The 50s Revolution,
+		WorldStaticModel = Tsarcraft.TCTape1,
+	}
+
+	item CassetteThe60sWave
+	{
+		Type			=	Normal,
+		DisplayCategory = Entertainment,
+		Weight			=	0.02,
+		Icon			=	TCTape8,
+		DisplayName		=	Cassette The 60s Wave,
+		WorldStaticModel = Tsarcraft.TCTape8,
+	}
+
+	item CassetteThe70sDecade
+	{
+		Type			=	Normal,
+		DisplayCategory = Entertainment,
+		Weight			=	0.02,
+		Icon			=	TCTape11,
+		DisplayName		=	Cassette The 70s Decade,
+		WorldStaticModel = Tsarcraft.TCTape11,
+	}
+
+	item CassetteThe80sAnthems
+	{
+		Type			=	Normal,
+		DisplayCategory = Entertainment,
+		Weight			=	0.02,
+		Icon			=	TCTape10,
+		DisplayName		=	Cassette The 80s Anthems,
+		WorldStaticModel = Tsarcraft.TCTape10,
+	}
+
+	item CassetteThe90sEra
+	{
+		Type			=	Normal,
+		DisplayCategory = Entertainment,
+		Weight			=	0.02,
+		Icon			=	TCTape7,
+		DisplayName		=	Cassette The 90s Era,
+		WorldStaticModel = Tsarcraft.TCTape7,
+	}
+	item CassetteCCCatchCauseYouAreYoung
+	{
+		Type			=	Normal,
+		DisplayCategory = Entertainment,
+		Weight			=	0.02,
+		Icon			=	TCTape8,
+		DisplayName		=	Cassette C.C.Catch-Cause You Are Young,
+		WorldStaticModel = Tsarcraft.TCTape8,
+	}
 
 	item CassetteACDCHighwayToHell(1979)
 	{

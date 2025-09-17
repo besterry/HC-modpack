@@ -1,4 +1,4 @@
--- c:\Users\FD\Zomboid\Workshop\HydroServer\Contents\mods\Shops\media\lua\client\ISUI\ATMSellUI.lua
+-- \Shops\media\lua\client\ISUI\ATMSellUI.lua
 local Nfunction = require "Nfunction"
 
 ATMSellUI = ISCollapsableWindow:derive("ATMSellUI");

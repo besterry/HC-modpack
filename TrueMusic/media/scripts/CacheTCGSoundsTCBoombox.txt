@@ -1,5 +1,75 @@
 module Tsarcraft
 {
+	sound CassetteMix6090
+	{
+		category = True Music,
+		master = Ambient,
+		clip
+		{
+			file = media/yourMusic/TCBoombox/Mix 60-90.ogg,
+			distanceMax = 75,
+		}
+	}
+	sound CassetteThe50sRevolution
+	{
+		category = True Music,
+		master = Ambient,
+		clip
+		{
+			file = media/yourMusic/TCBoombox/The 50s Revolution.ogg,
+			distanceMax = 75,
+		}
+	}
+	sound CassetteThe60sWave
+	{
+		category = True Music,
+		master = Ambient,
+		clip
+		{
+			file = media/yourMusic/TCBoombox/The 60s Wave.ogg,
+			distanceMax = 75,
+		}
+	}
+	sound CassetteThe70sDecade
+	{
+		category = True Music,
+		master = Ambient,
+		clip
+		{
+			file = media/yourMusic/TCBoombox/The 70s Decade.ogg,
+			distanceMax = 75,
+		}
+	}
+	sound CassetteThe80sAnthems
+	{
+		category = True Music,
+		master = Ambient,
+		clip
+		{
+			file = media/yourMusic/TCBoombox/The 80s Anthems.ogg,
+			distanceMax = 75,
+		}
+	}
+	sound CassetteThe90sEra
+	{
+		category = True Music,
+		master = Ambient,
+		clip
+		{
+			file = media/yourMusic/TCBoombox/The 90s Era.ogg,
+			distanceMax = 75,
+		}
+	}
+	sound CassetteCCCatchCauseYouAreYoung
+	{
+		category = True Music,
+		master = Ambient,
+		clip
+		{
+			file = media/yourMusic/TCBoombox/C.C.Catch-Cause You Are Young.ogg,
+			distanceMax = 75,
+		}
+	}
 	sound CassetteACDCHighwayToHell(1979)
 	{
 		category = True Music,

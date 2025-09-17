@@ -97,5 +97,11 @@ Items_RU = {
 	DisplayName_Vinyl_Righteous_Brothers___Unchained_Melody_(1965) = "Винил Righteous Brothers - Unchained Melody (1965)",
 	DisplayName_Vinyl_Robert_Johnson___Walking_Blues_(1936) = "Винил Robert Johnson - Walking Blues (1936)",
 	DisplayName_Vinyl_Thurl_Ravenscroft___Youre_A_Mean_One_Mr_Grinch_(1966) = "Винил Thurl Ravenscroft - Youre A Mean One Mr Grinch (1966)",
-
+	DisplayName_Cassette_Mix_60-90 = "Кассета Mix 60-90", 
+	DisplayName_Cassette_The_50s_Revolution = "Кассета The 50s Revolution", 
+	DisplayName_Cassette_The_60s_Wave = "Кассета The 60s Wave", 
+	DisplayName_Cassette_The_70s_Decade = "Кассета The 70s Decade", 
+	DisplayName_Cassette_The_80s_Anthems = "Кассета The 80s Anthems", 
+	DisplayName_Cassette_The_90s_Era = "Кассета The 90s Era", 
+	DisplayName_Cassette_C.C.Catch-Cause_You_Are_Young = "Кассета C.C.Catch-Cause You Are Young", 
 }
