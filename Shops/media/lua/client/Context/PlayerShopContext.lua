@@ -178,7 +178,10 @@ function PlayerShop.PlayerShopContextMenu(playerNum, context, worldobjects) -- Ð
                     end
                 end
             end
-            subShop:addOption(UIText.ViewIncomePlayerShop, worldobjects, PlayerShop.ViewIncome, wo);
+            -- subShop:addOption(UIText.ViewIncomePlayerShop, worldobjects, PlayerShop.ViewIncome, wo);
+            -- subShop:addOption(getText("IGUI_BuyOrders_Title"), worldobjects, function()
+            --     BuyOrdersUI:show(player, wo)
+            -- end);
             subShop:addOption(UIText.PickupPlayerShop, worldobjects, PlayerShop.PickupShop,player, wo);
         end
     end
