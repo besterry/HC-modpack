@@ -69,69 +69,102 @@ function ISAdminPowerUI:addAdminPowerOptions()
     self.setFunction = {}
     local accessLevel = self:getAccessLevelNumber(getAccessLevel())
 
-    if accessLevel >= 3 then -- moderator и выше
+    if accessLevel >= SandboxVars.Admins.adminPowerBtn then -- moderator и выше
         self:addOption(getText("IGUI_AdminPanel_Invisible"), self.player:isInvisible(), function(self, selected)
             self.player:setInvisible(selected);
         end);
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerGodMode then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_God_mode"), self.player:isGodMod(), function(self, selected)
             self.player:setGodMod(selected);
         end);
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerGhostMode then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_Ghost_mode"), self.player:isGhostMode(), function(self, selected)
             self.player:setGhostMode(selected);
         end);
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerNoClip then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_No_Clip"), self.player:isNoClip(), function(self, selected)
             self.player:setNoClip(selected);
         end);    
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerZombiesDontAttack then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_ZombiesDontAttack"), self.player:isZombiesDontAttack(), function(self, selected)
             self.player:setZombiesDontAttack(selected)
         end);
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerCanSeeAll then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_CanSeeAll"), self.player:isCanSeeAll(), function(self, selected)
             self.player:setCanSeeAll(selected)
         end);
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerCanHearAll then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_CanHearAll"), self.player:isCanHearAll(), function(self, selected)
             self.player:setCanHearAll(selected)
         end);      
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerTimedActionInstant then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_Timed_Action_Instant"), self.player:isTimedActionInstantCheat(), function(self, selected)
             self.player:setTimedActionInstantCheat(selected);
         end);        
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerUnlimitedCarry then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_Unlimited_Carry"), self.player:isUnlimitedCarry(), function(self, selected)
             self.player:setUnlimitedCarry(selected);
         end);        
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerUnlimitedEndurance then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_Unlimited_Endurance"), self.player:isUnlimitedEndurance(), function(self, selected)
             self.player:setUnlimitedEndurance(selected);
         end);        
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerFastMove then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_Fast_Move"), ISFastTeleportMove.cheat, function(self, selected)
             ISFastTeleportMove.cheat = selected
         end); 
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerMovablesCheat then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_MoveableCheat"), ISMoveableDefinitions.cheat, function(self, selected)
             ISMoveableDefinitions.cheat = selected;
             self.player:setMovablesCheat(selected);
         end);        
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerBuildCheat then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_BuildCheat"), ISBuildMenu.cheat, function(self, selected)
             ISBuildMenu.cheat = selected;
             self.player:setBuildCheat(selected);
         end);        
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerFarmingCheat then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_FarmingCheat"), ISFarmingMenu.cheat, function(self, selected)
             ISFarmingMenu.cheat = selected;
             self.player:setFarmingCheat(selected);
         end);
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerMechanicsCheat then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_MechanicsCheat"), ISVehicleMechanics.cheat, function(self, selected)
             ISVehicleMechanics.cheat = selected;
             self.player:setMechanicsCheat(selected);
         end); 
-
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerNetworkTeleportEnabled then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_NetworkTeleportEnabled"), self.player:isNetworkTeleportEnabled(), function(self, selected)
             self.player:setNetworkTeleportEnabled(selected)
         end);
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerShowMPInfos then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_ShowMPInfos"), self.player:isShowMPInfos(), function(self, selected)
             self.player:setShowMPInfos(selected)
         end);  
     end
-    if accessLevel >= 2 then    -- gm и выше
+    if accessLevel >= SandboxVars.Admins.adminPowerHealthCheat then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_HealthCheat"), ISHealthPanel.cheat, function(self, selected)
             ISHealthPanel.cheat = selected;
             self.player:setHealthCheat(selected);
         end);
+    end
+    if accessLevel >= SandboxVars.Admins.adminPowerBrushTool then -- gm и выше
         self:addOption(getText("IGUI_AdminPanel_Brush_tool"), BrushToolManager.cheat, function(self, selected)
             BrushToolManager.cheat = selected
         end);        
