@@ -467,3 +467,343 @@ option Reading.SkillsEXP {
   page = Character,
   translation = Reading_SkillsEXP,
 }
+
+option Admins.dbBtn 
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+	page = Admins, 
+  translation = Admins_dbBtn,
+}
+
+option Admins.checkStatsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 1,
+	page = Admins, 
+  translation = Admins_checkStatsBtn,
+}
+
+option Admins.adminPowerBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 2,
+	page = Admins, 
+  translation = Admins_adminPowerBtn,
+}
+
+option Admins.itemListBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 2,
+	page = Admins, 
+  translation = Admins_itemListBtn,
+}
+
+option Admins.seeOptionsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+	page = Admins, 
+  translation = Admins_seeOptionsBtn,
+}
+
+option Admins.nonpvpzoneBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+	page = Admins, 
+  translation = Admins_nonpvpzoneBtn,
+}
+
+option Admins.seeFactionBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+	page = Admins, 
+  translation = Admins_seeFactionBtn,
+}
+
+option Admins.seeSafehousesBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+	page = Admins, 
+  translation = Admins_seeSafehousesBtn,
+}
+
+option Admins.safezoneBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+	page = Admins, 
+  translation = Admins_safezoneBtn,
+}
+
+option Admins.seeTicketsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+	page = Admins, 
+  translation = Admins_seeTicketsBtn,
+}
+
+option Admins.miniScoreboardBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 2,
+	page = Admins, 
+  translation = Admins_miniScoreboardBtn,
+}
+
+option Admins.packetCountsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+	page = Admins, 
+  translation = Admins_packetCountsBtn,
+}
+
+option Admins.sandboxOptionsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+	page = Admins, 
+  translation = Admins_sandboxOptionsBtn,
+}
+
+option Admins.climateOptionsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+	page = Admins, 
+  translation = Admins_climateOptionsBtn,
+}
+
+option Admins.showStatisticsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 2,
+	page = Admins, 
+  translation = Admins_showStatisticsBtn,
+}
+
+option Admins.adminPowerInvisible
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerInvisible,
+}
+
+option Admins.adminPowerGodMode
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerGodMode,
+}
+
+option Admins.adminPowerGhostMode
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerGhostMode,
+}
+
+option Admins.adminPowerNoClip
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerNoClip,
+}
+
+option Admins.adminPowerZombiesDontAttack
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerZombiesDontAttack,
+}
+
+option Admins.adminPowerCanSeeAll
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerCanSeeAll,
+}
+
+option Admins.adminPowerCanHearAll
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_adminPowerCanHearAll,
+}
+
+option Admins.adminPowerTimedActionInstant
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerTimedActionInstant,
+}
+
+option Admins.adminPowerUnlimitedCarry
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerUnlimitedCarry,
+}
+
+option Admins.adminPowerUnlimitedEndurance
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerUnlimitedEndurance,
+}
+
+option Admins.adminPowerFastMove
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerFastMove,
+}
+
+option Admins.adminPowerBuildCheat
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerBuildCheat,
+}
+
+option Admins.adminPowerFarmingCheat
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerFarmingCheat,
+}
+
+option Admins.adminPowerHealthCheat
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 2,
+  page = Admins,
+  translation = Admins_adminPowerHealthCheat,
+}
+
+option Admins.adminPowerMechanicsCheat
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerMechanicsCheat,
+}
+
+option Admins.adminPowerMovablesCheat
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerMovablesCheat,
+}
+
+option Admins.adminPowerNetworkTeleportEnabled
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerNetworkTeleportEnabled,
+}
+
+option Admins.adminPowerShowMPInfos
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+  page = Admins,
+  translation = Admins_adminPowerShowMPInfos,
+}
+
+option Admins.adminPowerBrushTool
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 2,
+  page = Admins,
+  translation = Admins_adminPowerBrushTool,
+}
