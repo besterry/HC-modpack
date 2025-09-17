@@ -3,6 +3,8 @@ require "Shop"
 PlayerShop = PlayerShop or {}
 PlayerShop.Tabs = PlayerShop.Tabs or {}
 PlayerShop.Tabs[Tab.All] = getText("IGUI_Tab_All")
+Tab["BuyOrders"] = "BuyOrders"
+PlayerShop.Tabs[Tab.BuyOrders] = getText("IGUI_Tab_BuyOrders")
 PlayerShop.status= {}
 PlayerShop.spritePrefix = "playershop_"
 
