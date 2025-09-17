@@ -19,21 +19,21 @@ local function setAccessLevel(self, level)
     local accessLevel = getAccessLevelNumber(level)
     
     -- Базовые настройки для всех уровней
-    self.dbBtn.enable = accessLevel >= 3 --кнопка "См. базу данных"
-    self.checkStatsBtn.enable = accessLevel >= 1 --кнопка "Ваша статистика"
-    self.adminPowerBtn.enable = accessLevel >= 2 --кнопка "Изменение адм. сил"
-    self.itemListBtn.enable = accessLevel >= 2 --кнопка "Список предметов"
-    self.seeOptionsBtn.enable = accessLevel == 4 --кнопка "Настройки сервера"
-    if self.nonpvpzoneBtn then self.nonpvpzoneBtn.enable = accessLevel >= 4 end --кнопка "Не-PvP зоны" (только для admin)
-    self.seeFactionBtn.enable = accessLevel >= 3 --кнопка "Список фракций"
-    self.seeSafehousesBtn.enable = accessLevel >= 3 --кнопка "Список убежищ"
-    self.safezoneBtn.enable = accessLevel >= 3 --кнопка "Добавить убежище"
-    self.seeTicketsBtn.enable = accessLevel == 4 --кнопка "Просмотреть сообщения"
-    self.miniScoreboardBtn.enable = accessLevel >= 2 --кнопка "Мини-табло"
-    self.packetCountsBtn.enable = accessLevel >= 3 --кнопка "Количество пакетов"
-    self.sandboxOptionsBtn.enable = accessLevel == 4 --кнопка "Настройки песочницы"
-    self.climateOptionsBtn.enable = accessLevel == 4 --кнопка "Контроль климата"
-    self.showStatisticsBtn.enable = accessLevel >= 2 --кнопка "Показать статистику"
+    self.dbBtn.enable = accessLevel >= SandboxVars.Admins.dbBtn --кнопка "См. базу данных" 3
+    self.checkStatsBtn.enable = accessLevel >= SandboxVars.Admins.checkStatsBtn --кнопка "Ваша статистика" 1
+    self.adminPowerBtn.enable = accessLevel >= SandboxVars.Admins.adminPowerBtn --кнопка "Изменение адм. сил" 2
+    self.itemListBtn.enable = accessLevel >= SandboxVars.Admins.itemListBtn --кнопка "Список предметов" 2
+    self.seeOptionsBtn.enable = accessLevel == SandboxVars.Admins.seeOptionsBtn --кнопка "Настройки сервера" 4
+    if self.nonpvpzoneBtn then self.nonpvpzoneBtn.enable = accessLevel >= SandboxVars.Admins.nonpvpzoneBtn end --кнопка "Не-PvP зоны" (только для admin) 4
+    self.seeFactionBtn.enable = accessLevel >= SandboxVars.Admins.seeFactionBtn --кнопка "Список фракций" 3
+    self.seeSafehousesBtn.enable = accessLevel >= SandboxVars.Admins.seeSafehousesBtn --кнопка "Список убежищ" 3
+    self.safezoneBtn.enable = accessLevel >= SandboxVars.Admins.safezoneBtn --кнопка "Добавить убежище" 3
+    self.seeTicketsBtn.enable = accessLevel == SandboxVars.Admins.seeTicketsBtn --кнопка "Просмотреть сообщения" 4
+    self.miniScoreboardBtn.enable = accessLevel >= SandboxVars.Admins.miniScoreboardBtn --кнопка "Мини-табло" 2
+    self.packetCountsBtn.enable = accessLevel >= SandboxVars.Admins.packetCountsBtn --кнопка "Количество пакетов" 3
+    self.sandboxOptionsBtn.enable = accessLevel == SandboxVars.Admins.sandboxOptionsBtn --кнопка "Настройки песочницы" 4
+    self.climateOptionsBtn.enable = accessLevel == SandboxVars.Admins.climateOptionsBtn --кнопка "Контроль климата" 4
+    self.showStatisticsBtn.enable = accessLevel >= SandboxVars.Admins.showStatisticsBtn --кнопка "Показать статистику" 2
 end
 
 function ISAdminPanelUI:create()
