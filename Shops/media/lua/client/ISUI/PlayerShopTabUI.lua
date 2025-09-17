@@ -61,7 +61,32 @@ function PlayerShopTabUI:doDrawShopItem(y, item, alt)
         end
     end
 
-    self:drawTextureScaledAspect(addBtn.texture, self.parent.addButtonX, y + 10, addBtn.scale, addBtn.scale, 1, 1, 1, 1)
+    -- show + only if player has required item when on BuyOrders tab
+    local canAdd = true
+    if self.parent and self.parent.tabType == Tab.BuyOrders then
+        canAdd = false
+        local remainingOrder = item.item.count or 0
+        if remainingOrder > 0 then
+            local inv = self.parent and self.parent.ShopUI and self.parent.ShopUI.player and self.parent.ShopUI.player:getInventory()
+            local have = 0
+            if inv then
+                local list = inv:getAllTypeRecurse(item.item.type)
+                if list then have = list:size() end
+            end
+            local planned = 0
+            local cart = self.parent and self.parent.ShopUI and self.parent.ShopUI.cartItems and self.parent.ShopUI.cartItems.items or {}
+            for _,ci in ipairs(cart) do
+                local it = ci.item
+                if it and it.orderKey == (item.item.orderKey or item.text) then
+                    planned = planned + (it.units or 1)
+                end
+            end
+            if have > planned then canAdd = true end
+        end
+    end
+    if canAdd then
+        self:drawTextureScaledAspect(addBtn.texture, self.parent.addButtonX, y + 10, addBtn.scale, addBtn.scale, 1, 1, 1, 1)
+    end
 
     if item.item.VehicleID then
         self:drawTextureScaledAspect(previewBtn.texture, self.parent.previewButtonX, y + 10, previewBtn.scale, previewBtn.scale, 1, 1, 1, 1)
@@ -87,7 +112,11 @@ function PlayerShopTabUI:onMouseDownShopItem(x, y)
             return
         end
         if self.addBtn then
-		    self.parent:addToCart(self.selectedRow)
+            if self.tabType == Tab.BuyOrders then
+                self.parent.ShopUI:addOrderToCart(selectedRow)
+            else
+		        self.parent:addToCart(self.selectedRow)
+            end
         end
     end
 end
@@ -106,7 +135,28 @@ function PlayerShopTabUI:onMouseMoveShopItem(dx, dy)
     list.selectedRow = rowIndex
     local mouseX = self:getMouseX()
     if mouseX > self.parent.addButtonX then
-        list.addBtn = true
+        local canAdd = true
+        if self.parent and self.parent.tabType == Tab.BuyOrders then
+            canAdd = false
+            local inv = self.parent and self.parent.ShopUI and self.parent.ShopUI.player and self.parent.ShopUI.player:getInventory()
+            if inv and selectedRow and selectedRow.item and selectedRow.item.type then
+                local have = 0
+                local list = inv:getAllTypeRecurse(selectedRow.item.type)
+                if list then have = list:size() end
+                local planned = 0
+                for _,ci in ipairs(self.parent.ShopUI.cartItems.items) do
+                    local it = ci.item
+                    if it and it.orderKey == (selectedRow.item.orderKey or selectedRow.text) then
+                        planned = planned + (it.units or 1)
+                    end
+                end
+                local remainingOrder = selectedRow.item.count or 0
+                if have > planned and remainingOrder > 0 then canAdd = true end
+            end
+        end
+        list.addBtn = canAdd
+    else
+        list.addBtn = false
     end
     if mouseX > self.parent.previewButtonX then
         list.previewBtn = true
@@ -126,14 +176,40 @@ function PlayerShopTabUI:addToCart(selectedRow)
     if self.ShopUI.actionInProgress then return end
     self.ShopUI:toggleTooltip(false)
     if row and row.item and row.item.count and row.item.count > 1 then
+        -- ensure stack exists; if lost, rebuild from container by criteria
+        if (not row.item.stack) or (#row.item.stack or 0) == 0 then
+            local rebuilt = {}
+            local cont = self.ShopUI.shop and self.ShopUI.shop:getContainer()
+            if cont then
+                local items = cont:getItems()
+                for i=0, items:size()-1 do
+                    local it = items:get(i)
+                    local md = it:getModData()
+                    if it:getFullType() == row.item.type and md and md.price == row.item.price and md.specialCoin == row.item.specialCoin then
+                        table.insert(rebuilt, it)
+                    end
+                end
+            end
+            if #rebuilt > 0 then
+                row.item.stack = rebuilt
+                row.item.count = #rebuilt
+                row.item.invItem = rebuilt[#rebuilt]
+            end
+        end
         local v = {}
         for k,val in pairs(row.item) do v[k] = val end
         v.count = nil
         v.stack = nil
-        v.invItem = table.remove(row.item.stack)
+        if row.item.stack and #row.item.stack > 0 then
+            v.invItem = table.remove(row.item.stack)
+        else
+            v.invItem = row.item.invItem
+        end
         self.ShopUI.cartItems:addItem(row.text, v)
-        row.item.count = row.item.count - 1
-        row.item.invItem = row.item.stack[#row.item.stack]
+        row.item.count = math.max(0, (row.item.count or 1) - 1)
+        if row.item.stack and #row.item.stack > 0 then
+            row.item.invItem = row.item.stack[#row.item.stack]
+        end
         if row.item.count <= 1 then
             row.item.count = nil
         end
