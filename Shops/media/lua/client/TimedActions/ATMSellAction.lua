@@ -59,11 +59,8 @@ function ATMSellAction:perform()
 		Nfunction.logShop(coords, "ATMSell")
 	end
 
-	if total > 0 then
-		sendClientCommand("BS", "Deposit", { total, 0 })
-	end
-	if totalSpecial > 0 then
-		sendClientCommand("BS", "Deposit", { 0, totalSpecial })
+	if total > 0 or totalSpecial > 0 then
+		sendClientCommand("BS", "Deposit", { total, totalSpecial })
 	end
 	if total > 0 or totalSpecial > 0 then self.character:playSound("CashRegister") end
 
