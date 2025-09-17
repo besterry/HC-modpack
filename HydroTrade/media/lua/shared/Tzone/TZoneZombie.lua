@@ -8,9 +8,9 @@ local tickCounter = 0
 local unicalLoot = {
     --предмет и шанс выпадения 1 * 1/500 = 0.2%
     -- {"Base.EventCoin", 15}, -- монета 3%
-    {"Hydrocraft.GasFilterUsed", 5}, -- использованный фильтр для газа 1%
+    {"Hydrocraft.GasFilterUsed", 0.5}, -- использованный фильтр для газа 1%
     {"Base.HazmatSuit", 0.1}, -- хим костюм 0.2%
-    {"Base.ShotgunShellsBox", 2}, -- коробка с патронами для дробовика 0.4%
+    {"Base.ShotgunShellsBox", 1}, -- коробка с патронами для дробовика 0.4%
     {"injectorItems.injector_adrenaline", 1}, -- адреналин 0.2%
     {"injectorItems.injector_ahf1", 0.5}, -- аф1 0.2%
     {"injectorItems.injector_btg2a2", 0.5}, -- бтг2а2 0.2%
