@@ -1,4 +1,4 @@
--- c:\Users\FD\Zomboid\Workshop\HydroServer\Contents\mods\Shops\media\lua\client\TimedActions\ATMSellAction.lua
+-- \Shops\media\lua\client\TimedActions\ATMSellAction.lua
 require "TimedActions/ISBaseTimedAction"
 local Nfunction = require "Nfunction"
 
@@ -56,7 +56,7 @@ function ATMSellAction:perform()
 	if SandboxVars.Shops.SellLog then
 		local sq = self.atm and self.atm:getSquare() or self.character:getSquare()
 		local coords = { x = sq:getX(), y = sq:getY(), z = sq:getZ() }
-		Nfunction.logShop(coords, "ATMSell")
+		Nfunction.logShop(coords, "ATMSell [price: " .. total .. "c/" .. totalSpecial .. "s]")
 	end
 
 	if total > 0 or totalSpecial > 0 then
