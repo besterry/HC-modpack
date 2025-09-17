@@ -15,6 +15,8 @@ local removeBtn = Shop.textures.RemoveButton;
 local previewBtn = Shop.textures.PreviewButton;
 local cartImg = Shop.textures.Cart;
 local browseBtn = Shop.textures.Browse;
+local addBtn = Shop.textures.AddButton;
+local browseBtn = Shop.textures.Browse;
 local width = 995
 local height = 550
 local posX = 0
@@ -78,7 +80,11 @@ function PlayerShopUI:doDrawCartItem(y, item, alt)
         self:drawRect(0, (y), self:getWidth(), item.height - 1, 0.3, 0.7, 0.35, 0.15);
     end
 
-    self:drawText(item.item.name, 40, y + 10, 1, 1, 1, a, UIFont.Small);
+    local nameToDraw = item.item.name
+    if item.item.orderKey and item.item.units and item.item.units > 1 then
+        nameToDraw = nameToDraw .. "  x" .. tostring(item.item.units)
+    end
+    self:drawText(nameToDraw, 40, y + 10, 1, 1, 1, a, UIFont.Small);
     if item.item.price then
         local coinImg = Currency.CoinsTexture.Coin
         if item.item.specialCoin then coinImg = Currency.CoinsTexture.SpecialCoin end
@@ -200,7 +206,34 @@ end
 
 function PlayerShopUI:onActivateView()
     local tabType = self.panel.activeView.view.tabType
+    -- очистка корзины при переключении вкладок
+    if self.lastActiveTab and self.lastActiveTab ~= tabType then
+        if self.cartItems then self.cartItems:clear() end
+        self.total = 0; self.totalSpecial = 0
+    end
+    self.lastActiveTab = tabType
     local shopItems = self.panel.activeView.view.shopItems
+    -- вкладка скупки: показываем ордера
+    if tabType == Tab.BuyOrders then
+        local orders = self.shop:getModData().buyOrders or {}
+        shopItems:clear()
+        for key,ord in pairs(orders) do
+            local invItem = InventoryItemFactory.CreateItem(ord.type)
+            if invItem then
+                local v = {}
+                v.type = ord.type
+                v.price = ord.price
+                v.specialCoin = ord.specialCoin
+                v.name = Nfunction.trimString(invItem:getName(),42)
+                v.count = tonumber(ord.qty) or 0 -- показываем доступное кол-во отдельно, без включения в имя
+                v.invItem = invItem
+                v.orderKey = key
+                shopItems:addItem(v.type,v);
+            end
+        end
+        self.shopItemsCache[tabType] = shopItems.items
+        return
+    end
     local items = self.shop:getContainer():getItems()
     shopItems:clear()
     if self.cartItems then
@@ -271,6 +304,8 @@ function PlayerShopUI:createChildren()
     self:createCategories()
     self:activateFirstTab()
 
+    -- вместо кнопки используем полноценную вкладку (Tab.BuyOrders)
+
     self.clearCartButton = ISButton:new((self.width / 2)+380, y+280, 80,25,UIText.ClearCart,self, PlayerShopUI.clearCartBtn);
     self.clearCartButton:initialise()
     self:addChild(self.clearCartButton);
@@ -280,6 +315,11 @@ function PlayerShopUI:createChildren()
     self.buyCartButton.enable = false
     self.buyCartButton:setVisible(true)
     self:addChild(self.buyCartButton);
+
+    -- подсказка о нехватке средств (красным), показывается над кнопкой
+    self.buyHintLabel = ISLabel:new((self.width / 2)+200, y+330, PlayerShopUI.SMALL_FONT_HGT, "", 1, 0.25, 0.25, 1, UIFont.Small, true)
+    self.buyHintLabel:setVisible(false)
+    self:addChild(self.buyHintLabel)
 
     self.cancelBuyButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.Cancel,self, PlayerShopUI.cancelBuyBtn);
     self.cancelBuyButton:initialise()
@@ -308,6 +348,21 @@ function PlayerShopUI:createChildren()
     self.cartItems.onMouseMove = PlayerShopUI.onMouseMoveCartItem;
     self.cartItems.onMouseDown = PlayerShopUI.onMouseDownCartItem;
     self:addChild(self.cartItems);
+
+    -- Кнопки управления (только для владельца)
+    local ownerBtnY = y + 430 -- На 10 выше нижней границы окна (было y + 350)
+    local ownerBtnX = 30--(self.width / 2) + 80
+    self.manageIncomeBtn = ISButton:new(ownerBtnX, ownerBtnY, 140, 25, getText("IGUI_ViewIncomePlayerShop"), self, function()
+        IncomeUI:show(self.player, self.shop)
+    end)
+    self.manageIncomeBtn:initialise(); self.manageIncomeBtn:setVisible(false)
+    self:addChild(self.manageIncomeBtn)
+
+    self.manageBuyBtn = ISButton:new(ownerBtnX + 150, ownerBtnY, 140, 25, getText("IGUI_Tab_BuyOrders"), self, function()
+        BuyOrdersUI:show(self.player, self.shop)
+    end)
+    self.manageBuyBtn:initialise(); self.manageBuyBtn:setVisible(false)
+    self:addChild(self.manageBuyBtn)
 
     self.balanceLabel = ISLabel:new(x+490, 20, PlayerShopUI.SMALL_FONT_HGT, UIText.Balance, 1, 1, 1, 1, UIFont.Medium, true)
     self:addChild(self.balanceLabel);
@@ -358,6 +413,63 @@ function PlayerShopUI:createChildren()
     self:checkShopOwner()
 end
 
+-- Добавить выбранный ордер в корзину (продажа игроком в магазин): одна штука
+function PlayerShopUI:addOrderToCart(row)
+    local item = row.item
+    if not item or not item.orderKey then return end
+    -- ограничение: не больше, чем есть у игрока и чем осталось в ордере
+    local inv = self.player and self.player:getInventory() or nil
+    local have = 0
+    if inv then
+        local list = inv:getAllTypeRecurse(item.type)
+        if list then have = list:size() end
+    end
+    -- уже запланировано в корзине
+    local planned = 0
+    for _,ci in ipairs(self.cartItems.items) do
+        local it = ci.item
+        if it and it.orderKey == item.orderKey then
+            planned = planned + (it.units or 1)
+        end
+    end
+    local remainingOrder = row.item.count or 0
+    if planned >= have then
+        if self.player then self.player:setHaloNote(getText("IGUI_PlayerShop_NotEnoughItems"), 255,255,255,400) end
+        return
+    end
+    if remainingOrder <= 0 then
+        if self.player then self.player:setHaloNote(getText("IGUI_PlayerShop_OrderExhausted"), 255,255,255,400) end
+        return
+    end
+    -- попробуем найти в корзине уже добавленный такой же ордер и увеличить количество
+    local unitPrice = item.price
+    for _,ci in ipairs(self.cartItems.items) do
+        local it = ci.item
+        if it and it.orderKey == item.orderKey then
+            it.units = (it.units or 1) + 1
+            it.price = unitPrice * it.units
+            -- визуально уменьшим доступное количество в списке ордеров
+            if row.item.count and row.item.count > 0 then row.item.count = row.item.count - 1 end
+            self:updateTotal()
+            self.cartItems:setYScroll(-10000)
+            return
+        end
+    end
+    -- впервые добавляем ордер в корзину
+    local orderEntry = {
+        name = item.name,
+        price = unitPrice, -- общая цена = unitPrice * units
+        unitPrice = unitPrice,
+        units = 1,
+        specialCoin = item.specialCoin,
+        type = item.type,
+        orderKey = item.orderKey
+    }
+    if row.item.count and row.item.count > 0 then row.item.count = row.item.count - 1 end
+    self.cartItems:addItem(item.type, orderEntry)
+    self.cartItems:setYScroll(-10000)
+end
+
 function PlayerShopUI:activateFirstTab()
     for k,v in pairs(PlayerShop.Tabs) do 
         self.panel:activateView(v)
@@ -373,25 +485,53 @@ function PlayerShopUI:removeFromCart(selectedRow)
     local rekey = item.type.."|"..tostring(item.price).."|"..tostring(item.specialCoin).."|"..item.name
     local items = tab.shopItems.items
     local stacked = false
-    for _,row in ipairs(items) do
-        local ritem = row.item
-        if ritem and ritem.count and (ritem.type.."|"..tostring(ritem.price).."|"..tostring(ritem.specialCoin).."|"..ritem.name) == rekey then
-            ritem.count = ritem.count + 1
-            ritem.stack = ritem.stack or {}
-            table.insert(ritem.stack, item.invItem or item)
-            ritem.invItem = ritem.stack[#ritem.stack]
-            stacked = true
-            break
+    if item.orderKey then
+        -- для ордеров на скупку уменьшаем units, либо удаляем строку
+        if item.units and item.units > 1 then
+            item.units = item.units - 1
+            item.price = (item.unitPrice or item.price) * item.units
+            -- вернем 1 в доступное количество на панели ордеров
+            for _,row in ipairs(items) do
+                local ritem = row.item
+                if ritem and ritem.orderKey == item.orderKey then
+                    ritem.count = (ritem.count or 0) + 1
+                    break
+                end
+            end
+            return
+        else
+            -- снимаем строку целиком
+            for _,row in ipairs(items) do
+                local ritem = row.item
+                if ritem and ritem.orderKey == item.orderKey then
+                    ritem.count = (ritem.count or 0) + 1
+                    break
+                end
+            end
+            self.cartItems:removeItem(selectedRow.text)
+            return
         end
-    end
-    if not stacked then
-        if not item.VehicleID and (not (item.invItem and item.invItem:IsInventoryContainer())) then
-            item.count = 1
-            item.stack = { item.invItem or item }
+    else
+        for _,row in ipairs(items) do
+            local ritem = row.item
+            if ritem and ritem.count and (ritem.type.."|"..tostring(ritem.price).."|"..tostring(ritem.specialCoin).."|"..ritem.name) == rekey then
+                ritem.count = ritem.count + 1
+                ritem.stack = ritem.stack or {}
+                table.insert(ritem.stack, item.invItem or item)
+                ritem.invItem = ritem.stack[#ritem.stack]
+                stacked = true
+                break
+            end
         end
-        tab.shopItems:addItem(item.type,item)
+        if not stacked then
+            if not item.VehicleID and (not (item.invItem and item.invItem:IsInventoryContainer())) then
+                item.count = 1
+                item.stack = { item.invItem or item }
+            end
+            tab.shopItems:addItem(item.type,item)
+        end
+        self.cartItems:removeItem(selectedRow.text)
     end
-    self.cartItems:removeItem(selectedRow.text)
 end
 
 function PlayerShopUI:clearCartBtn()
@@ -414,13 +554,7 @@ function PlayerShopUI:cancelBuyBtn()
 end
 
 function PlayerShopUI:buyCartBtn()
-
-    local shop = PlayerShopUI.instance.shop
-    local username = self.player:getUsername()
-    if not PlayerShop.isBlockByUser(shop,username) then
-        self:close()
-    end
-
+    -- Запускаем покупку без закрытия окна; блокировка магазина уже установлена при открытии
     self.actionInProgress = true
     local ticket = {}
     ticket.coin = self.total
@@ -473,13 +607,53 @@ function PlayerShopUI:updateTotal()
     self:checkShopOwner()
     if total == 0 and totalSpecial == 0 then return end
 
-    local username = self.player:getUsername()
-    local coin,specialCoin = Balance.getUserBalance(username)
-    if coin >= total and specialCoin >= totalSpecial then
-        self.buyCartButton.enable = true
-        self.buyCartButton:setVisible(true)
-        self.cancelBuyButton.enable = false
-        self.cancelBuyButton:setVisible(false)
+    -- Вкл/выкл кнопки: для вкладки Скупка используем кассу магазина (+ доход, если разрешено), иначе баланс игрока
+    local tabType = self.panel.activeView.view.tabType
+    if tabType == Tab.BuyOrders then
+        local md = self.shop:getModData()
+        md.cash = md.cash or {coin=0,specialCoin=0}
+        local coin = md.cash.coin or 0
+        local specialCoin = md.cash.specialCoin or 0
+        if md.useIncome then
+            local sumCoin, sumSpec = 0, 0
+            for _,v in pairs(md.income or {}) do
+                sumCoin = sumCoin + (v.t and v.t.tl or 0)
+                sumSpec = sumSpec + (v.t and v.t.tls or 0)
+            end
+            coin = coin + sumCoin
+            specialCoin = specialCoin + sumSpec
+        end
+        if coin >= total and specialCoin >= totalSpecial then
+            self.buyCartButton.enable = true
+            self.buyCartButton:setVisible(true)
+            self.cancelBuyButton.enable = false
+            self.cancelBuyButton:setVisible(false)
+            if self.buyHintLabel then self.buyHintLabel:setVisible(false) end
+        end
+        if (coin < total) or (specialCoin < totalSpecial) then
+            if self.buyHintLabel then
+                local msg = getText("IGUI_Shop_NotEnoughRegister")
+                self.buyHintLabel:setName(msg)
+                self.buyHintLabel:setVisible(true)
+            end
+        end
+    else
+        local username = self.player:getUsername()
+        local coin,specialCoin = Balance.getUserBalance(username)
+        if coin >= total and specialCoin >= totalSpecial then
+            self.buyCartButton.enable = true
+            self.buyCartButton:setVisible(true)
+            self.cancelBuyButton.enable = false
+            self.cancelBuyButton:setVisible(false)
+            if self.buyHintLabel then self.buyHintLabel:setVisible(false) end
+        end
+        if (coin < total) or (specialCoin < totalSpecial) then
+            if self.buyHintLabel then
+                local msg = getText("IGUI_Shop_NotEnoughBalance")
+                self.buyHintLabel:setName(msg)
+                self.buyHintLabel:setVisible(true)
+            end
+        end
     end
     self:checkShopOwner()
 end
@@ -488,11 +662,19 @@ function PlayerShopUI:checkShopOwner()
     if not PlayerShopUI.instance then
         return
     end
-    local shopOwner = PlayerShopUI.instance.shopOwner
+    local md = self.shop and self.shop:getModData() or {}
+    local shopOwner = md.owner or PlayerShopUI.instance.shopOwner
     local playerName = self.player:getUsername()
     if shopOwner == playerName then
         self.buyCartButton.enable = false
         self.buyCartButton:setVisible(false)
+    end
+    if shopOwner == playerName or isAdmin() then
+        if self.manageIncomeBtn then self.manageIncomeBtn:setVisible(true) end
+        if self.manageBuyBtn then self.manageBuyBtn:setVisible(true) end
+    else
+        if self.manageIncomeBtn then self.manageIncomeBtn:setVisible(false) end
+        if self.manageBuyBtn then self.manageBuyBtn:setVisible(false) end
     end
 end
 
