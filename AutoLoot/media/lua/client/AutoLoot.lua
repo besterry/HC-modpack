@@ -208,7 +208,7 @@ local function AutoLoot_OnZombieDead(zombie)
 			end
 			Events.OnTick.Add(waitItems)
 		end
-        if waitCorpseCount > 200 then -- На всякий случай, если что-то пошло не так отпишемся, чтоб не повисло
+        if waitCorpseCount > 1000 then -- На всякий случай, если что-то пошло не так отпишемся, чтоб не повисло
             Events.OnTick.Remove(waitCorpse)
         end
 	end
