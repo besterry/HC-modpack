@@ -1780,6 +1780,7 @@ recipe Make bucket of paint
         SheetMetal=2,
 		keep HCFurnace2,
         Result:PaintbucketEmpty,
+        CanBeDoneFromFloor:true,
         Time:120,
         Category:Engineer,
     }	
