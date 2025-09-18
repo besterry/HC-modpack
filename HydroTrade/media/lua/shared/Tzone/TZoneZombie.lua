@@ -115,8 +115,8 @@ local function SpawnLoot(zombie) -- Выпадает предметы при с�
             local lootData = unicalLoot[randomIndex]
             if lootData then
                 local itemType = lootData[1] -- название предмета
-                local chance = lootData[2] -- шанс выпадения
-                if ZombRand(1, 100) <= chance then -- Шанс выпадения в 0.2%
+                local chance = lootData[2]*10-- шанс выпадения
+                if ZombRand(1, 1000) <= chance then -- Шанс выпадения в 0.2%
                     local item = itemType
                     if item then
                         zombie:getInventory():AddItem(item)
