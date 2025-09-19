@@ -13,7 +13,7 @@ local function buildOrdersSignature(orders)
     if not orders then return "" end
     local parts = {}
     for key, ord in pairs(orders) do
-        local s = tostring(key)..":"..tostring(ord and ord.qty or 0)..":"..tostring(ord and ord.price or 0)..":"..tostring(ord and ord.specialCoin and 1 or 0)
+        local s = tostring(key)..":"..tostring(ord and ord.qty or 0)..":"..tostring(ord and ord.price or 0)..":"..tostring(ord and ord.specialCoin and 1 or 0)..":"..tostring(ord and ord.onlyFull and 1 or 0)
         table.insert(parts, s)
     end
     table.sort(parts)
@@ -26,6 +26,9 @@ function BuyOrdersUI.doDrawOrderItem(self, y, item, alt)
     self:drawRectBorder(0, (y), self:getWidth(), self.itemheight - 1, a, self.borderColor.r, self.borderColor.g, self.borderColor.b)
     if self.selected == item.index then
         self:drawRect(0, (y), self:getWidth(), self.itemheight - 1, 0.3, 0.7, 0.35, 0.15)
+    elseif item.item.onlyFull then
+        -- выделяем ряды с флагом "только целые" зеленым фоном
+        self:drawRect(0, (y), self:getWidth(), self.itemheight - 1, 0.1, 1.0, 1.0, 0.25)
     end
     local fullName = item.item.fullName or item.item.name or item.text or "?"
     local qtyVal = tonumber(item.item.qty) or 0
@@ -60,6 +63,8 @@ function BuyOrdersUI.doDrawOrderItem(self, y, item, alt)
 
     -- draw
     self:drawText(displayName, leftPadding, y + 8, 1, 1, 1, a, UIFont.Small)
+    
+    
     self:drawText(qtyText, qtyX, y + 8, 1, 1, 1, a, UIFont.Small)
     -- сначала цифры, затем значок монеты
     self:drawText(priceText, priceX, y + 6, 1, 1, 1, a, UIFont.Small)
@@ -126,6 +131,7 @@ function BuyOrdersUI:refreshOrders(preserveSelection)
             v.price = tonumber(ord.price) or 0
             v.specialCoin = ord.specialCoin and true or false
             v.qty = tonumber(ord.qty) or 0
+            v.onlyFull = ord.onlyFull and true or false
             v.orderKey = key
             v.name = name.."  x"..tostring(v.qty)
             v.fullName = (item and item:getName()) or tostring(ord.type)
@@ -170,7 +176,11 @@ function BuyOrdersUI:createChildren()
     self.qtyEntry = ISTextEntryBox:new("1", x+120, y-2, 120, 20); self.qtyEntry.font = UIFont.Medium
     self.qtyEntry:initialise(); self.qtyEntry:instantiate(); self.qtyEntry:setOnlyNumbers(true); self.qtyEntry.onTextChange = BuyOrdersUI.onQtyChange; self:addChild(self.qtyEntry)
 
-    y = y + 40
+    -- только предметы с максимальным состоянием
+    self.onlyFullChk = ISTickBox:new(x+120, y+20, 200, 20, "", self, nil)
+    self.onlyFullChk:initialise(); self.onlyFullChk:instantiate(); self.onlyFullChk.autoWidth = true; self.onlyFullChk:addOption(getText("IGUI_BuyOrders_OnlyFull")); self:addChild(self.onlyFullChk)
+
+    y = y + 45
     self.addBtn = ISButton:new(x, y, 140, 25, getText("IGUI_BuyOrders_Add"), self, function()
         local typeFull = self.selectedType
         local price = tonumber(self.priceEntry:getInternalText()) or 0
@@ -179,12 +189,12 @@ function BuyOrdersUI:createChildren()
         if not typeFull or price <= 0 or qty <= 0 then return end
         local shopSquare = self.shop:getSquare()
         local coords = {x=shopSquare:getX(), y=shopSquare:getY(), z=shopSquare:getZ()}
-        local order = {type = typeFull, price = price, specialCoin = special, qty = qty, from = 'shop'}
+        local order = {type = typeFull, price = price, specialCoin = special, qty = qty, from = 'shop', onlyFull = self.onlyFullChk:isSelected(1) and (self.onlyFullChk.enable ~= false)}
         PSClient.SetBuyOrder(self.player, {coords = coords, order = order})
         -- sendClientCommand('PS', 'SetBuyOrder', {coords = coords, order = order})
         -- оптимистичное обновление UI: добавим локально
         local md = self.shop:getModData(); md.buyOrders = md.buyOrders or {}
-        local key = typeFull.."|"..tostring(price).."|"..tostring(special)
+        local key = typeFull.."|"..tostring(price).."|"..tostring(special).."|"..tostring(order.onlyFull and 1 or 0)
         md.buyOrders[key] = order
         self.shop:transmitModData()
         self:refreshOrders()
@@ -255,10 +265,10 @@ function BuyOrdersUI:createChildren()
     end
     y = y + 20
     -- icons before deposit inputs
-    self.depCoinIcon = ISImage:new(x-18, y-2, 0, 0, coinImg.texture); self.depCoinIcon.scaledWidth = coinImg.scale; self.depCoinIcon.scaledHeight = coinImg.scale; self:addChild(self.depCoinIcon)
+    self.depCoinIcon = ISImage:new(x-18, y+2, 0, 0, coinImg.texture); self.depCoinIcon.scaledWidth = coinImg.scale; self.depCoinIcon.scaledHeight = coinImg.scale; self:addChild(self.depCoinIcon)
     self.depCoin = ISTextEntryBox:new("0", x, y-2, 120, 20); self.depCoin.font = UIFont.Medium; self.depCoin:initialise(); self.depCoin:instantiate(); self.depCoin:setOnlyNumbers(true); self:addChild(self.depCoin)
     local secondInputX = x + 140
-    self.depSpecIcon = ISImage:new(secondInputX-18, y-2, 0, 0, sCoinImg.texture); self.depSpecIcon.scaledWidth = sCoinImg.scale; self.depSpecIcon.scaledHeight = sCoinImg.scale; self:addChild(self.depSpecIcon)
+    self.depSpecIcon = ISImage:new(secondInputX-18, y+2, 0, 0, sCoinImg.texture); self.depSpecIcon.scaledWidth = sCoinImg.scale; self.depSpecIcon.scaledHeight = sCoinImg.scale; self:addChild(self.depSpecIcon)
     self.depSpec = ISTextEntryBox:new("0", secondInputX, y-2, 120, 20); self.depSpec.font = UIFont.Medium; self.depSpec:initialise(); self.depSpec:instantiate(); self.depSpec:setOnlyNumbers(true); self:addChild(self.depSpec)
 
     y = y + 25
@@ -344,7 +354,11 @@ function BuyOrdersUI:createChildren()
         if not BuyOrdersUI.tooltip then BuyOrdersUI.tooltip = ShopUITooltip:new(); BuyOrdersUI.tooltip:initialise(); end
         BuyOrdersUI.tooltip:addToUIManager();
         BuyOrdersUI.tooltip:setOwner(listSelf)
-        BuyOrdersUI.tooltip:setItem({ name = it.fullName or it.name or row.text, items = {}, type = it.type })
+        local tooltipName = it.fullName or it.name or row.text
+        if it.onlyFull then
+            tooltipName = tooltipName .. "\n \n" .. getText("IGUI_BuyOrders_OnlyFull")
+        end
+        BuyOrdersUI.tooltip:setItem({ name = tooltipName, items = {}, type = it.type })
         BuyOrdersUI.tooltip:setVisible(true)
     end
     self.ordersList.onMouseOut = function()
@@ -373,6 +387,15 @@ function BuyOrdersUI:createChildren()
         if not row then return end
         self.selectedType = row.item.fullType
         self.nameValue:setName(row.text)
+        -- включим чекбокс только если предмет поддерживает состояние
+        local ok, sample = pcall(InventoryItemFactory.CreateItem, self.selectedType)
+        local hasCond = ok and sample and (sample:getConditionMax() or 0) > 0
+        if self.onlyFullChk.setEnable then
+            self.onlyFullChk:setEnable(hasCond)
+        else
+            self.onlyFullChk.enable = hasCond
+        end
+        if not hasCond then self.onlyFullChk:setSelected(1, false) end
         if self.addBtn then
             local price = tonumber(self.priceEntry:getInternalText()) or 0
             local qty = tonumber(self.qtyEntry:getInternalText()) or 0
@@ -380,6 +403,38 @@ function BuyOrdersUI:createChildren()
         end
     end
     self:addChild(self.itemList)
+
+	-- tooltip с полноценным описанием предмета, как в PlayerShopUI (ISToolTipInv)
+	self.itemList.onMouseMove = function(listSelf, dx, dy)
+		if listSelf:isMouseOverScrollBar() or not listSelf:isMouseOver() then
+			if BuyOrdersUI.invTooltip then BuyOrdersUI.invTooltip:removeFromUIManager(); BuyOrdersUI.invTooltip = nil end
+			return
+		end
+		local rowIndex = listSelf:rowAt(listSelf:getMouseX(), listSelf:getMouseY())
+		local row = rowIndex and listSelf.items[rowIndex]
+		if not row or not row.item or not row.item.fullType then
+			if BuyOrdersUI.invTooltip then BuyOrdersUI.invTooltip:removeFromUIManager(); BuyOrdersUI.invTooltip = nil end
+			return
+		end
+		local ok, sample = pcall(InventoryItemFactory.CreateItem, row.item.fullType)
+		if not ok or not sample then
+			if BuyOrdersUI.invTooltip then BuyOrdersUI.invTooltip:removeFromUIManager(); BuyOrdersUI.invTooltip = nil end
+			return
+		end
+		if not BuyOrdersUI.invTooltip then
+			BuyOrdersUI.invTooltip = ISToolTipInv:new(sample)
+			BuyOrdersUI.invTooltip:initialise()
+		else
+			BuyOrdersUI.invTooltip:addToUIManager()
+			BuyOrdersUI.invTooltip:setItem(sample)
+			BuyOrdersUI.invTooltip:setVisible(true)
+			BuyOrdersUI.invTooltip:setOwner(listSelf)
+			BuyOrdersUI.invTooltip:render()
+		end
+	end
+	self.itemList.onMouseOut = function()
+		if BuyOrdersUI.invTooltip then BuyOrdersUI.invTooltip:removeFromUIManager(); BuyOrdersUI.invTooltip = nil end
+	end
 
     -- загрузка индекса предметов по требованию и фильтр
     local function ensureIndex()
