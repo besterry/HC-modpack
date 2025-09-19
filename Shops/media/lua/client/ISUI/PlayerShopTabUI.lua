@@ -38,8 +38,11 @@ function PlayerShopTabUI:doDrawShopItem(y, item, alt)
     local a = 0.9;
     self:drawRectBorder(0, (y), self:getWidth(), item.height - 1, a, self.borderColor.r, self.borderColor.g, self.borderColor.b);
 
-    if self.selected == item.index then
+    if self.selected == item.index then -- выделяем выбранный ряд
         self:drawRect(0, (y), self:getWidth(), item.height - 1, 0.3, 0.7, 0.35, 0.15);
+    elseif (self.parent and self.parent.tabType == "BuyOrders" or self.tabType == "BuyOrders") and item.item.onlyFull then
+        -- выделяем ряды с флагом "только целые" зеленым фоном
+        self:drawRect(0, (y), self:getWidth(), item.height - 1, 0.1, 1.0, 1.0, 0.25);
     end
     
     local nameToDraw = item.item.name
@@ -47,6 +50,14 @@ function PlayerShopTabUI:doDrawShopItem(y, item, alt)
         nameToDraw = item.item.name .. "  x" .. tostring(item.item.count)
     end
     self:drawText(nameToDraw, 40, y + 10, 1, 1, 1, a, UIFont.Small);
+    -- Индикатор для ордеров скупки "только целые" на вкладке продавца
+    if (self.parent and self.parent.tabType == "BuyOrders" or self.tabType == "BuyOrders") and item.item.onlyFull then
+        -- print("DEBUG_TAB: onlyFull = true for " .. (nameToDraw or "?"))
+        local nameWidth = getTextManager():MeasureStringX(UIFont.Small, nameToDraw)
+        self:drawText(getText("IGUI_item_OnlyFull"), 40 + nameWidth + 6, y + 10, 0.5, 1.0, 0.5, a, UIFont.Small)
+    end
+    
+    
     if item.item.price then
         local coinImg = Currency.CoinsTexture.Coin
         if item.item.specialCoin then coinImg = Currency.CoinsTexture.SpecialCoin end
@@ -63,15 +74,28 @@ function PlayerShopTabUI:doDrawShopItem(y, item, alt)
 
     -- show + only if player has required item when on BuyOrders tab
     local canAdd = true
-    if self.parent and self.parent.tabType == Tab.BuyOrders then
+    if self.parent and self.parent.tabType == "BuyOrders" then
         canAdd = false
         local remainingOrder = item.item.count or 0
         if remainingOrder > 0 then
             local inv = self.parent and self.parent.ShopUI and self.parent.ShopUI.player and self.parent.ShopUI.player:getInventory()
             local have = 0
             if inv then
-                local list = inv:getAllTypeRecurse(item.item.type)
-                if list then have = list:size() end
+                if item.item.onlyFull then
+                    -- считаем только предметы с максимальным состоянием
+                    local list = inv:getAllTypeRecurse(item.item.type)
+                    if list then
+                        for i=0,list:size()-1 do
+                            local it = list:get(i)
+                            if it and it:getConditionMax() > 0 and it:getCondition() == it:getConditionMax() then
+                                have = have + 1
+                            end
+                        end
+                    end
+                else
+                    local list = inv:getAllTypeRecurse(item.item.type)
+                    if list then have = list:size() end
+                end
             end
             local planned = 0
             local cart = self.parent and self.parent.ShopUI and self.parent.ShopUI.cartItems and self.parent.ShopUI.cartItems.items or {}
