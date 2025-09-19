@@ -14,6 +14,7 @@ UIText = {
     RemovePlayerShop = getText("IGUI_RemovePlayerShop"),
     RemoveItemsPlayerShop = getText("IGUI_RemoveItemsPlayerShop"),
     RemoveIncomePlayerShop = getText("IGUI_RemoveIncomePlayerShop"),
+    RemoveCashPlayerShop = getText("IGUI_RemoveCashPlayerShop"),
     ViewIncomePlayerShop = getText("IGUI_ViewIncomePlayerShop"),
     PickupPlayerShop = getText("IGUI_PickupPlayerShop"),
     UnlockContainerPlayerShop = getText("IGUI_UnlockContainerPlayerShop"),
