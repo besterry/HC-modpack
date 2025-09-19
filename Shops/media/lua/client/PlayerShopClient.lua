@@ -47,8 +47,8 @@ local function ensureBuyOrdersTable(shop)
 end
 
 -- key формируем: type|price|special
-local function makeOrderKey(typeFull, price, special)
-    return typeFull.."|"..tostring(price).."|"..tostring(special)
+local function makeOrderKey(typeFull, price, special, onlyFull)
+    return typeFull.."|"..tostring(price).."|"..tostring(special).."|"..tostring(onlyFull and 1 or 0)
 end
 
 -- Создать/обновить ордер
@@ -61,7 +61,7 @@ function PSClient.SetBuyOrder(player,args)
     local owner = shop:getModData().owner or player:getUsername()
     local orders = ensureBuyOrdersTable(shop)
     order.owner = owner
-    local key = makeOrderKey(order.type, order.price, order.specialCoin)
+    local key = makeOrderKey(order.type, order.price, order.specialCoin, order.onlyFull)
     orders[key] = order
     shop:transmitModData()
 end
@@ -79,7 +79,7 @@ end
 
 -- Продать предмет в ордер: проверка и выплата
 function PSClient.SellToBuyOrder(player,args)
-    -- args: coords, itemType, quantity
+    -- args: coords, orderKey, itemType, quantity
     local coords = args.coords
     local itemType = args.itemType
     local quantity = args.quantity or 1
@@ -87,19 +87,11 @@ function PSClient.SellToBuyOrder(player,args)
     if not shop then return end
     local md = shop:getModData()
     local orders = ensureBuyOrdersTable(shop)
-    -- по нескольким ордерам: ищем самый дорогой подходящий
-    local bestKey, bestOrder
-    for key,ord in pairs(orders) do
-        local parts = {}
-        for p in string.gmatch(key, "[^|]+") do table.insert(parts, p) end
-        local t = parts[1]
-        if t == itemType and ord.qty and ord.qty > 0 then
-            if not bestOrder or ord.price > bestOrder.price or (ord.specialCoin and not bestOrder.specialCoin) then
-                bestKey, bestOrder = key, ord
-            end
-        end
-    end
-    if not bestOrder then return end
+    -- используем ровно тот ордер, который выбрал игрок
+    local bestKey = args.orderKey
+    local bestOrder = bestKey and orders[bestKey]
+    if not bestOrder or not bestOrder.qty or bestOrder.qty <= 0 then return end
+    local requireFull = bestOrder.onlyFull and true or false
     local canSell = math.min(quantity, bestOrder.qty)
     if canSell <= 0 then return end
     -- проверим вместимость контейнера магазина
@@ -183,14 +175,7 @@ function PSClient.SellToBuyOrder(player,args)
         sendClientCommand("BS", "Deposit", { totalPayCoin, totalPaySpec })
     end
     if totalPayCoin > 0 or totalPaySpec > 0 then player:playSound("CashRegister") end
-    -- положить купленные предметы в контейнер магазина
-    for i=1,canSell do
-        local it = InventoryItemFactory.CreateItem(itemType)
-        if it then
-            cont:AddItem(it)
-            if cont.addItemOnServer then cont:addItemOnServer(it) end
-        end
-    end
+    -- предметы уже перенесены на клиенте из инвентаря продавца в контейнер магазина
     bestOrder.qty = bestOrder.qty - canSell -- Уменьшаем количество предметов в ордере
     if bestOrder.limit then
         bestOrder.limit = math.max(0, bestOrder.limit - canSell) -- Уменьшаем лимит предметов в ордере
