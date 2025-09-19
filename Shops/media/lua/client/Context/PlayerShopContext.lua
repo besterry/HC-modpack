@@ -83,6 +83,11 @@ function PlayerShop.PickupShop(worldobjects,player,shop) -- Поднимаем �
         player:setHaloNote(UIText.RemoveIncomePlayerShop, 255,255,255,400);
         return
     end
+    local cash = shop:getModData().cash
+    if cash and cash.coin > 0 or cash.specialCoin > 0 then
+        player:setHaloNote(UIText.RemoveCashPlayerShop, 255,255,255,400);
+        return
+    end
     shop:getSquare():transmitRemoveItemFromSquare(shop)
     local item = "Base.PlayerShop"
     if shop:getContainer():getType() == "freezer" then
