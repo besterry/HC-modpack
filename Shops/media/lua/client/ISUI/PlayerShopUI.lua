@@ -152,11 +152,25 @@ local currentTooltip = nil
 function PlayerShopUI:toggleTooltip(show,item)
     if item then
         if not currentTooltip then
-            currentTooltip = ISToolTipInv:new(item.invItem)
+            if item.invItem then
+                currentTooltip = ISToolTipInv:new(item.invItem)
+            else
+                -- для ордеров скупки создаем простой тултип
+                currentTooltip = ISToolTip:new()
+            end
             currentTooltip:initialise();
         else
             currentTooltip:addToUIManager()
-            currentTooltip:setItem(item.invItem)
+            if item.invItem then
+                currentTooltip:setItem(item.invItem)
+            else
+                -- для ордеров скупки показываем информацию о предмете
+                local tooltipText = item.name or "Unknown Item"
+                if item.onlyFull then
+                    tooltipText = tooltipText .. "\n" .. getText("IGUI_BuyOrders_OnlyFull")
+                end
+                currentTooltip:setName(tooltipText)
+            end
             currentTooltip:setVisible(true)
             currentTooltip:setOwner(self)
             currentTooltip:render();
@@ -214,7 +228,7 @@ function PlayerShopUI:onActivateView()
     self.lastActiveTab = tabType
     local shopItems = self.panel.activeView.view.shopItems
     -- вкладка скупки: показываем ордера
-    if tabType == Tab.BuyOrders then
+    if tabType == "BuyOrders" then
         local orders = self.shop:getModData().buyOrders or {}
         shopItems:clear()
         for key,ord in pairs(orders) do
@@ -224,6 +238,7 @@ function PlayerShopUI:onActivateView()
                 v.type = ord.type
                 v.price = ord.price
                 v.specialCoin = ord.specialCoin
+                v.onlyFull = ord.onlyFull and true or false
                 v.name = Nfunction.trimString(invItem:getName(),42)
                 v.count = tonumber(ord.qty) or 0 -- показываем доступное кол-во отдельно, без включения в имя
                 v.invItem = invItem
@@ -421,8 +436,20 @@ function PlayerShopUI:addOrderToCart(row)
     local inv = self.player and self.player:getInventory() or nil
     local have = 0
     if inv then
-        local list = inv:getAllTypeRecurse(item.type)
-        if list then have = list:size() end
+        if item.onlyFull then
+            local list = inv:getAllTypeRecurse(item.type)
+            if list then
+                for i=0,list:size()-1 do
+                    local it = list:get(i)
+                    if it and it:getConditionMax() > 0 and it:getCondition() == it:getConditionMax() then
+                        have = have + 1
+                    end
+                end
+            end
+        else
+            local list = inv:getAllTypeRecurse(item.type)
+            if list then have = list:size() end
+        end
     end
     -- уже запланировано в корзине
     local planned = 0
@@ -463,7 +490,8 @@ function PlayerShopUI:addOrderToCart(row)
         units = 1,
         specialCoin = item.specialCoin,
         type = item.type,
-        orderKey = item.orderKey
+        orderKey = item.orderKey,
+        onlyFull = item.onlyFull and true or false
     }
     if row.item.count and row.item.count > 0 then row.item.count = row.item.count - 1 end
     self.cartItems:addItem(item.type, orderEntry)
@@ -557,8 +585,15 @@ function PlayerShopUI:buyCartBtn()
     -- Запускаем покупку без закрытия окна; блокировка магазина уже установлена при открытии
     self.actionInProgress = true
     local ticket = {}
-    ticket.coin = self.total
-    ticket.specialCoin = self.totalSpecial
+    local tabType = self.panel.activeView.view.tabType
+    if tabType == "BuyOrders" then
+        -- при скупке игрок не платит
+        ticket.coin = 0
+        ticket.specialCoin = 0
+    else
+        ticket.coin = self.total
+        ticket.specialCoin = self.totalSpecial
+    end
     local action = PlayerShopBuyAction:new(self.player,self,ticket);
     ISTimedActionQueue.add(action);
     self.buyCartButton.enable = false
@@ -609,7 +644,7 @@ function PlayerShopUI:updateTotal()
 
     -- Вкл/выкл кнопки: для вкладки Скупка используем кассу магазина (+ доход, если разрешено), иначе баланс игрока
     local tabType = self.panel.activeView.view.tabType
-    if tabType == Tab.BuyOrders then
+    if tabType == "BuyOrders" then
         local md = self.shop:getModData()
         md.cash = md.cash or {coin=0,specialCoin=0}
         local coin = md.cash.coin or 0
