@@ -4,10 +4,14 @@ local Nfunction = require "Nfunction"
 PlayerShopBuyAction = ISBaseTimedAction:derive("PlayerShopBuyAction")
 
 function PlayerShopBuyAction:isValid()
+    -- при скупке валидность не зависит от баланса игрока
+    local ticket = self.ticket
+    if (ticket.coin or 0) == 0 and (ticket.specialCoin or 0) == 0 then
+        return true
+    end
     local username = self.character:getUsername()
     local coin,specialCoin = Balance.getUserBalance(username)
-    local ticket = self.ticket
-    return coin >= ticket.coin and specialCoin >= ticket.specialCoin
+    return coin >= (ticket.coin or 0) and specialCoin >= (ticket.specialCoin or 0)
 end
 
 function PlayerShopBuyAction:waitToStart()
@@ -43,16 +47,30 @@ function PlayerShopBuyAction:perform()
             local key = it.orderKey
             local units = it.units or 1
             if not orderBatches[key] then
-                orderBatches[key] = { type = it.type, units = units }
+                orderBatches[key] = { key = key, type = it.type, units = units, onlyFull = it.onlyFull and true or false }
             else
                 orderBatches[key].units = orderBatches[key].units + units
             end
         end
     end
+    -- helper: найти подходящий предмет (учитывая onlyFull)
+    local function findEligible(inv, typeFull, onlyFull)
+        if not inv then return nil end
+        local list = inv:getAllTypeRecurse(typeFull)
+        if not list then return nil end
+        for i=0,list:size()-1 do
+            local it = list:get(i)
+            if not onlyFull then return it end
+            local maxC = it and it:getConditionMax() or 0
+            if maxC > 0 and it:getCondition() == maxC then return it end
+        end
+        return nil
+    end
+
     for _,batch in pairs(orderBatches) do
         local units = batch.units or 0
         if units > 0 then
-            local sample = playerInv:FindAndReturn(batch.type)
+            local sample = findEligible(playerInv, batch.type, batch.onlyFull)
             if sample then
                 local cont = self.shop:getContainer()
                 local unitWeight = sample:getActualWeight()
@@ -64,9 +82,12 @@ function PlayerShopBuyAction:perform()
                 else
                     local removed = 0
                     while removed < allowed do
-                        local it = playerInv:FindAndReturn(batch.type)
+                        local it = findEligible(playerInv, batch.type, batch.onlyFull)
                         if not it then break end
                         playerInv:Remove(it)
+                        -- переносим этот же экземпляр в контейнер магазина
+                        cont:AddItem(it)
+                        if cont.addItemOnServer then cont:addItemOnServer(it) end
                         if SandboxVars.Shops.PurchaseLog then Nfunction.buildLogShop(batch.type) end
                         removed = removed + 1
                     end
@@ -74,7 +95,7 @@ function PlayerShopBuyAction:perform()
                         soldUnits = soldUnits + removed
                         local shopSquare = self.shop:getSquare()
                         local coords = {x = shopSquare:getX(), y = shopSquare:getY(), z = shopSquare:getZ()}
-                        local paid = PSClient.SellToBuyOrder(self.character, {coords = coords, itemType = batch.type, quantity = removed})
+                        local paid = PSClient.SellToBuyOrder(self.character, {coords = coords, orderKey = batch.key, itemType = batch.type, quantity = removed})
                         if paid then
                             sellTotalCoin = sellTotalCoin + (paid.coin or 0)
                             sellTotalSpec = sellTotalSpec + (paid.special or 0)
