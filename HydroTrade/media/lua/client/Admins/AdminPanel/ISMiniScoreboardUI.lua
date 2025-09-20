@@ -69,19 +69,43 @@ function ISMiniScoreboardUI:doPlayerListContextMenu(player, x,y)
     local context = ISContextMenu.get(playerNum, x + self:getAbsoluteX(), y + self:getAbsoluteY());
     local accessLevel = self:getAccessLevelNumber(getAccessLevel())
     
-    if accessLevel >= 1 then -- observer и выше
+    if accessLevel >= SandboxVars.Admins.miniScoreboardTeleportBtn then -- админ
         context:addOption(getText("UI_Scoreboard_Teleport"), self, ISMiniScoreboardUI.onCommand, player, "TELEPORT");
+    end
+    if accessLevel >= SandboxVars.Admins.miniScoreboardTeleportToYouBtn then -- админ
         context:addOption(getText("UI_Scoreboard_TeleportToYou"), self, ISMiniScoreboardUI.onCommand, player, "TELEPORTTOYOU");
     end
-    if accessLevel >= 2 then -- gm и выше
+    if accessLevel >= SandboxVars.Admins.miniScoreboardInvisibleBtn then -- админ
         context:addOption(getText("UI_Scoreboard_Invisible"), self, ISMiniScoreboardUI.onCommand, player, "INVISIBLE");
+    end
+    if accessLevel >= SandboxVars.Admins.miniScoreboardGodModBtn then -- админ
         context:addOption(getText("UI_Scoreboard_GodMod"), self, ISMiniScoreboardUI.onCommand, player, "GODMOD");
-        context:addOption(getText("UI_Check_Stats"), self, ISMiniScoreboardUI.onCommand, player, "STATS");
     end
-    if accessLevel >= 4 then -- админ
-        context:addOption(getText("UI_Check_Health"), self, ISMiniScoreboardUI.onCommand, player, "CHECK_HEALTH");
-        context:addOption("Change Stats...", self, ISMiniScoreboardUI.onCommand, player, "CHANGE_STATS");
+    if accessLevel >= SandboxVars.Admins.miniScoreboardStatsBtn then -- админ
+        context:addOption(getText("UI_Scoreboard_Stats"), self, ISMiniScoreboardUI.onCommand, player, "STATS");
     end
+    if accessLevel >= SandboxVars.Admins.miniScoreboardCheckHealthBtn then -- админ
+        context:addOption(getText("UI_Scoreboard_CheckHealth"), self, ISMiniScoreboardUI.onCommand, player, "CHECK_HEALTH");
+    end
+    if accessLevel >= SandboxVars.Admins.miniScoreboardChangeStatsBtn then -- админ
+        context:addOption(getText("UI_ChangeStats"), self, ISMiniScoreboardUI.onCommand, player, "CHANGE_STATS");
+    end
+    if accessLevel == 4 then -- админ
+        context:addOption(getText("UI_SeePlayerModData"), self, ISMiniScoreboardUI.onCommand, player, "GET_MOD_DATA");
+    end
+    -- if accessLevel >= 1 then -- observer и выше
+    --     context:addOption(getText("UI_Scoreboard_Teleport"), self, ISMiniScoreboardUI.onCommand, player, "TELEPORT");
+    --     context:addOption(getText("UI_Scoreboard_TeleportToYou"), self, ISMiniScoreboardUI.onCommand, player, "TELEPORTTOYOU");
+    -- end
+    -- if accessLevel >= 2 then -- gm и выше
+    --     context:addOption(getText("UI_Scoreboard_Invisible"), self, ISMiniScoreboardUI.onCommand, player, "INVISIBLE");
+    --     context:addOption(getText("UI_Scoreboard_GodMod"), self, ISMiniScoreboardUI.onCommand, player, "GODMOD");
+    --     context:addOption(getText("UI_Check_Stats"), self, ISMiniScoreboardUI.onCommand, player, "STATS");
+    -- end
+    -- if accessLevel >= 4 then -- админ
+    --     context:addOption(getText("UI_Check_Health"), self, ISMiniScoreboardUI.onCommand, player, "CHECK_HEALTH");
+    --     context:addOption("Change Stats...", self, ISMiniScoreboardUI.onCommand, player, "CHANGE_STATS");
+    -- end
 end
 
 function ISMiniScoreboardUI:onCommand(player, command)
@@ -106,6 +130,9 @@ function ISMiniScoreboardUI:onCommand(player, command)
         AdminHealthPanel.openFor(playerObj)
     elseif command == "CHANGE_STATS" and getPlayer():getUsername() == "admin" then
         OpenChangeStatPlayersUI(player.username, player.displayName)
+    elseif command == "GET_MOD_DATA" then
+        local args = { player = player.username}
+        sendClientCommand("HT_GMD", "getPlayerModdata", args)
     end
 end
 
