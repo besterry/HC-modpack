@@ -174,6 +174,49 @@ function BServer.DepositByName(player,args)
         end
     end
 end
+
+--sendClientCommand(MODULE_NAME, "setBalance", { username = username, coin = coin, specialCoin = specialCoin })
+function BServer.SetBalance(player,args)
+    local changer = player:getUsername() -- игрок, который устанавливает баланс
+    if changer ~= "admin" then
+        return
+    end
+    --username = username, coin = coin, specialCoin = specialCoin
+    local username = args.username -- игрок, которому устанавливаем баланс
+    local coin = args.coin or 0 -- количество монет
+    local specialCoin = args.specialCoin or 0 -- количество специальных монет
+    local account = ModData.get("CoinBalance")[username] -- получаем баланс игрока из моддаты сервера
+    if not account then return end -- если игрока нет в моддате, то выходим
+    account.coin = coin -- устанавливаем количество монет
+    account.specialCoin = specialCoin -- устанавливаем количество специальных монет
+    msg = "%s SetBalance: Coin %s Special %s [changer: %s newBalance: Coin: %s SpecialCoin %s]" -- сообщение для лога
+    msg = string.format(msg,username,coin,specialCoin,changer,account.coin,account.specialCoin) -- форматируем сообщение
+    BServer.writeLog(msg) -- записываем сообщение в лог
+    SaveCoinBalancefd() -- сохраняем баланс в файл (json) для вебсервера
+    local players = getOnlinePlayers() -- получаем список онлайн игроков
+    local playersSize = players:size()
+    for i = 0, playersSize - 1, 1 do
+        local p = players:get(i) -- получаем игрока
+        if p:getUsername() == username then
+            sendServerCommand(p, "BS", "ChangeBalance", {coin = account.coin, specialCoin = account.specialCoin })
+            break
+        end
+    end
+    sendServerCommand(player, "BS", "SetBalanceResult", {success = true, message = "Balance set successfully"})
+end
+
+--sendClientCommand(MODULE_NAME, "getBalance", { username = username })
+function BServer.GetBalance(player,args)
+    if player:getUsername() ~= "admin" then
+        return
+    end
+    local username = args.username -- игрок, баланс которого запрашиваем
+    local account = ModData.get("CoinBalance")[username] -- получаем баланс игрока из моддаты сервера
+    if not account then return end -- если игрока нет в моддате, то выходим
+    sendServerCommand(player, "BS", "GetBalanceResult", {username = username, coin = account.coin, specialCoin = account.specialCoin })
+end
+
+
 local function BS_OnClientCommand(module, command, player, args)
     if module == "BS" and BServer[command] then
         BServer[command](player, args)
