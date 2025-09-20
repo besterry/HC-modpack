@@ -47,7 +47,7 @@ function PlayerShopBuyAction:perform()
             local key = it.orderKey
             local units = it.units or 1
             if not orderBatches[key] then
-                orderBatches[key] = { key = key, type = it.type, units = units, onlyFull = it.onlyFull and true or false }
+                orderBatches[key] = { key = key, type = it.type, units = units, onlyFull = it.onlyFull and true or false, unitPrice = it.unitPrice or it.price, specialCoin = it.specialCoin and true or false }
             else
                 orderBatches[key].units = orderBatches[key].units + units
             end
@@ -68,37 +68,70 @@ function PlayerShopBuyAction:perform()
     end
 
     for _,batch in pairs(orderBatches) do
-        local units = batch.units or 0
-        if units > 0 then
-            local sample = findEligible(playerInv, batch.type, batch.onlyFull)
-            if sample then
-                local cont = self.shop:getContainer()
-                local unitWeight = sample:getActualWeight()
-                local maxByWeight = math.floor(math.max(0, (cont:getCapacity() - cont:getCapacityWeight())) / math.max(0.0001, unitWeight))
-                local allowed = math.min(units, maxByWeight)
-                if allowed <= 0 then
-                    self.character:setHaloNote(getText("IGUI_ContainerFull"), 255,255,255,300)
-                    return -- выходим из всей функции если контейнер заполнен
-                else
-                    local removed = 0
-                    while removed < allowed do
-                        local it = findEligible(playerInv, batch.type, batch.onlyFull)
-                        if not it then break end
-                        playerInv:Remove(it)
-                        -- переносим этот же экземпляр в контейнер магазина
-                        cont:AddItem(it)
-                        if cont.addItemOnServer then cont:addItemOnServer(it) end
-                        if SandboxVars.Shops.PurchaseLog then Nfunction.buildLogShop(batch.type) end
-                        removed = removed + 1
+        local unitsRequested = batch.units or 0
+        if unitsRequested > 0 then
+            -- Сколько реально доступно у игрока (и по условию onlyFull), игнорируя избранные
+            local availEligible = 0
+            local list = playerInv and playerInv:getAllTypeRecurse(batch.type)
+            if list then
+                for i=0,list:size()-1 do
+                    local it = list:get(i)
+                    if it and (not it:isFavorite()) then
+                        if not batch.onlyFull then
+                            availEligible = availEligible + 1
+                        else
+                            local maxC = it and it:getConditionMax() or 0
+                            if maxC > 0 and it:getCondition() == maxC then
+                                availEligible = availEligible + 1
+                            end
+                        end
                     end
-                    if removed > 0 then
-                        soldUnits = soldUnits + removed
+                end
+            end
+            if availEligible > 0 then
+                -- Ограничение по вместимости контейнера
+                local cont = self.shop:getContainer()
+                local sample = findEligible(playerInv, batch.type, batch.onlyFull)
+                if sample then
+                    local unitWeight = sample:getActualWeight()
+                    local maxByWeight = math.floor(math.max(0, (cont:getCapacity() - cont:getCapacityWeight())) / math.max(0.0001, unitWeight))
+
+                    local desired = math.min(unitsRequested, availEligible, maxByWeight)
+                    if desired <= 0 then
+                        self.character:setHaloNote(getText("IGUI_ContainerFull"), 255,255,255,300)
+                    else
+                        -- Сначала пытаемся получить оплату (учитывает остаток ордера, кассу и доход)
                         local shopSquare = self.shop:getSquare()
                         local coords = {x = shopSquare:getX(), y = shopSquare:getY(), z = shopSquare:getZ()}
-                        local paid = PSClient.SellToBuyOrder(self.character, {coords = coords, orderKey = batch.key, itemType = batch.type, quantity = removed})
+                        local paid = PSClient.SellToBuyOrder(self.character, {coords = coords, orderKey = batch.key, itemType = batch.type, quantity = desired})
                         if paid then
-                            sellTotalCoin = sellTotalCoin + (paid.coin or 0)
-                            sellTotalSpec = sellTotalSpec + (paid.special or 0)
+                            local unitsPaid = 0
+                            local pricePerUnit = math.max(0, tonumber(batch.unitPrice or 0))
+                            if pricePerUnit > 0 then
+                                if batch.specialCoin then
+                                    unitsPaid = math.floor((paid.special or 0) / pricePerUnit)
+                                else
+                                    unitsPaid = math.floor((paid.coin or 0) / pricePerUnit)
+                                end
+                            end
+                            if unitsPaid > 0 then
+                                -- Снимаем ровно оплаченные единицы
+                                local removed = 0
+                                while removed < unitsPaid do
+                                    local it2 = findEligible(playerInv, batch.type, batch.onlyFull)
+                                    if not it2 then break end
+                                    playerInv:Remove(it2)
+                                    cont:AddItem(it2)
+                                    if cont.addItemOnServer then cont:addItemOnServer(it2) end
+                                    if SandboxVars.Shops.PurchaseLog then Nfunction.buildLogShop(batch.type) end
+                                    removed = removed + 1
+                                end
+                                if removed > 0 then
+                                    soldUnits = soldUnits + removed
+                                    sellTotalCoin = sellTotalCoin + (paid.coin or 0)
+                                    sellTotalSpec = sellTotalSpec + (paid.special or 0)
+                                end
+                            end
                         end
                     end
                 end
