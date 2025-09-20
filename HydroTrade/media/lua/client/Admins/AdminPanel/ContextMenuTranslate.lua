@@ -1,6 +1,8 @@
 -- Хук для перевода админ контекстного меню
 local old_ISContextMenu_addDebugOption = ISContextMenu.addDebugOption
 local old_ISContextMenu_addOption = ISContextMenu.addOption
+local old_ISVehicleMechanics_doPartContextMenu = ISVehicleMechanics.doPartContextMenu
+local old_ISVehicleMechanics_onRightMouseUp = ISVehicleMechanics.onRightMouseUp
 
 -- Словарь переводов
 local translations = {
@@ -29,7 +31,34 @@ local translations = {
     ["Radius: 50"] = "IGUI_Radius_50",
     ["Radius: 100"] = "IGUI_Radius_100",
     ["Radius: 200"] = "IGUI_Radius_200",
-    ["Radius: 500"] = "IGUI_Radius_500"
+    ["Radius: 500"] = "IGUI_Radius_500",
+
+    -- Чит-опции из ISVehicleMechanics
+    ["CHEAT: Get Key"] = "IGUI_CHEAT_GetKey",
+    ["CHEAT: Remove Hotwire"] = "IGUI_CHEAT_RemoveHotwire",
+    ["CHEAT: Hotwire"] = "IGUI_CHEAT_Hotwire",
+    ["CHEAT: Repair Part"] = "IGUI_CHEAT_RepairPart",
+    ["CHEAT: Repair Vehicle"] = "IGUI_CHEAT_RepairVehicle",
+    ["CHEAT: Set Rust"] = "IGUI_CHEAT_SetRust",
+    ["CHEAT: Set Part Condition"] = "IGUI_CHEAT_SetPartCondition",
+    ["CHEAT: Set Content Amount"] = "IGUI_CHEAT_SetContentAmount",
+    ["CHEAT: Remove Vehicle"] = "IGUI_CHEAT_RemoveVehicle",
+    ["CHEAT: Set Odometer in KM"] = "IGUI_CHEAT_SetOdometerInKM",
+    ["DBG: ISVehicleMechanics.cheat=false"] = "IGUI_DBG_ISVehicleMechanics_cheat_false",
+    ["DBG: ISVehicleMechanics.cheat=true"] = "IGUI_DBG_ISVehicleMechanics_cheat_true",
+}
+
+-- Соответствие чит-опций ключам SandboxVars.Admins (с дефолтом = 4)
+local cheatThresholds = {
+    ["CHEAT: Get Key"] = "vehicleCheatGetKey",
+    ["CHEAT: Remove Hotwire"] = "vehicleCheatRemoveHotwire",
+    ["CHEAT: Hotwire"] = "vehicleCheatHotwire",
+    ["CHEAT: Repair Part"] = "vehicleCheatRepairPart",
+    ["CHEAT: Repair Vehicle"] = "vehicleCheatRepairVehicle",
+    ["CHEAT: Set Rust"] = "vehicleCheatSetRust",
+    ["CHEAT: Set Part Condition"] = "vehicleCheatSetPartCondition",
+    ["CHEAT: Set Content Amount"] = "vehicleCheatSetContentAmount",
+    ["CHEAT: Remove Vehicle"] = "vehicleCheatRemoveVehicle",
 }
 
 function ISContextMenu:addDebugOption(text, worldobjects, param1, param2, param3, param4, param5)
@@ -44,4 +73,59 @@ function ISContextMenu:addOption(text, param1, param2, param3, param4, param5, p
         text = getText(translations[text])
     end
     return old_ISContextMenu_addOption(self, text, param1, param2, param3, param4, param5, param6, param7, param8, param9, param10)
+end
+
+local function getAccessLevelNumber(level)
+    if level == "observer" then
+        return 1
+    elseif level == "gm" then
+        return 2
+    elseif level == "moderator" then
+        return 3
+    elseif level == "admin" then
+        return 4
+    end
+    return 0
+end
+
+local function hasCheatAccess(text)
+    local key = cheatThresholds[text]
+    if not key then return true end
+
+    local required = 4
+    if SandboxVars and SandboxVars.Admins and SandboxVars.Admins[key] ~= nil then
+        required = SandboxVars.Admins[key]
+    end
+
+    local lvlStr = getAccessLevel and getAccessLevel() or "None"
+    local lvlNum = getAccessLevelNumber(lvlStr)
+    return lvlNum >= required
+end
+
+local function removeDisallowedCheatsFromContext(ctx)
+    if not ctx or ctx:isEmpty() then return end
+    for engLabel, _ in pairs(cheatThresholds) do
+        if not hasCheatAccess(engLabel) then
+            -- удалить локализованное имя (если было переведено)
+            local i18nKey = translations[engLabel]
+            if i18nKey then
+                local ru = getText(i18nKey)
+                if ru and ru ~= "" and ru ~= i18nKey then
+                    ctx:removeOptionByName(ru)
+                end
+            end
+            -- и на всякий случай оригинал
+            ctx:removeOptionByName(engLabel)
+        end
+    end
+end
+
+function ISVehicleMechanics:doPartContextMenu(part, x, y)
+    old_ISVehicleMechanics_doPartContextMenu(self, part, x, y)
+    removeDisallowedCheatsFromContext(self.context)
+end
+
+function ISVehicleMechanics:onRightMouseUp(x, y)
+    old_ISVehicleMechanics_onRightMouseUp(self, x, y)
+    removeDisallowedCheatsFromContext(self.context)
 end
