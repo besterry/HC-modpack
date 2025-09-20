@@ -68,18 +68,18 @@ function ItemModDataPanel:createChildren()
     self:addChild(self.infoList);
 
     -- Edit controls
-    ISDebugUtils.addLabel(self, {}, 225, self.height-86, "Key", UIFont.Small, true)
-    self.keyEntry = ISTextEntryBox:new("", 250, self.height-90, 150, 22)
+    ISDebugUtils.addLabel(self, {}, 225, 20, "Key", UIFont.Small, true)
+    self.keyEntry = ISTextEntryBox:new("", 250, 20, 150, 22)
     self.keyEntry:initialise();
     self:addChild(self.keyEntry)
 
-    ISDebugUtils.addLabel(self, {}, 410, self.height-86, "Value", UIFont.Small, true)
-    self.valueEntry = ISTextEntryBox:new("", 455, self.height-90, 180, 22)
+    ISDebugUtils.addLabel(self, {}, 410, 20, "Value", UIFont.Small, true)
+    self.valueEntry = ISTextEntryBox:new("", 455, 20, 180, 22)
     self.valueEntry:initialise();
     self:addChild(self.valueEntry)
 
-    ISDebugUtils.addLabel(self, {}, 655, self.height-86, "Type", UIFont.Small, true)
-    self.typeCombo = ISComboBox:new(690, self.height-90, 90, 22, nil, nil)
+    ISDebugUtils.addLabel(self, {}, 655, 20, "Type", UIFont.Small, true)
+    self.typeCombo = ISComboBox:new(690, 20, 90, 22, nil, nil)
     self.typeCombo:initialise();
     self.typeCombo:addOption("string")
     self.typeCombo:addOption("number")
