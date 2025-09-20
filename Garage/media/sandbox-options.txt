@@ -15,3 +15,21 @@ option NPC.GarageDistance {
   page = NPC, 
   translation = GarageDistance,
 }
+
+option NPC.PriceExpandGarage {
+  type = integer,
+  default = 500,
+  min = 0,
+  max = 2500,
+  page = NPC,
+  translation = NPC_PriceExpandGarage,
+}
+
+option NPC.MaxGarageCount {
+  type = integer,
+  default = 2,
+  min = 0,
+  max = 10,
+  page = NPC,
+  translation = NPC_MaxGarageCount,
+}
