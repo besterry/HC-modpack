@@ -55,5 +55,5 @@ IGUI_RU = {
     IGUI_ContainerIsNotEmpty = "В автомобиле остались предметы",
     IGUI_ChangeGarageCheckBox = "Смена стороны",
     IGUI_SafeHouseHasGarage = "В убежище есть гараж, сначала удалите его",
-    IGUI_BuyExpandGarage = "+1",
+    IGUI_BuyExpandGarage = "Расширение",
 }
