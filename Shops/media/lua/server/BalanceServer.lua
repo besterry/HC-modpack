@@ -207,12 +207,16 @@ end
 
 --sendClientCommand(MODULE_NAME, "getBalance", { username = username })
 function BServer.GetBalance(player,args)
-    if player:getUsername() ~= "admin" then
+    local changer = player:getUsername() -- игрок, который запрашивает баланс
+    if changer ~= "admin" then
         return
     end
     local username = args.username -- игрок, баланс которого запрашиваем
     local account = ModData.get("CoinBalance")[username] -- получаем баланс игрока из моддаты сервера
     if not account then return end -- если игрока нет в моддате, то выходим
+    local msg = "%s GetBalance: Coin %s Special %s [changer: %s]"
+    msg = string.format(msg,username,account.coin,account.specialCoin,changer)
+    BServer.writeLog(msg)
     sendServerCommand(player, "BS", "GetBalanceResult", {username = username, coin = account.coin, specialCoin = account.specialCoin })
 end
 
