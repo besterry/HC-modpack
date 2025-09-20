@@ -107,13 +107,42 @@ local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE:
     end
 end
 
-local function removeSpawnSprite(x, y, spriteName,modData)
-    if spriteName == "garage_0" then
+local function hasGarageSpriteInSafehouse(player, spriteName) --Проверка есть ли тайл гаража в убежище (сколько гаражей существует)
+    local safehouse = SafeHouse.getSafeHouse(player:getCurrentSquare())
+    if not safehouse then
+        return 0
+    end
+    -- Перебираем все клетки убежища
+    local sx, sy = safehouse:getX(), safehouse:getY()
+    local ex, ey = safehouse:getX2(), safehouse:getY2()
+    local garageCount = 0
+
+    for x = sx, ex do
+        for y = sy, ey do
+            local square = getCell():getGridSquare(x, y, 0)
+            if square then
+                local objects = square:getObjects()
+                for i = 0, objects:size() - 1 do
+                    local object = objects:get(i)
+                    if object:getTextureName() == spriteName then --and string.find(string.lower(object:getTextureName()), string.lower(spriteName)) then
+                        garageCount = garageCount + 1
+                    end
+                end
+            end
+        end
+    end
+    return garageCount
+end
+
+local function removeSpawnSprite(x, y, spriteName,modData) --Удаление гаража
+    if spriteName == "garage_0" then -- Если гараж
+        local garageCount = hasGarageSpriteInSafehouse(getPlayer(), "garage_0") -- Считаем сколько гаражей на убежище
+        print("garageCount: " .. garageCount)
         PM.DeleteGarage = false
         local action = "delete"
         local player = getPlayer()
         local modData = modData
-        sendClientCommand(player,"Garage","GarageLog",{x,y,action,modData})
+        sendClientCommand(player,"Garage","GarageLog",{ x, y, action, modData, garageCount })
     end
     local square = getCell():getGridSquare(x, y, 0)
     if square then
