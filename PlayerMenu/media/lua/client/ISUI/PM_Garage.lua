@@ -19,7 +19,7 @@ function PM_Garage:initialise()
     local y = 15;                                       --Координата по вертикали
 
     --Заголовок "Мой гараж"
-    self.shoplabel = ISLabel:new(self:getWidth() / 2 - 40, 10, FONT_HGT_MEDIUM, getText("IGUI_My_Garage"), 0, 1, 1, 1,
+    self.shoplabel = ISLabel:new(self:getWidth() / 2 - 40, 10, FONT_HGT_MEDIUM, getText("IGUI_My_Garage") .. " (" .. PM.GarageMaxCount .. ")", 0, 1, 1, 1,
         UIFont.Medium, true)
     self.shoplabel:initialise()
     self.shoplabel:instantiate()
@@ -95,9 +95,22 @@ function PM_Garage:initialise()
     self:addChild(self.EditGarage);
     self.EditGarage:addOption(getText("IGUI_editshopTB"));
 
-    --кнопка Закрыть
-    self.cancel = ISButton:new(self:getWidth() / 2 - (btnWid - 20) / 2, self:getHeight() - padBottom - btnHgt - 5,
-        btnWid - 20, btnHgt, getText("UI_Close"), self, PM_Garage.onClick);
+    local priceExpandGarage = SandboxVars.NPC.PriceExpandGarage
+    local yBuyGarage = self:getHeight() - padBottom - btnHgt - 5
+    local xBuyGarage = 10
+    --кнопка покупки расширения гаража (слева)
+    self.BuyGarage = ISButton:new(x, yBuyGarage, btnWid - 60, btnHgt, getText("IGUI_BuyExpandGarage"), self, self.clickedbuyexpandgarage)
+    self.BuyGarage:initialise();
+    self.BuyGarage:instantiate();
+    self.BuyGarage.enabled = false
+    self.BuyGarage.backgroundColor = { r = 0.43, g = 0.21, b = 0.1, a = 0.8 }
+    self.BuyGarage.borderColor = { r = 0.99, g = 0.93, b = 1.0, a = 0 };
+    self.BuyGarage.tooltip = getText("Tooltip_BuyExpandGarage") .. priceExpandGarage*PM.GarageMaxCount .. getText("Tooltip_BuyExpandGarage2");
+    self:addChild(self.BuyGarage);
+
+    --кнопка Закрыть (справа)
+    local xCancel = self.width - btnWid+60 - 10
+    self.cancel = ISButton:new(xCancel, yBuyGarage, btnWid - 60, btnHgt, getText("UI_Close"), self, PM_Garage.onClick);
     self.cancel.internal = "CANCEL";
     self.cancel.anchorTop = false
     self.cancel.anchorBottom = true
@@ -138,7 +151,7 @@ local function hasGarageSpriteInSafehouse(player, spriteName) -- Проверя�
     -- Перебираем все клетки убежища
     local sx, sy = safehouse:getX(), safehouse:getY()
     local ex, ey = safehouse:getX2(), safehouse:getY2()
-
+    local garageCount = 0
     for x = sx, ex do
         for y = sy, ey do
             local square = getCell():getGridSquare(x, y, 0)
@@ -147,16 +160,16 @@ local function hasGarageSpriteInSafehouse(player, spriteName) -- Проверя�
                 for i = 0, objects:size() - 1 do
                     local object = objects:get(i)
                     if object:getTextureName() == spriteName then--and string.find(string.lower(object:getTextureName()), string.lower(spriteName)) then
-                        return true
+                        garageCount = garageCount + 1
                     end
                 end
             end
         end
     end
-    return false
+    return garageCount
 end
 
-function PM_Garage:clickeddelete()
+function PM_Garage:clickeddelete() --Удаление гаража
     local check = self:checkSafeHouse()
     if self.DeleteGarage.selected[1] and check then
         PM.DeleteGarage = true
@@ -167,7 +180,7 @@ function PM_Garage:clickeddelete()
     end
 end
 
-function PM_Garage:clickedchange()
+function PM_Garage:clickedchange() --Смена стороны гаража
     local check = self:checkSafeHouse()
     if check and hasGarageSpriteInSafehouse(self.player, "garage_0") and not PM.ChangeSideGarage then
         PM.ChangeSideGarage = true
@@ -176,10 +189,27 @@ function PM_Garage:clickedchange()
     end
 end
 
-function PM_Garage:clicked()
-    local check = self:checkSafeHouse()
+function PM_Garage:clickedbuyexpandgarage() --Покупка расширения гаража
+    local priceExpandGarage = SandboxVars.NPC.PriceExpandGarage
+    if PM.Balance >= priceExpandGarage*PM.GarageMaxCount and PM.GarageMaxCount<SandboxVars.NPC.MaxGarageCount then
+        local oldGarageMaxCount = PM.GarageMaxCount
+        local saveData = {}
+        saveData.delta = priceExpandGarage*PM.GarageMaxCount
+        saveData.balance = PM.Balance
+        saveData.GarageMaxCount = oldGarageMaxCount + 1
+        saveData.action = "buy expand garage"
+        sendClientCommand(getPlayer(), 'BalanceAndSH', 'saveUserData', saveData)
+        LoadBalanceAndSafeHousePlayer()
+    end
+    if PM.Balance < priceExpandGarage*PM.GarageMaxCount then
+        getPlayer():Say(getText('IGUI_NoMoney'))
+    end
+end
+
+function PM_Garage:clicked() --Установка гаража
+    local check = self:checkSafeHouse() --Проверка на наличие убежища и принадлежность игроку
     if check then
-        if hasGarageSpriteInSafehouse(self.player, "garage_0") then -- Если уже существует, выполняем нужные действия.            
+        if hasGarageSpriteInSafehouse(self.player, "garage_0") >= PM.GarageMaxCount then -- Если уже существует максимальное количество гаражей, то выходим
             self.player:Say(getText("IGUI_GarageAlreadyExists"))--Гараж уже существует
             PM.EditGarage = false
             check = false
@@ -210,6 +240,15 @@ function PM_Garage:update()
     else
         self.changeGarage.selected[1] = false
     end
+    if PM.GarageMaxCount < SandboxVars.NPC.MaxGarageCount then -- Покупка расширения гаража (максимум 2 гаража)
+        self.BuyGarage.enabled = true
+        local priceExpandGarage = SandboxVars.NPC.PriceExpandGarage
+        self.BuyGarage.tooltip = getText("Tooltip_BuyExpandGarage") .. priceExpandGarage*PM.GarageMaxCount .. getText("Tooltip_BuyExpandGarage2")
+    else
+        self.BuyGarage.enabled = false
+        self.BuyGarage.tooltip = getText("Tooltip_MaximumGaragesOnServer")
+    end
+    self.shoplabel:setName(getText("IGUI_My_Garage") .. " (" .. PM.GarageMaxCount .. ")")
     -- if PM.ShopCount == PM.MaxShopCount and self.EditGarage.selected[1] then --Автоотключение установки гаража
     --     self.EditGarage.selected[1] = false
     --     getPlayer():Say(getText('IGUI_editshopTBdisable'))
