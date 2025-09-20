@@ -33,14 +33,15 @@ local function addGarageSprite(x, y)
     -- end
 end
 
-local function hasGarageSpriteInSafehouse(player, spriteName) --Проверка есть ли тайл гаража в убежище
+local function hasGarageSpriteInSafehouse(player, spriteName) --Проверка есть ли тайл гаража в убежище (сколько гаражей существует)
     local safehouse = SafeHouse.getSafeHouse(player:getCurrentSquare())
     if not safehouse then
-        return false
+        return 0
     end
     -- Перебираем все клетки убежища
     local sx, sy = safehouse:getX(), safehouse:getY()
     local ex, ey = safehouse:getX2(), safehouse:getY2()
+    local garageCount = 0
 
     for x = sx, ex do
         for y = sy, ey do
@@ -50,13 +51,13 @@ local function hasGarageSpriteInSafehouse(player, spriteName) --Проверка
                 for i = 0, objects:size() - 1 do
                     local object = objects:get(i)
                     if object:getTextureName() == spriteName then --and string.find(string.lower(object:getTextureName()), string.lower(spriteName)) then
-                        return true
+                        garageCount = garageCount + 1
                     end
                 end
             end
         end
     end
-    return false
+    return garageCount
 end
 
 local function checkSafeHouse(player, x, y, z) --Проверка существует ли убежище и принадлежит ли оно игроку
@@ -82,7 +83,7 @@ local function setGarage(worldobjects, playerNum, sprites) --Создание г
     local z = worldobjects[1]:getZ()
     if not checkSafeHouse(player, x, y, z) then return end
 
-    if hasGarageSpriteInSafehouse(player, "garage_0") then -- Вызов функции проверки на наличие спрайта в убежище
+    if hasGarageSpriteInSafehouse(player, "garage_0") >= PM.GarageMaxCount then -- Вызов функции проверки на наличие спрайта в убежище
         player:Say(getText("IGUI_GarageAlreadyExists"))
         PM.EditGarage = false
         return
