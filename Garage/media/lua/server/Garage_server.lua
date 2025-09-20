@@ -11,7 +11,9 @@ commands.GarageLog = function(player, args)                         --Устан
         if args[3] and args[3] == "add" then
             GlobalModData.PersonalGarage[Owner] = true -- Если гараж добавляется, устанавливаем для владельца статус true
         elseif args[3] and args[3] == "delete" and GlobalModData.PersonalGarage[Owner] then
-            if args[5] and args[5] <= 0 then -- Если гаражей нет, то удаляем информацию о владельце из хранилища данных
+            -- print("delete garage")
+            if args[5] and args[5] <= 1 then -- Если гаражей нет, то удаляем информацию о владельце из хранилища данных
+                -- print("delete garage2")
                 GlobalModData.PersonalGarage[Owner] = nil  -- Если гараж удаляется, удаляем информацию о владельце из хранилища данных
             end
         end
