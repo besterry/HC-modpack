@@ -8,7 +8,8 @@ local function checkUserdata() --проверка на существовани�
     if not UserData.bonus then  UserData.bonus = 0 end
     if not UserData.safehouse then  UserData.safehouse = 625 end    
     if not UserData.ShopCount then  UserData.ShopCount = 0 end        
-    if not UserData.MaxShopCount then  UserData.MaxShopCount = 5 end       
+    if not UserData.MaxShopCount then  UserData.MaxShopCount = 5 end
+    if not UserData.GarageMaxCount then  UserData.GarageMaxCount = 1 end
 end
 
 local function SaveJsonItems(theTable,filename) --Сохранение в файл
@@ -32,7 +33,8 @@ local function LoadJsonItems(filename) --чтение с файла json
             safehouse = 625, 
             ShopCount = 0,
             MaxShopCount = 5,
-            autoloot = 0
+            autoloot = 0,
+            GarageMaxCount = 1
         }
         local msg = "New user create account:" .. filename
         writeLog("BalanceAndSafeHouse", msg)
@@ -71,7 +73,7 @@ end
 
 local commands = {} --Команды приходящие на сервер
 
-commands.getData = function(player, args) --Считывание UserData из jsob и отправка
+commands.getData = function(player, args) --Считывание UserData из json и отправка
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"    
     UserData = LoadJsonItems(filename)
@@ -81,7 +83,7 @@ commands.getData = function(player, args) --Считывание UserData из j
     end
 end
 
-commands.getDataAutoLoot = function(player, args) --Считывание UserData из jsob и отправка
+commands.getDataAutoLoot = function(player, args) --Считывание UserData из json и отправка
     --print("test")
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"    
@@ -92,7 +94,7 @@ commands.getDataAutoLoot = function(player, args) --Считывание UserDat
     end
 end
 
-commands.getDataALUI = function(player, args) --Считывание UserData из jsob и отправка
+commands.getDataALUI = function(player, args) --Считывание UserData из json и отправка
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"    
     UserData = LoadJsonItems(filename)
@@ -102,7 +104,7 @@ commands.getDataALUI = function(player, args) --Считывание UserData и
     end
 end
 
-commands.saveData = function(player, args) 
+commands.saveData = function(player, args) --Сохранение данных в файл при покупке расширения убежища (проверка баланса)
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"
     UserData = LoadJsonItems(filename)
@@ -125,7 +127,7 @@ commands.saveData = function(player, args)
     writeLog("PlayerMenuActions", msg)
 end
 
-commands.saveUserData = function (player, args)
+commands.saveUserData = function (player, args) --Сохранение данных в файл при любой покупке
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"
     UserData = LoadJsonItems(filename)
@@ -147,11 +149,11 @@ commands.saveUserData = function (player, args)
     else
         action = ""
     end
-    local msg = nickname .. " " .. action .. "balance:" .. UserData["balance"] .. ", bonus:" .. UserData["bonus"] .. ", safehouse:" .. UserData["safehouse"] .. ", ShopCount:" ..UserData["ShopCount"] .. ", MaxShopCount:" ..UserData["MaxShopCount"]
+    local msg = nickname .. " " .. action .. "balance:" .. UserData["balance"] .. ", bonus:" .. UserData["bonus"] .. ", safehouse:" .. UserData["safehouse"] .. ", ShopCount:" ..UserData["ShopCount"] .. ", MaxShopCount:" ..UserData["MaxShopCount"] .. ", GarageMaxCount:" ..UserData["GarageMaxCount"]
     writeLog("PlayerMenuActions", msg)
 end
 
-commands.deleteShopCountByAdmin = function(player, args)
+commands.deleteShopCountByAdmin = function(player, args) --Удаление счетчика магазинов при удалении магазина админом
     local admin = player:getUsername()
     local nickname = args.nickname 
     local filename = "users/" .. nickname .. ".json"
@@ -170,25 +172,23 @@ commands.deleteShopCountByAdmin = function(player, args)
     end
 end
 
-commands.reloadUserData = function(player, args) --кнопка перезагрузка
+commands.reloadUserData = function(player, args) --кнопка перезагрузки данных в ui (не используется)
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"
     UserData = LoadJsonItems(filename)
     sendServerCommand('BalanceAndSH', 'onGetData', {UserData = UserData})
 end
 
-commands.getServerTime = function(player, args) --Получение серверного времени    
-    --print("Server Time:", os.time())
+commands.getServerTime = function(player, args) --Получение серверного времени
     args = {}
     args.time = os.time()
     sendServerCommand('BalanceAndSH', 'onGetServerTime1', args)
 end
 
---Объявляем функцию прослушивания BalanceAndSH с клиента и выполнение команд
+--Подписка на команды с клиента
 local function BalanceAndSH_OnClientCommand(module, command, player, args)
     if module == "BalanceAndSH" and commands[command] then
         commands[command](player, args)
     end
 end
-
 Events.OnClientCommand.Add(BalanceAndSH_OnClientCommand)
