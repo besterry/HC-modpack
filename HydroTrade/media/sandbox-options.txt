@@ -807,3 +807,163 @@ option Admins.adminPowerBrushTool
   page = Admins,
   translation = Admins_adminPowerBrushTool,
 }
+
+option Admins.vehicleCheatGetKey
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatGetKey,
+}
+
+option Admins.vehicleCheatRemoveHotwire
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatRemoveHotwire,
+}
+
+option Admins.vehicleCheatHotwire
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatHotwire,
+}
+
+option Admins.vehicleCheatRepairPart
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatRepairPart,
+}
+
+option Admins.vehicleCheatRepairVehicle
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatRepairVehicle,
+}
+
+option Admins.vehicleCheatSetRust
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatSetRust,
+}
+
+option Admins.vehicleCheatSetPartCondition
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatSetPartCondition,
+}
+
+option Admins.vehicleCheatSetContentAmount
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatSetContentAmount,
+}
+
+option Admins.vehicleCheatRemoveVehicle
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+  page = Admins,
+  translation = Admins_vehicleCheatRemoveVehicle,
+}
+
+option Admins.miniScoreboardTeleportBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+	page = Admins, 
+  translation = Admins_miniScoreboardTeleportBtn,
+}
+
+option Admins.miniScoreboardTeleportToYouBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 2,
+	page = Admins, 
+  translation = Admins_miniScoreboardTeleportToYouBtn,
+}
+
+option Admins.miniScoreboardInvisibleBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+	page = Admins, 
+  translation = Admins_miniScoreboardInvisibleBtn,
+}
+
+option Admins.miniScoreboardGodModBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 3,
+	page = Admins, 
+  translation = Admins_miniScoreboardGodModBtn,
+}
+
+option Admins.miniScoreboardStatsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 2,
+	page = Admins, 
+  translation = Admins_miniScoreboardStatsBtn,
+}
+
+option Admins.miniScoreboardCheckHealthBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+	page = Admins, 
+  translation = Admins_miniScoreboardCheckHealthBtn,
+}
+
+option Admins.miniScoreboardChangeStatsBtn
+{
+  type = integer,
+  min = 0,
+  max = 4,
+  default = 4,
+	page = Admins, 
+  translation = Admins_miniScoreboardChangeStatsBtn,
+}
