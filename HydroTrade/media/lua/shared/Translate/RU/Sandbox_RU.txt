@@ -1,7 +1,6 @@
 Sandbox_RU = {
 
     Sandbox_Reading_SkillsEXP = "Опыт за чтение",
-
     Sandbox_Injectors = "Иньекторы",
 	Sandbox_Injectors_config_notice 		  = "Конфигурации перемещены в папку media/lua/server/Config",
 	Sandbox_Injectors_config_notice_tooltip   = ".lua С файлами гораздо проще работать, они даже содержат аннотации и подсказки для более легкого понимания",
@@ -198,4 +197,29 @@ Sandbox_RU = {
     Sandbox_Admins_adminPowerHealthCheat_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
     Sandbox_Admins_adminPowerBrushTool = "Инструмент креатива",
     Sandbox_Admins_adminPowerBrushTool_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
+    -- Настройки прав доступа для транспорта
+	Sandbox_Admins_vehicleCheatGetKey = "Создание ключей транспорта",
+	Sandbox_Admins_vehicleCheatRemoveHotwire = "Удаление hotwire транспорта", 
+	Sandbox_Admins_vehicleCheatHotwire = "Hotwire транспорта",
+	Sandbox_Admins_vehicleCheatRepairPart = "Ремонт деталей транспорта",
+	Sandbox_Admins_vehicleCheatRepairVehicle = "Ремонт транспорта",
+	Sandbox_Admins_vehicleCheatSetRust = "Изменение ржавчины транспорта",
+	Sandbox_Admins_vehicleCheatSetPartCondition = "Изменение состояния деталей транспорта",
+	Sandbox_Admins_vehicleCheatSetContentAmount = "Изменение содержимого контейнеров транспорта",
+	Sandbox_Admins_vehicleCheatRemoveVehicle = "Удаление транспорта",
+    --Мини-табло
+    Sandbox_Admins_miniScoreboardTeleportBtn = "Телепорт к игроку",
+    Sandbox_Admins_miniScoreboardTeleportBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
+    Sandbox_Admins_miniScoreboardTeleportToYouBtn = "Телепорт игрока к себе",
+    Sandbox_Admins_miniScoreboardTeleportToYouBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
+    Sandbox_Admins_miniScoreboardInvisibleBtn = "Невидимость игрока",
+    Sandbox_Admins_miniScoreboardInvisibleBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
+    Sandbox_Admins_miniScoreboardGodModBtn = "Бессмертие игрока",
+    Sandbox_Admins_miniScoreboardGodModBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
+    Sandbox_Admins_miniScoreboardStatsBtn = "Статистика игрока",
+    Sandbox_Admins_miniScoreboardStatsBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
+    Sandbox_Admins_miniScoreboardCheckHealthBtn = "Проверка здоровья игрока",
+    Sandbox_Admins_miniScoreboardCheckHealthBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
+    Sandbox_Admins_miniScoreboardChangeStatsBtn = "Изменение характеристик игрока",
+    Sandbox_Admins_miniScoreboardChangeStatsBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
 }
