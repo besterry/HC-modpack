@@ -36,7 +36,7 @@ local function checkSafeHouse(player)
 end
 
 Events.EveryTenMinutes.Add(function()
-    if isAdmin() then return end
+    -- if isAdmin() then return end
 
     -- Обновляем переменные
     SafeHouse_HordeInterval = SandboxVars.SafeHouse.HordeInterval
