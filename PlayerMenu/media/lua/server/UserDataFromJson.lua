@@ -151,6 +151,25 @@ commands.saveUserData = function (player, args)
     writeLog("PlayerMenuActions", msg)
 end
 
+commands.deleteShopCountByAdmin = function(player, args)
+    local admin = player:getUsername()
+    local nickname = args.nickname 
+    local filename = "users/" .. nickname .. ".json"
+    UserData = LoadJsonItems(filename)
+    UserData.ShopCount = UserData.ShopCount - 1
+    SaveJsonItems(UserData, filename)
+    local msg = admin .. " delete ShopCount for " .. nickname .. " ShopCount:" .. UserData["ShopCount"]
+    writeLog("PlayerMenuActions", msg)
+    -- Если игрок онлайн то обновляем данные
+    local players = getOnlinePlayers()
+    for i = 0, players:size() - 1 do
+        local findPlayer = players:get(i)
+        if findPlayer:getUsername() == nickname then
+            sendServerCommand(findPlayer, 'BalanceAndSH', 'onGetData', {UserData = UserData})
+        end
+    end
+end
+
 commands.reloadUserData = function(player, args) --кнопка перезагрузка
     local nickname = player:getUsername()    
     local filename = "users/" .. nickname .. ".json"
