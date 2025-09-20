@@ -34,8 +34,8 @@ IGUI_RU = {
     IGUI_AddShop = "Установить магазин",
     IGUI_RemoveShop = "Убрать магазин",
 
-    IGUI_AddPlayerShop = "Добавить магазин игрока",
-    IGUI_AddPlayerShopFreezer = "Добавить магазин игрока (морозильная камера)",
+    IGUI_AddPlayerShop = "Установить магазин игрока",
+    IGUI_AddPlayerShopFreezer = "Установить магазин игрока (морозильная камера)",
     IGUI_RemoveShop = "Удалить магазин игрока",
     IGUI_RemoveItemsPlayerShop = "Убрерите все товары из магазина",
     IGUI_RemoveIncomePlayerShop = "Забрать весь доход с магазина",
