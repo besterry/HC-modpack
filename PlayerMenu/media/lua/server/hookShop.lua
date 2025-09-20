@@ -34,13 +34,23 @@ function PlayerShop.PickupShop(worldobjects,player,shop)
         player:setHaloNote(UIText.RemoveIncomePlayerShop, 255,255,255,400);
         return
     end
+    local cash = shop:getModData().cash
+    if cash and (cash.coin > 0 or cash.specialCoin > 0) then
+        player:setHaloNote(UIText.RemoveCashPlayerShop, 255,255,255,400);
+        return
+    end
+    local owner = shop:getModData().owner
+    
     shop:getSquare():transmitRemoveItemFromSquare(shop)
     PlayerShop.toggleBusy(shop,player:getUsername(),false)
 
-    if PM.ShopCount > 0 then 
+    if PM.ShopCount > 0 and owner == player:getUsername() then 
         PM.ShopCount = PM.ShopCount-1 
         local saveData = {}
         saveData.ShopCount = PM.ShopCount
         sendClientCommand(getPlayer(), 'BalanceAndSH', 'saveUserData', saveData)
+    end
+    if isAdmin() or owner ~= player:getUsername() then
+        sendClientCommand(getPlayer(), 'BalanceAndSH', 'deleteShopCountByAdmin', {nickname = owner})
     end
 end
