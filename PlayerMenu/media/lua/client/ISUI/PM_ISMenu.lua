@@ -54,6 +54,7 @@ function LoadBalanceAndSafeHousePlayer()
             PM.SafeHouseSize = SafeHouseSize
             PM.ShopCount = ShopCount
             PM.MaxShopCount = args['UserData'].MaxShopCount
+            PM.GarageMaxCount = args['UserData'].GarageMaxCount or 1
             local old_MaxSizeSH = MaxSizeSH
             MaxSizeSH = SafeHouseSize
             Events.OnServerCommand.Remove(receiveServerCommand)
