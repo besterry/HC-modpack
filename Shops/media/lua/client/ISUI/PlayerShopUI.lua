@@ -149,37 +149,54 @@ function PlayerShopUI:onMouseDownCartItem(x, y)
 end
 
 local currentTooltip = nil
-function PlayerShopUI:toggleTooltip(show,item)
-    if item then
-        if not currentTooltip then
-            if item.invItem then
-                currentTooltip = ISToolTipInv:new(item.invItem)
-            else
-                -- для ордеров скупки создаем простой тултип
-                currentTooltip = ISToolTip:new()
-            end
-            currentTooltip:initialise();
+function PlayerShopUI:toggleTooltip(show, item)
+    -- скрыть/очистить
+    if not show or not item then
+        if currentTooltip then
+            currentTooltip:removeFromUIManager()
+            currentTooltip:setVisible(false)
+            currentTooltip = nil
+        end
+        return
+    end
+
+    local needInv = item.invItem ~= nil
+    -- убедимся, что тип тултипа соответствует содержимому
+    if currentTooltip then
+        local wrongType = false
+        if needInv then
+            wrongType = not instanceof(currentTooltip, "ISToolTipInv")
         else
-            currentTooltip:addToUIManager()
-            if item.invItem then
-                currentTooltip:setItem(item.invItem)
-            else
-                -- для ордеров скупки показываем информацию о предмете
-                local tooltipText = item.name or "Unknown Item"
-                if item.onlyFull then
-                    tooltipText = tooltipText .. "\n" .. getText("IGUI_BuyOrders_OnlyFull")
-                end
-                currentTooltip:setName(tooltipText)
-            end
-            currentTooltip:setVisible(true)
-            currentTooltip:setOwner(self)
-            currentTooltip:render();
+            wrongType = not instanceof(currentTooltip, "ISToolTip")
+        end
+        if wrongType then
+            currentTooltip:removeFromUIManager()
+            currentTooltip:setVisible(false)
+            currentTooltip = nil
         end
     end
-    if not show and currentTooltip then
-        currentTooltip:removeFromUIManager()
-        currentTooltip:setVisible(false)
+
+    if not currentTooltip then
+        if needInv then
+            currentTooltip = ISToolTipInv:new(item.invItem)
+        else
+            currentTooltip = ISToolTip:new()
+        end
+        currentTooltip:initialise()
     end
+
+    currentTooltip:addToUIManager()
+    if needInv then
+        currentTooltip:setItem(item.invItem)
+    else
+        local tooltipText = item.name or "Unknown Item"
+        if item.onlyFull then
+            tooltipText = tooltipText .. "\n" .. getText("IGUI_BuyOrders_OnlyFull")
+        end
+        currentTooltip:setName(tooltipText)
+    end
+    currentTooltip:setVisible(true)
+    currentTooltip:setOwner(self)
 end
 
 function PlayerShopUI:onMouseMoveCartItem(dx, dy)
@@ -441,30 +458,39 @@ function PlayerShopUI:addOrderToCart(row)
             if list then
                 for i=0,list:size()-1 do
                     local it = list:get(i)
-                    if it and it:getConditionMax() > 0 and it:getCondition() == it:getConditionMax() then
+                    if it and it:getConditionMax() > 0 and it:getCondition() == it:getConditionMax() and not it:isFavorite() then
                         have = have + 1
                     end
                 end
             end
         else
             local list = inv:getAllTypeRecurse(item.type)
-            if list then have = list:size() end
+            if list then 
+                for i=0,list:size()-1 do
+                    local it = list:get(i)
+                    if not it:isFavorite() then
+                        have = have + 1
+                    end
+                end
+            end
         end
     end
-    -- уже запланировано в корзине
-    local planned = 0
+    -- уже запланировано в корзине по типу (учитываем суммарно) и по всем ордерам
+    local plannedAny = 0
+    local plannedByOrderKey = 0
     for _,ci in ipairs(self.cartItems.items) do
         local it = ci.item
-        if it and it.orderKey == item.orderKey then
-            planned = planned + (it.units or 1)
+        if it then
+            if it.type == item.type then plannedAny = plannedAny + (it.units or 1) end
+            if it.orderKey == item.orderKey then plannedByOrderKey = plannedByOrderKey + (it.units or 1) end
         end
     end
     local remainingOrder = row.item.count or 0
-    if planned >= have then
+    if plannedAny >= have then
         if self.player then self.player:setHaloNote(getText("IGUI_PlayerShop_NotEnoughItems"), 255,255,255,400) end
         return
     end
-    if remainingOrder <= 0 then
+    if remainingOrder - plannedByOrderKey <= 0 then
         if self.player then self.player:setHaloNote(getText("IGUI_PlayerShop_OrderExhausted"), 255,255,255,400) end
         return
     end
@@ -491,9 +517,124 @@ function PlayerShopUI:addOrderToCart(row)
         specialCoin = item.specialCoin,
         type = item.type,
         orderKey = item.orderKey,
-        onlyFull = item.onlyFull and true or false
+        onlyFull = item.onlyFull and true or false,
+        invItem = (pcall(InventoryItemFactory.CreateItem, item.type) and InventoryItemFactory.CreateItem(item.type)) or nil
     }
     if row.item.count and row.item.count > 0 then row.item.count = row.item.count - 1 end
+    self.cartItems:addItem(item.type, orderEntry)
+    self.cartItems:setYScroll(-10000)
+end
+
+-- Массовое добавление: максимум по предметам, остатку ордера и бюджету кассы
+function PlayerShopUI:addOrderToCartAll(row)
+    local item = row and row.item
+    if not item or not item.orderKey then return end
+    local unitPrice = tonumber(item.price) or 0
+    if unitPrice <= 0 then return end
+
+    -- сколько предметов у игрока по типу (и полных для onlyFull)
+    local inv = self.player and self.player:getInventory() or nil
+    local haveAll, haveFull = 0, 0
+    if inv then
+        local list = inv:getAllTypeRecurse(item.type)
+        if list then
+            for i = 0, list:size() - 1 do
+                local it = list:get(i)
+                if it and not it:isFavorite() then
+                    haveAll = haveAll + 1
+                    if it.getConditionMax and it:getConditionMax() > 0 and it:getCondition() == it:getConditionMax() then
+                        haveFull = haveFull + 1
+                    end
+                end
+            end
+        end
+    end
+
+    -- уже запланировано в корзине по типу
+    local plannedAny, plannedFull = 0, 0
+    local cartSumCoin, cartSumSpec = 0, 0
+    for _,ci in ipairs(self.cartItems.items) do
+        local it = ci.item
+        if it then
+            if it.type == item.type then
+                local u = it.units or 1
+                plannedAny = plannedAny + u
+                if it.onlyFull then plannedFull = plannedFull + u end
+            end
+            if it.orderKey then
+                if it.specialCoin then cartSumSpec = cartSumSpec + (it.price or 0)
+                else cartSumCoin = cartSumCoin + (it.price or 0) end
+            end
+        end
+    end
+
+    local remainingOrder = tonumber(row.item.count) or 0
+    local haveEffective = item.onlyFull and haveFull or haveAll
+    -- ВАЖНО: чтобы не превысить общее физическое количество,
+    -- считаем зарезервированное всегда по plannedAny (консервативно)
+    local plannedEffective = plannedAny
+    local maxByItems = math.max(0, math.min(haveEffective - plannedEffective, remainingOrder))
+    if maxByItems <= 0 then
+        if remainingOrder <= 0 then
+            if self.player then self.player:setHaloNote(getText("IGUI_PlayerShop_OrderExhausted"), 255,255,255,400) end
+        else
+            if self.player then self.player:setHaloNote(getText("IGUI_PlayerShop_NotEnoughItems"), 255,255,255,400) end
+        end
+        return
+    end
+
+    -- бюджет кассы (учитываем доход, если включен)
+    local md = self.shop and self.shop:getModData() or {}
+    md.cash = md.cash or { coin = 0, specialCoin = 0 }
+    local availCoin = tonumber(md.cash.coin) or 0
+    local availSpec = tonumber(md.cash.specialCoin) or 0
+    if md.useIncome then
+        local sumCoin, sumSpec = 0, 0
+        for _,v in pairs(md.income or {}) do
+            sumCoin = sumCoin + (v.t and v.t.tl or 0)
+            sumSpec = sumSpec + (v.t and v.t.tls or 0)
+        end
+        availCoin = availCoin + sumCoin
+        availSpec = availSpec + sumSpec
+    end
+    local budgetLeft = item.specialCoin and (availSpec - cartSumSpec) or (availCoin - cartSumCoin)
+    budgetLeft = math.max(0, budgetLeft)
+    local maxByCash = math.floor(budgetLeft / unitPrice)
+    if maxByCash < 0 then maxByCash = 0 end
+
+    local canAdd = math.min(maxByItems, maxByCash)
+    if canAdd <= 0 then
+        if self.player then self.player:setHaloNote(getText("IGUI_Shop_NotEnoughRegister"), 255,255,255,400) end
+        return
+    end
+
+    -- агрегированно кладём в корзину
+    for _,ci in ipairs(self.cartItems.items) do
+        local it = ci.item
+        if it and it.orderKey == item.orderKey then
+            it.units = (it.units or 1) + canAdd
+            it.price = unitPrice * it.units
+            if row.item.count and row.item.count > 0 then row.item.count = math.max(0, row.item.count - canAdd) end
+            self:updateTotal()
+            self.cartItems:setYScroll(-10000)
+            return
+        end
+    end
+
+    local sample = nil
+    pcall(function() sample = InventoryItemFactory.CreateItem(item.type) end)
+    local orderEntry = {
+        name = item.name,
+        price = unitPrice * canAdd,
+        unitPrice = unitPrice,
+        units = canAdd,
+        specialCoin = item.specialCoin,
+        type = item.type,
+        orderKey = item.orderKey,
+        onlyFull = item.onlyFull and true or false,
+        invItem = sample
+    }
+    if row.item.count and row.item.count > 0 then row.item.count = math.max(0, row.item.count - canAdd) end
     self.cartItems:addItem(item.type, orderEntry)
     self.cartItems:setYScroll(-10000)
 end
