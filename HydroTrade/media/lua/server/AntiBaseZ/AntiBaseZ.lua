@@ -47,10 +47,46 @@ local function spawnHordeToPlayer(player,args)
     end
 
     local wave = ZombRand(1,4) -- 1-3 волны
+    -- print("count: " .. count)
+    -- print("wave: " .. wave)
     for i=1,wave do
-        local ang = ZombRandFloat(0.0, 360.0)
-        local sx = px + math.cos(math.rad(ang))*radius
-        local sy = py + math.sin(math.rad(ang))*radius
+        local attempts = 0
+        local maxAttempts = 40
+        local sx, sy
+        local validSpawn = false
+        
+        -- Ищем подходящее место для спавна (не на воде)
+        while not validSpawn and attempts < maxAttempts do
+            local ang = ZombRandFloat(0.0, 360.0)
+            sx = px + math.cos(math.rad(ang))*radius
+            sy = py + math.sin(math.rad(ang))*radius
+            
+            -- Проверяем тайл на воде
+            local cell = getCell()
+            if cell then
+                local sq = cell:getGridSquare(sx, sy, 0)
+                if sq then
+                    local isWater = false
+                    for j = 0, sq:getObjects():size() - 1 do
+                        local object = sq:getObjects():get(j)
+                        if object and instanceof(object, "IsoObject") then
+                            if string.find(object:getTextureName(), "^blends_natural_02") then
+                                isWater = true
+                                break
+                            end
+                        end
+                    end
+                    if not isWater then
+                        validSpawn = true
+                    end
+                else
+                    validSpawn = true -- Если тайл не найден, считаем место подходящим
+                end
+            else
+                validSpawn = true -- Если ячейка не найдена, считаем место подходящим
+            end
+            attempts = attempts + 1
+        end
         local zombiePerWave = math.floor(count/wave)
         createHordeFromTo(sx, sy, px, py, zombiePerWave) -- (float spawnX, float spawnY, float targetX, float targetY, int count) sx, sy - координаты спавна, px, py - координаты цели, math.floor(count/wave) - количество зомби
     end
