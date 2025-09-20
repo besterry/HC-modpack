@@ -191,7 +191,7 @@ end
 
 function PM_Garage:clickedbuyexpandgarage() --Покупка расширения гаража
     local priceExpandGarage = SandboxVars.NPC.PriceExpandGarage
-    if PM.Balance >= priceExpandGarage*PM.GarageMaxCount and PM.GarageMaxCount<SandboxVars.NPC.MaxGarageCount then
+    if PM.Balance >= priceExpandGarage*PM.GarageMaxCount and PM.GarageMaxCount<SandboxVars.NPC.MaxGarageCount then -- Покупка расширения гаража если баланс достаточен и количество гаражей меньше максимального
         local oldGarageMaxCount = PM.GarageMaxCount
         local saveData = {}
         saveData.delta = priceExpandGarage*PM.GarageMaxCount
@@ -200,8 +200,10 @@ function PM_Garage:clickedbuyexpandgarage() --Покупка расширени�
         saveData.action = "buy expand garage"
         sendClientCommand(getPlayer(), 'BalanceAndSH', 'saveUserData', saveData)
         LoadBalanceAndSafeHousePlayer()
+    elseif PM.GarageMaxCount >= SandboxVars.NPC.MaxGarageCount then -- Если количество гаражей равно максимальному, то выводим сообщение
+        getPlayer():Say(getText("Tooltip_MaximumGaragesOnServer"))
     end
-    if PM.Balance < priceExpandGarage*PM.GarageMaxCount then
+    if PM.Balance < priceExpandGarage*PM.GarageMaxCount then -- Если баланс недостаточен, то выводим сообщение
         getPlayer():Say(getText('IGUI_NoMoney'))
     end
 end
