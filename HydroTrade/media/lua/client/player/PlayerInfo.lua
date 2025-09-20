@@ -241,7 +241,7 @@ function PlayerHealthClient.getPlayerInfo()
 end
 
 Commands.getModdataPlayer = function(args)
-    print(args.reciever)
+    -- print(args.reciever)
     local reciever = args.reciever
     local args = {}
     args.moddata = getPlayer():getModData() -- Моддата игрока
