@@ -2,11 +2,13 @@ PlayerShopTabUI = ISPanelJoypad:derive("PlayerShopTabUI");
 PlayerShopTabUI.SMALL_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Small):getLineHeight()
 PlayerShopTabUI.MEDIUM_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Medium):getLineHeight()
 PlayerShopTabUI.addButtonX = 380
-PlayerShopTabUI.previewButtonX = PlayerShopTabUI.addButtonX + 25
+PlayerShopTabUI.moveAllButtonX = PlayerShopTabUI.addButtonX + 25
+PlayerShopTabUI.previewButtonX = PlayerShopTabUI.moveAllButtonX + 25
 
 local addBtn = Shop.textures.AddButton;
 local previewBtn = Shop.textures.PreviewButton;
 local browseBtn = Shop.textures.Browse;
+local moveAllBtn = Shop.textures.MoveAll;
 
 function PlayerShopTabUI:initialise()
     ISPanelJoypad.initialise(self);
@@ -87,14 +89,21 @@ function PlayerShopTabUI:doDrawShopItem(y, item, alt)
                     if list then
                         for i=0,list:size()-1 do
                             local it = list:get(i)
-                            if it and it:getConditionMax() > 0 and it:getCondition() == it:getConditionMax() then
+                            if it and it:getConditionMax() > 0 and it:getCondition() == it:getConditionMax() and not it:isFavorite() then
                                 have = have + 1
                             end
                         end
                     end
                 else
                     local list = inv:getAllTypeRecurse(item.item.type)
-                    if list then have = list:size() end
+                    if list then 
+                        for i=0,list:size()-1 do
+                            local it = list:get(i)
+                            if not it:isFavorite() then
+                                have = have + 1
+                            end
+                        end
+                    end
                 end
             end
             local planned = 0
@@ -110,6 +119,11 @@ function PlayerShopTabUI:doDrawShopItem(y, item, alt)
     end
     if canAdd then
         self:drawTextureScaledAspect(addBtn.texture, self.parent.addButtonX, y + 10, addBtn.scale, addBtn.scale, 1, 1, 1, 1)
+        if self.parent and self.parent.tabType == "BuyOrders" then
+            local tex = moveAllBtn.texture
+            local scl = addBtn.scale
+            self:drawTextureScaledAspect(tex, self.parent.moveAllButtonX, y + 10, scl, scl, 1, 1, 1, 1)
+        end
     end
 
     if item.item.VehicleID then
@@ -126,6 +140,14 @@ function PlayerShopTabUI:onMouseDownShopItem(x, y)
 	if self.selectedRow then
         local selectedRow = self.items[self.selectedRow]
         if not selectedRow then return end
+        local mouseX = self:getMouseX()
+        -- сначала обработаем MoveAll на вкладке Скупка
+        if self.parent and self.parent.tabType == Tab.BuyOrders and self.parent.moveAllButtonX and mouseX >= self.parent.moveAllButtonX and mouseX <= self.parent.previewButtonX then
+            if self.parent and self.parent.ShopUI and self.parent.ShopUI.addOrderToCartAll then
+                self.parent.ShopUI:addOrderToCartAll(selectedRow)
+            end
+            return
+        end
         if self.previewBtn then
             if selectedRow.item.invItem:IsInventoryContainer() then
                 ContainerViewerUI:show(selectedRow.item.invItem)
@@ -135,7 +157,7 @@ function PlayerShopTabUI:onMouseDownShopItem(x, y)
             PreviewUI:show(selectedRow.item.name,selectedRow.item.VehicleID)
             return
         end
-        if self.addBtn then
+        if self.addBtn and mouseX >= self.parent.addButtonX and mouseX < (self.parent.moveAllButtonX or (self.parent.addButtonX+25)) then
             if self.tabType == Tab.BuyOrders then
                 self.parent.ShopUI:addOrderToCart(selectedRow)
             else
@@ -166,7 +188,14 @@ function PlayerShopTabUI:onMouseMoveShopItem(dx, dy)
             if inv and selectedRow and selectedRow.item and selectedRow.item.type then
                 local have = 0
                 local list = inv:getAllTypeRecurse(selectedRow.item.type)
-                if list then have = list:size() end
+                if list then 
+                    for i=0,list:size()-1 do
+                        local it = list:get(i)
+                        if not it:isFavorite() then
+                            have = have + 1
+                        end
+                    end
+                end
                 local planned = 0
                 for _,ci in ipairs(self.parent.ShopUI.cartItems.items) do
                     local it = ci.item
