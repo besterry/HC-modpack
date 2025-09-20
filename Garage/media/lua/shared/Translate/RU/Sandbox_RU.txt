@@ -3,4 +3,8 @@ Sandbox_RU = {
     Sandbox_GarageActivate_tooltip  = "Включить или отключить функционал персонального гаража",
     Sandbox_GarageDistance = "Дистанция взаимодействия с гаражом",    
     Sandbox_GarageDistance_tooltip = "Расстояние в клетках, на котором игрок может взаимодействовать со своим гаражом",
+    Sandbox_NPC_PriceExpandGarage = "Цена доп.гаражей",
+    Sandbox_NPC_PriceExpandGarage_tooltip = "Цена доп.гаража (хN за количество), т.е. если 2 гаража то цена х2, если 3 - х3",
+    Sandbox_NPC_MaxGarageCount = "Гаражей на игрока",
+    Sandbox_NPC_MaxGarageCount_tooltip = "Максимум гаражей на игрока (владельца убежища)",
 }
