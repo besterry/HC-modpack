@@ -2,7 +2,7 @@ local commands = {}
 Garage = Garage or {}
 
 commands.GarageLog = function(player, args)                         --Установка/удаление гаража
-    if args then                                                    -- NOTE: args[1] = x, args[2] = y, args[3] = action(string), args[4] = modData
+    if args then                                                    -- NOTE: args[1] = x, args[2] = y, args[3] = action(string), args[4] = modData, args[5] = garageCount
         local GlobalModData = ModData.getOrCreate("PersonalGarage") -- Получаем или создаем глобальное хранилище данных для мода "PersonalGarage"
         GlobalModData.PersonalGarage = GlobalModData.PersonalGarage or {}
         local Owner = args[4].GarageOwner or ""                     -- Получаем пользователя, которому принадлежит гараж, из modData
@@ -11,7 +11,9 @@ commands.GarageLog = function(player, args)                         --Устан
         if args[3] and args[3] == "add" then
             GlobalModData.PersonalGarage[Owner] = true -- Если гараж добавляется, устанавливаем для владельца статус true
         elseif args[3] and args[3] == "delete" and GlobalModData.PersonalGarage[Owner] then
-            GlobalModData.PersonalGarage[Owner] = nil  -- Если гараж удаляется, удаляем информацию о владельце из хранилища данных
+            if args[5] and args[5] <= 0 then -- Если гаражей нет, то удаляем информацию о владельце из хранилища данных
+                GlobalModData.PersonalGarage[Owner] = nil  -- Если гараж удаляется, удаляем информацию о владельце из хранилища данных
+            end
         end
         writeLog("Garage-server", msg)
     end
