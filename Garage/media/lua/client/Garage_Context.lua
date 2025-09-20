@@ -136,7 +136,7 @@ end
 
 local function removeSpawnSprite(x, y, spriteName,modData) --Удаление гаража
     if spriteName == "garage_0" then -- Если гараж
-        local garageCount = hasGarageSpriteInSafehouse(getPlayer(), "garage_0") -- Считаем сколько гаражей на убежище
+        local garageCount = hasGarageSpriteInSafehouse(getPlayer(), "garage_0") -- Считаем сколько гаражей на убежище до удаления
         print("garageCount: " .. garageCount)
         PM.DeleteGarage = false
         local action = "delete"
