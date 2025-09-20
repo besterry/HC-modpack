@@ -9,4 +9,5 @@ Tooltip_RU = {
 	Tooltip_SetGarageCheckBox_TT = "Активация и установка возможна только в убежище, владельцем. ПКМ по клетке в убежище - Разместить гараж. Взаимодействие с гаражом доступно в радиусе 6 клеток",
 	Tooltip_BuyExpandGarage = "Купить дополнительный гараж за ",
 	Tooltip_BuyExpandGarage2 = " монет",
+	Tooltip_MaximumGaragesOnServer = "Максимум гаражей",
 }
