@@ -48,7 +48,7 @@ local function buildSellList(character, sellItems)
 						end
 						v.priceFull = price
 						v.price = Nfunction.drainablePrice(item, price)
-						if v.price > 0 then
+						if v.price > 1 then
 							v.id = item:getID()
 							v.type = itemType
 							v.name = Nfunction.trimString(item:getName(), 42)
