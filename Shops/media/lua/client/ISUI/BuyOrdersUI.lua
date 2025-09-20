@@ -404,7 +404,7 @@ function BuyOrdersUI:createChildren()
     end
     self:addChild(self.itemList)
 
-	-- tooltip с полноценным описанием предмета, как в PlayerShopUI (ISToolTipInv)
+	-- tooltip с полноценным описанием предмета, как в PlayerShopUI (ISToolTipInv)ыф
 	self.itemList.onMouseMove = function(listSelf, dx, dy)
 		if listSelf:isMouseOverScrollBar() or not listSelf:isMouseOver() then
 			if BuyOrdersUI.invTooltip then BuyOrdersUI.invTooltip:removeFromUIManager(); BuyOrdersUI.invTooltip = nil end
