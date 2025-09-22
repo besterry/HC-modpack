@@ -76,7 +76,7 @@ function BServer.Transfer(player,args)
     SaveCoinBalancefd()
 
     -- print("BServer.Transfer")
-    sendServerCommand(player, "BS", "ChangeBalance", {coin = account.coin, specialCoin = account.specialCoin }) -- списываем средства у отправителя
+    sendServerCommand(player, "BS", "ChangeBalance", {coin = account.coin, specialCoin = account.specialCoin }) -- Обновляем баланс отправителя
     -- ModData.transmit("CoinBalance")
     local noti = { 
         sender = username,
@@ -90,6 +90,7 @@ function BServer.Transfer(player,args)
     for i = 0, playersSize - 1, 1 do
         local playerRecipient = players:get(i)
         if playerRecipient:getUsername() == args[3] then
+            sendServerCommand(playerRecipient, "BS", "ChangeBalance", {coin = recipientAccount.coin, specialCoin = recipientAccount.specialCoin }) -- Обновляем баланс получателя
             sendServerCommand(playerRecipient, "BS", "TransferReceived", noti)
             break;
         end
