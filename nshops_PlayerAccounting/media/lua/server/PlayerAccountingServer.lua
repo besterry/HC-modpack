@@ -8,6 +8,59 @@ local EVENT_TYPES = ETOMARAT.PlayerAccounting.EVENT_TYPES
 
 local base_BServer = {}
 
+-- Блок очистки от старых данных
+
+local function parseDateTime(dateTimeStr) -- Функция для парсинга даты из строки
+    local day, month, year, hour, minute = dateTimeStr:match("(%d+)/(%d+)/(%d+) (%d+):(%d+)")
+    if not day then return nil end
+    return {
+        day = tonumber(day),
+        month = tonumber(month),
+        year = tonumber(year),
+        hour = tonumber(hour),
+        minute = tonumber(minute)
+    }
+end
+
+local function isRecordOlderThanMonths(recordDate, months) -- Функция для проверки, является ли запись старше N месяцев
+    local currentTime = getGameTime()
+    local currentYear = currentTime:getYear()
+    local currentMonth = currentTime:getMonth()
+    local recordYear = recordDate.year
+    local recordMonth = recordDate.month
+    -- Вычисляем разность в месяцах ()
+    local monthsDiff = (currentYear - recordYear) * 12 + (currentMonth - recordMonth)
+    return monthsDiff > months
+end
+
+local DATA_RETENTION_MONTHS = 12 -- Сохраняем последние 12 месяца (заменить на настройку песочницы)
+
+-- Функция для очистки старых записей
+local function cleanOldRecords(data)
+    local cleaned = false
+    for username, records in pairs(data) do
+        if type(records) == "table" then
+            local newRecords = {}
+            for i, record in ipairs(records) do
+                if type(record) == "table" and #record > 0 then
+                    local recordDate = parseDateTime(record[1])
+                    if recordDate and not isRecordOlderThanMonths(recordDate, DATA_RETENTION_MONTHS) then
+                        table.insert(newRecords, record)
+                    else
+                        cleaned = true
+                    end
+                end
+            end
+            if #newRecords > 0 then
+                data[username] = newRecords
+            else
+                data[username] = nil -- Удаляем запись, если пустая
+            end            
+        end
+    end
+    return cleaned
+end
+
 
 local getDateTimeStr = function ()
     local gt = getGameTime()
@@ -59,7 +112,7 @@ function ServerAccaunting:insert(player, event_type, coin, specialCoin, recipien
         recipient
     })
 
-    while #old_table > 50 do
+    while #old_table > 30 do
         table.remove(old_table, 1)  -- Remove the oldest record
     end
 
@@ -127,11 +180,14 @@ end
 local serverAccaunting = nil
 
 local function initGlobalModData(isNewGame)
-    local modData = ModData.getOrCreate(MOD_NAME);
+    local modData = ModData.getOrCreate(MOD_NAME);     
+    local cleaned = cleanOldRecords(modData) -- Очищаем старые записи при инициализации
+    if cleaned then
+        ModData.add(MOD_NAME, modData)
+    end
     serverAccaunting = ServerAccaunting:new(modData)
 	ModData.transmit(MOD_NAME)
 end
-
 Events.OnInitGlobalModData.Add(initGlobalModData);
 
 
