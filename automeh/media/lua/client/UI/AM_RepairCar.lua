@@ -106,6 +106,16 @@ function AM_RepairCar:initialise() --Создание элементов окн�
     self.renewBtn.borderColor = {r=1, g=1, b=1, a=0.1};
     self:addChild(self.renewBtn);
 
+    -- Кнопка обслуживания автомобиля (удаление ржавчины, повышение качества двигателя, повышение мощности двигателя)
+    self.serviceBtn = ISButton:new(self:getWidth()-buttonWid-10, self.renewBtn:getY()+ buttonHgt + 25, buttonWid, buttonHgt, getText("IGUI_AM_Service"), self, AM_RepairCar.onClick);
+    self.serviceBtn.internal = "SERVICE";
+    self.serviceBtn:initialise();
+    self.serviceBtn:instantiate();
+    self.serviceBtn:setEnabled(true)
+    self.serviceBtn:setVisible(true)
+    self.serviceBtn.borderColor = {r=1, g=1, b=1, a=0.1};
+    self:addChild(self.serviceBtn);
+
     --кнопка "Создать ключ"
     self.CreateKeyBtn = ISButton:new(x, self:getHeight()-buttonHgt-10, buttonWid, buttonHgt, getText("IGUI_AM_CreateKey"), self, AM_RepairCar.onClick);
     self.CreateKeyBtn.internal = "CREATEKEY";
@@ -370,6 +380,17 @@ function AM_RepairCar:onClick(button) --Обработка нажатия кно
                 sendClientCommand("BS", "Withdraw", {SandboxVars.NPC.AutomehCreateKeyPrice,0})
             else
                 player:Say(getText("IGUI_AM_No_Money"))
+            end
+        end
+    end
+    if button.internal == "SERVICE" then
+        if vehicle then
+            if not AM_ServiceCar.instance then
+                local serviceUI = AM_ServiceCar:new(self.x + self:getWidth() + 12, self.y, 370, 280, player, vehicle, self.geoX, self.geoY)
+                serviceUI:initialise()
+                serviceUI:addToUIManager()
+            else 
+                AM_ServiceCar.instance:close()
             end
         end
     end
