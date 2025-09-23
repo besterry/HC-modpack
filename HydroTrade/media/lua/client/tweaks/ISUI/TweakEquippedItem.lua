@@ -82,9 +82,14 @@ TweakEquippedItem.ticks = function(ticks)
     end
 
     if ClientTweaker.Options.GetBool("highlight_safehouse") == false then
+        if getDebug() then
+            getDebugOptions():setBoolean("Safehouse.Render.Highlight", false) -- Отключаем подсветку безопасных зон
+        end
         return
     end
-
+    if getDebug() then
+        getDebugOptions():setBoolean("Safehouse.Render.Highlight", true) -- Включаем подсветку безопасных зон
+    end
     local storage = ClientTweaker.Storage
 
     if storage then
