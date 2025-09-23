@@ -58,4 +58,18 @@ Sandbox_RU = {
     Sandbox_AntiTheftPrice = "Цена противоугонки",
     Sandbox_AntiTheftEnabled = "Установка противоугонки",
 
+    --Автомеханик обслуживание
+    Sandbox_NPC_RustRestorePercent = "Удаление ржавчины автомехаником (%)",
+    Sandbox_NPC_RustPriceMoney = "Стоимость удаления ржавчины",
+    Sandbox_NPC_RustPriceBonus = "Цена бонусами за удаление ржавчины",
+    Sandbox_NPC_EngineQualityIncrease = "Увеличение качества двигателя (%)",
+    Sandbox_NPC_EngineQualityPriceMoney = "Стоимость улучшения качества",
+    Sandbox_NPC_EngineQualityPriceBonus = "Цена бонусами за улучшение качества",
+    Sandbox_NPC_EnginePowerIncrease = "Увеличение мощности двигателя (%)",
+    Sandbox_NPC_EnginePowerPriceMoney = "Стоимость увеличения мощности",
+    Sandbox_NPC_EnginePowerPriceBonus = "Цена бонусами за увеличение мощности",
+    Sandbox_NPC_MaxEngineQuality = "Максимальное качество двигателя (%)",
+    Sandbox_RustRestoreEnable = "Снятие ржавчины автомехаником",
+    Sandbox_EngineQualityIncreaseEnable = "Улучшение качества автомехаником",
+    Sandbox_EnginePowerIncreaseEnable = "Повышение мощности автомехаником",
 }

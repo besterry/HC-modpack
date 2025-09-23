@@ -166,3 +166,114 @@ option NPC.AntiTheftEnabled {
   page = NPC,
   translation = AntiTheftEnabled,
 }
+
+option NPC.RustRestoreEnable {
+  type = boolean,
+  default = true,
+  page = NPC,
+  translation = RustRestoreEnable,
+}
+
+option NPC.EngineQualityIncreaseEnable {
+  type = boolean,
+  default = false,
+  page = NPC,
+  translation = EngineQualityIncreaseEnable,
+}
+
+option NPC.EnginePowerIncreaseEnable {
+  type = boolean,
+  default = false,
+  page = NPC,
+  translation = EnginePowerIncreaseEnable,
+}
+
+option NPC.RustRestorePercent {
+  type = integer,
+  min = 0,
+  max = 100,
+  default = 20,
+  page = NPC,
+  translation = NPC_RustRestorePercent,
+}
+
+option NPC.RustPriceMoney {
+  type = integer,
+  min = 0,
+  max = 1000,
+  default = 50,
+  page = NPC,
+  translation = NPC_RustPriceMoney,
+}
+
+option NPC.RustPriceBonus {
+  type = integer,
+  min = 0,
+  max = 1000,
+  default = 10,
+  page = NPC,
+  translation = NPC_RustPriceBonus,
+}
+
+option NPC.EngineQualityIncrease {
+  type = integer,
+  min = 1,
+  max = 50,
+  default = 10,
+  page = NPC,
+  translation = NPC_EngineQualityIncrease,
+}
+
+option NPC.EngineQualityPriceMoney {
+  type = integer,
+  min = 0,
+  max = 1000,
+  default = 100,
+  page = NPC,
+  translation = NPC_EngineQualityPriceMoney,
+}
+
+option NPC.EngineQualityPriceBonus {
+  type = integer,
+  min = 0,
+  max = 100,
+  default = 15,
+  page = NPC,
+  translation = NPC_EngineQualityPriceBonus,
+}
+
+option NPC.EnginePowerIncrease {
+  type = integer,
+  min = 1,
+  max = 15,
+  default = 5,
+  page = NPC,
+  translation = NPC_EnginePowerIncrease,
+}
+
+option NPC.EnginePowerPriceMoney {
+  type = integer,
+  min = 0,
+  max = 10000,
+  default = 200,
+  page = NPC,
+  translation = NPC_EnginePowerPriceMoney,
+}
+
+option NPC.EnginePowerPriceBonus {
+  type = integer,
+  min = 0,
+  max = 1000,
+  default = 20,
+  page = NPC,
+  translation = NPC_EnginePowerPriceBonus,
+}
+
+option NPC.MaxEngineQuality {
+  type = integer,
+  min = 30,
+  max = 99,
+  default = 80,
+  page = NPC,
+  translation = NPC_MaxEngineQuality,
+}
