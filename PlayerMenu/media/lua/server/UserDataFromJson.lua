@@ -192,3 +192,8 @@ local function BalanceAndSH_OnClientCommand(module, command, player, args)
     end
 end
 Events.OnClientCommand.Add(BalanceAndSH_OnClientCommand)
+
+PlayerMenuAPI = PlayerMenuAPI or {}
+PlayerMenuAPI.LoadJsonItems = LoadJsonItems
+PlayerMenuAPI.SaveJsonItems = SaveJsonItems
+PlayerMenuAPI.saveUserData = commands.saveUserData
