@@ -102,7 +102,7 @@ function AM_ServiceCar:initialise()
     -- Service buttons
     self.removeRustBtn = ISButton:new(x + 3, innerY, contentWid - 6, btnHgt, "", self, AM_ServiceCar.onClick)
 	self.removeRustBtn.internal = "REMOVE_RUST"
-    self.removeRustBtn:initialise(); self.removeRustBtn:instantiate(); styleButton(self.removeRustBtn); self:addChild(self.removeRustBtn)
+    self.removeRustBtn:initialise(); self.removeRustBtn:instantiate(); styleButton(self.removeRustBtn); self:addChild(self.removeRustBtn)	
     innerY = innerY + btnHgt + 6
 
     self.engineQualityBtn = ISButton:new(x + 3, innerY, contentWid - 6, btnHgt, "", self, AM_ServiceCar.onClick)
@@ -113,7 +113,6 @@ function AM_ServiceCar:initialise()
     self.enginePowerBtn = ISButton:new(x + 3, innerY, contentWid - 6, btnHgt, "", self, AM_ServiceCar.onClick)
 	self.enginePowerBtn.internal = "INCREASE_POWER"
     self.enginePowerBtn:initialise(); self.enginePowerBtn:instantiate(); styleButton(self.enginePowerBtn); self:addChild(self.enginePowerBtn)
-
     y = servicesPanelY + servicesH + 8
 
 	-- Close button
@@ -221,13 +220,17 @@ function AM_ServiceCar:updateServiceButtons()
     local qCost = cfg.QualityPriceMoney
     local pCost = cfg.PowerPriceMoney
 
-    local rustText = string.format("%s (-%d%%) — %s", getText("IGUI_AM_RemoveRust"), cfg.RustPercent, self:formatPrice(cfg.RustPriceMoney))
-    local qText = string.format("%s (+%d%%) — %s", getText("IGUI_AM_ImproveEngineQuality"), cfg.QualityPercent, self:formatPrice(cfg.QualityPriceMoney))
-    local pText = string.format("%s (+%d%%) — %s", getText("IGUI_AM_IncreaseEnginePower"), cfg.PowerPercent, self:formatPrice(cfg.PowerPriceMoney))
+    local rustText = string.format("%s %d%% — %s", getText("IGUI_AM_RemoveRust"), cfg.RustPercent, self:formatPrice(cfg.RustPriceMoney))
+    local qText = string.format("%s +%d%% — %s", getText("IGUI_AM_ImproveEngineQuality"), cfg.QualityPercent, self:formatPrice(cfg.QualityPriceMoney))
+    local pText = string.format("%s +%d%% — %s", getText("IGUI_AM_IncreaseEnginePower"), cfg.PowerPercent, self:formatPrice(cfg.PowerPriceMoney))
 
+	local maxEngineQuality = getSandboxNPC("MaxEngineQuality", 90) -- Максимальное количество увеличений качества двигателя
 	self.removeRustBtn:setTitle(rustText)
+	self.removeRustBtn:setTooltip(getText("IGUI_AM_RemoveRustTootip"))
 	self.engineQualityBtn:setTitle(qText)
+	self.engineQualityBtn:setTooltip(getText("IGUI_MaxEngineQuality") .. " " .. maxEngineQuality .. "%")
 	self.enginePowerBtn:setTitle(pText)
+	self.enginePowerBtn:setTooltip(getText("IGUI_AM_MaxCount"))
 
     local canPayRust = balance >= rustCost
     local canPayQ = balance >= qCost
@@ -238,7 +241,7 @@ function AM_ServiceCar:updateServiceButtons()
 
 	local modData = self.vehicle:getModData() -- Моддата авто
 	local engineQuality = self.vehicle:getEngineQuality() -- Качество двигателя
-	local maxEngineQuality = getSandboxNPC("MaxEngineQuality", 90) -- Максимальное количество увеличений качества двигателя
+	
 	local enginePowerIncreased = modData.enginePowerIncreased or false -- Увеличили ли мощность двигателя
 	local rust = self.vehicle:getRust() -- Ржавчина
 	-- print("engineQuality: " .. engineQuality)
