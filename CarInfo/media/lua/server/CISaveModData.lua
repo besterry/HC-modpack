@@ -8,12 +8,22 @@ local function getServerTimestamp()
     return time
 end
 
+local function logCarQuality(player, vehicle, engineQuality)
+    local msg = "@admin WARNING: ".. player:getUsername() .. " [" .. player:getX() .. "," .. player:getY() .. "] " .. " vehicle: " .. vehicle:getScript():getName() .. " engineQuality: " .. engineQuality .. " sqlid: " .. vehicle:getSqlId()
+    writeLog("CarInfo", msg) 
+end
+
 commands.writeSeat = function(player, args)
     local vehicle = getVehicleById(args.vehicleId)
     if not vehicle then return end
     
     local modData = vehicle:getModData()['playerLog'] or {}
     local playerIndex
+
+    -- Отслеживание качества двигателя (логирование если качество двигателя 100%)
+    if args.engineQuality then
+        logCarQuality(player, vehicle, args.engineQuality)
+    end
     
     -- Поиск существующей записи игрока
     for i, entry in ipairs(modData) do 
