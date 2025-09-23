@@ -64,6 +64,12 @@ local function OnExitVehicleOnModData(player)
     args.action = "exit"
     args.exitX = math.floor(player:getX())
     args.exitY = math.floor(player:getY())
+
+    -- Проверка качества двигателя
+    local engineQuality = vehicle:getEngineQuality()
+    if engineQuality == 100 then
+        args.engineQuality = engineQuality
+    end
     
     sendClientCommand(getPlayer(), 'CISeat', 'writeSeat', args)
 end
