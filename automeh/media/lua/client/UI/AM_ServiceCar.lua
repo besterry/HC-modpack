@@ -246,9 +246,9 @@ function AM_ServiceCar:updateServiceButtons()
 	local rust = self.vehicle:getRust() -- Ржавчина
 	-- print("engineQuality: " .. engineQuality)
 	-- print("EnginePower:" .. self.vehicle:getEnginePower())
-	self.removeRustBtn:setEnable(canPayRust and hasPlayer and hasVehicle and rust > 0)
-	self.engineQualityBtn:setEnable(canPayQ and hasPlayer and hasVehicle and engineQuality < maxEngineQuality)
-	self.enginePowerBtn:setEnable(canPayP and hasPlayer and hasVehicle and not enginePowerIncreased)
+	self.removeRustBtn:setEnable(canPayRust and hasPlayer and hasVehicle and rust > 0 and SandboxVars.NPC.RustRestoreEnable)
+	self.engineQualityBtn:setEnable(canPayQ and hasPlayer and hasVehicle and engineQuality < maxEngineQuality and SandboxVars.NPC.EngineQualityIncreaseEnable)
+	self.enginePowerBtn:setEnable(canPayP and hasPlayer and hasVehicle and not enginePowerIncreased and SandboxVars.NPC.EnginePowerIncreaseEnable)
 end
 
 function AM_ServiceCar:sendService(serviceKey)
