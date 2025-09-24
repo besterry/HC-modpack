@@ -111,3 +111,15 @@ table.insert(VehicleDistributions.GloveBox.items, 0.001);
 table.insert(VehicleDistributions.GloveBox.items, "Tsarcraft.CassetteWhitneyHoustonIWillAlwaysLoveYou(1992)");
 table.insert(VehicleDistributions.GloveBox.items, 0.001);
 
+table.insert(VehicleDistributions.GloveBox.items, "Tsarcraft.CassetteMix6090");
+table.insert(VehicleDistributions.GloveBox.items, 0.001);
+table.insert(VehicleDistributions.GloveBox.items, "Tsarcraft.CassetteThe50sRevolution");
+table.insert(VehicleDistributions.GloveBox.items, 0.001);
+table.insert(VehicleDistributions.GloveBox.items, "Tsarcraft.CassetteThe60sWave");
+table.insert(VehicleDistributions.GloveBox.items, 0.001);
+table.insert(VehicleDistributions.GloveBox.items, "Tsarcraft.CassetteThe70sDecade");
+table.insert(VehicleDistributions.GloveBox.items, 0.001);
+table.insert(VehicleDistributions.GloveBox.items, "Tsarcraft.CassetteThe80sAnthems");
+table.insert(VehicleDistributions.GloveBox.items, 0.001);
+table.insert(VehicleDistributions.GloveBox.items, "Tsarcraft.CassetteThe90sEra");
+table.insert(VehicleDistributions.GloveBox.items, 0.001);
