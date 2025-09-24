@@ -14,6 +14,7 @@ IGUI_RU =
 	IGUI_DBG_ISVehicleMechanics_cheat_false = "ВЫКЛ чит-автомеханики [dbg]",
 	IGUI_DBG_ISVehicleMechanics_cheat_true = "ВКЛ чит-автомеханики [dbg]",
 	IGUI_CHEAT_SetOdometerInKM = "Установить одометр в км [admin]",
+	IGUI_CHEAT_SetCarQuality = "Установить качество [admin]",
 
 	IGUI_Tools= "Инструменты",
 	IGUI_Teleport= "Телепорт",
