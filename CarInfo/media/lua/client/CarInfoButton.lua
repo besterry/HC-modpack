@@ -35,14 +35,6 @@ local function OnEnterVehicleOnModData(player)
     args.enterX = math.floor(player:getX())
     args.enterY = math.floor(player:getY())
     
-    if vehicle then
-        -- Проверка качества двигателя
-        local engineQuality = vehicle:getEngineQuality()
-        if engineQuality == 100 then
-            args.engineQuality = engineQuality
-        end
-    end
-    
     sendClientCommand(getPlayer(), 'CISeat', 'writeSeat', args)
 end
 
@@ -67,14 +59,6 @@ local function OnExitVehicleOnModData(player)
     args.action = "exit"
     args.exitX = math.floor(player:getX())
     args.exitY = math.floor(player:getY())
-
-    if vehicle then
-        -- Проверка качества двигателя
-        local engineQuality = vehicle:getEngineQuality()
-        if engineQuality == 100 then
-            args.engineQuality = engineQuality
-        end
-    end
     
     sendClientCommand(getPlayer(), 'CISeat', 'writeSeat', args)
 end
