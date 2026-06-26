@@ -34,20 +34,21 @@ AM_Service.Service = function(player, args)
     local costMoneyClient = args.costMoney -- Стоимость (от клиента)
     local status = false -- Статус оплаты
     if payment == "balance" then
-        local balance = UserData.balance -- Баланс
+        local balance = UserData.balance or 0-- Баланс
         if balance >= costMoney and costMoney == costMoneyClient then -- Если денег достаточно и стоимость совпадает с стоимостью от клиента
             local saveData = {}
             saveData.delta = costMoney
             saveData.balance = balance
             saveData.action = "Service: " .. service
             status = true
-            PlayerMenuAPI.saveUserData(player, saveData)
+            UserData.balance = balance - costMoney -- Списываем деньги с баланса игрока и фиксируем в UserData
+            PlayerMenuAPI.saveUserData(player, saveData) -- Списываем деньги с баланса игрока
             sendServerCommand(player, 'BalanceAndSH', 'onGetData', {UserData = UserData}) -- Отправляем данные игроку
         end
     end
     if status then
         -- TODO: Добавить логику обслуживания автомобиля
-        if service == "REMOVE_RUST" then -- Удаление ржавчины сколько хочет игрок
+        if service == "REMOVE_RUST" then -- Удаление ржавчины
             debug("AM_Service.Service: service == REMOVE_RUST")
             local rust = vehicle:getRust()
             rust = rust - percent/100 -- Ржавчина 1 ~ 100%
@@ -82,7 +83,7 @@ AM_Service.Service = function(player, args)
             local engineLoudness = vehicle:getEngineLoudness() -- Громкость - не меняем
             local enginePower = vehicle:getEnginePower() -- Мощность
             local engineQuality = vehicle:getEngineQuality() -- не меняем
-            enginePowerNew = enginePower + enginePower*percent/100 -- (мощность 5750 ~ 575 л.с.) +5% = 5750 + 5750*5/100 = 5750 + 287.5 = 6037.5
+            local enginePowerNew = enginePower + enginePower*percent/100 -- (мощность 5750 ~ 575 л.с.) +5% = 5750 + 5750*5/100 = 5750 + 287.5 = 6037.5
             if enginePowerNew > enginePower*1.1 then
                 enginePowerNew = enginePower*1.1 -- Максимальное увеличение мощности на 10%
             end
