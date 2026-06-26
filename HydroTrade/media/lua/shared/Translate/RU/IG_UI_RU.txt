@@ -78,6 +78,9 @@ IGUI_RU =
 	
 	IGUI_AdminPanel_TZone = "Зараженные зоны",
 	IGUI_ToggleTZone = "Включить/выключить",
+	IGUI_TZone_EditZone = "Изменить",
+	IGUI_TZone_EditZoneTitle = "Редактирование зоны",
+	IGUI_TZone_SaveZone = "Сохранить",
 	IGUI_TZone_Title = "Зараженные зоны",
 
 	IGUI_Show_IsoCorpse_modData = "Моддата трупа",	

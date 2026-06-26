@@ -374,6 +374,10 @@ Commands.onToggleTZone = function(player, args)
     buildZoneCache(nil)    
 end
 
+Commands.onEditTZone = function(player, args)
+    buildZoneCache(nil)
+end
+
 local OnServerCommand = function(module, command, player, args) 
 	if module == MOD_NAME and Commands[command] then
 		Commands[command](player, args)

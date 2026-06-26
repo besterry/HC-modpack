@@ -107,7 +107,15 @@ function TZonePanel:initialise()
     self.addZone.borderColor = self.buttonBorderColor; -- цвет границы кнопки
     self:addChild(self.addZone); -- добавляем кнопку на панель
 
-    self.addZoneCoord = ISButton:new(self.TZoneList.x, self.TZoneList.y + self.TZoneList.height +self.addZone.height + 10, 70, btnHgt2, getText("IGUI_PvpZone_AddZoneCoord"), self, TZonePanel.onClick); -- создаем кнопку для добавления координат зоны
+    self.editZone = ISButton:new(self.TZoneList.x, self.TZoneList.y + self.TZoneList.height + self.addZone.height + 10, 70, btnHgt2, getText("IGUI_TZone_EditZone"), self, TZonePanel.onClick);
+    self.editZone.internal = "EDITZONE";
+    self.editZone:initialise();
+    self.editZone:instantiate();
+    self.editZone.borderColor = self.buttonBorderColor;
+    self:addChild(self.editZone);
+    self.editZone.enable = false;
+
+    self.addZoneCoord = ISButton:new(self.TZoneList.x, self.editZone.y + btnHgt2 + 5, 70, btnHgt2, getText("IGUI_PvpZone_AddZoneCoord"), self, TZonePanel.onClick); -- создаем кнопку для добавления координат зоны
     self.addZoneCoord.internal = "ADDZONECOORD"; -- внутреннее имя кнопки
     self.addZoneCoord:initialise(); -- инициализируем кнопку
     self.addZoneCoord:instantiate(); -- инициализируем кнопку
@@ -173,9 +181,11 @@ end
 function TZonePanel:render() -- рисуем панель
     self.removeZone.enable = false;
     self.teleportToZone.enable = false;
+    self.editZone.enable = false;
     if self.TZoneList.selected > 0 and self.TZoneList.items[self.TZoneList.selected] then
         self.removeZone.enable = true;
         self.teleportToZone.enable = true;
+        self.editZone.enable = true;
         self.selectedZone = self.TZoneList.items[self.TZoneList.selected].item;
     else
         self.selectedZone = nil;
@@ -203,6 +213,13 @@ function TZonePanel:onClick(button)
         addTZone:initialise()
         addTZone:addToUIManager()
         addTZone.parentUI = self;
+        self:setVisible(false);
+    end
+    if button.internal == "EDITZONE" then
+        local editTZone = TZone_AddTZoneCoordUI:new(self.x, self.y, 300, 250, self.player, self.selectedZone);
+        editTZone:initialise()
+        editTZone:addToUIManager()
+        editTZone.parentUI = self;
         self:setVisible(false);
     end
     if button.internal == "TELEPORTTOZONE" then

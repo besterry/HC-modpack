@@ -7,9 +7,34 @@ TZone.Data.TZone = TZone.Data.TZone or {}
 local Commands = {}
 Commands.addTZone = function(player, args) -- добавляем зону
 	local title, x, y, x2, y2 = args[1], args[2], args[3], args[4], args[5]
+	if not title or TZone.Data.TZone[title] then return end
     TZone.Data.TZone[title] = {x = x, y = y, x2 = x2, y2 = y2, enable = false} -- По умолчанию зона выключена
     ModData.add(MOD_NAME, TZone.Data.TZone) -- добавляем зону в ModData
     ModData.transmit(MOD_NAME) -- отправляем зону всем клиентам
+	sendServerCommand(MOD_NAME, "onEditTZone", { title })
+end
+
+Commands.editTZone = function(player, args) -- редактируем зону (имя и координаты)
+	local oldTitle, newTitle, x, y, x2, y2 = args[1], args[2], args[3], args[4], args[5], args[6]
+	if not oldTitle or not newTitle then return end
+	local zone = TZone.Data.TZone[oldTitle]
+	if not zone then return end
+	if oldTitle ~= newTitle and TZone.Data.TZone[newTitle] then return end
+
+	local updatedZone = {
+		x = x,
+		y = y,
+		x2 = x2,
+		y2 = y2,
+		enable = zone.enable,
+		activatedTime = zone.activatedTime,
+		deactivatedTime = zone.deactivatedTime,
+	}
+	TZone.Data.TZone[oldTitle] = nil
+	TZone.Data.TZone[newTitle] = updatedZone
+	ModData.add(MOD_NAME, TZone.Data.TZone)
+	ModData.transmit(MOD_NAME)
+	sendServerCommand(MOD_NAME, "onEditTZone", { newTitle, oldTitle })
 end
 
 Commands.removeTZone = function(player, args) -- удаляем зону
