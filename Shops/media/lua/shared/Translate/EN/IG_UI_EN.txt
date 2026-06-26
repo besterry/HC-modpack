@@ -1,4 +1,5 @@
 IGUI_EN = {
+    IGUI_ItemNoPrice = "Item no has price",
     IGUI_RemovePlayerShop = "Remove Player Shop",
     IGUI_ATM_Sell = "ATM Sell",
     IGUI_Sell = "Sell", 

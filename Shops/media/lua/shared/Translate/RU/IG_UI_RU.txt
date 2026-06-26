@@ -1,4 +1,5 @@
 IGUI_RU = {
+    IGUI_ItemNoPrice = "У предмета нет цены",
     IGUI_SMH_AdminBtn = "Редактор баланса",
     IGUI_RemovePlayerShop = "Убрать магазин",
     IGUI_ATM_Sell = "Банкомат: скупка",
