@@ -1,4 +1,5 @@
 ShopTabUI = ISPanelJoypad:derive("ShopTabUI");
+require "ISUI/ShopUIMode"
 ShopTabUI.SMALL_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Small):getLineHeight()
 ShopTabUI.MEDIUM_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Medium):getLineHeight()
 ShopTabUI.addButtonX = 380
@@ -15,6 +16,14 @@ end
 
 function ShopTabUI:setShopUI(instance)
     self.ShopUI = instance
+end
+
+function ShopTabUI:setShopAdminEditUI(instance)
+    self.ShopUI = instance
+end
+
+function ShopTabUI:isSellTab()
+    return self.ShopUI and ShopUIMode.isSellMode(self.ShopUI)
 end
 
 function ShopTabUI:onFilterChange()
@@ -42,7 +51,7 @@ function ShopTabUI:doDrawShopItem(y, item, alt)
         self:drawRect(0, (y), self:getWidth(), item.height - 1, 0.3, 0.7, 0.35, 0.15);
     end
     
-    if not (self.parent.tabType == Tab.Sell) then 
+    if not self.parent:isSellTab() then
         local alpha = 0.3
         local favTexture = nil
         if item.index == self.selectedRow and not self:isMouseOverScrollBar() and self:isMouseOver() then
@@ -103,7 +112,7 @@ function ShopTabUI:onMouseDownShopItem(x, y)
             return
         end
         if self.favoriteBtn then
-            if not (self.parent.tabType == Tab.Sell) then 
+            if not self.parent:isSellTab() then
                 self.parent:manageFavorites(self.selectedRow)
             end
             return
@@ -127,13 +136,12 @@ function ShopTabUI:manageFavorites(selectedRow)
         end
         shopFavorites[item.type] = data
     else
-        if self.tabType == Tab.Favorite then
-            self.shopItems:removeItemByIndex(selectedRow)
-        end
         shopFavorites[item.type] = nil
     end
     item.favorite = check
+    self.ShopUI.shopItemsCache[self.tabType] = nil
     self.ShopUI.reloadItems = true
+    self.ShopUI:onActivateView()
 end
 
 function ShopTabUI:onMouseMoveShopItem(dx, dy)
@@ -167,6 +175,13 @@ function ShopTabUI:prerender()
     self.shopItems.doDrawItem = ShopTabUI.doDrawShopItem;
     self.shopItems.onMouseMove = ShopTabUI.onMouseMoveShopItem;
     self.shopItems.onMouseDown = ShopTabUI.onMouseDownShopItem;
+    local sellMode = self:isSellTab()
+    if self.favoritesOnlyTick then
+        self.favoritesOnlyTick:setVisible(not sellMode)
+    end
+    if self.sortPriceButton then
+        self.sortPriceButton:setVisible(not sellMode)
+    end
 end
 
 function ShopTabUI:addToCart(selectedRow)
@@ -174,30 +189,35 @@ function ShopTabUI:addToCart(selectedRow)
     if self.ShopUI.actionInProgress then return end
     self.ShopUI:toggleTooltip(false)
     self.ShopUI.cartItems:addItem(item.text,item.item);
-    if self.tabType == Tab.Sell then
+    if self:isSellTab() then
         self.shopItems:removeItemByIndex(selectedRow)
     end
     self.ShopUI.cartItems:setYScroll(-10000);
 end
 
-function ShopTabUI:filter()
-    local filterText = string.trim(self.filterEntry:getInternalText())
+function ShopTabUI:onFavoritesOnlyToggle()
+    self:applyListFilter()
+end
+
+function ShopTabUI:applyListFilter()
     local tabType = self.tabType
-    self.shopItems.items = self.ShopUI.shopItemsCache[tabType]
-    filterText = string.lower(filterText)
-    local shopItems = self.shopItems.items
+    local source = self.ShopUI.shopItemsCache[tabType]
+    if not source then return end
+    local filterText = string.lower(string.trim(self.filterEntry:getInternalText()))
+    local favoritesOnly = self.favoritesOnlyTick and self.favoritesOnlyTick:isSelected(1)
     self.shopItems:clear()
-    for k,v in ipairs(shopItems) do
-        if string.contains(string.lower(v.item.name), filterText) then
-            if tabType == Tab.Favorite then
-                if v.item.favorite then
-                    self.shopItems:addItem(v.text,v.item);
-                end
-            else
-                self.shopItems:addItem(v.text,v.item);
-            end
+    for i = 1, #source do
+        local v = source[i]
+        if favoritesOnly and not v.item.favorite then
+        elseif filterText ~= "" and not string.contains(string.lower(v.item.name), filterText) then
+        else
+            self.shopItems:addItem(v.text, v.item)
         end
     end
+end
+
+function ShopTabUI:filter()
+    self:applyListFilter()
 end
 
 function ShopTabUI:create()
@@ -207,7 +227,7 @@ function ShopTabUI:create()
     self.filterLabel = ISLabel:new(x, y-20, 1,UIText.Search,1,1,1,1,UIFont.Small, true);
     self:addChild(self.filterLabel);
 
-    local width = ((self.width/3) - getTextManager():MeasureStringX(UIFont.Small, UIText.Search)) - 98;
+    local width = ((self.width/3) - getTextManager():MeasureStringX(UIFont.Small, UIText.Search)) - 130;
     self.filterEntry = ISTextEntryBox:new("", getTextManager():MeasureStringX(UIFont.Small,UIText.Search) + 40, y-28, width, 1);
     self.filterEntry:initialise();
     self.filterEntry:instantiate();
@@ -225,6 +245,12 @@ function ShopTabUI:create()
     self.sortPriceButton:initialise()
     self.sortPriceButton.enable = true
     self:addChild(self.sortPriceButton);
+
+    self.favoritesOnlyTick = ISTickBox:new((self.width / 2) - 128, y - 30, 120, 20, "", self, ShopTabUI.onFavoritesOnlyToggle)
+    self.favoritesOnlyTick:initialise()
+    self.favoritesOnlyTick:addOption(getText("IGUI_Shop_FavoritesOnly"), false)
+    self.favoritesOnlyTick:setVisible(false)
+    self:addChild(self.favoritesOnlyTick)
 
     self.moveAllButton = ISButton:new((self.width / 2)-50, y-30, 25,25,"",self, ShopTabUI.moveAllBtn);
     self.moveAllButton.borderColor.a = 0.0;

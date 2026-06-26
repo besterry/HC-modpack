@@ -1,6 +1,8 @@
 Shop = Shop or {}
 Shop.Items = Shop.Items or {}
 Shop.Tabs = Shop.Tabs or {}
+Shop.TabsBuy = Shop.TabsBuy or {}
+Shop.TabsBuyOrder = Shop.TabsBuyOrder or {}
 Shop.Sell = Shop.Sell or {}
 Shop.SellisBlacklist = false
 Shop.SellisWhitelist = false
@@ -90,3 +92,35 @@ Shop.Tabs[Tab.Book] = getText("IGUI_Tab_Book")
 Shop.Tabs[Tab.Weapons] = getText("IGUI_Tab_Weapons")
 Shop.Tabs[Tab.Vehicles] = getText("IGUI_Tab_Vehicles")
 Shop.Tabs[Tab.Event] = getText("IGUI_Tab_Event")
+
+Shop.TabsBuyOrder = {
+	Tab.All,
+	Tab.Food,
+	Tab.FirstAid,
+	Tab.Cloth,
+	Tab.Tools,
+	Tab.Book,
+	Tab.Weapons,
+	Tab.Vehicles,
+	Tab.Event,
+}
+
+Shop.TabsBuy = {
+	[Tab.All] = Shop.Tabs[Tab.All],
+	[Tab.Food] = Shop.Tabs[Tab.Food],
+	[Tab.FirstAid] = Shop.Tabs[Tab.FirstAid],
+	[Tab.Cloth] = Shop.Tabs[Tab.Cloth],
+	[Tab.Tools] = Shop.Tabs[Tab.Tools],
+	[Tab.Book] = Shop.Tabs[Tab.Book],
+	[Tab.Weapons] = Shop.Tabs[Tab.Weapons],
+	[Tab.Vehicles] = Shop.Tabs[Tab.Vehicles],
+	[Tab.Event] = Shop.Tabs[Tab.Event],
+}
+
+function Shop.hasSellCatalog()
+	if not Shop.Sell then return false end
+	for _ in pairs(Shop.Sell) do
+		return true
+	end
+	return false
+end

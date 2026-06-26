@@ -1,4 +1,5 @@
 local Nfunction = require "Nfunction"
+require "ISUI/ShopUIMode"
 ShopUI = ISCollapsableWindow:derive("ShopUI");
 ShopUI.instance = nil;
 ShopUI.SMALL_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Small):getLineHeight()
@@ -43,8 +44,10 @@ function ShopUI:show(player,viewMode,shop) --Вызов интерфейса м�
                 ShopUI.instance:instantiate();
             end
             ShopUI.instance.reloadItems = true
+            ShopUI.instance.shopMode = ShopUI.instance.shopMode or "buy"
             ShopUI.instance.pinButton:setVisible(false)
             ShopUI.instance.collapseButton:setVisible(false)
+            ShopUIMode.updateModeButtons(ShopUI.instance)
             ShopUI.instance:addToUIManager();
             ShopUI.instance:setVisible(true);
             return ShopUI.instance;
@@ -220,19 +223,6 @@ function ShopUI:onMouseMoveCartItem(dx, dy)
     ShopUI.instance:toggleTooltip(true,selectedRow.item)
 end
 
-function ShopUI:createCategories() --генерация Tab (вкладок)
-    for k,v in pairs(Shop.Tabs) do 
-        local tab = ShopTabUI:new(0, 0, self.width, self.panel.height - self.panel.tabHeight);
-        tab:initialise();
-        tab:setAnchorRight(true)
-        tab:setAnchorBottom(true)
-        tab:setShopUI(ShopUI.instance)
-        tab:setCategoryType(k)
-        self.panel:addView(v, tab);
-        tab.parent = self;
-    end
-end
-
 ---@return InventoryItem
 function ShopUI:getItemInstance(type)
     local item = self.ItemInstanceCache[type]
@@ -243,6 +233,10 @@ function ShopUI:getItemInstance(type)
         end
     end
     return item
+end
+
+function ShopUI:isSellMode()
+    return ShopUIMode.isSellMode(self)
 end
 
 function ShopUI:onActivateView()
@@ -258,12 +252,12 @@ function ShopUI:onActivateView()
         shopItems:clear() 
     end
 
-    if self.lastTab == Tab.Sell or tabType == Tab.Sell then
+    if self.lastTab == Tab.Sell or self:isSellMode() or tabType == Tab.Sell then
         self.cartItems:clear()
     end
     self.lastTab = tabType
 
-    if tabType == Tab.Sell then
+    if self:isSellMode() or tabType == Tab.Sell then
         tab.moveAllButton.enable = true
         tab.moveAllButton:setVisible(true)
         shopItems:clear()
@@ -322,44 +316,22 @@ function ShopUI:onActivateView()
         end
     end
 
-    if tabType == Tab.Favorite then
-        shopItems:clear()
-        local shopFavorites = character:getModData().shopFavorites
-        for k,v in pairs(shopFavorites) do
-            local shopItemDef = Shop.Items[k]
-            local item = self:getItemInstance(k)
-            if shopItemDef and item then
-                v.price = shopItemDef.price
-            end
-            if shopItemDef and item then
-                local VehicleID = item:getModData().VehicleID
-                if VehicleID then v.VehicleID = VehicleID end
-                v.favorite = true
-                v.type = k
-                if not v.items then
-                    v.invItem = item
-                else
-                    v.texture = item:getTex()
-                end
-                v.name = Nfunction.trimString(item:getName(),42)
-                shopItems:addItem(k,v);
-            else
-                character:getModData().shopFavorites[k] = nil
-            end
-        end
-        self.shopItemsCache[tabType] = shopItems.items
-        return  
-    end
-
-    if shopItems.count > 0 then return end
+    if shopItems.count > 0 and not self.reloadItems then return end
 
     if not self.reloadItems then
-        if self.shopItemsCache[tabType] then shopItems.items = self.shopItemsCache[tabType] return end
+        if self.shopItemsCache[tabType] then
+            shopItems.items = self.shopItemsCache[tabType]
+            ShopUIMode.sortFavoritesFirst(shopItems.items)
+            if (tab.filterEntry and tab.filterEntry:getInternalText() ~= "") or (tab.favoritesOnlyTick and tab.favoritesOnlyTick:isSelected(1)) then
+                tab:applyListFilter()
+            end
+            return
+        end
     end
 
     shopItems:clear()
-    for k,v in pairs(Shop.Items) do        
-        if v and (v.tab == tabType or tabType == Tab.All) then 
+    for k,v in pairs(Shop.Items) do
+        if v and (v.tab == tabType or tabType == Tab.All) then
             local item = self:getItemInstance(k)
             if item then
                 local VehicleID = item:getModData().VehicleID
@@ -376,8 +348,12 @@ function ShopUI:onActivateView()
             end
         end
     end
+    ShopUIMode.sortFavoritesFirst(shopItems.items)
     self.shopItemsCache[tabType] = shopItems.items
-    self.reloadItems = false 
+    self.reloadItems = false
+    if (tab.filterEntry and tab.filterEntry:getInternalText() ~= "") or (tab.favoritesOnlyTick and tab.favoritesOnlyTick:isSelected(1)) then
+        tab:applyListFilter()
+    end
 end
 
 function ShopUI:createChildren()
@@ -386,7 +362,11 @@ function ShopUI:createChildren()
     local y = 85
 
     local th = self:titleBarHeight();
-    self.panel = ISTabPanel:new(0, th, (self.width/2)-25, self.height-10);
+    self.shopMode = self.shopMode or "buy"
+    ShopUIMode.createModeButtons(self, th)
+
+    local panelY = th + ShopUIMode.MODE_BAR_H
+    self.panel = ISTabPanel:new(0, panelY, (self.width/2)-25, self.height - panelY - 4);
     self.panel:initialise();
     self.panel:setAnchorRight(true)
     self.panel:setAnchorBottom(true)
@@ -394,9 +374,9 @@ function ShopUI:createChildren()
     self.panel.onActivateView = self.onActivateView;
     self.panel.target = self;
     self.panel:setEqualTabWidth(false)
+    self._defaultTabHeight = self.panel.tabHeight
     self:addChild(self.panel);
-    self:createCategories()
-    self:activateFirstTab()
+    ShopUIMode.rebuildTabs(self)
 
     self.clearCartButton = ISButton:new((self.width / 2)+380, y+280, 80,25,UIText.ClearCart,self, ShopUI.clearCartBtn);
     self.clearCartButton:initialise()
@@ -495,19 +475,11 @@ function ShopUI:createChildren()
     end
 end
 
-function ShopUI:activateFirstTab()
-    for k,v in pairs(Shop.Tabs) do 
-        self.panel:activateView(v)
-        break;
-    end
-end
-
 function ShopUI:removeFromCart(selectedRow)
     if self.actionInProgress then return end
     self:toggleTooltip(false)
     local tab = self.panel.activeView.view
-    local tabType = tab.tabType
-    if tabType == Tab.Sell then
+    if self:isSellMode() or tab.tabType == Tab.Sell then
         tab.shopItems:addItem(selectedRow.item.type,selectedRow.item)
     end
     self.cartItems:removeItem(selectedRow.text)
@@ -516,8 +488,7 @@ end
 function ShopUI:clearCartBtn()
     if self.actionInProgress then return end
     local tab = self.panel.activeView.view
-    local tabType = tab.tabType
-    if tabType == Tab.Sell then
+    if self:isSellMode() or tab.tabType == Tab.Sell then
         for k,v in pairs(self.cartItems.items) do
             tab.shopItems:addItem(v.item.type,v.item)
         end
@@ -526,8 +497,7 @@ function ShopUI:clearCartBtn()
 end
 
 function ShopUI:cancelBuyBtn()
-    local tabType = self.panel.activeView.view.tabType
-    if tabType == Tab.Sell then 
+    if self:isSellMode() then
         self.sellCartButton.enable = true
         self.sellCartButton:setVisible(true)
     else
@@ -599,7 +569,7 @@ function ShopUI:updateTotal() --Обновление баланса
     if self.viewMode then return end
 
     local tabType = self.panel.activeView.view.tabType
-    if tabType == Tab.Sell then
+    if self:isSellMode() or tabType == Tab.Sell then
         self.sellCartButton.enable = false
         self.sellCartButton:setVisible(true)
     else
@@ -614,7 +584,7 @@ function ShopUI:updateTotal() --Обновление баланса
 
     local username = self.player:getUsername()
     local coin,specialCoin = Balance.getUserBalance(username)
-    if tabType == Tab.Sell and (total > 0 or totalSpecial > 0) then 
+    if (self:isSellMode() or tabType == Tab.Sell) and (total > 0 or totalSpecial > 0) then
         self.buyCartButton.enable = false
         self.buyCartButton:setVisible(false)
         self.sellCartButton.enable = true
@@ -623,7 +593,7 @@ function ShopUI:updateTotal() --Обновление баланса
         self.cancelBuyButton:setVisible(false)
         return
     end
-    if coin >= total and specialCoin >= totalSpecial and not (tabType==Tab.Sell) then
+    if coin >= total and specialCoin >= totalSpecial and not self:isSellMode() and not (tabType==Tab.Sell) then
         self.buyCartButton.enable = true
         self.buyCartButton:setVisible(true)
         self.sellCartButton.enable = false
@@ -651,6 +621,7 @@ function ShopUI:new(x, y, width, height, player) --Создание окна м�
     setmetatable(o, self)
     o.fgBar = {r=0, g=0.6, b=0, a=0.7 }
     self.__index = self
+    o.shopMode = "buy"
     o.title = UIText.ShopUITitle;
     o.player = player
     o.resizable = false;
