@@ -207,6 +207,7 @@ Sandbox_RU = {
 	Sandbox_Admins_vehicleCheatSetPartCondition = "Изменение состояния деталей транспорта",
 	Sandbox_Admins_vehicleCheatSetContentAmount = "Изменение содержимого контейнеров транспорта",
 	Sandbox_Admins_vehicleCheatRemoveVehicle = "Удаление транспорта",
+    Sandbox_Admins_vehicleCheatSetOdometerInKM = "Изменение одометра",
     --Мини-табло
     Sandbox_Admins_miniScoreboardTeleportBtn = "Телепорт к игроку",
     Sandbox_Admins_miniScoreboardTeleportBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
