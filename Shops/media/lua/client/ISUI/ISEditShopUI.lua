@@ -13,6 +13,23 @@ local msg = nil
 local player = nil
 local EditShopLog= {}
 
+local function shopEditGetPrice(item)
+	if not item then return nil end
+	return item.defaultPrice or item.price
+end
+
+local function shopEditSetPrice(item, price)
+	if not item then return end
+	item.price = price
+	item.defaultPrice = price
+end
+
+local function shopEditClearPrice(item)
+	if not item then return end
+	item.price = nil
+	item.defaultPrice = nil
+end
+
 function LoadShopItems()
     sendClientCommand(getPlayer(), 'shopItems', 'getData', {})
     local receiveServerCommand
@@ -215,8 +232,11 @@ end
 
     --local seletedData = self.comboBox:getOptionData(selectedId) -- данные, если есть
 function ISEditShopUI:onClickTab() --Подгрузка содержимого вкладок
+    if not self.comboBox or not self.scrollingList then return end
     local selectedId = self.comboBox.selected
+    if not selectedId or selectedId < 1 then return end
     local seletedName = self.comboBox:getOptionText(selectedId)
+    if not seletedName then return end
     local sp
     local count
     self.SpecialCoinBox:setVisible(false)
@@ -233,15 +253,16 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
                 sp = ""
             end            
             local itemName = getItemNameFromFullType(key)
-            if value.defaultPrice then
-                self.scrollingList:addItem(itemName .. " - " .. value.defaultPrice .. sp , { value = value }) 
+            local itemPrice = shopEditGetPrice(value)
+            if itemPrice then
+                self.scrollingList:addItem(itemName .. " - " .. itemPrice .. sp , { value = value }) 
             else
                 self.scrollingList:addItem(itemName .. " - " .. "blocked", { value = value }) 
             end
         end    
     else    
-        for key, value in pairs(Shop.Items) do -- это не работает или я сломал?
-            if  value.tab == seletedName then
+        for key, value in pairs(Shop.Items) do
+            if value.tab == seletedName then
                 if value.specialCoin and value.specialCoin == true then
                     sp = " SC"
                 else
@@ -253,8 +274,13 @@ function ISEditShopUI:onClickTab() --Подгрузка содержимого �
                     count = "1"
                 end
                 value.name = key
-                local itemName = getItemNameFromFullType(key)                
-                self.scrollingList:addItem(itemName .." (" .. count .. ") " .. " - " .. value.defaultPrice .. sp, { value = value })
+                local itemName = getItemNameFromFullType(key)
+                local itemPrice = shopEditGetPrice(value)
+                if itemPrice then
+                    self.scrollingList:addItem(itemName .." (" .. count .. ") " .. " - " .. itemPrice .. sp, { value = value })
+                else
+                    self.scrollingList:addItem(itemName .. " (" .. count .. ") - blocked", { value = value })
+                end
             end    
         end
     end
@@ -270,11 +296,11 @@ function ISEditShopUI:onClickItem (item, doubleClick) --При выборе эл
     if item ~= nil and item.value ~= nil then
         self.ItemEntry:setText(item.value.name)
 
-        if item.value.defaultPrice ~= nil then
+        if item.value.defaultPrice ~= nil or item.value.price ~= nil then
             self.PriceEntry:setVisible(true)
             self.priceLabel:setVisible(true)
             self.SpecialCoinBox:setVisible(true)
-            self.PriceEntry:setText(tostring(item.value.defaultPrice))
+            self.PriceEntry:setText(tostring(shopEditGetPrice(item.value)))
         else
             self.priceLabel:setVisible(false)
             self.SpecialCoinBox:setVisible(false)
@@ -308,9 +334,9 @@ function ISEditShopUI:onChangeButtonClicked()
         if self.BlockBox.selected[1] then --если блок выбран
             table.insert(modifiedParams, "blacklisted: false->true")
             selected.item.value.blacklisted = true --добавляем параметр blacklisted
-            if selected.item.value.defaultPrice then --если есть цена
-                table.insert(modifiedParams, "price:" .. tostring(selected.item.value.defaultPrice) .. "->nil")
-                selected.item.value.defaultPrice = nil --убираем
+            if shopEditGetPrice(selected.item.value) then
+                table.insert(modifiedParams, "price:" .. tostring(shopEditGetPrice(selected.item.value)) .. "->nil")
+                shopEditClearPrice(selected.item.value)
             end
             if selected.item.value.specialCoin then --если есть specialCoin                
                 table.insert(modifiedParams, "specialCoin:" .. tostring(selected.item.value.specialCoin) .. "->nil")
@@ -319,14 +345,14 @@ function ISEditShopUI:onChangeButtonClicked()
         elseif self.SpecialCoinBox.selected[1] and self.SpecialCoinBox:getIsVisible() then --если стоит чекбокс SpecialCoinBox              
             table.insert(modifiedParams, "specialCoin: false -> true, price:" .. self.PriceEntry:getInternalText())           
             selected.item.value.specialCoin = true --добавляем поле SpecialCoinBox
-            selected.item.value.defaultPrice = tonumber(self.PriceEntry:getInternalText()) --устанавливаем цену
+            shopEditSetPrice(selected.item.value, tonumber(self.PriceEntry:getInternalText()))
         else
-            if selected.item.value.specialCoin then --если чекбокс SpecialCoinBox есть                
+            if selected.item.value.specialCoin then
             table.insert(modifiedParams, "specialCoin: true -> nil")
-                selected.item.value.specialCoin = nil --убираем
+                selected.item.value.specialCoin = nil
             end
-            table.insert(modifiedParams, "price:" .. tostring(selected.item.value.defaultPrice) .. "->" .. self.PriceEntry:getInternalText()) 
-            selected.item.value.defaultPrice = tonumber(self.PriceEntry:getInternalText()) --Ставим цену в Coin
+            table.insert(modifiedParams, "price:" .. tostring(shopEditGetPrice(selected.item.value)) .. "->" .. self.PriceEntry:getInternalText()) 
+            shopEditSetPrice(selected.item.value, tonumber(self.PriceEntry:getInternalText()))
         end
         if seletedtab == "Sell" then
             Shop.Sell[selected.item.value.name] = selected.item.value
