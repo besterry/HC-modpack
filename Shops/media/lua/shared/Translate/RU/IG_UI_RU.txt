@@ -55,6 +55,8 @@ IGUI_RU = {
     IGUI_Get = "Взять",
 
     IGUI_Shop = "Магазин",
+    IGUI_Shop_NearHint = "[%1] Магазин",
+    IGUI_PlayerShop_NearHint = "[%1] Магазин: %2",
     IGUI_Shop_ViewItems = "Посмотреть предложения магазина",
     IGUI_Shop_ViewOnly = "Используйте магазин игроков для покупки",
     IGUI_Shop_Search = "Поиск",

@@ -1,5 +1,29 @@
 local minutes = 10
 local shopLockTime = minutes * 60 * 1000
+local playerShopState = ShopProximity.newState()
+
+local playerShopProximityOpts = {
+	spritePrefix = PlayerShop.spritePrefix,
+	canUse = function(player)
+		return ShopProximity.defaultCanUse(player, PlayerShopUI and PlayerShopUI.instance)
+	end,
+	canShowHint = function(player, shop)
+		return shop ~= nil and not PlayerShop.isBusy(shop)
+	end,
+	canOpen = function(player, shop)
+		return shop ~= nil and not PlayerShop.isBusy(shop)
+	end,
+	getHintText = function(player, shop)
+		local keyName = getKeyName(getCore():getKey("Interact"))
+		local owner = shop:getModData().owner or "?"
+		return getText("IGUI_PlayerShop_NearHint", keyName, owner)
+	end,
+	open = function(player, shop)
+		local sq = shop:getSquare()
+		if not sq then return end
+		PlayerShop.playerShopUI({ shop }, player:getPlayerNum(), sq, shop)
+	end,
+}
 
 local function seekShopTiles(worldobject,spritePrefix) -- Ищем объекты магазина
     local wo = worldobject
@@ -158,9 +182,10 @@ function PlayerShop.PlayerShopContextMenu(playerNum, context, worldobjects) -- �
     local owner = ""
     if found then
         owner = wo:getModData().owner
-        local optionView = getText("IGUI_ViewPlayerShop",owner)
-        local viewPS = context:addOption(optionView, worldobjects, PlayerShop.playerShopUI, playerNum,clickedSquare,wo);
-        local isBusy = PlayerShop.isBusy(wo) 
+        local optionView = getText("IGUI_ViewPlayerShop", owner)
+        local viewPS = context:addOptionOnTop(optionView, worldobjects, PlayerShop.playerShopUI, playerNum, clickedSquare, wo)
+        ShopProximity.addShopIcon(viewPS)
+        local isBusy = PlayerShop.isBusy(wo)
         if isBusy then viewPS.notAvailable = isBusy end
         if player:getUsername() == owner or isAdmin() then
             local shop = context:addOption(UIText.ManagePlayerShop,worldobjects,nil);
@@ -220,3 +245,6 @@ end
 
 Events.OnFillInventoryObjectContextMenu.Add(PlayerShop.ItemsSellPrice);
 Events.OnPreFillWorldObjectContextMenu.Add(PlayerShop.PlayerShopContextMenu)
+
+ShopProximity.register({ state = playerShopState, opts = playerShopProximityOpts })
+ShopProximity.initGlobalEvents()

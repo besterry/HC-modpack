@@ -1,0 +1,367 @@
+ShopProximity = ShopProximity or {}
+
+ShopProximity.INTERACT_RADIUS = 2.0
+ShopProximity.HINT_RADIUS = 1.35
+ShopProximity.HINT_SHOW_MS = 600
+ShopProximity.HINT_REFRESH_MS = 400
+ShopProximity.OPEN_COOLDOWN_MS = 600
+ShopProximity.FACING_CONE_DEG = 70
+
+local HIGHLIGHT_R = 0.48
+local HIGHLIGHT_G = 0.9
+local HIGHLIGHT_B = 0.48
+local HIGHLIGHT_A = 0.62
+
+local function isShopObject(worldobject, spritePrefix)
+	if not worldobject or not spritePrefix then return false end
+	local sprite = worldobject:getSprite()
+	if not sprite then return false end
+	local spriteName = sprite:getName()
+	return spriteName ~= nil and string.find(spriteName, spritePrefix) ~= nil
+end
+
+local function getAngleOffset2D(angle1, angle2)
+	return 180 - math.abs(math.abs(angle1 - angle2) - 180)
+end
+
+local function getPlayerFacingAngleDeg(player)
+	local angle = math.deg(player:getForwardDirection():getDirection() + math.pi / 2)
+	if angle < 0 then
+		angle = math.abs(360 + angle)
+	end
+	return angle
+end
+
+local function getAngleToWorldDeg(px, py, wx, wy)
+	local angle = math.atan2(px - wx, -(py - wy))
+	if angle < 0 then
+		angle = math.abs(angle)
+	else
+		angle = 2 * math.pi - angle
+	end
+	return math.deg(angle)
+end
+
+function ShopProximity.getShopWorldPos(shop)
+	local sq = shop:getSquare()
+	if not sq then return nil end
+	return sq:getX() + 0.5, sq:getY() + 0.5
+end
+
+function ShopProximity.getShopAngleOffset(player, shop)
+	local wx, wy = ShopProximity.getShopWorldPos(shop)
+	if not wx then return 360 end
+	local facing = getPlayerFacingAngleDeg(player)
+	local toShop = getAngleToWorldDeg(player:getX(), player:getY(), wx, wy)
+	toShop = math.abs(toShop - 360)
+	return getAngleOffset2D(facing, toShop)
+end
+
+function ShopProximity.isShopInFacingCone(player, shop, maxAngle)
+	local offset = ShopProximity.getShopAngleOffset(player, shop)
+	return offset <= (maxAngle or ShopProximity.FACING_CONE_DEG)
+end
+
+function ShopProximity.findAllNearby(player, spritePrefix, maxRadius)
+	local result = {}
+	if not player or not spritePrefix then return result end
+	local cell = player:getCell()
+	if not cell then return result end
+
+	maxRadius = maxRadius or ShopProximity.INTERACT_RADIUS
+	local px = player:getX()
+	local py = player:getY()
+	local pz = player:getZ()
+	local radius = math.ceil(maxRadius)
+	local maxDistSq = maxRadius * maxRadius
+
+	for dx = -radius, radius do
+		for dy = -radius, radius do
+			local sq = cell:getGridSquare(math.floor(px) + dx, math.floor(py) + dy, pz)
+			if sq then
+				local objects = sq:getObjects()
+				for i = 0, objects:size() - 1 do
+					local wo = objects:get(i)
+					if isShopObject(wo, spritePrefix) then
+						local sx = sq:getX() + 0.5
+						local sy = sq:getY() + 0.5
+						local ddx = px - sx
+						local ddy = py - sy
+						if ddx * ddx + ddy * ddy <= maxDistSq then
+							table.insert(result, wo)
+						end
+					end
+				end
+			end
+		end
+	end
+	return result
+end
+
+function ShopProximity.pickBestShop(player, shops)
+	if not shops or #shops == 0 then return nil end
+	if #shops == 1 then return shops[1] end
+
+	local inCone = {}
+	for i = 1, #shops do
+		if ShopProximity.isShopInFacingCone(player, shops[i]) then
+			table.insert(inCone, shops[i])
+		end
+	end
+
+	local pool = #inCone > 0 and inCone or shops
+	local best = pool[1]
+	local bestAngle = ShopProximity.getShopAngleOffset(player, best)
+	local bestDistSq = ShopProximity.getShopDistanceSq(player, best)
+
+	for i = 2, #pool do
+		local shop = pool[i]
+		local angle = ShopProximity.getShopAngleOffset(player, shop)
+		local distSq = ShopProximity.getShopDistanceSq(player, shop)
+		if #inCone > 0 then
+			if angle < bestAngle or (angle == bestAngle and distSq < bestDistSq) then
+				best = shop
+				bestAngle = angle
+				bestDistSq = distSq
+			end
+		elseif distSq < bestDistSq then
+			best = shop
+			bestAngle = angle
+			bestDistSq = distSq
+		end
+	end
+	return best
+end
+
+function ShopProximity.findNearby(player, spritePrefix, maxRadius)
+	local shops = ShopProximity.findAllNearby(player, spritePrefix, maxRadius)
+	return ShopProximity.pickBestShop(player, shops)
+end
+
+function ShopProximity.getShopDistanceSq(player, shop)
+	local wx, wy = ShopProximity.getShopWorldPos(shop)
+	if not wx then return nil end
+	local ddx = player:getX() - wx
+	local ddy = player:getY() - wy
+	return ddx * ddx + ddy * ddy
+end
+
+function ShopProximity.clearShopHighlight()
+	local wo = ShopProximity._highlightedShop
+	if wo then
+		wo:setHighlighted(false)
+		ShopProximity._highlightedShop = nil
+	end
+end
+
+function ShopProximity.setShopHighlight(shop)
+	if ShopProximity._highlightedShop ~= shop then
+		ShopProximity.clearShopHighlight()
+		ShopProximity._highlightedShop = shop
+	end
+	if not shop then return end
+
+	shop:setHighlighted(true)
+	shop:setHighlightColor(HIGHLIGHT_R, HIGHLIGHT_G, HIGHLIGHT_B, HIGHLIGHT_A)
+end
+
+function ShopProximity.newState()
+	return {
+		hintActive = false,
+		hintLastAt = 0,
+		openLastAt = 0,
+	}
+end
+
+function ShopProximity.clearHint(player, state)
+	if not player or not state or not state.hintActive then return end
+	player:setHaloNote("", 255, 255, 255, 1)
+	state.hintActive = false
+	state.hintLastAt = 0
+end
+
+function ShopProximity.defaultCanUse(player, uiInstance)
+	if not isClient() then return false end
+	if not player or not player:isLocalPlayer() then return false end
+	if player:isDead() or player:getVehicle() then return false end
+	if uiInstance and uiInstance:getIsVisible() then return false end
+	if ISContextMenu and ISContextMenu.instance and ISContextMenu.instance.visibleCheck then return false end
+	if ISUIHandler and ISUIHandler.allUIVisible and not ISUIHandler.allUIVisible then return false end
+	return true
+end
+
+function ShopProximity.updateHint(player, state, opts)
+	if not player or not player:isLocalPlayer() or not state or not opts then return end
+
+	local shops = ShopProximity.findAllNearby(player, opts.spritePrefix, opts.hintRadius or ShopProximity.HINT_RADIUS)
+	local shop = ShopProximity.pickBestShop(player, shops)
+	local canShow = opts.canUse(player) and shop ~= nil
+	if opts.canShowHint and not opts.canShowHint(player, shop) then
+		canShow = false
+	end
+
+	if not canShow then
+		ShopProximity.clearHint(player, state)
+		return
+	end
+
+	local now = getTimestampMs()
+	if now - state.hintLastAt < ShopProximity.HINT_REFRESH_MS then return end
+	state.hintLastAt = now
+
+	local text = opts.getHintText(player, shop)
+	player:setHaloNote(text, 255, 220, 120, ShopProximity.HINT_SHOW_MS)
+	state.hintActive = true
+end
+
+function ShopProximity.tryOpen(player, state, opts)
+	if not player or not state or not opts then return end
+	if not opts.canUse(player) then return end
+
+	local shops = ShopProximity.findAllNearby(player, opts.spritePrefix, opts.interactRadius or ShopProximity.INTERACT_RADIUS)
+	local shop = ShopProximity.pickBestShop(player, shops)
+	if not shop then return end
+	if opts.canOpen and not opts.canOpen(player, shop) then return end
+
+	local now = getTimestampMs()
+	if now - state.openLastAt < ShopProximity.OPEN_COOLDOWN_MS then return end
+	state.openLastAt = now
+	opts.open(player, shop)
+end
+
+function ShopProximity.onInteractKey(key, state, opts)
+	if key ~= getCore():getKey("Interact") then return end
+	local player = getPlayer()
+	if not player then return end
+	ShopProximity.tryOpen(player, state, opts)
+end
+
+function ShopProximity.addShopIcon(option)
+	if option and Currency and Currency.CoinsTexture and Currency.CoinsTexture.Coin then
+		option.iconTexture = Currency.CoinsTexture.Coin.texture
+	end
+end
+
+ShopProximity._handlers = ShopProximity._handlers or {}
+
+function ShopProximity.register(handler)
+	if not handler or not handler.state or not handler.opts then return end
+	table.insert(ShopProximity._handlers, handler)
+end
+
+local function collectCandidates(player, interactRadius)
+	local candidates = {}
+	for _, handler in ipairs(ShopProximity._handlers) do
+		local opts = handler.opts
+		if opts.canUse(player) then
+			local shops = ShopProximity.findAllNearby(player, opts.spritePrefix, interactRadius or ShopProximity.INTERACT_RADIUS)
+			for i = 1, #shops do
+				local shop = shops[i]
+				if not opts.canOpen or opts.canOpen(player, shop) then
+					table.insert(candidates, { handler = handler, shop = shop })
+				end
+			end
+		end
+	end
+	return candidates
+end
+
+local function pickBestCandidate(player, candidates)
+	if #candidates == 0 then return nil, nil end
+	if #candidates == 1 then return candidates[1].handler, candidates[1].shop end
+
+	local inCone = {}
+	for i = 1, #candidates do
+		if ShopProximity.isShopInFacingCone(player, candidates[i].shop) then
+			table.insert(inCone, candidates[i])
+		end
+	end
+
+	local pool = #inCone > 0 and inCone or candidates
+	local best = pool[1]
+	local bestAngle = ShopProximity.getShopAngleOffset(player, best.shop)
+	local bestDistSq = ShopProximity.getShopDistanceSq(player, best.shop)
+
+	for i = 2, #pool do
+		local c = pool[i]
+		local angle = ShopProximity.getShopAngleOffset(player, c.shop)
+		local distSq = ShopProximity.getShopDistanceSq(player, c.shop)
+		if #inCone > 0 then
+			if angle < bestAngle or (angle == bestAngle and distSq < bestDistSq) then
+				best = c
+				bestAngle = angle
+				bestDistSq = distSq
+			end
+		elseif distSq < bestDistSq then
+			best = c
+			bestAngle = angle
+			bestDistSq = distSq
+		end
+	end
+	return best.handler, best.shop
+end
+
+local function findBestHandler(player, interactRadius)
+	return pickBestCandidate(player, collectCandidates(player, interactRadius))
+end
+
+function ShopProximity.updateAllHints(player)
+	if not player or not player:isLocalPlayer() then return end
+
+	local bestHandler, bestShop = findBestHandler(player, ShopProximity.HINT_RADIUS)
+	local canShow = bestHandler ~= nil and bestShop ~= nil
+	if canShow and bestHandler.opts.canShowHint and not bestHandler.opts.canShowHint(player, bestShop) then
+		canShow = false
+	end
+
+	if not canShow then
+		for _, handler in ipairs(ShopProximity._handlers) do
+			ShopProximity.clearHint(player, handler.state)
+		end
+		ShopProximity.clearShopHighlight()
+		return
+	end
+
+	for _, handler in ipairs(ShopProximity._handlers) do
+		if handler ~= bestHandler then
+			ShopProximity.clearHint(player, handler.state)
+		end
+	end
+
+	ShopProximity.setShopHighlight(bestShop)
+
+	local state = bestHandler.state
+	local opts = bestHandler.opts
+	local now = getTimestampMs()
+	if state.hintActive and now - state.hintLastAt < ShopProximity.HINT_REFRESH_MS then
+		return
+	end
+	state.hintLastAt = now
+
+	local text = opts.getHintText(player, bestShop)
+	player:setHaloNote(text, 255, 220, 120, ShopProximity.HINT_SHOW_MS)
+	state.hintActive = true
+end
+
+function ShopProximity.onGlobalInteractKey(key)
+	if key ~= getCore():getKey("Interact") then return end
+	local player = getPlayer()
+	if not player then return end
+
+	local bestHandler, bestShop = findBestHandler(player, ShopProximity.INTERACT_RADIUS)
+	if not bestHandler or not bestShop then return end
+
+	local state = bestHandler.state
+	local opts = bestHandler.opts
+	local now = getTimestampMs()
+	if now - state.openLastAt < ShopProximity.OPEN_COOLDOWN_MS then return end
+	state.openLastAt = now
+	opts.open(player, bestShop)
+end
+
+function ShopProximity.initGlobalEvents()
+	if ShopProximity._eventsHooked then return end
+	ShopProximity._eventsHooked = true
+	Events.OnPlayerUpdate.Add(ShopProximity.updateAllHints)
+	Events.OnKeyPressed.Add(ShopProximity.onGlobalInteractKey)
+end

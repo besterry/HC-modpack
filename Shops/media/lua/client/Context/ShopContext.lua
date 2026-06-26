@@ -1,3 +1,29 @@
+local npcShopState = ShopProximity.newState()
+
+local function canUseNpcShop(player)
+	return ShopProximity.defaultCanUse(player, ShopUI and ShopUI.instance)
+end
+
+local function getNpcShopHintText(player, shop)
+	local keyName = getKeyName(getCore():getKey("Interact"))
+	return getText("IGUI_Shop_NearHint", keyName)
+end
+
+local npcShopProximityOpts = {
+	spritePrefix = Shop.spritePrefix,
+	canUse = canUseNpcShop,
+	getHintText = getNpcShopHintText,
+	open = function(player, shop)
+		local sq = shop:getSquare()
+		if not sq then return end
+		Shop.shopUI({ shop }, player:getPlayerNum(), false, sq)
+	end,
+}
+
+function Shop.openNearbyNpcShop(player)
+	ShopProximity.tryOpen(player, npcShopState, npcShopProximityOpts)
+end
+
 local function seekShopTiles(worldobject,spritePrefix)
     local wo = worldobject
     local found = false
@@ -56,15 +82,12 @@ function Shop.ShopUIContextMenu(playerNum, context, worldobjects)
     if not isClient() then return end
     local _,found = seekShopTiles(worldobjects[1],Shop.spritePrefix)
     if not found then return end
-    context:addOption(UIText.Shop, worldobjects, Shop.shopUI, playerNum,false,clickedSquare);
+    local option = context:addOptionOnTop(UIText.Shop, worldobjects, Shop.shopUI, playerNum, false, clickedSquare)
+    ShopProximity.addShopIcon(option)
 end
 
---function Shop.ShopViewContextMenu(playerNum, context, worldobjects)
-  --  if not isClient() then return end
-  --  local _,found = seekShopTiles(worldobjects[1],Shop.spritePrefix)
-  --  if found then return end
-  --  context:addOption(UIText.ShopViewItems, worldobjects, Shop.shopUI, playerNum,true);
---end
+ShopProximity.register({ state = npcShopState, opts = npcShopProximityOpts })
+ShopProximity.initGlobalEvents()
 
 Events.OnFillWorldObjectContextMenu.Add(Shop.ShopViewContextMenu)
 Events.OnPreFillWorldObjectContextMenu.Add(Shop.ShopContextMenu)

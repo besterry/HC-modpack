@@ -72,6 +72,8 @@ IGUI_EN = {
     IGUI_Get = "Get",
 
     IGUI_Shop = "Shop",
+    IGUI_Shop_NearHint = "[%1] Shop",
+    IGUI_PlayerShop_NearHint = "[%1] Shop: %2",
     IGUI_Shop_ViewItems = "View Shop Items",
     IGUI_Shop_ViewOnly = "Use a Shop Kiosk to buy",
     IGUI_Shop_Search = "Search",
