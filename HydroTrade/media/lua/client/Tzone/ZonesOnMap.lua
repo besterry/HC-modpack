@@ -92,30 +92,19 @@ end
 -- =============================
 -- Рендер зон на карте
 -- =============================
-local function drawTZonesOnMap(self)
-	local function drawBox(x1, y1, x2, y2, fill, border, label)
-		local uiX1 = self.mapAPI:worldToUIX(x1, y1)
-		local uiY1 = self.mapAPI:worldToUIY(x1, y1)
-		local uiX2 = self.mapAPI:worldToUIX(x2, y2)
-		local uiY2 = self.mapAPI:worldToUIY(x2, y2)
-		local rx = math.min(uiX1, uiX2)
-		local ry = math.min(uiY1, uiY2)
-		local rw = math.abs(uiX2 - uiX1)
-		local rh = math.abs(uiY2 - uiY1)
-		if rw > 0.5 and rh > 0.5 then
-			self:drawRect(rx, ry, rw, rh, fill.a, fill.r, fill.g, fill.b)
-			self:drawRectBorder(rx, ry, rw, rh, border.a, border.r, border.g, border.b)
-			if label then
-				self:drawText(tostring(label), rx + 2, ry + 2, 1.0, 0.95, 0.9, 1.0, UIFont.Small)
-			end
-		end
+local function drawBox(self, x1, y1, x2, y2, fill, border, label)
+	if HydroMapZoneDraw and HydroMapZoneDraw.drawWorldZoneQuad then
+		HydroMapZoneDraw.drawWorldZoneQuad(self, x1, y1, x2, y2, fill, border, label)
 	end
+end
+
+local function drawTZonesOnMap(self)
 
 	-- TZone
 	if ClientTweaker and ClientTweaker.Options and ClientTweaker.Options.GetBool and ClientTweaker.Options.GetBool("map_show_tzones") then
 		local zones = getActiveTZones()
 		for title, z in pairs(zones) do
-			drawBox(z.x, z.y, z.x2, z.y2, COLOR_TZONE_FILL, COLOR_TZONE_BORDER, z.title)
+			drawBox(self, z.x, z.y, z.x2, z.y2, COLOR_TZONE_FILL, COLOR_TZONE_BORDER, z.title)
 		end
 	end
 
@@ -127,7 +116,7 @@ local function drawTZonesOnMap(self)
 			local y1 = z.y or z["y"] or 0
 			local x2 = z.x2 or z["x2"] or 0
 			local y2 = z.y2 or z["y2"] or 0
-			drawBox(x1, y1, x2, y2, COLOR_PVP_FILL, COLOR_PVP_BORDER, "") -- z.title убрано (не нужно)
+			drawBox(self, x1, y1, x2, y2, COLOR_PVP_FILL, COLOR_PVP_BORDER, "") -- z.title убрано (не нужно)
 		end
 	end
 
@@ -135,7 +124,7 @@ local function drawTZonesOnMap(self)
 	if ClientTweaker and ClientTweaker.Options and ClientTweaker.Options.GetBool and ClientTweaker.Options.GetBool("map_show_town_zones") then
 		local towns = getTownCloseZones()
 		for _, z in ipairs(towns) do
-			drawBox(z.x, z.y, z.x2, z.y2, COLOR_TOWN_FILL, COLOR_TOWN_BORDER, "") -- z.title убрано (не нужно)
+			drawBox(self, z.x, z.y, z.x2, z.y2, COLOR_TOWN_FILL, COLOR_TOWN_BORDER, "") -- z.title убрано (не нужно)
 		end
 	end
 
@@ -144,7 +133,7 @@ local function drawTZonesOnMap(self)
 		local pve = getPveZones()
 		for _, z in ipairs(pve) do
 			local title = isAdmin() and z.title or ""
-			drawBox(z.x, z.y, z.x2, z.y2, COLOR_PVE_FILL, COLOR_PVE_BORDER, title)
+			drawBox(self, z.x, z.y, z.x2, z.y2, COLOR_PVE_FILL, COLOR_PVE_BORDER, title)
 		end
 	end
 end

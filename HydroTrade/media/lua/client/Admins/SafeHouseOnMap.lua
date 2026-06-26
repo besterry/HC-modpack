@@ -18,24 +18,12 @@ local function drawSafehousesOnMap(self)
 			local y = sh:getY()
 			local w = sh:getW()
 			local h = sh:getH()
-
-			-- Convert world coords to UI coords
-			local uiX1 = self.mapAPI:worldToUIX(x, y)
-			local uiY1 = self.mapAPI:worldToUIY(x, y)
-			local uiX2 = self.mapAPI:worldToUIX(x + w, y + h)
-			local uiY2 = self.mapAPI:worldToUIY(x + w, y + h)
-
-			local rx = math.min(uiX1, uiX2)
-			local ry = math.min(uiY1, uiY2)
-			local rw = math.abs(uiX2 - uiX1)
-			local rh = math.abs(uiY2 - uiY1)
-
-			if rw > 0.5 and rh > 0.5 then
-				self:drawRect(rx, ry, rw, rh, 0.10, 0.80, 0.20, 1.00) -- фиолетовая заливка
-				self:drawRectBorder(rx, ry, rw, rh, 0.90, 0.85, 0.30, 1.00) -- фиолетовая рамка
-				-- Owner label
-				local owner = sh:getOwner() or "?"
-				self:drawText(owner, rx + 2, ry + 2, 1.0, 1.0, 1.0, 1.0, UIFont.Small)
+			local owner = sh:getOwner() or "?"
+			if HydroMapZoneDraw and HydroMapZoneDraw.drawWorldZoneQuad then
+				HydroMapZoneDraw.drawWorldZoneQuad(self, x, y, x + w, y + h,
+					{ r = 0.80, g = 0.20, b = 1.00, a = 0.10 },
+					{ r = 0.85, g = 0.30, b = 1.00, a = 0.90 },
+					owner)
 			end
 		end
 	end
