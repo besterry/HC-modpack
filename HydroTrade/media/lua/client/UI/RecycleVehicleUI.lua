@@ -25,6 +25,17 @@ local function getFirstBlowTorchWithUses(container, uses)
     return container:getFirstTypeEvalArgRecurse("Base.BlowTorch", predicateDrainableUsesInt, uses)
 end
 
+-- Не снимать противогаз: в токсзоне или при надетой защитной маске (ToxicZones).
+local function shouldKeepProtectiveMaskOn(player)
+    if isInToxicZone and isInToxicZone(player) then
+        return true
+    end
+    if protectiveMaskEquipped and protectiveMaskEquipped(player) then
+        return true
+    end
+    return false
+end
+
 -- ------------------------------------------------------
 -- The mod's functions
 -- ------------------------------------------------------
@@ -54,7 +65,7 @@ local function onRecycleVehicleAux(player, button, vehicle, propaneNeeded)
         local blowTorch = getFirstBlowTorchWithUses(player:getInventory(), propaneNeeded)
         ISWorldObjectContextMenu.equip(player, player:getPrimaryHandItem(), blowTorch, true);
         local mask = player:getInventory():getFirstTypeRecurse("WeldingMask")
-        if mask then
+        if mask and not shouldKeepProtectiveMaskOn(player) then
             ISInventoryPaneContextMenu.wearItem(mask, player:getPlayerNum())
         end
         ISTimedActionQueue.add(RecycleVehicleAction:new(player, vehicle, propaneNeeded))
