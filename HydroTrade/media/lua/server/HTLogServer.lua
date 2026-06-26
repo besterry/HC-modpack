@@ -69,6 +69,19 @@ end
 --     writeLog("admin", msg)
 -- end
 
+commands.setNewEngineQuality = function(player, args) -- args = { vehicle = self.vehicle:getId(), carQuality = self.carQuality }
+    local vehicle = getVehicleById(args.vehicle)
+    if not vehicle then
+        return
+    end
+    local msg = '"' .. player:getUsername() .. '"' .. " -> SET NEW ENGINE QUALITY TO " .. args.carQuality .. " [" .. math.floor(player:getX()) .. "," .. math.floor(player:getY()) .. ",0]" ..
+    " vehicle: " .. vehicle:getScriptName() .. "[" .. math.floor(vehicle:getX()) .. "," .. math.floor(vehicle:getY()) .. ",0]" ..
+    " SqlId: " .. vehicle:getModData().sqlId
+    writeLog("admin", msg)
+    vehicle:setEngineFeature(args.carQuality, vehicle:getEngineLoudness(), vehicle:getEnginePower()) -- (качество, громкость, мощность)
+    vehicle:transmitEngine()
+end
+
 
 local function BalanceAndSH_OnClientCommand(module, command, player, args)
     if module == "vehicle" and commands[command] then
