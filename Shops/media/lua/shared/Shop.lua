@@ -117,6 +117,20 @@ Shop.TabsBuy = {
 	[Tab.Event] = Shop.Tabs[Tab.Event],
 }
 
+-- Ванильные предметы для иконок категорий (client: InventoryItemFactory)
+Shop.CategoryIconItems = {
+	[Tab.All] = "Base.GroceryBag1",
+	[Tab.Food] = "Base.CannedCorn",
+	[Tab.FirstAid] = "Base.Bandage",
+	[Tab.Cloth] = "Base.Tshirt_DefaultTEXTURE_TINT",
+	[Tab.Tools] = "Base.Hammer",
+	[Tab.Book] = "Base.BookCarpentry1",
+	[Tab.Weapons] = "Base.Pistol",
+	[Tab.Vehicles] = "Base.CarKey",
+	[Tab.Event] = "Base.EventCoin",
+	[Tab.Sell] = "Base.Wallet2",
+}
+
 function Shop.hasSellCatalog()
 	if not Shop.Sell then return false end
 	for _ in pairs(Shop.Sell) do

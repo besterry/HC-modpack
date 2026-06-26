@@ -1,10 +1,13 @@
 ShopUIMode = ShopUIMode or {}
 
-ShopUIMode.SIDEBAR_W = 120
+require "ISUI/ShopCategoryButton"
+
+ShopUIMode.SIDEBAR_W = 154
 ShopUIMode.CART_W = 330
 ShopUIMode.PAD = 6
-ShopUIMode.CAT_BTN_H = 24
-ShopUIMode.ICON_SLOT = 22
+ShopUIMode.CAT_BTN_H = 28
+ShopUIMode.CAT_BTN_GAP = 3
+ShopUIMode.ICON_SLOT = 26
 ShopUIMode.COIN_ICON_DY = -6
 ShopUIMode.CART_HEADER_H = 30
 ShopUIMode.CART_FOOTER_H = 106
@@ -207,6 +210,25 @@ function ShopUIMode.getShopRowLayout(listW, hasPreview)
 	}
 end
 
+function ShopUIMode.getCategoryIcon(tabType)
+	if not tabType then return nil end
+	if ShopUIMode._categoryIconCache == nil then
+		ShopUIMode._categoryIconCache = {}
+	end
+	if ShopUIMode._categoryIconCache[tabType] then
+		return ShopUIMode._categoryIconCache[tabType]
+	end
+	local itemType = Shop.CategoryIconItems and Shop.CategoryIconItems[tabType]
+	if not itemType then return nil end
+	local ok, item = pcall(InventoryItemFactory.CreateItem, itemType)
+	if ok and item then
+		local tex = item:getTex()
+		ShopUIMode._categoryIconCache[tabType] = tex
+		return tex
+	end
+	return nil
+end
+
 function ShopUIMode.createTab(ui, tabType)
 	local w = ui._contentW or 400
 	local h = ui._contentH or 400
@@ -272,7 +294,7 @@ function ShopUIMode.createCategorySidebar(ui, geom)
 	for i = 1, #Shop.TabsBuyOrder do
 		local tabType = Shop.TabsBuyOrder[i]
 		local label = Shop.TabsBuy[tabType]
-		local btn = ISButton:new(6, btnY, btnW, ShopUIMode.CAT_BTN_H, label, ui, function(target, button)
+		local btn = ShopCategoryButton:new(6, btnY, btnW, ShopUIMode.CAT_BTN_H, label, ShopUIMode.getCategoryIcon(tabType), ui, function(target, button)
 			ShopUIMode.selectBuyCategory(target, button.shopTabType)
 		end)
 		btn:initialise()
@@ -281,7 +303,7 @@ function ShopUIMode.createCategorySidebar(ui, geom)
 		btn.backgroundColor = MODE_INACTIVE
 		ui.categorySidebar:addChild(btn)
 		ui.categoryButtons[tabType] = btn
-		btnY = btnY + ShopUIMode.CAT_BTN_H + 2
+		btnY = btnY + ShopUIMode.CAT_BTN_H + ShopUIMode.CAT_BTN_GAP
 	end
 
 	btnY = btnY + 6
@@ -291,7 +313,7 @@ function ShopUIMode.createCategorySidebar(ui, geom)
 	ui.categorySidebar:addChild(ui.categorySellSep)
 	btnY = btnY + 8
 
-	ui.sellCategoryBtn = ISButton:new(6, btnY, btnW, ShopUIMode.CAT_BTN_H + 2, getText("IGUI_Tab_Sell"), ui, function(target)
+	ui.sellCategoryBtn = ShopCategoryButton:new(6, btnY, btnW, ShopUIMode.CAT_BTN_H, getText("IGUI_Tab_Sell"), ShopUIMode.getCategoryIcon(Tab.Sell), ui, function(target)
 		ShopUIMode.setShopMode(target, "sell")
 	end)
 	ui.sellCategoryBtn:initialise()
