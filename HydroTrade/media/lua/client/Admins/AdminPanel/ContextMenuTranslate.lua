@@ -59,6 +59,7 @@ local cheatThresholds = {
     ["CHEAT: Set Part Condition"] = "vehicleCheatSetPartCondition",
     ["CHEAT: Set Content Amount"] = "vehicleCheatSetContentAmount",
     ["CHEAT: Remove Vehicle"] = "vehicleCheatRemoveVehicle",
+    ["CHEAT: Set Odometer in KM"] = "vehicleCheatSetOdometerInKM",    
 }
 
 function ISContextMenu:addDebugOption(text, worldobjects, param1, param2, param3, param4, param5)
@@ -120,9 +121,32 @@ local function removeDisallowedCheatsFromContext(ctx)
     end
 end
 
+function ISVehicleMechanics:onCheatSetCarQuality(playerObj, vehicle)
+    if not isAdmin() then return end
+    if not vehicle then return end
+    print("vehicle: " .. tostring(vehicle))
+    local Quality = vehicle:getEngineQuality()
+    local modal = ISModalDialog:new(0, 0, 350, 150, getText("Car Quality?"), true, nil, ISVehicleMechanics.onCheatSetCarQualityAux, playerObj:getPlayerNum(), playerObj, vehicle)
+    modal:initialise()
+    modal.prevFocus = getPlayerMechanicsUI(playerObj:getPlayerNum())
+    modal.moveWithMouse = true
+    modal:addToUIManager()
+end
+
+function ISVehicleMechanics:onCheatSetCarQualityAux(target, button, playerObj, vehicle)
+    if button.internal ~= "OK" then return end
+    local text = button.parent.entry:getText()
+    local carQuality = tonumber(text)
+    if not carQuality then return end
+    sendClientCommand(playerObj, "vehicle", "setNewEngineQuality", { vehicle = vehicle:getId(), carQuality = carQuality })
+end
+
 function ISVehicleMechanics:doPartContextMenu(part, x, y)
     old_ISVehicleMechanics_doPartContextMenu(self, part, x, y)
     removeDisallowedCheatsFromContext(self.context)
+    if part:getId() == "Engine" and isAdmin() then
+        self.context:addOption(getText("IGUI_CHEAT_SetCarQuality"), getPlayer(), ISVehicleMechanics.onCheatSetCarQuality, self.vehicle)
+    end
 end
 
 function ISVehicleMechanics:onRightMouseUp(x, y)
