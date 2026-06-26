@@ -27,6 +27,9 @@ end
 
 -- Не снимать противогаз: в токсзоне или при надетой защитной маске (ToxicZones).
 local function shouldKeepProtectiveMaskOn(player)
+    if RecycleVehicleMaskFix and RecycleVehicleMaskFix.shouldKeepProtectiveMaskOn then
+        return RecycleVehicleMaskFix.shouldKeepProtectiveMaskOn(player)
+    end
     if isInToxicZone and isInToxicZone(player) then
         return true
     end
