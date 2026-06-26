@@ -36,12 +36,16 @@ function ShopUI:show(player,viewMode,shop) --Вызов интерфейса м�
             local square = player:getSquare()
             posX = square:getX()
             posY = square:getY()
-            if ShopUI.instance==nil then
-                ShopUI.instance = ShopUI:new (0, 0, width, height, player);
-                ShopUI.instance.shop = shop
-                ShopUI.instance.viewMode = viewMode
-                ShopUI.instance:initialise();
-                ShopUI.instance:instantiate();
+            if ShopUI.instance == nil or not ShopUI.instance.totalCoinLabel or not ShopUI.instance.contentPanel then
+                if ShopUI.instance then
+                    ShopUI.instance:removeFromUIManager()
+                end
+                local inst = ShopUI:new(0, 0, width, height, player)
+                inst.shop = shop
+                inst.viewMode = viewMode
+                inst:initialise()
+                inst:instantiate()
+                ShopUI.instance = inst
             end
             ShopUI.instance.reloadItems = true
             ShopUI.instance.shopMode = ShopUI.instance.shopMode or "buy"
@@ -66,9 +70,11 @@ function ShopUI:update()
     local username = self.player:getUsername()    
     local coin,specialCoin = Balance.getUserBalance(username)
     local coinFormatted = Currency.format(coin)
-    self.balanceCoinLabel:setName(""..coinFormatted)
-    local specialCoinFormatted = Currency.format(specialCoin)
-    self.balanceSpecialCoinLabel:setName(""..specialCoinFormatted)
+    if self.balanceCoinLabel then self.balanceCoinLabel:setName(""..coinFormatted) end
+    if self.balanceSpecialCoinLabel and Currency.UseSpecialCoin then
+        local specialCoinFormatted = Currency.format(specialCoin)
+        self.balanceSpecialCoinLabel:setName(""..specialCoinFormatted)
+    end
     if self.actionInProgress then 
         self.buyCartButton.enable = false
         self.buyCartButton:setVisible(false)
@@ -91,6 +97,7 @@ function ShopUI:doDrawCartItem(y, item, alt)
     if y + self:getYScroll() >= self.height then return y + item.height end
     if y + item.height + self:getYScroll() <= 0 then return y + item.height end
 
+    local lay = ShopUIMode.getCartRowLayout(self:getWidth())
     local a = 0.9;
     self:drawRectBorder(0, (y), self:getWidth(), item.height - 1, a, self.borderColor.r, self.borderColor.g, self.borderColor.b);
 
@@ -102,13 +109,14 @@ function ShopUI:doDrawCartItem(y, item, alt)
     if item.item.quantity then
         quantity = " ("..item.item.quantity..")"
     end
-    self:drawText(item.item.name..quantity, 40, y + 10, 1, 1, 1, a, UIFont.Small);
+    local displayName = Nfunction.trimString(item.item.name..quantity, lay.nameMaxChars)
+    self:drawText(displayName, 40, y + 10, 1, 1, 1, a, UIFont.Small);
     if item.item.price then
         local coinImg = Currency.CoinsTexture.Coin
         if item.item.specialCoin then coinImg = Currency.CoinsTexture.SpecialCoin end
-        self:drawTextureScaledAspect(coinImg.texture, 300, y + 10, coinImg.scale, coinImg.scale, 1, 1, 1, 1)
+        self:drawTextureScaledAspect(coinImg.texture, lay.coinX, y + 10, coinImg.scale, coinImg.scale, 1, 1, 1, 1)
         local priceFormatted = Currency.format(item.item.price)
-        self:drawText(""..priceFormatted, 320, y + 8, 1, 1, 1, a, UIFont.Small);
+        self:drawText(""..priceFormatted, lay.textX, y + 8, 1, 1, 1, a, UIFont.Small);
     end
 
     if item.item.invItem or item.item.texture then
@@ -119,13 +127,17 @@ function ShopUI:doDrawCartItem(y, item, alt)
         self:drawTextureScaledAspect(texture, 6, y+5, 30, 30, 1, 1, 1, 1)
     end
 
-    self:drawTextureScaledAspect(removeBtn.texture, self.parent.removeButtonX, y + 10, removeBtn.scale, removeBtn.scale, 1, 1, 1, 1)
+    self:drawTextureScaledAspect(removeBtn.texture, lay.removeX, y + 10, removeBtn.scale, removeBtn.scale, 1, 1, 1, 1)
 
     if item.item.VehicleID then
-        self:drawTextureScaledAspect(previewBtn.texture, self.parent.previewButtonX, y + 10, previewBtn.scale, previewBtn.scale, 1, 1, 1, 1)
+        self:drawTextureScaledAspect(previewBtn.texture, lay.previewX, y + 10, previewBtn.scale, previewBtn.scale, 1, 1, 1, 1)
     end
 
     return y + item.height;
+end
+
+function ShopUI:getActiveTab()
+    return ShopUIMode.getActiveTab(self)
 end
 
 function ShopUI:onMouseMove(dx, dy)
@@ -135,7 +147,8 @@ function ShopUI:onMouseMove(dx, dy)
 		self:setY(self.y + dy);
 		self:bringToTop();
 	end
-    if ShopUI.instance.panel.activeView.view.shopItems:isMouseOver() then return end
+    local tab = ShopUI.instance:getActiveTab()
+    if tab and tab.shopItems and tab.shopItems:isMouseOver() then return end
     if ShopUI.instance.cartItems:isMouseOver() then return end
     ShopUI.instance:toggleTooltip(false)
 end
@@ -213,10 +226,11 @@ function ShopUI:onMouseMoveCartItem(dx, dy)
     if not selectedRow then ShopUI.instance:toggleTooltip(false) return end
     local mouseX = self:getMouseX()
     list.selectedRow = rowIndex
-    if mouseX > self.parent.removeButtonX then
+    local lay = ShopUIMode.getCartRowLayout(list:getWidth())
+    if mouseX > lay.removeX then
         list.removeBtn = true
     end
-    if mouseX > self.parent.previewButtonX then
+    if mouseX > lay.previewX and mouseX < lay.removeX then
         list.previewBtn = true
     end
     if not selectedRow.item.items then ShopUI.instance:toggleTooltip(false) return end
@@ -244,7 +258,8 @@ function ShopUI:onActivateView()
     if not character:getModData().shopFavorites then
         character:getModData().shopFavorites = {}
     end
-    local tab = self.panel.activeView.view
+    local tab = self:getActiveTab()
+    if not tab then return end
     local tabType = tab.tabType
     local shopItems = tab.shopItems
 
@@ -307,6 +322,7 @@ function ShopUI:onActivateView()
                 end
             end
         end
+        if tab.relayout then tab:relayout() end
         return
     else
         if self.sellCartButton then
@@ -316,8 +332,6 @@ function ShopUI:onActivateView()
         end
     end
 
-    if shopItems.count > 0 and not self.reloadItems then return end
-
     if not self.reloadItems then
         if self.shopItemsCache[tabType] then
             shopItems.items = self.shopItemsCache[tabType]
@@ -325,6 +339,7 @@ function ShopUI:onActivateView()
             if (tab.filterEntry and tab.filterEntry:getInternalText() ~= "") or (tab.favoritesOnlyTick and tab.favoritesOnlyTick:isSelected(1)) then
                 tab:applyListFilter()
             end
+            if tab.relayout then tab:relayout() end
             return
         end
     end
@@ -354,131 +369,19 @@ function ShopUI:onActivateView()
     if (tab.filterEntry and tab.filterEntry:getInternalText() ~= "") or (tab.favoritesOnlyTick and tab.favoritesOnlyTick:isSelected(1)) then
         tab:applyListFilter()
     end
+    if tab.relayout then tab:relayout() end
 end
 
 function ShopUI:createChildren()
-    ISCollapsableWindow.createChildren(self);
-    local x = 30
-    local y = 85
-
-    local th = self:titleBarHeight();
-    self.shopMode = self.shopMode or "buy"
-    ShopUIMode.createModeButtons(self, th)
-
-    local panelY = th + ShopUIMode.MODE_BAR_H
-    self.panel = ISTabPanel:new(0, panelY, (self.width/2)-25, self.height - panelY - 4);
-    self.panel:initialise();
-    self.panel:setAnchorRight(true)
-    self.panel:setAnchorBottom(true)
-    self.panel.borderColor = { r = 0, g = 0, b = 0, a = 0};
-    self.panel.onActivateView = self.onActivateView;
-    self.panel.target = self;
-    self.panel:setEqualTabWidth(false)
-    self._defaultTabHeight = self.panel.tabHeight
-    self:addChild(self.panel);
-    ShopUIMode.rebuildTabs(self)
-
-    self.clearCartButton = ISButton:new((self.width / 2)+380, y+280, 80,25,UIText.ClearCart,self, ShopUI.clearCartBtn);
-    self.clearCartButton:initialise()
-    self:addChild(self.clearCartButton);
-
-    if not self.viewMode then 
-        self.buyCartButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.BuyCart,self, ShopUI.buyCartBtn);
-        self.buyCartButton:initialise()
-        self.buyCartButton.enable = false
-        self.buyCartButton:setVisible(true)
-        self:addChild(self.buyCartButton);
-
-        self.sellCartButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.Sell,self, ShopUI.sellCartBtn);
-        self.sellCartButton:initialise()
-        self.sellCartButton.enable = false
-        self.sellCartButton:setVisible(false)
-        self:addChild(self.sellCartButton);
-
-        self.cancelBuyButton = ISButton:new((self.width / 2)+200, y+350, 80,25,UIText.Cancel,self, ShopUI.cancelBuyBtn);
-        self.cancelBuyButton:initialise()
-        self.cancelBuyButton.enable = false
-        self.cancelBuyButton:setVisible(false)
-        self:addChild(self.cancelBuyButton);
-    else
-        self.balanceLabel = ISLabel:new((self.width / 2)+150, y+350, ShopUI.SMALL_FONT_HGT, UIText.ShopViewOnly, 1, 1, 1, 1, UIFont.Medium, true)
-        self:addChild(self.balanceLabel);
-    end
-
-    self.cartTex = ISImage:new(x+905, y-35, 0, 0, cartImg.texture);
-    self.cartTex.scaledWidth = cartImg.scale
-    self.cartTex.scaledHeight = cartImg.scale
-    self:addChild(self.cartTex);
-
-    self.cartItems = ISScrollingListBox:new(x+490, y, (self.width / 3) + 110, self.height/2);
-    self.cartItems:initialise();
-    self.cartItems:instantiate();
-    self.cartItems:setAnchorRight(false)
-    self.cartItems:setAnchorBottom(true)
-    self.cartItems.font = UIFont.NewSmall;
-    self.cartItems.itemheight = 2 + self.MEDIUM_FONT_HGT  + 4;
-    self.cartItems.selected = 1;
-    self.cartItems.joypadParent = self;
-    self.cartItems.drawBorder = false;
-    self.cartItems.SMALL_FONT_HGT = self.SMALL_FONT_HGT
-    self.cartItems.MEDIUM_FONT_HGT = self.MEDIUM_FONT_HGT
-    self.cartItems.doDrawItem = ShopUI.doDrawCartItem;
-    self.cartItems.onMouseMove = ShopUI.onMouseMoveCartItem;
-    self.cartItems.onMouseDown = ShopUI.onMouseDownCartItem;
-    self:addChild(self.cartItems);
-
-    self.balanceLabel = ISLabel:new(x+490, 20, ShopUI.SMALL_FONT_HGT, UIText.Balance, 1, 1, 1, 1, UIFont.Medium, true)
-    self:addChild(self.balanceLabel);
-
-    local coinImg = Currency.CoinsTexture.Coin
-    self.balanceCoinTex = ISImage:new(x+550, 20, 0, 0, coinImg.texture);
-    self.balanceCoinTex.scaledWidth = coinImg.scale+5
-    self.balanceCoinTex.scaledHeight = coinImg.scale+5
-    self:addChild(self.balanceCoinTex);
-
-    self.balanceCoinLabel = ISLabel:new(x+575, 20, ShopUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
-    self:addChild(self.balanceCoinLabel);
-
-    self.coinTex = ISImage:new(x+535, y+280, 0, 0, coinImg.texture);
-    self.coinTex.scaledWidth = coinImg.scale+5
-    self.coinTex.scaledHeight = coinImg.scale+5
-    self:addChild(self.coinTex);
-
-    self.totalLabel = ISLabel:new(x+490, y+280, ShopUI.SMALL_FONT_HGT, UIText.Total, 1, 1, 1, 1, UIFont.Medium, true)
-    self:addChild(self.totalLabel);
-
-    self.totalCoinLabel = ISLabel:new(x+560, y+280, ShopUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
-    self:addChild(self.totalCoinLabel);
-
-    coinImg = Currency.CoinsTexture.SpecialCoin
-    self.balanceSpecialCoinTex = ISImage:new(x+550, 45, 0, 0, coinImg.texture);
-    self.balanceSpecialCoinTex.scaledWidth = coinImg.scale+5
-    self.balanceSpecialCoinTex.scaledHeight = coinImg.scale+5
-    self:addChild(self.balanceSpecialCoinTex);
-
-    self.balanceSpecialCoinLabel = ISLabel:new(x+575, 45, ShopUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
-    self:addChild(self.balanceSpecialCoinLabel);
-
-    self.specialCoinTex = ISImage:new(x+535, y+305, 0, 0, coinImg.texture);
-    self.specialCoinTex.scaledWidth = coinImg.scale+5
-    self.specialCoinTex.scaledHeight = coinImg.scale+5
-    self:addChild(self.specialCoinTex);
-
-    self.totalSpecialCoinLabel = ISLabel:new(x+560, y+305, ShopUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
-    self:addChild(self.totalSpecialCoinLabel);
-
-    if not Currency.UseSpecialCoin then
-        self.balanceSpecialCoinTex:setVisible(false)
-        self.balanceSpecialCoinLabel:setVisible(false)
-        self.specialCoinTex:setVisible(false)
-        self.totalSpecialCoinLabel:setVisible(false)
-    end
+    ISCollapsableWindow.createChildren(self)
+    ShopUIMode.setupShopLayout(self)
 end
 
 function ShopUI:removeFromCart(selectedRow)
     if self.actionInProgress then return end
     self:toggleTooltip(false)
-    local tab = self.panel.activeView.view
+    local tab = self:getActiveTab()
+    if not tab then return end
     if self:isSellMode() or tab.tabType == Tab.Sell then
         tab.shopItems:addItem(selectedRow.item.type,selectedRow.item)
     end
@@ -487,7 +390,8 @@ end
 
 function ShopUI:clearCartBtn()
     if self.actionInProgress then return end
-    local tab = self.panel.activeView.view
+    local tab = self:getActiveTab()
+    if not tab then return end
     if self:isSellMode() or tab.tabType == Tab.Sell then
         for k,v in pairs(self.cartItems.items) do
             tab.shopItems:addItem(v.item.type,v.item)
@@ -542,14 +446,16 @@ function ShopUI:render()
     local currentAction = actionQueue.queue[1]
     if not currentAction then self.actionInProgress = false return end
     if not (currentAction.Type == "ShopBuyAction" or currentAction.Type == "ShopSellAction") then self.actionInProgress = false return end
-    self:drawProgressBar((self.width / 2)+180, 420, 120, 10, currentAction.action:getJobDelta(), self.fgBar)
+    local barX, barY, barW, barH = ShopUIMode.getCartProgressBarLayout(self)
+    self:drawProgressBar(barX, barY, barW, barH, currentAction.action:getJobDelta(), self.fgBar)
 end
 
 function ShopUI:updateTotal() --Обновление баланса
+    if not self.totalCoinLabel then return end
     local total = 0
     local totalSpecial = 0
     self.totalCoinLabel:setName(""..total)
-    self.totalSpecialCoinLabel:setName(""..totalSpecial)
+    if self.totalSpecialCoinLabel then self.totalSpecialCoinLabel:setName(""..totalSpecial) end
     for k,v in pairs(self.cartItems.items) do
         local cost = v.item.price
         if not v.item.specialCoin then
@@ -562,13 +468,16 @@ function ShopUI:updateTotal() --Обновление баланса
         local totalFormat = Currency.format(total)
         self.totalCoinLabel:setName(""..totalFormat)
     end
-    if totalSpecial > 0 then
+    if totalSpecial > 0 and self.totalSpecialCoinLabel then
         local totalSpecialFormat = Currency.format(totalSpecial)
         self.totalSpecialCoinLabel:setName(""..totalSpecialFormat)
     end
+    ShopUIMode.pinCartFooter(self)
     if self.viewMode then return end
 
-    local tabType = self.panel.activeView.view.tabType
+    local tab = self:getActiveTab()
+    if not tab then return end
+    local tabType = tab.tabType
     if self:isSellMode() or tabType == Tab.Sell then
         self.sellCartButton.enable = false
         self.sellCartButton:setVisible(true)
@@ -624,6 +533,8 @@ function ShopUI:new(x, y, width, height, player) --Создание окна м�
     o.shopMode = "buy"
     o.title = UIText.ShopUITitle;
     o.player = player
-    o.resizable = false;
+    o.resizable = false
+    o.shopItemsCache = {}
+    o.ItemInstanceCache = {}
     return o
 end
