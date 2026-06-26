@@ -12,7 +12,9 @@ function ISPickupBrokenGlass:perform()
     if ISMoveableTools.isObjectMoveable(self.glass) then        
         -- local moveable = ISMoveableTools.isObjectMoveable(self.glass)
         -- moveable:pickUpMoveable( self.character, self.square, self.glass, true )
-        self.glass:removeFromSquare()
+        self.glass:removeFromWorld()
+        triggerEvent("OnObjectAboutToBeRemoved", self.glass)
+        self.glass:getSquare():transmitRemoveItemFromSquare(self.glass)
         self.character:getInventory():AddItem("LabItems.MatShatteredGlass")
     end
     -- needed to remove from queue / start next.
