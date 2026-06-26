@@ -16,9 +16,14 @@ local playerShopProximityOpts = {
 	getHintText = function(player, shop)
 		local keyName = getKeyName(getCore():getKey("Interact"))
 		local owner = shop:getModData().owner or "?"
-		return getText("IGUI_PlayerShop_NearHint", keyName, owner)
+		local indicator = PlayerShop.getTradeIndicatorText(shop)
+		return getText("IGUI_PlayerShop_NearHint", keyName, indicator, owner)
 	end,
 	open = function(player, shop)
+		if not PlayerShop.isTradeable(shop) then
+			PlayerShop.notifyEmptyShop(player)
+			return
+		end
 		local sq = shop:getSquare()
 		if not sq then return end
 		PlayerShop.playerShopUI({ shop }, player:getPlayerNum(), sq, shop)
@@ -50,6 +55,10 @@ function PlayerShop.playerShopUI(worldobjects,playerNum,clickedSquare,shop) -- Ð
         end
         action:setOnComplete(function() 
             if PlayerShop.isBusy(shop) then return end
+            if not PlayerShop.isTradeable(shop) then
+                PlayerShop.notifyEmptyShop(player)
+                return
+            end
             PlayerShopUI:show(player,shop) 
         end)
         ISTimedActionQueue.add(action)
@@ -187,6 +196,9 @@ function PlayerShop.PlayerShopContextMenu(playerNum, context, worldobjects) -- Ð
         ShopProximity.addShopIcon(viewPS)
         local isBusy = PlayerShop.isBusy(wo)
         if isBusy then viewPS.notAvailable = isBusy end
+        if not PlayerShop.isTradeable(wo) then
+            viewPS.notAvailable = true
+        end
         if player:getUsername() == owner or isAdmin() then
             local shop = context:addOption(UIText.ManagePlayerShop,worldobjects,nil);
             local subShop = context:getNew(context);
@@ -208,10 +220,10 @@ function PlayerShop.PlayerShopContextMenu(playerNum, context, worldobjects) -- Ð
                     end
                 end
             end
-            -- subShop:addOption(UIText.ViewIncomePlayerShop, worldobjects, PlayerShop.ViewIncome, wo);
-            -- subShop:addOption(getText("IGUI_BuyOrders_Title"), worldobjects, function()
-            --     BuyOrdersUI:show(player, wo)
-            -- end);
+            subShop:addOption(UIText.ViewIncomePlayerShop, worldobjects, PlayerShop.ViewIncome, wo);
+            subShop:addOption(getText("IGUI_ManageBuyOrders"), worldobjects, function()
+                BuyOrdersUI:show(player, wo)
+            end);
             subShop:addOption(UIText.PickupPlayerShop, worldobjects, PlayerShop.PickupShop,player, wo);
         end
     end

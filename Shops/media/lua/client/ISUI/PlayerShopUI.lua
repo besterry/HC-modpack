@@ -33,6 +33,11 @@ function PlayerShopUI:show(player,shop)
         PlayerShopUI.instance.shopOwner = shopOwner
         PlayerShopUI.instance:initialise();
         PlayerShopUI.instance:instantiate();
+    else
+        PlayerShopUI.instance.shop = shop
+        PlayerShopUI.instance.shopOwner = shop:getModData().owner
+        PlayerShopUI.instance.player = player
+        PlayerShopUI.instance:rebuildShopTabs()
     end
     PlayerShopUI.instance.pinButton:setVisible(false)
     PlayerShopUI.instance.collapseButton:setVisible(false)
@@ -116,7 +121,7 @@ function PlayerShopUI:onMouseMove(dx, dy)
 		self:setY(self.y + dy);
 		self:bringToTop();
 	end
-    if PlayerShopUI.instance.panel.activeView.view.shopItems:isMouseOver() then return end
+    if PlayerShopUI.instance and PlayerShopUI.instance.panel and PlayerShopUI.instance.panel.activeView and PlayerShopUI.instance.panel.activeView.view and PlayerShopUI.instance.panel.activeView.view.shopItems:isMouseOver() then return end
     if PlayerShopUI.instance.cartItems:isMouseOver() then return end
     PlayerShopUI.instance:toggleTooltip(false)
 end
@@ -222,20 +227,56 @@ function PlayerShopUI:onMouseMoveCartItem(dx, dy)
     PlayerShopUI.instance:toggleTooltip(true,selectedRow.item)
 end
 
-function PlayerShopUI:createCategories()
-    for k,v in pairs(PlayerShop.Tabs) do 
-        local tab = PlayerShopTabUI:new(0, 0, self.width, self.panel.height - self.panel.tabHeight);
-        tab:initialise();
-        tab:setAnchorRight(true)
-        tab:setAnchorBottom(true)
-        tab:setShopUI(PlayerShopUI.instance)
-        tab:setCategoryType(k)
-        self.panel:addView(v, tab);
-        tab.parent = self;
+function PlayerShopUI:addShopTab(tabType, tabName)
+    local tab = PlayerShopTabUI:new(0, 0, self.width, self.panel.height - self.panel.tabHeight);
+    tab:initialise();
+    tab:setAnchorRight(true)
+    tab:setAnchorBottom(true)
+    tab:setShopUI(PlayerShopUI.instance)
+    tab:setCategoryType(tabType)
+    self.panel:addView(tabName, tab);
+    tab.parent = self;
+end
+
+function PlayerShopUI:rebuildShopTabs()
+    if not self.panel or not self.shop then return end
+
+    local toRemove = {}
+    for _, viewObject in ipairs(self.panel.viewList) do
+        table.insert(toRemove, viewObject.view)
+    end
+    for _, view in ipairs(toRemove) do
+        self.panel:removeView(view)
+    end
+
+    self.shopItemsCache = {}
+    self.lastActiveTab = nil
+
+    local hasSale = PlayerShop.hasSaleItems(self.shop)
+    local hasBuy = PlayerShop.hasBuyOrders(self.shop)
+
+    if hasSale then
+        self:addShopTab(Tab.All, getText("IGUI_Tab_All"))
+    end
+    if hasBuy then
+        self:addShopTab(Tab.BuyOrders, getText("IGUI_Tab_SellToShop"))
+    end
+
+    if self.emptyShopLabel then
+        self.emptyShopLabel:setVisible(not hasSale and not hasBuy)
+    end
+
+    if hasSale or hasBuy then
+        self:activateFirstTab()
+    elseif self.cartItems then
+        self.cartItems:clear()
+        self.total = 0
+        self.totalSpecial = 0
     end
 end
 
 function PlayerShopUI:onActivateView()
+    if not self.panel.activeView or not self.panel.activeView.view then return end
     local tabType = self.panel.activeView.view.tabType
     -- очистка корзины при переключении вкладок
     if self.lastActiveTab and self.lastActiveTab ~= tabType then
@@ -333,8 +374,12 @@ function PlayerShopUI:createChildren()
     self.panel.target = self;
     self.panel:setEqualTabWidth(false)
     self:addChild(self.panel);
-    self:createCategories()
-    self:activateFirstTab()
+
+    self.emptyShopLabel = ISLabel:new(x + 40, y + 120, self.MEDIUM_FONT_HGT, getText("IGUI_PlayerShop_Empty"), 0.7, 0.7, 0.7, 1, UIFont.Medium, true)
+    self.emptyShopLabel:setVisible(false)
+    self:addChild(self.emptyShopLabel)
+
+    self:rebuildShopTabs()
 
     -- вместо кнопки используем полноценную вкладку (Tab.BuyOrders)
 
@@ -390,7 +435,7 @@ function PlayerShopUI:createChildren()
     self.manageIncomeBtn:initialise(); self.manageIncomeBtn:setVisible(false)
     self:addChild(self.manageIncomeBtn)
 
-    self.manageBuyBtn = ISButton:new(ownerBtnX + 150, ownerBtnY, 140, 25, getText("IGUI_Tab_BuyOrders"), self, function()
+    self.manageBuyBtn = ISButton:new(ownerBtnX + 150, ownerBtnY, 140, 25, getText("IGUI_ManageBuyOrders"), self, function()
         BuyOrdersUI:show(self.player, self.shop)
     end)
     self.manageBuyBtn:initialise(); self.manageBuyBtn:setVisible(false)
@@ -640,14 +685,14 @@ function PlayerShopUI:addOrderToCartAll(row)
 end
 
 function PlayerShopUI:activateFirstTab()
-    for k,v in pairs(PlayerShop.Tabs) do 
-        self.panel:activateView(v)
-        break;
-    end
+    if not self.panel or not self.panel.viewList[1] then return end
+    self.panel:activateView(self.panel.viewList[1].name)
+    self:onActivateView()
 end
 
 function PlayerShopUI:removeFromCart(selectedRow)
     if self.actionInProgress then return end
+    if not self.panel.activeView or not self.panel.activeView.view then return end
     self:toggleTooltip(false)
     local tab = self.panel.activeView.view
     local item = selectedRow.item
@@ -705,7 +750,6 @@ end
 
 function PlayerShopUI:clearCartBtn()
     if self.actionInProgress then return end
-    local tab = self.panel.activeView.view
     self.cartItems:clear()
     self:activateFirstTab()
 end
@@ -723,6 +767,7 @@ function PlayerShopUI:cancelBuyBtn()
 end
 
 function PlayerShopUI:buyCartBtn()
+    if not self.panel.activeView or not self.panel.activeView.view then return end
     -- Запускаем покупку без закрытия окна; блокировка магазина уже установлена при открытии
     self.actionInProgress = true
     local ticket = {}
@@ -782,6 +827,7 @@ function PlayerShopUI:updateTotal()
     self.totalSpecial = totalSpecial
     self:checkShopOwner()
     if total == 0 and totalSpecial == 0 then return end
+    if not self.panel.activeView or not self.panel.activeView.view then return end
 
     -- Вкл/выкл кнопки: для вкладки Скупка используем кассу магазина (+ доход, если разрешено), иначе баланс игрока
     local tabType = self.panel.activeView.view.tabType
