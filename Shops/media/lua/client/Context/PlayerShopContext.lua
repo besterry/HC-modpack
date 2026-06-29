@@ -19,6 +19,19 @@ local playerShopProximityOpts = {
 		local indicator = PlayerShop.getTradeIndicatorText(shop)
 		return getText("IGUI_PlayerShop_NearHint", keyName, indicator, owner)
 	end,
+	getHaloNote = function(player, shop)
+		if not PlayerShop.isTradeable(shop) then
+			local owner = shop:getModData().owner or "?"
+			local text = getText("IGUI_PlayerShop_Empty") .. " (" .. owner .. ")"
+			local rgb = PlayerShop.EMPTY_HALO_RGB
+			return text, rgb.r, rgb.g, rgb.b, PlayerShop.EMPTY_HALO_MS
+		end
+		local keyName = getKeyName(getCore():getKey("Interact"))
+		local owner = shop:getModData().owner or "?"
+		local indicator = PlayerShop.getTradeIndicatorText(shop)
+		local text = getText("IGUI_PlayerShop_NearHint", keyName, indicator, owner)
+		return text, 255, 220, 120, ShopProximity.HINT_SHOW_MS
+	end,
 	open = function(player, shop)
 		if not PlayerShop.isTradeable(shop) then
 			PlayerShop.notifyEmptyShop(player)
@@ -102,7 +115,10 @@ function PlayerShop.LockUnlockPlayerShop(worldobjects, shop, lock) -- Закры
 end
 
 function PlayerShop.ViewIncome(worldobjects,shop) -- Показываем доход магазина
-    IncomeUI:show(player,shop)
+    local player = getPlayer()
+    if player then
+        IncomeUI:show(player,shop)
+    end
 end
 
 function PlayerShop.PickupShop(worldobjects,player,shop) -- Поднимаем магазин

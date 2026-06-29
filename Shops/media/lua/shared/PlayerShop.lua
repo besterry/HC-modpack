@@ -7,6 +7,8 @@ Tab["BuyOrders"] = "BuyOrders"
 PlayerShop.Tabs[Tab.BuyOrders] = getText("IGUI_Tab_SellToShop")
 PlayerShop.status= {}
 PlayerShop.spritePrefix = "playershop_"
+PlayerShop.EMPTY_HALO_MS = 4500
+PlayerShop.EMPTY_HALO_RGB = { r = 255, g = 70, b = 70 }
 
 function PlayerShop.hasSaleItems(shop)
 	if not shop then return false end
@@ -52,7 +54,8 @@ end
 
 function PlayerShop.notifyEmptyShop(player)
 	if not player then return end
-	player:setHaloNote(getText("IGUI_PlayerShop_Empty"), 255, 220, 120, 2000)
+	local rgb = PlayerShop.EMPTY_HALO_RGB
+	player:setHaloNote(getText("IGUI_PlayerShop_Empty"), rgb.r, rgb.g, rgb.b, PlayerShop.EMPTY_HALO_MS)
 end
 
 function PlayerShop.getTradeIndicatorText(shop)

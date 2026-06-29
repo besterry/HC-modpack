@@ -190,6 +190,19 @@ function ShopProximity.defaultCanUse(player, uiInstance)
 	return true
 end
 
+function ShopProximity.applyHaloHint(player, state, opts, shop)
+	if not player or not state or not opts or not shop then return end
+	local text, r, g, b, ms
+	if opts.getHaloNote then
+		text, r, g, b, ms = opts.getHaloNote(player, shop)
+	else
+		text = opts.getHintText(player, shop)
+		r, g, b, ms = 255, 220, 120, ShopProximity.HINT_SHOW_MS
+	end
+	player:setHaloNote(text, r, g, b, ms)
+	state.hintActive = true
+end
+
 function ShopProximity.updateHint(player, state, opts)
 	if not player or not player:isLocalPlayer() or not state or not opts then return end
 
@@ -209,9 +222,7 @@ function ShopProximity.updateHint(player, state, opts)
 	if now - state.hintLastAt < ShopProximity.HINT_REFRESH_MS then return end
 	state.hintLastAt = now
 
-	local text = opts.getHintText(player, shop)
-	player:setHaloNote(text, 255, 220, 120, ShopProximity.HINT_SHOW_MS)
-	state.hintActive = true
+	ShopProximity.applyHaloHint(player, state, opts, shop)
 end
 
 function ShopProximity.tryOpen(player, state, opts)
@@ -338,9 +349,7 @@ function ShopProximity.updateAllHints(player)
 	end
 	state.hintLastAt = now
 
-	local text = opts.getHintText(player, bestShop)
-	player:setHaloNote(text, 255, 220, 120, ShopProximity.HINT_SHOW_MS)
-	state.hintActive = true
+	ShopProximity.applyHaloHint(player, state, opts, bestShop)
 end
 
 function ShopProximity.onGlobalInteractKey(key)
