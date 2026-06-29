@@ -81,7 +81,7 @@ ItemName_RU = {
 	ItemName_PinkSlip.ATASchoolBus = "Автомобиль: школьный автобус",
 	ItemName_PinkSlip.ATAPrisonBus = "Автомобиль: тюремный автобус",
 	ItemName_PinkSlip.ATAArmyBus = "Автомобиль: армейский автобус",
-	ItemName_PinkSlip.PickUpTruck = "Автомобиль: пикап, Chevalier D6",
+	ItemName_PinkSlip.PickUpTruck = "Автомобиль: пикап Chevalier D6",
 	ItemName_PinkSlip.VanSeats = "Автомобиль: микроавтобус, Franklin Valuline",
 	ItemName_Hydrocraft.HCSpiffosorderbag = "Заказ Спиффо на вынос",
 	ItemName_Base.Muffintray_Biscuit = "Поднос с печеньем",
@@ -100,6 +100,8 @@ ItemName_RU = {
 	ItemName_PinkSlip.isoContainer2 = "Контейнер: Грузовой",
 	ItemName_PinkSlip.isoContainer3tanker = "Контейнер: Цистерна",
 	ItemName_PinkSlip.1992florino = "Автомобиль: 1992florino",
+	ItemName_PinkSlip.CarTaxi = "Автомобиль: Taxi",
+	ItemName_PinkSlip.CarTaxi2 = "Автомобиль: Taxi 2",
 	ItemName_Base.Screws = "Болт с левой резьбой",
 	ItemName_Base.worldmap1 = "Карта",
 	
