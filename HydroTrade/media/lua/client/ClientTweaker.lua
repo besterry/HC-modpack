@@ -10,6 +10,7 @@ ClientTweaker = {
         ["Show_Kills"] = {type = "bool", value = "false"},
         ["highlight_safehouse"] = {type = "bool", value = "false"},
         ["show_ping"] = {type = "bool", value = "true"},
+        ["show_tutorial_quests"] = {type = "bool", value = "true"},
         ["map_show_tzones"] = {type = "bool", value = "true"},
         ["map_show_pvp_zones"] = {type = "bool", value = "true"},
         ["map_show_pve_zones"] = {type = "bool", value = "true"},

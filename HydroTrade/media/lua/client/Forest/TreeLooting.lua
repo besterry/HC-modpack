@@ -194,6 +194,10 @@ function LootingTree(obj, player)
     if xpAmount == 0 then xpAmount = 0.2 end --Даём гарантированный опыт
     player:getXp():AddXP(Perks.PlantScavenging, xpAmount)
 
+    if count > 0 and TutorialQuests and TutorialQuests.onForageSuccess then
+        TutorialQuests.onForageSuccess(player)
+    end
+
     -- Обновление информацию о лутании
     local interval = ZombRand(6, 48) -- Респ 6-48 часов
     obj:getModData().TimeRespawn = interval

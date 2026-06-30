@@ -84,6 +84,10 @@ end
 	end
 	
 	--если мы дошли до сюда, значит можно выдать приват
-	SafeHouse.addSafeHouse(square, getSpecificPlayer(player));
+	local playerObj = getSpecificPlayer(player)
+	SafeHouse.addSafeHouse(square, playerObj);
+	if TutorialQuests and TutorialQuests.onSafehouseClaimed then
+		TutorialQuests.onSafehouseClaimed(playerObj)
+	end
 	--buildUtil.setHaveConstruction(square, true);
 end

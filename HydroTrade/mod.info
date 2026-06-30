@@ -11,3 +11,6 @@ tiledef=signs01 1102
 
 pack=signTradeZone
 tiledef=signTradeZone 1103
+
+pack=ht1
+tiledef=ht1 1104

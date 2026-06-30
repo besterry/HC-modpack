@@ -284,6 +284,16 @@ function PM_ISMenu:initialise()
     self.highlightSafehouse.backgroundColor = {r=0.12, g=0.15, b=0.2, a=0.95};
     self.highlightSafehouse.borderColor = {r=0.4, g=0.6, b=0.8, a=0.9};
     self:addChild(self.highlightSafehouse);
+    y_checkboxes = y_checkboxes + btnHgt;
+
+    self.showTutorialQuests = ISTickBox:new(x + btnWid + 15, y_checkboxes, 70, btnHgt, getText("IGUI_UserPanel_ShowTutorialQuests"), self, PM_ISMenu.onShowTutorialQuests);
+    self.showTutorialQuests:initialise();
+    self.showTutorialQuests:instantiate();
+    self.showTutorialQuests.selected[1] = ClientTweaker.Options.GetBool("show_tutorial_quests");
+    self.showTutorialQuests:addOption(getText("IGUI_UserPanel_ShowTutorialQuests"));
+    self.showTutorialQuests.backgroundColor = {r=0.12, g=0.15, b=0.2, a=0.95};
+    self.showTutorialQuests.borderColor = {r=0.4, g=0.6, b=0.8, a=0.9};
+    self:addChild(self.showTutorialQuests);
 
 
     --кнопка обновить баланс (ВОЗВРАЩАЕМ!)
@@ -466,6 +476,22 @@ end
 
 function PM_ISMenu:onShowPingInfo(option, enabled)
     setShowPingInfo(enabled);
+end
+
+function PM_ISMenu:onShowTutorialQuests(option, enabled)
+    if SandboxVars.ServerTweaker.SaveClientOptions then
+        ClientTweaker.Options.SetBool("show_tutorial_quests", enabled);
+    end
+    if TutorialQuests then
+        if enabled then
+            TutorialQuests.reopenHud()
+        else
+            TutorialQuests.hideHud()
+            if TutorialQuestNavigation then
+                TutorialQuestNavigation.clear()
+            end
+        end
+    end
 end
 
 function PM_ISMenu:updateButtons()

@@ -335,6 +335,9 @@ function ISAddSHUI:onClick(button)
 			self:setVisible(false);
 			self:removeFromUIManager()
 			setSafehouseData(self.titleEntry:getInternalText(), self.character:getUsername(), setX, setY, setW, setH)
+			if TutorialQuests and TutorialQuests.onSafehouseZoneCreated then
+				TutorialQuests.onSafehouseZoneCreated(self.character, setW * setH)
+			end
 			return;
 		end		
 	end

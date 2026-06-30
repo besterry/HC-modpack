@@ -1,10 +1,8 @@
-local old_checkShowFirstTimeSearchTutorial = ISSearchWindow.checkShowFirstTimeSearchTutorial
-
+-- Отключаем ванильный туториал поиска (F1): с кастомным Survival Guide он падает в ISTutorialPageInfo.
 function ISSearchWindow:checkShowFirstTimeSearchTutorial()
-    local o = old_checkShowFirstTimeSearchTutorial(self)
-    --if getCore():isShowFirstTimeSearchTutorial() then        
-    getCore():setShowFirstTimeSearchTutorial(false);
-    getCore():saveOptions();
-    --end
-    return o
+	if getCore():isShowFirstTimeSearchTutorial() then
+		getCore():setShowFirstTimeSearchTutorial(false)
+		getCore():saveOptions()
+	end
+	return false
 end
