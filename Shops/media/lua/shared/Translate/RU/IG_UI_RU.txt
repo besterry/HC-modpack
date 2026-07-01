@@ -3,6 +3,7 @@ IGUI_RU = {
     IGUI_SMH_AdminBtn = "Редактор баланса",
     IGUI_RemovePlayerShop = "Убрать магазин",
     IGUI_ATM_Sell = "Банкомат: скупка",
+    IGUI_ATM_NearHint = "[%1] Банкомат: скупка",
     IGUI_ATM_Inventory = "Инвентарь",
     IGUI_ATM_Cart = "К продаже",
     IGUI_ATM_ShiftHint = "Shift + клик по + — вся стопка",

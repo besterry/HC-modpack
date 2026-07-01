@@ -1,27 +1,51 @@
-local function isATMTile(worldobject)
-	if not worldobject then return false end
-	local sprite = worldobject.getSprite and worldobject:getSprite() or nil
-	if not sprite then return false end
-	local spriteName = sprite:getName()
-	return spriteName ~= nil and (spriteName == "location_business_bank_01_65" or spriteName == "location_business_bank_01_64" or spriteName == "location_business_bank_01_66" or spriteName == "location_business_bank_01_67")
+local atmState = ShopProximity.newState()
+local ATM_NEAR_RADIUS = 2.0
+
+local function canUseATM(player)
+	return ShopProximity.defaultCanUse(player, ATMSellUI and ATMSellUI.instance)
 end
+
+local function getATMHintText(player, atmWo)
+	local keyName = getKeyName(getCore():getKey("Interact"))
+	return getText("IGUI_ATM_NearHint", keyName)
+end
+
+function Shop.openATMSell(player, atmWo)
+	if not player or not atmWo then return end
+	local sq = atmWo:getSquare()
+	if not sq then return end
+	sq = luautils.getCorrectSquareForWall(player, sq)
+	local adjacent = AdjacentFreeTileFinder.Find(sq, player)
+	if not adjacent then return end
+	local action = ISWalkToTimedAction:new(player, adjacent)
+	action:setOnComplete(function() ATMSellUI:show(player, atmWo) end)
+	ISTimedActionQueue.add(action)
+end
+
+local atmProximityOpts = {
+	isObject = Shop.isATMTile,
+	interactRadius = ATM_NEAR_RADIUS,
+	hintRadius = ATM_NEAR_RADIUS,
+	canUse = canUseATM,
+	getHintText = getATMHintText,
+	open = function(player, atmWo)
+		Shop.openATMSell(player, atmWo)
+	end,
+}
 
 local function findATM(worldobjects)
 	if not worldobjects then return nil end
-	-- 1) ищем среди всех объектов под курсором
 	for i = 1, #worldobjects do
-		local o = worldobjects[i]
-		if isATMTile(o) then
-			return o
+		if Shop.isATMTile(worldobjects[i]) then
+			return worldobjects[i]
 		end
 	end
-	-- 2) запасной путь: обходим все объекты клетки
 	if clickedSquare then
 		local objects = clickedSquare:getObjects()
 		if objects then
 			for i = 0, objects:size() - 1 do
 				local o = objects:get(i)
-				if isATMTile(o) then
+				if Shop.isATMTile(o) then
 					return o
 				end
 			end
@@ -37,16 +61,12 @@ function Shop.ATMContextMenu(playerNum, context, worldobjects)
 	if not atmWo then return end
 
 	local player = getSpecificPlayer(playerNum)
-	context:addOption(getText("IGUI_ATM_Sell"), worldobjects, function()
-		local sq = clickedSquare or (atmWo and atmWo:getSquare()) or getMouseSquare()
-		if not sq then return end
-		sq = luautils.getCorrectSquareForWall(player, sq)
-		local adjacent = AdjacentFreeTileFinder.Find(sq, player)
-		if not adjacent then return end
-		local action = ISWalkToTimedAction:new(player, adjacent)
-		action:setOnComplete(function() ATMSellUI:show(player, atmWo) end)
-		ISTimedActionQueue.add(action)
+	local option = context:addOption(getText("IGUI_ATM_Sell"), worldobjects, function()
+		Shop.openATMSell(player, atmWo)
 	end)
+	ShopProximity.addShopIcon(option)
 end
+
+ShopProximity.register({ state = atmState, opts = atmProximityOpts })
 
 Events.OnPreFillWorldObjectContextMenu.Add(Shop.ATMContextMenu)

@@ -10,6 +10,22 @@ Shop.defaultPrice = 1
 Shop.defaultPriceBroken = 1
 
 Shop.spritePrefix = "npcshop_"
+
+Shop.ATM_SPRITES = {
+	["location_business_bank_01_64"] = true,
+	["location_business_bank_01_65"] = true,
+	["location_business_bank_01_66"] = true,
+	["location_business_bank_01_67"] = true,
+}
+
+function Shop.isATMTile(worldobject)
+	if not worldobject then return false end
+	local sprite = worldobject.getSprite and worldobject:getSprite() or nil
+	if not sprite then return false end
+	local spriteName = sprite:getName()
+	return spriteName ~= nil and Shop.ATM_SPRITES[spriteName] == true
+end
+
 Shop.sprites = {
 	FemaleA = {
 		"npcshop_0",
