@@ -39,7 +39,9 @@ function ATMSellAction:perform()
 	local total = 0
 	local totalSpecial = 0
 
-	for _, entry in ipairs(self.ui.itemsToSell) do
+	local cartItems = self.ui.cartItems and self.ui.cartItems.items or {}
+	for i = 1, #cartItems do
+		local entry = cartItems[i].item
 		local invItem = inventoryItems[entry.id]
 		if invItem then
 			local price = Nfunction.drainablePrice(invItem, entry.priceFull)
@@ -64,8 +66,9 @@ function ATMSellAction:perform()
 	end
 	if total > 0 or totalSpecial > 0 then self.character:playSound("CashRegister") end
 
-	self.ui.itemsToSell = {}
-	self.ui:close()
+	self.ui.cartItems:clear()
+	self.ui.actionInProgress = false
+	self.ui:refreshItems()
 	ISBaseTimedAction.perform(self)
 end
 
