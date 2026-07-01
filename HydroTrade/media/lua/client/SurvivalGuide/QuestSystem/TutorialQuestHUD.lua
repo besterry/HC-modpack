@@ -88,7 +88,7 @@ function TutorialQuestHUD:measureSideQuestSection()
 		local qh = self:estimateSideQuestHeight(sideQuest, player)
 		if qh > 0 then
 			if not anySide then
-				h = h + self:measureSeparator() + self:measureWrappedText(getText("IGUI_SideQuest_Tracked"))
+				h = h + self:measureSeparator()
 				anySide = true
 			else
 				h = h + self:measureSeparator()
@@ -97,10 +97,16 @@ function TutorialQuestHUD:measureSideQuestSection()
 		end
 	end
 	local offered = TutorialQuests.countOfferedSideQuests(player)
-	if TutorialQuests.shouldShowQuestBoardButton(player) then
-		h = h + self:measureSeparator() + CLAIM_BTN_H + 6
-	end
 	return h
+end
+
+function TutorialQuestHUD:measureBoardButtonBlock(skipSeparator)
+	if not TutorialQuests.shouldShowQuestBoardButton(getPlayer()) then return 0 end
+	local h = 0
+	if not skipSeparator then
+		h = h + self:measureSeparator()
+	end
+	return h + CLAIM_BTN_H + 6
 end
 
 function TutorialQuestHUD:drawSeparator(y)
@@ -265,11 +271,14 @@ function TutorialQuestHUD:onMouseMove(dx, dy)
 	if not self.moveWithMouse then return end
 	self:setX(self.x + dx)
 	self:setY(self.y + dy)
+	self:clampToScreen()
 	TutorialQuests.saveHudPosition(self.x, self.y)
 end
 
 function TutorialQuestHUD:onMouseUp(x, y)
 	self.moveWithMouse = false
+	self:clampToScreen()
+	TutorialQuests.saveHudPosition(self.x, self.y)
 end
 
 function TutorialQuestHUD:renderPrompt(y)
@@ -494,28 +503,33 @@ function TutorialQuestHUD:estimateTutorialQuestHeight(order)
 end
 
 function TutorialQuestHUD:estimateSideQuestHeight(quest, player)
-	if not TutorialQuests.isSideQuestVisibleOnHud(player, quest) then return 0 end
+	if not TutorialQuests.isTrackableQuestVisibleOnHud(player, quest) then return 0 end
 	local h = self.lineHgt + 2
 	if TutorialQuests.needsClaimById(quest.id) then
 		return h + self:measureRewardBlock(quest.id) + CLAIM_BTN_H + 6
 	end
 	h = h + self.lineHgt + 2
-	if quest.detailKey then
-		h = h + self:measureWrappedText(getText(quest.detailKey)) + 2
+	local progress = player and QuestStorage.getProgress(player, quest.id) or nil
+	local detail = QuestsData.getQuestDetail(quest, progress)
+	if detail then
+		h = h + self:measureWrappedText(detail) + 2
 	end
-	if quest.hintKey then
-		h = h + self:measureWrappedText(getText(quest.hintKey))
+	local hint = QuestsData.getQuestHint(quest, progress)
+	if hint then
+		h = h + self:measureWrappedText(hint)
 	end
-	if quest.navTarget then
+	if quest.type == "visit_location" or quest.navTarget then
 		h = h + CLAIM_BTN_H + 6
 	end
 	return h + self:measureRewardBlock(quest.id) + 6
 end
 
 function TutorialQuestHUD:renderSideQuestBlock(y, quest, player)
-	if not TutorialQuests.isSideQuestVisibleOnHud(player, quest) then return y end
+	if not TutorialQuests.isTrackableQuestVisibleOnHud(player, quest) then return y end
 
-	self:drawText(getText(quest.titleKey), PAD, y, 0.85, 0.9, 0.8, 1, UIFont.Small)
+	local progress = QuestStorage.getProgress(player, quest.id)
+	local tr = QuestsData.getQuestAccent(quest).title
+	self:drawText(QuestsData.getQuestTitle(quest, progress), PAD, y, tr[1], tr[2], tr[3], 1, UIFont.Small)
 	y = y + self.lineHgt + 2
 
 	if TutorialQuests.needsClaimById(quest.id) then
@@ -526,16 +540,18 @@ function TutorialQuestHUD:renderSideQuestBlock(y, quest, player)
 	local display = TutorialQuests.getSideQuestDisplay(player, quest)
 	if display then
 		y = self:drawObjectiveLine(y, display.done, display.text)
-		if quest.detailKey then
-			y = self:drawWrappedText(y, getText(quest.detailKey), 0.72, 0.8, 0.7, 1)
+		local detail = QuestsData.getQuestDetail(quest, progress)
+		if detail then
+			y = self:drawWrappedText(y, detail, 0.72, 0.8, 0.7, 1)
 			y = y + 2
 		end
-		if quest.hintKey then
-			y = self:drawWrappedText(y, getText(quest.hintKey), 0.55, 0.78, 0.55, 1)
+		local hint = QuestsData.getQuestHint(quest, progress)
+		if hint then
+			y = self:drawWrappedText(y, hint, 0.55, 0.78, 0.55, 1)
 			y = y + 2
 		end
 	end
-	if quest.navTarget and (not display or not display.done) then
+	if (quest.type == "visit_location" or quest.navTarget) and (not display or not display.done) then
 		y = self:drawNavButton(y, quest.id, quest.navButtonKey)
 	end
 	y = self:drawRewardLine(y, quest.id)
@@ -565,8 +581,16 @@ function TutorialQuestHUD:renderBoardButton(y, skipSeparator)
 	return self:drawBoardButton(y)
 end
 
+function TutorialQuestHUD:renderBoardButtonSection(y, skipSeparator)
+	if not TutorialQuests.shouldShowQuestBoardButton(getPlayer()) then return y end
+	if not skipSeparator then
+		y = self:drawSeparator(y)
+	end
+	return self:drawBoardButton(y)
+end
+
 function TutorialQuestHUD:renderBoardHint(y)
-	return self:renderBoardButton(y)
+	return self:renderBoardButtonSection(y)
 end
 
 function TutorialQuestHUD:renderSideQuests(y)
@@ -575,8 +599,6 @@ function TutorialQuestHUD:renderSideQuests(y)
 	if #sideQuests == 0 then return y end
 
 	y = self:drawSeparator(y)
-	y = self:drawWrappedText(y, getText("IGUI_SideQuest_Tracked"), 0.7, 0.75, 0.85, 1)
-	y = y + 2
 	for i, quest in ipairs(sideQuests) do
 		if i > 1 then
 			y = self:drawSeparator(y)
@@ -608,6 +630,7 @@ function TutorialQuestHUD:prerender()
 		self:setX(data.hudX)
 		self:setY(data.hudY)
 	end
+	self:clampToScreen()
 
 	self:drawRect(0, 0, self.width, self.height, 0.75, 0.05, 0.05, 0.08)
 	self:drawRectBorder(0, 0, self.width, self.height, 0.9, 0.35, 0.35, 0.45)
@@ -637,8 +660,8 @@ function TutorialQuestHUD:prerender()
 			self:renderQuest2(y)
 		elseif order == 3 then
 			y = self:renderQuest3(y)
+			y = self:renderBoardButtonSection(y)
 			y = self:renderSideQuests(y)
-			y = self:renderBoardHint(y)
 		end
 		return
 	end
@@ -652,19 +675,19 @@ function TutorialQuestHUD:prerender()
 		elseif quest.type == "skill_journal" then
 			y = self:renderStoryJournal(y, quest)
 		end
+		y = self:renderBoardButtonSection(y)
 		y = self:renderSideQuests(y)
-		y = self:renderBoardHint(y)
 		return
 	end
 
 	if hudQuest and hudQuest.mode == "story_sides" then
+		y = self:renderBoardButtonSection(y, true)
 		y = self:renderSideQuests(y)
-		y = self:renderBoardHint(y)
 		return
 	end
 
 	if hudQuest and hudQuest.mode == "board_hint" then
-		self:renderBoardButton(y, true)
+		self:renderBoardButtonSection(y, true)
 		return
 	end
 
@@ -690,6 +713,7 @@ function TutorialQuestHUD:estimateContentHeight(data)
 		local order = hudQuest.order
 		local h = self.headerH + 6 + self:estimateTutorialQuestHeight(order)
 		if order == 3 then
+			h = h + self:measureBoardButtonBlock()
 			h = h + self:measureSideQuestSection()
 		end
 		return h
@@ -732,6 +756,7 @@ function TutorialQuestHUD:estimateContentHeight(data)
 			end
 			h = h + self:measureRewardBlock(quest.id) + PAD
 		end
+		h = h + self:measureBoardButtonBlock()
 		local player = getPlayer()
 		local sideQuests = TutorialQuests.getTrackedSideQuestsForHud(player)
 		local anySide = false
@@ -739,7 +764,7 @@ function TutorialQuestHUD:estimateContentHeight(data)
 			local qh = self:estimateSideQuestHeight(sideQuest, player)
 			if qh > 0 then
 				if not anySide then
-					h = h + self:measureSeparator() + self:measureWrappedText(getText("IGUI_SideQuest_Tracked"))
+					h = h + self:measureSeparator()
 					anySide = true
 				else
 					h = h + self:measureSeparator()
@@ -747,16 +772,14 @@ function TutorialQuestHUD:estimateContentHeight(data)
 				h = h + qh
 			end
 		end
-		if TutorialQuests.shouldShowQuestBoardButton(player) then
-			h = h + self:measureSeparator() + CLAIM_BTN_H + 6
-		end
 		return h
 	elseif hudQuest and hudQuest.mode == "story_sides" then
 		local h = self.headerH + PAD + 6
+		h = h + self:measureBoardButtonBlock(true)
 		local player = getPlayer()
 		local sideQuests = TutorialQuests.getTrackedSideQuestsForHud(player)
 		if #sideQuests > 0 then
-			h = h + self:measureSeparator() + self:measureWrappedText(getText("IGUI_SideQuest_Tracked"))
+			h = h + self:measureSeparator()
 			local blockIndex = 0
 			for _, sideQuest in ipairs(sideQuests) do
 				local qh = self:estimateSideQuestHeight(sideQuest, player)
@@ -769,14 +792,23 @@ function TutorialQuestHUD:estimateContentHeight(data)
 				end
 			end
 		end
-		if TutorialQuests.shouldShowQuestBoardButton(player) then
-			h = h + self:measureSeparator() + CLAIM_BTN_H + 6
-		end
 		return h
 	elseif hudQuest and hudQuest.mode == "board_hint" then
 		return self.headerH + PAD + 6 + CLAIM_BTN_H + 6
 	end
 	return self.headerH + self.lineHgt + PAD
+end
+
+function TutorialQuestHUD:clampToScreen()
+	local core = getCore()
+	if not core then return end
+	local sh = core:getScreenHeight()
+	local margin = 8
+	local maxY = sh - self.height - margin
+	if self.y > maxY then
+		self:setY(math.max(margin, maxY))
+		TutorialQuests.saveHudPosition(self.x, self.y)
+	end
 end
 
 function TutorialQuestHUD:updateLayout()
@@ -789,6 +821,7 @@ function TutorialQuestHUD:updateLayout()
 		h = self:estimateContentHeight(data) + CONTENT_BOTTOM_PAD
 	end
 	self:setHeight(h)
+	self:clampToScreen()
 end
 
 function TutorialQuestHUD:new()

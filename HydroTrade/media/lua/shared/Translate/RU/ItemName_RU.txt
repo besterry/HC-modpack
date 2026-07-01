@@ -104,5 +104,6 @@ ItemName_RU = {
 	ItemName_PinkSlip.CarTaxi2 = "Автомобиль: Taxi 2",
 	ItemName_Base.Screws = "Болт с левой резьбой",
 	ItemName_Base.worldmap1 = "Карта",
+	ItemName_Base.CopperCoin = "Монета",
 	
 }

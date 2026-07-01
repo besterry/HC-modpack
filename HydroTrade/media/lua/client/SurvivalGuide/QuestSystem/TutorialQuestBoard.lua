@@ -8,8 +8,14 @@ local S = QuestStorage
 
 local PAD = 8
 local BTN_H = 20
+local TAB_H = 26
 local BOARD_W = 360
 local BOARD_H = 480
+
+TutorialQuestBoard.TAB_MAIN = "main"
+TutorialQuestBoard.TAB_DAILY = "daily"
+TutorialQuestBoard.TAB_REPEATABLE = "repeatable"
+TutorialQuestBoard.TAB_SPECIAL = "special"
 
 function TutorialQuestBoard:wrapText(text, maxWidth, font)
 	font = font or UIFont.Small
@@ -44,10 +50,15 @@ end
 
 function TutorialQuestBoard:resetZones()
 	self.interactZones = {}
+	self.tabZones = {}
 end
 
 function TutorialQuestBoard:registerZone(zone)
 	table.insert(self.interactZones, zone)
+end
+
+function TutorialQuestBoard:registerTabZone(zone)
+	table.insert(self.tabZones, zone)
 end
 
 function TutorialQuestBoard:panelToContentY(panelY)
@@ -68,6 +79,7 @@ end
 function TutorialQuestBoard:bringResizeHandlesToFront()
 	if self.resizeWidget then self.resizeWidget:bringToTop() end
 	if self.resizeWidget2 then self.resizeWidget2:bringToTop() end
+	if self.tabPane then self.tabPane:bringToTop() end
 end
 
 function TutorialQuestBoard:resizeWidgetHeight()
@@ -83,15 +95,103 @@ end
 function TutorialQuestBoard:handleZoneClick(zone)
 	if not zone then return false end
 	if zone.kind == "accept" then
-		TutorialQuests.acceptSideQuest(zone.id)
+		TutorialQuests.acceptQuest(zone.id)
 		self:refresh()
 		return true
 	elseif zone.kind == "track" then
 		TutorialQuests.setSideQuestTracked(zone.id, not zone.tracked)
 		self:refresh()
 		return true
+	elseif zone.kind == "tab" then
+		self.activeTab = zone.tab
+		if self.contentPane then
+			self.contentPane:setYScroll(0)
+		end
+		self:refresh()
+		return true
 	end
 	return false
+end
+
+function TutorialQuestBoard:isCyclicTabsUnlocked(player)
+	return TutorialQuests.isCyclicUnlocked(player)
+end
+
+function TutorialQuestBoard:getVisibleTabs(player)
+	local tabs = { self.TAB_MAIN }
+	if self:isCyclicTabsUnlocked(player) then
+		table.insert(tabs, self.TAB_DAILY)
+		table.insert(tabs, self.TAB_REPEATABLE)
+		table.insert(tabs, self.TAB_SPECIAL)
+	end
+	return tabs
+end
+
+function TutorialQuestBoard:ensureActiveTab(player)
+	local tabs = self:getVisibleTabs(player)
+	local valid = false
+	for _, tab in ipairs(tabs) do
+		if tab == self.activeTab then
+			valid = true
+			break
+		end
+	end
+	if not valid then
+		self.activeTab = self.TAB_MAIN
+	end
+end
+
+function TutorialQuestBoard:collectBoardQuestsForTab(player, tab)
+	local offered = {}
+	local active = {}
+
+	if tab == self.TAB_MAIN then
+		for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
+			if TutorialQuests.isSideQuestOffered(player, quest) or TutorialQuests.isCyclicQuestOffered(player, quest) then
+				table.insert(offered, quest)
+			elseif S.getStatus(player, quest.id) >= S.S_ACTIVE
+				and S.getStatus(player, quest.id) < S.S_CLAIMED then
+				table.insert(active, quest)
+			end
+		end
+	elseif tab == self.TAB_DAILY then
+		TutorialQuests.ensureCyclicDaily(player)
+		for _, quest in ipairs(QuestsData.getCyclicDailyQuests()) do
+			if TutorialQuests.isCyclicQuestOffered(player, quest) then
+				table.insert(offered, quest)
+			elseif S.getStatus(player, quest.id) >= S.S_ACTIVE
+				and S.getStatus(player, quest.id) < S.S_CLAIMED then
+				table.insert(active, quest)
+			end
+		end
+	elseif tab == self.TAB_REPEATABLE then
+		for _, quest in ipairs(QuestsData.getCyclicBackgroundQuests()) do
+			if TutorialQuests.isCyclicQuestOffered(player, quest) then
+				table.insert(offered, quest)
+			elseif S.getStatus(player, quest.id) >= S.S_ACTIVE
+				and S.getStatus(player, quest.id) < S.S_CLAIMED then
+				table.insert(active, quest)
+			end
+		end
+	elseif tab == self.TAB_SPECIAL then
+		for _, quest in ipairs(QuestsData.getSpecialQuests()) do
+			if S.getStatus(player, quest.id) >= S.S_ACTIVE
+				and S.getStatus(player, quest.id) < S.S_CLAIMED then
+				table.insert(active, quest)
+			end
+		end
+	end
+
+	return offered, active
+end
+
+function TutorialQuestBoard:hitTabZoneLocal(x, localY)
+	for _, zone in ipairs(self.tabZones) do
+		if x >= zone.x and x <= zone.x + zone.w and localY >= zone.y and localY <= zone.y + zone.h then
+			return zone
+		end
+	end
+	return nil
 end
 
 function TutorialQuestBoard:contentPaneMouseDown(x, y)
@@ -112,31 +212,43 @@ function TutorialQuestBoard:contentWidth()
 	return self.contentPane.width - PAD * 2 - scrollW
 end
 
+function TutorialQuestBoard:estimateTabHeaderHeight(player, tab, maxW)
+	local h = 0
+	if tab == self.TAB_REPEATABLE then
+		h = h + self.lineHgt + 4
+	end
+	if tab == self.TAB_DAILY then
+		h = h + self.lineHgt + 2 + self.lineHgt + 4
+	end
+	if tab == self.TAB_SPECIAL then
+		h = h + self:measureWrapped(getText("IGUI_TutorialQuest_Board_Special_Hint"), maxW) + 4
+	end
+	return h
+end
+
 function TutorialQuestBoard:estimateContentHeight()
 	local player = getPlayer()
+	self:ensureActiveTab(player)
+	local tab = self.activeTab or self.TAB_MAIN
 	local h = PAD
 	local maxW = self:contentWidth()
 
-	local offered = {}
-	local active = {}
-	for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
-		if TutorialQuests.isSideQuestOffered(player, quest) then
-			table.insert(offered, quest)
-		elseif QuestStorage.getStatus(player, quest.id) >= QuestStorage.S_ACTIVE
-			and QuestStorage.getStatus(player, quest.id) < QuestStorage.S_CLAIMED then
-			table.insert(active, quest)
-		end
-	end
+	h = h + self:estimateTabHeaderHeight(player, tab, maxW)
+
+	local offered, active = self:collectBoardQuestsForTab(player, tab)
 
 	if #offered > 0 then
 		h = h + self.lineHgt + 4
 		for _, quest in ipairs(offered) do
 			h = h + self.lineHgt + 2
-			if quest.previewKey then
-				h = h + self:measureWrapped(QuestsData.getQuestPreviewText(quest), maxW) + 2
+			local progress = QuestStorage.getProgress(player, quest.id)
+			local preview = QuestsData.getQuestPreviewText(quest, progress)
+			if preview and preview ~= "" then
+				h = h + self:measureWrapped(preview, maxW) + 2
 			end
-			if quest.detailKey then
-				h = h + self:measureWrapped(getText(quest.detailKey), maxW) + 2
+			local detail = QuestsData.getQuestDetail(quest, progress)
+			if detail then
+				h = h + self:measureWrapped(detail, maxW) + 2
 			end
 			h = h + BTN_H + 8
 		end
@@ -146,6 +258,16 @@ function TutorialQuestBoard:estimateContentHeight()
 		h = h + self.lineHgt + 4
 		for _, quest in ipairs(active) do
 			h = h + self.lineHgt + BTN_H + 8
+		end
+	end
+
+	if tab == self.TAB_DAILY then
+		local claimed = TutorialQuests.getTodayClaimedDailyQuests(player)
+		if #claimed > 0 and (#offered > 0 or #active > 0) then
+			h = h + 4
+		end
+		for _ in ipairs(claimed) do
+			h = h + self.lineHgt * 2 + 6
 		end
 	end
 
@@ -176,10 +298,18 @@ function TutorialQuestBoard:layoutContentPane()
 	if not self.contentPane then return end
 	local th = self:titleBarHeight()
 	local rh = self.resizable and self:resizeWidgetHeight() or 0
+	local tabH = 0
+	if self.tabPane then
+		tabH = TAB_H
+		self.tabPane:setX(0)
+		self.tabPane:setY(th)
+		self.tabPane:setWidth(self.width)
+		self.tabPane:setHeight(tabH)
+	end
 	self.contentPane:setX(0)
-	self.contentPane:setY(th)
+	self.contentPane:setY(th + tabH)
 	self.contentPane:setWidth(self.width)
-	self.contentPane:setHeight(math.max(40, self.height - th - rh))
+	self.contentPane:setHeight(math.max(40, self.height - th - tabH - rh))
 	if self.contentPane.vscroll then
 		self.contentPane.vscroll:setX(self.contentPane.width - self.contentPane.vscroll.width)
 		self.contentPane.vscroll:setHeight(self.contentPane.height)
@@ -188,17 +318,30 @@ function TutorialQuestBoard:layoutContentPane()
 	self:refresh()
 end
 
+function TutorialQuestBoard:renderClaimedDailyBlock(y, quest, player, maxW)
+	local progress = QuestStorage.getProgress(player, quest.id)
+	local tr = QuestsData.getQuestAccent(quest).title
+	self.contentPane:drawText(QuestsData.getQuestTitle(quest, progress), PAD, y, tr[1], tr[2], tr[3], 1, UIFont.Small)
+	y = y + self.lineHgt
+	self.contentPane:drawText(getText("IGUI_Cyclic_Daily_ClaimedStatus"), PAD, y, 0.55, 0.75, 0.55, 1, UIFont.Small)
+	return y + self.lineHgt + 6
+end
+
 function TutorialQuestBoard:renderQuestBlock(y, quest, player, maxW)
-	self.contentPane:drawText(getText(quest.titleKey), PAD, y, 1, 0.92, 0.85, 1, UIFont.Small)
+	local progress = QuestStorage.getProgress(player, quest.id)
+	local tr = QuestsData.getQuestAccent(quest).title
+	self.contentPane:drawText(QuestsData.getQuestTitle(quest, progress), PAD, y, tr[1], tr[2], tr[3], 1, UIFont.Small)
 	y = y + self.lineHgt + 2
 
-	if TutorialQuests.isSideQuestOffered(player, quest) then
-		if quest.previewKey then
-			y = self:drawWrapped(y, QuestsData.getQuestPreviewText(quest), 0.8, 0.85, 0.75, maxW)
+	if TutorialQuests.isSideQuestOffered(player, quest) or TutorialQuests.isCyclicQuestOffered(player, quest) then
+		local preview = QuestsData.getQuestPreviewText(quest, progress)
+		if preview and preview ~= "" then
+			y = self:drawWrapped(y, preview, 0.8, 0.85, 0.75, maxW)
 			y = y + 2
 		end
-		if quest.detailKey then
-			y = self:drawWrapped(y, getText(quest.detailKey), 0.72, 0.8, 0.7, maxW)
+		local detail = QuestsData.getQuestDetail(quest, progress)
+		if detail then
+			y = self:drawWrapped(y, detail, 0.72, 0.8, 0.7, maxW)
 			y = y + 2
 		end
 		self.contentPane:drawRect(PAD, y, maxW, BTN_H, 0.85, 0.12, 0.35, 0.35)
@@ -208,7 +351,7 @@ function TutorialQuestBoard:renderQuestBlock(y, quest, player, maxW)
 		return y + BTN_H + 8
 	end
 
-	local tracked = TutorialQuests.isSideQuestTracked(player, quest)
+	local tracked = TutorialQuests.isCyclicQuestTracked(player, quest) or TutorialQuests.isSideQuestTracked(player, quest)
 	local status = QuestStorage.getStatus(player, quest.id)
 	local statusKey = status == QuestStorage.S_COMPLETE and "IGUI_TutorialQuest_Board_Done" or "IGUI_TutorialQuest_Board_Active"
 	self.contentPane:drawText(getText(statusKey), PAD, y, 0.7, 0.8, 0.7, 1, UIFont.Small)
@@ -221,6 +364,31 @@ function TutorialQuestBoard:renderQuestBlock(y, quest, player, maxW)
 	return y + BTN_H + 8
 end
 
+function TutorialQuestBoard:renderTabBar()
+	if not self.tabPane then return end
+	self.tabZones = {}
+	local player = getPlayer()
+	self:ensureActiveTab(player)
+	local tabs = self:getVisibleTabs(player)
+	local tabW = math.floor(self.width / math.max(#tabs, 1))
+	local labels = {
+		[self.TAB_MAIN] = "IGUI_TutorialQuest_Board_Tab_Main",
+		[self.TAB_DAILY] = "IGUI_TutorialQuest_Board_Tab_Daily",
+		[self.TAB_REPEATABLE] = "IGUI_TutorialQuest_Board_Tab_Repeatable",
+		[self.TAB_SPECIAL] = "IGUI_TutorialQuest_Board_Tab_Special",
+	}
+	for i, tab in ipairs(tabs) do
+		local x = (i - 1) * tabW
+		local active = tab == self.activeTab
+		local style = QuestsData.getBoardTabAccent(tab, active)
+		local bg, border, text = style.bg, style.border, style.text
+		self.tabPane:drawRect(x, 0, tabW - 1, TAB_H, 0.9, bg[1], bg[2], bg[3])
+		self.tabPane:drawRectBorder(x, 0, tabW - 1, TAB_H, 0.85, border[1], border[2], border[3])
+		self.tabPane:drawTextCentre(getText(labels[tab] or tab), x + tabW / 2, 6, text[1], text[2], text[3], 1, UIFont.Small)
+		self:registerTabZone({ kind = "tab", tab = tab, x = x, y = 0, w = tabW - 1, h = TAB_H })
+	end
+end
+
 function TutorialQuestBoard:renderContent()
 	if not self.contentPane then return end
 
@@ -229,17 +397,30 @@ function TutorialQuestBoard:renderContent()
 	local player = getPlayer()
 	if not player then return end
 
+	self:ensureActiveTab(player)
+	local tab = self.activeTab or self.TAB_MAIN
 	local maxW = self:contentWidth()
 	local y = PAD
-	local offered = {}
-	local active = {}
-	for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
-		if TutorialQuests.isSideQuestOffered(player, quest) then
-			table.insert(offered, quest)
-		elseif QuestStorage.getStatus(player, quest.id) >= QuestStorage.S_ACTIVE
-			and QuestStorage.getStatus(player, quest.id) < QuestStorage.S_CLAIMED then
-			table.insert(active, quest)
+	local offered, active = self:collectBoardQuestsForTab(player, tab)
+
+	if tab == self.TAB_REPEATABLE then
+		local activeCount = TutorialQuests.countActiveBackgroundCyclics(player)
+		self.contentPane:drawText(getText("IGUI_Cyclic_Background_ActiveCount", activeCount, QuestsData.MAX_BACKGROUND_CYCLIC), PAD, y, 0.75, 0.85, 0.7, 1, UIFont.Small)
+		y = y + self.lineHgt + 4
+	end
+	if tab == self.TAB_DAILY then
+		self.contentPane:drawText(TutorialQuests.formatGameDayResetCountdown(), PAD, y, 0.75, 0.85, 0.7, 1, UIFont.Small)
+		y = y + self.lineHgt + 2
+		local done, total = TutorialQuests.getDailyClaimedCount(player)
+		if total > 0 then
+			self.contentPane:drawText(getText("IGUI_Cyclic_Daily_Progress", done, total), PAD, y, 0.75, 0.85, 0.7, 1, UIFont.Small)
+			y = y + self.lineHgt + 4
 		end
+	end
+	if tab == self.TAB_SPECIAL then
+		local sp = QuestsData.getPoolAccent("special").title
+		y = self:drawWrapped(y, getText("IGUI_TutorialQuest_Board_Special_Hint"), sp[1] * 0.85, sp[2] * 0.85, sp[3] * 0.85, maxW)
+		y = y + 4
 	end
 
 	local stencilW = self.contentPane.width
@@ -271,9 +452,35 @@ function TutorialQuestBoard:renderContent()
 		end
 	end
 
+	if tab == self.TAB_DAILY then
+		local claimed = TutorialQuests.getTodayClaimedDailyQuests(player)
+		if #claimed > 0 then
+			if #offered > 0 or #active > 0 then
+				y = y + 4
+			end
+			for i, quest in ipairs(claimed) do
+				if i > 1 then
+					y = y + 2
+					self.contentPane:drawRect(PAD, y, maxW, 1, 0.45, 0.35, 0.35, 0.35)
+					y = y + 6
+				end
+				y = self:renderClaimedDailyBlock(y, quest, player, maxW)
+			end
+		end
+	end
+
 	if #offered == 0 and #active == 0 then
-		self.contentPane:drawText(getText("IGUI_TutorialQuest_Board_Empty"), PAD, y, 0.7, 0.75, 0.7, 1, UIFont.Small)
-		y = y + self.lineHgt
+		if tab == self.TAB_DAILY then
+			if #TutorialQuests.getTodayClaimedDailyQuests(player) > 0 then
+				y = y + 4
+			end
+			y = self:drawWrapped(y, TutorialQuests.getDailyBoardEmptyText(player), 0.7, 0.75, 0.7, maxW)
+			y = y + 4
+			y = self:drawWrapped(y, getText("IGUI_Cyclic_Daily_ResetHint"), 0.6, 0.7, 0.65, maxW)
+		else
+			self.contentPane:drawText(getText("IGUI_TutorialQuest_Board_Empty"), PAD, y, 0.7, 0.75, 0.7, 1, UIFont.Small)
+			y = y + self.lineHgt
+		end
 	end
 
 	self:updateScrollHeight(y + PAD)
@@ -286,7 +493,17 @@ function TutorialQuestBoard:createChildren()
 
 	local th = self:titleBarHeight()
 	local rh = self.resizable and self:resizeWidgetHeight() or 0
-	self.contentPane = ISPanel:new(0, th, self.width, self.height - th - rh)
+
+	self.tabPane = ISPanel:new(0, th, self.width, TAB_H)
+	self.tabPane.backgroundColor = { r = 0, g = 0, b = 0, a = 0.01 }
+	self.tabPane.borderColor = { r = 0, g = 0, b = 0, a = 0 }
+	self.tabPane.drawBorder = false
+	self.tabPane:initialise()
+	self.tabPane:instantiate()
+	self.tabPane:setAnchorRight(true)
+	self:addChild(self.tabPane)
+
+	self.contentPane = ISPanel:new(0, th + TAB_H, self.width, self.height - th - TAB_H - rh)
 	self.contentPane.backgroundColor = { r = 0, g = 0, b = 0, a = 0.01 }
 	self.contentPane.borderColor = { r = 0, g = 0, b = 0, a = 0 }
 	self.contentPane.drawBorder = false
@@ -300,6 +517,16 @@ function TutorialQuestBoard:createChildren()
 	self:bringResizeHandlesToFront()
 
 	local board = self
+	function self.tabPane:prerender()
+		ISPanel.prerender(self)
+		board:renderTabBar()
+	end
+
+	function self.tabPane:onMouseDown(x, y)
+		local zone = board:hitTabZoneLocal(x, y)
+		return board:handleZoneClick(zone)
+	end
+
 	function self.contentPane:prerender()
 		ISPanel.prerender(self)
 		board:renderContent()
@@ -323,8 +550,13 @@ end
 function TutorialQuestBoard:onMouseDown(x, y)
 	if not self.contentPane then return ISCollapsableWindow.onMouseDown(self, x, y) end
 	local th = self:titleBarHeight()
-	if y >= th and y < self.contentPane:getY() + self.contentPane.height then
-		if self:contentPaneMouseDown(x, y - th) then return true end
+	if self.tabPane and y >= th and y < th + TAB_H then
+		local zone = self:hitTabZoneLocal(x, y - th)
+		if self:handleZoneClick(zone) then return true end
+	end
+	local contentY = th + (self.tabPane and TAB_H or 0)
+	if y >= contentY and y < self.contentPane:getY() + self.contentPane.height then
+		if self:contentPaneMouseDown(x, y - contentY) then return true end
 	end
 	return ISCollapsableWindow.onMouseDown(self, x, y)
 end
@@ -345,6 +577,8 @@ end
 function TutorialQuestBoard:initialise()
 	ISCollapsableWindow.initialise(self)
 	self.interactZones = {}
+	self.tabZones = {}
+	self.activeTab = self.TAB_MAIN
 	self.lineHgt = getTextManager():getFontFromEnum(UIFont.Small):getLineHeight()
 	self.resizable = true
 	self:setResizable(true)

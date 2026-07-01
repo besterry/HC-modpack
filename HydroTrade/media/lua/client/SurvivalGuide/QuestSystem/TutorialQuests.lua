@@ -132,6 +132,7 @@ end
 function TutorialQuests.tryActivateStoryQuests(player)
 	if not TutorialQuests.ensureModules() then return end
 	if not player or not TutorialQuests.isChainComplete() then return end
+	TutorialQuests.tryNotifyCyclicUnlocked(player)
 	for _, quest in ipairs(QuestsData.getStoryQuests()) do
 		local status = S.getStatus(player, quest.id)
 		if status == S.S_CLAIMED then
@@ -260,18 +261,61 @@ end
 
 function TutorialQuests.onCraftActionPerform(player, action)
 	if not player or not player:isLocalPlayer() or not action or not action.recipe then return end
-	local quest = QuestsData.getQuest("story_skill_journal")
-	if not quest or S.getStatus(player, quest.id) ~= S.S_ACTIVE then return end
 	local recipeName = action.recipe:getOriginalname()
+	local quest = QuestsData.getQuest("story_skill_journal")
+	if quest and S.getStatus(player, quest.id) == S.S_ACTIVE then
+		local p = S.getProgress(player, quest.id)
+		if recipeName == "Bind Journal" then
+			p.journalCrafted = true
+		elseif recipeName == "Transcribe Journal" and action.changesMade then
+			p.journalTranscribed = true
+		end
+		if TutorialQuests.instance then
+			TutorialQuests.instance:updateLayout()
+		end
+	end
+	TutorialQuests.onElectronicsDismantled(player, action.recipe, action.item)
+	TutorialQuests.onClothingRipped(player, action.recipe)
+end
+
+function TutorialQuests.onClothingRipped(player, recipe)
+	if not player or not player:isLocalPlayer() then return end
+	if not QuestsData.isRipClothingRecipe(recipe) then return end
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
+		if quest.type == "rip_clothing" and S.getStatus(player, quest.id) == S.S_ACTIVE then
+			local p = S.getProgress(player, quest.id)
+			p.ripCount = (p.ripCount or 0) + 1
+			if TutorialQuests.instance then
+				TutorialQuests.instance:updateLayout()
+			end
+		end
+	end
+end
+
+function TutorialQuests.getRipClothingProgress(player, quest)
 	local p = S.getProgress(player, quest.id)
-	if recipeName == "Bind Journal" then
-		p.journalCrafted = true
-	elseif recipeName == "Transcribe Journal" and action.changesMade then
-		p.journalTranscribed = true
+	local need = quest.ripsRequired or 15
+	return p.ripCount or 0, need
+end
+
+function TutorialQuests.onElectronicsDismantled(player, recipe, item)
+	if not player or not player:isLocalPlayer() then return end
+	if not QuestsData.isElectronicsDismantleRecipe(recipe, item) then return end
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
+		if quest.type == "dismantle_electronics" and S.getStatus(player, quest.id) == S.S_ACTIVE then
+			local p = S.getProgress(player, quest.id)
+			p.dismantleCount = (p.dismantleCount or 0) + 1
+			if TutorialQuests.instance then
+				TutorialQuests.instance:updateLayout()
+			end
+		end
 	end
-	if TutorialQuests.instance then
-		TutorialQuests.instance:updateLayout()
-	end
+end
+
+function TutorialQuests.getDismantleElectronicsProgress(player, quest)
+	local p = S.getProgress(player, quest.id)
+	local need = quest.dismantleRequired or 10
+	return p.dismantleCount or 0, need
 end
 
 function TutorialQuests.onSafehouseClaimed(player)
@@ -342,13 +386,230 @@ function TutorialQuests.isSideQuestVisibleOnHud(player, quest)
 end
 
 function TutorialQuests.getTrackedSideQuestsForHud(player)
+	return TutorialQuests.getTrackedQuestsForHud(player)
+end
+
+function TutorialQuests.isCyclicUnlocked(player)
+	return TutorialQuests.isChainComplete()
+end
+
+function TutorialQuests.tryNotifyCyclicUnlocked(player)
+	if not player or not TutorialQuests.isCyclicUnlocked(player) then return end
+	local q = S.ensure(player)
+	if not q.cyclic then q.cyclic = {} end
+	if q.cyclic.unlockNotified then return end
+	q.cyclic.unlockNotified = true
+	TutorialQuests.showNotice(player, getText("IGUI_Cyclic_Unlocked"))
+	if TutorialQuests.instance then
+		TutorialQuests.instance:updateLayout()
+	end
+end
+
+function TutorialQuests.getCyclicMeta(player)
+	local q = S.ensure(player)
+	return q and q.cyclic or {}
+end
+
+function TutorialQuests.ensureCyclicDaily(player)
+	if not player then return end
+	local q = S.ensure(player)
+	if not q.cyclic then q.cyclic = {} end
+	local c = q.cyclic
+	local day = QuestsData.getGameDay()
+
+	if c.dailyDay == day then
+		if not c.dailyQuestIds then
+			if c.dailyQuestId then
+				c.dailyQuestIds = { c.dailyQuestId }
+			else
+				c.dailyQuestIds = QuestsData.getDailyCyclicIdsForDay(day)
+			end
+		end
+		if c.dailyClaimedDay == day and c.dailyQuestId and not c.dailyClaimedIds then
+			c.dailyClaimedIds = { [c.dailyQuestId] = true }
+		end
+		return
+	end
+
+	local oldIds = c.dailyQuestIds
+	if not oldIds and c.dailyQuestId then
+		oldIds = { c.dailyQuestId }
+	end
+	if oldIds then
+		for _, oldId in ipairs(oldIds) do
+			local status = S.getStatus(player, oldId)
+			if status == S.S_ACTIVE or status == S.S_COMPLETE then
+				S.setStatus(player, oldId, S.S_INACTIVE)
+				local entry = S.getEntry(player, oldId)
+				if entry then entry.p = {} end
+			end
+		end
+	end
+
+	c.dailyDay = day
+	c.dailyQuestIds = QuestsData.getDailyCyclicIdsForDay(day)
+	c.dailyQuestId = nil
+	c.dailyClaimedIds = {}
+	c.dailyClaimedDay = nil
+end
+
+function TutorialQuests.getTodayDailyQuestIds(player)
+	if not player then return {} end
+	TutorialQuests.ensureCyclicDaily(player)
+	return TutorialQuests.getCyclicMeta(player).dailyQuestIds or {}
+end
+
+function TutorialQuests.isTodayDailyQuest(player, questId)
+	for _, id in ipairs(TutorialQuests.getTodayDailyQuestIds(player)) do
+		if id == questId then return true end
+	end
+	return false
+end
+
+function TutorialQuests.isDailyQuestClaimedToday(player, questId)
+	local c = TutorialQuests.getCyclicMeta(player)
+	if not c.dailyClaimedIds or c.dailyDay ~= QuestsData.getGameDay() then return false end
+	return c.dailyClaimedIds[questId] == true
+end
+
+function TutorialQuests.getDailyClaimedCount(player)
+	local ids = TutorialQuests.getTodayDailyQuestIds(player)
+	local done = 0
+	for _, id in ipairs(ids) do
+		if TutorialQuests.isDailyQuestClaimedToday(player, id) then
+			done = done + 1
+		end
+	end
+	return done, #ids
+end
+
+function TutorialQuests.getTodayClaimedDailyQuests(player)
+	local result = {}
+	if not player then return result end
+	for _, id in ipairs(TutorialQuests.getTodayDailyQuestIds(player)) do
+		if TutorialQuests.isDailyQuestClaimedToday(player, id) then
+			local quest = QuestsData.getQuest(id)
+			if quest then
+				table.insert(result, quest)
+			end
+		end
+	end
+	return result
+end
+
+function TutorialQuests.areAllDailiesClaimedToday(player)
+	local done, total = TutorialQuests.getDailyClaimedCount(player)
+	return total > 0 and done >= total
+end
+
+function TutorialQuests.isDailyCyclicClaimedToday(player)
+	return TutorialQuests.areAllDailiesClaimedToday(player)
+end
+
+function TutorialQuests.countActiveBackgroundCyclics(player)
+	local count = 0
+	for _, quest in ipairs(QuestsData.getCyclicBackgroundQuests()) do
+		if S.getStatus(player, quest.id) == S.S_ACTIVE then
+			count = count + 1
+		end
+	end
+	return count
+end
+
+function TutorialQuests.isCyclicQuestAvailable(player, quest)
+	if not quest or quest.category ~= QuestsData.CATEGORY_CYCLIC then return false end
+	if not TutorialQuests.isCyclicUnlocked(player) then return false end
+	TutorialQuests.ensureCyclicDaily(player)
+	if quest.cyclicTier == QuestsData.CYCLIC_DAILY then
+		if not TutorialQuests.isTodayDailyQuest(player, quest.id) then return false end
+		if TutorialQuests.isDailyQuestClaimedToday(player, quest.id) then return false end
+		return true
+	end
+	return quest.cyclicTier == QuestsData.CYCLIC_BACKGROUND
+end
+
+function TutorialQuests.isCyclicQuestTracked(player, quest)
+	if not quest then return false end
+	local entry = S.getEntry(player, quest.id)
+	return entry and entry.p and entry.p.tracked == true
+end
+
+function TutorialQuests.isCyclicQuestOffered(player, quest)
+	if not TutorialQuests.isCyclicQuestAvailable(player, quest) then return false end
+	if S.getStatus(player, quest.id) >= S.S_ACTIVE then return false end
+	if quest.cyclicTier == QuestsData.CYCLIC_BACKGROUND then
+		return TutorialQuests.countActiveBackgroundCyclics(player) < QuestsData.MAX_BACKGROUND_CYCLIC
+	end
+	return true
+end
+
+function TutorialQuests.isCyclicQuestVisibleOnHud(player, quest)
+	if not TutorialQuests.isCyclicQuestAvailable(player, quest) then return false end
+	if S.getStatus(player, quest.id) < S.S_ACTIVE then return false end
+	return TutorialQuests.isCyclicQuestTracked(player, quest)
+end
+
+function TutorialQuests.isTrackableQuestVisibleOnHud(player, quest)
+	if quest.category == QuestsData.CATEGORY_CYCLIC then
+		return TutorialQuests.isCyclicQuestVisibleOnHud(player, quest)
+	end
+	return TutorialQuests.isSideQuestVisibleOnHud(player, quest)
+end
+
+function TutorialQuests.getTrackedQuestsForHud(player)
 	local list = {}
 	for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
 		if TutorialQuests.isSideQuestVisibleOnHud(player, quest) then
 			table.insert(list, quest)
 		end
 	end
+	for _, quest in ipairs(QuestsData.getCyclicQuests()) do
+		if TutorialQuests.isCyclicQuestVisibleOnHud(player, quest) then
+			table.insert(list, quest)
+		end
+	end
 	return list
+end
+
+function TutorialQuests.countOfferedCyclicQuests(player)
+	local count = 0
+	for _, quest in ipairs(QuestsData.getCyclicQuests()) do
+		if TutorialQuests.isCyclicQuestOffered(player, quest) then
+			count = count + 1
+		end
+	end
+	return count
+end
+
+function TutorialQuests.getMinutesUntilGameDayReset()
+	local gt = getGameTime()
+	if not gt then return 0 end
+	local h = gt:getHour()
+	local m = gt:getMinutes()
+	local mins = (24 - h) * 60 - m
+	if mins < 0 then mins = 0 end
+	return mins
+end
+
+function TutorialQuests.formatGameDayResetCountdown()
+	local mins = TutorialQuests.getMinutesUntilGameDayReset()
+	local hours = math.floor(mins / 60)
+	local minutes = mins % 60
+	return getText("IGUI_Cyclic_Daily_ResetIn", hours, minutes)
+end
+
+function TutorialQuests.getTodayDailyQuest(player)
+	local ids = TutorialQuests.getTodayDailyQuestIds(player)
+	if #ids == 0 then return nil end
+	return QuestsData.getQuest(ids[1])
+end
+
+function TutorialQuests.getDailyBoardEmptyText(player)
+	if TutorialQuests.areAllDailiesClaimedToday(player) then
+		local done, total = TutorialQuests.getDailyClaimedCount(player)
+		return getText("IGUI_Cyclic_Daily_EmptyAllClaimed", done, total)
+	end
+	return getText("IGUI_Cyclic_Daily_EmptyWait")
 end
 
 function TutorialQuests.countOfferedSideQuests(player)
@@ -358,7 +619,7 @@ function TutorialQuests.countOfferedSideQuests(player)
 			count = count + 1
 		end
 	end
-	return count
+	return count + TutorialQuests.countOfferedCyclicQuests(player)
 end
 
 function TutorialQuests.shouldShowQuestBoardButton(player)
@@ -370,16 +631,25 @@ function TutorialQuests.shouldShowQuestBoardButton(player)
 			end
 		end
 	end
+	if TutorialQuests.isCyclicUnlocked(player) then
+		for _, quest in ipairs(QuestsData.getCyclicQuests()) do
+			if TutorialQuests.isCyclicQuestAvailable(player, quest) then
+				if S.getStatus(player, quest.id) < S.S_CLAIMED then
+					return true
+				end
+			end
+		end
+	end
 	return false
 end
 
 function TutorialQuests.hasTrackedSideQuestsOnHud(player)
-	return #TutorialQuests.getTrackedSideQuestsForHud(player) > 0
+	return #TutorialQuests.getTrackedQuestsForHud(player) > 0
 end
 
 function TutorialQuests.ensureSideQuestTracking(player)
 	if not player then return end
-	for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
 		local status = S.getStatus(player, quest.id)
 		if status >= S.S_ACTIVE and status < S.S_CLAIMED then
 			local entry = S.ensureEntry(player, quest.id)
@@ -462,27 +732,9 @@ function TutorialQuests.announceQuestStart(player, quest)
 	player:Say(getText("IGUI_SideQuest_StartItems", summary))
 end
 
-function TutorialQuests.acceptSideQuest(id)
-	local player = getPlayer()
-	local quest = QuestsData.getQuest(id)
-	if not player or not quest or not quest.optional then return end
-	if not TutorialQuests.isSideQuestOffered(player, quest) then return end
-
-	if not TutorialQuests.grantQuestStart(player, quest) then
-		return
-	end
-
-	TutorialQuests.announceQuestStart(player, quest)
-
-	if quest.navTarget or (quest.type == "visit_location" and quest.target) then
-		TutorialQuests.showLocationArrow(player, quest.navTarget or quest.target)
-	end
-
-	local entry = S.ensureEntry(player, id)
-	entry.s = S.S_ACTIVE
-	entry.p.tracked = true
+function TutorialQuests.initQuestProgress(entry, player, quest)
 	if quest.type == "catch_fish" then
-		entry.p.fishAtStart = TutorialQuests.countFish(player)
+		entry.p.fishCaught = 0
 	elseif quest.type == "kill_count" then
 		entry.p.killsAtStart = player:getZombieKills()
 	elseif quest.type == "travel_distance" then
@@ -505,12 +757,102 @@ function TutorialQuests.acceptSideQuest(id)
 		entry.p.flashLastY = player:getY()
 	elseif quest.type == "forage_count" then
 		entry.p.searchForageCount = 0
+	elseif quest.type == "forage_food" then
+		entry.p.forageCount = 0
 	elseif quest.type == "collect_water" then
 		entry.p.waterAtStart = TutorialQuests.countWaterContainers(player)
+	elseif quest.type == "collect_item" then
+		entry.p.collectAtStart = TutorialQuests.countInventoryItem(player, quest.collectItem)
 	elseif quest.type == "sew_patch" then
 		entry.p.patchesAtStart = TutorialQuests.countClothingPatches(player)
 		entry.p.patchesSewn = 0
+	elseif quest.type == "visit_location" and quest.dynamicVisit then
+		local day = QuestsData.getGameDay()
+		entry.p.visitDay = day
+		entry.p.visitTarget = QuestsData.getDailySectorForDay(day)
+	elseif quest.type == "night_distance" then
+		entry.p.nightDistance = 0
+		entry.p.nightLastX = player:getX()
+		entry.p.nightLastY = player:getY()
+	elseif quest.type == "drive_distance" then
+		entry.p.driveDistance = 0
+		entry.p.driveLastX = player:getX()
+		entry.p.driveLastY = player:getY()
+	elseif quest.type == "indoor_minutes" then
+		entry.p.indoorAccumMs = 0
+		entry.p.indoorStartMs = nil
+	elseif quest.type == "fitness_minutes" then
+		entry.p.fitnessMinutes = 0
+	elseif quest.type == "vehicle_bulb_swap" then
+		entry.p.bulbSwaps = 0
+		entry.p.pendingBulbParts = {}
+	elseif quest.type == "dismantle_electronics" then
+		entry.p.dismantleCount = 0
+	elseif quest.type == "rip_clothing" then
+		entry.p.ripCount = 0
 	end
+end
+
+function TutorialQuests.beginQuestAccept(player, quest, id)
+	if not TutorialQuests.grantQuestStart(player, quest) then
+		return false
+	end
+
+	TutorialQuests.announceQuestStart(player, quest)
+
+	local visitTarget = quest.navTarget or quest.target
+	if quest.dynamicVisit then
+		local entry = S.ensureEntry(player, id)
+		visitTarget = entry.p and entry.p.visitTarget or QuestsData.getDailySectorForDay(QuestsData.getGameDay())
+	elseif quest.type == "visit_location" and quest.target then
+		visitTarget = quest.target
+	end
+	if visitTarget then
+		TutorialQuests.showLocationArrow(player, visitTarget)
+	end
+
+	local entry = S.ensureEntry(player, id)
+	entry.s = S.S_ACTIVE
+	entry.p.tracked = true
+	TutorialQuests.initQuestProgress(entry, player, quest)
+	return true
+end
+
+function TutorialQuests.acceptQuest(id)
+	local quest = QuestsData.getQuest(id)
+	if not quest then return end
+	if quest.category == QuestsData.CATEGORY_CYCLIC then
+		TutorialQuests.acceptCyclicQuest(id)
+	else
+		TutorialQuests.acceptSideQuest(id)
+	end
+end
+
+function TutorialQuests.acceptCyclicQuest(id)
+	local player = getPlayer()
+	local quest = QuestsData.getQuest(id)
+	if not player or not quest or quest.category ~= QuestsData.CATEGORY_CYCLIC then return end
+	if not TutorialQuests.isCyclicQuestOffered(player, quest) then return end
+
+	TutorialQuests.ensureCyclicDaily(player)
+	if not TutorialQuests.beginQuestAccept(player, quest, id) then return end
+
+	TutorialQuests.showNotice(player, getText("IGUI_Cyclic_Accepted"))
+	if TutorialQuestBoard and TutorialQuestBoard.instance then
+		TutorialQuestBoard.instance:refresh()
+	end
+	if TutorialQuests.instance then
+		TutorialQuests.instance:updateLayout()
+	end
+end
+
+function TutorialQuests.acceptSideQuest(id)
+	local player = getPlayer()
+	local quest = QuestsData.getQuest(id)
+	if not player or not quest or not quest.optional then return end
+	if not TutorialQuests.isSideQuestOffered(player, quest) then return end
+
+	if not TutorialQuests.beginQuestAccept(player, quest, id) then return end
 
 	TutorialQuests.showNotice(player, getText("IGUI_SideQuest_Accepted"))
 	if TutorialQuestBoard and TutorialQuestBoard.instance then
@@ -647,6 +989,14 @@ function TutorialQuests.getFlashlightDistanceProgress(player, quest)
 	return current, need
 end
 
+function TutorialQuests.getCollectItemProgress(player, quest)
+	local p = S.getProgress(player, quest.id)
+	local need = quest.collectRequired or 1
+	local total = TutorialQuests.countInventoryItem(player, quest.collectItem)
+	local current = math.max(0, total - (p.collectAtStart or 0))
+	return current, need
+end
+
 function TutorialQuests.countInventoryItem(player, itemType)
 	if not player or not itemType then return 0 end
 	local count = 0
@@ -722,8 +1072,25 @@ end
 function TutorialQuests.getFishQuestProgress(player, quest)
 	local p = S.getProgress(player, quest.id)
 	local need = quest.fishRequired or 5
-	local caught = math.max(0, TutorialQuests.countFish(player) - (p.fishAtStart or 0))
-	return caught, need
+	return p.fishCaught or 0, need
+end
+
+function TutorialQuests.onFishCaught(player, fishItem)
+	if not player or not player:isLocalPlayer() then return end
+	if fishItem and QuestsData.isFishItem and not QuestsData.isFishItem(fishItem) then return end
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
+		if quest.type == "catch_fish" and S.getStatus(player, quest.id) == S.S_ACTIVE then
+			local p = S.getProgress(player, quest.id)
+			p.fishCaught = (p.fishCaught or 0) + 1
+			local need = quest.fishRequired or 5
+			if p.fishCaught >= need then
+				completeSideQuest(player, quest)
+			elseif TutorialQuests.instance then
+				TutorialQuests.instance:updateLayout()
+			end
+			return
+		end
+	end
 end
 
 function TutorialQuests.forEachClothingItem(player, fn)
@@ -931,6 +1298,201 @@ function TutorialQuests.isPlayerIndoors(player)
 	return false
 end
 
+function TutorialQuests.getGameTimeMillis()
+	local gt = getGameTime()
+	if not gt then return 0 end
+	return gt:getCalender():getTimeInMillis()
+end
+
+function TutorialQuests.isNightHour(hour, quest)
+	hour = hour or 0
+	local startH = (quest and quest.nightStartHour) or 21
+	local endH = (quest and quest.nightEndHour) or 5
+	if startH == endH then return true end
+	if startH < endH then
+		return hour >= startH and hour < endH
+	end
+	return hour >= startH or hour < endH
+end
+
+function TutorialQuests.isVehicleHeadlightPart(part)
+	if not part or not part.getId then return false end
+	local id = part:getId()
+	return id == "HeadlightLeft" or id == "HeadlightRight"
+		or id == "HeadlightRearLeft" or id == "HeadlightRearRight"
+end
+
+function TutorialQuests.getIndoorMinutesRequired(quest)
+	if not quest then return 20 end
+	if quest.indoorHoursRequired then
+		return quest.indoorHoursRequired * 60
+	end
+	return quest.indoorMinutesRequired or 20
+end
+
+function TutorialQuests.updateNightDistance(player, quest)
+	if not player or not quest or quest.type ~= "night_distance" then return end
+	if S.getStatus(player, quest.id) ~= S.S_ACTIVE then return end
+	local p = S.getProgress(player, quest.id)
+	local gt = getGameTime()
+	if not gt or not TutorialQuests.isNightHour(gt:getHour(), quest) or TutorialQuests.isPlayerIndoors(player) then
+		p.nightLastX = nil
+		p.nightLastY = nil
+		return
+	end
+	local x, y = player:getX(), player:getY()
+	if not player:isPlayerMoving() then
+		p.nightLastX = x
+		p.nightLastY = y
+		return
+	end
+	if p.nightLastX and p.nightLastY then
+		local dx = x - p.nightLastX
+		local dy = y - p.nightLastY
+		local step = math.sqrt(dx * dx + dy * dy)
+		if step > 0.05 and step < 40 then
+			p.nightDistance = (p.nightDistance or 0) + step
+		end
+	end
+	p.nightLastX = x
+	p.nightLastY = y
+end
+
+function TutorialQuests.getNightDistanceProgress(player, quest)
+	local p = S.getProgress(player, quest.id)
+	local need = quest.distanceRequired or 200
+	return math.floor(p.nightDistance or 0), need
+end
+
+function TutorialQuests.updateDriveDistance(player, quest)
+	if not player or not quest or quest.type ~= "drive_distance" then return end
+	if S.getStatus(player, quest.id) ~= S.S_ACTIVE then return end
+	local vehicle = player:getVehicle()
+	local p = S.getProgress(player, quest.id)
+	if not vehicle then
+		p.driveLastX = nil
+		p.driveLastY = nil
+		return
+	end
+	local x, y = player:getX(), player:getY()
+	if p.driveLastX and p.driveLastY then
+		local dx = x - p.driveLastX
+		local dy = y - p.driveLastY
+		local step = math.sqrt(dx * dx + dy * dy)
+		if step > 0.05 and step < 80 then
+			p.driveDistance = (p.driveDistance or 0) + step
+		end
+	end
+	p.driveLastX = x
+	p.driveLastY = y
+end
+
+function TutorialQuests.getDriveDistanceProgress(player, quest)
+	local p = S.getProgress(player, quest.id)
+	local need = quest.distanceRequired or 150
+	return math.floor(p.driveDistance or 0), need
+end
+
+function TutorialQuests.updateIndoorTime(player, quest)
+	if not player or not quest or quest.type ~= "indoor_minutes" then return end
+	if S.getStatus(player, quest.id) ~= S.S_ACTIVE then return end
+	local p = S.getProgress(player, quest.id)
+	local now = TutorialQuests.getGameTimeMillis()
+	local indoors = TutorialQuests.isPlayerIndoors(player)
+	if indoors then
+		if not p.indoorStartMs then
+			p.indoorStartMs = now
+		end
+	else
+		if p.indoorStartMs then
+			p.indoorAccumMs = (p.indoorAccumMs or 0) + (now - p.indoorStartMs)
+			p.indoorStartMs = nil
+		end
+	end
+end
+
+function TutorialQuests.getIndoorMinutesProgress(player, quest)
+	local p = S.getProgress(player, quest.id)
+	local needMin = TutorialQuests.getIndoorMinutesRequired(quest)
+	local totalMs = p.indoorAccumMs or 0
+	if p.indoorStartMs and TutorialQuests.isPlayerIndoors(player) then
+		totalMs = totalMs + (TutorialQuests.getGameTimeMillis() - p.indoorStartMs)
+	end
+	local currentMin = math.floor(totalMs / 60000)
+	return currentMin, needMin
+end
+
+function TutorialQuests.getIndoorHoursProgress(player, quest)
+	local currentMin, needMin = TutorialQuests.getIndoorMinutesProgress(player, quest)
+	local needH = quest.indoorHoursRequired or math.ceil(needMin / 60)
+	return math.floor(currentMin / 60), needH
+end
+
+function TutorialQuests.getFitnessMinutesProgress(player, quest)
+	local p = S.getProgress(player, quest.id)
+	local need = quest.fitnessMinutesRequired or 10
+	local current = math.floor(p.fitnessMinutes or 0)
+	return current, need
+end
+
+function TutorialQuests.onFitnessSessionEnd(player, action)
+	if not player or not player:isLocalPlayer() or not action then return end
+	if action._questFitnessCounted then return end
+	action._questFitnessCounted = true
+	local startMs = action.startMS
+	if not startMs then return end
+	local elapsedMs = TutorialQuests.getGameTimeMillis() - startMs
+	if elapsedMs < 0 then return end
+	local minutes = elapsedMs / 60000
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
+		if quest.type == "fitness_minutes" and S.getStatus(player, quest.id) == S.S_ACTIVE then
+			local p = S.getProgress(player, quest.id)
+			p.fitnessMinutes = (p.fitnessMinutes or 0) + minutes
+			if TutorialQuests.instance then
+				TutorialQuests.instance:updateLayout()
+			end
+		end
+	end
+end
+
+function TutorialQuests.getBulbSwapProgress(player, quest)
+	local p = S.getProgress(player, quest.id)
+	local need = quest.bulbSwapsRequired or 4
+	return p.bulbSwaps or 0, need
+end
+
+function TutorialQuests.onVehicleHeadlightUninstalled(player, part)
+	if not player or not player:isLocalPlayer() or not TutorialQuests.isVehicleHeadlightPart(part) then return end
+	local partId = part:getId()
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
+		if quest.type == "vehicle_bulb_swap" and S.getStatus(player, quest.id) == S.S_ACTIVE then
+			local p = S.getProgress(player, quest.id)
+			if not p.pendingBulbParts then p.pendingBulbParts = {} end
+			p.pendingBulbParts[partId] = true
+			if TutorialQuests.instance then
+				TutorialQuests.instance:updateLayout()
+			end
+		end
+	end
+end
+
+function TutorialQuests.onVehicleHeadlightInstalled(player, part)
+	if not player or not player:isLocalPlayer() or not TutorialQuests.isVehicleHeadlightPart(part) then return end
+	local partId = part:getId()
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
+		if quest.type == "vehicle_bulb_swap" and S.getStatus(player, quest.id) == S.S_ACTIVE then
+			local p = S.getProgress(player, quest.id)
+			if p.pendingBulbParts and p.pendingBulbParts[partId] then
+				p.pendingBulbParts[partId] = nil
+				p.bulbSwaps = (p.bulbSwaps or 0) + 1
+				if TutorialQuests.instance then
+					TutorialQuests.instance:updateLayout()
+				end
+			end
+		end
+	end
+end
+
 function TutorialQuests.getSideQuestDisplay(player, quest)
 	if not player or not quest then return nil end
 	if quest.type == "catch_fish" then
@@ -941,7 +1503,7 @@ function TutorialQuests.getSideQuestDisplay(player, quest)
 		local p = S.getProgress(player, quest.id)
 		local need = quest.forageRequired or 1
 		local current = p.forageCount or 0
-		return { done = current >= need, text = getText(quest.goalKey) }
+		return { done = current >= need, text = getText(quest.goalKey, current, need) }
 	end
 	if quest.type == "kill_count" then
 		local current, need = TutorialQuests.getKillQuestProgress(player, quest)
@@ -982,11 +1544,19 @@ function TutorialQuests.getSideQuestDisplay(player, quest)
 		return { done = done, text = getText(quest.goalKey) }
 	end
 	if quest.type == "visit_location" then
-		local target = quest.target
+		local p = S.getProgress(player, quest.id)
+		local target = QuestsData.resolveVisitTarget(quest, p, QuestsData.getGameDay())
 		local radius = quest.visitRadius or 12
 		local dist = math.floor(QuestsData.getDistanceToPoint(player:getX(), player:getY(), target))
 		local done = QuestsData.isNearPoint(player:getX(), player:getY(), target, radius)
-		local text = done and getText(quest.goalKey) or getText(quest.distanceKey or quest.goalKey, dist)
+		local text
+		if done then
+			text = getText(quest.goalKey)
+		elseif quest.dynamicVisit and target and target.titleKey then
+			text = getText("IGUI_Cyclic_DailyVisit_GoalNamed", getText(target.titleKey), dist)
+		else
+			text = getText(quest.distanceKey or quest.goalKey, dist)
+		end
 		return { done = done, text = text }
 	end
 	if quest.type == "quiet_zone" then
@@ -1006,9 +1576,37 @@ function TutorialQuests.getSideQuestDisplay(player, quest)
 		local current, need = TutorialQuests.getSearchForageProgress(player, quest)
 		return { done = current >= need, text = getText(quest.goalKey, current, need) }
 	end
+	if quest.type == "night_distance" then
+		local current, need = TutorialQuests.getNightDistanceProgress(player, quest)
+		return { done = current >= need, text = getText(quest.goalKey, current, need) }
+	end
+	if quest.type == "drive_distance" then
+		local current, need = TutorialQuests.getDriveDistanceProgress(player, quest)
+		return { done = current >= need, text = getText(quest.goalKey, current, need) }
+	end
+	if quest.type == "indoor_minutes" then
+		local currentMin, needMin = TutorialQuests.getIndoorMinutesProgress(player, quest)
+		local currentH, needH = TutorialQuests.getIndoorHoursProgress(player, quest)
+		return { done = currentMin >= needMin, text = getText(quest.goalKey, currentH, needH) }
+	end
+	if quest.type == "fitness_minutes" then
+		local current, need = TutorialQuests.getFitnessMinutesProgress(player, quest)
+		return { done = current >= need, text = getText(quest.goalKey, current, need) }
+	end
+	if quest.type == "vehicle_bulb_swap" then
+		local current, need = TutorialQuests.getBulbSwapProgress(player, quest)
+		return { done = current >= need, text = getText(quest.goalKey, current, need) }
+	end
+	if quest.type == "dismantle_electronics" then
+		local current, need = TutorialQuests.getDismantleElectronicsProgress(player, quest)
+		return { done = current >= need, text = getText(quest.goalKey, current, need) }
+	end
+	if quest.type == "rip_clothing" then
+		local current, need = TutorialQuests.getRipClothingProgress(player, quest)
+		return { done = current >= need, text = getText(quest.goalKey, current, need) }
+	end
 	if quest.type == "collect_item" then
-		local need = quest.collectRequired or 1
-		local current = TutorialQuests.countInventoryItem(player, quest.collectItem)
+		local current, need = TutorialQuests.getCollectItemProgress(player, quest)
 		return { done = current >= need, text = getText(quest.goalKey, current, need) }
 	end
 	if quest.type == "rest_stamina" then
@@ -1058,7 +1656,7 @@ end
 
 function TutorialQuests.onPatchSewn(player)
 	if not player or not player:isLocalPlayer() then return end
-	for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
 		if quest.type == "sew_patch" and S.getStatus(player, quest.id) == S.S_ACTIVE then
 			local p = S.getProgress(player, quest.id)
 			p.patchesSewn = (p.patchesSewn or 0) + 1
@@ -1075,7 +1673,7 @@ end
 
 function TutorialQuests.onVanillaForageSuccess(player)
 	if not player or not player:isLocalPlayer() then return end
-	for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
 		if quest.type == "forage_count" and S.getStatus(player, quest.id) == S.S_ACTIVE then
 			local p = S.getProgress(player, quest.id)
 			p.searchForageCount = (p.searchForageCount or 0) + 1
@@ -1092,7 +1690,7 @@ end
 
 function TutorialQuests.onForageSuccess(player)
 	if not player or not player:isLocalPlayer() then return end
-	for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
 		if quest.type == "forage_food" and S.getStatus(player, quest.id) == S.S_ACTIVE then
 			local p = S.getProgress(player, quest.id)
 			p.forageCount = (p.forageCount or 0) + 1
@@ -1107,7 +1705,10 @@ end
 
 function TutorialQuests.updateSideQuests(player)
 	TutorialQuests.tryAutoActivateRestQuest(player)
-	for _, quest in ipairs(QuestsData.getAllOptionalQuests()) do
+	if TutorialQuests.isCyclicUnlocked(player) then
+		TutorialQuests.ensureCyclicDaily(player)
+	end
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
 		local status = S.getStatus(player, quest.id)
 		if quest.type == "travel_distance" and status == S.S_ACTIVE then
 			TutorialQuests.updateTravelDistance(player, quest)
@@ -1123,6 +1724,12 @@ function TutorialQuests.updateSideQuests(player)
 			TutorialQuests.updateFlashlightDistance(player, quest)
 		elseif quest.type == "rest_stamina" and status == S.S_ACTIVE then
 			TutorialQuests.updateRestStaminaQuest(player, quest)
+		elseif quest.type == "night_distance" and status == S.S_ACTIVE then
+			TutorialQuests.updateNightDistance(player, quest)
+		elseif quest.type == "drive_distance" and status == S.S_ACTIVE then
+			TutorialQuests.updateDriveDistance(player, quest)
+		elseif quest.type == "indoor_minutes" and status == S.S_ACTIVE then
+			TutorialQuests.updateIndoorTime(player, quest)
 		end
 		if quest.rewardPool and status >= S.S_COMPLETE and status < S.S_CLAIMED then
 			QuestsData.getPooledRewardItem(quest, S.getProgress(player, quest.id))
@@ -1303,8 +1910,12 @@ end
 
 function TutorialQuests.findQuestLocation(questId)
 	local quest = QuestsData.getQuest(questId)
-	if not quest or not quest.target then return end
-	TutorialQuests.showLocationArrow(getPlayer(), quest.target)
+	if not quest then return end
+	local player = getPlayer()
+	local p = player and S.getProgress(player, questId) or nil
+	local target = QuestsData.resolveVisitTarget(quest, p, QuestsData.getGameDay())
+	if not target then return end
+	TutorialQuests.showLocationArrow(player, target)
 end
 
 function TutorialQuests.needsClaim(order)
@@ -1314,6 +1925,7 @@ end
 function TutorialQuests.hasGrantableRewards(def)
 	if not def then return false end
 	if def.balanceReward and def.balanceReward > 0 then return true end
+	if def.xpReward and def.xpReward.amount and def.xpReward.amount > 0 then return true end
 	if def.rewards and #def.rewards > 0 then return true end
 	if def.rewardPool and #def.rewardPool > 0 then return true end
 	return false
@@ -1356,6 +1968,10 @@ function TutorialQuests.grantQuestRewards(player, def)
 			return false
 		end
 	end
+	if def.xpReward and def.xpReward.amount and def.xpReward.amount > 0 then
+		local perk = Perks[def.xpReward.perkName] or Perks.Mechanics
+		player:getXp():AddXP(perk, def.xpReward.amount)
+	end
 	return true
 end
 
@@ -1367,6 +1983,27 @@ function TutorialQuests.claimRewardById(id)
 	if not def or not TutorialQuests.hasGrantableRewards(def) then return end
 
 	if not TutorialQuests.grantQuestRewards(player, def) then return end
+
+	if def.category == QuestsData.CATEGORY_CYCLIC then
+		local q = S.ensure(player)
+		if def.cyclicTier == QuestsData.CYCLIC_DAILY then
+			if not q.cyclic then q.cyclic = {} end
+			if not q.cyclic.dailyClaimedIds then q.cyclic.dailyClaimedIds = {} end
+			q.cyclic.dailyClaimedIds[id] = true
+		end
+		local entry = S.ensureEntry(player, id)
+		entry.p = {}
+		entry.s = S.S_INACTIVE
+		local rewardLabel = QuestsData.getRewardText(id, entry.p)
+		TutorialQuests.showNotice(player, getText("IGUI_TutorialQuest_Reward_Got", rewardLabel))
+		if TutorialQuests.instance then
+			TutorialQuests.instance:updateLayout()
+		end
+		if TutorialQuestBoard and TutorialQuestBoard.instance then
+			TutorialQuestBoard.instance:refresh()
+		end
+		return
+	end
 
 	S.setStatus(player, id, S.S_CLAIMED)
 
@@ -1386,6 +2023,8 @@ function TutorialQuests.claimRewardById(id)
 		end
 	end
 
+	TutorialQuests.tryNotifyCyclicUnlocked(player)
+
 	local rewardLabel = QuestsData.getRewardText(id, S.getProgress(player, id))
 	TutorialQuests.showNotice(player, getText("IGUI_TutorialQuest_Reward_Got", rewardLabel))
 	if TutorialQuests.instance then
@@ -1397,7 +2036,7 @@ function TutorialQuests.claimReward(order)
 	TutorialQuests.claimRewardById(questId(order))
 end
 
-function TutorialQuests.acceptQuestChain()
+function TutorialQuests.acceptQuestChain(silent)
 	local player = getPlayer()
 	if not player or S.isTutorialOptedIn(player) then return end
 
@@ -1406,7 +2045,9 @@ function TutorialQuests.acceptQuestChain()
 	entry.s = S.S_ACTIVE
 	entry.p.killsAtStart = player:getZombieKills()
 
-	TutorialQuests.showNotice(player, getText("IGUI_TutorialQuest_Accepted"))
+	if not silent then
+		TutorialQuests.showNotice(player, getText("IGUI_TutorialQuest_Accepted"))
+	end
 	TutorialQuests.reopenHud()
 end
 
@@ -1494,6 +2135,10 @@ function TutorialQuests.update(player)
 		return
 	end
 
+	if not S.isTutorialOptedIn(player) then
+		TutorialQuests.acceptQuestChain(true)
+	end
+
 	TutorialQuests.ensureHud()
 	if TutorialQuests.instance then
 		TutorialQuests.instance:setVisible(true)
@@ -1524,6 +2169,7 @@ function TutorialQuests.update(player)
 	TutorialQuests.updateSideQuests(player)
 
 	if TutorialQuests.isChainComplete() then
+		TutorialQuests.tryNotifyCyclicUnlocked(player)
 		TutorialQuests.tryActivateStoryQuests(player)
 		for _, quest in ipairs(QuestsData.getStoryQuests()) do
 			if S.getStatus(player, quest.id) == S.S_ACTIVE then

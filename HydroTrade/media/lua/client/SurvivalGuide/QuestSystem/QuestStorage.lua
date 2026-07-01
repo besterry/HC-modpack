@@ -41,6 +41,9 @@ function QuestStorage.ensure(player)
 	if not q.entries then
 		q.entries = {}
 	end
+	if not q.cyclic then
+		q.cyclic = {}
+	end
 	return q
 end
 
