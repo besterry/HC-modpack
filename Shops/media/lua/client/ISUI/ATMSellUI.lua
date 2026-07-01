@@ -79,6 +79,45 @@ local function getCartIds(cartItems)
 	return ids
 end
 
+local function stackKeyFor(v)
+	local spec = v.specialCoin and "s" or "c"
+	return v.type .. "_" .. spec .. "_" .. tostring(v.priceFull) .. "_" .. tostring(v.price)
+end
+
+local function groupStacks(flatList)
+	local groups = {}
+	local order = {}
+	for _, v in ipairs(flatList) do
+		local key = stackKeyFor(v)
+		local g = groups[key]
+		if not g then
+			g = {
+				stackKey = key,
+				type = v.type,
+				name = v.name,
+				specialCoin = v.specialCoin,
+				price = v.price,
+				priceFull = v.priceFull,
+				invItem = v.invItem,
+				entries = {},
+				isStack = true,
+			}
+			groups[key] = g
+			table.insert(order, g)
+		end
+		table.insert(g.entries, v)
+	end
+	for _, g in ipairs(order) do
+		g.count = #g.entries
+		if g.count > 1 then
+			g.displayName = Nfunction.trimString(g.name, 26) .. " (x" .. g.count .. ")"
+		else
+			g.displayName = g.name
+		end
+	end
+	return order
+end
+
 local function itemKey(item)
 	return item.type .. "_" .. item.id
 end
@@ -118,12 +157,13 @@ local function drawListItem(self, y, item, alt, isInventory)
 
 	local coinImg = Currency.CoinsTexture.Coin
 	if item.item.specialCoin then coinImg = Currency.CoinsTexture.SpecialCoin end
+	local displayName = item.item.displayName or item.item.name
 	local priceFormatted = Currency.format(item.item.price)
 	local priceW = getTextManager():MeasureStringX(UIFont.Small, priceFormatted)
 	local coinSz = coinImg.scale + 2
 	local textX = lay.btnX - PRICE_BTN_GAP - priceW
 	local coinX = textX - COIN_PRICE_GAP - coinSz
-	self:drawText(item.item.name, 46, y + 8, 1, 1, 1, a, UIFont.Small);
+	self:drawText(displayName, 46, y + 8, 1, 1, 1, a, UIFont.Small);
 
 	self:drawTextureScaledAspect(coinImg.texture, coinX, y + 6, coinSz, coinSz, 1, 1, 1, 1)
 	self:drawText(priceFormatted, textX, y + 8, 1, 1, 1, a, UIFont.Small);
@@ -134,73 +174,75 @@ local function drawListItem(self, y, item, alt, isInventory)
 	return y + self.itemheight
 end
 
-function ATMSellUI:refreshItems()
+function ATMSellUI:rebuildInventoryList()
 	if not self.sellItems then return end
 
 	local cartIds = getCartIds(self.cartItems)
-	self.itemsToSell = buildSellList(self.player, self.sellItems, cartIds)
+	local flat = buildSellList(self.player, self.sellItems, cartIds)
+	self.inventoryStacks = groupStacks(flat)
 	self.itemsList:clear()
-	for _, v in ipairs(self.itemsToSell) do
-		self.itemsList:addItem(itemKey(v), v)
+	for _, stack in ipairs(self.inventoryStacks) do
+		self.itemsList:addItem(stack.stackKey, stack)
 	end
 	self:updateTotals()
 end
 
-function ATMSellUI:addToCart(rowIndex)
+function ATMSellUI:refreshItems()
+	self:rebuildInventoryList()
+end
+
+function ATMSellUI:addToCart(rowIndex, addAll)
 	if self.actionInProgress then return end
 	local row = self.itemsList.items[rowIndex]
 	if not row then return end
-	local item = row.item
-	self.cartItems:addItem(itemKey(item), item)
-	self.itemsList:removeItemByIndex(rowIndex)
-	for i, v in ipairs(self.itemsToSell) do
-		if v.id == item.id then
-			table.remove(self.itemsToSell, i)
-			break
+	local stack = row.item
+	if not stack.entries or #stack.entries == 0 then return end
+
+	local toAdd = {}
+	if addAll then
+		for i = 1, #stack.entries do
+			toAdd[i] = stack.entries[i]
 		end
+	else
+		toAdd[1] = stack.entries[1]
+	end
+
+	for i = 1, #toAdd do
+		local entry = toAdd[i]
+		self.cartItems:addItem(itemKey(entry), entry)
 	end
 	self.cartItems:setYScroll(-10000)
-	self:updateTotals()
+	self:rebuildInventoryList()
 end
 
 function ATMSellUI:removeFromCart(rowIndex)
 	if self.actionInProgress then return end
 	local row = self.cartItems.items[rowIndex]
 	if not row then return end
-	local item = row.item
 	self.cartItems:removeItemByIndex(rowIndex)
-	table.insert(self.itemsToSell, item)
-	self.itemsList:addItem(itemKey(item), item)
-	self:updateTotals()
+	self:rebuildInventoryList()
 end
 
 function ATMSellUI:moveAllToCart()
 	if self.actionInProgress then return end
 	local items = self.itemsList.items
 	for i = 1, #items do
-		local row = items[i]
-		if row then
-			self.cartItems:addItem(itemKey(row.item), row.item)
+		local stack = items[i].item
+		if stack and stack.entries then
+			for j = 1, #stack.entries do
+				local entry = stack.entries[j]
+				self.cartItems:addItem(itemKey(entry), entry)
+			end
 		end
 	end
-	self.itemsList:clear()
-	self.itemsToSell = {}
 	self.cartItems:setYScroll(-10000)
-	self:updateTotals()
+	self:rebuildInventoryList()
 end
 
 function ATMSellUI:clearCart()
 	if self.actionInProgress then return end
-	local items = self.cartItems.items
-	for i = 1, #items do
-		local row = items[i]
-		if row then
-			table.insert(self.itemsToSell, row.item)
-			self.itemsList:addItem(itemKey(row.item), row.item)
-		end
-	end
 	self.cartItems:clear()
-	self:updateTotals()
+	self:rebuildInventoryList()
 end
 
 function ATMSellUI:onMouseDownInventory(x, y)
@@ -210,7 +252,7 @@ function ATMSellUI:onMouseDownInventory(x, y)
 	if not rowIndex then return end
 	local lay = getAtmRowLayout(self:getWidth())
 	if self:getMouseX() >= lay.btnX - 2 then
-		self.parentUI:addToCart(rowIndex)
+		self.parentUI:addToCart(rowIndex, isShiftKeyDown())
 	end
 end
 
@@ -284,7 +326,15 @@ function ATMSellUI:updateTotals()
 
 	self.sellButton.enable = (not self.actionInProgress) and cartCount > 0
 	self.clearCartButton.enable = (not self.actionInProgress) and cartCount > 0
-	self.moveAllButton.enable = (not self.actionInProgress) and #self.itemsToSell > 0
+	self.moveAllButton.enable = (not self.actionInProgress) and self.inventoryStacks and #self.inventoryStacks > 0
+
+	if self.cartLabel then
+		local cartText = getText("IGUI_ATM_Cart")
+		if cartCount > 0 then
+			cartText = cartText .. " (" .. cartCount .. ")"
+		end
+		self.cartLabel:setName(cartText)
+	end
 end
 
 function ATMSellUI:onSell()
@@ -303,7 +353,7 @@ function ATMSellUI:render()
 	local q = ISTimedActionQueue.getTimedActionQueue(self.player)
 	if q and q.queue and q.queue[1] and q.queue[1].Type == "ATMSellAction" then
 		self.actionInProgress = true
-		self:drawProgressBar(self.width - 260, self.height - 58, 120, 10, q.queue[1].action:getJobDelta(), self.fgBar)
+		self:drawProgressBar(self.width - 260, self.height - 46, 120, 10, q.queue[1].action:getJobDelta(), self.fgBar)
 	else
 		self.actionInProgress = false
 	end
@@ -318,32 +368,50 @@ function ATMSellUI:createChildren()
 	local th = self:titleBarHeight();
 	local gap = 10
 	local listW = math.floor((self.width - 40 - gap) / 2)
-	local listY = th + 50
-	local listH = self.height - 160
+	local cartX = x + listW + gap
+	local labelY = th + 32
+	local listY = labelY + ATMSellUI.SMALL_FONT_HGT + 4
+	local btnH = 30
+	local bottomPad = 4
+	local btnY = self.height - bottomPad - btnH
+	local helpIconSize = 16
+	local helpRowH = ATMSellUI.SMALL_FONT_HGT + 2
+	local helpH = helpRowH * 2
+	local footerY = btnY - 2 - helpH
+	local listH = footerY - 4 - listY
+	local totalY = footerY + helpRowH - 2
+	local headerBtnSize = 25
+	local headerBtnY = labelY - 4
 
-	self.inventoryLabel = ISLabel:new(x, th + 32, ATMSellUI.SMALL_FONT_HGT, getText("IGUI_ATM_Inventory"), 0.9, 0.9, 1.0, 1, UIFont.Small, true)
+	local function addHeaderIconButton(btnX, y, texture, onClick)
+		local btn = ISButton:new(btnX, y, headerBtnSize, headerBtnSize, "", self, onClick)
+		btn.borderColor = { r = 0, g = 0, b = 0, a = 0 }
+		btn.backgroundColor = { r = 0, g = 0, b = 0, a = 0 }
+		btn.backgroundColorMouseOver = { r = 0.25, g = 0.25, b = 0.25, a = 0.45 }
+		btn:setImage(texture)
+		btn:initialise()
+		btn.enable = false
+		self:addChild(btn)
+		return btn
+	end
+
+	local function addHelpLegend(btnX, y, texture, text)
+		local icon = ISImage:new(btnX, y, 0, 0, texture)
+		icon.scaledWidth = helpIconSize
+		icon.scaledHeight = helpIconSize
+		self:addChild(icon)
+		local lbl = ISLabel:new(btnX + helpIconSize + 4, y + 1, ATMSellUI.SMALL_FONT_HGT, text, 0.75, 0.75, 0.75, 1, UIFont.Small, true)
+		self:addChild(lbl)
+	end
+
+	self.inventoryLabel = ISLabel:new(x, labelY, ATMSellUI.SMALL_FONT_HGT, getText("IGUI_ATM_Inventory"), 0.9, 0.9, 1.0, 1, UIFont.Small, true)
 	self:addChild(self.inventoryLabel);
 
-	self.cartLabel = ISLabel:new(x + listW + gap, th + 32, ATMSellUI.SMALL_FONT_HGT, getText("IGUI_ATM_Cart"), 0.9, 0.9, 1.0, 1, UIFont.Small, true)
+	self.cartLabel = ISLabel:new(cartX, labelY, ATMSellUI.SMALL_FONT_HGT, getText("IGUI_ATM_Cart"), 0.9, 0.9, 1.0, 1, UIFont.Small, true)
 	self:addChild(self.cartLabel);
 
-	self.moveAllButton = ISButton:new(x + listW - 30, th + 28, 25, 25, "", self, ATMSellUI.moveAllToCart)
-	self.moveAllButton.borderColor = { r = 0, g = 0, b = 0, a = 0 }
-	self.moveAllButton.backgroundColor = { r = 0, g = 0, b = 0, a = 0 }
-	self.moveAllButton.backgroundColorMouseOver = { r = 0, g = 0, b = 0, a = 0 }
-	self.moveAllButton:setImage(Shop.textures.MoveAll.texture)
-	self.moveAllButton:initialise()
-	self.moveAllButton.enable = false
-	self:addChild(self.moveAllButton);
-
-	self.clearCartButton = ISButton:new(self.width - 45, th + 28, 25, 25, "", self, ATMSellUI.clearCart)
-	self.clearCartButton.borderColor = { r = 0, g = 0, b = 0, a = 0 }
-	self.clearCartButton.backgroundColor = { r = 0, g = 0, b = 0, a = 0 }
-	self.clearCartButton.backgroundColorMouseOver = { r = 0, g = 0, b = 0, a = 0 }
-	self.clearCartButton:setImage(Shop.textures.Dell.texture)
-	self.clearCartButton:initialise()
-	self.clearCartButton.enable = false
-	self:addChild(self.clearCartButton);
+	self.moveAllButton = addHeaderIconButton(x + listW - headerBtnSize, headerBtnY, Shop.textures.MoveAll.texture, ATMSellUI.moveAllToCart)
+	self.clearCartButton = addHeaderIconButton(cartX + listW - headerBtnSize, headerBtnY, Shop.textures.Dell.texture, ATMSellUI.clearCart)
 
 	self.itemsList = ISScrollingListBox:new(x, listY, listW, listH);
 	self.itemsList:initialise();
@@ -360,7 +428,7 @@ function ATMSellUI:createChildren()
 	self.itemsList.onMouseDown = ATMSellUI.onMouseDownInventory
 	self:addChild(self.itemsList);
 
-	self.cartItems = ISScrollingListBox:new(x + listW + gap, listY, listW, listH);
+	self.cartItems = ISScrollingListBox:new(cartX, listY, listW, listH);
 	self.cartItems:initialise();
 	self.cartItems:instantiate();
 	self.cartItems:setAnchorRight(true)
@@ -397,31 +465,43 @@ function ATMSellUI:createChildren()
 	self.balanceSpecialCoinLabel = ISLabel:new(x + 225, 25, ATMSellUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
 	self:addChild(self.balanceSpecialCoinLabel);
 
-	self.totalText = ISLabel:new(x, self.height - 80, ATMSellUI.SMALL_FONT_HGT, getText("IGUI_Total"), 0.9, 0.9, 1.0, 1, UIFont.Medium, true)
+	local helpMidX = x + math.floor(listW / 2)
+	addHelpLegend(x, footerY, Shop.textures.MoveAll.texture, getText("IGUI_ATM_HelpMoveAll"))
+	addHelpLegend(helpMidX, footerY, Shop.textures.Dell.texture, getText("IGUI_ATM_HelpClearCart"))
+
+	local shiftIconY = footerY + helpRowH
+	local shiftIcon = ISImage:new(x, shiftIconY, 0, 0, addBtn.texture)
+	shiftIcon.scaledWidth = helpIconSize
+	shiftIcon.scaledHeight = helpIconSize
+	self:addChild(shiftIcon)
+	self.helpShiftLabel = ISLabel:new(x + helpIconSize + 4, shiftIconY + 1, ATMSellUI.SMALL_FONT_HGT, getText("IGUI_ATM_ShiftHint"), 0.65, 0.65, 0.65, 1, UIFont.Small, true)
+	self:addChild(self.helpShiftLabel)
+
+	self.totalText = ISLabel:new(cartX, totalY, ATMSellUI.SMALL_FONT_HGT, getText("IGUI_Total"), 0.9, 0.9, 1.0, 1, UIFont.Medium, true)
 	self.totalText:setAnchorBottom(true)
 	self:addChild(self.totalText);
 
-	self.totalCoinTex = ISImage:new(x + 70, self.height - 83, 0, 0, coinImg.texture);
+	self.totalCoinTex = ISImage:new(cartX + 55, totalY - 3, 0, 0, coinImg.texture);
 	self.totalCoinTex.scaledWidth = coinImg.scale+6
 	self.totalCoinTex.scaledHeight = coinImg.scale+6
 	self.totalCoinTex:setAnchorBottom(true)
 	self:addChild(self.totalCoinTex);
 
-	self.totalCoinLabel = ISLabel:new(x + 95, self.height - 80, ATMSellUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
+	self.totalCoinLabel = ISLabel:new(cartX + 80, totalY, ATMSellUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
 	self.totalCoinLabel:setAnchorBottom(true)
 	self:addChild(self.totalCoinLabel);
 
-	self.totalSpecialCoinTex = ISImage:new(x + 180, self.height - 83, 0, 0, sImg.texture);
+	self.totalSpecialCoinTex = ISImage:new(cartX + 165, totalY - 3, 0, 0, sImg.texture);
 	self.totalSpecialCoinTex.scaledWidth = sImg.scale+6
 	self.totalSpecialCoinTex.scaledHeight = sImg.scale+6
 	self.totalSpecialCoinTex:setAnchorBottom(true)
 	self:addChild(self.totalSpecialCoinTex);
 
-	self.totalSpecialCoinLabel = ISLabel:new(x + 205, self.height - 80, ATMSellUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
+	self.totalSpecialCoinLabel = ISLabel:new(cartX + 190, totalY, ATMSellUI.SMALL_FONT_HGT, "0", 1, 1, 1, 1, UIFont.Medium, true)
 	self.totalSpecialCoinLabel:setAnchorBottom(true)
 	self:addChild(self.totalSpecialCoinLabel);
 
-	self.sellButton = ISButton:new(self.width - 260, self.height - 50, 120, 35, getText("IGUI_Sell"), self, ATMSellUI.onSell);
+	self.sellButton = ISButton:new(self.width - 260, btnY, 120, btnH, getText("IGUI_Sell"), self, ATMSellUI.onSell);
 	self.sellButton:setAnchorRight(true)
 	self.sellButton:setAnchorBottom(true)
 	self.sellButton.enable = false
@@ -429,7 +509,7 @@ function ATMSellUI:createChildren()
 	self.sellButton.borderColor = {r=0.4, g=0.8, b=0.4, a=1.0}
 	self:addChild(self.sellButton);
 
-	self.closeButton = ISButton:new(self.width - 130, self.height - 50, 120, 35, getText("UI_Cancel"), self, ATMSellUI.onClose);
+	self.closeButton = ISButton:new(self.width - 130, btnY, 120, btnH, getText("UI_Cancel"), self, ATMSellUI.onClose);
 	self.closeButton:setAnchorRight(true)
 	self.closeButton:setAnchorBottom(true)
 	self.closeButton.backgroundColor = {r=0.6, g=0.2, b=0.2, a=0.8}
@@ -443,7 +523,7 @@ function ATMSellUI:createChildren()
 		self.totalSpecialCoinLabel:setVisible(false)
 	end
 
-	self.itemsToSell = {}
+	self.inventoryStacks = {}
 	self.itemsList:clear()
 	self.cartItems:clear()
 	self:updateTotals()
