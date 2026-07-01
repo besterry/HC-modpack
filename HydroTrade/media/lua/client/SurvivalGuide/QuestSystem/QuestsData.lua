@@ -490,7 +490,7 @@ QuestsData.REGISTRY = {
 		hintKey = "IGUI_StoryQuest_Safehouse_Hint",
 		completeKey = "IGUI_StoryQuest_Safehouse_Complete",
 		zoneCellsMin = 625,
-		rewards = { "Base.Hammer", "Base.NailsBox", "Base.Plank", "Base.Plank", "Base.Plank" },
+		rewards = { "Base.Hammer", "Base.Saw", "Base.NailsBox", "Base.NailsBox" },
 	},
 	{
 		id = "story_skill_journal",
