@@ -9,10 +9,26 @@ local zoneCheckCooldown = 1000 -- миллисекунды между прове
 
 local enable = SandboxVars.ToxicZone.Enable or false
 -- Переменные тумана
-local tzoneOverlay = getTexture("media/ui/ToxicOverlay.png") -- текстура тумана
-local tzoneAlpha = 0 -- прозрачность тумана
-local tzoneVisible = false -- видимость тумана
-local tzoneFadeSpeed = 0.01 -- скорость появления/исчезновения
+local tzoneTintTex = nil
+local tzoneFogTex = nil
+local maskLensTintTex = nil
+local maskRimTex = nil
+local tzoneOverlay = nil
+local tzoneAlpha = 0
+local vignetteAlpha = 0
+local maskTintAlpha = 0
+local maskRimAlpha = 0
+local tzoneVisible = false
+local tzoneFadeSpeed = 0.02
+local maskRimFadeSpeed = 0.03
+local TOXIC_TINT_NAKED = 0.58
+local TOXIC_TINT_MASKED = 0.14
+local TOXIC_VIGNETTE_NAKED = 0.45
+local TOXIC_VIGNETTE_MASKED = 0.08
+local MASK_LENS_TINT = 0.14
+local MASK_LENS_TINT_ZONE = 0.10
+local MASK_RIM_ALPHA = 1.0
+local MASK_RIM_ALPHA_ZONE = 1.0
 local lastZoneState = nil -- последнее состояние зоны
 local lastZoneCheckTime = 0 -- последнее время проверки зоны
 local zoneCheckInterval = 1000 -- интервал проверки зоны
@@ -83,6 +99,50 @@ function protectiveTZoneEquipped(player, PlayerZone)
 		end
 	end
 	return false
+end
+
+local function hasProtectiveMask(player)
+	if not player then return false end
+	local inventory = player:getInventory()
+	if not inventory then return false end
+	local it = inventory:getItems()
+	for i = 0, it:size() - 1 do
+		local item = it:get(i)
+		if player:isEquippedClothing(item) then
+			local iType = item:getType()
+			for j = 1, #ProtectiveMasks do
+				if ProtectiveMasks[j] == iType then
+					local percent = item:getModData().percent or 1
+					if percent > 0 then return true end
+				end
+			end
+		end
+	end
+	return false
+end
+
+local function getMaskFilterPercent(player)
+	if not player then return 1 end
+	local lowest = 1
+	local found = false
+	local inventory = player:getInventory()
+	if not inventory then return 1 end
+	local it = inventory:getItems()
+	for i = 0, it:size() - 1 do
+		local item = it:get(i)
+		if player:isEquippedClothing(item) then
+			local iType = item:getType()
+			for j = 1, #ProtectiveMasks do
+				if ProtectiveMasks[j] == iType then
+					found = true
+					local percent = item:getModData().percent or 1
+					if percent < lowest then lowest = percent end
+				end
+			end
+		end
+	end
+	if not found then return 1 end
+	return lowest
 end
 
 -- Функция для получения урона от токсичности
@@ -254,39 +314,95 @@ local function getZonesInPlayerRegion(player)
     return TZoneCache[regionKey] or {}
 end
 
--- Функция отрисовки тумана
+local function fadeAlpha(current, target, speed)
+	if current < target then
+		return math.min(current + speed, target)
+	end
+	if current > target then
+		return math.max(current - speed, target)
+	end
+	return current
+end
+
+local function loadTZoneTextures()
+	if tzoneTintTex then return end
+	tzoneTintTex = getTexture("media/ui/ToxicFogTint.png")
+	tzoneFogTex = getTexture("media/ui/ToxicFogVignette.png")
+	maskLensTintTex = getTexture("media/ui/GasMaskLensTint.png")
+	maskRimTex = getTexture("media/ui/GasMaskRim.png")
+	tzoneOverlay = getTexture("media/ui/ToxicOverlay.png")
+end
+
+local function drawOverlay(tex, alpha)
+	if not tex or alpha <= 0 then return end
+	local core = getCore()
+	UIManager.DrawTexture(tex, 0, 0, core:getScreenWidth(), core:getScreenHeight(), alpha)
+end
+
+local function updateMaskEquippedOverlay(player)
+	if not player then return end
+	local targetRim = 0
+	local targetLens = 0
+	if hasProtectiveMask(player) then
+		targetRim = MASK_RIM_ALPHA
+		targetLens = MASK_LENS_TINT
+		if isPlayerInTZone(player) then
+			targetRim = MASK_RIM_ALPHA_ZONE
+			local leak = 1 - getMaskFilterPercent(player)
+			targetLens = MASK_LENS_TINT + MASK_LENS_TINT_ZONE + leak * 0.10
+		end
+	end
+	maskRimAlpha = fadeAlpha(maskRimAlpha, targetRim, maskRimFadeSpeed)
+	maskTintAlpha = fadeAlpha(maskTintAlpha, targetLens, maskRimFadeSpeed)
+end
+
+-- Отрисовка тумана и эффектов противогаза
 local function renderTZoneOverlay()
-    if not tzoneVisible or not tzoneOverlay then return end    
-    local core = getCore()
-    local width = core:getScreenWidth()
-    local height = core:getScreenHeight()
-    UIManager.DrawTexture(tzoneOverlay, 0, 0, width, height, tzoneAlpha)
+	loadTZoneTextures()
+	if tzoneVisible then
+		local tintTex = tzoneTintTex or tzoneOverlay
+		drawOverlay(tintTex, tzoneAlpha)
+		if tzoneFogTex and vignetteAlpha > 0 then
+			drawOverlay(tzoneFogTex, vignetteAlpha)
+		end
+	end
+	if maskLensTintTex and maskTintAlpha > 0 then
+		drawOverlay(maskLensTintTex, maskTintAlpha)
+	end
+	if maskRimTex and maskRimAlpha > 0 then
+		drawOverlay(maskRimTex, maskRimAlpha)
+	end
 end
 
 -- Функция обновления тумана
 local function updateTZoneOverlay(player)
-    local zone = isPlayerInTZone(player)    
-    if zone then
-        -- Игрок в зоне - показываем туман
-        if not tzoneVisible then
-            tzoneVisible = true
-        end        
-        -- Плавно увеличиваем прозрачность
-        if tzoneAlpha < 0.5 then
-            tzoneAlpha = tzoneAlpha + tzoneFadeSpeed
-        end
-    else
-        -- Игрок не в зоне - скрываем туман
-        if tzoneVisible then
-            -- Плавно уменьшаем прозрачность
-            if tzoneAlpha > 0 then
-                tzoneAlpha = tzoneAlpha - tzoneFadeSpeed
-            else
-                tzoneVisible = false
-                tzoneAlpha = 0
-            end
-        end
-    end
+	local zone = isPlayerInTZone(player)
+	if zone then
+		if not tzoneVisible then
+			tzoneVisible = true
+		end
+		local hasMask = hasProtectiveMask(player)
+		local targetTint = TOXIC_TINT_NAKED
+		local targetVignette = TOXIC_VIGNETTE_NAKED
+		if hasMask then
+			local filterPercent = getMaskFilterPercent(player)
+			local leak = 1 - filterPercent
+			targetTint = TOXIC_TINT_MASKED + leak * (TOXIC_TINT_NAKED - TOXIC_TINT_MASKED)
+			targetVignette = TOXIC_VIGNETTE_MASKED + leak * (TOXIC_VIGNETTE_NAKED - TOXIC_VIGNETTE_MASKED)
+		end
+		tzoneAlpha = fadeAlpha(tzoneAlpha, targetTint, tzoneFadeSpeed)
+		vignetteAlpha = fadeAlpha(vignetteAlpha, targetVignette, tzoneFadeSpeed)
+	else
+		if tzoneVisible then
+			tzoneAlpha = fadeAlpha(tzoneAlpha, 0, tzoneFadeSpeed)
+			vignetteAlpha = fadeAlpha(vignetteAlpha, 0, tzoneFadeSpeed)
+			if tzoneAlpha <= 0 and vignetteAlpha <= 0 then
+				tzoneVisible = false
+				tzoneAlpha = 0
+				vignetteAlpha = 0
+			end
+		end
+	end
 end
 
 -- Используем общую функцию для получения защитных предметов
@@ -316,8 +432,8 @@ local function checkZone(player)
     -- Проверяем только если прошло время или изменилась позиция
     if lastZoneCheckTime and currentTime - lastZoneCheckTime < zoneCheckInterval and 
        lastPlayerPos.x == playerX and lastPlayerPos.y == playerY then
-        -- Обновляем туман даже при кэшированной проверке зоны
         updateTZoneOverlay(player)
+        updateMaskEquippedOverlay(player)
         return
     end
     
@@ -349,8 +465,8 @@ local function checkZone(player)
         end
     end
     
-    -- Обновляем туман
-    updateTZoneOverlay(player)    
+    updateTZoneOverlay(player)
+    updateMaskEquippedOverlay(player)
     lastZoneCheckTime = currentTime
 end
 
@@ -437,6 +553,7 @@ if isClient() then
     end
     Events.OnTick.Add(initializeTZoneClient)
 
+    Events.OnGameStart.Add(loadTZoneTextures)
     -- Добавляем события только на клиенте 
     Events.OnPreUIDraw.Add(renderTZoneOverlay) -- Отрисовка тумана
     Events.OnPlayerUpdate.Add(checkZone) -- Проверка зоны
