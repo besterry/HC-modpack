@@ -93,4 +93,10 @@ Sandbox_EN = {
     Sandbox_SafeHouse_CloseRoom_tooltip = "Room names separated by ; no spaces. <LINE> Full list of rooms pzwiki.net/wiki/Room_definitions",
     Sandbox_SafeHouse_CloseZone = "List of forbidden locations",
     Sandbox_SafeHouse_CloseZone_tooltip = "Coordinates of forbidden locations to create a safe house, each coordinate is separated by /, separated by ; no spaces. <LINE> 117/144/9/39 are louisville coordinates, these are 4 Cell coordinates (without two zeros): 11700,14400 ,900,3900 <LINE> So the first angle is 11700.900.0 the second angle is 14400.3900.0 - together they form the square of prohibition",
+
+    Sandbox_LootingSystem = "Looting systems",
+    Sandbox_LootingSystem_TreeLooting = "Tree looting",
+    Sandbox_LootingSystem_BushLooting = "Bush looting",
+    Sandbox_LootingSystem_ContainerBackupEnable = "Container loot backup",
+    Sandbox_LootingSystem_ContainerBackupAttempts = "Backup spawn attempts",
 }

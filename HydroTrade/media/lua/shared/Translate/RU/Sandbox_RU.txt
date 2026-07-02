@@ -18,6 +18,9 @@ Sandbox_RU = {
     Sandbox_LootingSystem = "Системы лутания",
     Sandbox_LootingSystem_TreeLooting = "Обирать деревья",
     Sandbox_LootingSystem_BushLooting = "Сбор с кустов",
+    Sandbox_LootingSystem_ContainerBackupEnable = "Резервный спавн лута в контейнерах",
+    Sandbox_LootingSystem_ContainerBackupAttempts = "Попыток резервного спавна",
+    Sandbox_LootingSystem_ContainerRespawnHours = "Часов до респавна лута в контейнере",
 
     -- SafeHouse 
     Sandbox_SafeHouse = "Убежища",

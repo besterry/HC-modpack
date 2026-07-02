@@ -342,6 +342,24 @@ option LootingSystem.BushLooting
   translation = LootingSystem_BushLooting,
 }
 
+option LootingSystem.ContainerBackupEnable
+{
+	type = boolean,
+	default = true,
+	page = LootingSystem,
+	translation = LootingSystem_ContainerBackupEnable,
+}
+
+option LootingSystem.ContainerBackupAttempts
+{
+	type = integer,
+	min = 1,
+	max = 20,
+	default = 10,
+	page = LootingSystem,
+	translation = LootingSystem_ContainerBackupAttempts,
+}
+
 option SafeHouse.Horde
 {
 	type = boolean, 
