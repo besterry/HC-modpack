@@ -5,6 +5,7 @@ if isClient() then
 end
 
 local MOD_NAME = ContainerLootBackup.MOD_NAME
+local fillingFromBackup = false -- guard: fillContainer триггерит OnFillContainer → без этого stack overflow
 
 local function syncContainer(obj, container) -- Синхронизировать содержимое контейнера клиентам после спавна
     if isServer() then
@@ -46,6 +47,7 @@ function ContainerLootBackup.tryRespawn(obj, container, player, reason, force) -
     end
     local maxAttempts = ContainerLootBackup.getMaxAttempts()
     local hadItems = false
+    fillingFromBackup = true
     for i = 1, maxAttempts do
         ItemPicker.fillContainer(container, player)
         if container:getItems():size() > 0 then
@@ -56,6 +58,7 @@ function ContainerLootBackup.tryRespawn(obj, container, player, reason, force) -
             ContainerLootBackup.clearProceduralCounters(container)
         end
     end
+    fillingFromBackup = false
     local now = getGameTime():getWorldAgeHours()
     md.LastRespawnAttempt = now
     if hadItems then
@@ -63,6 +66,7 @@ function ContainerLootBackup.tryRespawn(obj, container, player, reason, force) -
         md.BackupFailed = false
         md.TimeEmptied = nil
         obj:transmitModData()
+        ItemPicker.updateOverlaySprite(obj)
         syncContainer(obj, container)
         return true
     end
@@ -72,6 +76,9 @@ function ContainerLootBackup.tryRespawn(obj, container, player, reason, force) -
 end
 
 local function onFillContainer(roomType, containerType, container) -- Ваниль fillContainer дал пусто → broken_spawn
+    if fillingFromBackup then
+        return
+    end
     if not ContainerLootBackup.isEnabled() then
         return
     end
