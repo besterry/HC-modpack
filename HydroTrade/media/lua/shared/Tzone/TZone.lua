@@ -21,10 +21,10 @@ local maskRimAlpha = 0
 local tzoneVisible = false
 local tzoneFadeSpeed = 0.005 -- ~2 сек до полной густоты тумана
 local maskRimFadeSpeed = 0.03
-local TOXIC_TINT_NAKED = 0.65
-local TOXIC_TINT_MASKED = 0.14
-local TOXIC_VIGNETTE_NAKED = 0.52
-local TOXIC_VIGNETTE_MASKED = 0.08
+local TOXIC_TINT_NAKED = 0.78
+local TOXIC_TINT_MASKED = 0.12
+local TOXIC_VIGNETTE_NAKED = 0.68
+local TOXIC_VIGNETTE_MASKED = 0.06
 local MASK_LENS_TINT = 0.08
 local MASK_LENS_TINT_ZONE = 0.12
 local MASK_RIM_ALPHA = 0.22
@@ -142,6 +142,30 @@ local function getMaskFilterPercent(player)
 		end
 	end
 	if not found then return 1 end
+	return lowest
+end
+
+local function getEquippedMaskFilter(player)
+	if not player then return nil end
+	local inventory = player:getInventory()
+	if not inventory then return nil end
+	local it = inventory:getItems()
+	local lowest = nil
+	for i = 0, it:size() - 1 do
+		local item = it:get(i)
+		if player:isEquippedClothing(item) then
+			local iType = item:getType()
+			for j = 1, #ProtectiveMasks do
+				if ProtectiveMasks[j] == iType then
+					local percent = item:getModData().percent
+					if percent == nil then percent = 1 end
+					if lowest == nil or percent < lowest then
+						lowest = math.max(0, percent)
+					end
+				end
+			end
+		end
+	end
 	return lowest
 end
 
@@ -567,4 +591,5 @@ TZone.getZonesInPlayerRegion = getZonesInPlayerRegion
 TZone.buildZoneCache = buildZoneCache
 TZone.shouldTakeToxicDamage = shouldTakeToxicDamage
 TZone.protectiveTZoneEquipped = protectiveTZoneEquipped
+TZone.getEquippedMaskFilter = getEquippedMaskFilter
 TZone.ProtectiveMasks = ProtectiveMasks
