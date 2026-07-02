@@ -3,8 +3,8 @@ ContainerLootBackup = ContainerLootBackup or {}
 -- =============================================================================
 -- Общие правила для клиента и сервера. Порядок чтения:
 --   1) isEnabled / isEligible          — какие ящики участвуют
---   2) needsLegacyStamp                — legacy: поставить метку, не спавнить
---   3) getRespawnReason                — когда клиент просит сервер спавнить
+--   2) needsLegacyStamp                — опустошил игрок: штамп TimeEmptied, спавн через N ч
+--   3) getRespawnReason                — immediate_spawn / timer_respawn
 --   4) client/ContainerLootBackupClient.lua — хуки открытия ития и опустошения
 --   5) server/ContainerLootBackupServer.lua — спавн и команды
 -- =============================================================================
@@ -271,8 +271,8 @@ function ContainerLootBackup.needsLegacyStamp(obj, container)
 end
 
 -- Нужен ли запрос спавна на сервер. nil = нет, иначе строка-причина:
---   "broken_spawn"  — пустой, hasBeenLooted=false (ваниль сломала первый спавн)
---   "timer_respawn" — пустой, TimeEmptied есть, прошло >= HoursForLootRespawn
+--   "immediate_spawn" — пустой, hasBeenLooted=false, нет TimeEmptied (первая попытка)
+--   "timer_respawn"   — TimeEmptied есть, прошло >= HoursForLootRespawn
 -- BackupFailed не блокирует (только для админа в modData)
 function ContainerLootBackup.getRespawnReason(obj, container)
     if not ContainerLootBackup.isEnabled() then
@@ -290,11 +290,10 @@ function ContainerLootBackup.getRespawnReason(obj, container)
 
     local md = obj:getModData()
 
-    if not container:isHasBeenLooted() then
-        return "broken_spawn"
-    end
-
     if not md.TimeEmptied then
+        if not container:isHasBeenLooted() then
+            return "immediate_spawn"
+        end
         return nil
     end
 

@@ -13,11 +13,36 @@ local function syncContainer(obj, container) -- Синхронизировать
     end
 end
 
-local function markEmptied(obj, player) -- Запись в modData времени опустошения и кто опустошил
+local function stampEmptyRecord(obj, player) -- TimeEmptied + PlayerLooter (BackupFailed не трогаем)
     local md = obj:getModData()
     md.TimeEmptied = getGameTime():getWorldAgeHours()
     md.PlayerLooter = player and player:getUsername() or "unknown"
+    obj:transmitModData()
+end
+
+local function markEmptied(obj, player) -- Игрок опустошил: штамп и сброс BackupFailed
+    local md = obj:getModData()
+    if md.TimeEmptied then
+        return
+    end
+    stampEmptyRecord(obj, player)
     md.BackupFailed = false
+    obj:transmitModData()
+end
+
+local function recordFailedRespawn(obj, container, player) -- Провал N попыток: штамп если нет, иначе сдвиг таймера
+    local md = obj:getModData()
+    local now = getGameTime():getWorldAgeHours()
+    if not md.TimeEmptied then
+        stampEmptyRecord(obj, player)
+    else
+        md.TimeEmptied = now
+        if player then
+            md.PlayerLooter = player:getUsername()
+        end
+    end
+    md.LastRespawnAttempt = now
+    md.BackupFailed = true
     obj:transmitModData()
 end
 
@@ -59,23 +84,21 @@ function ContainerLootBackup.tryRespawn(obj, container, player, reason, force) -
         end
     end
     fillingFromBackup = false
-    local now = getGameTime():getWorldAgeHours()
-    md.LastRespawnAttempt = now
     if hadItems then
         md.RespawnCount = (md.RespawnCount or 0) + 1
         md.BackupFailed = false
         md.TimeEmptied = nil
+        md.LastRespawnAttempt = getGameTime():getWorldAgeHours()
         obj:transmitModData()
         ItemPicker.updateOverlaySprite(obj)
         syncContainer(obj, container)
         return true
     end
-    md.BackupFailed = true -- только для админа, не блокирует следующие попытки
-    obj:transmitModData()
+    recordFailedRespawn(obj, container, player) -- BackupFailed для админа; таймер N ч для следующей попытки
     return false
 end
 
-local function onFillContainer(roomType, containerType, container) -- Ваниль fillContainer дал пусто → broken_spawn
+local function onFillContainer(roomType, containerType, container) -- Ваниль fillContainer дал пусто → immediate_spawn
     if fillingFromBackup then
         return
     end
@@ -92,15 +115,15 @@ local function onFillContainer(roomType, containerType, container) -- Ванил
     if not obj then
         return
     end
-    if not container:isHasBeenLooted() then
-        ContainerLootBackup.tryRespawn(obj, container, nil, "broken_spawn", false)
+    if not container:isHasBeenLooted() and not obj:getModData().TimeEmptied then
+        ContainerLootBackup.tryRespawn(obj, container, nil, "immediate_spawn", false)
     end
 end
 Events.OnFillContainer.Add(onFillContainer)
 
 local Commands = {}
 
-Commands.markEmptied = function(player, args) -- Опустошение или legacy-штамп; не перезаписывает TimeEmptied
+Commands.markEmptied = function(player, args) -- Игрок опустошил: штамп TimeEmptied, ждём N ч
     local obj, container = ContainerLootBackup.resolveContainer(args)
     if not obj or not container then
         return
@@ -111,14 +134,10 @@ Commands.markEmptied = function(player, args) -- Опустошение или l
     if not container:isHasBeenLooted() then
         return
     end
-    local md = obj:getModData()
-    if md.TimeEmptied then
-        return
-    end
     markEmptied(obj, player)
 end
 
-Commands.requestRespawn = function(player, args) -- Клиент: broken_spawn или timer_respawn
+Commands.requestRespawn = function(player, args) -- Клиент: immediate_spawn или timer_respawn
     local obj, container = ContainerLootBackup.resolveContainer(args)
     if not obj or not container then
         return

@@ -54,7 +54,8 @@ IGUI_RU =
 	IGUI_ContainerLootBackup_HintVanillaTimerNA = " (ваниль здание: н/д)",
 	IGUI_ContainerLootBackup_HintEmptyLooted = "Пустой, explored, залутан, ждём таймер или метку",
 	IGUI_ContainerLootBackup_HintLegacyStamp = "Legacy: при открытии поставим TimeEmptied, затем полный таймер респавна",
-	IGUI_ContainerLootBackup_HintBackupFailed = "Последняя попытка backup не удалась (повтор при следующем окне респавна)",
+	IGUI_ContainerLootBackup_HintBackupFailed = "Последняя попытка backup не удалась (повтор после таймера респавна)",
+	IGUI_ContainerLootBackup_HintBackupFailedShort = " (последняя попытка спавна не удалась)",
 	IGUI_ContainerLootBackup_HintEligible = "Подходит для автоматического backup",
 	IGUI_ContainerLootBackup_HintIneligible = "Не подходит для backup",
 
