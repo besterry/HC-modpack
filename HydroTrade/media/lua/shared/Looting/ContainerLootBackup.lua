@@ -142,12 +142,48 @@ function ContainerLootBackup.getObjectIndex(square, obj) -- Индекс IsoObje
     return -1
 end
 
+-- Индекс объекта на клетке контейнера (multi-tile: parent может быть не на sourceGrid)
+function ContainerLootBackup.getObjectIndexForContainer(square, obj, container)
+    local idx = ContainerLootBackup.getObjectIndex(square, obj)
+    if idx >= 0 then
+        return idx
+    end
+    if not square or not container then
+        return -1
+    end
+    for i = 0, square:getObjects():size() - 1 do
+        local o = square:getObjects():get(i)
+        if o == obj then
+            return i
+        end
+        if o:getContainer() == container then
+            return i
+        end
+        for j = 0, o:getContainerCount() - 1 do
+            if o:getContainerByIndex(j) == container then
+                return i
+            end
+        end
+    end
+    return -1
+end
+
+local function pickContainerFromObject(obj, containerIndex)
+    if not obj then
+        return nil
+    end
+    if containerIndex ~= nil and containerIndex >= 0 then
+        return obj:getContainerByIndex(containerIndex)
+    end
+    return obj:getContainer()
+end
+
 -- Координаты объекта для sendClientCommand
 function ContainerLootBackup.buildArgs(obj, container) -- Координаты для sendClientCommand
     if not obj or not container then
         return nil
     end
-    local sq = obj:getSquare()
+    local sq = ContainerLootBackup.getContainerSquare(obj, container)
     if not sq then
         return nil
     end
@@ -162,7 +198,7 @@ function ContainerLootBackup.buildArgs(obj, container) -- Координаты �
         x = sq:getX(),
         y = sq:getY(),
         z = sq:getZ(),
-        index = ContainerLootBackup.getObjectIndex(sq, obj),
+        index = ContainerLootBackup.getObjectIndexForContainer(sq, obj, container),
         containerIndex = containerIndex,
     }
 end
@@ -177,18 +213,24 @@ function ContainerLootBackup.resolveContainer(args) -- Найти obj+container 
         return nil, nil
     end
     local sq = cell:getGridSquare(args.x, args.y, args.z)
-    if not sq or args.index < 0 or args.index >= sq:getObjects():size() then
+    if not sq then
         return nil, nil
     end
-    local obj = sq:getObjects():get(args.index)
-    if not obj then
-        return nil, nil
+    local obj, container
+    if args.index >= 0 and args.index < sq:getObjects():size() then
+        obj = sq:getObjects():get(args.index)
+        container = pickContainerFromObject(obj, args.containerIndex)
     end
-    local container
-    if args.containerIndex ~= nil and args.containerIndex >= 0 then
-        container = obj:getContainerByIndex(args.containerIndex)
-    else
-        container = obj:getContainer()
+    if not container then
+        for i = 0, sq:getObjects():size() - 1 do
+            local o = sq:getObjects():get(i)
+            local c = pickContainerFromObject(o, args.containerIndex)
+            if c then
+                obj = o
+                container = c
+                break
+            end
+        end
     end
     return obj, container
 end
@@ -277,6 +319,51 @@ function ContainerLootBackup.getHoursUntilRespawn(obj)
         return nil
     end
     local left = respawnHours - (getGameTime():getWorldAgeHours() - md.TimeEmptied)
+    if left < 0 then
+        return 0
+    end
+    return left
+end
+
+-- Ваниль: public field BuildingDef.lootRespawnHour (час worldAge когда здание получит респавн)
+-- Возвращает number или nil если поле недоступно. 0 = ваниль ещё не запланировала респавн.
+function ContainerLootBackup.readBuildingLootRespawnHour(buildingDef)
+    if not buildingDef then
+        return nil
+    end
+    local ok, hour = pcall(function()
+        return buildingDef.lootRespawnHour
+    end)
+    if ok and type(hour) == "number" then
+        return hour
+    end
+    ok, hour = pcall(function()
+        local tbl = buildingDef:getTable()
+        return tbl and tbl.lootRespawnHour or nil
+    end)
+    if ok and type(hour) == "number" then
+        return hour
+    end
+    return nil
+end
+
+function ContainerLootBackup.getSeenHoursPreventLootRespawn()
+    if getServerOptions then
+        return getServerOptions():getInteger("SeenHoursPreventLootRespawn") or 0
+    end
+    return 0
+end
+
+-- Часы до ванильного респавна здания (не per-container). nil = поле недоступно, 0 = срок наступил.
+function ContainerLootBackup.getVanillaHoursUntilRespawn(buildingDef)
+    local targetHour = ContainerLootBackup.readBuildingLootRespawnHour(buildingDef)
+    if targetHour == nil then
+        return nil
+    end
+    if targetHour <= 0 then
+        return nil
+    end
+    local left = targetHour - getGameTime():getWorldAgeHours()
     if left < 0 then
         return 0
     end

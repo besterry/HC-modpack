@@ -23,6 +23,8 @@ local function requestRespawnIfNeeded(playerObj, obj, container) -- Запрос
     end
 end
 
+local emptyContainerDebounce = {} -- ключ args → ms; refreshBackpacks дергается часто
+
 local function handleEmptyContainer(playerObj, obj, container) -- Пустой explored: legacy-штамп или requestRespawn
     if ContainerLootBackup.needsLegacyStamp(obj, container) then
         local args = ContainerLootBackup.buildArgs(obj, container)
@@ -34,22 +36,67 @@ local function handleEmptyContainer(playerObj, obj, container) -- Пустой e
     requestRespawnIfNeeded(playerObj, obj, container)
 end
 
+local function scanWorldContainer(playerObj, container) -- Проверка одного мирового контейнера в loot UI
+    if not container or ContainerLootBackup.shouldSkipContainer(container) then
+        return
+    end
+    if container:isInCharacterInventory(playerObj) then
+        return
+    end
+    if not container:isExplored() or container:getItems():size() > 0 then
+        return
+    end
+    local obj = container:getParent()
+    if not obj then
+        return
+    end
+    local args = ContainerLootBackup.buildArgs(obj, container)
+    if not args then
+        return
+    end
+    local key = args.x .. ":" .. args.y .. ":" .. args.z .. ":" .. args.index .. ":" .. args.containerIndex
+    local now = getTimeInMillis()
+    if emptyContainerDebounce[key] and now - emptyContainerDebounce[key] < 2000 then
+        return
+    end
+    emptyContainerDebounce[key] = now
+    handleEmptyContainer(playerObj, obj, container)
+end
+
 local oldCheckExplored = ISInventoryPage.checkExplored
-function ISInventoryPage:checkExplored(container, playerObj) -- Хук открытия контейнера
+function ISInventoryPage:checkExplored(container, playerObj) -- Хук первого открытия (vanilla: только !isExplored)
     if container:isExplored() then
-        if isClient() and ContainerLootBackup.isEnabled() then
-            local obj = container:getParent()
-            if obj and container:getItems():size() == 0 then
-                handleEmptyContainer(playerObj, obj, container)
-            end
-        end
         return
     end
     oldCheckExplored(self, container, playerObj)
+    if isClient() and ContainerLootBackup.isEnabled() then
+        local obj = container:getParent()
+        if obj and container:getItems():size() == 0 then
+            scanWorldContainer(playerObj, container)
+        end
+    end
+end
+
+local oldRefreshBackpacks = ISInventoryPage.refreshBackpacks
+function ISInventoryPage:refreshBackpacks() -- Хук loot UI: explored пустые контейнеры (vanilla checkExplored их не трогает)
+    oldRefreshBackpacks(self)
+    if not isClient() or not ContainerLootBackup.isEnabled() or self.onCharacter then
+        return
+    end
+    local playerObj = getSpecificPlayer(self.player)
+    if not playerObj then
+        return
+    end
+    if self.inventory then
+        scanWorldContainer(playerObj, self.inventory)
+    end
+    for _, btn in ipairs(self.backpacks or {}) do
+        scanWorldContainer(playerObj, btn.inventory)
+    end
 end
 
 local oldTransferPerform = ISInventoryTransferAction.perform
-function ISInventoryTransferAction:perform() -- Хук переноса: опустошил мировой контейнер → markEmptied
+function ISInventoryTransferAction:perform() -- Хук переноса: опустошил мировой контейнер
     local src = self.srcContainer
     local srcParent = src and src:getParent()
     local wasWorld = src and not src:isInCharacterInventory(self.character)
@@ -57,11 +104,8 @@ function ISInventoryTransferAction:perform() -- Хук переноса: опу�
     if not isClient() or not ContainerLootBackup.isEnabled() then
         return
     end
-    if wasWorld and srcParent and src:getItems():size() == 0 and src:isHasBeenLooted() then
-        local args = ContainerLootBackup.buildArgs(srcParent, src)
-        if args then
-            sendClientCommand(self.character, MOD_NAME, "markEmptied", args)
-        end
+    if wasWorld and srcParent and src:getItems():size() == 0 then
+        handleEmptyContainer(self.character, srcParent, src)
     end
 end
 

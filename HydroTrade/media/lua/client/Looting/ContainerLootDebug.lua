@@ -82,6 +82,9 @@ function ContainerLootDebug.collectFullDebug(obj, container)
     addRow(rows, "Meta", "needsLegacyStamp", legacyStamp)
     addRow(rows, "Meta", "respawnReason", reason or "none")
     addRow(rows, "Meta", "hoursUntilRespawn", ContainerLootBackup.getHoursUntilRespawn(obj))
+    addRow(rows, "Meta", "vanillaLootRespawnHour", ContainerLootBackup.readBuildingLootRespawnHour(buildingDef))
+    addRow(rows, "Meta", "vanillaHoursUntilRespawn", ContainerLootBackup.getVanillaHoursUntilRespawn(buildingDef))
+    addRow(rows, "Meta", "SeenHoursPreventLootRespawn", ContainerLootBackup.getSeenHoursPreventLootRespawn())
     addRow(rows, "Meta", "eligible", ContainerLootBackup.isEligible(obj, container, false))
 
     if container then
@@ -139,7 +142,8 @@ function ContainerLootDebug.collectFullDebug(obj, container)
     end
 
     if buildingDef then
-        addRow(rows, "BuildingDef", "lootRespawnHour", tryMethod(buildingDef, "getLootRespawnHour"))
+        addRow(rows, "BuildingDef", "lootRespawnHour", ContainerLootBackup.readBuildingLootRespawnHour(buildingDef))
+        addRow(rows, "BuildingDef", "hasBeenVisited", tryMethod(buildingDef, "isHasBeenVisited"))
     end
 
     addRow(rows, "ModData", "TimeEmptied", md.TimeEmptied, md.TimeEmptied)
@@ -161,6 +165,8 @@ function ContainerLootDebug.collectFullDebug(obj, container)
         respawnReason = reason,
         needsLegacyStamp = legacyStamp,
         hoursUntilRespawn = ContainerLootBackup.getHoursUntilRespawn(obj),
+        vanillaHoursUntilRespawn = ContainerLootBackup.getVanillaHoursUntilRespawn(buildingDef),
+        vanillaLootRespawnHour = ContainerLootBackup.readBuildingLootRespawnHour(buildingDef),
         debugRows = rows,
     }
 end

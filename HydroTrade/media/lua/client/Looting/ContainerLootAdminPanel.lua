@@ -164,7 +164,15 @@ function ContainerLootAdminPanel:updateSummary(info)
     elseif (info.itemCount or 0) == 0 and info.isExplored and info.hasBeenLooted and info.needsLegacyStamp then
         self.hintLabel:setName(getText("IGUI_ContainerLootBackup_HintLegacyStamp"))
     elseif (info.itemCount or 0) == 0 and info.isExplored and info.hasBeenLooted and info.hoursUntilRespawn then
-        self.hintLabel:setName(getText("IGUI_ContainerLootBackup_HintTimerWait") .. string.format(" %.1f h", info.hoursUntilRespawn))
+        local hint = getText("IGUI_ContainerLootBackup_HintTimerWait") .. string.format(" %.1f h", info.hoursUntilRespawn)
+        if info.vanillaHoursUntilRespawn ~= nil then
+            hint = hint .. string.format(getText("IGUI_ContainerLootBackup_HintVanillaTimer"), info.vanillaHoursUntilRespawn)
+        elseif info.vanillaLootRespawnHour == 0 then
+            hint = hint .. getText("IGUI_ContainerLootBackup_HintVanillaTimerZero")
+        else
+            hint = hint .. getText("IGUI_ContainerLootBackup_HintVanillaTimerNA")
+        end
+        self.hintLabel:setName(hint)
     elseif (info.itemCount or 0) == 0 and info.isExplored and info.hasBeenLooted then
         self.hintLabel:setName(getText("IGUI_ContainerLootBackup_HintEmptyLooted"))
     elseif info.backupFailed then
