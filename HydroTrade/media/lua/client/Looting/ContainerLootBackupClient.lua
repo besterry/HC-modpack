@@ -25,8 +25,8 @@ end
 
 local emptyContainerDebounce = {} -- ключ args → ms; refreshBackpacks дергается часто
 
-local function handleEmptyContainer(playerObj, obj, container) -- Пустой explored: legacy-штамп или requestRespawn
-    if ContainerLootBackup.needsLegacyStamp(obj, container) then
+local function handleEmptyContainer(playerObj, obj, container) -- Пустой explored: штамп или timer_respawn
+    if ContainerLootBackup.needsEmptyStamp(obj, container) then
         local args = ContainerLootBackup.buildArgs(obj, container)
         if args then
             sendClientCommand(playerObj, MOD_NAME, "markEmptied", args)

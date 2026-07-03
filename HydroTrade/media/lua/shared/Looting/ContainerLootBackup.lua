@@ -3,8 +3,8 @@ ContainerLootBackup = ContainerLootBackup or {}
 -- =============================================================================
 -- Общие правила для клиента и сервера. Порядок чтения:
 --   1) isEnabled / isEligible          — какие ящики участвуют
---   2) needsLegacyStamp                — опустошил игрок: штамп TimeEmptied, спавн через N ч
---   3) getRespawnReason                — immediate_spawn / timer_respawn
+--   2) needsEmptyStamp                  — пустой без TimeEmptied: штамп, спавн через N ч
+--   3) getRespawnReason                  — timer_respawn после N ч
 --   4) client/ContainerLootBackupClient.lua — хуки открытия ития и опустошения
 --   5) server/ContainerLootBackupServer.lua — спавн и команды
 -- =============================================================================
@@ -243,9 +243,8 @@ function ContainerLootBackup.clearProceduralCounters(container) -- Сброс pr
     end
 end
 
--- Legacy-ящик: пустой, explored, залутан, нет TimeEmptied в modData.
--- Не modData-флаг, а проверка на лету. Клиент шлёт markEmptied, спавн не просит.
-function ContainerLootBackup.needsLegacyStamp(obj, container)
+-- Пустой explored ящик без TimeEmptied: штамп при открытии, спавн только через N ч
+function ContainerLootBackup.needsEmptyStamp(obj, container)
     if not ContainerLootBackup.isEnabled() then
         return false
     end
@@ -258,21 +257,16 @@ function ContainerLootBackup.needsLegacyStamp(obj, container)
     if container:getItems():size() > 0 then
         return false
     end
-
     local md = obj:getModData()
-    if not container:isHasBeenLooted() then
-        return false
-    end
     if md.TimeEmptied then
         return false
     end
-
     return true
 end
 
--- Нужен ли запрос спавна на сервер. nil = нет, иначе строка-причина:
---   "immediate_spawn" — пустой, hasBeenLooted=false, нет TimeEmptied (первая попытка)
---   "timer_respawn"   — TimeEmptied есть, прошло >= HoursForLootRespawn
+ContainerLootBackup.needsLegacyStamp = ContainerLootBackup.needsEmptyStamp
+
+-- Нужен ли запрос спавна на сервер. nil = нет, иначе "timer_respawn"
 -- BackupFailed не блокирует (только для админа в modData)
 function ContainerLootBackup.getRespawnReason(obj, container)
     if not ContainerLootBackup.isEnabled() then
@@ -289,15 +283,11 @@ function ContainerLootBackup.getRespawnReason(obj, container)
     end
 
     local md = obj:getModData()
-
     if not md.TimeEmptied then
-        if not container:isHasBeenLooted() then
-            return "immediate_spawn"
-        end
         return nil
     end
 
-    local respawnHours = ContainerLootBackup.getRespawnHours()
+    local respawnHours = ContainerLootBackup.getRespawnDelayHours(md)
     if respawnHours <= 0 then
         return nil
     end
@@ -310,10 +300,18 @@ function ContainerLootBackup.getRespawnReason(obj, container)
     return nil
 end
 
+-- Сколько часов до респавна для конкретного ящика (HoursForLootRespawn + jitter 0..24 ч)
+function ContainerLootBackup.getRespawnDelayHours(md)
+    if md and type(md.RespawnDelayHours) == "number" and md.RespawnDelayHours > 0 then
+        return md.RespawnDelayHours
+    end
+    return ContainerLootBackup.getRespawnHours()
+end
+
 -- Сколько часов осталось до timer_respawn (для админ-панели)
 function ContainerLootBackup.getHoursUntilRespawn(obj)
     local md = obj and obj:getModData() or {}
-    local respawnHours = ContainerLootBackup.getRespawnHours()
+    local respawnHours = ContainerLootBackup.getRespawnDelayHours(md)
     if not md.TimeEmptied or respawnHours <= 0 then
         return nil
     end

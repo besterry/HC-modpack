@@ -13,10 +13,19 @@ local function syncContainer(obj, container) -- Синхронизировать
     end
 end
 
-local function stampEmptyRecord(obj, player) -- TimeEmptied + PlayerLooter (BackupFailed не трогаем)
+local function rollRespawnDelayHours() -- HoursForLootRespawn + случайные 0..24 ч
+    local base = ContainerLootBackup.getRespawnHours()
+    if base <= 0 then
+        return 0
+    end
+    return base + ZombRand(0, 24)
+end
+
+local function stampEmptyRecord(obj, player) -- TimeEmptied + PlayerLooter + RespawnDelayHours
     local md = obj:getModData()
     md.TimeEmptied = getGameTime():getWorldAgeHours()
     md.PlayerLooter = player and player:getUsername() or "unknown"
+    md.RespawnDelayHours = rollRespawnDelayHours()
     obj:transmitModData()
 end
 
@@ -37,6 +46,7 @@ local function recordFailedRespawn(obj, container, player) -- Провал N п�
         stampEmptyRecord(obj, player)
     else
         md.TimeEmptied = now
+        md.RespawnDelayHours = rollRespawnDelayHours()
         if player then
             md.PlayerLooter = player:getUsername()
         end
@@ -88,6 +98,7 @@ function ContainerLootBackup.tryRespawn(obj, container, player, reason, force) -
         md.RespawnCount = (md.RespawnCount or 0) + 1
         md.BackupFailed = false
         md.TimeEmptied = nil
+        md.RespawnDelayHours = nil
         md.LastRespawnAttempt = getGameTime():getWorldAgeHours()
         obj:transmitModData()
         ItemPicker.updateOverlaySprite(obj)
@@ -98,32 +109,9 @@ function ContainerLootBackup.tryRespawn(obj, container, player, reason, force) -
     return false
 end
 
-local function onFillContainer(roomType, containerType, container) -- Ваниль fillContainer дал пусто → immediate_spawn
-    if fillingFromBackup then
-        return
-    end
-    if not ContainerLootBackup.isEnabled() then
-        return
-    end
-    if ContainerLootBackup.shouldSkipContainer(container) then
-        return
-    end
-    if container:getItems():size() > 0 then
-        return
-    end
-    local obj = container:getParent()
-    if not obj then
-        return
-    end
-    if not container:isHasBeenLooted() and not obj:getModData().TimeEmptied then
-        ContainerLootBackup.tryRespawn(obj, container, nil, "immediate_spawn", false)
-    end
-end
-Events.OnFillContainer.Add(onFillContainer)
-
 local Commands = {}
 
-Commands.markEmptied = function(player, args) -- Игрок опустошил: штамп TimeEmptied, ждём N ч
+Commands.markEmptied = function(player, args) -- Пустой ящик: штамп TimeEmptied, ждём N ч
     local obj, container = ContainerLootBackup.resolveContainer(args)
     if not obj or not container then
         return
@@ -131,13 +119,10 @@ Commands.markEmptied = function(player, args) -- Игрок опустошил: 
     if container:getItems():size() > 0 then
         return
     end
-    if not container:isHasBeenLooted() then
-        return
-    end
     markEmptied(obj, player)
 end
 
-Commands.requestRespawn = function(player, args) -- Клиент: immediate_spawn или timer_respawn
+Commands.requestRespawn = function(player, args) -- Клиент: timer_respawn
     local obj, container = ContainerLootBackup.resolveContainer(args)
     if not obj or not container then
         return
@@ -171,6 +156,7 @@ Commands.resetState = function(player, args) -- Админ: сброс modData b
     local md = obj:getModData()
     md.TimeEmptied = nil
     md.PlayerLooter = nil
+    md.RespawnDelayHours = nil
     md.RespawnCount = 0
     md.LastRespawnAttempt = nil
     md.BackupFailed = false

@@ -161,8 +161,8 @@ function ContainerLootAdminPanel:updateSummary(info)
 
     if (info.itemCount or 0) == 0 and info.isExplored and info.respawnReason then
         self.hintLabel:setName(getText("IGUI_ContainerLootBackup_HintWillRespawn") .. ": " .. info.respawnReason)
-    elseif (info.itemCount or 0) == 0 and info.isExplored and info.needsLegacyStamp then
-        self.hintLabel:setName(getText("IGUI_ContainerLootBackup_HintLegacyStamp"))
+    elseif (info.itemCount or 0) == 0 and info.isExplored and info.needsEmptyStamp then
+        self.hintLabel:setName(getText("IGUI_ContainerLootBackup_HintEmptyStamp"))
     elseif (info.itemCount or 0) == 0 and info.isExplored and info.hoursUntilRespawn then
         local hint = getText("IGUI_ContainerLootBackup_HintTimerWait") .. string.format(" %.1f h", info.hoursUntilRespawn)
         if info.backupFailed then

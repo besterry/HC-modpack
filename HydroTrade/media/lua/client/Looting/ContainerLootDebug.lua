@@ -73,13 +73,13 @@ function ContainerLootDebug.collectFullDebug(obj, container)
     local md = obj and obj:getModData() or {}
     local worldAge = getGameTime():getWorldAgeHours()
     local reason = ContainerLootBackup.getRespawnReason(obj, container)
-    local legacyStamp = ContainerLootBackup.needsLegacyStamp(obj, container)
+    local legacyStamp = ContainerLootBackup.needsEmptyStamp(obj, container)
 
     addRow(rows, "Meta", "worldAgeHours", worldAge)
     addRow(rows, "Meta", "backupEnabled", ContainerLootBackup.isEnabled())
     addRow(rows, "Meta", "HoursForLootRespawn", ContainerLootBackup.getRespawnHours())
     addRow(rows, "Meta", "MaxItemsForLootRespawn", ContainerLootBackup.getMaxItemsForLootRespawn())
-    addRow(rows, "Meta", "needsLegacyStamp", legacyStamp)
+    addRow(rows, "Meta", "needsEmptyStamp", legacyStamp)
     addRow(rows, "Meta", "respawnReason", reason or "none")
     addRow(rows, "Meta", "hoursUntilRespawn", ContainerLootBackup.getHoursUntilRespawn(obj))
     addRow(rows, "Meta", "vanillaLootRespawnHour", ContainerLootBackup.readBuildingLootRespawnHour(buildingDef))
@@ -149,6 +149,7 @@ function ContainerLootDebug.collectFullDebug(obj, container)
     addRow(rows, "ModData", "TimeEmptied", md.TimeEmptied, md.TimeEmptied)
     addRow(rows, "ModData", "TimeEmptied_ago", ContainerLootBackup.formatHoursAgo(worldAge, md.TimeEmptied))
     addRow(rows, "ModData", "PlayerLooter", md.PlayerLooter)
+    addRow(rows, "ModData", "RespawnDelayHours", md.RespawnDelayHours)
     addRow(rows, "ModData", "RespawnCount", md.RespawnCount or 0)
     addRow(rows, "ModData", "LastRespawnAttempt", md.LastRespawnAttempt)
     addRow(rows, "ModData", "BackupFailed", md.BackupFailed == true, md.BackupFailed == true)
@@ -163,7 +164,7 @@ function ContainerLootDebug.collectFullDebug(obj, container)
         eligible = ContainerLootBackup.isEligible(obj, container, false),
         ineligibleReason = reason or "none",
         respawnReason = reason,
-        needsLegacyStamp = legacyStamp,
+        needsEmptyStamp = legacyStamp,
         hoursUntilRespawn = ContainerLootBackup.getHoursUntilRespawn(obj),
         vanillaHoursUntilRespawn = ContainerLootBackup.getVanillaHoursUntilRespawn(buildingDef),
         vanillaLootRespawnHour = ContainerLootBackup.readBuildingLootRespawnHour(buildingDef),
