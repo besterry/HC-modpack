@@ -490,7 +490,7 @@ QuestsData.REGISTRY = {
 		hintKey = "IGUI_StoryQuest_Safehouse_Hint",
 		completeKey = "IGUI_StoryQuest_Safehouse_Complete",
 		zoneCellsMin = 625,
-		rewards = { "Base.Hammer", "Base.Saw", "Base.NailsBox", "Base.NailsBox" },
+		rewards = { "Base.Hammer", "Base.Saw", "Base.NailsBox" },
 	},
 	{
 		id = "story_skill_journal",
@@ -837,7 +837,7 @@ QuestsData.REGISTRY = {
 		goalKey = "IGUI_Cyclic_DailyAutoBulbs_Goal",
 		completeKey = "IGUI_Cyclic_DailyAutoBulbs_Complete",
 		bulbSwapsRequired = 4,
-		xpReward = { perkName = "Mechanics", amount = 40 },
+		xpReward = { perkName = "Mechanics", amount = 160 },
 	},
 	{
 		id = "daily_dismantle_electronics",
@@ -851,7 +851,7 @@ QuestsData.REGISTRY = {
 		goalKey = "IGUI_Cyclic_DailyScrapElec_Goal",
 		completeKey = "IGUI_Cyclic_DailyScrapElec_Complete",
 		dismantleRequired = 10,
-		xpReward = { perkName = "Electricity", amount = 40, previewKey = "IGUI_Cyclic_XpReward_Electricity" },
+		xpReward = { perkName = "Electricity", amount = 160, previewKey = "IGUI_Cyclic_XpReward_Electricity" },
 	},
 	{
 		id = "daily_rip_clothing",
@@ -865,7 +865,7 @@ QuestsData.REGISTRY = {
 		goalKey = "IGUI_Cyclic_DailyRipClothing_Goal",
 		completeKey = "IGUI_Cyclic_DailyRipClothing_Complete",
 		ripsRequired = 15,
-		xpReward = { perkName = "Tailoring", amount = 30, previewKey = "IGUI_Cyclic_XpReward_Tailoring" },
+		xpReward = { perkName = "Tailoring", amount = 120, previewKey = "IGUI_Cyclic_XpReward_Tailoring" },
 	},
 }
 
