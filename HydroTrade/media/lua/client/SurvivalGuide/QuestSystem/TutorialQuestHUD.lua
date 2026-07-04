@@ -268,17 +268,19 @@ function TutorialQuestHUD:onRightMouseDown(x, y)
 end
 
 function TutorialQuestHUD:onMouseMove(dx, dy)
-	if not self.moveWithMouse then return end
-	self:setX(self.x + dx)
-	self:setY(self.y + dy)
-	self:clampToScreen()
-	TutorialQuests.saveHudPosition(self.x, self.y)
+	self:applyDrag(dx, dy)
+end
+
+function TutorialQuestHUD:onMouseMoveOutside(dx, dy)
+	self:applyDrag(dx, dy)
 end
 
 function TutorialQuestHUD:onMouseUp(x, y)
-	self.moveWithMouse = false
-	self:clampToScreen()
-	TutorialQuests.saveHudPosition(self.x, self.y)
+	self:stopDrag()
+end
+
+function TutorialQuestHUD:onMouseUpOutside(x, y)
+	self:stopDrag()
 end
 
 function TutorialQuestHUD:renderPrompt(y)
@@ -802,13 +804,36 @@ end
 function TutorialQuestHUD:clampToScreen()
 	local core = getCore()
 	if not core then return end
+	local sw = core:getScreenWidth()
 	local sh = core:getScreenHeight()
 	local margin = 8
+	local maxX = sw - self.width - margin
 	local maxY = sh - self.height - margin
-	if self.y > maxY then
-		self:setY(math.max(margin, maxY))
-		TutorialQuests.saveHudPosition(self.x, self.y)
+	if self.x < margin then
+		self:setX(margin)
+	elseif self.x > maxX then
+		self:setX(math.max(margin, maxX))
 	end
+	if self.y < margin then
+		self:setY(margin)
+	elseif self.y > maxY then
+		self:setY(math.max(margin, maxY))
+	end
+end
+
+function TutorialQuestHUD:applyDrag(dx, dy)
+	if not self.moveWithMouse then return end
+	self:setX(self.x + dx)
+	self:setY(self.y + dy)
+	self:clampToScreen()
+	TutorialQuests.saveHudPosition(self.x, self.y)
+end
+
+function TutorialQuestHUD:stopDrag()
+	if not self.moveWithMouse then return end
+	self.moveWithMouse = false
+	self:clampToScreen()
+	TutorialQuests.saveHudPosition(self.x, self.y)
 end
 
 function TutorialQuestHUD:updateLayout()
