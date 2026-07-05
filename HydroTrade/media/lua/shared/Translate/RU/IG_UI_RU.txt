@@ -843,4 +843,7 @@ IGUI_RU =
 	IGUI_ConsumableHotbar_Title = "Расходники",
 	IGUI_ConsumableHotbar_SlotN = "Слот %1",
 	IGUI_ConsumableHotbar_NoItems = "Нет подходящих предметов",
+
+	IGUI_SafehouseNeighbor_Halo = "Убежище: %1",
+	IGUI_SafehouseNeighbor_Untitled = "Без названия",
 }
