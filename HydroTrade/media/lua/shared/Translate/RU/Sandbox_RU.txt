@@ -226,4 +226,8 @@ Sandbox_RU = {
     Sandbox_Admins_miniScoreboardCheckHealthBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
     Sandbox_Admins_miniScoreboardChangeStatsBtn = "Изменение характеристик игрока",
     Sandbox_Admins_miniScoreboardChangeStatsBtn_tooltip = "0-игрок, 1-Observer, 2-GM, 3-Moderator, 4-Admin",
+
+    Sandbox_FloorTrashCleaner_Enabled = "Включить очистку мусора на полу",
+    Sandbox_FloorTrashCleaner_MaxAgeGameDays = "Срок хранения на полу (игровые дни)",
+    Sandbox_FloorTrashCleaner_MaxAgeGameDays_tooltip = "Предметы с Owner и TimeUsed старше этого срока удаляются вне убежищ. 24 игр. дня -> 3 реал. суток.",
 }

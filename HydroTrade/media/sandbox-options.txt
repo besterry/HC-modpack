@@ -360,6 +360,24 @@ option LootingSystem.ContainerBackupAttempts
 	translation = LootingSystem_ContainerBackupAttempts,
 }
 
+option FloorTrashCleaner.Enabled
+{
+	type = boolean,
+	default = true,
+	page = LootingSystem,
+	translation = FloorTrashCleaner_Enabled,
+}
+
+option FloorTrashCleaner.MaxAgeGameDays
+{
+	type = integer,
+	min = 1,
+	max = 365,
+	default = 30,
+	page = LootingSystem,
+	translation = FloorTrashCleaner_MaxAgeGameDays,
+}
+
 option SafeHouse.Horde
 {
 	type = boolean, 
