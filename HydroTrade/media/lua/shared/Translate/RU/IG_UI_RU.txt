@@ -834,4 +834,11 @@ IGUI_RU =
 	IGUI_SideQuest_Shelter_Goal = "Зайти в здание",
 	IGUI_SideQuest_Shelter_Complete = "Есть где спрятаться!",
 	IGUI_SideQuest_Shelter_RewardPool = "Случайный инструмент",
+
+	IGUI_ConsumableHotbar_Add = "В панель расходников",
+	IGUI_ConsumableHotbar_Remove = "Убрать с панели",
+	IGUI_ConsumableHotbar_RemoveItem = "Убрать %1 с панели",
+	IGUI_ConsumableHotbar_Title = "Расходники",
+	IGUI_ConsumableHotbar_SlotN = "Слот %1",
+	IGUI_ConsumableHotbar_NoItems = "Нет подходящих предметов",
 }

@@ -541,4 +541,11 @@ IGUI_EN =
 	IGUI_SafehouseUI_Players = "Players:",
 	IGUI_SafehouseUI_Size = "Current Size:",
 	IGUI_SafehouseUI_MaxSize = "Max Size:",
+
+	IGUI_ConsumableHotbar_Add = "Add to consumable bar",
+	IGUI_ConsumableHotbar_Remove = "Remove from bar",
+	IGUI_ConsumableHotbar_RemoveItem = "Remove %1 from bar",
+	IGUI_ConsumableHotbar_Title = "Consumables",
+	IGUI_ConsumableHotbar_SlotN = "Slot %1",
+	IGUI_ConsumableHotbar_NoItems = "No suitable items",
 }
