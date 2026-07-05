@@ -1,0 +1,12 @@
+IGUI_EN = {
+    IGUI_CI_KeyRingHistory = "Vehicle history",
+    IGUI_CI_KeyRingHistoryTitle = "Vehicle history",
+    IGUI_CI_KeyRingHistoryEmpty = "No vehicles recorded yet.",
+    IGUI_CI_KeyRingHistoryUnknown = "Unknown vehicle",
+    IGUI_CI_KeyRingHistoryDate = "Date",
+    IGUI_CI_KeyRingHistoryActive = "In vehicle",
+    IGUI_CI_KeyRingHistoryHint = "Last 10 vehicles",
+    IGUI_CI_PlateFormat = "H %1 KT",
+    IGUI_CI_CopyBtn = "Copy",
+    IGUI_CI_Copied = "Copied",
+}

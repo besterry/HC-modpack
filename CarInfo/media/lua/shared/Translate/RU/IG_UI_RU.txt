@@ -1,0 +1,12 @@
+IGUI_RU = {
+    IGUI_CI_KeyRingHistory = "История транспорта",
+    IGUI_CI_KeyRingHistoryTitle = "История транспорта",
+    IGUI_CI_KeyRingHistoryEmpty = "Пока нет записей о транспорте",
+    IGUI_CI_KeyRingHistoryUnknown = "Неизвестный транспорт",
+    IGUI_CI_KeyRingHistoryDate = "Дата",
+    IGUI_CI_KeyRingHistoryActive = "В машине",
+    IGUI_CI_KeyRingHistoryHint = "Последние 10 транспортных средств",
+    IGUI_CI_PlateFormat = "H %1 КТ",
+    IGUI_CI_CopyBtn = "Копир.",
+    IGUI_CI_Copied = "Скопировано",
+}
