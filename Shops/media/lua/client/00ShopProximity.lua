@@ -210,6 +210,35 @@ function ShopProximity.clearHint(player, state)
 	state.hintLastAt = 0
 end
 
+function ShopProximity.isPriorityNoteActive()
+	return getTimestampMs() < (ShopProximity._priorityNoteUntil or 0)
+end
+
+function ShopProximity.showPriorityNote(player, text, r, g, b, durationMs)
+	if not player or not text then return end
+	durationMs = durationMs or 2500
+	r = r or 255
+	g = g or 100
+	b = b or 100
+	local now = getTimestampMs()
+	if ShopProximity._priorityNoteText == text and now < (ShopProximity._priorityNoteUntil or 0) then
+		return
+	end
+	ShopProximity._priorityNoteUntil = now + durationMs
+	ShopProximity._priorityNoteText = text
+	ShopProximity._priorityNoteColor = { r, g, b }
+	player:setHaloNote(text, r, g, b, durationMs)
+end
+
+function ShopProximity.clearPriorityNote(player)
+	ShopProximity._priorityNoteUntil = 0
+	ShopProximity._priorityNoteText = nil
+	ShopProximity._priorityNoteColor = nil
+	if player then
+		player:setHaloNote("", 255, 255, 255, 1)
+	end
+end
+
 function ShopProximity.clearAllActive(player)
 	for _, handler in ipairs(ShopProximity._handlers) do
 		ShopProximity.clearHint(player, handler.state)
@@ -469,6 +498,16 @@ function ShopProximity.updateAllHints(player)
 	local state = bestHandler.state
 	local opts = bestHandler.opts
 	local now = getTimestampMs()
+
+	if ShopProximity.isPriorityNoteActive() then
+		local color = ShopProximity._priorityNoteColor
+		local remaining = (ShopProximity._priorityNoteUntil or 0) - now
+		if color and remaining > 0 then
+			player:setHaloNote(ShopProximity._priorityNoteText, color[1], color[2], color[3], remaining)
+		end
+		return
+	end
+
 	if state.hintActive and now - state.hintLastAt < ShopProximity.HINT_REFRESH_MS then
 		return
 	end
