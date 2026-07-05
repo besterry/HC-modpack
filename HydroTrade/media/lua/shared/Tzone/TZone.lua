@@ -145,11 +145,12 @@ local function getMaskFilterPercent(player)
 	return lowest
 end
 
-local function getEquippedMaskFilter(player)
+local function getEquippedMaskItem(player)
 	if not player then return nil end
 	local inventory = player:getInventory()
 	if not inventory then return nil end
 	local it = inventory:getItems()
+	local bestItem = nil
 	local lowest = nil
 	for i = 0, it:size() - 1 do
 		local item = it:get(i)
@@ -159,14 +160,21 @@ local function getEquippedMaskFilter(player)
 				if ProtectiveMasks[j] == iType then
 					local percent = item:getModData().percent
 					if percent == nil then percent = 1 end
+					percent = math.max(0, percent)
 					if lowest == nil or percent < lowest then
-						lowest = math.max(0, percent)
+						lowest = percent
+						bestItem = item
 					end
 				end
 			end
 		end
 	end
-	return lowest
+	return bestItem, lowest
+end
+
+local function getEquippedMaskFilter(player)
+	local _, percent = getEquippedMaskItem(player)
+	return percent
 end
 
 -- Функция для получения урона от токсичности
@@ -592,4 +600,5 @@ TZone.buildZoneCache = buildZoneCache
 TZone.shouldTakeToxicDamage = shouldTakeToxicDamage
 TZone.protectiveTZoneEquipped = protectiveTZoneEquipped
 TZone.getEquippedMaskFilter = getEquippedMaskFilter
+TZone.getEquippedMaskItem = getEquippedMaskItem
 TZone.ProtectiveMasks = ProtectiveMasks

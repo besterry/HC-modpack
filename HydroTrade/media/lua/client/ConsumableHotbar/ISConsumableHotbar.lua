@@ -377,7 +377,7 @@ function ISConsumableHotbar:getSlotIndexAt(x, y)
 end
 
 function ISConsumableHotbar:getAnchorPanel()
-    return getPlayerHotbar(self.playerNum)
+	return getPlayerHotbar(self.playerNum)
 end
 
 function ISConsumableHotbar:setSizeAndPosition()
