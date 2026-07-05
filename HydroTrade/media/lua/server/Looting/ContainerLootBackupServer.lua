@@ -29,12 +29,9 @@ local function stampEmptyRecord(obj, player) -- TimeEmptied + PlayerLooter + Res
     obj:transmitModData()
 end
 
-local function markEmptied(obj, player) -- Игрок опустошил: штамп и сброс BackupFailed
-    local md = obj:getModData()
-    if md.TimeEmptied then
-        return
-    end
+local function markEmptied(obj, player) -- Обновить TimeEmptied, PlayerLooter, RespawnDelayHours
     stampEmptyRecord(obj, player)
+    local md = obj:getModData()
     md.BackupFailed = false
     obj:transmitModData()
 end
@@ -111,7 +108,7 @@ end
 
 local Commands = {}
 
-Commands.markEmptied = function(player, args) -- Пустой ящик: штамп TimeEmptied, ждём N ч
+Commands.markEmptied = function(player, args) -- Пустой ящик: обновить метку, ждём N ч
     local obj, container = ContainerLootBackup.resolveContainer(args)
     if not obj or not container then
         return

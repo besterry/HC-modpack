@@ -18,6 +18,8 @@ IGUI_RU =
 
 	IGUI_ContainerLootBackup_Title = "Резервный лут контейнера",
 	IGUI_ContainerLootBackup_AdminMenu = "Лут контейнера",
+	IGUI_ContainerLootBackup_HoursShort = "ч",
+	IGUI_ContainerLootBackup_AdminMenuSpawnNA = "—",
 	IGUI_ContainerLootBackup_ShowState = "Показать состояние",
 	IGUI_ContainerLootBackup_ForceRefill = "Принудительный рефилл",
 	IGUI_ContainerLootBackup_ResetState = "Сбросить состояние backup",

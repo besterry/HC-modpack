@@ -3,7 +3,8 @@ ContainerLootBackup = ContainerLootBackup or {}
 -- =============================================================================
 -- Общие правила для клиента и сервера. Порядок чтения:
 --   1) isEnabled / isEligible          — какие ящики участвуют
---   2) needsEmptyStamp                  — пустой без TimeEmptied: штамп, спавн через N ч
+--   2) needsEmptyStamp                  — первый загляд в пустой без метки
+--   3) markEmptied (transfer)           — опустошение: всегда обновить метку
 --   3) getRespawnReason                  — timer_respawn после N ч
 --   4) client/ContainerLootBackupClient.lua — хуки открытия ития и опустошения
 --   5) server/ContainerLootBackupServer.lua — спавн и команды

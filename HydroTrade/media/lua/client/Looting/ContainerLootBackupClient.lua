@@ -25,12 +25,20 @@ end
 
 local emptyContainerDebounce = {} -- ключ args → ms; refreshBackpacks дергается часто
 
-local function handleEmptyContainer(playerObj, obj, container) -- Пустой explored: штамп или timer_respawn
+local function sendMarkEmptied(playerObj, obj, container)
+    local args = ContainerLootBackup.buildArgs(obj, container)
+    if args then
+        sendClientCommand(playerObj, MOD_NAME, "markEmptied", args)
+    end
+end
+
+local function handleEmptyContainer(playerObj, obj, container, playerEmptied) -- Пустой explored: метка или timer_respawn
+    if playerEmptied then
+        sendMarkEmptied(playerObj, obj, container)
+        return
+    end
     if ContainerLootBackup.needsEmptyStamp(obj, container) then
-        local args = ContainerLootBackup.buildArgs(obj, container)
-        if args then
-            sendClientCommand(playerObj, MOD_NAME, "markEmptied", args)
-        end
+        sendMarkEmptied(playerObj, obj, container)
         return
     end
     requestRespawnIfNeeded(playerObj, obj, container)
@@ -105,8 +113,22 @@ function ISInventoryTransferAction:perform() -- Хук переноса: опу�
         return
     end
     if wasWorld and srcParent and src:getItems():size() == 0 then
-        handleEmptyContainer(self.character, srcParent, src)
+        handleEmptyContainer(self.character, srcParent, src, true)
     end
+end
+
+local function formatSpawnTimerLabel(obj, container) -- Часы до спавна для пункта ПКМ-меню
+    if ContainerLootBackup.getRespawnReason(obj, container) then
+        return "0" .. getText("IGUI_ContainerLootBackup_HoursShort")
+    end
+    local left = ContainerLootBackup.getHoursUntilRespawn(obj)
+    if left ~= nil then
+        if left >= 10 then
+            return string.format("%.0f%s", left, getText("IGUI_ContainerLootBackup_HoursShort"))
+        end
+        return string.format("%.1f%s", left, getText("IGUI_ContainerLootBackup_HoursShort"))
+    end
+    return getText("IGUI_ContainerLootBackup_AdminMenuSpawnNA")
 end
 
 local function onFillWorldObjectContextMenu(player, context, worldobjects, test) -- ПКМ: админ-меню контейнера
@@ -125,7 +147,9 @@ local function onFillWorldObjectContextMenu(player, context, worldobjects, test)
                 if ContainerLootBackup.shouldSkipContainer(container) then
                     return
                 end
-                local label = getText("IGUI_ContainerLootBackup_AdminMenu") .. " [" .. container:getType() .. "]"
+                local label = getText("IGUI_ContainerLootBackup_AdminMenu")
+                    .. " [" .. container:getType() .. "]"
+                    .. " (" .. formatSpawnTimerLabel(obj, container) .. ")"
                 local subMenu = context:getNew(context)
                 local root = context:addOption(label, nil, nil)
                 context:addSubMenu(root, subMenu)
