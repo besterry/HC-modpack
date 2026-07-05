@@ -6,14 +6,14 @@ local PROXIMITY = 3
 local BORDER_SEGMENT = 3
 local HALO_MS = 1200
 local HALO_R, HALO_G, HALO_B = 255, 180, 80
-local TICK_INTERVAL = 3
 
 local BORDER_COLOR = ColorInfo.new(1.0, 0.45, 0.1, 1.0)
 
 local lastHighlighted = {}
-local tickCounter = 0
 local haloActive = false
 local haloSafehouseKey = nil
+local activeSh = nil
+local lastPx, lastPy = nil, nil
 
 local function getSafehouseKey(sh)
     return tostring(sh:getX()) .. "," .. tostring(sh:getY()) .. "," .. tostring(sh:getW()) .. "," .. tostring(sh:getH())
@@ -27,6 +27,23 @@ local function clearHighlights()
         end
     end
     lastHighlighted = {}
+end
+
+local function clearHalo(player)
+    if not haloActive then return end
+    if player then
+        player:setHaloNote("", 255, 255, 255, 1)
+    end
+    haloActive = false
+    haloSafehouseKey = nil
+end
+
+local function resetState(player)
+    clearHighlights()
+    clearHalo(player)
+    activeSh = nil
+    lastPx = nil
+    lastPy = nil
 end
 
 local function chebyshevDistToRect(px, py, x1, y1, x2, y2)
@@ -123,38 +140,42 @@ local function isSafehouseResident(player, sh)
     return false
 end
 
-local function findNearestForeignSafehouse(player)
-    local px = math.floor(player:getX())
-    local py = math.floor(player:getY())
-    local list = SafeHouse.getSafehouseList()
-    if not list then return nil end
+-- Скан только клеток вокруг игрока, без перебора всего списка убежищ сервера
+local function findNearestForeignSafehouse(player, px, py)
+    local cell = getCell()
+    if not cell then return nil end
 
     local best = nil
     local bestDist = PROXIMITY + 1
+    local seen = {}
 
-    for i = 0, list:size() - 1 do
-        local sh = list:get(i)
-        if sh and not isSafehouseResident(player, sh) then
-            local x1 = sh:getX()
-            local y1 = sh:getY()
-            local x2 = x1 + sh:getW() - 1
-            local y2 = y1 + sh:getH() - 1
-            local dist = chebyshevDistToRect(px, py, x1, y1, x2, y2)
-            if dist <= PROXIMITY and dist < bestDist then
-                bestDist = dist
-                best = sh
+    for dx = -PROXIMITY, PROXIMITY do
+        for dy = -PROXIMITY, PROXIMITY do
+            if math.max(math.abs(dx), math.abs(dy)) <= PROXIMITY then
+                local sq = cell:getGridSquare(px + dx, py + dy, 0)
+                if sq then
+                    local sh = SafeHouse.getSafeHouse(sq)
+                    if sh and not isSafehouseResident(player, sh) then
+                        local key = getSafehouseKey(sh)
+                        if not seen[key] then
+                            seen[key] = true
+                            local x1 = sh:getX()
+                            local y1 = sh:getY()
+                            local x2 = x1 + sh:getW() - 1
+                            local y2 = y1 + sh:getH() - 1
+                            local dist = chebyshevDistToRect(px, py, x1, y1, x2, y2)
+                            if dist <= PROXIMITY and dist < bestDist then
+                                bestDist = dist
+                                best = sh
+                            end
+                        end
+                    end
+                end
             end
         end
     end
 
     return best
-end
-
-local function clearHalo(player)
-    if not haloActive then return end
-    player:setHaloNote("", 255, 255, 255, 1)
-    haloActive = false
-    haloSafehouseKey = nil
 end
 
 local function showHaloOnce(player, sh)
@@ -169,30 +190,30 @@ end
 local function update(player)
     if not player or not player:isLocalPlayer() then return end
     if isAdmin() then
-        return
-    end
-
-    clearHighlights()
-
-    local sh = findNearestForeignSafehouse(player)
-    if not sh then
-        clearHalo(player)
+        resetState(player)
         return
     end
 
     local px = math.floor(player:getX())
     local py = math.floor(player:getY())
-    highlightBorderNearPlayer(sh, px, py, getCell())
-    showHaloOnce(player, sh)
-end
+    if px == lastPx and py == lastPy then return end
+    lastPx = px
+    lastPy = py
 
-local function onRenderTick()
-    tickCounter = tickCounter + 1
-    if tickCounter % TICK_INTERVAL ~= 0 then return end
-    local player = getPlayer()
-    if player then
-        update(player)
+    local sh = findNearestForeignSafehouse(player, px, py)
+    if not sh then
+        resetState(player)
+        return
     end
+
+    local shKey = getSafehouseKey(sh)
+    if activeSh == nil or getSafehouseKey(activeSh) ~= shKey then
+        activeSh = sh
+        showHaloOnce(player, sh)
+    end
+
+    clearHighlights()
+    highlightBorderNearPlayer(sh, px, py, getCell())
 end
 
-Events.OnRenderTick.Add(onRenderTick)
+Events.OnPlayerMove.Add(update)
