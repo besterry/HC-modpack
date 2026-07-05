@@ -2,6 +2,8 @@ local MOD_NAME = 'ZipContainer'
 local ZIP_CONTAINER_TYPE = MOD_NAME
 local TILE_NAME_START = ZIP_CONTAINER_TYPE
 local utils = require 'ZipContainer_utils'
+local zlog = utils.zlog
+local zipCoordsFromObj = utils.zipCoordsFromObj
 
 ---@type whiteListType
 local whiteListArr = nil
@@ -120,15 +122,69 @@ function ZipContainer:removeForbiddenTypeFromItemList(items)
 	return items;
 end
 
+---@return integer
+local function generateUniqueItemId(usedIds)
+    local id
+    repeat
+        id = ZombRand(100000000, 2147483646)
+    until not usedIds[id]
+    usedIds[id] = true
+    return id
+end
+
+---@return integer fixed count
+function ZipContainer:repairDuplicateIds()
+    local seen = {}
+    local fixed = 0
+    local coords = zipCoordsFromObj(self.isoObject)
+
+    for itemType, typeTables in pairs(self.modData) do
+        for idx, typeTable in pairs(typeTables) do
+            if typeTable and typeTable.id then
+                local id = typeTable.id
+                if seen[id] then
+                    local newId = generateUniqueItemId(seen)
+                    zlog('repairIds', string.format('coords=%s type=%s oldId=%d newId=%d', coords, itemType, id, newId))
+                    typeTable.id = newId
+                    fixed = fixed + 1
+                else
+                    seen[id] = true
+                end
+            end
+        end
+    end
+
+    if fixed > 0 then
+        zlog('repairIds', string.format('coords=%s fixed=%d', coords, fixed))
+        self:setModData()
+    end
+    return fixed
+end
+
+---@param id integer
+---@return boolean
+function ZipContainer:modDataHasId(id)
+    for _, typeTables in pairs(self.modData) do
+        for _, typeTable in pairs(typeTables) do
+            if typeTable and typeTable.id == id then
+                return true
+            end
+        end
+    end
+    return false
+end
 
 function ZipContainer:setModData()
+    local coords = zipCoordsFromObj(self.isoObject)
+    local count = self:countItems()
+    zlog('setModData', string.format('coords=%s modDataCount=%d', coords, count))
     self.isoObject:getModData()[MOD_NAME] = self.modData
     self.isoObject:transmitModData()
 end
-
 ---@return InventoryItem[]
 function ZipContainer:getItems()
     local resultList = {}
+    local coords = zipCoordsFromObj(self.isoObject)
     for type, typeTables in pairs(self.modData) do
         for idx, typeTable in pairs(typeTables) do
             local item = InventoryItemFactory.CreateItem(type);
@@ -194,21 +250,35 @@ function ZipContainer:getItems()
 
                 table.insert(resultList, item)
             else
+                zlog('getItems', string.format('coords=%s CreateItem FAILED type=%s idx=%s id=%s', coords, type, tostring(idx), typeTable and tostring(typeTable.id) or '?'))
                 typeTables[idx] = nil
             end
         end
     end
     return resultList
 end
-
 ---@return ItemContainer
 function ZipContainer:makeItems()
+    local coords = zipCoordsFromObj(self.isoObject)
+    self:repairDuplicateIds()
+    local beforeCount = self:countItems()
+    zlog('makeItems', string.format('coords=%s modDataCount=%d containerBefore=%d', coords, beforeCount, self.itemContainer:getItems():size()))
     self.itemContainer:removeAllItems()
     local items = self:getItems()
+    local usedIds = {}
     for _, item in pairs(items) do
-        -- local remove_base = item:
+        local id = item:getID()
+        if usedIds[id] then
+            local newId = generateUniqueItemId(usedIds)
+            zlog('makeItems', string.format('coords=%s duplicate runtime id=%d -> %d type=%s', coords, id, newId, item:getFullType()))
+            item:setID(newId)
+            id = newId
+        else
+            usedIds[id] = true
+        end
         self.itemContainer:addItem(item)
     end
+    zlog('makeItems', string.format('coords=%s containerAfter=%d', coords, self.itemContainer:getItems():size()))
     -- local DoRemoveItem_base = self.itemContainer.DoRemoveItem
     -- print('DoRemoveItem_base', DoRemoveItem_base)
     -- function self.itemContainer:DoRemoveItem (item)
@@ -365,12 +435,28 @@ end
 
 ---@param items InventoryItem[]
 function ZipContainer:addItems(items)
+    local coords = zipCoordsFromObj(self.isoObject)
     for _, item in pairs(items) do
         if self.itemContainer:contains(item) then
             local type = item:getFullType()
+            local itemId = item:getID()
+            if self:modDataHasId(itemId) then
+                local usedIds = {}
+                for _, typeTables in pairs(self.modData) do
+                    for _, typeTable in pairs(typeTables) do
+                        if typeTable and typeTable.id then
+                            usedIds[typeTable.id] = true
+                        end
+                    end
+                end
+                local newId = generateUniqueItemId(usedIds)
+                zlog('addItems', string.format('coords=%s duplicate id=%d -> %d type=%s', coords, itemId, newId, type))
+                item:setID(newId)
+                itemId = newId
+            end
             local typeTable = self.modData[type] or {} --[[@as zipTable]]
             local resultTable = {
-                id = item:getID(),
+                id = itemId,
                 condition = item:getCondition(),
                 weight = item:getUnequippedWeight(),
                 actualWeight = item:getActualWeight(),
@@ -429,27 +515,36 @@ function ZipContainer:addItems(items)
             end
             table.insert(typeTable, resultTable)
             self.modData[type] = typeTable
+            zlog('addItems', string.format('coords=%s type=%s id=%d modDataCount=%d', coords, type, item:getID(), self:countItems()))
+        else
+            zlog('addItems', string.format('coords=%s SKIPPED type=%s id=%d (not in container)', coords, item:getFullType(), item:getID()))
         end
     end
-    -- self:setModData()
 end
 
 ---@param items InventoryItem[]
 function ZipContainer:removeItems(items)
+    local coords = zipCoordsFromObj(self.isoObject)
     for _, item in pairs(items) do
-        if not self.itemContainer:contains(item) then
+        local inContainer = self.itemContainer:contains(item)
+        if not inContainer then
             local type = item:getFullType()
             local id = item:getID()
             local typeTables = self.modData[type] or {}
-            for idx, typeTable in ipairs(typeTables) do
+            local removed = false
+            for idx, typeTable in pairs(typeTables) do
                 if typeTable and typeTable.id == id then
                     table.remove(typeTables, idx)
+                    removed = true
+                    break
                 end
             end
             self.modData[type] = typeTables
+            zlog('removeItems', string.format('coords=%s type=%s id=%d removed=%s modDataCount=%d', coords, type, id, tostring(removed), self:countItems()))
+        else
+            zlog('removeItems', string.format('coords=%s SKIPPED type=%s id=%d (still in container)', coords, item:getFullType(), item:getID()))
         end
     end
-    -- self:setModData()
 end
 
 ---@param items InventoryItem[]
@@ -490,16 +585,31 @@ function ZipContainer:countItems(itemType)
     return count
 end
 
-local function sortAndHash(list) -- Not actualy hash, just a string. Cause sh1.lua works slow
-    table.sort(list)
-    local str = table.concat(list, ',')
-    return str
-    -- return utils.sha1.hex(str)
+local function sortAndHash(list)
+    local seen = {}
+    local unique = {}
+    for _, id in ipairs(list) do
+        if id and not seen[id] then
+            seen[id] = true
+            table.insert(unique, id)
+        end
+    end
+    table.sort(unique)
+    return table.concat(unique, ',')
+end
+
+---@return boolean
+function ZipContainer:needsRefresh()
+    local modCount = self:countItems()
+    local uiCount = self.itemContainer:getItems():size()
+    if modCount ~= uiCount then
+        return true
+    end
+    return self:getHashOfModdata() ~= self:getHashOfContains()
 end
 
 ---@return string
-function ZipContainer:getHashOfModdata()
-    local resultList = {}
+function ZipContainer:getHashOfModdata()    local resultList = {}
     for _, typeTables in pairs(self.modData) do
         for _, typeTable in pairs(typeTables) do
             if typeTable then

@@ -1,3 +1,17 @@
+-- DEBUG: поставить false после диагностики
+local ZIP_DEBUG = false
+
+local function zlog(tag, msg)
+    if ZIP_DEBUG then
+        print('[ZipContainer:' .. tag .. '] ' .. tostring(msg))
+    end
+end
+
+local function zipCoordsFromObj(o)
+    if not o then return '?' end
+    return string.format('%d,%d,%d', math.floor(o:getX()), math.floor(o:getY()), math.floor(o:getZ()))
+end
+
 -- copy from BravensUtils.DelayFunction
 local delayFn = function(func, delay)
 
@@ -61,7 +75,8 @@ local debounceFn = function (name, delay, func, args)
             ticks = ticks + 1;
             debounceDict[name].ticks = ticks
         else
-            --print('Zip Container debounce time: ', os.time() - debounceDict[name].startTime)
+            local elapsed = os.time() - debounceDict[name].startTime
+            zlog('debounce', string.format('key=%s items=%d elapsed=%ds', name, #debounceDict[name].acc, elapsed))
             debounceDict[name].func(args, debounceDict[name].acc)
             Events.OnTick.Remove(debounceDict[name].onTick);
             debounceDict[name] = nil
@@ -74,5 +89,7 @@ end
 return {
     delay = delayFn,
     debounce = debounceFn,
-    -- getWhiteListArr = getWhiteListArr,
+    zlog = zlog,
+    zipCoordsFromObj = zipCoordsFromObj,
+    ZIP_DEBUG = ZIP_DEBUG,
 }

@@ -1,8 +1,77 @@
 local main = require 'ZipContainer_client'
 local utils = require 'ZipContainer_utils'
 local ZipContainer = main.ZipContainer
+local zlog = utils.zlog
+local zipCoordsFromObj = utils.zipCoordsFromObj
 
 local hasZipNear = false
+
+---@type table<ItemContainer, integer>
+local zipTransferLock = {}
+
+local function zipLockContainers(srcContainer, destContainer, delta)
+    if ZipContainer.isValid(srcContainer) then
+        local n = (zipTransferLock[srcContainer] or 0) + delta
+        if n <= 0 then
+            zipTransferLock[srcContainer] = nil
+        else
+            zipTransferLock[srcContainer] = n
+        end
+    end
+    if ZipContainer.isValid(destContainer) then
+        local n = (zipTransferLock[destContainer] or 0) + delta
+        if n <= 0 then
+            zipTransferLock[destContainer] = nil
+        else
+            zipTransferLock[destContainer] = n
+        end
+    end
+end
+
+local function isZipTransferLocked(container)
+    return container and (zipTransferLock[container] or 0) > 0
+end
+
+local function releaseZipTransferLock(ta)
+    if ta._zipLockActive then
+        ta._zipLockActive = false
+        zipLockContainers(ta.srcContainer, ta.destContainer, -1)
+    end
+end
+
+local function itemBrief(item)
+    if not item then return 'item=nil' end
+    return string.format('type=%s id=%d', item:getFullType(), item:getID())
+end
+
+local function containerBrief(container)
+    if not container then return 'container=nil' end
+    local parent = container:getParent()
+    local owner = parent and parent:getModData().owner or nil
+    return string.format('type=%s owner=%s', container:getType(), tostring(owner))
+end
+
+local function logTransferValid(ta, result, extra)
+    local srcZip = ZipContainer:new(ta.srcContainer)
+    local destZip = ZipContainer:new(ta.destContainer)
+    if not srcZip and not destZip then return end
+
+    local txOk = 'n/a'
+    if isClient() and ta.item and ta.srcContainer and ta.destContainer and isItemTransactionConsistent then
+        txOk = tostring(isItemTransactionConsistent(ta.item, ta.srcContainer, ta.destContainer))
+    end
+
+    local contains = ta.srcContainer and ta.item and ta.srcContainer:contains(ta.item) or false
+    local inDest = ta.destContainer and ta.item and ta.destContainer:contains(ta.item) or false
+    local coords = srcZip and zipCoordsFromObj(srcZip.isoObject) or (destZip and zipCoordsFromObj(destZip.isoObject) or '?')
+
+    zlog('isValid', string.format(
+        'result=%s coords=%s %s src=[%s] dest=[%s] contains=%s inDest=%s txConsistent=%s %s',
+        tostring(result), coords, itemBrief(ta.item),
+        containerBrief(ta.srcContainer), containerBrief(ta.destContainer),
+        tostring(contains), tostring(inDest), txOk, extra or ''
+    ))
+end
 
 local ISInventoryPaneContextMenu_base = {
     -- onPutItems = ISInventoryPaneContextMenu.onPutItems
@@ -23,6 +92,8 @@ local ISInventoryPage_base = {
 local ISInventoryTransferAction_base = {
     new = ISInventoryTransferAction.new,
     perform = ISInventoryTransferAction.perform,
+    start = ISInventoryTransferAction.start,
+    stop = ISInventoryTransferAction.stop,
     transferItem = ISInventoryTransferAction.transferItem,
     isValid = ISInventoryTransferAction.isValid
 }
@@ -315,13 +386,18 @@ local function refreshContainer(pane, page)
             container:removeAllItems() -- очищаем контейнер если требуется
             hasZipNear = false
         else
-            local hash1 = zipContainer:getHashOfModdata()
-            local hash2 = zipContainer:getHashOfContains()
-            -- local count = zipContainer:countItems()
-            -- if container:getItems():size() ~= count then
-            if hash1 ~= hash2 then --- FIXME: Работает немного медленно. Можно использовать вариант строкой выше, но это менее безопасно. Нормальный хеш посчитать не получилось.
-                -- print('real render')
-                zipContainer:makeItems() -- отрисовываем айтемы
+            if isZipTransferLocked(container) then
+                zlog('refresh', string.format('skip makeItems (transfer active) coords=%s', zipCoordsFromObj(zipContainer.isoObject)))
+            elseif zipContainer:needsRefresh() then
+                local hash1 = zipContainer:getHashOfModdata()
+                local hash2 = zipContainer:getHashOfContains()
+                local modCount = zipContainer:countItems()
+                local uiCount = container:getItems():size()
+                zlog('refresh', string.format(
+                    'makeItems coords=%s modCount=%d uiCount=%d hashMod=[%s] hashUi=[%s]',
+                    zipCoordsFromObj(zipContainer.isoObject), modCount, uiCount, hash1, hash2
+                ))
+                zipContainer:makeItems()
                 hasZipNear = true
             end
         end
@@ -334,6 +410,15 @@ local function onTransferComplete(ta)
     local item, sourceContainer, targetContainer = ta.item, ta.srcContainer, ta.destContainer
     local sourceZip = ZipContainer:new(sourceContainer)
     local targetZip = ZipContainer:new(targetContainer)
+
+    if not sourceZip and not targetZip then return end
+
+    local srcContains = sourceContainer and item and sourceContainer:contains(item) or false
+    local destContains = targetContainer and item and targetContainer:contains(item) or false
+    zlog('transfer', string.format(
+        'onComplete %s srcContains=%s destContains=%s',
+        itemBrief(item), tostring(srcContains), tostring(destContains)
+    ))
 
     local function mkKey(zip, op)
         local o = zip and zip.isoObject
@@ -420,15 +505,49 @@ end
 
 
 ---@param item InventoryItem
+function ISInventoryTransferAction_patch:start()
+    if ZipContainer.isValid(self.srcContainer) or ZipContainer.isValid(self.destContainer) then
+        self._zipLockActive = true
+        zipLockContainers(self.srcContainer, self.destContainer, 1)
+    end
+    return ISInventoryTransferAction_base.start(self)
+end
+
+function ISInventoryTransferAction_patch:stop()
+    releaseZipTransferLock(self)
+    return ISInventoryTransferAction_base.stop(self)
+end
+
+function ISInventoryTransferAction_patch:perform()
+    local result = ISInventoryTransferAction_base.perform(self)
+    releaseZipTransferLock(self)
+    return result
+end
+
+---@param item InventoryItem
 function ISInventoryTransferAction_patch:transferItem(item)
+    local srcZip = ZipContainer:new(self.srcContainer)
+    local destZip = ZipContainer:new(self.destContainer)
+    if srcZip or destZip then
+        local srcBefore = self.srcContainer and self.srcContainer:contains(item) or false
+        zlog('transfer', string.format('before %s srcContains=%s', itemBrief(item), tostring(srcBefore)))
+    end
+
     local o = ISInventoryTransferAction_base.transferItem(self, item)
+
+    if srcZip or destZip then
+        local srcAfter = self.srcContainer and self.srcContainer:contains(item) or false
+        local destAfter = self.destContainer and self.destContainer:contains(item) or false
+        zlog('transfer', string.format('after %s srcContains=%s destContains=%s', itemBrief(item), tostring(srcAfter), tostring(destAfter)))
+    end
+
     onTransferComplete(self)
     return o
 end
 
 function ISInventoryTransferAction_patch:isValid()
-    local zipContainer = ZipContainer:new(self.destContainer)
-    if zipContainer then
+    local destZip = ZipContainer:new(self.destContainer)
+    if destZip then
         local o_getServerOptions = getServerOptions
         getServerOptions = function()
             return {
@@ -442,18 +561,28 @@ function ISInventoryTransferAction_patch:isValid()
         end
         local p_result = ISInventoryTransferAction_base.isValid(self)
         getServerOptions = o_getServerOptions
+        if not p_result then
+            logTransferValid(self, p_result, 'path=destZip')
+        end
         return p_result
     end
 
     local o_result = ISInventoryTransferAction_base.isValid(self)
-    local isOwner = false
+    local srcZip = ZipContainer:new(self.srcContainer)
     if self.srcContainer then
         local parent = self.srcContainer:getParent()
         if parent and parent:getModData().owner then
-            isOwner = self.character:getUsername() == parent:getModData().owner
+            local isOwner = self.character:getUsername() == parent:getModData().owner
             if isAdmin() then isOwner = true end
-            return (o_result and isOwner)
+            local final = o_result and isOwner
+            if srcZip and not final then
+                logTransferValid(self, final, string.format('path=owner owner=%s player=%s', parent:getModData().owner, self.character:getUsername()))
+            end
+            return final
         end
+    end
+    if srcZip and not o_result then
+        logTransferValid(self, o_result, 'path=srcZip')
     end
     return o_result
 end
@@ -463,7 +592,7 @@ end
 -- local createItemTransaction_base = createItemTransaction
 -- local isItemTransactionConsistent_base = isItemTransactionConsistent
 local makeHooks = function ()
-    print('Zip Container: make hooks')
+    print('Zip Container: make hooks (DEBUG=' .. tostring(utils.ZIP_DEBUG) .. ')')
     ISInventoryPane.refreshContainer = ISInventoryPane_patch.refreshContainer
     ISInventoryPane.transferItemsByWeight = ISInventoryPane_patch.transferItemsByWeight
     ISInventoryPane.renderdetails = ISInventoryPane_patch.renderdetails
@@ -477,6 +606,9 @@ local makeHooks = function ()
 
     ISInventoryTransferAction.transferItem = ISInventoryTransferAction_patch.transferItem
     ISInventoryTransferAction.isValid = ISInventoryTransferAction_patch.isValid
+    ISInventoryTransferAction.start = ISInventoryTransferAction_patch.start
+    ISInventoryTransferAction.stop = ISInventoryTransferAction_patch.stop
+    ISInventoryTransferAction.perform = ISInventoryTransferAction_patch.perform
 
     ISMoveableSpriteProps.objectNoContainerOrEmpty = ISMoveableSpriteProps_patch.objectNoContainerOrEmpty
 
@@ -504,6 +636,9 @@ local removeHooks = function ()
 
     ISInventoryTransferAction.transferItem = ISInventoryTransferAction_base.transferItem
     ISInventoryTransferAction.isValid = ISInventoryTransferAction_base.isValid
+    ISInventoryTransferAction.start = ISInventoryTransferAction_base.start
+    ISInventoryTransferAction.stop = ISInventoryTransferAction_base.stop
+    ISInventoryTransferAction.perform = ISInventoryTransferAction_base.perform
 
     ISMoveableSpriteProps.objectNoContainerOrEmpty = ISMoveableSpriteProps_base.objectNoContainerOrEmpty
 
