@@ -1,5 +1,7 @@
 local Nfunction = require "Nfunction"
 require "ISUI/ShopUIMode"
+require "ISUI/ShopSellSourceBar"
+require "ShopSellInventory"
 ShopUI = ISCollapsableWindow:derive("ShopUI");
 ShopUI.instance = nil;
 ShopUI.SMALL_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Small):getLineHeight()
@@ -253,6 +255,54 @@ function ShopUI:isSellMode()
     return ShopUIMode.isSellMode(self)
 end
 
+function ShopUI:onSellSourceSelected(index)
+    self.sellSourceIndex = index
+    local tab = self:getActiveTab()
+    if tab then
+        self:populateSellTab(tab, false)
+    end
+end
+
+function ShopUI:populateSellTab(tab, clearCart)
+    if not tab or not self.player then return end
+    if clearCart then
+        self.cartItems:clear()
+    end
+    tab.moveAllButton.enable = true
+    tab.moveAllButton:setVisible(true)
+    tab.shopItems:clear()
+    if not self.viewMode then
+        self.sellCartButton.enable = false
+        self.sellCartButton:setVisible(true)
+        self.buyCartButton.enable = false
+        self.buyCartButton:setVisible(false)
+    end
+
+    self.sellSourceIndex = self.sellSourceIndex or 1
+    if tab.layoutSellSourceBar then
+        tab:layoutSellSourceBar()
+    end
+
+    local cartIds = {}
+    if self.cartItems and self.cartItems.items then
+        for i = 1, #self.cartItems.items do
+            local entry = self.cartItems.items[i].item
+            if entry and entry.id then
+                cartIds[entry.id] = true
+            end
+        end
+    end
+
+    local flat = ShopSellInventory.collectFromSource(self.player, self.sellSourceIndex, Shop.Sell, cartIds, {
+        nameLen = 42,
+    })
+    for i = 1, #flat do
+        local v = flat[i]
+        tab.shopItems:addItem(v.type, v)
+    end
+    if tab.relayout then tab:relayout() end
+end
+
 function ShopUI:onActivateView()
     local character = self.player
     if not character:getModData().shopFavorites then
@@ -267,69 +317,24 @@ function ShopUI:onActivateView()
         shopItems:clear() 
     end
 
-    if self.lastTab == Tab.Sell or self:isSellMode() or tabType == Tab.Sell then
-        self.cartItems:clear()
+    local isSell = self:isSellMode() or tabType == Tab.Sell
+    if isSell then
+        local clearCart = not self._sellViewActive
+        self._sellViewActive = true
+        if clearCart then
+            self.sellSourceIndex = 1
+        end
+        self.lastTab = tabType
+        self:populateSellTab(tab, clearCart)
+        return
     end
+    self._sellViewActive = false
     self.lastTab = tabType
 
-    if self:isSellMode() or tabType == Tab.Sell then
-        tab.moveAllButton.enable = true
-        tab.moveAllButton:setVisible(true)
-        shopItems:clear()
-        if not self.viewMode then
-            self.sellCartButton.enable = false
-            self.sellCartButton:setVisible(true)
-            self.buyCartButton.enable = false
-            self.buyCartButton:setVisible(false)
-        end
-        local inventory = character:getInventory():getItems()
-        for i = 0, inventory:size() -1 do
-            local item = inventory:get(i)
-            local itemType = item:getFullType()
-            local itemSell = Shop.Sell[itemType]
-            local isBroken = item:isBroken()
-            if not (Shop.SellisBlacklist and itemSell) then
-                if not (item:isEquipped() or item:isFavorite() or Currency.Coins[itemType]) then
-                    if not (itemSell and itemSell.blacklisted) then
-                        local v = {}
-                        v.type = itemType
-                        local price = Shop.defaultPrice
-                        if isBroken then price = Shop.defaultPriceBroken end
-                        if itemSell then
-                            v.specialCoin = itemSell.specialCoin
-                            if isBroken then
-                                price = itemSell.priceBroken or Shop.defaultPriceBroken
-                            else
-                                price = itemSell.price or Shop.defaultPrice
-                            end
-                        end
-                        v.priceFull = price
-                        price = Nfunction.drainablePrice(item,price)
-                        v.price = price
-                        v.id = item:getID()
-                        v.name = Nfunction.trimString(item:getName(),42)
-                        v.invItem = item
-                        if price > 0 then
-                            if Shop.SellisWhitelist then 
-                                if itemSell then
-                                    shopItems:addItem(itemType,v);
-                                end
-                            else
-                                shopItems:addItem(itemType,v);
-                            end
-                        end
-                    end
-                end
-            end
-        end
-        if tab.relayout then tab:relayout() end
-        return
-    else
-        if self.sellCartButton then
-            self.sellCartButton.enable = false
-            self.sellCartButton:setVisible(false)
-            self.buyCartButton:setVisible(true)
-        end
+    if self.sellCartButton then
+        self.sellCartButton.enable = false
+        self.sellCartButton:setVisible(false)
+        self.buyCartButton:setVisible(true)
     end
 
     if not self.reloadItems then

@@ -1,5 +1,6 @@
 ShopTabUI = ISPanelJoypad:derive("ShopTabUI");
 require "ISUI/ShopUIMode"
+require "ISUI/ShopSellSourceBar"
 ShopTabUI.SMALL_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Small):getLineHeight()
 ShopTabUI.MEDIUM_FONT_HGT = getTextManager():getFontFromEnum(UIFont.Medium):getLineHeight()
 ShopTabUI.addButtonX = 380
@@ -265,6 +266,10 @@ end
 function ShopTabUI:prerender()
     self:syncPanelSize()
     self:relayout()
+    if not self:isSellTab() then
+        ShopSellSourceBar.destroy(self)
+        self.sellSourceBarH = 0
+    end
     if not self.shopItems then return end
     self.shopItems.doDrawItem = ShopTabUI.doDrawShopItem;
     self.shopItems.onMouseMove = ShopTabUI.onMouseMoveShopItem;
@@ -314,10 +319,29 @@ function ShopTabUI:filter()
     self:applyListFilter()
 end
 
+function ShopTabUI:layoutSellSourceBar()
+	if not self:isSellTab() or not self.ShopUI then
+		ShopSellSourceBar.destroy(self)
+		self.sellSourceBarH = 0
+		return 0
+	end
+	local pad = 8
+	local barY = 8
+	local barH = ShopSellSourceBar.rebuild(self, self.ShopUI.player, self.ShopUI.sellSourceIndex, function(idx)
+		self.ShopUI:onSellSourceSelected(idx)
+	end, { x = pad, y = barY, maxW = self:getWidth() - pad * 2 })
+	self.sellSourceBarH = barH > 0 and (barH + 6) or 0
+	return self.sellSourceBarH
+end
+
 function ShopTabUI:relayout()
     self:syncPanelSize()
     local pad = 8
-    local top = 40
+    local sourceBarH = 0
+    if self:isSellTab() then
+        sourceBarH = self.sellSourceBarH or 0
+    end
+    local top = 40 + sourceBarH
     local w = self:getWidth()
     local h = self:getHeight()
     if w < 80 then return end

@@ -1,5 +1,7 @@
 -- \Shops\media\lua\client\ISUI\ATMSellUI.lua
 require "ISUI/ShopUIMode"
+require "ISUI/ShopSellSourceBar"
+require "ShopSellInventory"
 local Nfunction = require "Nfunction"
 
 ATMSellUI = ISCollapsableWindow:derive("ATMSellUI");
@@ -26,47 +28,10 @@ local function GetSellItems(callback)
     Events.OnServerCommand.Add(receiveServerCommand)
 end
 
-local function buildSellList(character, sellItems, excludeIds)
-	local list = {}
-	local inv = character:getInventory():getItems()
-	for i = 0, inv:size() - 1 do
-		local item = inv:get(i)
-		if not (item:isEquipped() or item:isFavorite()) then
-			local itemId = item:getID()
-			if not (excludeIds and excludeIds[itemId]) then
-				local itemType = item:getFullType()
-				local itemSell = sellItems[itemType]
-				local isBroken = item:isBroken()
-				if not (Shop.SellisBlacklist and itemSell) then
-					if not Currency.Coins[itemType] then
-						if not (itemSell and itemSell.blacklisted) then
-							local v = {}
-							local price = Shop.defaultPrice
-							if isBroken then price = Shop.defaultPriceBroken end
-							if itemSell then
-								v.specialCoin = itemSell.specialCoin
-								if isBroken then
-									price = itemSell.priceBroken or Shop.defaultPriceBroken
-								else
-									price = itemSell.price or Shop.defaultPrice
-								end
-							end
-							v.priceFull = price
-							v.price = Nfunction.drainablePrice(item, price)
-							if v.price > 1 then
-								v.id = itemId
-								v.type = itemType
-								v.name = Nfunction.trimString(item:getName(), 32)
-								v.invItem = item
-								table.insert(list, v)
-							end
-						end
-					end
-				end
-			end
-		end
-	end
-	return list
+local function buildSellList(character, sellItems, excludeIds, sourceIndex)
+	return ShopSellInventory.collectFromSource(character, sourceIndex or 1, sellItems, excludeIds, {
+		nameLen = 32,
+	})
 end
 
 local function getCartIds(cartItems)
@@ -174,11 +139,25 @@ local function drawListItem(self, y, item, alt, isInventory)
 	return y + self.itemheight
 end
 
+function ATMSellUI:layoutSellSourceBar()
+	if not self.inventoryLabel or not self.itemsList then return end
+	local x = 20
+	local listW = math.floor((self.width - 40 - 10) / 2)
+	local barY = self.inventoryLabel:getY() + ATMSellUI.SMALL_FONT_HGT + 4
+	local barH = ShopSellSourceBar.rebuild(self, self.player, self.sellSourceIndex, function(idx)
+		self.sellSourceIndex = idx
+		self:rebuildInventoryList()
+	end, { x = x, y = barY, maxW = listW })
+	local listY = self.itemsListBaseY + (barH > 0 and (barH + 4) or 0)
+	self.itemsList:setY(listY)
+	self.itemsList:setHeight(self.itemsListBaseH - (listY - self.itemsListBaseY))
+end
+
 function ATMSellUI:rebuildInventoryList()
 	if not self.sellItems then return end
 
 	local cartIds = getCartIds(self.cartItems)
-	local flat = buildSellList(self.player, self.sellItems, cartIds)
+	local flat = buildSellList(self.player, self.sellItems, cartIds, self.sellSourceIndex)
 	self.inventoryStacks = groupStacks(flat)
 	self.itemsList:clear()
 	for _, stack in ipairs(self.inventoryStacks) do
@@ -188,6 +167,7 @@ function ATMSellUI:rebuildInventoryList()
 end
 
 function ATMSellUI:refreshItems()
+	self:layoutSellSourceBar()
 	self:rebuildInventoryList()
 end
 
@@ -277,6 +257,7 @@ function ATMSellUI:show(player, atmWo)
 		ATMSellUI.instance.actionInProgress = false
 		ATMSellUI.instance.player = player
 		ATMSellUI.instance.atmWo = atmWo
+		ATMSellUI.instance.sellSourceIndex = 1
 	end
 
 	GetSellItems(function(sellItems)
@@ -427,6 +408,9 @@ function ATMSellUI:createChildren()
 	end
 	self.itemsList.onMouseDown = ATMSellUI.onMouseDownInventory
 	self:addChild(self.itemsList);
+	self.itemsListBaseY = listY
+	self.itemsListBaseH = listH
+	self.sellSourceIndex = 1
 
 	self.cartItems = ISScrollingListBox:new(cartX, listY, listW, listH);
 	self.cartItems:initialise();
@@ -548,6 +532,7 @@ function ATMSellUI:new(x, y, width, height, player, atmWo)
 	o.title = getText("IGUI_ATM_Sell")
 	o.player = player
 	o.atmWo = atmWo
+	o.sellSourceIndex = 1
 	o.resizable = false;
 	o.fgBar = {r=0, g=0.6, b=0, a=0.7}
 	return o

@@ -1,6 +1,7 @@
 -- \Shops\media\lua\client\TimedActions\ATMSellAction.lua
 require "TimedActions/ISBaseTimedAction"
 local Nfunction = require "Nfunction"
+require "ShopSellInventory"
 
 ATMSellAction = ISBaseTimedAction:derive("ATMSellAction")
 
@@ -26,15 +27,7 @@ function ATMSellAction:stop()
 end
 
 function ATMSellAction:perform()
-	local playerInv = self.character:getInventory()
-	local inventoryItems = {}
-	local inventory = playerInv:getItems()
-	for i = 0, inventory:size() - 1 do
-		local item = inventory:get(i)
-		if not (item:isEquipped() or item:isFavorite()) then
-			inventoryItems[item:getID()] = item
-		end
-	end
+	local inventoryItems = ShopSellInventory.buildItemMap(self.character)
 
 	local total = 0
 	local totalSpecial = 0
