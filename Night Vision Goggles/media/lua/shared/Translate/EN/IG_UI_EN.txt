@@ -1,0 +1,16 @@
+IGUI_EN = {
+    IGUI_HydroNV_ChargeLabel       = "NVG: %1",
+    IGUI_HydroNV_ChargeTipTitle    = "NVG Charge",
+    IGUI_HydroNV_ChargeTipRecharge = "Requires a Battery in inventory.",
+    IGUI_HydroNV_ChargeFull        = "Fully charged.",
+    IGUI_HydroNV_ChargeNoBattery   = "No battery in inventory.",
+    IGUI_HydroNV_ChargeTooltip     = "Charge: %1",
+    IGUI_HydroNV_Repair            = "Repair NVG",
+    IGUI_HydroNV_StatusOn          = "NVG active",
+    IGUI_HydroNV_StatusOff         = "NVG off",
+    IGUI_HydroNV_StatusRaised      = "Flipped up",
+    IGUI_HydroNV_Context_Flip      = "Flip up / down",
+    IGUI_HydroNV_SlotClickHint     = "LMB: turn on / off",
+    IGUI_HydroNV_Context_Charge    = "Recharge",
+    IGUI_HydroNV_Context_Unequip   = "Unequip",
+}

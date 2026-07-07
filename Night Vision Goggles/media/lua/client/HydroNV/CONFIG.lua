@@ -7,9 +7,8 @@ local CONFIG = {
   DAYLIGHT_BLOCK_ON  = 0.35,
   DAYLIGHT_AUTO_OFF  = 0.40,
 
-  -- true: ПНВ можно включать днём (для тестов на сервере)
-  -- false: блокировка днём включена
-  ALLOW_DAYTIME_TEST = true,
+  -- false: ПНВ можно включать днём (игрок сам решает)
+  BLOCK_DAYLIGHT_NV = false,
 
   -- множитель альфы зерна оверлея (NVAPI использует ~0.2-0.4)
   GRAIN_OVERLAY_SCALE = 1.3,

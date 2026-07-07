@@ -14,11 +14,6 @@ local DEFAULT_PROFILE = {
   shaderGrain  = 0.04,
 }
 
-Profiles.TEXTURES = {
-  fine   = "media/textures/overlay-noiseless.png",
-  coarse = "media/textures/overlay-linearblur.png",
-}
-
 Profiles.BY_TYPE = {
   ["Base.Hat_PVS_5"]              = { tier = 1, drain = 0.001,  viewDist = 58, viewDistMax = 66, shaderGrain = 0.05 },
   ["Base.Hat_PVS15"]              = { tier = 2, drain = 0.0006, viewDist = 70, viewDistMax = 80, shaderGrain = 0.025 },
@@ -29,6 +24,37 @@ Profiles.BY_TYPE = {
   ["Base.Hat_Sam_NV"]             = { tier = 3, drain = 0.0004, viewDist = 85, viewDistMax = 96, shaderGrain = 0.010, phosphor = "white" },
   ["Base.FMA_GP_NVG_18"]          = { tier = 3, drain = 0.0003, viewDist = 88, viewDistMax = 100, shaderGrain = 0.005 },
 }
+
+Profiles.OFF_TYPES = {
+  ["Base.Hat_PVS_5_OFF"]            = true,
+  ["Base.Hat_PVS15_UP"]             = true,
+  ["Base.Hat_PVS15_OFF"]            = true,
+  ["Base.Hat_PVS15_Harness_OFF"]   = true,
+  ["Base.Hat_NV18_OFF"]             = true,
+  ["Base.Hat_NV18_Harness_OFF"]     = true,
+  ["Base.Hat_Sam_NV_OFF"]           = true,
+}
+
+Profiles.NV_SLOTS = {
+  Nose = true,
+  Eyes = true,
+}
+
+Profiles.TEXTURES = {
+  fine   = "media/textures/overlay-noiseless.png",
+  coarse = "media/textures/overlay-linearblur.png",
+}
+
+function Profiles.isOffVariant(item)
+  if item == nil then
+    return false
+  end
+  return Profiles.OFF_TYPES[item:getFullType()] == true
+end
+
+function Profiles.isNvBodySlot(bodyLocation)
+  return bodyLocation ~= nil and Profiles.NV_SLOTS[bodyLocation] == true
+end
 
 function Profiles.get(item)
   if item == nil then

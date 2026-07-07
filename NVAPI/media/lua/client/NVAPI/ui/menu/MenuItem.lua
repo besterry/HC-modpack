@@ -48,24 +48,47 @@ end
 
 -- Create [NV] Charge Menu
 --------------------------------------------------------------------------------
+local function buildChargeMenuTooltip(percent, isFull, hasBattery)
+  local tip = ISToolTip:new()
+  tip:initialise()
+  tip:setVisible(false)
+  tip:setName(getText("IGUI_HydroNV_ChargeTipTitle"))
+
+  if isFull then
+    tip.description = getText("IGUI_HydroNV_ChargeFull")
+  elseif not hasBattery then
+    tip.description = getText("IGUI_HydroNV_ChargeNoBattery") .. "\n"
+      .. getText("IGUI_HydroNV_ChargeTipRecharge", percent)
+  else
+    tip.description = getText("IGUI_HydroNV_ChargeTipRecharge", percent)
+  end
+
+  return tip
+end
+
+
 local function addRechargeOptionToMenu( context, player, nvitem )
 
-  local label  = "[NV] Charge: " .. nvitem.charge:getPercent()
-  local action = function() ItemMenuApply.recharge( player, nvitem ) end
+  local percent = nvitem.charge:getPercent()
+  local label   = getText("IGUI_HydroNV_ChargeLabel", percent)
+  local action  = function() ItemMenuApply.recharge( player, nvitem ) end
+  local item    = nvitem:getBoundItem()
+  local option  = context:addOption( label, player, action, item )
+  local hasBattery = player:getInventory():getFirstTypeRecurse("Battery") ~= nil
 
-  local chargeAmount = function()
-    return nvitem.charge:isFull()
+  option.toolTip = buildChargeMenuTooltip(
+    percent,
+    nvitem.charge:isFull(),
+    hasBattery
+  )
+
+  if nvitem.charge:isFull() then
+    option.notAvailable = true
+    option.onSelect = nil
+  elseif not hasBattery then
+    option.notAvailable = true
+    option.onSelect = nil
   end
-
-  local batteryAvailable = function()
-    return player:getInventory():getFirstTypeRecurse("Battery") == nil
-  end
-
-
-  local opt = Option:new( label, action )
-  opt:check( chargeAmount    , "item is fully charged" )
-  opt:check( batteryAvailable, "Need a battery to recharge" )
-  opt:renderTo( context, nvitem:getBoundItem() )
 
 end
 
@@ -74,7 +97,7 @@ end
 --------------------------------------------------------------------------------
 local function addRepairOptionToMenu( context, player, nvitem )
 
-  local label  = "[NV] Repair"
+  local label  = getText("IGUI_HydroNV_Repair")
   local action = function() ItemMenuApply.repair( player, nvitem ) end
 
 

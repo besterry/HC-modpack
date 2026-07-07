@@ -11,6 +11,18 @@ ItemUtil.isNightVisionItem = function(item)
   return item ~= nil and item:hasTag(CONFIG.ITEM_TAG)
 end
 
+ItemUtil.canActivateNv = function(item)
+  return ItemUtil.isNightVisionItem(item)
+end
+
+ItemUtil.isNvDisplayItem = function(item)
+  if item == nil then
+    return false
+  end
+  local Profiles = require "HydroNV/Profiles"
+  return ItemUtil.canActivateNv(item) or Profiles.isOffVariant(item)
+end
+
 ItemUtil.isBroken = function(item)
   return item:getCondition() == 0
 end

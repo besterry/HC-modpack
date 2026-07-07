@@ -5,7 +5,7 @@ local Debug = {
 }
 
 function Debug:isDaylightChecksEnabled()
-  if CONFIG.ALLOW_DAYTIME_TEST then
+  if not CONFIG.BLOCK_DAYLIGHT_NV then
     return false
   end
 
@@ -17,8 +17,8 @@ function Debug:isDaylightChecksEnabled()
 end
 
 function Debug:toggleSessionTest()
-  if CONFIG.ALLOW_DAYTIME_TEST then
-    self:notify("HydroNV: тест днём уже включён в CONFIG")
+  if not CONFIG.BLOCK_DAYLIGHT_NV then
+    self:notify("HydroNV: дневная блокировка отключена (CONFIG)")
     return
   end
 
@@ -49,11 +49,6 @@ function Debug:notify(text)
 end
 
 function Debug:notifyStartupState()
-  if not CONFIG.ALLOW_DAYTIME_TEST then
-    return
-  end
-
-  self:notify("HydroNV: тест днём активен (CONFIG)")
 end
 
 return Debug

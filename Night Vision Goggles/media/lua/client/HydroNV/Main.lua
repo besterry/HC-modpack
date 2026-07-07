@@ -1,4 +1,5 @@
 local Control      = require "HydroNV/Control"
+local ChargeUI     = require "HydroNV/ChargeUI"
 local Daylight     = require "HydroNV/Daylight"
 local Debug        = require "HydroNV/Debug"
 local Hooks        = require "HydroNV/Hooks"
@@ -29,6 +30,7 @@ local function onGameStart()
   end
 
   Hooks.install()
+  ChargeUI.install()
   Control:clear()
   Debug:notifyStartupState()
 end

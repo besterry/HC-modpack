@@ -18,6 +18,17 @@ local function shouldTurnOffForBodyLocation(bodyLocation)
   return activeItem ~= nil and activeItem:getBodyLocation() == bodyLocation
 end
 
+local function unequipItemSync(player, item)
+  if player == nil or item == nil or not item:isEquipped() then
+    return
+  end
+
+  local action = ISUnequipAction:new(player, item, 1)
+  if action:isValid() then
+    action:perform()
+  end
+end
+
 local function unequipOtherNightVision(player, keepItem)
   if player == nil or keepItem == nil then
     return
@@ -31,13 +42,7 @@ local function unequipOtherNightVision(player, keepItem)
   end)
 
   for i = 1, #removeList do
-    ISTimedActionQueue.add(ISUnequipAction:new(player, removeList[i], 50))
-  end
-end
-
-local function onWearNightVision(self)
-  if self.item ~= nil and self.item:hasTag(CONFIG.ITEM_TAG) then
-    unequipOtherNightVision(self.character, self.item)
+    unequipItemSync(player, removeList[i])
   end
 end
 
@@ -68,9 +73,8 @@ function Hooks.install()
     if shouldTurnOffForBodyLocation(self.item:getBodyLocation()) then
       Control:turnOff(false)
     end
-    onWearNightVision(self)
     Hooks.equipPerform(self)
-    if self.character ~= nil and self.item ~= nil and self.item:hasTag(CONFIG.ITEM_TAG) then
+    if self.character ~= nil and self.item ~= nil and self.item:isEquipped() and self.item:hasTag(CONFIG.ITEM_TAG) then
       unequipOtherNightVision(self.character, self.item)
     end
     Control:syncActiveItem()

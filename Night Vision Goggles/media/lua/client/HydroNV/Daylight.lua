@@ -12,14 +12,14 @@ Daylight.getStrength = function()
 end
 
 Daylight.isTooBrightToTurnOn = function()
-  if not Debug:isDaylightChecksEnabled() then
+  if not CONFIG.BLOCK_DAYLIGHT_NV then
     return false
   end
   return Daylight.getStrength() >= CONFIG.DAYLIGHT_BLOCK_ON
 end
 
 Daylight.isTooBrightToKeepOn = function()
-  if not Debug:isDaylightChecksEnabled() then
+  if not CONFIG.BLOCK_DAYLIGHT_NV then
     return false
   end
   return Daylight.getStrength() >= CONFIG.DAYLIGHT_AUTO_OFF

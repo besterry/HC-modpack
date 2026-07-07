@@ -1,0 +1,16 @@
+IGUI_RU = {
+    IGUI_HydroNV_ChargeLabel       = "Заряд: %1",
+    IGUI_HydroNV_ChargeTipTitle    = "Зарядка прибора",
+    IGUI_HydroNV_ChargeTipRecharge = "Для зарядки нужна батарейка в инвентаре",
+    IGUI_HydroNV_ChargeFull        = "Полностью заряжен",
+    IGUI_HydroNV_ChargeNoBattery   = "Нет батареи в инвентаре",
+    IGUI_HydroNV_ChargeTooltip     = "Заряд: %1",
+    IGUI_HydroNV_Repair            = "Ремонт ПНВ",
+    IGUI_HydroNV_StatusOn          = "ПНВ включён",
+    IGUI_HydroNV_StatusOff         = "ПНВ выключен",
+    IGUI_HydroNV_StatusRaised      = "Поднято",
+    IGUI_HydroNV_Context_Flip      = "Поднять/опустить",
+    IGUI_HydroNV_SlotClickHint     = "ЛКМ: включить/выключить",
+    IGUI_HydroNV_Context_Charge    = "Зарядить",
+    IGUI_HydroNV_Context_Unequip   = "Снять",
+}

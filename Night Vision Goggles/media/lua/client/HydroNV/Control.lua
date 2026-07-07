@@ -155,6 +155,11 @@ function Control:turnOn(item)
     return false
   end
 
+  if not ItemUtil.canActivateNv(item) then
+    Sound:playToggleFail()
+    return false
+  end
+
   if Daylight.isTooBrightToTurnOn() then
     Sound:playToggleFail()
     return false
