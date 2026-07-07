@@ -112,6 +112,13 @@ function CI_KeyRing.stamp(player, vehicle, action)
     syncKeyRing(keyRing)
 end
 
+local function getVehicleByIdSafe(vehicleId)
+    if vehicleId == nil then return nil end
+    local ok, vehicle = pcall(getVehicleById, vehicleId)
+    if ok then return vehicle end
+    return nil
+end
+
 local function onEnterVehicle(player)
     local vehicle = player:getVehicle()
     if not vehicle then return end
@@ -119,9 +126,21 @@ local function onEnterVehicle(player)
 end
 
 local function onExitVehicle(player)
-    local vehicle = getVehicleById(CI_KeyRing.lastVehicleId)
-    if not vehicle then return end
-    CI_KeyRing.stamp(player, vehicle, "exit")
+    if not player then return end
+
+    local vehicleId = CI_KeyRing.lastVehicleId
+    if not vehicleId then return end
+
+    local vehicle = player:getVehicle()
+    if vehicle and vehicle:getId() == vehicleId then
+        CI_KeyRing.stamp(player, vehicle, "exit")
+        return
+    end
+
+    vehicle = getVehicleByIdSafe(vehicleId)
+    if vehicle then
+        CI_KeyRing.stamp(player, vehicle, "exit")
+    end
 end
 
 CI_KeyRing.lastVehicleId = nil
