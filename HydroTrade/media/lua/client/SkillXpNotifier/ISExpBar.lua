@@ -1,5 +1,64 @@
 ISExpBar = ISPanel:derive("ISExpBar");
 
+ISExpConfigTickBox = ISTickBox:derive("ISExpConfigTickBox");
+
+function ISExpConfigTickBox:new(x, y, width, height, name, changeOptionTarget, changeOptionMethod, changeOptionArg1, changeOptionArg2)
+	local o = ISTickBox:new(x, y, width, height, name, changeOptionTarget, changeOptionMethod, changeOptionArg1, changeOptionArg2);
+	setmetatable(o, self);
+	self.__index = self;
+	return o;
+end
+
+function ISExpConfigTickBox:getOptionIndexAt(x, y)
+	if #self.options == 0 or x < 0 or x > self.width then
+		return nil;
+	end
+
+	local totalHgt = #self.options * self.itemHgt;
+	local localY = y - (self.height - totalHgt) / 2;
+	if localY < 0 or localY >= totalHgt then
+		return nil;
+	end
+
+	local index = math.floor(localY / self.itemHgt + 1);
+	if index < 1 or index > #self.options then
+		return nil;
+	end
+
+	return index;
+end
+
+function ISExpConfigTickBox:onMouseUp(x, y)
+	if not self.enable then
+		return false;
+	end
+
+	local index = self:getOptionIndexAt(x, y);
+	if index == nil then
+		return false;
+	end
+
+	if self.disabledOptions[self.optionsIndex[index]] then
+		return false;
+	end
+
+	getSoundManager():playUISound("UIToggleTickBox");
+	if self.onlyOnePossibility then
+		self.selected = {};
+	end
+	if self.selected[index] == nil then
+		self.selected[index] = true;
+	else
+		self.selected[index] = not self.selected[index];
+	end
+
+	if self.changeOptionTarget ~= nil then
+		self.changeOptionTarget:onConfigTickboxChanged(self, index, self.selected[index]);
+	end
+
+	return false;
+end
+
 function ISExpBar:new(playerIndex, player)
 	-- Core
 	local fontSize, fontHeightMed;
@@ -115,7 +174,7 @@ function ISExpBar:new(playerIndex, player)
 				tonumber(perk:getXp6()), tonumber(perk:getXp7()), tonumber(perk:getXp8()), tonumber(perk:getXp9()), tonumber(perk:getXp10()),
 			};
 
-			barHandle:setTrackSkill(perkType, (perkType ~="Fitness") and (perkType ~="Strength") and (perkType ~="Lightfoot") and (perkType ~="Sneak") and (perkType ~="Maintenance") and (perkType ~="Reading"));
+			barHandle:setTrackSkill(perkType, (perkType ~="Fitness") and (perkType ~="Strength") and (perkType ~="Sprinting") and (perkType ~="Lightfoot") and (perkType ~="Sneak") and (perkType ~="Maintenance") and (perkType ~="Reading"));
 		end
 	end
 	
@@ -178,6 +237,7 @@ function ISExpBar:new(playerIndex, player)
 	-- Other panel instances
 	barHandle.dropdownPanel = nil;
 	barHandle.configPanel = nil;
+	barHandle.configTickboxes = {};
 
 	barHandle.CONFIG_VERSION = 2;
 
@@ -321,7 +381,7 @@ function ISExpBar:addConfigPanel()
 	--pw = 180;
 	ph = 22;
 
-	columnWidth = math.max(barHandle.longestNameWidth + 80, 180 + (20 * (getCore():getOptionFontSize() - 1)));
+	columnWidth = math.max(self.longestNameWidth + 80, 180 + (20 * (getCore():getOptionFontSize() - 1)));
 	skillColumns = 3;
 
 	pw = columnWidth * skillColumns;
@@ -331,7 +391,7 @@ function ISExpBar:addConfigPanel()
 	panel:instantiate();
 	panel.backgroundColor = {r=self.backgroundColor.r, g=self.backgroundColor.g, b=self.backgroundColor.b, a=0.8};
 	panel.borderColor = self.borderColor_inner;
-	panel.moveWithMouse = true;
+	panel.moveWithMouse = false;
 	panel:setCapture(false);
 
 	-- Title label
@@ -366,10 +426,13 @@ function ISExpBar:addConfigPanel()
 	skillCountTotal = skillCount + moddedSkillCount;
 	skillRows = math.ceil(skillCountTotal / skillColumns);
 
+	self.configTickboxes = {};
+
 	-- Add the base skills in order first, then add any modded skills at the end
 	for column=1, skillColumns, 1 do
-		tickbox = ISTickBox:new(tx, ty, tw, th, "", self, ISExpBar.doTrackTickbox, 1, 2);
+		tickbox = ISExpConfigTickBox:new(tx, ty, tw, th, "", self, nil, nil, nil);
 		tickbox:initialise();
+		tickbox:instantiate();
 		tickbox:setVisible(true);
 		optionIndex = 1
 		nameWidthLongest = 0;
@@ -410,10 +473,12 @@ function ISExpBar:addConfigPanel()
 
 		-- Dynamically reduce the column width if longest name is shorter than base coumns size
 		columnWidthDynamic = math.min(columnWidth, nameWidthLongest + 80);
+		tickbox:setWidthToFit();
 		tx = tx + columnWidthDynamic;
 		pw = pw + (columnWidthDynamic-columnWidth);
 
 		panel:addChild(tickbox);
+		table.insert(self.configTickboxes, tickbox);
 	end
 
 	ph = ph + ( (th+5) * (skillRows+1)) + 47;
@@ -448,6 +513,30 @@ function ISExpBar:skillIsBaseGame(skill_type)
 	return false;
 end
 
+function ISExpBar:syncTrackSkillsFromConfigPanel()
+	if self.configTickboxes == nil then
+		return;
+	end
+
+	local tickbox, perkType, optionCount, optionIndex;
+	for tickboxIndex=1, #self.configTickboxes, 1 do
+		tickbox = self.configTickboxes[tickboxIndex];
+		if tickbox ~= nil then
+			optionCount = tickbox:getOptionCount();
+			for optionIndex=1, optionCount, 1 do
+				perkType = tickbox.optionData[optionIndex];
+				if perkType ~= nil then
+					self:setTrackSkill(perkType, tickbox:isSelected(optionIndex));
+				end
+			end
+		end
+	end
+end
+
+function ISExpBar:onConfigTickboxChanged(tickbox, index, selected)
+	self:writeConfig();
+end
+
 function ISExpBar:closeConfigPanel()
 	if self.configPanel ~= nil then
 		self.configPanel:setVisible(false);
@@ -464,25 +553,6 @@ function ISExpBar:openConfigPanel()
 		self.configPanel:bringToTop();
 	end
 	self:updateInteractionLock();
-end
-
-
-function ISExpBar:doTrackTickbox(index, selected, arg1, arg2, tickbox)
-	if tickbox == nil or tickbox.optionsIndex == nil then
-		return;
-	end
-
-	local perkType = tickbox.optionData[index];
-	if perkType == nil then
-		local perkName = tickbox.optionsIndex[index];
-		if perkName == nil then
-			return;
-		end
-		perkType = self:getPerkTypeFromName(perkName);
-	end
-
-	self:setTrackSkill(perkType, selected);
-	self:writeConfig();
 end
 
 function ISExpBar:getPerkTypeFromName(perkName)
@@ -671,6 +741,8 @@ end
 
 function ISExpBar:writeConfig()
 	local fileStream;
+
+	self:syncTrackSkillsFromConfigPanel();
 	fileStream = getFileWriter("RUNE_EXP_conf.ini", true, false);
 
 	if fileStream ~= nil then
