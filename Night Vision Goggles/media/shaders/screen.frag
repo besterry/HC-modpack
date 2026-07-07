@@ -38,6 +38,8 @@ float intensityAdjust = 1.15;
 const float nvGainMin = 1.15;
 const float nvGainMax = 1.55;
 const float nvNoiseAmount = 0.002;
+const float nvWhitePhosphorGain = 0.68;
+const float nvWhitePhosphorCurve = 1.10;
 
 //blur options:
 const float blur_pi = 6.28318530718; 	// Pi times 2
@@ -321,21 +323,27 @@ vec3 screenNightvision(in vec3 pixel, in vec3 noise, in vec2 uv) {
 	invintensity = invintensity * invintensity;
 
 	float gain = mix(nvGainMin, nvGainMax, nightMix);
-	col.rg += 0.32;
+	bool isWhitePhosphor = VarInfo.y > 0.65;
+	col.rg += isWhitePhosphor ? 0.18 : 0.32;
 	float shaderGrain = max(ParamInfo.w, nvNoiseAmount);
 	col = col * gain + ((noise * shaderGrain) * (invintensity * 1.6));
 
 	vec2 centered = uv - vec2(0.5, 0.5);
 	float edgeDist = length(centered);
-	float edgeBoost = smoothstep(0.12, 0.62, edgeDist) * nightMix * 0.34;
+	float edgeBoostAmt = isWhitePhosphor ? 0.20 : 0.34;
+	float edgeBoost = smoothstep(0.12, 0.62, edgeDist) * nightMix * edgeBoostAmt;
 	col += edgeBoost;
 
 	float intensity2 = dot(lumvec, col);
-	intensity2 = clamp(contrast2 * (intensity2 - 0.5) + 0.5, 0.0, 1.0);
-	float phosphorLevel = clamp(intensity2 / 0.59, 0.0, 1.0) * intensityAdjust;
+	float localContrast2 = isWhitePhosphor ? 0.62 : contrast2;
+	intensity2 = clamp(localContrast2 * (intensity2 - 0.5) + 0.5, 0.0, 1.0);
+	float phosphorDiv = isWhitePhosphor ? 0.64 : 0.59;
+	float phosphorAdj = isWhitePhosphor ? 1.02 : intensityAdjust;
+	float phosphorLevel = clamp(intensity2 / phosphorDiv, 0.0, 1.0) * phosphorAdj;
 
-	if (VarInfo.y > 0.65) {
-		col = vec3(phosphorLevel * 0.96, phosphorLevel * 0.99, phosphorLevel * 1.05);
+	if (isWhitePhosphor) {
+		float whiteLevel = pow(phosphorLevel * nvWhitePhosphorGain, nvWhitePhosphorCurve);
+		col = vec3(whiteLevel * 0.94, whiteLevel * 0.97, whiteLevel * 1.00);
 	} else {
 		col = col * vec3(0.0, phosphorLevel, 0.0);
 	}

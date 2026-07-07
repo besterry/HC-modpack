@@ -1,5 +1,7 @@
 require "ISUI/ISPanelJoypad"
 
+local HydroHUDVehicle = require "HydroHUDVehicle"
+
 ConsumableHotbar = ConsumableHotbar or {}
 ConsumableHotbar.SLOT_COUNT = 2
 
@@ -148,6 +150,14 @@ function ConsumableHotbar.findItemById(character, itemId)
     return search(character:getInventory())
 end
 
+function ConsumableHotbar.isBicycle(vehicle)
+    return HydroHUDVehicle.isBicycle(vehicle)
+end
+
+function ConsumableHotbar.shouldHideInVehicle(playerNum, character)
+    return HydroHUDVehicle.shouldHideInVehicle(playerNum, character)
+end
+
 function ConsumableHotbar.useFull(playerObj, item)
     if not playerObj or not item then
         return false
@@ -192,7 +202,7 @@ function ISConsumableHotbar:shouldShow()
     if self.playerNum > 0 or JoypadState.players[self.playerNum + 1] then
         return false
     end
-    if self.chr:getVehicle() then
+    if ConsumableHotbar.shouldHideInVehicle(self.playerNum, self.chr) then
         return false
     end
     return true
@@ -204,6 +214,8 @@ function ISConsumableHotbar:render()
         self:setVisible(false)
         return
     end
+
+    self:setVisible(true)
 
     self:drawRect(0, 0, self.width, self.height, self.panelBg.a, self.panelBg.r, self.panelBg.g, self.panelBg.b)
     self:drawRectBorderStatic(0, 0, self.width, self.height, self.borderColor.a, self.borderColor.r, self.borderColor.g, self.borderColor.b)
@@ -410,10 +422,7 @@ function ISConsumableHotbar:update()
         self:hideTooltip()
         self:setVisible(false)
     else
-        local moodleUI = UIManager.getMoodleUI(self.playerNum)
-        if not self:isVisible() and moodleUI and moodleUI:isVisible() then
-            self:setVisible(true)
-        end
+        self:setVisible(true)
     end
 
     self:setSizeAndPosition()

@@ -2,6 +2,7 @@ if isServer() then return end
 
 require "ISUI/ISPanel"
 
+local HydroHUDVehicle = require "HydroHUDVehicle"
 local Control        = require "HydroNV/Control"
 local Inventory      = require "HydroNV/Inventory"
 local ItemUtil       = require "HydroNV/ItemUtil"
@@ -184,7 +185,11 @@ function HydroNVChargeSlot:shouldShow()
   end
 
   local player = getSpecificPlayer(self.playerNum)
-  if not player or player:getVehicle() then
+  if not player then
+    return false
+  end
+
+  if HydroHUDVehicle.shouldHideInVehicle(self.playerNum, player) then
     return false
   end
 

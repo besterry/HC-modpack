@@ -2,6 +2,8 @@ if isServer() then return end
 
 require "ISUI/ISPanel"
 
+local HydroHUDVehicle = require "HydroHUDVehicle"
+
 TZoneMaskFilterHUD = TZoneMaskFilterHUD or {}
 
 local HOTBAR_GAP = 4
@@ -122,7 +124,10 @@ function TZoneMaskFilterSlot:shouldShow()
 		return false
 	end
 	local player = getSpecificPlayer(self.playerNum)
-	if not player or player:getVehicle() then
+	if not player then
+		return false
+	end
+	if HydroHUDVehicle.shouldHideInVehicle(self.playerNum, player) then
 		return false
 	end
 	local hotbar = getPlayerHotbar(self.playerNum)
