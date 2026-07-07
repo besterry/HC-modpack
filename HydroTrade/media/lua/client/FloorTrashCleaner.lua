@@ -1,5 +1,6 @@
 -- Очистка мусора на полу вне убежищ (клиент MP, очередь с бюджетом).
 -- Sandbox: FloorTrashCleaner.Enabled, FloorTrashCleaner.MaxAgeGameDays
+-- Ванильную очистку (HoursForWorldItemRemoval) отключить: она не учитывает убежища.
 
 if not isClient() then return end
 
@@ -27,7 +28,6 @@ local cachedWorldAgeDays = 0
 local cachedMaxAgeGameDays = 24
 local cachedMe = nil
 local cachedOtherPlayers = nil
-local cachedSafehouses = nil
 
 local function isModuleEnabled()
     return SandboxVars.FloorTrashCleaner and SandboxVars.FloorTrashCleaner.Enabled
@@ -51,32 +51,9 @@ local function chebyshevDist(ax, ay, az, bx, by, bz)
     return math.max(math.abs(ax - bx), math.abs(ay - by))
 end
 
-local function refreshSafehouseCache()
-    cachedSafehouses = {}
-    local list = SafeHouse.getSafehouseList()
-    if not list then return end
-    for i = 0, list:size() - 1 do
-        local sh = list:get(i)
-        if sh then
-            cachedSafehouses[#cachedSafehouses + 1] = {
-                x1 = sh:getX(),
-                y1 = sh:getY(),
-                x2 = sh:getX2(),
-                y2 = sh:getY2(),
-            }
-        end
-    end
-end
-
-local function isInSafehouse(x, y)
-    if not cachedSafehouses then return false end
-    for i = 1, #cachedSafehouses do
-        local sh = cachedSafehouses[i]
-        if x >= sh.x1 and x <= sh.x2 and y >= sh.y1 and y <= sh.y2 then
-            return true
-        end
-    end
-    return false
+local function isSquareInSafehouse(square)
+    if not square then return false end
+    return SafeHouse.getSafeHouse(square) ~= nil
 end
 
 local function refreshPlayerCache()
@@ -93,7 +70,6 @@ local function refreshPlayerCache()
     end
     cachedWorldAgeDays = getWorld():getWorldAgeDays()
     cachedMaxAgeGameDays = getMaxAgeGameDays()
-    refreshSafehouseCache()
 end
 
 local function ensureTick()
@@ -159,8 +135,16 @@ local function isBlockedByPlayers(x, y, z)
     return false
 end
 
+-- Рюкзаки, сумки и любые контейнеры на полу не трогаем
+local function isProtectedItem(item)
+    if not item then return true end
+    if item:isFavorite() then return true end
+    if instanceof(item, "InventoryContainer") then return true end
+    return false
+end
+
 local function isTrashItem(item)
-    if not item then return false end
+    if not item or isProtectedItem(item) then return false end
     local md = item:getModData()
     if not md or not md["Owner"] or not md["TimeUsed"] then
         return false
@@ -174,11 +158,8 @@ local function squareHasTrashCandidate(wos)
         local wo = wos:get(i)
         if wo then
             local item = wo:getItem()
-            if item then
-                local md = item:getModData()
-                if md and md["Owner"] and md["TimeUsed"] then
-                    return true
-                end
+            if item and isTrashItem(item) then
+                return true
             end
         end
     end
@@ -199,11 +180,6 @@ end
 local function processSquare(cell, entry, removeBudget)
     local key = squareKey(entry.x, entry.y, entry.z)
 
-    if isInSafehouse(entry.x, entry.y) then
-        markSquareDone(key)
-        return 0
-    end
-
     if isBlockedByPlayers(entry.x, entry.y, entry.z) then
         deferSquareCoords(entry.x, entry.y, entry.z)
         return 0
@@ -212,6 +188,11 @@ local function processSquare(cell, entry, removeBudget)
     local square = cell:getGridSquare(entry.x, entry.y, entry.z)
     if not square then
         clearDeferred(key)
+        markSquareDone(key)
+        return 0
+    end
+
+    if isSquareInSafehouse(square) then
         markSquareDone(key)
         return 0
     end
@@ -240,6 +221,10 @@ local function processSquare(cell, entry, removeBudget)
         if wo then
             local item = wo:getItem()
             if item and isTrashItem(item) then
+                if isSquareInSafehouse(square) then
+                    markSquareDone(key)
+                    return removed
+                end
                 removeWorldObject(square, wo)
                 removed = removed + 1
             end
@@ -274,14 +259,11 @@ end
 local function onLoadGridsquare(square)
     if not isModuleEnabled() or not square then return end
 
+    if isSquareInSafehouse(square) then return end
+
     local x, y, z = square:getX(), square:getY(), square:getZ()
     local key = squareKey(x, y, z)
     if skipKeys[key] or pendingKeys[key] or deferredKeys[key] then return end
-
-    if not cachedSafehouses then
-        refreshSafehouseCache()
-    end
-    if isInSafehouse(x, y) then return end
 
     local me = getPlayer()
     if me and isPlayerNearCoords(x, y, z, me, FloorTrashCleaner.VISIBLE_RADIUS) then
