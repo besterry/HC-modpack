@@ -739,7 +739,7 @@
 			<itemGUID>3f013b5b-6b66-4307-b69c-2774de3b53ca</itemGUID>
 		</m_items>
 <!-- NV18 Night Vision --> <m_items>
-			<probability>0.3</probability>
+			<probability>0.12</probability>
 			<itemGUID>7b698b42-97c9-4ebd-ae0e-2ebbf85ff25f</itemGUID>
 		</m_items>
 <!-- Crewman Goggles --> <m_items>
@@ -800,7 +800,7 @@
 			<itemGUID>58f05a80-61fd-4b10-827d-0f13a2cbf7ff</itemGUID>
 		</m_items>			
 <!-- NV18 Night Vision --> <m_items>
-			<probability>0.3</probability>
+			<probability>0.12</probability>
 			<itemGUID>7b698b42-97c9-4ebd-ae0e-2ebbf85ff25f</itemGUID>
 		</m_items>			
 <!-- Chempak Suit --> <m_items> 
@@ -847,7 +847,7 @@
 			<itemGUID>bd83cfe9-e3c9-4281-be7d-f2a054c94a5c</itemGUID>
 		</m_items>		
 <!-- NV18 Night Vision --> <m_items>
-			<probability>0.3</probability>
+			<probability>0.12</probability>
 			<itemGUID>7b698b42-97c9-4ebd-ae0e-2ebbf85ff25f</itemGUID>
 		</m_items>		
 <!-- Chempak Suit --> <m_items> 
@@ -907,7 +907,7 @@
 			<itemGUID>27959da7-cfe3-4877-9035-d352fa2aa6a5</itemGUID>
 		</m_items>			
 <!-- Alice Backpack --> <m_items>
-			<probability>0.3</probability>
+			<probability>0.12</probability>
 			<itemGUID>2177c2b6-f4cb-4924-8df4-943acf595c08</itemGUID>
 		</m_items>		
 	</m_FemaleOutfits>
@@ -945,7 +945,7 @@
 			<itemGUID>7d35edc27-abc4-4524-95f3-505bb7245f53</itemGUID>
 		</m_items>			
 <!-- Alice Backpack --> <m_items>
-			<probability>0.3</probability>
+			<probability>0.12</probability>
 			<itemGUID>2177c2b6-f4cb-4924-8df4-943acf595c08</itemGUID>
 		</m_items>			
 	</m_MaleOutfits>
@@ -978,7 +978,7 @@
 			<itemGUID>a500e850-53c0-489c-918f-6fc1ad8aa7db</itemGUID>
 		</m_items>			
 <!-- ARVN Rucksack --> <m_items>
-			<probability>0.3</probability>
+			<probability>0.12</probability>
 			<itemGUID>315573a2-9b44-4b1a-95d8-b159a84ffe1f</itemGUID>
 		</m_items>			
 	</m_MaleOutfits>	

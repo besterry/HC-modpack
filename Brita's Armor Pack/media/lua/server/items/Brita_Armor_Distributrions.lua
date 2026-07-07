@@ -287,18 +287,18 @@ table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
 -- Military Bags --
 -----------------------
 
--- G3 Sniper Pack --
+-- G3 Sniper Pack (40) --
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, "Base.Bag_Sniper_Pack");
-table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, "Base.Bag_Sniper_Pack");
-table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, "Base.Bag_Sniper_Pack");
-table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
--- ARVN --
+table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.12);
+-- ARVN (48) --
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, "Base.Bag_ARVN_Rucksack");
-table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, "Base.Bag_ARVN_Rucksack");
-table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
+table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.12);
 -- ST53 SCBA --
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, "Base.Bag_ST53_Set");
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.3);
@@ -320,13 +320,13 @@ table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, "Base.Ba
 table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.3);
 table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, "Base.Bag_Radio_Pack");
 table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
--- Alice Pack --
+-- Alice Pack (44) --
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, "Base.Bag_Tactical_Alice");
-table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, "Base.Bag_Tactical_Alice");
-table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, "Base.Bag_Tactical_Alice");
-table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
+table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.12);
 -- M2 Pack --
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, "Base.Bag_M2A1_Pack");
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.3);
@@ -337,11 +337,11 @@ table.insert(ProceduralDistributions.list["ArmySurplusOutfit"].items, "Base.Bag_
 table.insert(ProceduralDistributions.list["ArmySurplusOutfit"].items, 1);
 table.insert(ProceduralDistributions.list["CampingStoreClothes"].items, "Base.Bag_Bush");
 table.insert(ProceduralDistributions.list["CampingStoreClothes"].items, 1);
--- Bush w/ Axe Pack --
+-- Bush w/ Axe Pack (42) --
 table.insert(ProceduralDistributions.list["ArmySurplusOutfit"].items, "Base.Bag_Hunting");
-table.insert(ProceduralDistributions.list["ArmySurplusOutfit"].items, 1);
+table.insert(ProceduralDistributions.list["ArmySurplusOutfit"].items, 0.5);
 table.insert(ProceduralDistributions.list["CampingStoreClothes"].items, "Base.Bag_Hunting");
-table.insert(ProceduralDistributions.list["CampingStoreClothes"].items, 1);
+table.insert(ProceduralDistributions.list["CampingStoreClothes"].items, 0.5);
 
 -----------------------
 -- Military Goggles --
@@ -479,27 +479,27 @@ table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
 -- Military Night Vision --
 -----------------------
 
--- Sam --
+-- Sam (tier 3) --
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, "Base.Hat_Sam_NV");
-table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, "Base.Hat_Sam_NV");
-table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, "Base.Hat_Sam_NV");
-table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
--- PVS15 --
+table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.12);
+-- PVS15 (tier 2) --
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, "Base.Hat_PVS15_ON");
-table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.2);
 table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, "Base.Hat_PVS15_ON");
-table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.2);
 table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, "Base.Hat_PVS15_ON");
-table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
--- PVS18 --
+table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.2);
+-- NV18 (tier 3) --
 table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, "Base.Hat_NV18_ON");
-table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["ArmyStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, "Base.Hat_NV18_ON");
-table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.3);
+table.insert(ProceduralDistributions.list["PoliceStorageOutfit"].items, 0.12);
 table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, "Base.Hat_NV18_ON");
-table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.3);
+table.insert(ProceduralDistributions.list["LockerArmyBedroom"].items, 0.12);
 
 -----------------------
 -- Military Helmet --
