@@ -552,4 +552,15 @@ IGUI_EN =
 	IGUI_ConsumableHotbar_Title = "Consumables",
 	IGUI_ConsumableHotbar_SlotN = "Slot %1",
 	IGUI_ConsumableHotbar_NoItems = "No suitable items",
+
+	IGUI_RUNEEXP_TrackedSkills = "Tracked skills:",
+	IGUI_RUNEEXP_Close = "Close",
+	IGUI_RUNEEXP_Hide = "Hide",
+	IGUI_RUNEEXP_Show = "Show",
+	IGUI_RUNEEXP_Configurate = "Configure",
+	IGUI_RUNEEXP_HiddenHint = "Left click: show panel <LINE> Right click: menu",
+	IGUI_RUNEEXP_TooltipLevel = "Lvl %1",
+	IGUI_RUNEEXP_TooltipCurrent = "Current:",
+	IGUI_RUNEEXP_TooltipNext = "Next level:",
+	IGUI_RUNEEXP_TooltipRemaining = "Remaining",
 }

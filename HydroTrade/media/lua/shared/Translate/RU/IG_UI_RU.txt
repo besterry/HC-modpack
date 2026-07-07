@@ -846,4 +846,15 @@ IGUI_RU =
 
 	IGUI_SafehouseNeighbor_Halo = "Убежище: %1",
 	IGUI_SafehouseNeighbor_Untitled = "Без названия",
+
+	IGUI_RUNEEXP_TrackedSkills = "Отслеживаемые навыки:",
+	IGUI_RUNEEXP_Close = "Закрыть",
+	IGUI_RUNEEXP_Hide = "Скрыть",
+	IGUI_RUNEEXP_Show = "Показать",
+	IGUI_RUNEEXP_Configurate = "Настроить",
+	IGUI_RUNEEXP_HiddenHint = "ЛКМ: показать панель <LINE> ПКМ: меню",
+	IGUI_RUNEEXP_TooltipLevel = "Ур. %1",
+	IGUI_RUNEEXP_TooltipCurrent = "Сейчас:",
+	IGUI_RUNEEXP_TooltipNext = "След.уровнь:",
+	IGUI_RUNEEXP_TooltipRemaining = "Осталось",
 }
