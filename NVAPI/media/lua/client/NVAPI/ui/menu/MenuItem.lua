@@ -123,8 +123,6 @@ local function OnFillInventoryObjectContextMenu( _player, context, _items )
   -- if the selected item is attached to the controller,
   -- then create specific menu options
   ------------------------------------------------------
-  addFilterOptionToMenu    ( context, player, nvitem )
-  addBrightnessOptionToMenu( context, player, nvitem )
   addRechargeOptionToMenu  ( context, player, nvitem )
   if nvitem:isBroken() then
     addRepairOptionToMenu    ( context, player, nvitem )
