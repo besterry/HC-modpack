@@ -1,3 +1,4 @@
 IGUI_RU = {
-	IGUI_perks_Lockpicking = "Взлом",
+    IGUI_perks_Lockpicking = "Взлом",
+    IGUI_perks_Miscellaneous = "Разное",
 }

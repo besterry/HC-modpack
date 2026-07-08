@@ -1,6 +1,11 @@
 ItemName_RU = {
-    ItemName_BetLock.BobbyPin = "Заколка",
-    ItemName_BetLock.HandmadeBobbyPin = "Самодельная заколка",
+    ItemName_BetLock.BobbyPin = "Отмычка",
+    ItemName_BetLock.HandmadeBobbyPin = "Самодельная отмычка",
     ItemName_BetLock.LockpickingMag = "Взлом для чайников",
     ItemName_BetLock.AlarmMag = "Сигнализация для чайников",
+    DisplayName_AB2_Lockpick_1 = "Взлом замков. Том 1",
+    DisplayName_AB2_Lockpick_2 = "Взлом замков. Том 2",
+    DisplayName_AB2_Lockpick_3 = "Взлом замков. Том 3",
+    DisplayName_AB2_Lockpick_4 = "Взлом замков. Том 4",
+    DisplayName_AB2_Lockpick_5 = "Взлом замков. Том 5",
 }

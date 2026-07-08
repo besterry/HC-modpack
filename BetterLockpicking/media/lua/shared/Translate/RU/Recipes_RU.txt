@@ -1,3 +1,5 @@
 Recipe_RU = {
-    Recipe_Create_BobbyPin = "Создать заколку"
+    Recipe_Create_BobbyPin = "Сделать отмычку",
+    Recipe_Lockpicking = "Взлом",
+    Recipe_Alarm_check = "Проверка сигнализации",
 }
