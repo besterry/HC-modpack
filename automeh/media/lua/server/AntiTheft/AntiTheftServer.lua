@@ -146,7 +146,10 @@ end
 
 Events.OnClientCommand.Add(onClientCommand)
 
--- Перехват событий взлома (если BetterLockpicking активен)
+-- TODO [AntiTheft]: блок ниже не выполняется. Better Lockpicking не создаёт глобал BetterLockpicking (есть BetLock).
+-- Защита хотвайра сейчас на клиенте: automeh/media/lua/client/AntiTheft/BetterLockpickingHook.lua
+-- При доработке: заменить условие на проверку мода (betterLockpicking_h) и согласовать с клиентским хуком,
+-- чтобы не было двойной блокировки. onHotwireAttempt здесь даёт серверный лог и уведомление владельца.
 if BetterLockpicking then
     local oldHotwire = ISVehicleMenu.onHotwire
     function ISVehicleMenu.onHotwire(playerObj)
