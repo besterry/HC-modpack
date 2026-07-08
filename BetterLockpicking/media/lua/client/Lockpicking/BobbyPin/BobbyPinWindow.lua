@@ -8,7 +8,11 @@ local MODE_BUILDING_DOOR = 2
 local xPos = 125
 local yPos = 250
 
-local pickLockHealth = 230
+local PICK_LOCK_HEALTH_MAX = 230
+local PIN_BREAK_ANIM_TIME = 5
+local PANEL_WIDTH = 250
+local PANEL_HEIGHT = 110
+local JAM_SOUND_COOLDOWN_MS = 450
 
 local tmpVec1 = Vector3f.new()
 local tmpVec2 = Vector3f.new():set(1, 0, 0)
@@ -16,6 +20,70 @@ local tmpVec2 = Vector3f.new():set(1, 0, 0)
 
 local function forceUnlockChance(playerObj)
     return 10 + playerObj:getPerkLevel(Perks.Strength)
+end
+
+local function updateMaxAngle(win)
+    local diff = math.abs((win.anglePick + 405) - win.keyAngle)
+    if diff > 180 then diff = 360 - diff end
+
+    if diff < win.diffAngle then
+        win.maxAngle = 90
+    elseif diff >= 45 then
+        win.maxAngle = 5
+    else
+        win.maxAngle = (90 - 2 * diff)
+    end
+end
+
+function BobbyPinWindow:getBobbyPinCount()
+    local inv = self.character:getInventory()
+    local count = 0
+    local pins = inv:getItemsFromType("BobbyPin", true)
+    if pins then count = count + pins:size() end
+    local handmade = inv:getItemsFromType("HandmadeBobbyPin", true)
+    if handmade then count = count + handmade:size() end
+    return count
+end
+
+function BobbyPinWindow:consumeBobbyPin()
+    local inv = self.character:getInventory()
+    if inv:containsType("BobbyPin") then
+        inv:Remove("BobbyPin")
+        return true
+    elseif inv:containsType("HandmadeBobbyPin") then
+        inv:Remove("HandmadeBobbyPin")
+        return true
+    end
+    return false
+end
+
+function BobbyPinWindow:resetForNewAttempt()
+    self.breakTimer = 0
+    self.isEnd = false
+    self.isFailEnd = false
+    self.isLockBroken = false
+    self.noRetry = false
+    self.angleScrew = 0
+    self.anglePick = -ZombRand(225, 406)
+    self.keyAngle = ZombRand(178) + 1
+    self.pickLockHealth = PICK_LOCK_HEALTH_MAX
+    self.lastJamSoundMillis = 0
+    updateMaxAngle(self)
+end
+
+function BobbyPinWindow:playJamSound()
+    local now = getTimeInMillis()
+    if self.lastJamSoundMillis ~= nil and now - self.lastJamSoundMillis < JAM_SOUND_COOLDOWN_MS then
+        return
+    end
+    self.lastJamSoundMillis = now
+    self.character:getEmitter():playSound("bobby_jam")
+end
+
+function BobbyPinWindow:finishMinigame()
+    self:setVisible(false)
+    self:removeFromUIManager()
+    self:close()
 end
 
 --------------
@@ -27,7 +95,9 @@ end
 
 local lastRenderMillis = nil
 function BobbyPinWindow:render()
-    self:drawText(getText("UI_Controls_BobbyPin"), self.width/2 - (getTextManager():MeasureStringX(UIFont.Small, getText("UI_Controls_BobbyPin")) / 2), 10, 1,1,1,1, UIFont.Small);
+    self:drawText(getText("UI_Controls_BobbyPin"), self.width/2 - (getTextManager():MeasureStringX(UIFont.Small, getText("UI_Controls_BobbyPin")) / 2), 8, 1,1,1,1, UIFont.Small);
+    local pinText = getText("UI_BetLock_BobbyPinsLeft", tostring(self:getBobbyPinCount()))
+    self:drawText(pinText, self.width/2 - (getTextManager():MeasureStringX(UIFont.Small, pinText) / 2), 28, 1,1,1,1, UIFont.Small);
 
     self:DrawTextureAngle(self.tex_LockBack, xPos, yPos, 0)
     self:DrawTextureAngle(self.tex_LockFront, xPos, yPos, self.angleScrew)
@@ -52,10 +122,14 @@ function BobbyPinWindow:render()
         end
 
         if self.breakTimer <= 0 then
-            if self.isEnd or self.isFailEnd then
-                self:setVisible(false);
-                self:removeFromUIManager();
-                self:close()
+            if self.isEnd and not self.isFailEnd then
+                self:finishMinigame()
+            elseif self.isFailEnd then
+                if self.noRetry or self.isLockBroken or self:getBobbyPinCount() <= 0 then
+                    self:finishMinigame()
+                else
+                    self:resetForNewAttempt()
+                end
             end
         end
     else
@@ -199,16 +273,7 @@ function BobbyPinWindow:onMouseMoveOutside(dx, dy)
         end
     end
 
-    local diff = math.abs((self.anglePick + 405) - self.keyAngle)
-    if diff > 180 then diff = 360 - diff end
-
-    if diff < self.diffAngle then 
-        self.maxAngle = 90
-    elseif diff >= 45 then
-        self.maxAngle = 5
-    else
-        self.maxAngle = (90 - 2*diff)
-    end
+    updateMaxAngle(self)
 end
 
 --------------------------
@@ -221,7 +286,7 @@ function BobbyPinWindow:createVehicleDoor(playerObj, part)
         return
     end
         
-    local modal = BobbyPinWindow:new(Core:getInstance():getScreenWidth()/2 - 250/2 + 300, Core:getInstance():getScreenHeight()/2 - 500/2, 250, 90)
+    local modal = BobbyPinWindow:new(Core:getInstance():getScreenWidth()/2 - PANEL_WIDTH/2 + 300, Core:getInstance():getScreenHeight()/2 - 500/2, PANEL_WIDTH, PANEL_HEIGHT)
     modal.lockpick_object = part
     modal.mode = MODE_VEHICLE_DOOR
     modal.tex_LockBack = getTexture("media/textures/BetLock_Back_VehDoor.png")
@@ -261,7 +326,7 @@ function BobbyPinWindow:createBuildingDoor(playerObj, door, goToOpen)
         return
     end
 
-    local modal = BobbyPinWindow:new(Core:getInstance():getScreenWidth()/2 - 250/2 + 300, Core:getInstance():getScreenHeight()/2 - 500/2, 250, 90)
+    local modal = BobbyPinWindow:new(Core:getInstance():getScreenWidth()/2 - PANEL_WIDTH/2 + 300, Core:getInstance():getScreenHeight()/2 - 500/2, PANEL_WIDTH, PANEL_HEIGHT)
     modal.lockpick_object = door
     modal.mode = MODE_BUILDING_DOOR
     modal.tex_LockBack = getTexture("media/textures/BetLock_Back_VehDoor.png")
@@ -316,24 +381,15 @@ function BobbyPinWindow:initialise()
 
     self.chanceBreakLock = BetLock.Utils.getChanceBreakLock(skill, level)
     self.diffAngle = BetLock.Utils.getDiffAngleBobbyPin(skill, level)
-
-    local diff = math.abs((self.anglePick + 405) - self.keyAngle)
-    if diff > 180 then diff = 360 - diff end
-
-    if diff < self.diffAngle then 
-        self.maxAngle = 90
-    elseif diff >= 45 then
-        self.maxAngle = 5
-    else
-        self.maxAngle = (90 - 2*diff)
-    end
+    self.pickLockHealth = PICK_LOCK_HEALTH_MAX
+    updateMaxAngle(self)
 
     ISTimedActionQueue.clear(self.character)
     ISTimedActionQueue.add(BobbyPinActionAnim:new(self.character))
 end
 
 function BobbyPinWindow:create()
-    self.cancel = ISButton:new((self:getWidth() / 2) - 50, self:getHeight() - 55, 100, 20, getText("UI_Cancel"), self, BobbyPinWindow.onOptionMouseDown);
+    self.cancel = ISButton:new((self:getWidth() / 2) - 50, self:getHeight() - 48, 100, 20, getText("UI_Cancel"), self, BobbyPinWindow.onOptionMouseDown);
     self.cancel.internal = "CANCEL";
     self.cancel:initialise();
     self.cancel:instantiate();
@@ -341,7 +397,7 @@ function BobbyPinWindow:create()
     self:addChild(self.cancel);
 
     if self.goToOpen then
-        self.forceButton = ISButton:new((self:getWidth() / 2) - 100, self:getHeight() - 30, 200, 20, getText("UI_ForceUnlock") .. " (" .. forceUnlockChance(self.character) .. "%)", self, BobbyPinWindow.onOptionMouseDown);
+        self.forceButton = ISButton:new((self:getWidth() / 2) - 100, self:getHeight() - 24, 200, 20, getText("UI_ForceUnlock") .. " (" .. forceUnlockChance(self.character) .. "%)", self, BobbyPinWindow.onOptionMouseDown);
         self.forceButton.internal = "FORCE";
         self.forceButton:initialise();
         self.forceButton:instantiate();
@@ -360,6 +416,9 @@ function BobbyPinWindow:new(x, y, width, height)
     o.borderColor = {r=0.4, g=0.4, b=0.4, a=1};
     o.backgroundColor = {r=0, g=0, b=0, a=0.8};
     o.breakTimer = 0
+    o.isLockBroken = false
+    o.noRetry = false
+    o.pickLockHealth = PICK_LOCK_HEALTH_MAX
 
     o.angleScrew = 0
     o.anglePick = -ZombRand(225, 406)
@@ -367,6 +426,7 @@ function BobbyPinWindow:new(x, y, width, height)
 
 
     o.isEnd = false
+    o.lastJamSoundMillis = 0
 
     o.comboList = {};
     o.zOffsetSmallFont = 25;
@@ -395,28 +455,18 @@ BobbyPinWindow.OnKeyKeepPressed = function(key)
                 win.isEnd = true
                 win.breakTimer = 1
             else
-                pickLockHealth = pickLockHealth - 1
-                if pickLockHealth <= 0 then
-                    win.breakTimer = 5
+                win:playJamSound()
+                win.pickLockHealth = win.pickLockHealth - 1
+                if win.pickLockHealth <= 0 then
+                    win.breakTimer = PIN_BREAK_ANIM_TIME
+                    win.isFailEnd = true
                     win.character:getEmitter():playSound("bobby_fail")
-                    pickLockHealth = 300
+                    win.pickLockHealth = PICK_LOCK_HEALTH_MAX
+                    win:consumeBobbyPin()
 
                     if ZombRand(100) < win.chanceBreakLock then
+                        win.isLockBroken = true
                         win:doBreakLock()
-                        win:close()                    
-                    end
-
-                    if win.character:getInventory():containsType("BobbyPin") then
-                        win.character:getInventory():Remove("BobbyPin")
-                    elseif win.character:getInventory():containsType("HandmadeBobbyPin") then 
-                        win.character:getInventory():Remove("HandmadeBobbyPin")
-                    else
-                        win.breakTimer = 2
-                        win.isFailEnd = true
-                    end
-                    if not (win.character:getInventory():containsType("BobbyPin") or win.character:getInventory():containsType("HandmadeBobbyPin")) then 
-                        win.breakTimer = 2
-                        win.isFailEnd = true
                     end
                 end
             end 

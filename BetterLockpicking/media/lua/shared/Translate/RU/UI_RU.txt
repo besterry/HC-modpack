@@ -29,4 +29,5 @@ UI_RU = {
     UI_cant_check_alarm = "Не могу определить",
     UI_chance_break_lock = "Шанс сломать замок: ",
     UI_chance_break_window = "Шанс разбить окно: ",
+    UI_BetLock_BobbyPinsLeft = "Отмычек осталось: %1",
 }

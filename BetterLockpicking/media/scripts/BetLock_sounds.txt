@@ -1,0 +1,12 @@
+module BetLock
+{
+	sound bobby_jam
+	{
+		category = Player,
+		loop = false,
+		clip
+		{
+			file = media/sound/bobby_jam.ogg,
+		}
+	}
+}

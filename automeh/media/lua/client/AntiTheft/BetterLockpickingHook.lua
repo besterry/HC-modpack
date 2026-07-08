@@ -83,6 +83,7 @@ local function hookVehicleDoorLockpick()
                 if vehicle and isAntiTheftBlocked(self.character, vehicle) then
                     self.breakTimer = 1
                     self.isFailEnd = true
+                    self.noRetry = true
                     self.character:getEmitter():playSound("lockpick_force_fail")
                     return
                 end
