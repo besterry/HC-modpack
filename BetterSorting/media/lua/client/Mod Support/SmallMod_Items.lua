@@ -191,7 +191,7 @@ end
 
 --BetterLockpicking
 --https://steamcommunity.com/sharedfiles/filedetails/?id=2368058459
-if getActivatedMods():contains("betterLockpicking") then
+if getActivatedMods():contains("betterLockpicking_h") or getActivatedMods():contains("betterLockpicking") then
 TweakItem("BetLock.LockpickingMag","DisplayCategory","LitR");
 TweakItem("BetLock.AlarmMag","DisplayCategory","LitR");
 TweakItem("BetLock.BobbyPin","DisplayCategory","Tool");

@@ -336,10 +336,11 @@ DTBaseGameCharacterDetails.DoProfessions = function()
     carpenter:addFreeTrait("Handy2");
 
     -- BURGLAR PROFESSION REBALANCE
-    if getActivatedMods():contains("WPA") and getActivatedMods():contains("betterLockpicking") then
+    local hasBetterLockpicking = getActivatedMods():contains("betterLockpicking_h") or getActivatedMods():contains("betterLockpicking")
+    if getActivatedMods():contains("WPA") and hasBetterLockpicking then
         local burglar = ProfessionFactory.getProfession("burglar");
         burglar:setCost(-12);
-    elseif getActivatedMods():contains("WPA") or getActivatedMods():contains("betterLockpicking") then
+    elseif getActivatedMods():contains("WPA") or hasBetterLockpicking then
         local burglar = ProfessionFactory.getProfession("burglar");
         burglar:setCost(-11);
     else
