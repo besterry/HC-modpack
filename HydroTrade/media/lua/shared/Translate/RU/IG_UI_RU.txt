@@ -857,4 +857,12 @@ IGUI_RU =
 	IGUI_RUNEEXP_TooltipCurrent = "Сейчас:",
 	IGUI_RUNEEXP_TooltipNext = "След.уровнь:",
 	IGUI_RUNEEXP_TooltipRemaining = "Осталось",
+
+	IGUI_HydroFactionRoles_Officers = "Офицеры",
+	IGUI_HydroFactionRoles_ManageOfficers = "Офицеры фракции",
+	IGUI_HydroFactionRoles_OfficerTag = "офицер",
+	IGUI_HydroFactionRoles_AddOfficer = "Назначить офицером",
+	IGUI_HydroFactionRoles_RemoveOfficer = "Снять офицера",
+	IGUI_HydroFactionRoles_InviteDenied = "Нельзя отправить приглашение",
+	IGUI_HydroFactionRoles_RemoveDenied = "Нельзя исключить этого игрока",
 }

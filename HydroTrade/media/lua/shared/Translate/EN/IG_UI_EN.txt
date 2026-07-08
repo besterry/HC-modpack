@@ -8,6 +8,14 @@ IGUI_EN =
 	IGUI_TZone_EditZone = "Edit",
 	IGUI_TZone_EditZoneTitle = "Edit zone",
 	IGUI_TZone_SaveZone = "Save",
+
+	IGUI_HydroFactionRoles_Officers = "Officers",
+	IGUI_HydroFactionRoles_ManageOfficers = "Faction officers",
+	IGUI_HydroFactionRoles_OfficerTag = "officer",
+	IGUI_HydroFactionRoles_AddOfficer = "Promote to officer",
+	IGUI_HydroFactionRoles_RemoveOfficer = "Demote officer",
+	IGUI_HydroFactionRoles_InviteDenied = "Cannot send invitation",
+	IGUI_HydroFactionRoles_RemoveDenied = "Cannot remove this player",
 	
 	IGUI_TradeZone_Protected = "Destruction is prohibited in the trading area",
 	IGUI_perks_Reading = "Reading",
