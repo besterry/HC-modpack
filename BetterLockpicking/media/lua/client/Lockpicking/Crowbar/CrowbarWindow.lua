@@ -292,6 +292,11 @@ function CrowbarWindow:new(x, y, width, height)
     return o;
 end
 
+function CrowbarWindow:resetProgress()
+    progressBarVal = 0
+    self.isEnd = false
+end
+
 function CrowbarWindow:ActionKeyPressed()
     if crowbarTimer > 0 then return end
 
