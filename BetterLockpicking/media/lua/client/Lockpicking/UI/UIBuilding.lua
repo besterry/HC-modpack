@@ -69,6 +69,44 @@ function BetLock.UI.goToWindowCrowbar(playerObj, window)
 end
 
 
+local function addDoorBobbyPinOption(subMenu, playerObj, door, playerSkill, goToOpen)
+    local label = goToOpen and getText("UI_Lockpick_bobbypin_open") or getText("UI_Lockpick_bobbypin_lock")
+    local option = subMenu:addOption(label, playerObj, BetLock.UI.goToDoorBobbyPin, door, goToOpen)
+    option.toolTip = ISToolTip:new()
+    option.toolTip:initialise()
+    option.toolTip:setVisible(false)
+    option.toolTip:setName(getText(door:getModData().LockpickLevel.name))
+
+    local color
+    if playerSkill >= door:getModData().LockpickLevel.num then
+        color = " <RGB:1,1,1> "
+    else
+        color = " <RGB:0.9,0.5,0> "
+    end
+    option.toolTip.description = color .. getText("Tooltip_vehicle_recommendedSkill", playerSkill .. "/" .. door:getModData().LockpickLevel.num, "") .. " <LINE> "
+    option.toolTip.description = option.toolTip.description .. " <RGB:1,1,1> " .. getText("UI_chance_break_lock") .. BetLock.Utils.getChanceBreakLock(playerSkill, door:getModData().LockpickLevel.num) .. "%" .. " <LINE> "
+
+    if not (playerObj:getInventory():containsType("BobbyPin") or playerObj:getInventory():containsType("HandmadeBobbyPin")) then
+        color = " <RGB:0.9,0,0> "
+        option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("BetLock.BobbyPin")) .. " <LINE> "
+        option.notAvailable = true
+    end
+
+    if not playerObj:getInventory():containsType("Screwdriver") then
+        color = " <RGB:0.9,0,0> "
+        option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("Base.Screwdriver")) .. " <LINE> "
+        option.notAvailable = true
+    end
+
+    if door:getKeyId() == -3 then
+        color = " <RGB:0.9,0,0> "
+        option.toolTip.description = option.toolTip.description .. color .. getText("IGUI_LockBroken")
+        option.notAvailable = true
+    end
+
+    return option
+end
+
 function BetLock.UI.contextMenuOptions(player, context, worldobjects)
     local playerObj = getSpecificPlayer(player)
     local playerSkill = playerObj:getPerkLevel(Perks.Lockpicking)
@@ -97,97 +135,32 @@ function BetLock.UI.contextMenuOptions(player, context, worldobjects)
             local subMenuLockpicking = context:getNew(context)
             context:addSubMenu(lockpickingMenuOption, subMenuLockpicking)
 
-            local option = subMenuLockpicking:addOption(getText("UI_Lockpick_bobbypin") .. " (" .. getText("ContextMenu_Open_door") .. ")", playerObj, BetLock.UI.goToDoorBobbyPin, door, true)
-            option.toolTip = ISToolTip:new();
-            option.toolTip:initialise();
-            option.toolTip:setVisible(false);
-            option.toolTip:setName(getText(door:getModData().LockpickLevel.name))
-
-            local color
-            if playerSkill >= door:getModData().LockpickLevel.num then
-                color = " <RGB:1,1,1> "
+            if door:isLocked() then
+                addDoorBobbyPinOption(subMenuLockpicking, playerObj, door, playerSkill, true)
             else
-                color = " <RGB:0.9,0.5,0> "
-            end
-            option.toolTip.description = color .. getText("Tooltip_vehicle_recommendedSkill", playerSkill .. "/" .. door:getModData().LockpickLevel.num, "") .. " <LINE> "
-
-            option.toolTip.description = option.toolTip.description .. " <RGB:1,1,1> " .. getText("UI_chance_break_lock") .. BetLock.Utils.getChanceBreakLock(playerSkill, door:getModData().LockpickLevel.num) .. "%" .. " <LINE> "
-
-            if not (playerObj:getInventory():containsType("BobbyPin") or playerObj:getInventory():containsType("HandmadeBobbyPin")) then
-                color = " <RGB:0.9,0,0> "
-                option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("BetLock.BobbyPin")) .. " <LINE> "
-                option.notAvailable = true
+                addDoorBobbyPinOption(subMenuLockpicking, playerObj, door, playerSkill, false)
             end
 
-            if not playerObj:getInventory():containsType("Screwdriver") then
-                color = " <RGB:0.9,0,0> "
-                option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("Base.Screwdriver")) .. " <LINE> "
-                option.notAvailable = true
-            end
+            if door:isLocked() then
+                option = subMenuLockpicking:addOption(getText("UI_Lockpick_crowbar"), playerObj, BetLock.UI.goToDoorCrowbar, door)
+                option.toolTip = ISToolTip:new()
+                option.toolTip:initialise()
+                option.toolTip:setVisible(false)
+                option.toolTip:setName(getText(door:getModData().LockpickLevel.name))
 
-            if door:getKeyId() == -3 then
-                color = " <RGB:0.9,0,0> "
-                option.toolTip.description = option.toolTip.description .. color .. getText("IGUI_LockBroken")
-                option.notAvailable = true
-            end
+                local color
+                if playerSkill >= door:getModData().LockpickLevel.num then
+                    color = " <RGB:1,1,1> "
+                else
+                    color = " <RGB:0.9,0.5,0> "
+                end
+                option.toolTip.description = color .. getText("Tooltip_vehicle_recommendedSkill", playerSkill .. "/" .. door:getModData().LockpickLevel.num, "") .. " <LINE> "
 
-            ----
-            option = subMenuLockpicking:addOption(getText("UI_Lockpick_bobbypin") .. " (" .. getText("ContextMenu_Close_door") .. ")", playerObj, BetLock.UI.goToDoorBobbyPin, door, false)
-            option.toolTip = ISToolTip:new();
-            option.toolTip:initialise();
-            option.toolTip:setVisible(false);
-            option.toolTip:setName(getText(door:getModData().LockpickLevel.name))
-
-            local color
-            if playerSkill >= door:getModData().LockpickLevel.num then
-                color = " <RGB:1,1,1> "
-            else
-                color = " <RGB:0.9,0.5,0> "
-            end
-            option.toolTip.description = color .. getText("Tooltip_vehicle_recommendedSkill", playerSkill .. "/" .. door:getModData().LockpickLevel.num, "") .. " <LINE> "
-
-            option.toolTip.description = option.toolTip.description .. " <RGB:1,1,1> " .. getText("UI_chance_break_lock") .. BetLock.Utils.getChanceBreakLock(playerSkill, door:getModData().LockpickLevel.num) .. "%".. " <LINE> "
-
-            if not (playerObj:getInventory():containsType("BobbyPin") or playerObj:getInventory():containsType("HandmadeBobbyPin")) then
-                color = " <RGB:0.9,0,0> "
-                option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("BetLock.BobbyPin")) .. " <LINE> "
-                option.notAvailable = true
-            end
-
-            if not playerObj:getInventory():containsType("Screwdriver") then
-                color = " <RGB:0.9,0,0> "
-                option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("Base.Screwdriver")) .. " <LINE> "
-                option.notAvailable = true
-            end
-
-            if door:getKeyId() == -3 then
-                color = " <RGB:0.9,0,0> "
-                option.toolTip.description = option.toolTip.description .. color .. getText("IGUI_LockBroken")
-                option.notAvailable = true
-            end
-
-
-            ----
-
-            option = subMenuLockpicking:addOption(getText("UI_Lockpick_crowbar"), playerObj, BetLock.UI.goToDoorCrowbar, door)
-            option.toolTip = ISToolTip:new()
-            option.toolTip:initialise()
-            option.toolTip:setVisible(false)
-            option.toolTip:setName(getText(door:getModData().LockpickLevel.name))
-
-            local color
-            if playerSkill >= door:getModData().LockpickLevel.num then
-                color = " <RGB:1,1,1> "
-            else
-                color = " <RGB:0.9,0.5,0> "
-            end
-            option.toolTip.description = color .. getText("Tooltip_vehicle_recommendedSkill", playerSkill .. "/" .. door:getModData().LockpickLevel.num, "") .. " <LINE> "
-
-
-            if not playerObj:getInventory():containsType("Crowbar") then
-                color = " <RGB:0.9,0,0> "
-                option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("Base.Crowbar"))
-                option.notAvailable = true
+                if not playerObj:getInventory():containsType("Crowbar") then
+                    color = " <RGB:0.9,0,0> "
+                    option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("Base.Crowbar"))
+                    option.notAvailable = true
+                end
             end
         end
     elseif window then
