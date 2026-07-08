@@ -78,7 +78,7 @@ function HTDrivingGuide_OnGiveXP(recipe, ingredients, result, player)
 end
 
 function HTLockpikingGuide_OnGiveXP(recipe, ingredients, result, player)
-    player:getXp():AddXP(Perks.Lockpiking, 160);
+    player:getXp():AddXP(Perks.Lockpicking, 160);
 	-- player:getStats():setHunger(player:getStats():getHunger()+0.01)
 end
 
