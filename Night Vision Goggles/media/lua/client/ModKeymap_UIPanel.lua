@@ -5,6 +5,19 @@ local instance
 
 local bound = nil
 
+local function localizeKeymapLabel(label)
+  local key = "IGUI_HydroNV_Key_" .. label
+  local text = getText(key)
+  if text ~= key then
+    return text
+  end
+  return label
+end
+
+local function localizeNoKey()
+  return getText("IGUI_HydroNV_Key_None")
+end
+
 --
 -- User has chosen a key for keymap. We must register and save it
 --
@@ -26,7 +39,7 @@ function onRegisterKeymap( key )
   local isUserClearingKeymap = key == 1
   if isUserClearingKeymap then
 
-    title = "NO KEY"
+    title = localizeNoKey()
 
   else
 
@@ -96,7 +109,7 @@ function addModHeader( panel, mki )
   local height = ( rowinfo.count * 30 ) + pad
   rowinfo.count = rowinfo.count + 1
 
-  local text = getText(mki.name .. " Keymap Entries")
+  local text = getText("IGUI_HydroNV_KeymapHeader")
   local font = UIFont.Medium
   addHorizontalCentralizedLabel( panel, height, text, font )
 
@@ -112,11 +125,11 @@ function addKeymapRow( panel, mki, label, callback, key )
   if key then
     keylabel = "[ " .. Keyboard.getKeyName( key ) .. " ]"
   else
-    keylabel = "[ NO KEY ]"
+    keylabel = "[ " .. localizeNoKey() .. " ]"
   end
 
 
-  local text   = label
+  local text   = localizeKeymapLabel(label)
   local font   = UIFont.Small
   local fonth  = getTextManager():getFontHeight(font)
   local x      = getTextManager():MeasureStringX( font, text )
@@ -176,7 +189,5 @@ module.new = function( self, x, y, width, height, playerNum)
   return o
 
 end
-print("SCRIPTPANELUI")
-
 instance = module:new( 0, 8, 500, 500, 0 )
 return instance

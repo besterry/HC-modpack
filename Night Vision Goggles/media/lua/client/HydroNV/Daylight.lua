@@ -1,5 +1,4 @@
 local CONFIG = require "HydroNV/CONFIG"
-local Debug  = require "HydroNV/Debug"
 
 local Daylight = {}
 

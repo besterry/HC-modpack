@@ -1,7 +1,6 @@
 local Control      = require "HydroNV/Control"
 local ChargeUI     = require "HydroNV/ChargeUI"
 local Daylight     = require "HydroNV/Daylight"
-local Debug        = require "HydroNV/Debug"
 local Hooks        = require "HydroNV/Hooks"
 local NVAPIPatch   = require "HydroNV/NVAPIPatch"
 local ShaderBridge = require "HydroNV/ShaderBridge"
@@ -17,10 +16,6 @@ local function registerKeybind()
   keymap:add("ToggleNightVision", function()
     Control:toggle()
   end, 49)
-
-  keymap:add("HydroNV_ToggleDaylightTest", function()
-    Debug:toggleSessionTest()
-  end, 21)
 end
 
 local function onGameStart()
@@ -32,7 +27,6 @@ local function onGameStart()
   Hooks.install()
   ChargeUI.install()
   Control:clear()
-  Debug:notifyStartupState()
 end
 
 Events.OnGameStart.Add(onGameStart)

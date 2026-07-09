@@ -1,5 +1,5 @@
 return {
 
-  APPNAME = "ModKeymap"
+  APPNAME = "IGUI_HydroNV_KeymapTab"
 
 }

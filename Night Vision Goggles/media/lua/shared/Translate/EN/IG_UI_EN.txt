@@ -13,4 +13,8 @@ IGUI_EN = {
     IGUI_HydroNV_SlotClickHint     = "LMB: turn on / off",
     IGUI_HydroNV_Context_Charge    = "Recharge",
     IGUI_HydroNV_Context_Unequip   = "Unequip",
+    IGUI_HydroNV_KeymapTab         = "NVG",
+    IGUI_HydroNV_KeymapHeader      = "Key bindings",
+    IGUI_HydroNV_Key_None          = "No key",
+    IGUI_HydroNV_Key_ToggleNightVision = "Toggle night vision",
 }

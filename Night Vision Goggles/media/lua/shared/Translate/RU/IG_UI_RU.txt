@@ -13,4 +13,8 @@ IGUI_RU = {
     IGUI_HydroNV_SlotClickHint     = "ЛКМ: включить/выключить",
     IGUI_HydroNV_Context_Charge    = "Зарядить",
     IGUI_HydroNV_Context_Unequip   = "Снять",
+    IGUI_HydroNV_KeymapTab         = "ПНВ",
+    IGUI_HydroNV_KeymapHeader      = "Горячие клавиши",
+    IGUI_HydroNV_Key_None          = "Нет клавиши",
+    IGUI_HydroNV_Key_ToggleNightVision = "Вкл/выкл ПНВ",
 }
