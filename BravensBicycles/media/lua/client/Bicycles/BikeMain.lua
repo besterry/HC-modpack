@@ -4,6 +4,17 @@
 
 local OnExitVehicle = ISVehicleMenu.onExit
 local tickCounter = 0
+local bbDebugTick = 0
+local bbLastVehicleScriptName = nil
+
+-- true = печать в console.txt (Logs). Поза починена, по умолчанию выкл.
+local BB_BIKE_ANIM_DEBUG = false
+
+local BikeAnimDebug = function(msg)
+	if BB_BIKE_ANIM_DEBUG then
+		print("[BB_BikeAnim] " .. tostring(msg))
+	end
+end
 
 -- Damage variables
 local bikeEngine
@@ -59,20 +70,114 @@ local EnteredBike = function(vehicle, playerObj)
 		end
 end
 
--- Assign a variable depending on bike type. Simplifies the use of animations.
+-- Must match m_StringValue in AnimSets/player-vehicle/idle/*.xml
 local GetBikeType = function(bikeName)
-
-	-- Remove scrap from the vehicle name to make my life easier
 	bikeName = bikeName:gsub("Scrap", "")
-	local bikeType = ""
+	if bikeName == "Base.BicycleRegular" then
+		return "BikeRegular"
+	elseif bikeName == "Base.BicycleMTB" then
+		return "BikeMTB"
+	end
+	return ""
+end
 
-	if (bikeName == "Base.BicycleRegular") then
-		bikeType = "BikeRegular"
-	elseif (bikeName == "Base.BicycleMTB") then
-		bikeType = "BikeMTB"
+local GetBikeAnimClip = function(bikeName)
+	bikeName = bikeName:gsub("Scrap", "")
+	if bikeName == "Base.BicycleRegular" then
+		return "The_Bike_Idle"
+	elseif bikeName == "Base.BicycleMTB" then
+		return "The_MTBike_Idle"
+	end
+	return ""
+end
+
+local ClearNickNoobsVehicleVars = function(playerObj, source)
+	-- Car_hondacrv95 / Car_toyotahilux89: баг ставит NickNoobsVehicle=true на ВСЕ ТС
+	if playerObj:isVariable("NickNoobsVehicle", "true") or playerObj:isVariable("NickNoobsVehicle_Driver", "true") then
+		playerObj:SetVariable("NickNoobsVehicle", "false")
+		playerObj:SetVariable("NickNoobsVehicle_Driver", "false")
+		BikeAnimDebug(source .. ": cleared NickNoobsVehicle vars")
+	end
+end
+
+local LogBikeAnimState = function(playerObj, vehicle, source)
+	if not BB_BIKE_ANIM_DEBUG or not playerObj then return end
+
+	local expectedClip = vehicle and GetBikeAnimClip(vehicle:getScriptName()) or "?"
+	local expectedType = vehicle and GetBikeType(vehicle:getScriptName()) or "?"
+	local vehicleScriptName = playerObj:getVariableString("VehicleScriptName") or ""
+	local bikeType = playerObj:getVariableString("BikeType") or ""
+	local nickNoobs = playerObj:getVariableString("NickNoobsVehicle") or ""
+	local nickNoobsDriver = playerObj:getVariableString("NickNoobsVehicle_Driver") or ""
+	local animState = ""
+	local actionState = ""
+	local childState = ""
+
+	local okAnim, animResult = pcall(function() return playerObj:getAnimationStateName() end)
+	if okAnim and animResult then animState = animResult end
+
+	local okAction, actionResult = pcall(function() return playerObj:getCurrentActionContextStateName() end)
+	if okAction and actionResult then actionState = actionResult end
+
+	local okChild, childResult = pcall(function()
+		local ctx = playerObj:getActionContext()
+		if not ctx then return "" end
+		local child = ctx:getChildStateAt(0)
+		if child then return child:getName() end
+		return ""
+	end)
+	if okChild and childResult then childState = childResult end
+
+	if bbLastVehicleScriptName ~= vehicleScriptName then
+		BikeAnimDebug("VehicleScriptName: '" .. tostring(bbLastVehicleScriptName) .. "' -> '" .. vehicleScriptName .. "' (" .. source .. ")")
+		bbLastVehicleScriptName = vehicleScriptName
 	end
 
-	return bikeType
+	BikeAnimDebug(string.format(
+		"[%s] veh=%s clip=%s type=%s | VSN='%s' BikeType='%s' | NickNoobs='%s' Driver='%s' | anim=%s action=%s child=%s",
+		source,
+		vehicle and vehicle:getScriptName() or "?",
+		expectedClip,
+		expectedType,
+		vehicleScriptName,
+		bikeType,
+		nickNoobs,
+		nickNoobsDriver,
+		animState,
+		actionState,
+		childState
+	))
+end
+
+local ApplyBikeAnimVariables = function(playerObj, vehicle, source)
+	local animClip = GetBikeAnimClip(vehicle:getScriptName())
+	local bikeType = GetBikeType(vehicle:getScriptName())
+	if animClip == "" then return end
+
+	ClearNickNoobsVehicleVars(playerObj, source)
+	playerObj:SetVariable("VehicleScriptName", animClip)
+	playerObj:SetVariable("BikeType", bikeType)
+
+	BikeAnimDebug(source .. ": set VSN='" .. animClip .. "' BikeType='" .. bikeType .. "'")
+	LogBikeAnimState(playerObj, vehicle, source .. "/afterSet")
+end
+
+local ApplyBikeSeatPose = function(playerObj, vehicle, source)
+	source = source or "ApplyBikeSeatPose"
+	local seat = vehicle:getSeat(playerObj)
+	ApplyBikeAnimVariables(playerObj, vehicle, source)
+	vehicle:setCharacterPosition(playerObj, seat, "inside")
+	vehicle:transmitCharacterPosition(seat, "inside")
+end
+
+local SetBikeAnimVariable = function(playerObj, vehicle, source)
+	ApplyBikeAnimVariables(playerObj, vehicle, source or "SetBikeAnimVariable")
+end
+
+local ClearBikeAnimVariable = function(playerObj)
+	playerObj:SetVariable("VehicleScriptName", "")
+	playerObj:clearVariable("BikeType")
+	BikeAnimDebug("ClearBikeAnimVariable")
 end
 
 -- Throw the player off the bicycle!
@@ -177,6 +282,32 @@ local onTick = function(tick)
 	local playerObj = getPlayer(); if not playerObj then return end
 	local vehicle = playerObj:getVehicle(); if not vehicle then return end
 	if BravensBikeUtils.isBike(vehicle) then
+		local expectedClip = GetBikeAnimClip(vehicle:getScriptName())
+		local expectedType = GetBikeType(vehicle:getScriptName())
+		local needsFix = false
+
+		if expectedClip ~= "" and playerObj:getVariableString("VehicleScriptName") ~= expectedClip then
+			needsFix = true
+		end
+		if expectedType ~= "" and playerObj:getVariableString("BikeType") ~= expectedType then
+			needsFix = true
+		end
+		if playerObj:isVariable("NickNoobsVehicle", "true") or playerObj:isVariable("NickNoobsVehicle_Driver", "true") then
+			needsFix = true
+		end
+
+		if needsFix then
+			SetBikeAnimVariable(playerObj, vehicle, "onTick/fix")
+		end
+
+		if BB_BIKE_ANIM_DEBUG then
+			bbDebugTick = bbDebugTick + 1
+			if bbDebugTick >= 120 then
+				LogBikeAnimState(playerObj, vehicle, "onTick/status")
+				bbDebugTick = 0
+			end
+		end
+
 		if tickCounter < 70 then
 			tickCounter = tickCounter + 1
 		else
@@ -191,7 +322,12 @@ local OnEnterVehicle = function(playerObj)
 	if BravensBikeUtils.isBike(vehicle) then -- Если велосипед
 		bikeEngine = vehicle:getPartById("Engine") -- Получаем двигатель велосипеда
 		bikeCondition = 100 -- Устанавливаем состояние двигателя на 100%
-		playerObj:SetVariable("BikeType", GetBikeType(vehicle:getScriptName())) -- Устанавливаем тип велосипеда
+		ApplyBikeSeatPose(playerObj, vehicle, "OnEnterVehicle")
+		BravensUtils.DelayFunction(function()
+			if playerObj:getVehicle() == vehicle then
+				ApplyBikeSeatPose(playerObj, vehicle, "OnEnterVehicle/delayed")
+			end
+		end, 30)
 		local windowPart = vehicle:getPartById("WindowFront") -- Получаем часть велосипеда
 
 		if windowPart and windowPart:getWindow():isOpen() == false then -- Если окно закрыто
@@ -214,6 +350,31 @@ end
 --#endregion
 
 --#region VANILLA OVERRIDES
+-- Обёртка в конце цепочки, после car-модов (NickNoobs)
+
+local chained_ISEnterVehicle_start = ISEnterVehicle.start
+function ISEnterVehicle:start()
+	chained_ISEnterVehicle_start(self)
+	if self.vehicle and BravensBikeUtils.isBike(self.vehicle) then
+		SetBikeAnimVariable(self.character, self.vehicle, "ISEnterVehicle:start/chain")
+	end
+end
+
+local chained_ISEnterVehicle_perform = ISEnterVehicle.perform
+function ISEnterVehicle:perform()
+	chained_ISEnterVehicle_perform(self)
+	if self.vehicle and BravensBikeUtils.isBike(self.vehicle) then
+		ApplyBikeSeatPose(self.character, self.vehicle, "ISEnterVehicle:perform/chain")
+	end
+end
+
+local chained_ISExitVehicle_perform = ISExitVehicle.perform
+function ISExitVehicle:perform()
+	if self.character:getVehicle() and BravensBikeUtils.isBike(self.character:getVehicle()) then
+		ClearBikeAnimVariable(self.character)
+	end
+	chained_ISExitVehicle_perform(self)
+end
 
 ISVehicleMenu.onExit = function(playerObj, seatFrom)
 	local vehicle = playerObj:getVehicle();
@@ -226,7 +387,8 @@ ISVehicleMenu.onExit = function(playerObj, seatFrom)
 		-- Delay because game is now sending this command earlier for <<SOME REASON™>>
 		BravensUtils.DelayFunction(function()
 
-			playerObj:SetVariable("BikeType", "")
+			playerObj:SetVariable("VehicleScriptName", "")
+			playerObj:clearVariable("BikeType")
 			BravensUtils.TryStopSoundClip(vehicle, "BicycleRide")
 			vehicle:shutOff()
 
@@ -244,3 +406,5 @@ end
 
 Events.OnGameStart.Add(OnGameStart);
 Events.OnEnterVehicle.Add(OnEnterVehicle)
+
+BikeAnimDebug("BikeMain.lua loaded, debug=" .. tostring(BB_BIKE_ANIM_DEBUG))
