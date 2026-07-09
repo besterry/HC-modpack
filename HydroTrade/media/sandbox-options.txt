@@ -378,6 +378,16 @@ option FloorTrashCleaner.MaxAgeGameDays
 	translation = FloorTrashCleaner_MaxAgeGameDays,
 }
 
+option FloorTrashCleaner.ContainerAgeMultiplier
+{
+	type = integer,
+	min = 1,
+	max = 100,
+	default = 5,
+	page = LootingSystem,
+	translation = FloorTrashCleaner_ContainerAgeMultiplier,
+}
+
 option SafeHouse.Horde
 {
 	type = boolean, 

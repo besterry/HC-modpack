@@ -229,5 +229,7 @@ Sandbox_RU = {
 
     Sandbox_FloorTrashCleaner_Enabled = "¬ключить очистку мусора на полу",
     Sandbox_FloorTrashCleaner_MaxAgeGameDays = "—рок хранени€ на полу (игровые дни)",
-    Sandbox_FloorTrashCleaner_MaxAgeGameDays_tooltip = "ѕредметы с Owner и TimeUsed старше этого срока удал€ютс€ вне убежищ. 24 игр. дн€ -> 3 реал. суток.",
+    Sandbox_FloorTrashCleaner_MaxAgeGameDays_tooltip = "ѕредметы с Owner и TimeUsed старше этого срока удал€ютс€ вне убежищ в игровых дн€х. 24 игр. дн€ -> 3 реал. суток.",
+    Sandbox_FloorTrashCleaner_ContainerAgeMultiplier = "ћножитель срока дл€ сумок",
+    Sandbox_FloorTrashCleaner_ContainerAgeMultiplier_tooltip = "—умки на полу удал€ютс€ после: (срок хранени€) x (этот множитель)",
 }

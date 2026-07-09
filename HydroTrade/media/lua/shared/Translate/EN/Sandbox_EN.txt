@@ -103,4 +103,6 @@ Sandbox_EN = {
     Sandbox_FloorTrashCleaner_Enabled = "Enable floor trash cleanup",
     Sandbox_FloorTrashCleaner_MaxAgeGameDays = "Max age on floor (game days)",
     Sandbox_FloorTrashCleaner_MaxAgeGameDays_tooltip = "Items with Owner and TimeUsed older than this are removed outside safehouses. 24 game days ≈ 3 real days.",
+    Sandbox_FloorTrashCleaner_ContainerAgeMultiplier = "Container age multiplier",
+    Sandbox_FloorTrashCleaner_ContainerAgeMultiplier_tooltip = "Bags on the floor are removed after Max age × this value (default 10).",
 }
