@@ -140,10 +140,16 @@ function TutorialQuestHUD:registerZone(zone)
 	table.insert(self.interactZones, zone)
 end
 
-function TutorialQuestHUD:hitZone(y)
+function TutorialQuestHUD:hitZone(x, y)
 	for _, zone in ipairs(self.interactZones) do
 		if y >= zone.y and y <= zone.y + zone.h then
-			return zone
+			if zone.x and zone.w then
+				if x >= zone.x and x <= zone.x + zone.w then
+					return zone
+				end
+			else
+				return zone
+			end
 		end
 	end
 	return nil
@@ -183,7 +189,7 @@ function TutorialQuestHUD:drawNavButton(y, questId, labelKey)
 	self:drawRect(PAD, y, self.width - PAD * 2, CLAIM_BTN_H, 0.85, 0.12, 0.28, 0.35)
 	self:drawRectBorder(PAD, y, self.width - PAD * 2, CLAIM_BTN_H, 0.9, 0.35, 0.55, 0.55)
 	self:drawTextCentre(getText(labelKey or "IGUI_TutorialQuest_FindZone"), self.width / 2, y + 4, 1, 1, 0.9, 1, UIFont.Small)
-	self:registerZone({ kind = "nav", id = questId, y = y, h = CLAIM_BTN_H })
+	self:registerZone({ kind = "nav", id = questId, x = PAD, y = y, w = self.width - PAD * 2, h = CLAIM_BTN_H })
 	return y + CLAIM_BTN_H + 6
 end
 
@@ -201,7 +207,7 @@ function TutorialQuestHUD:drawClaimButton(y, questRef)
 	self:drawRectBorder(PAD, y, self.width - PAD * 2, CLAIM_BTN_H, 0.9, 0.45, 0.8, 0.45)
 	local label = getText("IGUI_TutorialQuest_Claim_Short")
 	self:drawTextCentre(label, self.width / 2, y + 4, 1, 1, 0.9, 1, UIFont.Small)
-	self:registerZone({ kind = "claim", id = questRef, y = y, h = CLAIM_BTN_H })
+	self:registerZone({ kind = "claim", id = questRef, x = PAD, y = y, w = self.width - PAD * 2, h = CLAIM_BTN_H })
 	return y + CLAIM_BTN_H + 6
 end
 
@@ -216,12 +222,12 @@ function TutorialQuestHUD:drawClaimRepeatButtons(y, questRef, showRepeat)
 	self:drawRect(PAD, y, btnW, CLAIM_BTN_H, 0.85, 0.15, 0.45, 0.2)
 	self:drawRectBorder(PAD, y, btnW, CLAIM_BTN_H, 0.9, 0.45, 0.8, 0.45)
 	self:drawTextCentre(getText("IGUI_TutorialQuest_Claim_Short"), PAD + btnW / 2, y + 4, 1, 1, 0.9, 1, UIFont.Small)
-	self:registerZone({ kind = "claim", id = questRef, y = y, h = CLAIM_BTN_H })
+	self:registerZone({ kind = "claim", id = questRef, x = PAD, y = y, w = btnW, h = CLAIM_BTN_H })
 	local rx = PAD + btnW + gap
 	self:drawRect(rx, y, btnW, CLAIM_BTN_H, 0.85, 0.18, 0.32, 0.42)
 	self:drawRectBorder(rx, y, btnW, CLAIM_BTN_H, 0.9, 0.42, 0.62, 0.72)
 	self:drawTextCentre(getText("IGUI_Cyclic_Repeat"), rx + btnW / 2, y + 4, 1, 0.92, 0.88, 1, UIFont.Small)
-	self:registerZone({ kind = "repeat", id = questRef, y = y, h = CLAIM_BTN_H })
+	self:registerZone({ kind = "repeat", id = questRef, x = rx, y = y, w = btnW, h = CLAIM_BTN_H })
 	return y + CLAIM_BTN_H + 6
 end
 
@@ -232,7 +238,7 @@ function TutorialQuestHUD:onMouseDown(x, y)
 		return true
 	end
 
-	local zone = self:hitZone(y)
+	local zone = self:hitZone(x, y)
 	if zone then
 		if zone.kind == "claim" then
 			if type(zone.id) == "number" then
@@ -595,7 +601,7 @@ function TutorialQuestHUD:drawBoardButton(y)
 	self:drawRect(PAD, y, self.width - PAD * 2, CLAIM_BTN_H, 0.85, 0.18, 0.22, 0.32)
 	self:drawRectBorder(PAD, y, self.width - PAD * 2, CLAIM_BTN_H, 0.9, 0.4, 0.5, 0.55)
 	self:drawTextCentre(label, self.width / 2, y + 4, 1, 0.92, 0.88, 1, UIFont.Small)
-	self:registerZone({ kind = "board", y = y, h = CLAIM_BTN_H })
+	self:registerZone({ kind = "board", x = PAD, y = y, w = self.width - PAD * 2, h = CLAIM_BTN_H })
 	return y + CLAIM_BTN_H + 6
 end
 

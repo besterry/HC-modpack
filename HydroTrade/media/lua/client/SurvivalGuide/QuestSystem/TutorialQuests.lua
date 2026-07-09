@@ -1998,8 +1998,14 @@ function TutorialQuests.claimAndRepeatCyclicQuest(id)
 	if not player or not quest or not TutorialQuests.canRepeatBackgroundCyclic(player, quest) then return end
 	if not TutorialQuests.needsClaimById(id) then return end
 	TutorialQuests.claimRewardById(id)
-	if TutorialQuests.isCyclicQuestOffered(player, quest) then
-		TutorialQuests.acceptCyclicQuest(id)
+	TutorialQuests.ensureCyclicDaily(player)
+	if not TutorialQuests.beginQuestAccept(player, quest, id) then return end
+	TutorialQuests.showNotice(player, getText("IGUI_Cyclic_Accepted"))
+	if TutorialQuestBoard and TutorialQuestBoard.instance then
+		TutorialQuestBoard.instance:refresh()
+	end
+	if TutorialQuests.instance then
+		TutorialQuests.instance:updateLayout()
 	end
 end
 
