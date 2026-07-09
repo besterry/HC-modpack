@@ -114,4 +114,6 @@ tooltipTooltip_RU = {
 	Tooltip_VehicleRecycling = "–азбор автомобил€ или прицепа с помощью пропановой горелки даст вам металл и электроматериалы. <LINE> „ем выше уровень газосварки, тем больше полезных материалов вы получите.",
     Tooltip_VehicleRecycling_Uninstall = "–емонтировать:",
     Tooltip_VehicleRecycling_Passengers = "Ќевозможно разобрать автомобиль с пассажирами внутри.",
+    Tooltip_RemoveContainerFitness = "—нимите %1 перед зан€тием фитнесом.",
+    Tooltip_StopMovingFitness = "ќстановитесь перед зан€тием фитнесом.",
 }

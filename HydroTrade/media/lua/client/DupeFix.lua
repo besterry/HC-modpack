@@ -2,13 +2,96 @@ function ISUnequipAction:isValid()
     return self.valid;
 end
 
-local oldFunc = ISFitnessUI.updateButtons -- не даёт выполнять упражнения, если игрок движется
+local function getWornContainer(player)
+	for i = 0, player:getWornItems():size() - 1 do
+		local item = player:getWornItems():get(i):getItem()
+		if item and instanceof(item, "InventoryContainer") then
+			return item
+		end
+	end
+	return nil
+end
+
+local function getFitnessBlockMessage(player)
+	local container = getWornContainer(player)
+	if container then
+		return getText("Tooltip_RemoveContainerFitness", container:getDisplayName())
+	end
+	if player:isPlayerMoving() then
+		return getText("Tooltip_StopMovingFitness")
+	end
+	return nil
+end
+
+local function applyFitnessButtonBlocks(self)
+	local msg = getFitnessBlockMessage(self.player)
+	if msg then
+		self.ok.enable = false
+		self.ok.tooltip = msg
+	end
+end
+
+local function showFitnessBlockNote(player)
+	local msg = getFitnessBlockMessage(player)
+	if msg then
+		player:setHaloNote(msg, 255, 220, 120, 250)
+	end
+end
+
+-- Не ставим снятие рюкзака в очередь: вместе с DupeFix это ломало unequip и фитнес молча не стартовал.
+---@diagnostic disable-next-line: duplicate-set-field
+function ISFitnessUI:equipItems()
+	if getWornContainer(self.player) then
+		return false
+	end
+	if self.exeData.item and not self.player:getInventory():contains(self.exeData.item, true) then
+		return false
+	end
+	if not self.exeData.prop then
+		ISInventoryPaneContextMenu.unequipItem(self.player:getPrimaryHandItem(), self.player:getPlayerNum())
+		if not self.player:isItemInBothHands(self.player:getPrimaryHandItem()) then
+			ISInventoryPaneContextMenu.unequipItem(self.player:getSecondaryHandItem(), self.player:getPlayerNum())
+		end
+	end
+	if self.exeData.prop == "twohands" then
+		ISWorldObjectContextMenu.equip(self.player, self.player:getPrimaryHandItem(), self.exeData.item, true, true)
+	end
+	if self.exeData.prop == "primary" then
+		ISWorldObjectContextMenu.equip(self.player, self.player:getPrimaryHandItem(), self.exeData.item, true, false)
+		self.player:setSecondaryHandItem(nil)
+	end
+	if self.exeData.prop == "switch" then
+		ISWorldObjectContextMenu.equip(self.player, self.player:getPrimaryHandItem(), self.exeData.item, true, false)
+		self.player:setSecondaryHandItem(nil)
+	end
+	return true
+end
+
+local vanillaFitnessOnClick = ISFitnessUI.onClick
+---@diagnostic disable-next-line: duplicate-set-field
+function ISFitnessUI:onClick(button)
+	if button.internal == "OK" then
+		local blockMsg = getFitnessBlockMessage(self.player)
+		if blockMsg then
+			showFitnessBlockNote(self.player)
+			return
+		end
+		if self.exeData.item and not self.player:getInventory():contains(self.exeData.item, true) then
+			local item = InventoryItemFactory.CreateItem(self.exeData.item)
+			if item then
+				self.player:setHaloNote(getText("IGUI_FitnessNeedItem", item:getDisplayName()), 255, 220, 120, 250)
+			end
+			return
+		end
+	end
+	vanillaFitnessOnClick(self, button)
+end
+
+local oldFunc = ISFitnessUI.updateButtons
 ---@diagnostic disable-next-line: duplicate-set-field
 function ISFitnessUI:updateButtons(currentAction)
 	oldFunc(self, currentAction)
-	if self.player:isPlayerMoving()  then -- or self.player:pressedMovement(false)
-		self.ok.enable = false;
-	end
+	applyFitnessButtonBlocks(self)
 end
 
 ISWorldObjectContextMenu.onTrade = function(worldobjects, player, otherPlayer) -- не даёт торговаться с игроком, если он в убежище
