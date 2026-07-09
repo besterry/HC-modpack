@@ -205,6 +205,26 @@ function TutorialQuestHUD:drawClaimButton(y, questRef)
 	return y + CLAIM_BTN_H + 6
 end
 
+function TutorialQuestHUD:drawClaimRepeatButtons(y, questRef, showRepeat)
+	local totalW = self.width - PAD * 2
+	if not showRepeat then
+		return self:drawClaimButton(y, questRef)
+	end
+	local gap = 4
+	local btnW = math.floor((totalW - gap) / 2)
+	self.claimBtnY = y
+	self:drawRect(PAD, y, btnW, CLAIM_BTN_H, 0.85, 0.15, 0.45, 0.2)
+	self:drawRectBorder(PAD, y, btnW, CLAIM_BTN_H, 0.9, 0.45, 0.8, 0.45)
+	self:drawTextCentre(getText("IGUI_TutorialQuest_Claim_Short"), PAD + btnW / 2, y + 4, 1, 1, 0.9, 1, UIFont.Small)
+	self:registerZone({ kind = "claim", id = questRef, y = y, h = CLAIM_BTN_H })
+	local rx = PAD + btnW + gap
+	self:drawRect(rx, y, btnW, CLAIM_BTN_H, 0.85, 0.18, 0.32, 0.42)
+	self:drawRectBorder(rx, y, btnW, CLAIM_BTN_H, 0.9, 0.42, 0.62, 0.72)
+	self:drawTextCentre(getText("IGUI_Cyclic_Repeat"), rx + btnW / 2, y + 4, 1, 0.92, 0.88, 1, UIFont.Small)
+	self:registerZone({ kind = "repeat", id = questRef, y = y, h = CLAIM_BTN_H })
+	return y + CLAIM_BTN_H + 6
+end
+
 function TutorialQuestHUD:onMouseDown(x, y)
 	local data = TutorialQuests.getState()
 	if data.hidden then
@@ -220,6 +240,9 @@ function TutorialQuestHUD:onMouseDown(x, y)
 			else
 				TutorialQuests.claimRewardById(zone.id)
 			end
+			return true
+		elseif zone.kind == "repeat" then
+			TutorialQuests.claimAndRepeatCyclicQuest(zone.id)
 			return true
 		elseif zone.kind == "accept" then
 			TutorialQuests.acceptSideQuest(zone.id)
@@ -536,7 +559,8 @@ function TutorialQuestHUD:renderSideQuestBlock(y, quest, player)
 
 	if TutorialQuests.needsClaimById(quest.id) then
 		y = self:drawRewardLine(y, quest.id)
-		return self:drawClaimButton(y, quest.id)
+		local showRepeat = TutorialQuests.canRepeatBackgroundCyclic(player, quest)
+		return self:drawClaimRepeatButtons(y, quest.id, showRepeat)
 	end
 
 	local display = TutorialQuests.getSideQuestDisplay(player, quest)

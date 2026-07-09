@@ -838,7 +838,7 @@ QuestsData.REGISTRY = {
 		goalKey = "IGUI_Cyclic_DailyAutoBulbs_Goal",
 		completeKey = "IGUI_Cyclic_DailyAutoBulbs_Complete",
 		bulbSwapsRequired = 4,
-		xpReward = { perkName = "Mechanics", amount = 160 },
+		xpReward = { perkName = "Mechanics", amount = 40 },
 	},
 	{
 		id = "daily_dismantle_electronics",
@@ -852,7 +852,7 @@ QuestsData.REGISTRY = {
 		goalKey = "IGUI_Cyclic_DailyScrapElec_Goal",
 		completeKey = "IGUI_Cyclic_DailyScrapElec_Complete",
 		dismantleRequired = 10,
-		xpReward = { perkName = "Electricity", amount = 160, previewKey = "IGUI_Cyclic_XpReward_Electricity" },
+		xpReward = { perkName = "Electricity", amount = 40, previewKey = "IGUI_Cyclic_XpReward_Electricity" },
 	},
 	{
 		id = "daily_rip_clothing",
@@ -866,7 +866,7 @@ QuestsData.REGISTRY = {
 		goalKey = "IGUI_Cyclic_DailyRipClothing_Goal",
 		completeKey = "IGUI_Cyclic_DailyRipClothing_Complete",
 		ripsRequired = 15,
-		xpReward = { perkName = "Tailoring", amount = 120, previewKey = "IGUI_Cyclic_XpReward_Tailoring" },
+		xpReward = { perkName = "Tailoring", amount = 32, previewKey = "IGUI_Cyclic_XpReward_Tailoring" },
 	},
 }
 
@@ -1224,6 +1224,22 @@ function QuestsData.formatCoinAmount(amount)
 	return formatted .. " " .. QuestsData.getCurrencyUnitLabel()
 end
 
+-- xpReward.amount передаётся в AddXP. Без бонуса профессии игра режет на 0.25 (IsoGameCharacter.XP).
+-- В UI показываем фактический прирост до множителя книги/уровня: amount / 4.
+QuestsData.SKILL_XP_UI_DIVISOR = 4
+
+function QuestsData.getXpRewardDisplayAmount(xpReward)
+	if not xpReward or not xpReward.amount or xpReward.amount <= 0 then return 0 end
+	if xpReward.displayAmount then return xpReward.displayAmount end
+	return math.floor(xpReward.amount / QuestsData.SKILL_XP_UI_DIVISOR)
+end
+
+function QuestsData.getXpRewardGrantAmount(xpReward)
+	if not xpReward or not xpReward.amount or xpReward.amount <= 0 then return 0 end
+	if xpReward.grantAmount then return xpReward.grantAmount end
+	return xpReward.amount
+end
+
 function QuestsData.getCyclicRewardPreview(quest)
 	local parts = {}
 	if quest.balanceReward and quest.balanceReward > 0 then
@@ -1231,7 +1247,7 @@ function QuestsData.getCyclicRewardPreview(quest)
 	end
 	if quest.xpReward and quest.xpReward.amount and quest.xpReward.amount > 0 then
 		local xpKey = quest.xpReward.previewKey or "IGUI_Cyclic_XpReward_Mechanics"
-		table.insert(parts, getText(xpKey, quest.xpReward.amount))
+		table.insert(parts, getText(xpKey, QuestsData.getXpRewardDisplayAmount(quest.xpReward)))
 	end
 	if quest.rewardPool and #quest.rewardPool > 0 then
 		table.insert(parts, getText("IGUI_Cyclic_RewardPool_Bonus"))
@@ -1260,7 +1276,7 @@ function QuestsData.getRewardText(questIdOrOrder, progress)
 	end
 	if quest.xpReward and quest.xpReward.amount and quest.xpReward.amount > 0 then
 		local xpKey = quest.xpReward.previewKey or "IGUI_Cyclic_XpReward_Mechanics"
-		table.insert(parts, getText(xpKey, quest.xpReward.amount))
+		table.insert(parts, getText(xpKey, QuestsData.getXpRewardDisplayAmount(quest.xpReward)))
 	end
 	local poolDisplay = QuestsData.getPoolRewardDisplay(quest, progress)
 	if poolDisplay then
@@ -1293,7 +1309,7 @@ function QuestsData.getRewardLines(questIdOrOrder, progress)
 	end
 	if quest.xpReward and quest.xpReward.amount and quest.xpReward.amount > 0 then
 		local xpKey = quest.xpReward.previewKey or "IGUI_Cyclic_XpReward_Mechanics"
-		table.insert(lines, getText(xpKey, quest.xpReward.amount))
+		table.insert(lines, getText(xpKey, QuestsData.getXpRewardDisplayAmount(quest.xpReward)))
 	end
 	local poolDisplay = QuestsData.getPoolRewardDisplay(quest, progress)
 	if poolDisplay then

@@ -1201,6 +1201,11 @@ function TutorialQuests.updateTravelDistance(player, quest)
 	if not player or not quest or quest.type ~= "travel_distance" then return end
 	if S.getStatus(player, quest.id) ~= S.S_ACTIVE then return end
 	local p = S.getProgress(player, quest.id)
+	if player:getVehicle() then
+		p.travelLastX = nil
+		p.travelLastY = nil
+		return
+	end
 	local x, y = player:getX(), player:getY()
 	if p.travelLastX and p.travelLastY then
 		local dx = x - p.travelLastX
@@ -1970,9 +1975,32 @@ function TutorialQuests.grantQuestRewards(player, def)
 	end
 	if def.xpReward and def.xpReward.amount and def.xpReward.amount > 0 then
 		local perk = Perks[def.xpReward.perkName] or Perks.Mechanics
-		player:getXp():AddXP(perk, def.xpReward.amount)
+		player:getXp():AddXP(perk, QuestsData.getXpRewardGrantAmount(def.xpReward))
 	end
 	return true
+end
+
+function TutorialQuests.isBackgroundCyclicQuest(quest)
+	return quest
+		and quest.category == QuestsData.CATEGORY_CYCLIC
+		and quest.cyclicTier == QuestsData.CYCLIC_BACKGROUND
+end
+
+function TutorialQuests.canRepeatBackgroundCyclic(player, quest)
+	if not player or not TutorialQuests.isBackgroundCyclicQuest(quest) then return false end
+	if S.getStatus(player, quest.id) ~= S.S_COMPLETE then return false end
+	return TutorialQuests.countActiveBackgroundCyclics(player) < QuestsData.MAX_BACKGROUND_CYCLIC
+end
+
+function TutorialQuests.claimAndRepeatCyclicQuest(id)
+	local player = getPlayer()
+	local quest = QuestsData.getQuest(id)
+	if not player or not quest or not TutorialQuests.canRepeatBackgroundCyclic(player, quest) then return end
+	if not TutorialQuests.needsClaimById(id) then return end
+	TutorialQuests.claimRewardById(id)
+	if TutorialQuests.isCyclicQuestOffered(player, quest) then
+		TutorialQuests.acceptCyclicQuest(id)
+	end
 end
 
 function TutorialQuests.claimRewardById(id)

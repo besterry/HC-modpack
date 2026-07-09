@@ -102,6 +102,14 @@ function TutorialQuestBoard:handleZoneClick(zone)
 		TutorialQuests.setSideQuestTracked(zone.id, not zone.tracked)
 		self:refresh()
 		return true
+	elseif zone.kind == "claim" then
+		TutorialQuests.claimRewardById(zone.id)
+		self:refresh()
+		return true
+	elseif zone.kind == "repeat" then
+		TutorialQuests.claimAndRepeatCyclicQuest(zone.id)
+		self:refresh()
+		return true
 	elseif zone.kind == "tab" then
 		self.activeTab = zone.tab
 		if self.contentPane then
@@ -327,6 +335,28 @@ function TutorialQuestBoard:renderClaimedDailyBlock(y, quest, player, maxW)
 	return y + self.lineHgt + 6
 end
 
+function TutorialQuestBoard:drawClaimRepeatButtons(y, questId, showRepeat, maxW)
+	if not showRepeat then
+		self.contentPane:drawRect(PAD, y, maxW, BTN_H, 0.85, 0.15, 0.45, 0.2)
+		self.contentPane:drawRectBorder(PAD, y, maxW, BTN_H, 0.9, 0.45, 0.8, 0.45)
+		self.contentPane:drawTextCentre(getText("IGUI_TutorialQuest_Claim_Short"), PAD + maxW / 2, y + 4, 1, 1, 0.9, 1, UIFont.Small)
+		self:registerZone({ kind = "claim", id = questId, x = PAD, y = y, w = maxW, h = BTN_H })
+		return y + BTN_H + 8
+	end
+	local gap = 4
+	local btnW = math.floor((maxW - gap) / 2)
+	self.contentPane:drawRect(PAD, y, btnW, BTN_H, 0.85, 0.15, 0.45, 0.2)
+	self.contentPane:drawRectBorder(PAD, y, btnW, BTN_H, 0.9, 0.45, 0.8, 0.45)
+	self.contentPane:drawTextCentre(getText("IGUI_TutorialQuest_Claim_Short"), PAD + btnW / 2, y + 4, 1, 1, 0.9, 1, UIFont.Small)
+	self:registerZone({ kind = "claim", id = questId, x = PAD, y = y, w = btnW, h = BTN_H })
+	local rx = PAD + btnW + gap
+	self.contentPane:drawRect(rx, y, btnW, BTN_H, 0.85, 0.18, 0.32, 0.42)
+	self.contentPane:drawRectBorder(rx, y, btnW, BTN_H, 0.9, 0.42, 0.62, 0.72)
+	self.contentPane:drawTextCentre(getText("IGUI_Cyclic_Repeat"), rx + btnW / 2, y + 4, 1, 0.92, 0.88, 1, UIFont.Small)
+	self:registerZone({ kind = "repeat", id = questId, x = rx, y = y, w = btnW, h = BTN_H })
+	return y + BTN_H + 8
+end
+
 function TutorialQuestBoard:renderQuestBlock(y, quest, player, maxW)
 	local progress = QuestStorage.getProgress(player, quest.id)
 	local tr = QuestsData.getQuestAccent(quest).title
@@ -353,6 +383,14 @@ function TutorialQuestBoard:renderQuestBlock(y, quest, player, maxW)
 
 	local tracked = TutorialQuests.isCyclicQuestTracked(player, quest) or TutorialQuests.isSideQuestTracked(player, quest)
 	local status = QuestStorage.getStatus(player, quest.id)
+	if status == QuestStorage.S_COMPLETE and TutorialQuests.isBackgroundCyclicQuest(quest) then
+		local reward = QuestsData.getRewardText(quest.id, progress)
+		if reward and reward ~= "" then
+			self.contentPane:drawText(getText("IGUI_TutorialQuest_Reward", reward), PAD, y, 0.95, 0.82, 0.35, 1, UIFont.Small)
+			y = y + self.lineHgt + 4
+		end
+		return self:drawClaimRepeatButtons(y, quest.id, TutorialQuests.canRepeatBackgroundCyclic(player, quest), maxW)
+	end
 	local statusKey = status == QuestStorage.S_COMPLETE and "IGUI_TutorialQuest_Board_Done" or "IGUI_TutorialQuest_Board_Active"
 	self.contentPane:drawText(getText(statusKey), PAD, y, 0.7, 0.8, 0.7, 1, UIFont.Small)
 	y = y + self.lineHgt + 2
