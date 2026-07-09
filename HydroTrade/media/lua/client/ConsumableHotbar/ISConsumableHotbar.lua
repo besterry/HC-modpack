@@ -154,10 +154,6 @@ function ConsumableHotbar.isBicycle(vehicle)
     return HydroHUDVehicle.isBicycle(vehicle)
 end
 
-function ConsumableHotbar.shouldHideInVehicle(playerNum, character)
-    return HydroHUDVehicle.shouldHideInVehicle(playerNum, character)
-end
-
 function ConsumableHotbar.useFull(playerObj, item)
     if not playerObj or not item then
         return false
@@ -200,9 +196,6 @@ ISConsumableHotbar = ISPanelJoypad:derive("ISConsumableHotbar")
 
 function ISConsumableHotbar:shouldShow()
     if self.playerNum > 0 or JoypadState.players[self.playerNum + 1] then
-        return false
-    end
-    if ConsumableHotbar.shouldHideInVehicle(self.playerNum, self.chr) then
         return false
     end
     return true
@@ -396,6 +389,11 @@ function ISConsumableHotbar:setSizeAndPosition()
     local slotsWidth = ConsumableHotbar.SLOT_COUNT * self.slotWidth
     slotsWidth = slotsWidth + (ConsumableHotbar.SLOT_COUNT - 1) * self.slotPad
     self:setWidth(slotsWidth + self.margins * 2)
+
+    if HydroHUDVehicle.isVehicleGearHudMode(self.playerNum, self.chr) then
+        HydroHUDVehicle.layoutConsumableHotbar(self.playerNum, self)
+        return
+    end
 
     local screenX = getPlayerScreenLeft(self.playerNum)
     local screenY = getPlayerScreenTop(self.playerNum)

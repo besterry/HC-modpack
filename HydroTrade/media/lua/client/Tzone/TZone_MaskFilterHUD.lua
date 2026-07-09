@@ -119,6 +119,10 @@ function TZoneMaskFilterSlot:prerender()
 	end
 end
 
+function TZoneMaskFilterSlot:isVehicleHudMode(player)
+	return HydroHUDVehicle.isVehicleGearHudMode(self.playerNum, player)
+end
+
 function TZoneMaskFilterSlot:shouldShow()
 	if self.playerNum > 0 or JoypadState.players[self.playerNum + 1] then
 		return false
@@ -127,12 +131,15 @@ function TZoneMaskFilterSlot:shouldShow()
 	if not player then
 		return false
 	end
-	if HydroHUDVehicle.shouldHideInVehicle(self.playerNum, player) then
+	local vehicleMode = self:isVehicleHudMode(player)
+	if not vehicleMode and HydroHUDVehicle.shouldHideInVehicle(self.playerNum, player) then
 		return false
 	end
-	local hotbar = getPlayerHotbar(self.playerNum)
-	if not hotbar or not hotbar:getIsVisible() then
-		return false
+	if not vehicleMode then
+		local hotbar = getPlayerHotbar(self.playerNum)
+		if not hotbar or not hotbar:getIsVisible() then
+			return false
+		end
 	end
 	if not TZone or not TZone.getEquippedMaskItem then
 		return false
@@ -147,6 +154,12 @@ function TZoneMaskFilterSlot:shouldShow()
 end
 
 function TZoneMaskFilterSlot:setSizeAndPosition()
+	local player = getSpecificPlayer(self.playerNum)
+	if player and self:isVehicleHudMode(player) then
+		HydroHUDVehicle.syncStandardSlotMetrics(self.playerNum, self)
+		HydroHUDVehicle.layoutGearHudSlots(self.playerNum)
+		return
+	end
 	local hotbar = getPlayerHotbar(self.playerNum)
 	if not hotbar then return end
 	self:syncHotbarMetrics(hotbar)

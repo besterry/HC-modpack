@@ -179,6 +179,10 @@ function HydroNVChargeSlot:prerender()
   end
 end
 
+function HydroNVChargeSlot:isVehicleHudMode(player)
+  return HydroHUDVehicle.isVehicleGearHudMode(self.playerNum, player)
+end
+
 function HydroNVChargeSlot:shouldShow()
   if self.playerNum > 0 or JoypadState.players[self.playerNum + 1] then
     return false
@@ -189,13 +193,16 @@ function HydroNVChargeSlot:shouldShow()
     return false
   end
 
-  if HydroHUDVehicle.shouldHideInVehicle(self.playerNum, player) then
+  local vehicleMode = self:isVehicleHudMode(player)
+  if not vehicleMode and HydroHUDVehicle.shouldHideInVehicle(self.playerNum, player) then
     return false
   end
 
-  local hotbar = getPlayerHotbar(self.playerNum)
-  if not hotbar or not hotbar:getIsVisible() then
-    return false
+  if not vehicleMode then
+    local hotbar = getPlayerHotbar(self.playerNum)
+    if not hotbar or not hotbar:getIsVisible() then
+      return false
+    end
   end
 
   local nvItem = self:getWornNightVisionItem(player)
@@ -209,6 +216,13 @@ function HydroNVChargeSlot:shouldShow()
 end
 
 function HydroNVChargeSlot:setSizeAndPosition()
+  local player = getSpecificPlayer(self.playerNum)
+  if player and self:isVehicleHudMode(player) then
+    HydroHUDVehicle.syncStandardSlotMetrics(self.playerNum, self)
+    HydroHUDVehicle.layoutGearHudSlots(self.playerNum)
+    return
+  end
+
   local hotbar = getPlayerHotbar(self.playerNum)
   if not hotbar then
     return
@@ -342,5 +356,7 @@ function ChargeHUD.install()
     createSlot(0)
   end)
 end
+
+HydroNVChargeHUD = ChargeHUD
 
 return ChargeHUD
