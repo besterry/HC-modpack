@@ -1,3 +1,4 @@
 IGUI_RU = {
 	IGUI_Container_not_empty = "Контейнер не пустой",
+	IGUI_ZipContainer_Storable = "Можно хранить в подвале",
 }

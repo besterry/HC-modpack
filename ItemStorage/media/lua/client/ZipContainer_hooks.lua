@@ -4,8 +4,6 @@ local ZipContainer = main.ZipContainer
 local zlog = utils.zlog
 local zipCoordsFromObj = utils.zipCoordsFromObj
 
-local hasZipNear = false
-
 ---@type table<ItemContainer, integer>
 local zipTransferLock = {}
 
@@ -37,6 +35,58 @@ local function releaseZipTransferLock(ta)
         ta._zipLockActive = false
         zipLockContainers(ta.srcContainer, ta.destContainer, -1)
     end
+end
+
+ZipContainer = ZipContainer or {}
+local ZIP_STORABLE_TOOLTIP_TAG = "IGUI_ZipContainer_Storable"
+local STORABLE_BAR_WIDTH = 3
+local STORABLE_BAR_COLOR = { r = 0.95, g = 0.65, b = 0.15, a = 0.95 }
+local TOOLTIP_LINE_HEIGHT = {
+    Small = 17,
+    Medium = 20,
+    Large = 20,
+}
+
+local function isZipStorableContainer(container)
+    if not container then return true end
+    if ZipContainer.isValid(container) then return true end
+    return container:getType() == "TradeUI"
+end
+
+local function shouldShowZipStorableMark(item, inventoryPane)
+    if not item or not instanceof(item, "InventoryItem") then return false end
+    if not inventoryPane or not inventoryPane.inventory then return false end
+    if isZipStorableContainer(inventoryPane.inventory) then return false end
+    return ZipContainer.isWhiteListed(item)
+end
+
+local function shouldShowZipStorableTooltip(item, owner)
+    if not item or not instanceof(item, "InventoryItem") then return false end
+    if owner and owner.inventory and isZipStorableContainer(owner.inventory) then return false end
+    return ZipContainer.isWhiteListed(item)
+end
+
+local function getStorableMarkOffsets(inventoryPane, y, doDragged)
+    local xoff = 0
+    local yoff = 0
+    local doIt = true
+    if inventoryPane.dragging ~= nil and inventoryPane.selected[y + 1] ~= nil and inventoryPane.dragStarted then
+        xoff = inventoryPane:getMouseX() - inventoryPane.draggingX
+        yoff = inventoryPane:getMouseY() - inventoryPane.draggingY
+        if not doDragged then
+            doIt = false
+        end
+    elseif doDragged then
+        doIt = false
+    end
+    if doIt then
+        local topOfItem = y * inventoryPane.itemHgt + inventoryPane:getYScroll()
+        local bottom = topOfItem + inventoryPane.itemHgt
+        if bottom < 0 or topOfItem > inventoryPane:getHeight() then
+            doIt = false
+        end
+    end
+    return doIt, xoff, yoff
 end
 
 local function itemBrief(item)
@@ -378,13 +428,11 @@ local function refreshContainer(pane, page)
     if pane.lastinventory and ZipContainer.isValid(pane.lastinventory) and not isVisible then
         -- print('clear last')
         pane.lastinventory:removeAllItems() -- очищаем прошлый контейнер если требуется
-        hasZipNear = false
     end
     if zipContainer then
         if isCollapsed then
             -- print('clear')
             container:removeAllItems() -- очищаем контейнер если требуется
-            hasZipNear = false
         else
             if isZipTransferLocked(container) then
                 zlog('refresh', string.format('skip makeItems (transfer active) coords=%s', zipCoordsFromObj(zipContainer.isoObject)))
@@ -398,7 +446,6 @@ local function refreshContainer(pane, page)
                     zipCoordsFromObj(zipContainer.isoObject), modCount, uiCount, hash1, hash2
                 ))
                 zipContainer:makeItems()
-                hasZipNear = true
             end
         end
     end
@@ -461,18 +508,27 @@ end
 
 function ISInventoryPane_patch:renderdetails(doDragged)
     local o = ISInventoryPane_base.renderdetails(self, doDragged)
-    local y = 0;
-    local textDY = (self.itemHgt - self.fontHgt) / 2
+    if doDragged or not self.itemslist then
+        return o
+    end
+
+    local column2 = self.column2 or 45
+    local y = 0
     for _, group in ipairs(self.itemslist) do
-        local count = 1;
+        local count = 1
         for _, item in ipairs(group.items) do
-            local xoff = 0;
-            local yoff = 0;
-            local itemName = item:getName();
-            -- hasZipNear
-            if count == 1 and not ZipContainer.isValid(self.inventory) and ZipContainer.isWhiteListed(item) then
-                -- self:drawRect(1+xoff, (y*self.itemHgt)+self.headerHgt+yoff, self:getWidth()-1, self.itemHgt, 0.1, 1.0, 1.0, 0.0); -- Желтый фон
-                self:drawText(itemName, self.column2+8+xoff, (y*self.itemHgt)+self.headerHgt+textDY+yoff, 0.7, 0.7, 0.1, 0.5, self.font);
+            if count == 1 and shouldShowZipStorableMark(item, self) then
+                local doIt, xoff, yoff = getStorableMarkOffsets(self, y, doDragged)
+                if doIt then
+                    local rowTop = (y * self.itemHgt) + self.headerHgt + yoff
+                    local barH = self.itemHgt - 4
+                    local barX = column2 + xoff - 6
+                    local barY = rowTop + 2
+                    self:drawRect(
+                        barX, barY, STORABLE_BAR_WIDTH, barH,
+                        STORABLE_BAR_COLOR.a, STORABLE_BAR_COLOR.r, STORABLE_BAR_COLOR.g, STORABLE_BAR_COLOR.b
+                    )
+                end
             end
             y = y + 1
             if count == ISInventoryPane.MAX_ITEMS_IN_STACK_TO_RENDER + 1 then
@@ -485,6 +541,50 @@ function ISInventoryPane_patch:renderdetails(doDragged)
         end
     end
     return o
+end
+
+local ISToolTipInv_render_base = nil
+
+local ISToolTipInv_patch = {}
+
+function ISToolTipInv_patch:render()
+    if not shouldShowZipStorableTooltip(self.item, self.owner) or not self.tooltip then
+        ISToolTipInv_render_base(self)
+        return
+    end
+
+    local hint = getText(ZIP_STORABLE_TOOLTIP_TAG)
+    local fontSize = getCore():getOptionTooltipFont()
+    local extraH = (TOOLTIP_LINE_HEIGHT[fontSize] or 17) + 4
+    local stage = 1
+    local savedH = 0
+
+    local oldSetHeight = self.setHeight
+    self.setHeight = function(panel, h, ...)
+        if stage == 1 then
+            stage = 2
+            savedH = h
+            h = h + extraH
+        end
+        return oldSetHeight(panel, h, ...)
+    end
+
+    local oldDrawRectBorder = self.drawRectBorder
+    self.drawRectBorder = function(panel, ...)
+        local result = oldDrawRectBorder(panel, ...)
+        if stage == 2 then
+            stage = 3
+            panel.tooltip:DrawText(
+                panel.tooltip:getFont(), hint, 10, savedH + 2,
+                STORABLE_BAR_COLOR.r, STORABLE_BAR_COLOR.g, STORABLE_BAR_COLOR.b, 1
+            )
+        end
+        return result
+    end
+
+    ISToolTipInv_render_base(self)
+    self.setHeight = oldSetHeight
+    self.drawRectBorder = oldDrawRectBorder
 end
 
 function ISInventoryPane_patch:refreshContainer()
@@ -593,6 +693,9 @@ end
 -- local isItemTransactionConsistent_base = isItemTransactionConsistent
 local makeHooks = function ()
     print('Zip Container: make hooks (DEBUG=' .. tostring(utils.ZIP_DEBUG) .. ')')
+    ISToolTipInv_render_base = ISToolTipInv.render
+    ISToolTipInv.render = ISToolTipInv_patch.render
+
     ISInventoryPane.refreshContainer = ISInventoryPane_patch.refreshContainer
     ISInventoryPane.transferItemsByWeight = ISInventoryPane_patch.transferItemsByWeight
     ISInventoryPane.renderdetails = ISInventoryPane_patch.renderdetails
@@ -623,6 +726,10 @@ local makeHooks = function ()
 end
 local removeHooks = function ()
     print('Zip Container: remove hooks')
+    if ISToolTipInv_render_base then
+        ISToolTipInv.render = ISToolTipInv_render_base
+    end
+
     ISInventoryPane.refreshContainer = ISInventoryPane_base.refreshContainer
     ISInventoryPane.transferItemsByWeight = ISInventoryPane_base.transferItemsByWeight
     ISInventoryPane.renderdetails = ISInventoryPane_base.renderdetails
