@@ -18,9 +18,9 @@ function BetLock.UI.addOutsideOptions(playerObj)
             end
 
             -- Bobby pin
-            if not (playerObj:getInventory():containsType("BobbyPin") or playerObj:getInventory():containsType("HandmadeBobbyPin")) then
+            if not BetLock.Utils.hasBobbyPin(playerObj) then
                 menu:addSlice(getText("ContextMenu_Require", getItemNameFromFullType("BetLock.BobbyPin")), getTexture("media/textures/BetLock_lockpick_Icon.png"))
-            elseif not playerObj:getInventory():containsType("Screwdriver") then
+            elseif not BetLock.Utils.hasScrewdriver(playerObj) then
                 menu:addSlice(getText("ContextMenu_Require", getItemNameFromFullType("Base.Screwdriver")), getTexture("media/textures/BetLock_lockpick_Icon.png"))
             else
                 if part:getDoor():isLockBroken() then
@@ -32,7 +32,7 @@ function BetLock.UI.addOutsideOptions(playerObj)
             end
 
             -- Crowbar
-            if not playerObj:getInventory():containsType("Crowbar") then
+            if not BetLock.Utils.hasCrowbar(playerObj) then
                 menu:addSlice(getText("ContextMenu_Require", getItemNameFromFullType("Base.Crowbar")), getTexture("media/textures/BetLock_lockpick_Crowbar_Icon.png"))
             else
                 local text = getText("UI_BetLock_LockpickDoorCrowBar") .. " \n(" .. getText(vehicle:getModData().LockpickLevel.name) .. ")" 
@@ -73,12 +73,7 @@ function BetLock.UI.startLockpickingVehicleDoorBobbyPin(playerObj, part)
     local vehicle = part:getVehicle()
     playerObj:facePosition(vehicle:getX(), vehicle:getY())
 
-    if playerObj:getPrimaryHandItem() then
-        ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getPrimaryHandItem(), 50));
-    end
-    if playerObj:getSecondaryHandItem() and playerObj:getSecondaryHandItem() ~= playerObj:getPrimaryHandItem() then
-        ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getSecondaryHandItem(), 50));
-    end
+    if not BetLock.Utils.queueEquipLockpickTools(playerObj) then return end
 
     ISTimedActionQueue.add(EmptyAction:new(playerObj, BobbyPinWindow.createVehicleDoor, nil, playerObj, part))
 end
@@ -95,10 +90,10 @@ function BetLock.UI.startLockpickingVehicleDoorCrowbar(playerObj, part)
             ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getSecondaryHandItem(), 50));
         end
 
-        local item = playerObj:getInventory():getItemFromType("Crowbar")
+        local item = playerObj:getInventory():getFirstTypeRecurse("Crowbar")
         if item == nil then return end
 
-        ISTimedActionQueue.add(ISEquipWeaponAction:new(playerObj, item, 50, true, item:isTwoHandWeapon()));
+        BetLock.Utils.queueEquipItem(playerObj, item, true, item:isTwoHandWeapon())
     end
 
     ISTimedActionQueue.add(EmptyAction:new(playerObj, CrowbarWindow.createVehicleDoor, nil, playerObj, part))

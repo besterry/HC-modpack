@@ -250,3 +250,110 @@ crowbarSizeByLevel[18] = {40, 80}
 function BetLock.Utils.getGreenYellowSize(skill, level)
     return crowbarSizeByLevel[skill - level + 8]
 end
+
+function BetLock.Utils.hasBobbyPin(playerObj)
+    local inv = playerObj:getInventory()
+    return inv:containsTypeRecurse("BobbyPin") or inv:containsTypeRecurse("HandmadeBobbyPin")
+end
+
+function BetLock.Utils.hasScrewdriver(playerObj)
+    return playerObj:getInventory():containsTypeRecurse("Screwdriver")
+end
+
+function BetLock.Utils.hasCrowbar(playerObj)
+    return playerObj:getInventory():containsTypeRecurse("Crowbar")
+end
+
+function BetLock.Utils.getScrewdriverItem(playerObj)
+    return playerObj:getInventory():getFirstTypeRecurse("Screwdriver")
+end
+
+function BetLock.Utils.getBobbyPinItem(playerObj)
+    local inv = playerObj:getInventory()
+    return inv:getFirstTypeRecurse("BobbyPin") or inv:getFirstTypeRecurse("HandmadeBobbyPin")
+end
+
+function BetLock.Utils.queueTransferIfNeeded(playerObj, item)
+    if item and luautils.haveToBeTransfered(playerObj, item) then
+        ISTimedActionQueue.add(ISInventoryTransferAction:new(playerObj, item, item:getContainer(), playerObj:getInventory()))
+    end
+end
+
+function BetLock.Utils.queueEquipItem(playerObj, item, primary, twoHand)
+    if not item then return false end
+    BetLock.Utils.queueTransferIfNeeded(playerObj, item)
+    ISTimedActionQueue.add(ISEquipWeaponAction:new(playerObj, item, 50, primary, twoHand or false))
+    return true
+end
+
+function BetLock.Utils.queueEquipLockpickTools(playerObj)
+    local screwdriver = BetLock.Utils.getScrewdriverItem(playerObj)
+    local bobbyPin = BetLock.Utils.getBobbyPinItem(playerObj)
+    if not screwdriver or not bobbyPin then return false end
+
+    if playerObj:getPrimaryHandItem() then
+        ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getPrimaryHandItem(), 50))
+    end
+    if playerObj:getSecondaryHandItem() and playerObj:getSecondaryHandItem() ~= playerObj:getPrimaryHandItem() then
+        ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getSecondaryHandItem(), 50))
+    end
+
+    BetLock.Utils.queueEquipItem(playerObj, screwdriver, true, false)
+    BetLock.Utils.queueEquipItem(playerObj, bobbyPin, false, false)
+    return true
+end
+
+function BetLock.Utils.equipBobbyPinSecondary(playerObj)
+    return BetLock.Utils.queueEquipItem(playerObj, BetLock.Utils.getBobbyPinItem(playerObj), false, false)
+end
+
+function BetLock.Utils.consumeEquippedBobbyPin(playerObj)
+    local item = playerObj:getSecondaryHandItem()
+    if item and (item:getType() == "BobbyPin" or item:getType() == "HandmadeBobbyPin") then
+        playerObj:setSecondaryHandItem(nil)
+        playerObj:getInventory():Remove(item)
+        return true
+    end
+    return false
+end
+
+function BetLock.Utils.queueRetryBobbyPinEquip(playerObj, onDone, onDoneArg)
+    local pin = BetLock.Utils.getBobbyPinItem(playerObj)
+    if not pin then return false end
+
+    ISTimedActionQueue.clear(playerObj)
+    BetLock.Utils.queueTransferIfNeeded(playerObj, pin)
+    ISTimedActionQueue.add(ISEquipWeaponAction:new(playerObj, pin, 50, false, false))
+    ISTimedActionQueue.add(EmptyAction:new(playerObj, onDone, onDoneArg))
+    ISTimedActionQueue.add(BobbyPinActionAnim:new(playerObj))
+    return true
+end
+
+function BetLock.Utils.getBobbyPinCount(playerObj)
+    local inv = playerObj:getInventory()
+    local count = 0
+    local pins = inv:getItemsFromType("BobbyPin", true)
+    if pins then count = count + pins:size() end
+    local handmade = inv:getItemsFromType("HandmadeBobbyPin", true)
+    if handmade then count = count + handmade:size() end
+    return count
+end
+
+function BetLock.Utils.consumeBobbyPin(playerObj)
+    local item = playerObj:getSecondaryHandItem()
+    if item and (item:getType() == "BobbyPin" or item:getType() == "HandmadeBobbyPin") then
+        playerObj:setSecondaryHandItem(nil)
+        playerObj:getInventory():Remove(item)
+        return true
+    end
+
+    local inv = playerObj:getInventory()
+    item = inv:getFirstTypeRecurse("BobbyPin") or inv:getFirstTypeRecurse("HandmadeBobbyPin")
+    if item then
+        if playerObj:getPrimaryHandItem() == item then playerObj:setPrimaryHandItem(nil) end
+        if playerObj:getSecondaryHandItem() == item then playerObj:setSecondaryHandItem(nil) end
+        inv:Remove(item)
+        return true
+    end
+    return false
+end

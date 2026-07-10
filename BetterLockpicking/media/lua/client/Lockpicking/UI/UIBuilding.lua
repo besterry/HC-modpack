@@ -9,12 +9,7 @@ function BetLock.UI.goToDoorBobbyPin(playerObj, door, goToOpen)
     end
 
     ISTimedActionQueue.add(ISWalkToTimedAction:new(playerObj, sq));
-    if playerObj:getPrimaryHandItem() then
-        ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getPrimaryHandItem(), 50));
-    end
-    if playerObj:getSecondaryHandItem() and playerObj:getSecondaryHandItem() ~= playerObj:getPrimaryHandItem() then
-        ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getSecondaryHandItem(), 50));
-    end
+    if not BetLock.Utils.queueEquipLockpickTools(playerObj) then return end
 
     ISTimedActionQueue.add(EmptyAction:new(playerObj, BobbyPinWindow.createBuildingDoor, nil, playerObj, door, goToOpen))
 end
@@ -35,10 +30,10 @@ function BetLock.UI.goToDoorCrowbar(playerObj, door)
             ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getSecondaryHandItem(), 50));
         end
 
-        local item = playerObj:getInventory():getItemFromType("Crowbar")
+        local item = playerObj:getInventory():getFirstTypeRecurse("Crowbar")
         if item == nil then return end
 
-        ISTimedActionQueue.add(ISEquipWeaponAction:new(playerObj, item, 50, true, item:isTwoHandWeapon()));
+        BetLock.Utils.queueEquipItem(playerObj, item, true, item:isTwoHandWeapon())
     end
 
     ISTimedActionQueue.add(EmptyAction:new(playerObj, CrowbarWindow.createBuildingDoor, nil, playerObj, door))
@@ -59,10 +54,10 @@ function BetLock.UI.goToWindowCrowbar(playerObj, window)
             ISTimedActionQueue.add(ISUnequipAction:new(playerObj, playerObj:getSecondaryHandItem(), 50));
         end
 
-        local item = playerObj:getInventory():getItemFromType("Crowbar")
+        local item = playerObj:getInventory():getFirstTypeRecurse("Crowbar")
         if item == nil then return end
 
-        ISTimedActionQueue.add(ISEquipWeaponAction:new(playerObj, item, 50, true, item:isTwoHandWeapon()));
+        BetLock.Utils.queueEquipItem(playerObj, item, true, item:isTwoHandWeapon())
     end
 
     ISTimedActionQueue.add(EmptyAction:new(playerObj, CrowbarWindow.createBuildingWindow, nil, playerObj, window))
@@ -86,13 +81,13 @@ local function addDoorBobbyPinOption(subMenu, playerObj, door, playerSkill, goTo
     option.toolTip.description = color .. getText("Tooltip_vehicle_recommendedSkill", playerSkill .. "/" .. door:getModData().LockpickLevel.num, "") .. " <LINE> "
     option.toolTip.description = option.toolTip.description .. " <RGB:1,1,1> " .. getText("UI_chance_break_lock") .. BetLock.Utils.getChanceBreakLock(playerSkill, door:getModData().LockpickLevel.num) .. "%" .. " <LINE> "
 
-    if not (playerObj:getInventory():containsType("BobbyPin") or playerObj:getInventory():containsType("HandmadeBobbyPin")) then
+    if not BetLock.Utils.hasBobbyPin(playerObj) then
         color = " <RGB:0.9,0,0> "
         option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("BetLock.BobbyPin")) .. " <LINE> "
         option.notAvailable = true
     end
 
-    if not playerObj:getInventory():containsType("Screwdriver") then
+    if not BetLock.Utils.hasScrewdriver(playerObj) then
         color = " <RGB:0.9,0,0> "
         option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("Base.Screwdriver")) .. " <LINE> "
         option.notAvailable = true
@@ -156,7 +151,7 @@ function BetLock.UI.contextMenuOptions(player, context, worldobjects)
                 end
                 option.toolTip.description = color .. getText("Tooltip_vehicle_recommendedSkill", playerSkill .. "/" .. door:getModData().LockpickLevel.num, "") .. " <LINE> "
 
-                if not playerObj:getInventory():containsType("Crowbar") then
+                if not BetLock.Utils.hasCrowbar(playerObj) then
                     color = " <RGB:0.9,0,0> "
                     option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("Base.Crowbar"))
                     option.notAvailable = true
@@ -193,7 +188,7 @@ function BetLock.UI.contextMenuOptions(player, context, worldobjects)
 
             option.toolTip.description = option.toolTip.description .. " <RGB:1,1,1> " .. getText("UI_chance_break_window") .. BetLock.Utils.getChanceBreakLock(playerSkill, window:getModData().LockpickLevel.num) .. "%"
 
-            if not playerObj:getInventory():containsType("Crowbar") then
+            if not BetLock.Utils.hasCrowbar(playerObj) then
                 color = " <RGB:0.9,0,0> "
                 option.toolTip.description = option.toolTip.description .. color .. getText("ContextMenu_Require", getItemNameFromFullType("Base.Crowbar"))
                 option.notAvailable = true

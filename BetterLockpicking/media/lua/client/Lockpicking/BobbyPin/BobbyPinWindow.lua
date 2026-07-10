@@ -9,7 +9,7 @@ local xPos = 125
 local yPos = 250
 
 local PICK_LOCK_HEALTH_MAX = 230
-local PIN_BREAK_ANIM_TIME = 5
+local PIN_BREAK_ANIM_TIME = 0.3
 local PANEL_WIDTH = 250
 local PANEL_HEIGHT = 110
 local JAM_SOUND_COOLDOWN_MS = 450
@@ -36,25 +36,33 @@ local function updateMaxAngle(win)
 end
 
 function BobbyPinWindow:getBobbyPinCount()
-    local inv = self.character:getInventory()
-    local count = 0
-    local pins = inv:getItemsFromType("BobbyPin", true)
-    if pins then count = count + pins:size() end
-    local handmade = inv:getItemsFromType("HandmadeBobbyPin", true)
-    if handmade then count = count + handmade:size() end
-    return count
+    return BetLock.Utils.getBobbyPinCount(self.character)
 end
 
 function BobbyPinWindow:consumeBobbyPin()
-    local inv = self.character:getInventory()
-    if inv:containsType("BobbyPin") then
-        inv:Remove("BobbyPin")
-        return true
-    elseif inv:containsType("HandmadeBobbyPin") then
-        inv:Remove("HandmadeBobbyPin")
-        return true
+    return BetLock.Utils.consumeEquippedBobbyPin(self.character)
+end
+
+function BobbyPinWindow.onRetryEquipDone(win)
+    if BobbyPinWindow.instance ~= win then return end
+    win.waitingForEquip = false
+    win.retryQueued = false
+    win:resetForNewAttempt()
+end
+
+function BobbyPinWindow:startRetryWithNewPin()
+    if self.retryQueued then return end
+    self.retryQueued = true
+    self.waitingForEquip = true
+
+    if self:getBobbyPinCount() <= 0 then
+        self:finishMinigame()
+        return
     end
-    return false
+
+    if not BetLock.Utils.queueRetryBobbyPinEquip(self.character, BobbyPinWindow.onRetryEquipDone, self) then
+        self:finishMinigame()
+    end
 end
 
 function BobbyPinWindow:resetForNewAttempt()
@@ -63,6 +71,8 @@ function BobbyPinWindow:resetForNewAttempt()
     self.isFailEnd = false
     self.isLockBroken = false
     self.noRetry = false
+    self.waitingForEquip = false
+    self.retryQueued = false
     self.angleScrew = 0
     self.anglePick = -ZombRand(225, 406)
     self.keyAngle = ZombRand(178) + 1
@@ -110,9 +120,9 @@ function BobbyPinWindow:render()
         isNewTimeStep = true
     end
 
-    if self.breakTimer > 0 then
+    if self.breakTimer > 0 or self.waitingForEquip then
         
-        if isNewTimeStep then
+        if self.breakTimer > 0 and isNewTimeStep then
             self.breakTimer = self.breakTimer - 0.1
         end
         if self.isEnd and not self.isFailEnd then
@@ -121,14 +131,14 @@ function BobbyPinWindow:render()
             self:DrawTextureAngle(self.tex_LockPickBreak, xPos, yPos, self.anglePick)
         end
 
-        if self.breakTimer <= 0 then
+        if self.breakTimer <= 0 and not self.waitingForEquip then
             if self.isEnd and not self.isFailEnd then
                 self:finishMinigame()
             elseif self.isFailEnd then
                 if self.noRetry or self.isLockBroken or self:getBobbyPinCount() <= 0 then
                     self:finishMinigame()
-                else
-                    self:resetForNewAttempt()
+                elseif not self.retryQueued then
+                    self:startRetryWithNewPin()
                 end
             end
         end
@@ -256,7 +266,7 @@ function BobbyPinWindow:close()
 end
 
 function BobbyPinWindow:onMouseMoveOutside(dx, dy)
-    if self.angleScrew == self.maxAngle or self.breakTimer > 0 then
+    if self.angleScrew == self.maxAngle or self.breakTimer > 0 or self.waitingForEquip then
         return
     end
     
@@ -351,7 +361,7 @@ end
 
 
 function BobbyPinWindow:initialise()
-    if not (self.character:getInventory():containsType("BobbyPin") or self.character:getInventory():containsType("HandmadeBobbyPin")) then 
+    if not BetLock.Utils.hasBobbyPin(self.character) then 
         return
     end
 
@@ -418,6 +428,8 @@ function BobbyPinWindow:new(x, y, width, height)
     o.breakTimer = 0
     o.isLockBroken = false
     o.noRetry = false
+    o.waitingForEquip = false
+    o.retryQueued = false
     o.pickLockHealth = PICK_LOCK_HEALTH_MAX
 
     o.angleScrew = 0
@@ -439,7 +451,7 @@ BobbyPinWindow.OnKeyKeepPressed = function(key)
     if BobbyPinWindow.instance == nil then return end
     
     local win = BobbyPinWindow.instance
-    if win.breakTimer > 0 then return end
+    if win.breakTimer > 0 or win.waitingForEquip then return end
 
     if key == Keyboard.KEY_A or key == Keyboard.KEY_D or key == Keyboard.KEY_W or key == Keyboard.KEY_S then
         win.angleScrew = win.angleScrew + 3

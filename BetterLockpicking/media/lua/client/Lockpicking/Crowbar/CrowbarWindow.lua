@@ -229,7 +229,7 @@ end
 
 
 function CrowbarWindow:initialise()
-    if not self.character:getInventory():containsType("Crowbar") then 
+    if not BetLock.Utils.hasCrowbar(self.character) then 
         return
     end
 
