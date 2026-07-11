@@ -1521,4 +1521,6 @@ UI_RU = {
 	UI_ChangeStats = "Измененение килов/выживания",
 	UI_Scoreboard_CheckHealth = "Сводная информация",
 	UI_SeePlayerModData = "Моддата игрока",
+	UI_BigMoodles_Enable = "Крупные иконки moodles",
+	UI_BigMoodles_Enable_tooltip = "Увеличивает иконки moodles на широких и высоких экранах. По умолчанию выключено.",
 }
