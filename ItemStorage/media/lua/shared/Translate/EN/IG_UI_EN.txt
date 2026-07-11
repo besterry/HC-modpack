@@ -1,4 +1,4 @@
 IGUI_EN = {
 	IGUI_Container_not_empty = "Container is notempty",
-	IGUI_ZipContainer_Storable = "Can be stored in basement",
+	IGUI_ZipContainer_Storable = "Can be stored in zip",
 }

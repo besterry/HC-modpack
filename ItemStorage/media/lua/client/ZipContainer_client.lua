@@ -64,7 +64,7 @@ end
 
 ---@param container ItemContainer
 function ZipContainer.isValid(container)
-    if not container then
+    if not container or not container.getType then
         return false
     end
     return luautils.stringStarts(container:getType(), ZIP_CONTAINER_TYPE)

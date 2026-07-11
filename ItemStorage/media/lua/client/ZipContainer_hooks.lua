@@ -39,8 +39,9 @@ end
 
 ZipContainer = ZipContainer or {}
 local ZIP_STORABLE_TOOLTIP_TAG = "IGUI_ZipContainer_Storable"
-local STORABLE_BAR_WIDTH = 3
-local STORABLE_BAR_COLOR = { r = 0.95, g = 0.65, b = 0.15, a = 0.95 }
+local STORABLE_BAR_WIDTH = 2
+local STORABLE_BAR_COLOR = { r = 0.58, g = 0.52, b = 0.44, a = 0.45 }
+local STORABLE_TOOLTIP_COLOR = { r = 0.68, g = 0.68, b = 0.68, a = 0.85 }
 local TOOLTIP_LINE_HEIGHT = {
     Small = 17,
     Medium = 20,
@@ -48,7 +49,9 @@ local TOOLTIP_LINE_HEIGHT = {
 }
 
 local function isZipStorableContainer(container)
-    if not container then return true end
+    if not container or not instanceof(container, "ItemContainer") then
+        return false
+    end
     if ZipContainer.isValid(container) then return true end
     return container:getType() == "TradeUI"
 end
@@ -62,7 +65,9 @@ end
 
 local function shouldShowZipStorableTooltip(item, owner)
     if not item or not instanceof(item, "InventoryItem") then return false end
-    if owner and owner.inventory and isZipStorableContainer(owner.inventory) then return false end
+    if owner and owner.inventory and instanceof(owner.inventory, "ItemContainer") then
+        if isZipStorableContainer(owner.inventory) then return false end
+    end
     return ZipContainer.isWhiteListed(item)
 end
 
@@ -521,9 +526,9 @@ function ISInventoryPane_patch:renderdetails(doDragged)
                 local doIt, xoff, yoff = getStorableMarkOffsets(self, y, doDragged)
                 if doIt then
                     local rowTop = (y * self.itemHgt) + self.headerHgt + yoff
-                    local barH = self.itemHgt - 4
-                    local barX = column2 + xoff - 6
-                    local barY = rowTop + 2
+                    local barH = self.itemHgt - 8
+                    local barX = column2 + xoff - 5
+                    local barY = rowTop + 4
                     self:drawRect(
                         barX, barY, STORABLE_BAR_WIDTH, barH,
                         STORABLE_BAR_COLOR.a, STORABLE_BAR_COLOR.r, STORABLE_BAR_COLOR.g, STORABLE_BAR_COLOR.b
@@ -576,7 +581,7 @@ function ISToolTipInv_patch:render()
             stage = 3
             panel.tooltip:DrawText(
                 panel.tooltip:getFont(), hint, 10, savedH + 2,
-                STORABLE_BAR_COLOR.r, STORABLE_BAR_COLOR.g, STORABLE_BAR_COLOR.b, 1
+                STORABLE_TOOLTIP_COLOR.r, STORABLE_TOOLTIP_COLOR.g, STORABLE_TOOLTIP_COLOR.b, STORABLE_TOOLTIP_COLOR.a
             )
         end
         return result
