@@ -1,8 +1,83 @@
 --Author: FD
 
 RemoverItemAndBuildsTool = ISPanelJoypad:derive("RemoverItemAndBuildsTool");
+RemoverItemAndBuildsTool.storedTemplate = nil
+RemoverItemAndBuildsTool.MAX_APPLY_CELLS = 5000
+RemoverItemAndBuildsTool.APPLY_BATCH_SIZE = 80
+RemoverItemAndBuildsTool.applyQueue = nil
+RemoverItemAndBuildsTool.applyQueueIndex = 1
+RemoverItemAndBuildsTool.applyInProgress = false
+RemoverItemAndBuildsTool.placeItem = nil
 
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
+
+function RemoverItemAndBuildsTool.snapEndToTemplate(startPos, endX, endY, template)
+    if not template or not startPos then return endX, endY end
+    local tw = template.width
+    local th = template.height
+    local dx = endX - startPos.x
+    local dy = endY - startPos.y
+    local signX = dx >= 0 and 1 or -1
+    local signY = dy >= 0 and 1 or -1
+    local absW = math.abs(dx) + 1
+    local absH = math.abs(dy) + 1
+    local snapW = math.max(tw, math.floor(absW / tw) * tw)
+    local snapH = math.max(th, math.floor(absH / th) * th)
+    return startPos.x + signX * (snapW - 1), startPos.y + signY * (snapH - 1)
+end
+
+function RemoverItemAndBuildsTool.getSelectionBounds(startPos, endX, endY)
+    if not startPos or not endX or not endY then return nil end
+    local x1 = math.min(startPos.x, endX)
+    local x2 = math.max(startPos.x, endX)
+    local y1 = math.min(startPos.y, endY)
+    local y2 = math.max(startPos.y, endY)
+    return x1, x2, y1, y2, x2 - x1 + 1, y2 - y1 + 1
+end
+
+function RemoverItemAndBuildsTool:getSelectionEnd()
+    if self.selectEnd and self.startPos then
+        local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), self.zPos)
+        xx = math.floor(xx)
+        yy = math.floor(yy)
+        if self.itemType:isSelected(11) and RemoverItemAndBuildsTool.storedTemplate then
+            xx, yy = RemoverItemAndBuildsTool.snapEndToTemplate(self.startPos, xx, yy, RemoverItemAndBuildsTool.storedTemplate)
+        end
+        return xx, yy
+    elseif self.endPos then
+        return self.endPos.x, self.endPos.y
+    end
+    return nil, nil
+end
+
+function RemoverItemAndBuildsTool:highlightSelection(cell)
+    local endX, endY = self:getSelectionEnd()
+    if not self.startPos or not endX or not endY then return end
+    local x1, x2, y1, y2 = RemoverItemAndBuildsTool.getSelectionBounds(self.startPos, endX, endY)
+    for x = x1, x2 do
+        for y = y1, y2 do
+            local sq = cell:getGridSquare(x, y, self.zPos)
+            if sq and sq:getFloor() then sq:getFloor():setHighlighted(true) end
+        end
+    end
+end
+
+function RemoverItemAndBuildsTool:drawSelectionSizeLabel()
+    local endX, endY = self:getSelectionEnd()
+    if not self.startPos or not endX or not endY then return end
+    local x1, x2, y1, y2, selW, selH = RemoverItemAndBuildsTool.getSelectionBounds(self.startPos, endX, endY)
+    local template = RemoverItemAndBuildsTool.storedTemplate
+    local label = getText("IGUI_SelectionSize", selW, selH)
+    if self.itemType:isSelected(11) and template then
+        local repX = math.floor(selW / template.width)
+        local repY = math.floor(selH / template.height)
+        label = label .. "  " .. getText("IGUI_TemplateRepeats", repX, repY)
+    end
+    local playerNum = self.player:getPlayerNum()
+    local sx = isoToScreenX(playerNum, x2 + 0.5, y1, self.zPos)
+    local sy = isoToScreenY(playerNum, x2 + 0.5, y1, self.zPos)
+    getTextManager():DrawString(UIFont.Small, sx + 8, sy - 16, label, 1, 1, 0.4, 1)
+end
 
 function RemoverItemAndBuildsTool:initialise()
     ISPanelJoypad.initialise(self);
@@ -50,6 +125,8 @@ function RemoverItemAndBuildsTool:initialise()
     self.itemType:addOption(getText("IGUI_AddRandomTrees"))
     self.itemType:addOption(getText("IGUI_RemoveFloors"))
     self.itemType:addOption(getText("IGUI_SetSelectedFloors"))
+    self.itemType:addOption(getText("IGUI_CaptureTemplate"))
+    self.itemType:addOption(getText("IGUI_ApplyTemplate"))
     -- self.itemType:addOption(getText("IGUI_ClearSnow"))
     self.itemType:setSelected(1)
 
@@ -61,6 +138,9 @@ function RemoverItemAndBuildsTool:initialise()
 end
 
 function RemoverItemAndBuildsTool:destroy()
+    if RemoverItemAndBuildsTool.applyUIInstance == self then
+        RemoverItemAndBuildsTool.applyUIInstance = nil
+    end
     self:setVisible(false);
     self:removeFromUIManager();
 end
@@ -76,6 +156,79 @@ local function removeAllButFloor(square)
 		isoObject:removeFromWorld()
 		isoObject:removeFromSquare()
 	end
+end
+
+local function clearSquareForTemplate(square)
+    if not square then return end
+    for i = square:getObjects():size() - 1, 0, -1 do
+        local obj = square:getObjects():get(i)
+        if obj and not obj:isFloor() then
+            if isClient() and sledgeDestroy then
+                sledgeDestroy(obj)
+            else
+                square:transmitRemoveItemFromSquare(obj)
+                square:RemoveTileObject(obj)
+            end
+        end
+    end
+end
+
+local function getPlaceItem()
+    if not RemoverItemAndBuildsTool.placeItem then
+        RemoverItemAndBuildsTool.placeItem = InventoryItemFactory.CreateItem("Base.Plank")
+    end
+    return RemoverItemAndBuildsTool.placeItem
+end
+
+local function isFloorSprite(spriteName)
+    if not spriteName then return false end
+    local sprite = getSprite(spriteName)
+    if not sprite or not sprite:getProperties() then return false end
+    return sprite:getProperties():Is(IsoFlagType.solidfloor)
+end
+
+local function placeTileOnSquare(square, spriteName)
+    if not square or not spriteName then return end
+    if isFloorSprite(spriteName) then
+        local floor = square:getFloor()
+        if floor then
+            local current = floor:getSprite()
+            if current and current:getName() == spriteName then return end
+            floor:setSprite(getSprite(spriteName))
+            floor:transmitUpdatedSprite()
+        end
+        return
+    end
+    local objs = square:getObjects()
+    for i = 0, objs:size() - 1 do
+        local spr = objs:get(i):getSprite()
+        if spr and spr:getName() == spriteName then
+            return
+        end
+    end
+    local props = ISMoveableSpriteProps.new(IsoObject.new(square, spriteName):getSprite())
+    props.rawWeight = 10
+    props:placeMoveableInternal(square, getPlaceItem(), spriteName)
+end
+
+local function applySquareData(square, cellData)
+    if not square or not cellData then return end
+    clearSquareForTemplate(square)
+    if cellData.floor then
+        local floor = square:getFloor()
+        if floor then
+            floor:setSprite(getSprite(cellData.floor))
+            if cellData.floorOverlay and floor.setOverlaySprite then
+                floor:setOverlaySprite(cellData.floorOverlay, 1, 1, 1, 1)
+            end
+            floor:transmitUpdatedSprite()
+        end
+    end
+    for _, spriteName in ipairs(cellData.objects or {}) do
+        if spriteName ~= cellData.floor and spriteName ~= cellData.floorOverlay then
+            placeTileOnSquare(square, spriteName)
+        end
+    end
 end
 
 local function addTreeToSquare(sprite, square)
@@ -138,6 +291,41 @@ function RemoverItemAndBuildsTool:onClick(button)
             local x2 = math.max(self.startPos.x, self.endPos.x)
             local y1 = math.min(self.startPos.y, self.endPos.y)
             local y2 = math.max(self.startPos.y, self.endPos.y)
+            local z = self.zPos
+
+            if self.itemType:isSelected(10) then
+                RemoverItemAndBuildsTool.storedTemplate = self:captureTemplate(x1, y1, x2, y2, z)
+                if RemoverItemAndBuildsTool.storedTemplate and self.player then
+                    local t = RemoverItemAndBuildsTool.storedTemplate
+                    self.player:Say(getText("IGUI_TemplateCapturedMsg", t.width, t.height))
+                end
+                self.startPos = nil
+                self.endPos = nil
+                self.selectStart = false
+                self.selectEnd = false
+                self.itemType:setSelected(11)
+                return
+            elseif self.itemType:isSelected(11) then
+                if RemoverItemAndBuildsTool.applyInProgress then
+                    if self.player then
+                        self.player:Say(getText("IGUI_TemplateApplyInProgress"))
+                    end
+                    return
+                end
+                if RemoverItemAndBuildsTool.storedTemplate then
+                    local template = RemoverItemAndBuildsTool.storedTemplate
+                    local snapEndX, snapEndY = RemoverItemAndBuildsTool.snapEndToTemplate(self.startPos, self.endPos.x, self.endPos.y, template)
+                    x2 = math.max(self.startPos.x, snapEndX)
+                    x1 = math.min(self.startPos.x, snapEndX)
+                    y2 = math.max(self.startPos.y, snapEndY)
+                    y1 = math.min(self.startPos.y, snapEndY)
+                    self:startApplyTemplate(template, x1, y1, x2, y2, z)
+                elseif self.player then
+                    self.player:Say(getText("IGUI_TemplateNone"))
+                end
+                return
+            end
+
             local itemBuffer = {}
     
             for x = x1, x2 do
@@ -316,6 +504,129 @@ function RemoverItemAndBuildsTool:onClick(button)
     end
 end
 
+function RemoverItemAndBuildsTool:captureSquareData(square)
+    if not square then return nil end
+    local data = { floor = nil, floorOverlay = nil, objects = {} }
+    local seen = {}
+    local function addObject(spriteName)
+        if not spriteName or seen[spriteName] then return end
+        seen[spriteName] = true
+        table.insert(data.objects, spriteName)
+    end
+    for i = 0, square:getObjects():size() - 1 do
+        local obj = square:getObjects():get(i)
+        if obj and obj:getSprite() then
+            local spriteName = obj:getSprite():getName()
+            if spriteName then
+                if obj:isFloor() then
+                    data.floor = spriteName
+                    seen[spriteName] = true
+                    if obj:getOverlaySprite() and obj:getOverlaySprite():getName() then
+                        data.floorOverlay = obj:getOverlaySprite():getName()
+                        seen[data.floorOverlay] = true
+                    end
+                else
+                    addObject(spriteName)
+                end
+            end
+        end
+        if obj and not obj:isFloor() and obj:getOverlaySprite() and obj:getOverlaySprite():getName() then
+            addObject(obj:getOverlaySprite():getName())
+        end
+    end
+    return data
+end
+
+function RemoverItemAndBuildsTool:captureTemplate(x1, y1, x2, y2, z)
+    local template = {
+        width = x2 - x1 + 1,
+        height = y2 - y1 + 1,
+        z = z,
+        cells = {},
+    }
+    local cell = getCell()
+    for x = x1, x2 do
+        local relX = x - x1 + 1
+        template.cells[relX] = {}
+        for y = y1, y2 do
+            local relY = y - y1 + 1
+            local sq = cell:getGridSquare(x, y, z)
+            template.cells[relX][relY] = self:captureSquareData(sq)
+        end
+    end
+    return template
+end
+
+function RemoverItemAndBuildsTool:startApplyTemplate(template, x1, y1, x2, y2, z)
+    if not template or not template.cells then return end
+    local totalCells = (x2 - x1 + 1) * (y2 - y1 + 1)
+    if totalCells > RemoverItemAndBuildsTool.MAX_APPLY_CELLS then
+        if self.player then
+            self.player:Say(getText("IGUI_TemplateApplyTooLarge", totalCells, RemoverItemAndBuildsTool.MAX_APPLY_CELLS))
+        end
+        return
+    end
+    RemoverItemAndBuildsTool.applyQueue = {}
+    for tx = x1, x2 do
+        for ty = y1, y2 do
+            local relX = ((tx - x1) % template.width) + 1
+            local relY = ((ty - y1) % template.height) + 1
+            local cellData = template.cells[relX] and template.cells[relX][relY]
+            if cellData then
+                table.insert(RemoverItemAndBuildsTool.applyQueue, { tx = tx, ty = ty, z = z, cellData = cellData })
+            end
+        end
+    end
+    RemoverItemAndBuildsTool.applyQueueIndex = 1
+    RemoverItemAndBuildsTool.applyInProgress = true
+    RemoverItemAndBuildsTool.applyPlayer = self.player
+    RemoverItemAndBuildsTool.applyUIInstance = self
+    if self.remove then
+        self.remove:setEnable(false)
+    end
+    if self.player then
+        self.player:Say(getText("IGUI_TemplateApplyStarted", totalCells))
+    end
+    Events.OnTick.Add(RemoverItemAndBuildsTool.onApplyTemplateTick)
+end
+
+function RemoverItemAndBuildsTool.onApplyTemplateTick()
+    local queue = RemoverItemAndBuildsTool.applyQueue
+    if not queue or not RemoverItemAndBuildsTool.applyInProgress then
+        Events.OnTick.Remove(RemoverItemAndBuildsTool.onApplyTemplateTick)
+        return
+    end
+    local cell = getCell()
+    local batchEnd = math.min(RemoverItemAndBuildsTool.applyQueueIndex + RemoverItemAndBuildsTool.APPLY_BATCH_SIZE - 1, #queue)
+    for i = RemoverItemAndBuildsTool.applyQueueIndex, batchEnd do
+        local job = queue[i]
+        local sq = cell:getGridSquare(job.tx, job.ty, job.z)
+        if sq then
+            applySquareData(sq, job.cellData)
+        end
+    end
+    RemoverItemAndBuildsTool.applyQueueIndex = batchEnd + 1
+    if RemoverItemAndBuildsTool.applyQueueIndex > #queue then
+        RemoverItemAndBuildsTool.applyQueue = nil
+        RemoverItemAndBuildsTool.applyInProgress = false
+        Events.OnTick.Remove(RemoverItemAndBuildsTool.onApplyTemplateTick)
+        local player = RemoverItemAndBuildsTool.applyPlayer
+        if player then
+            player:Say(getText("IGUI_TemplateApplyDone"))
+        end
+        RemoverItemAndBuildsTool.applyPlayer = nil
+        local ui = RemoverItemAndBuildsTool.applyUIInstance
+        if ui and ui.remove then
+            ui.remove:setEnable(true)
+        end
+        RemoverItemAndBuildsTool.applyUIInstance = nil
+    end
+end
+
+function RemoverItemAndBuildsTool:applyTemplate(template, x1, y1, x2, y2, z)
+    self:startApplyTemplate(template, x1, y1, x2, y2, z)
+end
+
 function RemoverItemAndBuildsTool:addTileToSquare(tileName, square)
     -- Создаем новый IsoObject с использованием спрайта, имя которого указано в tileName
     local object = IsoObject.new(square:getCell(), square, tileName)
@@ -345,41 +656,43 @@ function RemoverItemAndBuildsTool:prerender()
     self:drawRectBorder(0, 0, self.width, self.height, self.borderColor.a, self.borderColor.r, self.borderColor.g, self.borderColor.b);
 
     self:drawTextCentre(getText("IGUI_Remover_Tools"), self:getWidth() / 2, 20, 1, 1, 1, 1, UIFont.NewLarge);
+
+    local template = RemoverItemAndBuildsTool.storedTemplate
+    if template then
+        self:drawTextCentre(getText("IGUI_TemplateCaptured") .. ": " .. template.width .. "x" .. template.height, self:getWidth() / 2, 36, 0.4, 1, 0.4, 1, UIFont.Small)
+    else
+        self:drawTextCentre(getText("IGUI_TemplateNone"), self:getWidth() / 2, 36, 0.7, 0.7, 0.7, 1, UIFont.Small)
+    end
+
+    local endX, endY = self:getSelectionEnd()
+    if self.startPos and endX and endY then
+        local _, _, _, _, selW, selH = RemoverItemAndBuildsTool.getSelectionBounds(self.startPos, endX, endY)
+        local selText = getText("IGUI_SelectionSize", selW, selH)
+        local r, g, b = 1, 1, 1
+        if self.itemType:isSelected(11) and template then
+            local repX = math.floor(selW / template.width)
+            local repY = math.floor(selH / template.height)
+            selText = selText .. "  " .. getText("IGUI_TemplateRepeats", repX, repY)
+            r, g, b = 0.4, 1, 0.4
+        end
+        self:drawTextCentre(selText, self:getWidth() / 2, 52, r, g, b, 1, UIFont.Small)
+    elseif self.itemType:isSelected(11) and template then
+        self:drawTextCentre(getText("IGUI_TemplateApplyHint", template.width, template.height) .. "  " .. getText("IGUI_TemplateApplyLimit", RemoverItemAndBuildsTool.MAX_APPLY_CELLS), self:getWidth() / 2, 52, 0.8, 0.8, 0.4, 1, UIFont.Small)
+    end
+    if RemoverItemAndBuildsTool.applyInProgress then
+        self:drawTextCentre(getText("IGUI_TemplateApplyInProgress"), self:getWidth() / 2, 68, 1, 0.8, 0.2, 1, UIFont.Small)
+    end
 end
 
 function RemoverItemAndBuildsTool:render()
+    local cell = getCell()
     if self.selectStart then
         local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), self.zPos)
-        local sq = getCell():getGridSquare(math.floor(xx), math.floor(yy), self.zPos)
+        local sq = cell:getGridSquare(math.floor(xx), math.floor(yy), self.zPos)
         if sq and sq:getFloor() then sq:getFloor():setHighlighted(true) end
-    elseif self.selectEnd then
-        local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), self.zPos)
-        xx = math.floor(xx)
-        yy = math.floor(yy)
-        local cell = getCell()
-        local x1 = math.min(xx, self.startPos.x)
-        local x2 = math.max(xx, self.startPos.x)
-        local y1 = math.min(yy, self.startPos.y)
-        local y2 = math.max(yy, self.startPos.y)
-
-        for x = x1, x2 do
-            for y = y1, y2 do
-                local sq = cell:getGridSquare(x, y, self.zPos)
-                if sq and sq:getFloor() then sq:getFloor():setHighlighted(true) end
-            end
-        end
-    elseif self.startPos ~= nil and self.endPos ~= nil then
-        local cell = getCell()
-        local x1 = math.min(self.startPos.x, self.endPos.x)
-        local x2 = math.max(self.startPos.x, self.endPos.x)
-        local y1 = math.min(self.startPos.y, self.endPos.y)
-        local y2 = math.max(self.startPos.y, self.endPos.y)
-        for x = x1, x2 do
-            for y = y1, y2 do
-                local sq = cell:getGridSquare(x, y, self.zPos)
-                if sq and sq:getFloor() then sq:getFloor():setHighlighted(true) end
-            end
-        end
+    else
+        self:highlightSelection(cell)
+        self:drawSelectionSizeLabel()
     end
 end
 
@@ -432,12 +745,17 @@ end
 
 function RemoverItemAndBuildsTool:onMouseDownOutside(x, y)
     local xx, yy = ISCoordConversion.ToWorld(getMouseXScaled(), getMouseYScaled(), self.zPos)
+    xx = math.floor(xx)
+    yy = math.floor(yy)
     if self.selectStart then
-        self.startPos = { x = math.floor(xx), y = math.floor(yy) }
+        self.startPos = { x = xx, y = yy }
         self.selectStart = false
         self.selectEnd = true
     elseif self.selectEnd then
-        self.endPos = { x = math.floor(xx), y = math.floor(yy) }
+        if self.itemType:isSelected(11) and RemoverItemAndBuildsTool.storedTemplate then
+            xx, yy = RemoverItemAndBuildsTool.snapEndToTemplate(self.startPos, xx, yy, RemoverItemAndBuildsTool.storedTemplate)
+        end
+        self.endPos = { x = xx, y = yy }
         self.selectEnd = false
     end
 end

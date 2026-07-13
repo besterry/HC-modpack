@@ -872,4 +872,18 @@ IGUI_RU =
 	IGUI_HydroFactionRoles_RemoveOfficer = "Снять офицера",
 	IGUI_HydroFactionRoles_InviteDenied = "Нельзя отправить приглашение",
 	IGUI_HydroFactionRoles_RemoveDenied = "Нельзя исключить этого игрока",
+
+	IGUI_CaptureTemplate = "Снять макет",
+	IGUI_ApplyTemplate = "Применить макет",
+	IGUI_TemplateCaptured = "Макет",
+	IGUI_TemplateNone = "Макет не захвачен",
+	IGUI_TemplateCapturedMsg = "Макет захвачен: %1x%2",
+	IGUI_SelectionSize = "Зона: %1x%2",
+	IGUI_TemplateRepeats = "повтор: %1x%2",
+	IGUI_TemplateApplyHint = "Размеры кратны макету %1x%2",
+	IGUI_TemplateApplyLimit = "макс. %1 клеток",
+	IGUI_TemplateApplyTooLarge = "Слишком большая зона: %1 (макс %2)",
+	IGUI_TemplateApplyStarted = "Применение макета: %1 клеток...",
+	IGUI_TemplateApplyDone = "Макет применён",
+	IGUI_TemplateApplyInProgress = "Применение...",
 }
