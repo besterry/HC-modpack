@@ -80,6 +80,10 @@ function RIC.delayedFunctionOverSeatTaked(player)
     player:Say(getText('IGUI_RIC_no_more_place'))    
     RIC.ForceExitCar(player)
 end
+-- Сервер шлёт команду "OverSeatTaked", а хендлер раньше отсутствовал (только delayed*)
+function RIC.OverSeatTaked(player, args, command)
+    RIC.delayedFunctionOverSeatTaked(player)
+end
 -------------------------------------------------------------------
 function RIC.ExpulsePlayer(player,args)        
     player:Say(getText("IGUI_RIC_playerIsExpulsed") .. tostring(args[1]) .. getText("IGUI_RIC_Is_Expulsed"))
