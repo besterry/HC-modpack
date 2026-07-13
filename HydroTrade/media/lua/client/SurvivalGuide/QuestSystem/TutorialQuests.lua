@@ -737,6 +737,8 @@ function TutorialQuests.initQuestProgress(entry, player, quest)
 		entry.p.fishCaught = 0
 	elseif quest.type == "kill_count" then
 		entry.p.killsAtStart = player:getZombieKills()
+	elseif quest.type == "kill_sprinter" then
+		entry.p.sprinterKills = 0
 	elseif quest.type == "travel_distance" then
 		entry.p.travelDistance = 0
 		entry.p.travelLastX = player:getX()
@@ -844,6 +846,45 @@ function TutorialQuests.acceptCyclicQuest(id)
 	if TutorialQuests.instance then
 		TutorialQuests.instance:updateLayout()
 	end
+end
+
+function TutorialQuests.forceTestDailyQuest(questId)
+	local player = getPlayer()
+	if not player then return false end
+	if not (isAdmin() or (getCore() and getCore():getDebug())) then return false end
+	local quest = QuestsData.getQuest(questId)
+	if not quest or quest.cyclicTier ~= QuestsData.CYCLIC_DAILY then return false end
+
+	TutorialQuests.ensureCyclicDaily(player)
+	local c = TutorialQuests.getCyclicMeta(player)
+	if not c.dailyQuestIds then
+		c.dailyQuestIds = {}
+	end
+	local found = false
+	for _, id in ipairs(c.dailyQuestIds) do
+		if id == questId then
+			found = true
+			break
+		end
+	end
+	if not found then
+		table.insert(c.dailyQuestIds, questId)
+	end
+
+	local status = S.getStatus(player, questId)
+	if status < S.S_ACTIVE then
+		if not TutorialQuests.beginQuestAccept(player, quest, questId) then return false end
+		TutorialQuests.showNotice(player, getText("IGUI_Cyclic_Accepted"))
+	else
+		TutorialQuests.showNotice(player, getText(quest.titleKey))
+	end
+	if TutorialQuestBoard and TutorialQuestBoard.instance then
+		TutorialQuestBoard.instance:refresh()
+	end
+	if TutorialQuests.instance then
+		TutorialQuests.instance:updateLayout()
+	end
+	return true
 end
 
 function TutorialQuests.acceptSideQuest(id)
@@ -1075,6 +1116,17 @@ function TutorialQuests.getFishQuestProgress(player, quest)
 	return p.fishCaught or 0, need
 end
 
+local function completeSideQuest(player, quest)
+	if quest.rewardPool and #quest.rewardPool > 0 then
+		QuestsData.getPooledRewardItem(quest, S.getProgress(player, quest.id))
+	end
+	S.setStatus(player, quest.id, S.S_COMPLETE)
+	TutorialQuests.showNotice(player, getText(quest.completeKey or "IGUI_SideQuest_Complete"))
+	if TutorialQuests.instance then
+		TutorialQuests.instance:updateLayout()
+	end
+end
+
 function TutorialQuests.onFishCaught(player, fishItem)
 	if not player or not player:isLocalPlayer() then return end
 	if fishItem and QuestsData.isFishItem and not QuestsData.isFishItem(fishItem) then return end
@@ -1180,6 +1232,61 @@ function TutorialQuests.getKillQuestProgress(player, quest)
 	local need = quest.killCount or 25
 	local kills = math.max(0, player:getZombieKills() - (p.killsAtStart or 0))
 	return kills, need
+end
+
+function TutorialQuests.getSprinterKillQuestProgress(player, quest)
+	local p = S.getProgress(player, quest.id)
+	local need = quest.killCount or 3
+	return p.sprinterKills or 0, need
+end
+
+local function isLocalPlayerSafe(player)
+	return player and player.isLocalPlayer and player:isLocalPlayer()
+end
+
+local function trackZombieHitPlayer(zombie, player, bodyPart, weapon)
+	if not zombie or not player or not instanceof(player, "IsoPlayer") then return end
+	if not isLocalPlayerSafe(player) then return end
+	zombie:getModData().lastHitPlayerNum = player:getPlayerNum()
+end
+
+local function getZombieKillerPlayer(zombie)
+	if not zombie then return nil end
+	local modData = zombie:getModData()
+	if modData and modData.lastHitPlayerNum ~= nil then
+		local player = getSpecificPlayer(modData.lastHitPlayerNum)
+		if isLocalPlayerSafe(player) then
+			return player
+		end
+	end
+	local player = getPlayer()
+	if isLocalPlayerSafe(player) then
+		return player
+	end
+	return nil
+end
+
+function TutorialQuests.onSprinterKilled(player, zombie)
+	if not isLocalPlayerSafe(player) then return end
+	if zombie and TZone and TZone.isPlayerInTZone and not TZone.isPlayerInTZone(zombie) then
+		return
+	end
+	if zombie and TZone and TZone.isSprinterZombie and not TZone.isSprinterZombie(zombie) then
+		return
+	end
+	for _, quest in ipairs(QuestsData.getAllTrackableQuests()) do
+		if quest.type == "kill_sprinter" and S.getStatus(player, quest.id) == S.S_ACTIVE then
+			local p = S.getProgress(player, quest.id)
+			p.sprinterKills = (p.sprinterKills or 0) + 1
+			local need = quest.killCount or 3
+			if p.sprinterKills >= need then
+				completeSideQuest(player, quest)
+			elseif TutorialQuests.instance then
+				TutorialQuests.instance:updateLayout()
+			end
+			return
+		end
+	end
 end
 
 function TutorialQuests.getWaterQuestProgress(player, quest)
@@ -1514,6 +1621,10 @@ function TutorialQuests.getSideQuestDisplay(player, quest)
 		local current, need = TutorialQuests.getKillQuestProgress(player, quest)
 		return { done = current >= need, text = getText(quest.goalKey, current, need) }
 	end
+	if quest.type == "kill_sprinter" then
+		local current, need = TutorialQuests.getSprinterKillQuestProgress(player, quest)
+		return { done = current >= need, text = getText(quest.goalKey, current, need) }
+	end
 	if quest.type == "travel_distance" then
 		local current, need = TutorialQuests.getTravelDistanceProgress(player, quest)
 		return { done = current >= need, text = getText(quest.goalKey, current, need) }
@@ -1620,17 +1731,6 @@ function TutorialQuests.getSideQuestDisplay(player, quest)
 		return { done = done, text = getText(quest.goalKey) }
 	end
 	return nil
-end
-
-local function completeSideQuest(player, quest)
-	if quest.rewardPool and #quest.rewardPool > 0 then
-		QuestsData.getPooledRewardItem(quest, S.getProgress(player, quest.id))
-	end
-	S.setStatus(player, quest.id, S.S_COMPLETE)
-	TutorialQuests.showNotice(player, getText(quest.completeKey or "IGUI_SideQuest_Complete"))
-	if TutorialQuests.instance then
-		TutorialQuests.instance:updateLayout()
-	end
 end
 
 function TutorialQuests.isSideQuestObjectiveMet(player, quest)
@@ -2241,6 +2341,19 @@ local function onPlayerUpdate(player)
 end
 
 Events.OnPlayerUpdate.Add(onPlayerUpdate)
+
+local function onZombieDeadForSprinterQuest(zombie)
+	if not zombie or not TutorialQuests or not TutorialQuests.onSprinterKilled then return end
+	if TZone and TZone.isSprinterZombie and not TZone.isSprinterZombie(zombie) then return end
+	local player = getZombieKillerPlayer(zombie)
+	if player then
+		TutorialQuests.onSprinterKilled(player, zombie)
+	end
+end
+
+Events.OnZombieDead.Add(onZombieDeadForSprinterQuest)
+Events.OnHitZombie.Add(trackZombieHitPlayer)
+
 Events.OnGameStart.Add(function()
 	TutorialQuests.ensureModules()
 	if TutorialQuestHooks then

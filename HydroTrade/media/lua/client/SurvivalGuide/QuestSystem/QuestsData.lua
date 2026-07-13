@@ -145,6 +145,7 @@ QuestsData.DAILY_CYCLIC_IDS = {
 	"daily_auto_bulbs",
 	"daily_dismantle_electronics",
 	"daily_rip_clothing",
+	"daily_tzone_sprinter",
 }
 
 -- Дневные и повторяемые не пересекаются по type (см. CYCLIC_BACKGROUND types в REGISTRY).
@@ -868,6 +869,22 @@ QuestsData.REGISTRY = {
 		ripsRequired = 15,
 		xpReward = { perkName = "Tailoring", amount = 32, previewKey = "IGUI_Cyclic_XpReward_Tailoring" },
 	},
+	{
+		id = "daily_tzone_sprinter",
+		category = QuestsData.CATEGORY_CYCLIC,
+		cyclicTier = QuestsData.CYCLIC_DAILY,
+		type = "kill_sprinter",
+		titleKey = "IGUI_Cyclic_DailySprinter_Title",
+		previewKey = "IGUI_Cyclic_DailySprinter_Preview",
+		detailKey = "IGUI_Cyclic_DailySprinter_Detail",
+		hintKey = "IGUI_Cyclic_DailySprinter_Hint",
+		goalKey = "IGUI_Cyclic_DailySprinter_Goal",
+		completeKey = "IGUI_Cyclic_DailySprinter_Complete",
+		killCount = 3,
+		balanceReward = 1500,
+		rewardPool = QuestsData.CYCLIC_CONSUMABLE_POOL,
+		rewardPoolLabel = "IGUI_Cyclic_RewardPool_Bonus",
+	},
 }
 
 QuestsData._byId = {}
@@ -1355,6 +1372,12 @@ function QuestsData.getQuestPreviewText(quest, progress, day)
 			return getText(quest.previewKey, quest.killCount or 25, rewardPreview)
 		end
 		return getText(quest.previewKey, quest.killCount or 25)
+	end
+	if quest.type == "kill_sprinter" then
+		if rewardPreview then
+			return getText(quest.previewKey, quest.killCount or 3, rewardPreview)
+		end
+		return getText(quest.previewKey, quest.killCount or 3)
 	end
 	if quest.type == "travel_distance" then
 		if rewardPreview then
