@@ -87,6 +87,8 @@ function ISExpBar:new(playerIndex, player)
 
 	barHandle.moveWithMouse = true;
 	barHandle:setCapture(false);
+	barHandle.mousePressed = false;
+	barHandle.wasDragged = false;
 
 	barHandle.backgroundColor = 	{r=0.22, g=0.19, b=0.14, a=0.5};
 	barHandle.borderColor = 		{r=0.22, g=0.19, b=0.14, a=1.0};
@@ -275,25 +277,64 @@ function ISExpBar:onRightMouseDown(x, y)
 end
 
 --Override
+function ISExpBar:onMouseDown(x, y)
+	self.mousePressed = true;
+	self.wasDragged = false;
+	ISPanel.onMouseDown(self, x, y);
+end
+
+function ISExpBar:openSkillsPanel()
+	if self.player_isDead then
+		return;
+	end
+
+	local playerNum = self.playerIndex;
+	if self.player ~= nil then
+		playerNum = self.player:getPlayerNum();
+	end
+
+	local infoPanel = getPlayerInfoPanel(playerNum);
+	if infoPanel ~= nil then
+		getSoundManager():playUISound("UISelectListItem");
+		infoPanel:toggleView(getText("IGUI_XP_Skills"));
+	end
+end
+
+--Override
 function ISExpBar:onMouseUp(x, y)
 	if self.button_mode then
 		self:setButtonMode(false, false);
+		self.mousePressed = false;
+		self.wasDragged = false;
 		return;
 	end
+
 	local wasMoving = self.moving;
 	ISPanel.onMouseUp(self, x, y);
-	if wasMoving then
+
+	if wasMoving and self.wasDragged then
 		self:writeConfig();
+	elseif not self.wasDragged and not self:isConfigPanelOpen() and not self:dropdownPanelIsOpen() then
+		self:openSkillsPanel();
 	end
+
+	self.mousePressed = false;
+	self.wasDragged = false;
 end
 
 --Override
 function ISExpBar:onMouseUpOutside(x, y)
 	ISPanel.onMouseUpOutside(self, x, y);
+	self.mousePressed = false;
+	self.wasDragged = false;
 end
 
 --Override
 function ISExpBar:onMouseMove(dx, dy)
+	if self.mousePressed and (dx ~= 0 or dy ~= 0) then
+		self.wasDragged = true;
+	end
+
 	if self:isConfigPanelOpen() or self:dropdownPanelIsOpen() then
 		self.tooltip_visible = false;
 		if self.hiddenTooltip then
@@ -324,6 +365,10 @@ end
 
 --Override
 function ISExpBar:onMouseMoveOutside(dx, dy)
+	if self.mousePressed and (dx ~= 0 or dy ~= 0) then
+		self.wasDragged = true;
+	end
+
 	self.tooltip_visible = false;
 	if self.hiddenTooltip then
 		self.hiddenTooltip:setVisible(false);
