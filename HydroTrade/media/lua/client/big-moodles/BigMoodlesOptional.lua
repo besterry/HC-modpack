@@ -21,6 +21,8 @@ local BKG_BAD = {
 }
 local BKG_NEUTRAL = BKG_BAD[1]
 
+-- Order must match MoodleType.FromIndex (not enum ordinal):
+-- ... Zombie(18), FoodEaten(19), Hyperthermia(20), Hypothermia(21), Windchill(22), CantSprint(23)
 local ICON_PATHS = {
     "media/ui/Moodles/Moodle_Icon_Endurance.png",
     "media/ui/Moodles/Moodle_Icon_Tired.png",
@@ -41,11 +43,11 @@ local ICON_PATHS = {
     "media/ui/Moodles/Moodle_Icon_Drunk.png",
     "media/ui/Moodles/Moodle_Icon_Dead.png",
     "media/ui/Moodles/Moodle_Icon_Zombie.png",
+    "media/ui/Moodles/Moodle_Icon_Hungry.png",
     "media/ui/weather/Moodle_Icon_TempHot.png",
     "media/ui/weather/Moodle_Icon_TempCold.png",
     "media/ui/Moodle_Icon_Windchill.png",
     "media/ui/Moodle_Icon_CantSprint.png",
-    "media/ui/Moodles/Moodle_Icon_Hungry.png",
 }
 
 local icons = {}
@@ -60,9 +62,10 @@ local function calcScale()
     return s
 end
 
+-- MoodleType.GoodBadNeutral: 1 = good, 2 = bad
 local function getBackground(gbn, level)
-    if gbn == 0 then return BKG_GOOD[level] or BKG_GOOD[1] end
-    if gbn == 1 then return BKG_BAD[level] or BKG_BAD[1] end
+    if gbn == 1 then return BKG_GOOD[level] or BKG_GOOD[1] end
+    if gbn == 2 then return BKG_BAD[level] or BKG_BAD[1] end
     return BKG_NEUTRAL
 end
 
@@ -113,6 +116,20 @@ end
 
 local ISScaledMoodles = ISUIElement:derive("ISScaledMoodles")
 
+local OSC_RATE = 0.8
+local OSC_SCALAR = 15.6
+local OSC_START = 1.0
+local OSC_DECAY = 0.04
+
+local oscillator = 0
+local oscillatorStep = 0
+
+local function updateOscillator()
+    local dt = UIManager.getMillisSinceLastRender() / 33.3
+    oscillatorStep = oscillatorStep + OSC_RATE * 0.5 * dt
+    oscillator = math.sin(oscillatorStep) * OSC_SCALAR
+end
+
 function ISScaledMoodles:new(playerNum, player)
     local o = ISUIElement:new(0, 0, ICON_SIZE, 500)
     setmetatable(o, self)
@@ -120,6 +137,8 @@ function ISScaledMoodles:new(playerNum, player)
     o.playerNum = playerNum
     o.player = player
     o.scale = scale
+    o.prevLevels = {}
+    o.oscLevels = {}
     o:setWantKeyEvents(false)
     return o
 end
@@ -140,20 +159,43 @@ function ISScaledMoodles:render()
     local moodles = self.player:getMoodles()
     if not moodles then return end
 
+    updateOscillator()
+
     local maxIndex = MoodleType.ToIndex(MoodleType.MAX)
     local slot = 0
     local fontHgt = getTextManager():getFontHeight(UIFont.Small)
+    local dt = UIManager.getMillisSinceLastRender() / 33.3
+    if dt < 0.1 then dt = 0.1 end
 
     for i = 0, maxIndex - 1 do
         local level = moodles:getMoodleLevel(i)
+        local prev = self.prevLevels[i] or 0
+
+        if level ~= prev then
+            if level > 0 then
+                self.oscLevels[i] = OSC_START
+            else
+                self.oscLevels[i] = 0
+            end
+            self.prevLevels[i] = level
+        end
+
+        local osc = self.oscLevels[i] or 0
+        if osc > 0 then
+            osc = osc - osc * OSC_DECAY * dt
+            if osc < 0.01 then osc = 0 end
+            self.oscLevels[i] = osc
+        end
+
         if level > 0 then
             local y = slot * SPACING * self.scale
+            local x = oscillator * osc * self.scale
             local gbn = moodles:getGoodBadNeutral(i)
             local bkg = getBackground(gbn, level)
             local icon = icons[i]
             if bkg and icon then
-                self:drawTextureScaledUniform(bkg, 0, y, self.scale, 1, 1, 1, 1)
-                self:drawTextureScaledUniform(icon, 0, y, self.scale, 1, 1, 1, 1)
+                self:drawTextureScaledUniform(bkg, x, y, self.scale, 1, 1, 1, 1)
+                self:drawTextureScaledUniform(icon, x, y, self.scale, 1, 1, 1, 1)
             end
 
             if self:isMouseOver() then
