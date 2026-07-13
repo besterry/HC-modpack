@@ -1762,6 +1762,7 @@ function HCRemoveDonkeyPack(items, result, player)
 end
 
 function HCRemoveHorseSaddle(items, result, player)
+	HCEmptyContainerOnRecipe(items, result, player);
 	HCAddManySameItem("Hydrocraft.HCHorsesaddle", 0, player);
 	--AiweLeliaThamm Сохранение голода животного
 	--recipe_saveOldTimingState(items, result, player)
@@ -2770,8 +2771,14 @@ function HCEmptyContainerOnRecipe(item, resultItem, player)
 	for i = 0, (item:size() - 1) do               --item = number of items required for recipe
 		dItem = item:get(i);
 		if dItem:getCategory() == "Container" then --if any items in recipe are bags...
-			-- print("Container detected")
-			if player:getClothingItem_Back() == dItem then --...and are equiped on the back...
+			for j = 0, player:getWornItems():size() - 1 do
+				local wornEntry = player:getWornItems():get(j)
+				if wornEntry and wornEntry:getItem() == dItem then
+					player:removeWornItem(dItem, false)
+					break
+				end
+			end
+			if player:getClothingItem_Back() == dItem then
 				player:setClothingItem_Back(nil);
 			end
 			if player:getPrimaryHandItem() == dItem then --...or are equiped primary...

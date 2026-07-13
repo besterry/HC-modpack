@@ -134,9 +134,199 @@ end
 
 -------------------
 
-function ISClothingExtraAction:isValid()
-    return self.character:getInventory():contains(self.item) and self.character:getInventory():getCapacityWeight() < 25;
+local function getContainerContentsWeight(item)
+	if not item then return 0 end
+	if instanceof(item, "InventoryContainer") then
+		local container = item:getItemContainer()
+		if container then
+			return container:getContentsWeight()
+		end
+	end
+	local inv = item:getInventory()
+	if inv then
+		return inv:getCapacityWeight()
+	end
+	return 0
 end
+
+-- При смене слота или крафте с экипированным контейнером его содержимое
+-- начинает учитываться в переноске. Превышение лимита вызывает дюп.
+local function wouldEquippedContainerExceedWeight(character, item)
+	if not character or not item then
+		return true
+	end
+	local inv = character:getInventory()
+	if not inv or not inv:contains(item) then
+		return true
+	end
+
+	local maxWeight = character:getMaxWeight()
+	local invWeight = inv:getCapacityWeight()
+	local contentsWeight = getContainerContentsWeight(item)
+
+	if item:isEquipped() and contentsWeight > 0 then
+		return invWeight + contentsWeight >= maxWeight
+	end
+
+	local burden = item:getActualWeight() + contentsWeight
+	return invWeight + burden >= maxWeight
+end
+
+local function itemUsedAsRecipeContainerInput(item, recipe)
+	if not item or not recipe then return false end
+	local fullType = item:getFullType()
+	for i = 0, recipe:getSource():size() - 1 do
+		local source = recipe:getSource():get(i)
+		for j = 0, source:getItems():size() - 1 do
+			if source:getItems():get(j) == fullType then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+local function getHeavyContainerBlockText()
+	return getText("Tooltip_DupeFix_HeavyEquippedContainer")
+end
+
+local function showHeavyContainerBlockNote(character)
+	if character then
+		character:setHaloNote(getHeavyContainerBlockText(), 255, 100, 100, 200)
+	end
+end
+
+local function applyHeavyContainerBlock(option)
+	option.notAvailable = true
+	local tooltip = option.toolTip or ISInventoryPaneContextMenu.addToolTip()
+	tooltip.description = getHeavyContainerBlockText()
+	option.toolTip = tooltip
+end
+
+local function isClothingExtraOption(option)
+	return option.onSelect == ISInventoryPaneContextMenu.onClothingItemExtra
+end
+
+local function getCraftOptionRecipe(option)
+	if option.param2 and instanceof(option.param2, "Recipe") then
+		return option.param2
+	end
+	if option.param1 and instanceof(option.param1, "Recipe") then
+		return option.param1
+	end
+	return nil
+end
+
+local function isCraftOptionForItem(option, item)
+	if option.onSelect ~= ISInventoryPaneContextMenu.OnCraft
+		and option.onSelect ~= ISInventoryPaneContextMenu.onCraft then
+		return false
+	end
+	if not option.target then
+		return false
+	end
+	if instanceof(option.target, "InventoryItem") then
+		return option.target == item
+	end
+	if type(option.target) == "table" then
+		for i = 1, #option.target do
+			if option.target[i] == item then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+local function shouldBlockContextOption(option, player, item)
+	if not wouldEquippedContainerExceedWeight(player, item) then
+		return false
+	end
+	if isClothingExtraOption(option) then
+		return true
+	end
+	if isCraftOptionForItem(option, item) then
+		local recipe = getCraftOptionRecipe(option)
+		if recipe and itemUsedAsRecipeContainerInput(item, recipe) then
+			return true
+		end
+	end
+	return false
+end
+
+local function patchHeavyContainerContextMenu(context, player, item)
+	if not player or not item or not context or not context.options then
+		return
+	end
+	if not item:isEquipped() or item:getCategory() ~= "Container" then
+		return
+	end
+	if not wouldEquippedContainerExceedWeight(player, item) then
+		return
+	end
+
+	local function patchOption(option)
+		if option and shouldBlockContextOption(option, player, item) then
+			applyHeavyContainerBlock(option)
+		end
+		if option and option.subOption and option.subOption.options then
+			for j = 1, #option.subOption.options do
+				patchOption(option.subOption.options[j])
+			end
+		end
+	end
+
+	for i = 1, #context.options do
+		patchOption(context.options[i])
+	end
+end
+
+local vanillaClothingExtraStart = ISClothingExtraAction.start
+function ISClothingExtraAction:start()
+	if wouldEquippedContainerExceedWeight(self.character, self.item) then
+		showHeavyContainerBlockNote(self.character)
+		self:forceStop()
+		return
+	end
+	if vanillaClothingExtraStart then
+		vanillaClothingExtraStart(self)
+	end
+end
+
+function ISClothingExtraAction:isValid()
+	if not self.character or not self.item then
+		return false
+	end
+	if not self.character:getInventory():contains(self.item) then
+		return false
+	end
+	return not wouldEquippedContainerExceedWeight(self.character, self.item)
+end
+
+local function installContextMenuHook()
+	if DupeFix and DupeFix.contextMenuHookInstalled then return end
+	require "ISUI/ISInventoryPaneContextMenu"
+	if not ISInventoryPaneContextMenu or not ISInventoryPaneContextMenu.createMenu then return end
+
+	local vanillaCreateMenu = ISInventoryPaneContextMenu.createMenu
+	function ISInventoryPaneContextMenu.createMenu(player, isInPlayerInventory, items, x, y, origin)
+		local context = vanillaCreateMenu(player, isInPlayerInventory, items, x, y, origin)
+		if context and context.options then
+			local actualItems = ISInventoryPane.getActualItems(items)
+			local playerObj = getSpecificPlayer(player)
+			if actualItems and #actualItems == 1 and playerObj then
+				patchHeavyContainerContextMenu(context, playerObj, actualItems[1])
+			end
+		end
+		return context
+	end
+
+	DupeFix = DupeFix or {}
+	DupeFix.contextMenuHookInstalled = true
+end
+
+Events.OnGameStart.Add(installContextMenuHook)
+installContextMenuHook()
 
 -------------------
 function ISInventoryTransferAction:isValid()
