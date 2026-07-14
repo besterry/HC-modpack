@@ -1023,3 +1023,43 @@ option Admins.miniScoreboardChangeStatsBtn
 	page = Admins, 
   translation = Admins_miniScoreboardChangeStatsBtn,
 }
+
+option HT_GFL.LinkRange
+{
+  type = integer,
+  min = 1,
+  max = 20,
+  default = 1,
+  page = HT_GFL,
+  translation = HT_GFL_LinkRange,
+}
+
+option HT_GFL.MaxLinks
+{
+  type = integer,
+  min = 1,
+  max = 20,
+  default = 8,
+  page = HT_GFL,
+  translation = HT_GFL_MaxLinks,
+}
+
+option HT_GFL.MaxReserveLitres
+{
+  type = integer,
+  min = 100,
+  max = 10000,
+  default = 1200,
+  page = HT_GFL,
+  translation = HT_GFL_MaxReserveLitres,
+}
+
+option HT_GFL.TopupThreshold
+{
+  type = integer,
+  min = 10,
+  max = 99,
+  default = 90,
+  page = HT_GFL,
+  translation = HT_GFL_TopupThreshold,
+}

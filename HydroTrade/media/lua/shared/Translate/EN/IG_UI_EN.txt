@@ -593,4 +593,11 @@ IGUI_EN =
 	IGUI_TemplateApplyStarted = "Applying template: %1 cells...",
 	IGUI_TemplateApplyDone = "Template applied",
 	IGUI_TemplateApplyInProgress = "Applying...",
+
+	IGUI_HT_GFL_Reserve = "Fuel in linked barrels: %1 L (%2%)",
+	IGUI_HT_GFL_Total = "Total fuel: %1%",
+	IGUI_HT_GFL_Links = "Linked barrels: %1",
+	IGUI_HT_GFL_LinkedPhantom = "Barrel connected: %1 L stays in the barrel (feeding generator)",
+	IGUI_HT_GFL_Unlinked = "Barrel disconnected, fuel returned",
+	IGUI_HT_GFL_MaxLinks = "Max linked barrels: %1",
 }

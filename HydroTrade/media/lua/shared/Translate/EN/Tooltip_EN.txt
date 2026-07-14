@@ -31,4 +31,6 @@ Tooltip_EN = {
     Tooltip_VehicleRecycling_Passengers = "Can't dismantle a vehicle with passengers inside.",
     Tooltip_RemoveContainerFitness = "Remove %1 before exercising.",
     Tooltip_StopMovingFitness = "Stop moving before exercising.",
+    Tooltip_HT_GFL_Status = "Tank: %1% <LINE> In linked barrels: %2 L <LINE> Total: %3% <LINE> Barrels: %4 <LINE> Max system: %5 L",
+    Tooltip_HT_GFL_PhantomHint = "Fuel visually stays in the barrel while linked. Cannot siphon it until disconnect. Real accounting is on the generator.",
 }

@@ -105,4 +105,14 @@ Sandbox_EN = {
     Sandbox_FloorTrashCleaner_MaxAgeGameDays_tooltip = "Items with Owner and TimeUsed older than this are removed outside safehouses. 24 game days ≈ 3 real days.",
     Sandbox_FloorTrashCleaner_ContainerAgeMultiplier = "Container age multiplier",
     Sandbox_FloorTrashCleaner_ContainerAgeMultiplier_tooltip = "Bags on the floor are removed after Max age × this value (default 10).",
+
+    Sandbox_HT_GFL = "Generator Fuel Link",
+    Sandbox_HT_GFL_LinkRange = "Barrel link range (tiles)",
+    Sandbox_HT_GFL_LinkRange_tooltip = "Max distance from generator. Default 1 = adjacent tiles only.",
+    Sandbox_HT_GFL_MaxLinks = "Max linked barrels per generator",
+    Sandbox_HT_GFL_MaxLinks_tooltip = "With range 1, up to 8 neighbors around the generator.",
+    Sandbox_HT_GFL_MaxReserveLitres = "Max fuel reserve (litres)",
+    Sandbox_HT_GFL_MaxReserveLitres_tooltip = "How much fuel can be stored in generator modData reserve. Default 1200 ≈ ten 120 L barrels.",
+    Sandbox_HT_GFL_TopupThreshold = "Auto top-up tank below (%)",
+    Sandbox_HT_GFL_TopupThreshold_tooltip = "When generator tank fuel is below this, refill from reserve.",
 }

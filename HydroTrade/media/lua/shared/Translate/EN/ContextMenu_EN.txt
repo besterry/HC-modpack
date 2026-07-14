@@ -89,4 +89,13 @@ ContextMenu_EN = {
     ContextMenu_Reset_Trip_Odometer = "Reset Trip Odometer",
 	ContextMenu_VehicleRecycling_RemoveVehicle = "Dismantle Vehicle",
     ContextMenu_VehicleRecycling_RemoveTrailer = "Dismantle Trailer",
+
+	ContextMenu_HT_GFL_FuelLink = "Generator Fuel Link",
+	ContextMenu_HT_GFL_Status = "System: %1 L, barrels: %2 / %3",
+	ContextMenu_HT_GFL_LinkBarrel = "Connect barrel (%1 L)",
+	ContextMenu_HT_GFL_UnlinkBarrel = "Disconnect barrel (%1 L in system)",
+	ContextMenu_HT_GFL_LinkToGen = "Connect to generator (%1 L)",
+	ContextMenu_HT_GFL_UnlinkFromGen = "Disconnect from generator (%1 L)",
+	ContextMenu_HT_GFL_PhantomStatus = "Fuel in linked barrel: %1 L",
+	ContextMenu_HT_GFL_UnlinkAll = "Disconnect all barrels",
 }

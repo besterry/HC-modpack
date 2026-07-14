@@ -232,4 +232,14 @@ Sandbox_RU = {
     Sandbox_FloorTrashCleaner_MaxAgeGameDays_tooltip = "Предметы с Owner и TimeUsed старше этого срока удаляются вне убежищ в игровых днях. 24 игр. дня -> 3 реал. суток.",
     Sandbox_FloorTrashCleaner_ContainerAgeMultiplier = "Множитель срока для сумок",
     Sandbox_FloorTrashCleaner_ContainerAgeMultiplier_tooltip = "Сумки на полу удаляются после: (срок хранения) x (этот множитель)",
+
+    Sandbox_HT_GFL = "Бочки к генератору",
+    Sandbox_HT_GFL_LinkRange = "Дальность связи бочки (клетки)",
+    Sandbox_HT_GFL_LinkRange_tooltip = "Макс. дистанция от генератора. По умолчанию 1 = только соседние клетки.",
+    Sandbox_HT_GFL_MaxLinks = "Макс. бочек на один генератор",
+    Sandbox_HT_GFL_MaxLinks_tooltip = "При радиусе 1 вокруг генератора до 8 соседей",
+    Sandbox_HT_GFL_MaxReserveLitres = "Макс. резерв топлива (литры)",
+    Sandbox_HT_GFL_MaxReserveLitres_tooltip = "Сколько литров хранится в резерве генератора (modData). По умолчанию 1200 -> десять бочек по 120 л.",
+    Sandbox_HT_GFL_TopupThreshold = "Доливать бак ниже (%)",
+    Sandbox_HT_GFL_TopupThreshold_tooltip = "Если бак генератора ниже этого процента, долить из резерва.",
 }
