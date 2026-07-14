@@ -77,12 +77,19 @@ function ShopSellInventory.forEachSellableInSource(source, fn)
 	end
 end
 
-function ShopSellInventory.passesSellPriceFilter(v)
+function ShopSellInventory.passesSellPriceFilter(v, itemSell)
 	if not v then return false end
 	if v.specialCoin then
 		return v.price > 0
 	end
-	return v.price > 1
+	if v.price > 1 then
+		return true
+	end
+	-- цена 1 только если явно задана в каталоге (банкнота $1 и т.п.), не defaultPrice
+	if v.price >= 1 and itemSell and itemSell.price and not itemSell.blacklisted then
+		return true
+	end
+	return false
 end
 
 function ShopSellInventory.tryBuildEntry(item, sellItems, opts)
@@ -115,7 +122,7 @@ function ShopSellInventory.tryBuildEntry(item, sellItems, opts)
 	v.invItem = item
 
 	if Shop.SellisWhitelist and not itemSell then return nil end
-	if not ShopSellInventory.passesSellPriceFilter(v) then return nil end
+	if not ShopSellInventory.passesSellPriceFilter(v, itemSell) then return nil end
 	return v
 end
 
