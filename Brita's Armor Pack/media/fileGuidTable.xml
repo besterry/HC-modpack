@@ -6,42 +6,6 @@
 		<guid>1a95a0a4-ba88-4e88-8189-dfd2c9cf962d</guid>
 	</files>
 	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST.xml</path>
-		<guid>96993ec6-25b0-499c-8bec-dc530dea9619</guid>
-	</files>	
-	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST_Headset.xml</path>
-		<guid>50c8a591-7cac-4a51-b1cb-c2d2d47fddab</guid>
-	</files>		
-	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST_Headset_NV_OFF.xml</path>
-		<guid>3854c952-de4a-4a8c-8ef2-e0543824a186</guid>
-	</files>	
-	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST_Headset_NV_ON.xml</path>
-		<guid>c302dc40-1e37-461d-83b1-e2c69fd861ea</guid>
-	</files>	
-	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST_NV_ON.xml</path>
-		<guid>54ff8827-8a68-4a4e-868a-3b1ded0e63c0</guid>
-	</files>	
-	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST_NV_OFF.xml</path>
-		<guid>d1993472-7154-4e00-b431-57bd8dd82e51</guid>
-	</files>	
-	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST_Shield.xml</path>
-		<guid>cd9012c3-a325-44a7-9204-bfd2795ad43a</guid>
-	</files>		
-	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST_Shield_NV_OFF.xml</path>
-		<guid>c5f5e358-23c5-4122-b428-d9d89484fa08</guid>
-	</files>	
-	<files>
-		<path>media/clothing/clothingItems/Hat_Opscore_FAST_Shield_NV_ON.xml</path>
-		<guid>c74a8250-b027-4ee7-a769-89c5235a8ba4</guid>
-	</files>	
-	<files>
 		<path>media/clothing/clothingItems/Ela_Pants.xml</path>
 		<guid>73901eed-94d0-4a61-b100-77edb7e6d535</guid>
 	</files>		

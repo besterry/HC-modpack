@@ -785,15 +785,15 @@
 		<m_AllowTShirtDecal>false</m_AllowTShirtDecal>
 <!-- OPSCORE FAST Helmet --> <m_items>
 			<probability>0.3</probability>
-			<itemGUID>96993ec6-25b0-499c-8bec-dc530dea9619</itemGUID>
+			<itemGUID>08ea6a28-34eb-4962-91e8-cc06b3738e94</itemGUID>
 		</m_items>
 <!-- OPSCORE Face Shield --> <m_items>
 			<probability>0.3</probability>
-			<itemGUID>cd9012c3-a325-44a7-9204-bfd2795ad43a</itemGUID>
+			<itemGUID>356bb7f9-e080-40a0-ab29-96c416343889</itemGUID>
 		</m_items>
 <!-- Helmet Headset --> <m_items>
 			<probability>0.3</probability>
-			<itemGUID>50c8a591-7cac-4a51-b1cb-c2d2d47fddab</itemGUID>
+			<itemGUID>e993bc8b-7f63-4dae-8b67-96e3ed94b85e</itemGUID>
 		</m_items>		
 <!-- Napier Glasses --> <m_items>
 			<probability>0.3</probability>
@@ -836,7 +836,7 @@
 		<m_AllowTShirtDecal>false</m_AllowTShirtDecal>
 <!-- OPSCORE FAST Helmet --> <m_items>
 			<probability>0.3</probability>
-			<itemGUID>96993ec6-25b0-499c-8bec-dc530dea9619</itemGUID>
+			<itemGUID>08ea6a28-34eb-4962-91e8-cc06b3738e94</itemGUID>
 		</m_items>
 <!-- FM53 Gas Mask --> <m_items>
 			<probability>0.3</probability>
