@@ -1,0 +1,11 @@
+module T15KKillboard
+{
+	sound T15KKillboardMonthEnd
+	{
+		category = UI,
+		clip
+		{
+			file = media/sound/T15K_MonthEnd.ogg,
+		}
+	}
+}

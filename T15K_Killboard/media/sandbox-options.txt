@@ -19,3 +19,68 @@ option T15KKillboardTable.PlayerTickRate = {
 	type = integer, default = 1, min = 1, max = 3,
     page = RateTable, translation = T15KKillboard_Player_Tick_Rate,
 }
+
+option T15KKillboardTable.CountAdmins = {
+	type = boolean, default = false,
+    page = RateTable, translation = T15KKillboard_CountAdmins,
+}
+
+option T15KKillboardTable.Reward1Item = {
+	type = string, default = PM.Balance,
+    page = RateTable, translation = T15KKillboard_Reward1Item,
+}
+
+option T15KKillboardTable.Reward1Count = {
+	type = integer, default = 500, min = 1, max = 100000,
+    page = RateTable, translation = T15KKillboard_Reward1Count,
+}
+
+option T15KKillboardTable.Reward2Item = {
+	type = string, default = PinkSlip.70barracuda,
+    page = RateTable, translation = T15KKillboard_Reward2Item,
+}
+
+option T15KKillboardTable.Reward2Count = {
+	type = integer, default = 1, min = 1, max = 100000,
+    page = RateTable, translation = T15KKillboard_Reward2Count,
+}
+
+option T15KKillboardTable.Reward3Item = {
+	type = string, default = Base.HazmatSuit,
+    page = RateTable, translation = T15KKillboard_Reward3Item,
+}
+
+option T15KKillboardTable.Reward3Count = {
+	type = integer, default = 1, min = 1, max = 100000,
+    page = RateTable, translation = T15KKillboard_Reward3Count,
+}
+
+option T15KKillboardTable.NextReward1Item = {
+	type = string, default = ,
+    page = RateTable, translation = T15KKillboard_NextReward1Item,
+}
+
+option T15KKillboardTable.NextReward1Count = {
+	type = integer, default = 1, min = 1, max = 100000,
+    page = RateTable, translation = T15KKillboard_NextReward1Count,
+}
+
+option T15KKillboardTable.NextReward2Item = {
+	type = string, default = ,
+    page = RateTable, translation = T15KKillboard_NextReward2Item,
+}
+
+option T15KKillboardTable.NextReward2Count = {
+	type = integer, default = 1, min = 1, max = 100000,
+    page = RateTable, translation = T15KKillboard_NextReward2Count,
+}
+
+option T15KKillboardTable.NextReward3Item = {
+	type = string, default = ,
+    page = RateTable, translation = T15KKillboard_NextReward3Item,
+}
+
+option T15KKillboardTable.NextReward3Count = {
+	type = integer, default = 1, min = 1, max = 100000,
+    page = RateTable, translation = T15KKillboard_NextReward3Count,
+}
