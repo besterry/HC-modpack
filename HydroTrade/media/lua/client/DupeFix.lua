@@ -134,30 +134,47 @@ end
 
 -------------------
 
+local function isInventoryContainerItem(item)
+	return item and (instanceof(item, "InventoryContainer") or item:getCategory() == "Container")
+end
+
 local function getContainerContentsWeight(item)
-	if not item then return 0 end
-	if instanceof(item, "InventoryContainer") then
+	if not isInventoryContainerItem(item) then
+		return 0
+	end
+	if item.getItemContainer then
 		local container = item:getItemContainer()
 		if container then
-			return container:getContentsWeight()
+			if container.getContentsWeight then
+				return container:getContentsWeight()
+			end
+			if container.getCapacityWeight then
+				return container:getCapacityWeight()
+			end
 		end
 	end
-	local inv = item:getInventory()
-	if inv then
-		return inv:getCapacityWeight()
+	if item.getInventory then
+		local inv = item:getInventory()
+		if inv and inv.getCapacityWeight then
+			return inv:getCapacityWeight()
+		end
 	end
 	return 0
 end
 
 -- При смене слота или крафте с экипированным контейнером его содержимое
 -- начинает учитываться в переноске. Превышение лимита вызывает дюп.
+-- Только для контейнеров (лошадь и т.п.), не для часов / одежды.
 local function wouldEquippedContainerExceedWeight(character, item)
 	if not character or not item then
-		return true
+		return false
+	end
+	if not isInventoryContainerItem(item) then
+		return false
 	end
 	local inv = character:getInventory()
 	if not inv or not inv:contains(item) then
-		return true
+		return false
 	end
 
 	local maxWeight = character:getMaxWeight()
