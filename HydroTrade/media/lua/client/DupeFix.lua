@@ -1,5 +1,14 @@
+-- self.valid раньше писался в класс ISUnequipAction, а не в экземпляр.
+-- Любой unequip тяжёлого предмета с непустой очередью портил valid у всех
+-- текущих UnequipAction (оружие / ПНВ в бою) и предмет падал на землю.
 function ISUnequipAction:isValid()
-    return self.valid;
+	if self.valid == false then
+		return false
+	end
+	if not self.character or not self.item then
+		return false
+	end
+	return self.character:getInventory():contains(self.item)
 end
 
 local function getWornContainer(player)
@@ -100,36 +109,35 @@ ISWorldObjectContextMenu.onTrade = function(worldobjects, player, otherPlayer) -
 end
 
 function ISUnequipAction:new(character, item, time)
-	self.valid = true
-   if character:isHeavyItem(item) and #ISTimedActionQueue.getTimedActionQueue(character).queue > 0 then
-        self.valid = false
-    end
+	local o = ISBaseTimedAction.new(self, character);
+	o.item = item;
+	o.stopOnAim = false;
+	o.stopOnWalk = false;
+	o.stopOnRun = true;
+	o.maxTime = time;
+	o.ignoreHandsWounds = true;
+	o.valid = true;
+	if character:isHeavyItem(item) and #ISTimedActionQueue.getTimedActionQueue(character).queue > 0 then
+		o.valid = false;
+	end
 
-    local o = ISBaseTimedAction.new(self, character);
-    o.item = item;
-    o.stopOnAim = false;
-    o.stopOnWalk = false;
-    o.stopOnRun = true;
-    o.maxTime = time;
-    o.ignoreHandsWounds = true;
-
-    o.hotbar = getPlayerHotbar(character:getPlayerNum());
-    if o.hotbar then
-        o.fromHotbar = o.hotbar:isItemAttached(item);
-    else
-        o.fromHotbar = false;
-    end
-    o.useProgressBar = not o.fromHotbar;
-    if o.character:isTimedActionInstant() then
-        o.maxTime = 1;
-    end
-    if o.maxTime > 1 and o.fromHotbar then
-        o.animSpeed = o.maxTime / o:adjustMaxTime(o.maxTime)
-        o.maxTime = -1
-    else
-        o.animSpeed = 1.0
-    end
-    return o;
+	o.hotbar = getPlayerHotbar(character:getPlayerNum());
+	if o.hotbar then
+		o.fromHotbar = o.hotbar:isItemAttached(item);
+	else
+		o.fromHotbar = false;
+	end
+	o.useProgressBar = not o.fromHotbar;
+	if o.character:isTimedActionInstant() then
+		o.maxTime = 1;
+	end
+	if o.maxTime > 1 and o.fromHotbar then
+		o.animSpeed = o.maxTime / o:adjustMaxTime(o.maxTime)
+		o.maxTime = -1
+	else
+		o.animSpeed = 1.0
+	end
+	return o;
 end
 
 -------------------
@@ -162,9 +170,13 @@ local function getContainerContentsWeight(item)
 	return 0
 end
 
--- При смене слота или крафте с экипированным контейнером его содержимое
--- начинает учитываться в переноске. Превышение лимита вызывает дюп.
--- Только для контейнеров (лошадь и т.п.), не для часов / одежды.
+-- Hard-cap игры на поднятие ~50 кг (выше предмет сбрасывается / дюп).
+-- Берём 45 с запасом, а не getMaxWeight() (8/14): иначе при лёгком
+-- перегрузе блокируется даже пустая лошадь («за спину» молчит).
+local HEAVY_CONTAINER_PICKUP_LIMIT = 45
+
+-- При смене слота / крафте с экипированным контейнером содержимое
+-- временно учитывается в переноске. Блок только у контейнеров.
 local function wouldEquippedContainerExceedWeight(character, item)
 	if not character or not item then
 		return false
@@ -177,16 +189,19 @@ local function wouldEquippedContainerExceedWeight(character, item)
 		return false
 	end
 
-	local maxWeight = character:getMaxWeight()
 	local invWeight = inv:getCapacityWeight()
 	local contentsWeight = getContainerContentsWeight(item)
 
-	if item:isEquipped() and contentsWeight > 0 then
-		return invWeight + contentsWeight >= maxWeight
+	-- У лошади WeightReduction=100: пока надета, содержимое почти не
+	-- входит в invWeight. При снятии / смене слота оно добавится целиком.
+	local projected
+	if item:isEquipped() then
+		projected = invWeight + contentsWeight
+	else
+		projected = invWeight + item:getActualWeight() + contentsWeight
 	end
 
-	local burden = item:getActualWeight() + contentsWeight
-	return invWeight + burden >= maxWeight
+	return projected >= HEAVY_CONTAINER_PICKUP_LIMIT
 end
 
 local function itemUsedAsRecipeContainerInput(item, recipe)
@@ -300,7 +315,8 @@ end
 
 local vanillaClothingExtraStart = ISClothingExtraAction.start
 function ISClothingExtraAction:start()
-	if wouldEquippedContainerExceedWeight(self.character, self.item) then
+	if isInventoryContainerItem(self.item)
+		and wouldEquippedContainerExceedWeight(self.character, self.item) then
 		showHeavyContainerBlockNote(self.character)
 		self:forceStop()
 		return
@@ -317,7 +333,11 @@ function ISClothingExtraAction:isValid()
 	if not self.character:getInventory():contains(self.item) then
 		return false
 	end
-	return not wouldEquippedContainerExceedWeight(self.character, self.item)
+	if isInventoryContainerItem(self.item)
+		and wouldEquippedContainerExceedWeight(self.character, self.item) then
+		return false
+	end
+	return true
 end
 
 local function installContextMenuHook()
