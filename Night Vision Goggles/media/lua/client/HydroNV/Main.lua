@@ -3,7 +3,6 @@ local ChargeUI     = require "HydroNV/ChargeUI"
 local Daylight     = require "HydroNV/Daylight"
 local Hooks        = require "HydroNV/Hooks"
 local NVAPIPatch   = require "HydroNV/NVAPIPatch"
-local ShaderBridge = require "HydroNV/ShaderBridge"
 local VisionBoost  = require "HydroNV/VisionBoost"
 local ModKeymap   = require "ModKeymap_Main"
 local Sound       = require "NVAPI/item/ItemSound"
@@ -58,8 +57,6 @@ Events.OnPlayerUpdate.Add(function(player)
   if Control:isOn() then
     VisionBoost:tick()
     Control:syncActiveItem()
-  else
-    ShaderBridge:clear(player)
   end
 end)
 

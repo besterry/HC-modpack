@@ -115,12 +115,19 @@ end
 function Control:syncActiveItem()
   local player = getPlayer()
   if player == nil then
-    self:turnOff(false)
+    if self:isOn() or self._activeItem ~= nil then
+      self:turnOff(false)
+    end
     return
   end
 
+  -- ПНВ выключен: SearchMode не трогаем (иначе сбивается собирательство)
   if not self:isOn() then
-    ShaderBridge:clear(player)
+    if self._activeItem ~= nil then
+      self._activeItem = nil
+      VisionBoost:restore()
+      self:_stopDrain()
+    end
     return
   end
 
@@ -170,10 +177,6 @@ function Control:turnOn(item)
     return true
   end
 
-  if self:isOn() and self._activeItem ~= item then
-    ShaderBridge:clear(player)
-  end
-
   self._activeItem = item
   player:setWearingNightVisionGoggles(true)
   VisionBoost:apply(item)
@@ -189,17 +192,26 @@ function Control:turnOff(playSound)
   end
 
   local player = getPlayer()
+  local wasOn = self:isOn()
+
   if player == nil then
+    self._activeItem = nil
+    self:_stopDrain()
     return
   end
 
-  if self:isOn() and playSound then
+  if wasOn and playSound then
     Sound:playTurnOff()
   end
 
   player:setWearingNightVisionGoggles(false)
-  ShaderBridge:clear(player)
-  VisionBoost:restore()
+
+  -- Сбрасываем только свой эффект ПНВ, и только если он был включён
+  if wasOn then
+    ShaderBridge:clear(player)
+    VisionBoost:restore()
+  end
+
   self._activeItem = nil
   self:_stopDrain()
 end
