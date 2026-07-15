@@ -20,13 +20,6 @@ function ShaderBridge:_setFloat(channel, value)
   channel:setTargetInterior(value)
 end
 
-function ShaderBridge:_resetChannels(idx)
-  local searchMode = getSearchMode()
-  self:_setFloat(searchMode:getDarkness(idx), 0)
-  self:_setFloat(searchMode:getDesat(idx), 0)
-  self:_setFloat(searchMode:getBlur(idx), 0)
-end
-
 function ShaderBridge:_isForagingActive(player)
   if player == nil then
     return false
@@ -47,11 +40,11 @@ function ShaderBridge:apply(player, item)
     return
   end
 
-  local itemId = item:getID()
   local profile = Profiles.get(item)
   local searchMode = getSearchMode()
   local idx = self:_playerIndex(player)
 
+  -- ПНВ занимает SearchMode целиком; туман сбора при этом не рисуется
   searchMode:setOverride(idx, true)
 
   local phosphor = profile.phosphor == "white" and self.PHOSPHOR_WHITE or 0.0
@@ -59,7 +52,7 @@ function ShaderBridge:apply(player, item)
 
   self:_setFloat(searchMode:getDarkness(idx), phosphor)
   self:_setFloat(searchMode:getDesat(idx), grain)
-  self._activeItemId = itemId
+  self._activeItemId = item:getID()
   self._overrideOn = true
 end
 
@@ -75,15 +68,16 @@ function ShaderBridge:clear(player)
   local idx = self:_playerIndex(player)
   local searchMode = getSearchMode()
 
-  -- Снимаем только каналы ПНВ (phosphor/grain)
   self:_setFloat(searchMode:getDarkness(idx), 0)
   self:_setFloat(searchMode:getDesat(idx), 0)
 
-  -- При активном собирательстве blur/override не трогаем
+  -- blur не трогаем при активном сборе: менеджер сам восстановит круг
   if not self:_isForagingActive(player) then
     self:_setFloat(searchMode:getBlur(idx), 0)
-    searchMode:setOverride(idx, false)
   end
+
+  -- Важно: override снимаем всегда. Иначе SearchMode залипает и сбор мёртв до рестарта
+  searchMode:setOverride(idx, false)
 
   self._activeItemId = nil
   self._overrideOn = false
