@@ -118,6 +118,37 @@ function Currency.UnlinkWalletObjectContextMenu(playerNum, context, items)
     context:addOption(UIText.Unlink, worldobjects, Currency.unlinkWallet,item);
 end
 
+function Currency.toggleWalletBalanceHud()
+    if not WalletBalanceHUD then return end
+    WalletBalanceHUD.togglePref()
+end
+
+function Currency.WalletBalanceHudContextMenu(playerNum, context, items)
+    items = ISInventoryPane.getActualItems(items)
+    if not items or #items > 1 then return end
+    local item = items[1]
+    if not item then return end
+    local itemType = item:getFullType()
+    if not Currency.Wallets[itemType] then return end
+    if not item:isInPlayerInventory() then return end
+    local player = getSpecificPlayer(playerNum)
+    if not player then return end
+    local username = player:getUsername()
+    local md = item:getModData()
+    if not md or not md.linkedTo then return end
+    if md.belongsTo ~= username then return end
+    local account = Balance.getUserAccount(username)
+    if not account or account.linkedTo ~= md.linkedTo then return end
+
+    local label
+    if WalletBalanceHUD and WalletBalanceHUD.isPrefVisible() then
+        label = getText("IGUI_Wallet_HideBalance")
+    else
+        label = getText("IGUI_Wallet_ShowBalance")
+    end
+    context:addOption(label, nil, Currency.toggleWalletBalanceHud)
+end
+
 function Currency.transfer(worldobjects,wallet,player)
     TransferUI:show(player)
 end
@@ -125,4 +156,5 @@ end
 Events.OnPreFillInventoryObjectContextMenu.Add(Currency.LootCoinsObjectContextMenu);
 Events.OnPreFillInventoryObjectContextMenu.Add(Currency.LinkWalletObjectContextMenu);
 Events.OnPreFillInventoryObjectContextMenu.Add(Currency.UnlinkWalletObjectContextMenu);
+Events.OnPreFillInventoryObjectContextMenu.Add(Currency.WalletBalanceHudContextMenu);
 Events.OnPreFillInventoryObjectContextMenu.Add(Currency.CoinsToAccountObjectContextMenu);

@@ -241,6 +241,12 @@ end
 
 Events.OnPreFillInventoryObjectContextMenu.Add(onPreFillInventoryObjectContextMenu);
 
+function ShowPlayerAccountingUI()
+    local ui = PlayerAccountingUI:new()
+    ui:initialise()
+    return ui
+end
+
 -- DShowPlayerAccountingUI = function () -- DEBUG
 --     local ui = PlayerAccountingUI:new()
 --     ui:initialise()

@@ -94,6 +94,12 @@ IGUI_RU = {
     IGUI_Balance_TransferReceived = "Перевод получен, Отправитель: %1, Сумма: %2",
     IGUI_Balance_TransferReceivedSpecial = "Перевод получен, Отправитель: %1, Сумма: %2, Event Coins: %3",
     IGUI_Balance_AccountNeeded = "Учетная запись не найдена, пожалуйста, создайте ее",
+    IGUI_Wallet_ShowBalance = "Показать баланс",
+    IGUI_Wallet_HideBalance = "Скрыть баланс",
+    IGUI_Wallet_Statement = "Выписка по счёту",
+    IGUI_Wallet_StatementAccount = "Счёт: %1",
+    IGUI_Wallet_StatementCoin = "Баланс:",
+    IGUI_Wallet_StatementSpecial = "Event:",
 
     IGUI_Tab_Favorite = "Избранное",
     IGUI_Tab_Sell = "Скупка",
