@@ -8,6 +8,11 @@ IGUI_EN = {
    IGUI_CUI_Slot_vertical_spacing = "Clothing slot vertical spacing",
    IGUI_CUI_Slot_vertical_spacing_tooltip = "Vertical gap between the slot icons.",
    IGUI_CUI_Slot_button_size = "Clothing slot icon size",
-   IGUI_CUI_Slot_button_size_tooltip = "Size of the button"
+   IGUI_CUI_Slot_button_size_tooltip = "Size of the button",
+   IGUI_CUI_Display_condition_bar = "Show clothing condition bar",
+   IGUI_CUI_Display_condition_bar_tooltip = "Draw a condition progress bar at the bottom of each clothing slot",
+   IGUI_CUI_Display_holes_badge = "Show holes badge",
+   IGUI_CUI_Display_holes_badge_tooltip = "Show hole count badge on damaged clothing slots",
+   IGUI_CUI_Damaged_condition_threshold = "Damaged condition threshold %",
+   IGUI_CUI_Damaged_condition_threshold_tooltip = "Clothing below this condition % counts as damaged for the toggle badge and category warning"
 }
-

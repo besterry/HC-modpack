@@ -1,6 +1,8 @@
 UI_EN = {
     UI_CUI_window_title = "Equipped items",
     UI_CUI_no_items_avaliable = "No avaliable item in inventory",
+    UI_CUI_toggle_tooltip = "Equipped clothing. Red badge = damaged items.",
+    UI_CUI_open_from_health = "Clothing / equipment",
  
     -- Category Buttons
     UI_CUI_Category_HEAD = "HEAD",

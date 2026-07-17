@@ -90,6 +90,29 @@ local SETTINGS = {
             tooltip = "IGUI_CUI_Slot_button_size_tooltip",
             default = 3,
             OnApplyMainMenu = OnApply
+        },
+        display_condition_bar = {
+            name = "IGUI_CUI_Display_condition_bar",
+            tooltip = "IGUI_CUI_Display_condition_bar_tooltip",
+            default = true,
+            OnApplyMainMenu = OnApply
+        },
+        display_holes_badge = {
+            name = "IGUI_CUI_Display_holes_badge",
+            tooltip = "IGUI_CUI_Display_holes_badge_tooltip",
+            default = true,
+            OnApplyMainMenu = OnApply
+        },
+        damaged_condition_threshold = {
+            "30",
+            "40",
+            "50",
+            "60",
+            "70",
+            name = "IGUI_CUI_Damaged_condition_threshold",
+            tooltip = "IGUI_CUI_Damaged_condition_threshold_tooltip",
+            default = 3,
+            OnApplyMainMenu = OnApply
         }
     },
     mod_id = 'myclothinguimod',
@@ -107,6 +130,10 @@ local function setupConfig()
     config.slot_button_vertical_spacing = tonumber(SETTINGS.options_data.slot_button_vertical_spacing[SETTINGS.options
                                                        .slot_button_vertical_spacing]);
     config.slot_button_size = tonumber(SETTINGS.options_data.slot_button_size[SETTINGS.options.slot_button_size]);
+    config.display_condition_bar = SETTINGS.options.display_condition_bar;
+    config.display_holes_badge = SETTINGS.options.display_holes_badge;
+    config.damaged_condition_threshold = tonumber(
+        SETTINGS.options_data.damaged_condition_threshold[SETTINGS.options.damaged_condition_threshold]) / 100;
 end
 
 -- In case the user will not have ModOptions installed - default values will work without the plugin!
@@ -122,6 +149,10 @@ local function setupDefaultConfig()
         SETTINGS.options_data.slot_button_vertical_spacing[SETTINGS.options_data.slot_button_vertical_spacing.default]);
     config.slot_button_size = tonumber(SETTINGS.options_data.slot_button_size[SETTINGS.options_data.slot_button_size
                                            .default]);
+    config.display_condition_bar = SETTINGS.options_data.display_condition_bar.default;
+    config.display_holes_badge = SETTINGS.options_data.display_holes_badge.default;
+    config.damaged_condition_threshold = tonumber(
+        SETTINGS.options_data.damaged_condition_threshold[SETTINGS.options_data.damaged_condition_threshold.default]) / 100;
 end
 
 local function triggerConfigLoad()
@@ -182,6 +213,20 @@ local function triggerConfigLoad()
             if ourOptions["slot_button_size"] then
                 config.slot_button_size = tonumber(SETTINGS.options_data.slot_button_size[tonumber(
                     ourOptions["slot_button_size"])]);
+            end
+
+            if ourOptions["display_condition_bar"] then
+                config.display_condition_bar = utils.toBoolean(ourOptions["display_condition_bar"])
+            end
+
+            if ourOptions["display_holes_badge"] then
+                config.display_holes_badge = utils.toBoolean(ourOptions["display_holes_badge"])
+            end
+
+            if ourOptions["damaged_condition_threshold"] then
+                config.damaged_condition_threshold = tonumber(
+                    SETTINGS.options_data.damaged_condition_threshold[tonumber(
+                        ourOptions["damaged_condition_threshold"])]) / 100;
             end
 
             print("CUI - ModOptions manually loaded from the file");

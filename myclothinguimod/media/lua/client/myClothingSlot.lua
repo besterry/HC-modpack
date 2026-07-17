@@ -46,9 +46,71 @@ function myClothingSlot:new (x, y, width, height, bodyLocation, slotItem )
     return o
 end
 
+function myClothingSlot:applyConditionVisuals()
+    if not self.slotItem then
+        self.borderColor.r = 0.5;
+        self.borderColor.g = 0.5;
+        self.borderColor.b = 0.5;
+        self.borderColor.a = 0.5;
+        return
+    end
+
+    local color = utils.getConditionBorderColor(self.slotItem);
+    self.borderColor.r = color.r;
+    self.borderColor.g = color.g;
+    self.borderColor.b = color.b;
+    self.borderColor.a = color.a;
+end
+
+function myClothingSlot:drawConditionBar()
+    if not config.display_condition_bar or not self.slotItem then
+        return
+    end
+
+    local ratio = utils.getItemConditionRatio(self.slotItem);
+    local barH = 4;
+    local pad = 2;
+    local barY = self.height - barH - pad;
+    local barW = self.width - pad * 2;
+    local fillW = math.floor(barW * ratio);
+
+    self:drawRect(pad, barY, barW, barH, 0.55, 0.1, 0.1, 0.1);
+    if fillW > 0 then
+        local barColor = utils.getConditionBarColor(self.slotItem);
+        self:drawRect(pad, barY, fillW, barH, barColor.a, barColor.r, barColor.g, barColor.b);
+    end
+    self:drawRectBorder(pad, barY, barW, barH, 0.8, 0.2, 0.2, 0.2);
+end
+
+function myClothingSlot:drawHolesBadge()
+    if not config.display_holes_badge or not self.slotItem then
+        return
+    end
+
+    local holes = utils.getItemHoles(self.slotItem);
+    if holes <= 0 then
+        return
+    end
+
+    local label = tostring(holes);
+    local textW = getTextManager():MeasureStringX(UIFont.Small, label);
+    local textH = getTextManager():getFontHeight(UIFont.Small);
+    local padX = 3;
+    local padY = 1;
+    local badgeW = textW + padX * 2;
+    local badgeH = textH + padY * 2;
+    local badgeX = self.width - badgeW - 1;
+    local badgeY = 1;
+
+    self:drawRect(badgeX, badgeY, badgeW, badgeH, 0.85, 0.75, 0.15, 0.1);
+    self:drawRectBorder(badgeX, badgeY, badgeW, badgeH, 0.95, 0.95, 0.4, 0.2);
+    self:drawText(label, badgeX + padX, badgeY + padY, 1, 1, 1, 1, UIFont.Small);
+end
+
 -- re-render and handle mouse event on the button
 function myClothingSlot:render()
 
+    self:applyConditionVisuals();
     ISButton.render(self);
     self:setClothingPicture(self.slotItem);
 
@@ -59,6 +121,9 @@ function myClothingSlot:render()
     end
 
     if self.slotItem then
+        self:drawConditionBar();
+        self:drawHolesBadge();
+
         -- if item equipped, handle item tooltip
         if self.mouseOver and (self.contextMenu == nil or not self.contextMenu.visibleCheck ) then -- show tooltip when mouse over or context menu is not visible
             self.activeItemTooltip:bringToTop();
@@ -105,7 +170,14 @@ function myClothingSlot:setClothingPicture(item)
             tint = visual:getTint(item:getClothingItem());
         end
         if tint ~= nil then
-            self:setTextureRGBA(tint:getRedFloat(), tint:getGreenFloat(), tint:getBlueFloat(), 1.0);
+            local dirtFactor = 1.0;
+            if item.getDirtyness and item.getBloodlevel then
+                local dirt = (item:getDirtyness() or 0) / 100;
+                local blood = (item:getBloodlevel() or 0) / 100;
+                dirtFactor = 1.0 - math.min(0.45, (dirt * 0.25 + blood * 0.35));
+            end
+            self:setTextureRGBA(tint:getRedFloat() * dirtFactor, tint:getGreenFloat() * dirtFactor,
+                tint:getBlueFloat() * dirtFactor, 1.0);
         end
         self:forceImageSize(self.width * 0.8, self.height * 0.8);
     end

@@ -1,6 +1,8 @@
 UI_CN = {
     UI_CUI_window_title = "装备物品",
     UI_CUI_no_items_avaliable = "库存中无可用的物品",
+    UI_CUI_toggle_tooltip = "已装备衣物。红色标记 = 损坏物品。",
+    UI_CUI_open_from_health = "衣物 / 装备",
 
     -- Category Buttons
     UI_CUI_Category_HEAD = "头",
