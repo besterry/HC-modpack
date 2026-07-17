@@ -220,11 +220,6 @@ function Commands.repairEngine(player, args)
 		if condPerPart > 5 then condPerPart = 5 end
 		local done = 0
 		for i=1,args.numberOfParts do
-			local item = player:getInventory():getFirstTypeRecurse("EngineParts")
-			if not item then break end
-			local container = item:getContainer()
-			if not container then break end
-			container:Remove(item)
 			part:setCondition(part:getCondition() + condPerPart)
 			done = done + 1
 			if part:getCondition() >= 100 then
@@ -236,6 +231,7 @@ function Commands.repairEngine(player, args)
 			if args.giveXP then
 				player:sendObjectChange('addXp', { perk = Perks.Mechanics:index(), xp = done, noMultiplier = false })
 			end
+			player:sendObjectChange('removeItemType', { type = 'Base.EngineParts', count = done })
 			vehicle:transmitPartCondition(part)
 		end
 		player:sendObjectChange('mechanicActionDone', { success = (done > 0), vehicleId = vehicle:getId(), partId = part:getId(), itemId = -1, installing = true })
