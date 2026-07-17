@@ -48,7 +48,7 @@ local onReceiveGlobalModData = function(tableName, data)
 	if tableName == MOD_NAME then
         local username = getPlayer():getUsername()
         local log = data[username]
-        if #log > 0 then
+        if log and#log > 0 then
             triggerEvent('onPlayerAccountingChange')
         end
     end
