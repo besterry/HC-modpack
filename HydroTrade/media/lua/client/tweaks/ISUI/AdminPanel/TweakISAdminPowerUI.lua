@@ -15,7 +15,11 @@ TweakISAdminPowerUI = {
 }
 
 TweakISAdminPowerUI.addAdminPowerOptions = function(self)
-    local setFunction = {}
+    -- При SaveAdminPower первым в tickBox добавляем "Show admin tag".
+    -- Original потом делает self.setFunction = {} и добавляет опции через
+    -- tickBox:addOption, поэтому их индексы уже 2,3,4...
+    -- Нужно только вернуть handler в [1], без повторного сдвига.
+    local showAdminTagFunc = nil
 
     if SandboxVars.ServerTweaker.SaveAdminPower then
         self.setFunction = {}
@@ -24,17 +28,13 @@ TweakISAdminPowerUI.addAdminPowerOptions = function(self)
             ClientTweaker.AdminOptions.SetBool("ShowAdminTag", selected);
         end);
 
-        setFunction = self.setFunction
+        showAdminTagFunc = self.setFunction[1]
     end
 
     TweakISAdminPowerUI.Original.addAdminPowerOptions(self)
 
-    if SandboxVars.ServerTweaker.SaveAdminPower then
-        for i, v in pairs(self.setFunction) do
-            setFunction[i] = v
-        end
-
-        self.setFunction = setFunction
+    if showAdminTagFunc then
+        self.setFunction[1] = showAdminTagFunc
     end
 end
 
@@ -54,35 +54,35 @@ TweakISAdminPowerUI.addOption = function(self, text, selected, setFunction)
         setFunction = function(self1, selected1)
             originalFunc(self1, selected1)
 
-            if text == "Invisible" then
+            if text == "Invisible" or text == getText("IGUI_AdminPanel_Invisible") then
                 ClientTweaker.AdminOptions.SetBool("Invisible", selected1);
             end
 
-            if text == "God mode" then
+            if text == "God mode" or text == getText("IGUI_AdminPanel_God_mode") then
                 ClientTweaker.AdminOptions.SetBool("GodMode", selected1);
             end
 
-            if text == "Ghost mode" then
+            if text == "Ghost mode" or text == getText("IGUI_AdminPanel_Ghost_mode") then
                 ClientTweaker.AdminOptions.SetBool("GhostMode", selected1);
             end
 
-            if text == "No Clip" then
+            if text == "No Clip" or text == getText("IGUI_AdminPanel_No_Clip") then
                 ClientTweaker.AdminOptions.SetBool("NoClip", selected1);
             end
 
-            if text == "Timed Action Instant" then
+            if text == "Timed Action Instant" or text == getText("IGUI_AdminPanel_Timed_Action_Instant") then
                 ClientTweaker.AdminOptions.SetBool("TimedActionInstantCheat", selected1);
             end
 
-            if text == "Unlimited Carry" then
+            if text == "Unlimited Carry" or text == getText("IGUI_AdminPanel_Unlimited_Carry") then
                 ClientTweaker.AdminOptions.SetBool("UnlimitedCarry", selected1);
             end
 
-            if text == "Unlimited Endurance" then
+            if text == "Unlimited Endurance" or text == getText("IGUI_AdminPanel_Unlimited_Endurance") then
                 ClientTweaker.AdminOptions.SetBool("UnlimitedEndurance", selected1);
             end
 
-            if text == "Fast Move" then
+            if text == "Fast Move" or text == getText("IGUI_AdminPanel_Fast_Move") then
                 ClientTweaker.AdminOptions.SetBool("FastMove", selected1);
             end
 
@@ -126,7 +126,7 @@ TweakISAdminPowerUI.addOption = function(self, text, selected, setFunction)
                 ClientTweaker.AdminOptions.SetBool("ShowMPInfos", selected1);
             end
 
-            if text == "Brush tool" then
+            if text == "Brush tool" or text == getText("IGUI_AdminPanel_Brush_tool") then
                 ClientTweaker.AdminOptions.SetBool("BrushTool", selected1);
             end
         end

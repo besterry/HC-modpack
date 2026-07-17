@@ -227,7 +227,10 @@ function ISAdminPowerUI:onClick(button)
     if button.internal == "SAVE" then
         if not self.player:isDead() then
             for i=1,#self.tickBox.options do
-                self.setFunction[i](self, self.tickBox:isSelected(i))
+                local fn = self.setFunction[i]
+                if fn then
+                    fn(self, self.tickBox:isSelected(i))
+                end
             end
             self.player:setShowAdminTag(false);
             for i,v in pairs(self.tickBox.selected) do
