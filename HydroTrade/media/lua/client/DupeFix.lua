@@ -471,6 +471,17 @@ local CampfireDup_fix = function ()
         end
         return oldfunc(self)
     end
+
+    -- Build cheat / instant action: animEvent fires without a weapon in hands
+    local oldAnimEvent = ISDestroyStuffAction.animEvent
+    function ISDestroyStuffAction:animEvent(event, parameter)
+        if event == "PlaySwingSound" or event == "PlayHitSound" then
+            if not self.character:getPrimaryHandItem() then
+                return
+            end
+        end
+        return oldAnimEvent(self, event, parameter)
+    end
 end
 
 Events.OnGameStart.Add(CampfireDup_fix)
