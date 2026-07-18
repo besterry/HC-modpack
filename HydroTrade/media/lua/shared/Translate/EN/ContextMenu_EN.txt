@@ -97,5 +97,7 @@ ContextMenu_EN = {
 	ContextMenu_HT_GFL_LinkToGen = "Connect to generator (%1 L)",
 	ContextMenu_HT_GFL_UnlinkFromGen = "Disconnect from generator (%1 L)",
 	ContextMenu_HT_GFL_PhantomStatus = "Fuel in linked barrel: %1 L",
+	ContextMenu_HT_GFL_TransferNow = "Pull fuel from linked barrels now",
+	ContextMenu_HT_GFL_TransferToGen = "Send barrel fuel to generator (%1 L)",
 	ContextMenu_HT_GFL_UnlinkAll = "Disconnect all barrels",
 }

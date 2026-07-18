@@ -32,6 +32,7 @@ Tooltip_EN = {
     Tooltip_DupeFix_HeavyEquippedContainer = "Unload the container first. Pickup limit is 45 kg.",
     Tooltip_RemoveContainerFitness = "Remove %1 before exercising.",
     Tooltip_StopMovingFitness = "Stop moving before exercising.",
-    Tooltip_HT_GFL_Status = "Tank: %1% <LINE> In linked barrels: %2 L <LINE> Total: %3% <LINE> Barrels: %4 <LINE> Max system: %5 L",
-    Tooltip_HT_GFL_PhantomHint = "Fuel visually stays in the barrel while linked. Cannot siphon it until disconnect. Real accounting is on the generator.",
+    Tooltip_HT_GFL_Status = "Tank: %1 <LINE> In linked barrels: %2 L <LINE> Total: %3 <LINE> Barrels: %4",
+    Tooltip_HT_GFL_MaxSystem = "Max system: %1 L",
+    Tooltip_HT_GFL_PhantomHint = "Fuel visually stays in the barrel while linked. Cannot siphon it until disconnect. Real accounting is on the generator. Fresh fuel is pulled in within minutes (or instantly after pouring).",
 }

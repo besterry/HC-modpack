@@ -36,15 +36,45 @@ local function onUnlinkAll(playerObj, gen)
     sendCmd("unlink", genArgs(gen))
 end
 
+local function onTransferNow(playerObj, gen, barrel)
+    if barrel then
+        if not luautils.walkAdj(playerObj, barrel:getSquare()) then return end
+        sendCmd("transfer", mergeArgs(genArgs(gen), barrelArgs(barrel)))
+    else
+        if not luautils.walkAdj(playerObj, gen:getSquare()) then return end
+        sendCmd("transfer", genArgs(gen))
+    end
+end
+
+--- Показать реальное содержимое бочки (share или долитое поверх).
 local function getBarrelDisplayLitres(barrel, gen)
+    local amount = HT_GFL.getBarrelFuelAmount(barrel)
     if gen then
         local linked, idx = HT_GFL.isLinked(gen, barrel)
         if linked then
             local links = HT_GFL.getLinks(gen)
-            return math.floor(HT_GFL.getLinkShare(links[idx]) + 0.5)
+            local share = HT_GFL.getLinkShare(links[idx])
+            if amount > share then
+                return math.floor(amount + 0.5)
+            end
+            return math.floor(share + 0.5)
         end
     end
-    return math.floor(HT_GFL.getBarrelFuelAmount(barrel) + 0.5)
+    return math.floor(amount + 0.5)
+end
+
+local function buildStatusTooltip(generator)
+    local tip = ISToolTip:new()
+    tip:setName(getText("ContextMenu_HT_GFL_FuelLink"))
+    -- getText в PZ принимает максимум 4 аргумента (%1..%4), %5 не подставляется.
+    tip.description = getText("Tooltip_HT_GFL_Status",
+        string.format("%.1f%%", generator:getFuel()),
+        tostring(math.floor(HT_GFL.getReserve(generator) + 0.5)),
+        string.format("%.1f%%", HT_GFL.getTotalFuelPercent(generator)),
+        tostring(#HT_GFL.getLinks(generator)))
+    tip.description = tip.description .. " <LINE> " .. getText("Tooltip_HT_GFL_MaxSystem", tostring(HT_GFL.getMaxReserve()))
+    tip.description = tip.description .. " <LINE> " .. getText("Tooltip_HT_GFL_PhantomHint")
+    return tip
 end
 
 local function addGeneratorOptions(player, context, generator)
@@ -64,16 +94,7 @@ local function addGeneratorOptions(player, context, generator)
         tostring(math.floor(reserve + 0.5)),
         tostring(#links),
         tostring(HT_GFL.getMaxLinks())), nil, nil)
-    local tip = ISToolTip:new()
-    tip:setName(getText("ContextMenu_HT_GFL_FuelLink"))
-    tip.description = getText("Tooltip_HT_GFL_Status",
-        string.format("%.1f", generator:getFuel()),
-        tostring(math.floor(reserve + 0.5)),
-        string.format("%.1f", HT_GFL.getTotalFuelPercent(generator)),
-        tostring(#links),
-        tostring(HT_GFL.getMaxReserve()))
-    tip.description = tip.description .. " <LINE> " .. getText("Tooltip_HT_GFL_PhantomHint")
-    infoOpt.toolTip = tip
+    infoOpt.toolTip = buildStatusTooltip(generator)
 
     for i = 1, #barrels do
         local barrel = barrels[i]
@@ -87,6 +108,7 @@ local function addGeneratorOptions(player, context, generator)
     end
 
     if #links > 0 then
+        menu:addOption(getText("ContextMenu_HT_GFL_TransferNow"), playerObj, onTransferNow, generator, nil)
         menu:addOption(getText("ContextMenu_HT_GFL_UnlinkAll"), playerObj, onUnlinkAll, generator)
     end
 end
@@ -107,6 +129,7 @@ local function addBarrelOptions(player, context, barrel)
         local linked = HT_GFL.isLinked(gen, barrel)
         local fuelAmt = getBarrelDisplayLitres(barrel, gen)
         if linked then
+            menu:addOption(getText("ContextMenu_HT_GFL_TransferToGen", tostring(fuelAmt)), playerObj, onTransferNow, gen, barrel)
             menu:addOption(getText("ContextMenu_HT_GFL_UnlinkFromGen", tostring(fuelAmt)), playerObj, onUnlinkBarrel, barrel, gen)
             local tipOpt = menu:addOption(getText("ContextMenu_HT_GFL_PhantomStatus", tostring(fuelAmt)), nil, nil)
             local tip = ISToolTip:new()
@@ -176,3 +199,36 @@ local function onFillWorldObjectContextMenu(player, context, worldobjects, test)
 end
 
 Events.OnFillWorldObjectContextMenu.Add(onFillWorldObjectContextMenu)
+
+-- После заливки в связанную бочку сразу отправить топливо в систему гена.
+local function hookFuelApiAdd()
+    local ok, AddFuelCustomObject = pcall(require, "FuelAPI/AddFuelCustomObject")
+    if not ok or not AddFuelCustomObject or not AddFuelCustomObject.perform then
+        return
+    end
+    if AddFuelCustomObject._HT_GFL_hooked then
+        return
+    end
+    AddFuelCustomObject._HT_GFL_hooked = true
+
+    local oldPerform = AddFuelCustomObject.perform
+    function AddFuelCustomObject:perform()
+        oldPerform(self)
+        local barrel = self.customFuelObject and self.customFuelObject.isoObject
+        if not barrel or not HT_GFL.isBarrelObject(barrel) then
+            return
+        end
+        if not HT_GFL.isPhantomBarrel(barrel) then
+            return
+        end
+        local gens = HT_GFL.findNearbyGenerators(barrel:getSquare())
+        for i = 1, #gens do
+            if HT_GFL.isLinked(gens[i], barrel) then
+                sendCmd("transfer", mergeArgs(genArgs(gens[i]), barrelArgs(barrel)))
+                break
+            end
+        end
+    end
+end
+
+Events.OnGameStart.Add(hookFuelApiAdd)

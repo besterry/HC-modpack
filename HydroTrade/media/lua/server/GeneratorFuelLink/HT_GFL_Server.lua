@@ -202,9 +202,9 @@ function HT_GFL.pullFromLinkedBarrels(gen)
 end
 
 --- Вернуть share одной бочки из резерва в реальное топливо бочки.
+--- Сначала забираем долитое поверх фантома, чтобы не затереть свежий бензин.
 function HT_GFL.returnShareToBarrel(gen, link)
     if not gen or not link then return end
-    local share = HT_GFL.getLinkShare(link)
     local cell = getCell()
     local barrel = nil
     if cell then
@@ -212,6 +212,25 @@ function HT_GFL.returnShareToBarrel(gen, link)
         barrel = HT_GFL.findBarrelOnSquare(sq)
     end
 
+    if barrel then
+        HT_GFL.transferBarrelToReserve(gen, barrel)
+    end
+
+    -- после transfer share мог вырасти; перечитываем линк из gen
+    local links = HT_GFL.getLinks(gen)
+    local key = HT_GFL.linkKey(link.x, link.y, link.z)
+    local current = nil
+    for i = 1, #links do
+        if links[i] and HT_GFL.linkKey(links[i].x, links[i].y, links[i].z) == key then
+            current = links[i]
+            break
+        end
+    end
+    if not current then
+        current = link
+    end
+
+    local share = HT_GFL.getLinkShare(current)
     local reserve = HT_GFL.getReserve(gen)
     local give = math.min(share, reserve)
     if barrel then
@@ -219,7 +238,6 @@ function HT_GFL.returnShareToBarrel(gen, link)
         HT_GFL.setBarrelPhantom(barrel, false, nil)
         HT_GFL.setBarrelFuelAmount(barrel, give)
     end
-    -- если бочка не в памяти: share остаётся в общем резерве гена
 end
 
 function HT_GFL.processGenerator(gen)
@@ -344,18 +362,38 @@ end
 local function onTransfer(player, args)
     if not player or not args then return end
     local gx, gy, gz = tonumber(args.gx), tonumber(args.gy), tonumber(args.gz)
+    local bx, by, bz = tonumber(args.bx), tonumber(args.by), tonumber(args.bz)
     if not gx or not gy or gz == nil then return end
     local gsq = resolveSquare(gx, gy, gz)
     local gen = HT_GFL.getGeneratorOnSquare(gsq)
     if not gen then return end
-    if player:DistToSquared(gen:getX() + 0.5, gen:getY() + 0.5) > 4 * 4 then return end
 
-    local taken = HT_GFL.pullFromLinkedBarrels(gen)
+    local nearGen = player:DistToSquared(gen:getX() + 0.5, gen:getY() + 0.5) <= 6 * 6
+    local nearBarrel = false
+    if bx and by and bz ~= nil then
+        nearBarrel = player:DistToSquared(bx + 0.5, by + 0.5) <= 6 * 6
+    end
+    if not nearGen and not nearBarrel then return end
+
+    local taken = 0
+    if bx and by and bz ~= nil then
+        local bsq = resolveSquare(bx, by, bz)
+        local barrel = HT_GFL.findBarrelOnSquare(bsq)
+        if barrel then
+            taken = HT_GFL.transferBarrelToReserve(gen, barrel)
+        end
+    else
+        taken = HT_GFL.pullFromLinkedBarrels(gen)
+    end
+
     HT_GFL.topUpTankFromReserve(gen)
     HT_GFL.refreshPhantomDisplays(gen)
     transmitGen(gen)
     registerGen(gen)
-    player:setHaloNote(getText("IGUI_HT_GFL_LinkedPhantom", tostring(math.floor(HT_GFL.getReserve(gen) + 0.5))), 200, 255, 200, 200)
+
+    if taken > 0.01 then
+        player:setHaloNote(getText("IGUI_HT_GFL_Synced", tostring(math.floor(taken + 0.5))), 200, 255, 200, 200)
+    end
 end
 
 local function onClientCommand(module, command, player, args)
@@ -417,7 +455,10 @@ local function onLoadGridsquare(square)
 end
 
 Events.OnClientCommand.Add(onClientCommand)
+-- Часовой тик: AFK catch-up бака из резерва.
 Events.EveryHours.Add(processRegistry)
+-- Пока чанк гружен: быстрее подхватывать долитое в связанные бочки.
+Events.EveryTenMinutes.Add(processRegistry)
 Events.LoadGridsquare.Add(onLoadGridsquare)
 
 Events.OnInitGlobalModData.Add(function(isNewGame)

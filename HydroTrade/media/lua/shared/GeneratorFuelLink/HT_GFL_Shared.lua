@@ -197,10 +197,12 @@ function HT_GFL.getGeneratorOnSquare(square)
     return nil
 end
 
-function HT_GFL.distSq(ax, ay, bx, by)
-    local dx = ax - bx
-    local dy = ay - by
-    return dx * dx + dy * dy
+-- Chebyshev: ортогональ и диагональ при range=1 (max(|dx|,|dy|) <= 1).
+function HT_GFL.chebyshev(ax, ay, bx, by)
+    local dx = math.abs(ax - bx)
+    local dy = math.abs(ay - by)
+    if dx > dy then return dx end
+    return dy
 end
 
 function HT_GFL.isInLinkRange(gen, barrel)
@@ -210,10 +212,8 @@ function HT_GFL.isInLinkRange(gen, barrel)
     if not gs or not bs then return false end
     if gs:getZ() ~= bs:getZ() then return false end
     local range = HT_GFL.getLinkRange()
-    local d = HT_GFL.distSq(gs:getX(), gs:getY(), bs:getX(), bs:getY())
-    -- range 1: соседи и не та же клетка что ген (d от 1 до 2 по диагонали = 2)
-    if d < 1 then return false end
-    return d <= (range * range)
+    local d = HT_GFL.chebyshev(gs:getX(), gs:getY(), bs:getX(), bs:getY())
+    return d >= 1 and d <= range
 end
 
 function HT_GFL.findNearbyGenerators(square, range)
@@ -225,8 +225,8 @@ function HT_GFL.findNearbyGenerators(square, range)
     if not cell then return result end
     for x = cx - range, cx + range do
         for y = cy - range, cy + range do
-            local d = HT_GFL.distSq(cx, cy, x, y)
-            if d >= 1 and d <= (range * range) then
+            local d = HT_GFL.chebyshev(cx, cy, x, y)
+            if d >= 1 and d <= range then
                 local sq = cell:getGridSquare(x, y, cz)
                 local gen = HT_GFL.getGeneratorOnSquare(sq)
                 if gen then
@@ -247,8 +247,8 @@ function HT_GFL.findNearbyBarrels(square, range)
     if not cell then return result end
     for x = cx - range, cx + range do
         for y = cy - range, cy + range do
-            local d = HT_GFL.distSq(cx, cy, x, y)
-            if d >= 1 and d <= (range * range) then
+            local d = HT_GFL.chebyshev(cx, cy, x, y)
+            if d >= 1 and d <= range then
                 local sq = cell:getGridSquare(x, y, cz)
                 local barrel = HT_GFL.findBarrelOnSquare(sq)
                 if barrel then

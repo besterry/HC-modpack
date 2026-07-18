@@ -599,6 +599,7 @@ IGUI_EN =
 	IGUI_HT_GFL_LinkedPhantom = "Barrel connected: %1 L stays in the barrel (feeding generator)",
 	IGUI_HT_GFL_Unlinked = "Barrel disconnected, fuel returned",
 	IGUI_HT_GFL_MaxLinks = "Max linked barrels: %1",
+	IGUI_HT_GFL_Synced = "Sent %1 L from barrel to generator",
 
 	IGUI_RepairEngine_Parts = "%1 pc.",
 	IGUI_RepairEngine_PartsToFull = "To 100% (%1)",
