@@ -64,24 +64,49 @@ function BServer.Transfer(player,args)
     local account = ModData.get("CoinBalance")[username]
     local recipientAccount = ModData.get("CoinBalance")[args[3]]
     if not account or not recipientAccount then return end
-    account.coin = account.coin-args[1]
-    account.specialCoin = account.specialCoin-args[2]
-    recipientAccount.coin = recipientAccount.coin+args[1]
-    recipientAccount.specialCoin = recipientAccount.specialCoin+args[2]
+    if args[3] == username then return end
+
+    local coin = tonumber(args[1]) or 0
+    local specialCoin = tonumber(args[2]) or 0
+    if coin < 0 or specialCoin < 0 then return end
+    if coin == 0 and specialCoin == 0 then return end
+    if account.coin < coin or account.specialCoin < specialCoin then return end
+
+    local message = args[4]
+    if type(message) == "string" then
+        message = string.trim(message)
+        message = string.gsub(message, "[\r\n\t]", " ")
+        message = string.gsub(message, "%s+", " ")
+        if #message > 40 then
+            message = string.sub(message, 1, 40)
+        end
+        if message == "" then
+            message = nil
+        end
+    else
+        message = nil
+    end
+
+    account.coin = account.coin - coin
+    account.specialCoin = account.specialCoin - specialCoin
+    recipientAccount.coin = recipientAccount.coin + coin
+    recipientAccount.specialCoin = recipientAccount.specialCoin + specialCoin
 
     msg = "Transfer: %s -> %s  Coin:%s Special:%s [Sender: %s oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s Recipient: %s oldBalance: Coin: %s SpecialCoin %s -> newBalance: Coin: %s SpecialCoin %s]"
-    msg = string.format(msg,username,args[3],account.coin-account.coin+args[1],account.specialCoin-account.specialCoin+args[2],username,account.coin+args[1],account.specialCoin+args[2],account.coin,account.specialCoin,
-    args[3],recipientAccount.coin-args[1],recipientAccount.specialCoin-args[2],recipientAccount.coin,recipientAccount.specialCoin)
+    msg = string.format(msg,username,args[3],coin,specialCoin,username,account.coin+coin,account.specialCoin+specialCoin,account.coin,account.specialCoin,
+    args[3],recipientAccount.coin-coin,recipientAccount.specialCoin-specialCoin,recipientAccount.coin,recipientAccount.specialCoin)
+    if message then
+        msg = msg .. " msg=" .. message
+    end
     BServer.writeLog(msg)
     SaveCoinBalancefd()
 
-    -- print("BServer.Transfer")
-    sendServerCommand(player, "BS", "ChangeBalance", {coin = account.coin, specialCoin = account.specialCoin }) -- Обновляем баланс отправителя
-    -- ModData.transmit("CoinBalance")
-    local noti = { 
+    sendServerCommand(player, "BS", "ChangeBalance", {coin = account.coin, specialCoin = account.specialCoin })
+    local noti = {
         sender = username,
-        coin = args[1],
-        specialCoin = args[2],
+        coin = coin,
+        specialCoin = specialCoin,
+        message = message,
     }
 
     local players = getOnlinePlayers()
@@ -90,7 +115,7 @@ function BServer.Transfer(player,args)
     for i = 0, playersSize - 1, 1 do
         local playerRecipient = players:get(i)
         if playerRecipient:getUsername() == args[3] then
-            sendServerCommand(playerRecipient, "BS", "ChangeBalance", {coin = recipientAccount.coin, specialCoin = recipientAccount.specialCoin }) -- Обновляем баланс получателя
+            sendServerCommand(playerRecipient, "BS", "ChangeBalance", {coin = recipientAccount.coin, specialCoin = recipientAccount.specialCoin })
             sendServerCommand(playerRecipient, "BS", "TransferReceived", noti)
             break;
         end

@@ -48,6 +48,9 @@ function BClient.TransferReceived(noti) -- получаем средства о�
     if not Currency.UseSpecialCoin then
         msg = getText("IGUI_Balance_TransferReceived",sender,coin)
     end
+    if noti.message and noti.message ~= "" then
+        msg = msg .. " | " .. tostring(noti.message)
+    end
     player:playSound("Notification")
     player:setHaloNote(msg, 255,255,255,400);
 end

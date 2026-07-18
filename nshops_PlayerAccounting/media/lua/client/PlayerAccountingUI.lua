@@ -142,9 +142,8 @@ function PlayerAccountingUI.processLog()
     end
     local text = ''
     for _, v in ipairs(reverseData) do
-        local dt, event_type, coin, specialCoin, recipient = unpack(v)
+        local dt, event_type, coin, specialCoin, recipient, note = unpack(v)
         local indentX = getTextManager():MeasureStringX(UIFont.Small, dt .. ' : ') + 2 -- Прибито к дате
-        -- local indentX = 300 -- Справа
         local line = ' <TEXT> ' .. dt .. BLACK..SPACE..': '
         if event_type == EVENT_TYPES.Linked then
             line = line .. getText('IGUI_Accounting_Linked_Wallet')
@@ -153,11 +152,17 @@ function PlayerAccountingUI.processLog()
             local coinStr = DGREEN .. ' +'
             coinStr = PlayerAccountingUI.processCoinStr(coinStr, coin, specialCoin)
             line = line .. getText('IGUI_Accounting_Transfer_In') .. recipient .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
+            if note and note ~= "" then
+                line = line .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. getText('IGUI_Accounting_Note') .. ' ' .. note
+            end
         end
         if event_type == EVENT_TYPES.TransferOut then
             local coinStr = DRED .. ' -'
             coinStr = PlayerAccountingUI.processCoinStr(coinStr, coin, specialCoin)
             line = line .. getText('IGUI_Accounting_Transfer_Out') .. recipient .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. coinStr
+            if note and note ~= "" then
+                line = line .. ' <LINE> <TEXT> <SETX:'..indentX..'> '.. BLACK .. getText('IGUI_Accounting_Note') .. ' ' .. note
+            end
         end
         if event_type == EVENT_TYPES.Deposit then
             local coinStr = DGREEN .. ' +'

@@ -97,20 +97,25 @@ end
 ---@param coin integer | nil
 ---@param specialCoin integer | nil
 ---@param recipient string | nil
-function ServerAccaunting:insert(player, event_type, coin, specialCoin, recipient)
+---@param note string | nil
+function ServerAccaunting:insert(player, event_type, coin, specialCoin, recipient, note)
     local username = player
     if type(player) ~= "string" then
         username = player:getUsername()
     end
     local dt = getDateTimeStr()
     local old_table = self.data[username] or {} -- Таблица для игрока
-    table.insert(old_table, {
+    local entry = {
         dt,
         event_type,
         coin,
         specialCoin,
         recipient
-    })
+    }
+    if note and note ~= "" then
+        entry[6] = note
+    end
+    table.insert(old_table, entry)
 
     while #old_table > 30 do
         table.remove(old_table, 1)  -- Remove the oldest record
@@ -137,9 +142,6 @@ function ServerAccaunting:insert(player, event_type, coin, specialCoin, recipien
     if playerObj then
         sendServerCommand(playerObj, "PlayerAccounting", "Insert", args)
     end
-    --sendServerCommand(player, "BS", "CreateAccount", {account = account})
-    -- sendServerCommand(player, "PlayerAccounting", "Insert", args)
-    -- self:transmit()
 end
 
 ---@param player IsoPlayer
@@ -170,10 +172,13 @@ end
 ---@param player IsoPlayer
 ---@param args (integer | string)[]
 function ServerAccaunting:Transfer(player, args)
-    local coin, specialCoin, recipient = unpack(args)
+    local coin, specialCoin, recipient, note = unpack(args)
     ---@cast coin integer
-    self:insert(player, EVENT_TYPES.TransferOut, coin, specialCoin, recipient)
-    self:insert(recipient, EVENT_TYPES.TransferIn, coin, specialCoin, player:getUsername())
+    if type(note) ~= "string" or note == "" then
+        note = nil
+    end
+    self:insert(player, EVENT_TYPES.TransferOut, coin, specialCoin, recipient, note)
+    self:insert(recipient, EVENT_TYPES.TransferIn, coin, specialCoin, player:getUsername(), note)
 end
 
 ---@type ServerAccaunting
