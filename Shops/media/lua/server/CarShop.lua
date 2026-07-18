@@ -102,10 +102,19 @@ function Commands.onRemoveFromSale(player, offerInfo)
 end
 
 function Commands.onBuyCar(player, offerInfo)
+	local carname = tostring(offerInfo.carname or "")
+	local msg = getText("IGUI_CarShop_TransferNote")
+	if carname ~= "" and carname ~= "nil" then
+		msg = msg .. carname
+	end
+	if #msg > 40 then
+		msg = string.sub(msg, 1, 40)
+	end
 	local args = {
 		offerInfo.price,
 		0,
-		offerInfo.username
+		offerInfo.username,
+		msg,
 	}
 	BServer.Transfer(player, args)
 	Commands.onRemoveFromSale(player, offerInfo)
