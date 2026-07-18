@@ -214,6 +214,16 @@ function ISVehicleMenu.buyCar(playerObj, _carInfo)
 		return
 	end
 	offerInfo.vehicle = nil
+	-- Текст собираем на клиенте: на DS getText/кириллица в .lua не работают
+	local carname = tostring(offerInfo.carname or "")
+	local note = getText("IGUI_CarShop_TransferNote")
+	if carname ~= "" and carname ~= "nil" then
+		note = note .. carname
+	end
+	if #note > 40 then
+		note = string.sub(note, 1, 40)
+	end
+	offerInfo.transferNote = note
 	sendClientCommand(playerObj, MOD_NAME, 'onBuyCar', offerInfo)
 end
 

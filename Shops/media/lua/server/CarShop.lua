@@ -102,11 +102,16 @@ function Commands.onRemoveFromSale(player, offerInfo)
 end
 
 function Commands.onBuyCar(player, offerInfo)
-	local carname = tostring(offerInfo.carname or "")
-	local msg = getText("IGUI_CarShop_TransferNote")
-	if carname ~= "" and carname ~= "nil" then
-		msg = msg .. carname
+	local msg = offerInfo.transferNote
+	if type(msg) ~= "string" or msg == "" then
+		local carname = tostring(offerInfo.carname or "")
+		msg = "Car buy: "
+		if carname ~= "" and carname ~= "nil" then
+			msg = msg .. carname
+		end
 	end
+	msg = string.gsub(tostring(msg), "[\r\n\t]", " ")
+	msg = string.gsub(msg, "%s+", " ")
 	if #msg > 40 then
 		msg = string.sub(msg, 1, 40)
 	end
