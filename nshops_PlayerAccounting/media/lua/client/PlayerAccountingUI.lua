@@ -62,21 +62,6 @@ local function drawPanelChrome(ui)
     end
 end
 
-local function formatAmountLine(coin, specialCoin, isCredit)
-    local sign = isCredit and "+" or "-"
-    local parts = {}
-    if coin and coin > 0 then
-        table.insert(parts, sign .. Currency.format(coin))
-    end
-    if specialCoin and specialCoin > 0 and Currency.UseSpecialCoin then
-        table.insert(parts, sign .. Currency.format(specialCoin) .. " E")
-    end
-    if #parts == 0 then
-        return sign .. "0"
-    end
-    return table.concat(parts, "  ")
-end
-
 local function buildEntryTitle(eventType, recipient)
     if eventType == EVENT_TYPES.Linked then
         return getText("IGUI_Accounting_Linked_Wallet")
@@ -246,7 +231,6 @@ function PlayerAccountingUI:buildLogEntries()
                 coin = coin,
                 specialCoin = specialCoin,
                 isCredit = credit,
-                amountText = formatAmountLine(coin, specialCoin, credit),
                 note = note,
                 rowH = rowH,
             }
@@ -307,9 +291,35 @@ function PlayerAccountingUI:doDrawItem(y, item, alt)
     self:drawText(title, titleX, y + 4, COL_INK.r, COL_INK.g, COL_INK.b, 1, UIFont.Small)
 
     local amountCol = entry.isCredit and COL_GREEN or COL_RED
-    local showAmount = entry.eventType ~= EVENT_TYPES.Linked and ((entry.coin or 0) > 0 or (entry.specialCoin or 0) > 0)
+    local showCoin = (entry.coin or 0) > 0
+    local showSpecial = Currency.UseSpecialCoin and (entry.specialCoin or 0) > 0
+    local showAmount = entry.eventType ~= EVENT_TYPES.Linked and (showCoin or showSpecial)
     if showAmount then
-        self:drawText(entry.amountText or "", pad, y + 4 + PlayerAccountingUI.SMALL_FONT_HGT, amountCol.r, amountCol.g, amountCol.b, 1, UIFont.Small)
+        local ax = pad
+        local ay = y + 4 + PlayerAccountingUI.SMALL_FONT_HGT
+        local sign = entry.isCredit and "+" or "-"
+        local iconSize = 14
+
+        if showCoin then
+            local coinImg = Currency.CoinsTexture.Coin
+            if coinImg and coinImg.texture then
+                self:drawTextureScaledAspect(coinImg.texture, ax, ay + 1, iconSize, iconSize, 1, 1, 1, 1)
+                ax = ax + iconSize + 4
+            end
+            local coinText = sign .. Currency.format(entry.coin)
+            self:drawText(coinText, ax, ay, amountCol.r, amountCol.g, amountCol.b, 1, UIFont.Small)
+            ax = ax + getTextManager():MeasureStringX(UIFont.Small, coinText) + 12
+        end
+
+        if showSpecial then
+            local specialImg = Currency.CoinsTexture.SpecialCoin
+            if specialImg and specialImg.texture then
+                self:drawTextureScaledAspect(specialImg.texture, ax, ay + 1, iconSize, iconSize, 1, 1, 1, 1)
+                ax = ax + iconSize + 4
+            end
+            local specialText = sign .. Currency.format(entry.specialCoin)
+            self:drawText(specialText, ax, ay, amountCol.r, amountCol.g, amountCol.b, 1, UIFont.Small)
+        end
     end
 
     if entry.note then
