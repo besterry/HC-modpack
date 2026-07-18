@@ -893,4 +893,10 @@ IGUI_RU =
 	IGUI_HT_GFL_LinkedPhantom = "Бочка подключена: %1 л остаётся в бочке (питает генератор)",
 	IGUI_HT_GFL_Unlinked = "Бочка отключена, топливо возвращено",
 	IGUI_HT_GFL_MaxLinks = "Лимит бочек: %1",
+
+	IGUI_RepairEngine_Parts = "%1 шт.",
+	IGUI_RepairEngine_PartsToFull = "До 100% (%1 шт.)",
+	IGUI_RepairEngine_All = "Все (%1)",
+	IGUI_RepairEngine_PartsTip = "Потратить %1 запчаст(ей), примерно +%2%",
+	IGUI_RepairEngine_NeedForFull = "До 100%% нужно ~%1 шт.",
 }
