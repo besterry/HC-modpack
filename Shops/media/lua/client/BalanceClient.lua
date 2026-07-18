@@ -37,22 +37,28 @@ function BClient.TransferReceived(noti) -- получаем средства о�
     local player = getPlayer()
     if not player then return end
     local sender = noti.sender
-    local coin = Currency.format(noti.coin)
-    local specialCoin = Currency.format(noti.specialCoin)
+    local coinAmt = tonumber(noti.coin) or 0
+    local specialAmt = tonumber(noti.specialCoin) or 0
     local account = BClientGetAccount(player)
     if not account then return end
-    account.coin = account.coin + noti.coin
-    account.specialCoin = account.specialCoin + noti.specialCoin
+    account.coin = account.coin + coinAmt
+    account.specialCoin = account.specialCoin + specialAmt
 
-    local msg = getText("IGUI_Balance_TransferReceivedSpecial",sender,coin,specialCoin)
-    if not Currency.UseSpecialCoin then
-        msg = getText("IGUI_Balance_TransferReceived",sender,coin)
+    local msg
+    local showSpecial = Currency.UseSpecialCoin and specialAmt > 0
+    local showCoin = coinAmt > 0
+    if showCoin and showSpecial then
+        msg = getText("IGUI_Balance_TransferReceivedSpecial", sender, Currency.format(coinAmt), Currency.format(specialAmt))
+    elseif showSpecial then
+        msg = getText("IGUI_Balance_TransferReceivedEvent", sender, Currency.format(specialAmt))
+    else
+        msg = getText("IGUI_Balance_TransferReceived", sender, Currency.format(coinAmt))
     end
     if noti.message and noti.message ~= "" then
         msg = msg .. " | " .. tostring(noti.message)
     end
     player:playSound("Notification")
-    player:setHaloNote(msg, 255,255,255,400);
+    player:setHaloNote(msg, 255, 255, 255, 400)
 end
 
 local function BS_OnServerCommand(module, command, args)

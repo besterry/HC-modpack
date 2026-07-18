@@ -118,6 +118,7 @@ IGUI_EN = {
     IGUI_Balance_Send = "Send",
     IGUI_Balance_TransferReceived = "Transfer Received, Sender: %1, Coins: %2",
     IGUI_Balance_TransferReceivedSpecial = "Transfer Received, Sender: %1, Coins: %2, Event Coins: %3",
+    IGUI_Balance_TransferReceivedEvent = "Transfer Received, Sender: %1, Event Coins: %2",
     IGUI_Balance_AccountNeeded = "Account not found, please create one",
     IGUI_Wallet_ShowBalance = "Show Balance HUD",
     IGUI_Wallet_HideBalance = "Hide Balance HUD",
