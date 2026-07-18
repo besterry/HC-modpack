@@ -35,6 +35,9 @@ local zoneCheckInterval = 1000 -- интервал проверки зоны
 local currentZoneTitle = nil -- текущее название зоны
 local NotificationOnEntered = false -- уведомление о входе в зараженную зону
 local multiplier = SandboxVars.ToxicZone.FilterDurationMultiplier or 0.1
+-- Полный фильтр при multiplier=1.0: 40 минут реального времени в зоне
+local BASE_FILTER_DURATION_MS = 40 * 60 * 1000
+local lastFilterDrainMs = {}
 
 -- Защитные маски от тумана
 ProtectiveMasks = {
@@ -52,6 +55,20 @@ ProtectiveMasks = {
 
 local warningSent1, warningSent2, warningSent3 = false, false, false
 -- Функция проверки защитного снаряжения
+local function drainMaskFilter(player, modData)
+	local pnum = player:getPlayerNum()
+	local now = getTimestampMs()
+	local last = lastFilterDrainMs[pnum]
+	lastFilterDrainMs[pnum] = now
+	if not last then return end
+	local dt = now - last
+	if dt <= 0 then return end
+	if dt > 5000 then dt = 5000 end
+	multiplier = SandboxVars.ToxicZone.FilterDurationMultiplier or 0.1
+	local drain = (dt / BASE_FILTER_DURATION_MS) * multiplier
+	modData.percent = modData.percent - drain
+end
+
 function protectiveTZoneEquipped(player, PlayerZone)
     local zone = PlayerZone
 	if player:isGodMod() then return true end -- Если godmod то защита включена
@@ -69,9 +86,11 @@ function protectiveTZoneEquipped(player, PlayerZone)
                         if not modData.percent then modData.percent = 1 end --Используем именно 1, а не 100%
                         local percent = modData.percent
 						if percent > 0 then
-                            if not zone then return true end -- Если игрок не в зоне, то не отнимаем целостность фильтра
-                            multiplier = SandboxVars.ToxicZone.FilterDurationMultiplier or 0.1
-							modData.percent = percent - 0.00001*multiplier -- Уменьшаем целостность фильтра, используем setModData() для изменения значения в ModData  0.00001 - 21 минута
+                            if not zone then
+								lastFilterDrainMs[player:getPlayerNum()] = nil
+								return true
+							end
+							drainMaskFilter(player, modData)
                             if modData.percent > 0.5 then warningSent1 = false end -- Сбрасываем флаг, если фильтр больше 50% или сменился фильтр/маска
                             if modData.percent < 0.5 and not warningSent1 then
                                 player:Say(getText("IGUI_TZoneFilterWarning")) -- Фильтр начинает забиваться...
@@ -91,6 +110,7 @@ function protectiveTZoneEquipped(player, PlayerZone)
 							return true
 						else
                             warningSent1, warningSent2, warningSent3 = false, false, false
+							lastFilterDrainMs[player:getPlayerNum()] = nil
 							return false 
 						end
 					end
@@ -142,7 +162,18 @@ local function getMaskFilterPercent(player)
 		end
 	end
 	if not found then return 1 end
-	return lowest
+	return math.max(0, lowest)
+end
+
+-- Туман почти комфортный до ~20%, ниже резко нарастает
+local function getFilterLeak(filterPercent)
+	local pct = math.max(0, math.min(1, filterPercent or 0))
+	if pct >= 0.2 then
+		-- 100%→0, 20%→~0.05: почти незаметно
+		return (1 - pct) * 0.06
+	end
+	local t = 1 - (pct / 0.2)
+	return 0.048 + t * t * 0.952
 end
 
 local function getEquippedMaskItem(player)
@@ -418,7 +449,7 @@ local function updateTZoneOverlay(player)
 		local targetVignette = TOXIC_VIGNETTE_NAKED
 		if hasMask then
 			local filterPercent = getMaskFilterPercent(player)
-			local leak = 1 - filterPercent
+			local leak = getFilterLeak(filterPercent)
 			targetTint = TOXIC_TINT_MASKED + leak * (TOXIC_TINT_NAKED - TOXIC_TINT_MASKED)
 			targetVignette = TOXIC_VIGNETTE_MASKED + leak * (TOXIC_VIGNETTE_NAKED - TOXIC_VIGNETTE_MASKED)
 		end
