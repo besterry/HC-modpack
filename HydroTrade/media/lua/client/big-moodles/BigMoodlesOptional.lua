@@ -218,6 +218,11 @@ function ISScaledMoodles:render()
             slot = slot + 1
         end
     end
+
+    -- Append HydroTrade craving moodles into the same stack
+    if HT_CravingMoodles_AppendToStack then
+        HT_CravingMoodles_AppendToStack(self, self.player, slot, self.scale, fontHgt)
+    end
 end
 
 local function removePanel(playerNum)

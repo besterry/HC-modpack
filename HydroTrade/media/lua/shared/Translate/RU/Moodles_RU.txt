@@ -1,0 +1,28 @@
+Moodles_RU = {
+	Moodles_HT_CraveProtein_lvl1 = "Сейчас бы рыбки",
+	Moodles_HT_CraveProtein_lvl2 = "Тянет на мясное",
+	Moodles_HT_CraveProtein_lvl3 = "Сильно хочу мяса",
+	Moodles_HT_CraveProtein_lvl4 = "Съел бы целого лося",
+	Moodles_HT_CraveProtein_desc_lvl1 = "Рыбки бы... или яйцо, кусочек чего мясного",
+	Moodles_HT_CraveProtein_desc_lvl2 = "Всё думаю про запах жареного мяса",
+	Moodles_HT_CraveProtein_desc_lvl3 = "Ещё немного и наброшусь на банку тушёнки",
+	Moodles_HT_CraveProtein_desc_lvl4 = "В голове одно мясо... остальное уже не еда",
+
+	Moodles_HT_CraveLipids_lvl1 = "Чипсов бы..",
+	Moodles_HT_CraveLipids_lvl2 = "Тянет на жареное",
+	Moodles_HT_CraveLipids_lvl3 = "Масляный голод",
+	Moodles_HT_CraveLipids_lvl4 = "Сковороду бы вылизать после жарки",
+	Moodles_HT_CraveLipids_desc_lvl1 = "Масла бы... или чего склизкого и сытного",
+	Moodles_HT_CraveLipids_desc_lvl2 = "Хочу чего-то тяжёлого, с корочкой",
+	Moodles_HT_CraveLipids_desc_lvl3 = "Сало, масло, жареное... хоть что-нибудь жирное",
+	Moodles_HT_CraveLipids_desc_lvl4 = "Сухомятка уже противна... хоть сало с ножа",
+
+	Moodles_HT_CraveCarbs_lvl1 = "Хоть кроху мучного",
+	Moodles_HT_CraveCarbs_lvl2 = "Тянет на сладкое",
+	Moodles_HT_CraveCarbs_lvl3 = "Хлебный голод",
+	Moodles_HT_CraveCarbs_lvl4 = "Без мучного никак",
+	Moodles_HT_CraveCarbs_desc_lvl1 = "Краюху бы хлеба... или что-нибудь мучное",
+	Moodles_HT_CraveCarbs_desc_lvl2 = "Шоколадку бы или печенье с медом...",
+	Moodles_HT_CraveCarbs_desc_lvl3 = "Полрюкзака бы отдать за буханку",
+	Moodles_HT_CraveCarbs_desc_lvl4 = "В голове только хлеб... хлеб, хлеб!",
+}

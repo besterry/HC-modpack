@@ -273,11 +273,22 @@ function AdminHealthPanel:renderPhysiology(p)
     local pro = safeCall(nut,"getProteins") or 0
     local fat = safeCall(nut,"getLipids") or 0
     local carb= safeCall(nut,"getCarbohydrates") or 0
+    local craveLvl = HT_CravingMoodleLevel
+    if not craveLvl then
+        craveLvl = function(v)
+            if not v or v >= 0 then return 0 end
+            if v >= -100 then return 1 end
+            if v >= -250 then return 2 end
+            if v >= -400 then return 3 end
+            return 4
+        end
+    end
     self:drawText(string.format("Weight: %.1f", weight), 8, y, 1,1,1,1, self.font); y=y+16
     self:drawText(string.format("Calories: %.0f", cal),  8, y, 1,1,1,1, self.font); y=y+16
-    self:drawText(string.format("Proteins: %.1f", pro),  8, y, 0.8,1,0.8,1, self.font); y=y+16
-    self:drawText(string.format("Lipids: %.1f", fat),    8, y, 0.8,1,0.8,1, self.font); y=y+16
-    self:drawText(string.format("Carbs: %.1f",  carb),   8, y, 0.8,1,0.8,1, self.font)
+    self:drawText(string.format("Proteins: %.1f  (crave lvl %d)", pro, craveLvl(pro)),  8, y, 0.8,1,0.8,1, self.font); y=y+16
+    self:drawText(string.format("Lipids: %.1f  (crave lvl %d)", fat, craveLvl(fat)),    8, y, 0.8,1,0.8,1, self.font); y=y+16
+    self:drawText(string.format("Carbs: %.1f  (crave lvl %d)",  carb, craveLvl(carb)),   8, y, 0.8,1,0.8,1, self.font); y=y+16
+    self:drawText("Craving thresholds: 0 / -100 / -250 / -400", 8, y, 0.7,0.7,0.7,1, self.font)
 end
 
 function AdminHealthPanel:renderEquipment(p)
