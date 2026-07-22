@@ -36,6 +36,35 @@ local function seekShopTiles(worldobject, spritePrefix) --Функция пои�
     return wo, found, spriteName, sprite
 end
 
+-- Размер таблицы modData в KB (для лимита гаража и UI)
+Garage.getModDataSizeKB = function(modData)
+    local function getTableSize(t, visited)
+        visited = visited or {}
+        if not t or type(t) ~= "table" then return 0 end
+        if visited[t] then return 0 end
+        visited[t] = true
+        local size = 0
+        for k, v in pairs(t) do
+            if type(k) == "string" then
+                size = size + #k
+            elseif type(k) == "number" then
+                size = size + 8
+            end
+            if type(v) == "string" then
+                size = size + #v
+            elseif type(v) == "number" then
+                size = size + 8
+            elseif type(v) == "boolean" then
+                size = size + 1
+            elseif type(v) == "table" then
+                size = size + getTableSize(v, visited)
+            end
+        end
+        return size
+    end
+    return math.floor(getTableSize(modData) / 1024)
+end
+
 local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранение ТС (отправка в гараж)
     sendClientCommand(getPlayer(), "Garage", "getSkinIdx", {vehicle = vehicle:getId()}) --Отправка запроса на сервер для поиска skinIdx  
     local receiveServerCommand
@@ -79,6 +108,7 @@ local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранен�
     end
     Events.OnServerCommand.Add(receiveServerCommand)
 end
+Garage.storeCar = putCar
 
 local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE: Восстановление ТС (получение из гаража)
     local vehicleZone = CheckCar(spawnX, geoY)
@@ -106,6 +136,7 @@ local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE:
         getPlayer():Say(getText("IGUI_PlaceForCarBusy"))
     end
 end
+Garage.retrieveCar = getCar
 
 local function hasGarageSpriteInSafehouse(player, spriteName) --Проверка есть ли тайл гаража в убежище (сколько гаражей существует)
     local safehouse = SafeHouse.getSafeHouse(player:getCurrentSquare())
@@ -334,32 +365,13 @@ end
 
 -- Функция для получения размера modData в KB
 local function getModDataSizeKB(modData)
-    local function getTableSize(t, visited)
-        visited = visited or {}
-        if visited[t] then return 0 end
-        visited[t] = true
-        if not t then return 0 end
-        local size = 0
-        for k, v in pairs(t) do
-            if type(k) == "string" then
-                size = size + #k
-            elseif type(k) == "number" then
-                size = size + 8
-            end
-            
-            if type(v) == "string" then
-                size = size + #v
-            elseif type(v) == "number" then
-                size = size + 8
-            elseif type(v) == "boolean" then
-                size = size + 1
-            elseif type(v) == "table" then
-                size = size + getTableSize(v, visited)
-            end
-        end
-        return size
+    return Garage.getModDataSizeKB(modData)
+end
+
+local function openGaragePanel(worldobjects, playerNum, vehicle, spawnX, spawnY)
+    if Garage_Panel and Garage_Panel.open then
+        Garage_Panel.open(worldobjects, playerNum, spawnX, spawnY, vehicle)
     end
-    return math.floor(getTableSize(modData) / 1024)
 end
 
 local function GarageContextMenu(playerNum, context, worldobjects)
@@ -433,21 +445,17 @@ local function GarageContextMenu(playerNum, context, worldobjects)
                 return
             end
 
-            if worldobjects[1]:getModData()["Garage"] and #worldobjects[1]:getModData()["Garage"] > 0 then -- Добавляем опции для каждого автомобиля в гараже (считываем все авто в моддате гаража)
-                local myGarageOption = subMenu:addOption(getText("IGUI_MyGarage") .. " (" .. currentSizeKB .. "/" .. maxSizeKB .. "m2)", worldobjects, nil)    --В гараже
-                local myGarageSubMenu = subMenu:getNew(subMenu)
-                context:addSubMenu(myGarageOption, myGarageSubMenu)
-                for k, v in pairs(worldobjects[1]:getModData()["Garage"]) do
-                    if not v.owner then v.owner = "" end
-                    local carSizeKB = getModDataSizeKB(v)
-                    -- print(v.vehicleFullName .. " ".. v.oldSqlid)
-                    myGarageSubMenu:addOption( k .. ". " .. 
-                        getText("IGUI_VehicleName" .. getText(v.scriptName)) ..
-                        " [H " .. v.oldSqlid .. " KT] " .. v.owner .. " [" .. carSizeKB .. "m2]",
-                        worldobjects, getCar, playerNum, v, vehicle, spawnCoordX, spawnCoordY)
-                end
+            if worldobjects[1]:getModData()["Garage"] and #worldobjects[1]:getModData()["Garage"] > 0 then
+                local myGarageOption = subMenu:addOption(
+                    getText("IGUI_MyGarage") .. " (" .. currentSizeKB .. "/" .. maxSizeKB .. "m2)",
+                    worldobjects, openGaragePanel, playerNum, vehicle, spawnCoordX, spawnCoordY)
+                local tooltip = toolTipcheck(myGarageOption)
+                tooltip:setName(getText("IGUI_GaragePanel_Title"))
+                tooltip.description = getText("IGUI_GaragePanel_OpenHint")
             else
-                local myGarageOption = subMenu:addOption(getText("IGUI_MyGarage_empty") .. " (0/" .. maxSizeKB .. "m2)", worldobjects, nil) --Гараж пустой
+                local myGarageOption = subMenu:addOption(
+                    getText("IGUI_MyGarage_empty") .. " (0/" .. maxSizeKB .. "m2)",
+                    worldobjects, openGaragePanel, playerNum, vehicle, spawnCoordX, spawnCoordY)
                 local tooltip = toolTipcheck(myGarageOption)
                 tooltip:setName(getText('ContextMenu_UseGarage'))
                 tooltip.description = getText('Tooltip_Need_Car')
