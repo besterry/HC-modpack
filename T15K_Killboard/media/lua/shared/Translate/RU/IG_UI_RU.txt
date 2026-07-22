@@ -30,4 +30,6 @@ IGUI_RU = {
   IGUI_T15KKillboard_ClaimReward = "ПОЛУЧИТЬ НАГРАДЫ",
   IGUI_T15KKillboard_Reward_Balance = "Монеты",
   IGUI_T15KKillboard_Reward_Balance_Amount = "%1 монет",
+  IGUI_T15KKillboard_SubtractMonth = "Вычесть из месяца...",
+  IGUI_T15KKillboard_SubtractMonth_Prompt = "Вычесть из месяца у %1 (сейчас %2):",
 }

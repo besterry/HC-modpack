@@ -16,6 +16,9 @@ local T15KKillboard = getT15KKillboardInstance()
 
 ---------- SAVE PLAYER DATA ----------
 
+-- после смерти игнорим обычные апдейты, пока не будет живого персонажа с киллами
+local suppressRankUpdates = false
+
 local function updatePlayerRank(onDead)
     -- staff не шлём апдейты, кроме когда CountAdmins включён для теста
     if isAdmin() and not T15KKillboard.getSandboxVar("CountAdmins") then
@@ -25,22 +28,39 @@ local function updatePlayerRank(onDead)
     if not _player then
         return
     end
-    if _player:getZombieKills() < T15KKillboard.getSandboxVar("MinKills") and not onDead then
+
+    if onDead then
+        suppressRankUpdates = true
+        sendClientCommand("T15KKillboardModule", "playerUpdate", { _player:getUsername(), 0, 0 })
         return
     end
 
-    local zmbKll = 0
-    local srvKll = 0
-
-    if not onDead then
-        zmbKll = _player:getZombieKills()
-        srvKll = _player:getSurvivorKills()
+    if suppressRankUpdates then
+        -- новый персонаж: снимаем блок только когда киллы уже с нуля/малые, либо просто при первом валидном апдейте
+        if _player:isAlive() then
+            suppressRankUpdates = false
+        else
+            return
+        end
     end
 
+    if not _player:isAlive() then
+        return
+    end
+
+    if _player:getZombieKills() < T15KKillboard.getSandboxVar("MinKills") then
+        return
+    end
+
+    local zmbKll = _player:getZombieKills()
+    local srvKll = _player:getSurvivorKills()
     sendClientCommand("T15KKillboardModule", "playerUpdate", { _player:getUsername(), zmbKll, srvKll })
 end
 
-Events.OnGameStart.Add(updatePlayerRank)
+Events.OnGameStart.Add(function()
+    suppressRankUpdates = false
+    updatePlayerRank(false)
+end)
 
 local serverUpdateTickRate = T15KKillboard.getSandboxVar("ServerTickRate")
 if serverUpdateTickRate == 1 or T15KKillboard.isSinglePlayer() then

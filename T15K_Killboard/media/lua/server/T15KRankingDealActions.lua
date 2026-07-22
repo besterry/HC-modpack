@@ -235,40 +235,68 @@ local function rolloverMonthIfNeeded(store)
     return true
 end
 
+-- макс. прирост за один апдейт (защита от stale-пакета после смерти)
+local function maxMonthlyDeltaPerUpdate()
+    local tick = T15KKillboard.getSandboxVar("ServerTickRate") or 1
+    if tick == 1 then
+        return 8000 -- ~10 мин
+    elseif tick == 2 then
+        return 25000 -- ~1 час
+    end
+    return 100000 -- ~сутки
+end
+
 local function applyDelta(store, username, zKills, sKills)
+    zKills = tonumber(zKills) or 0
+    sKills = tonumber(sKills) or 0
     local ts = getTimestamp()
+
     -- вкладка "Текущие": абсолютный getZombieKills (сброс при смерти)
-    if zKills and zKills > 0 then
-        store.allTime[username] = { zKills, sKills or 0, ts }
+    if zKills > 0 then
+        store.allTime[username] = { zKills, sKills, ts }
     else
         store.allTime[username] = nil
     end
 
     local last = store.lastKnown[username]
-    if last == nil then
-        store.lastKnown[username] = zKills
+
+    -- смерть / ресет: НЕ ставим 0 (иначе stale-пакет со старыми киллами = +весь счётчик в месяц)
+    -- следующий апдейт только фиксирует baseline без кредита в monthly
+    if last ~= nil and zKills < last then
+        store.lastKnown[username] = nil
         return
     end
 
-    if zKills < last then
-        -- смерть/ресет счётчика: monthly не минусуем
-        store.lastKnown[username] = zKills
+    if last == nil then
+        if zKills > 0 then
+            store.lastKnown[username] = zKills
+        end
         return
     end
 
     local delta = zKills - last
-    store.lastKnown[username] = zKills
     if delta <= 0 then
+        store.lastKnown[username] = zKills
         return
     end
+
+    local maxDelta = maxMonthlyDeltaPerUpdate()
+    if delta > maxDelta then
+        print("[T15KKillboard] suspicious delta ignored for " .. tostring(username)
+            .. ": +" .. tostring(delta) .. " (max " .. tostring(maxDelta) .. "), rebaseline")
+        store.lastKnown[username] = zKills
+        return
+    end
+
+    store.lastKnown[username] = zKills
 
     local monthly = store.monthly[username]
     if monthly then
         monthly[1] = (monthly[1] or 0) + delta
-        monthly[2] = sKills or monthly[2] or 0
+        monthly[2] = sKills
         monthly[3] = ts
     else
-        store.monthly[username] = { delta, sKills or 0, ts }
+        store.monthly[username] = { delta, sKills, ts }
     end
 end
 
@@ -558,12 +586,48 @@ local function OnClientCommandT15KRank(module, command, player, args)
     tryAnnouncePending(store)
 
     if command == "playerRemove" then
+        if not playerIsAdmin(player) and not (getCore and getCore():getDebug()) then
+            return
+        end
         local user = args[1]
         store.monthly[user] = nil
         store.allTime[user] = nil
         store.lastKnown[user] = nil
         serverUpdateT15KRankTable()
+    elseif command == "adjustMonthly" then
+        if not playerIsAdmin(player) and not (getCore and getCore():getDebug()) then
+            return
+        end
+        local user = args and args[1]
+        local amount = tonumber(args and args[2]) or 0
+        if not user or user == "" or amount <= 0 then
+            return
+        end
+        amount = math.floor(amount)
+        local entry = store.monthly[user]
+        if not entry then
+            print("[T15KKillboard] adjustMonthly: no monthly entry for " .. tostring(user))
+            return
+        end
+        local before = entry[1] or 0
+        local after = before - amount
+        if after <= 0 then
+            store.monthly[user] = nil
+            after = 0
+        else
+            entry[1] = after
+            entry[3] = getTimestamp()
+        end
+        print("[T15KKillboard] adjustMonthly " .. tostring(user) .. ": " .. tostring(before) .. " -> " .. tostring(after)
+            .. " (-" .. tostring(amount) .. ") by " .. tostring(player:getUsername()))
+        if writeLog then
+            writeLog("T15KKillboard", player:getUsername() .. " adjustMonthly " .. user .. " " .. before .. "->" .. after)
+        end
+        serverUpdateT15KRankTable()
     elseif command == "clearKillboard" then
+        if not playerIsAdmin(player) and not (getCore and getCore():getDebug()) then
+            return
+        end
         local mode = args and args[1]
         if mode == T15KKillboard.MODE_ALLTIME then
             store.allTime = {}
