@@ -171,17 +171,24 @@ local function getContainerContentsWeight(item)
 end
 
 -- Hard-cap игры на поднятие ~50 кг (выше предмет сбрасывается / дюп).
--- Берём 45 с запасом, а не getMaxWeight() (8/14): иначе при лёгком
--- перегрузе блокируется даже пустая лошадь («за спину» молчит).
+-- Для лошади берём 45 с запасом, а не getMaxWeight() (8/14): иначе при
+-- лёгком перегрузе блокируется даже пустая лошадь («за спину» молчит).
 local HEAVY_CONTAINER_PICKUP_LIMIT = 45
 
--- При смене слота / крафте с экипированным контейнером содержимое
--- временно учитывается в переноске. Блок только у контейнеров.
-local function wouldEquippedContainerExceedWeight(character, item)
+-- HydroNV / NVAPI: очки уже на голове, flip = смена типа через ClothingExtra.
+local function isNightVisionItem(item)
+	return item ~= nil and item.hasTag ~= nil and item:hasTag("NVITEM")
+end
+
+-- ClothingItemExtra (ПНВ вверх/вниз, «за спину», часы) клонирует предмет.
+-- При нехватке места старый экземпляр падает на землю, новый остаётся
+-- экипированным → дюп.
+local function wouldClothingExtraCauseDupe(character, item)
 	if not character or not item then
 		return false
 	end
-	if not isInventoryContainerItem(item) then
+	-- ПНВ: всегда разрешаем flip; антидюп через временный boost веса в perform.
+	if isNightVisionItem(item) then
 		return false
 	end
 	local inv = character:getInventory()
@@ -190,18 +197,26 @@ local function wouldEquippedContainerExceedWeight(character, item)
 	end
 
 	local invWeight = inv:getCapacityWeight()
-	local contentsWeight = getContainerContentsWeight(item)
+	local maxWeight = character:getMaxWeight()
 
-	-- У лошади WeightReduction=100: пока надета, содержимое почти не
-	-- входит в invWeight. При снятии / смене слота оно добавится целиком.
-	local projected
-	if item:isEquipped() then
-		projected = invWeight + contentsWeight
-	else
-		projected = invWeight + item:getActualWeight() + contentsWeight
+	-- Контейнеры с WeightReduction (лошадь): soft-перегруз ок, опасен hard-cap.
+	if isInventoryContainerItem(item) then
+		local contentsWeight = getContainerContentsWeight(item)
+		local projected
+		if item:isEquipped() then
+			projected = invWeight + contentsWeight
+		else
+			projected = invWeight + item:getActualWeight() + contentsWeight
+		end
+		return projected >= HEAVY_CONTAINER_PICKUP_LIMIT
 	end
 
-	return projected >= HEAVY_CONTAINER_PICKUP_LIMIT
+	-- Одежда / часы: при soft-перегрузе ClothingExtra дюпает.
+	if item:isEquipped() and invWeight >= maxWeight then
+		return true
+	end
+
+	return false
 end
 
 local function itemUsedAsRecipeContainerInput(item, recipe)
@@ -218,20 +233,23 @@ local function itemUsedAsRecipeContainerInput(item, recipe)
 	return false
 end
 
-local function getHeavyContainerBlockText()
-	return getText("Tooltip_DupeFix_HeavyEquippedContainer")
+local function getClothingExtraBlockText(item)
+	if isInventoryContainerItem(item) then
+		return getText("Tooltip_DupeFix_HeavyEquippedContainer")
+	end
+	return getText("Tooltip_DupeFix_OverweightClothingExtra")
 end
 
-local function showHeavyContainerBlockNote(character)
+local function showClothingExtraBlockNote(character, item)
 	if character then
-		character:setHaloNote(getHeavyContainerBlockText(), 255, 100, 100, 200)
+		character:setHaloNote(getClothingExtraBlockText(item), 255, 100, 100, 200)
 	end
 end
 
-local function applyHeavyContainerBlock(option)
+local function applyClothingExtraBlock(option, item)
 	option.notAvailable = true
 	local tooltip = option.toolTip or ISInventoryPaneContextMenu.addToolTip()
-	tooltip.description = getHeavyContainerBlockText()
+	tooltip.description = getClothingExtraBlockText(item)
 	option.toolTip = tooltip
 end
 
@@ -271,13 +289,13 @@ local function isCraftOptionForItem(option, item)
 end
 
 local function shouldBlockContextOption(option, player, item)
-	if not wouldEquippedContainerExceedWeight(player, item) then
+	if not wouldClothingExtraCauseDupe(player, item) then
 		return false
 	end
 	if isClothingExtraOption(option) then
 		return true
 	end
-	if isCraftOptionForItem(option, item) then
+	if isInventoryContainerItem(item) and isCraftOptionForItem(option, item) then
 		local recipe = getCraftOptionRecipe(option)
 		if recipe and itemUsedAsRecipeContainerInput(item, recipe) then
 			return true
@@ -286,20 +304,20 @@ local function shouldBlockContextOption(option, player, item)
 	return false
 end
 
-local function patchHeavyContainerContextMenu(context, player, item)
+local function patchClothingExtraContextMenu(context, player, item)
 	if not player or not item or not context or not context.options then
 		return
 	end
-	if not item:isEquipped() or item:getCategory() ~= "Container" then
+	if not item:isEquipped() then
 		return
 	end
-	if not wouldEquippedContainerExceedWeight(player, item) then
+	if not wouldClothingExtraCauseDupe(player, item) then
 		return
 	end
 
 	local function patchOption(option)
 		if option and shouldBlockContextOption(option, player, item) then
-			applyHeavyContainerBlock(option)
+			applyClothingExtraBlock(option, item)
 		end
 		if option and option.subOption and option.subOption.options then
 			for j = 1, #option.subOption.options do
@@ -315,9 +333,8 @@ end
 
 local vanillaClothingExtraStart = ISClothingExtraAction.start
 function ISClothingExtraAction:start()
-	if isInventoryContainerItem(self.item)
-		and wouldEquippedContainerExceedWeight(self.character, self.item) then
-		showHeavyContainerBlockNote(self.character)
+	if wouldClothingExtraCauseDupe(self.character, self.item) then
+		showClothingExtraBlockNote(self.character, self.item)
 		self:forceStop()
 		return
 	end
@@ -333,11 +350,7 @@ function ISClothingExtraAction:isValid()
 	if not self.character:getInventory():contains(self.item) then
 		return false
 	end
-	if isInventoryContainerItem(self.item)
-		and wouldEquippedContainerExceedWeight(self.character, self.item) then
-		return false
-	end
-	return true
+	return not wouldClothingExtraCauseDupe(self.character, self.item)
 end
 
 local function installContextMenuHook()
@@ -352,7 +365,7 @@ local function installContextMenuHook()
 			local actualItems = ISInventoryPane.getActualItems(items)
 			local playerObj = getSpecificPlayer(player)
 			if actualItems and #actualItems == 1 and playerObj then
-				patchHeavyContainerContextMenu(context, playerObj, actualItems[1])
+				patchClothingExtraContextMenu(context, playerObj, actualItems[1])
 			end
 		end
 		return context
@@ -364,6 +377,34 @@ end
 
 Events.OnGameStart.Add(installContextMenuHook)
 installContextMenuHook()
+
+-- ПНВ flip при перегрузе: ваниль роняет старый тип на пол. На время perform
+-- поднимаем лимит веса, чтобы смена положения не дюпала.
+local function installNvgClothingExtraPerformHook()
+	if DupeFix and DupeFix.nvgPerformHookInstalled then return end
+	if not ISClothingExtraAction or not ISClothingExtraAction.perform then return end
+
+	local previousPerform = ISClothingExtraAction.perform
+	function ISClothingExtraAction:perform()
+		local boosted = false
+		local savedDelta = 0
+		if self.character and isNightVisionItem(self.item) then
+			savedDelta = self.character:getMaxWeightDelta()
+			self.character:setMaxWeightDelta(savedDelta + 50)
+			boosted = true
+		end
+		previousPerform(self)
+		if boosted then
+			self.character:setMaxWeightDelta(savedDelta)
+		end
+	end
+
+	DupeFix = DupeFix or {}
+	DupeFix.nvgPerformHookInstalled = true
+end
+
+Events.OnGameStart.Add(installNvgClothingExtraPerformHook)
+installNvgClothingExtraPerformHook()
 
 -------------------
 function ISInventoryTransferAction:isValid()

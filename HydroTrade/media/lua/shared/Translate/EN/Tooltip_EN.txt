@@ -30,6 +30,7 @@ Tooltip_EN = {
     Tooltip_VehicleRecycling_Uninstall = "Uninstall:",
     Tooltip_VehicleRecycling_Passengers = "Can't dismantle a vehicle with passengers inside.",
     Tooltip_DupeFix_HeavyEquippedContainer = "Unload the container first. Pickup limit is 45 kg.",
+    Tooltip_DupeFix_OverweightClothingExtra = "Too heavy: unload inventory before changing item position.",
     Tooltip_RemoveContainerFitness = "Remove %1 before exercising.",
     Tooltip_StopMovingFitness = "Stop moving before exercising.",
     Tooltip_HT_GFL_Status = "Tank: %1 <LINE> In linked barrels: %2 L <LINE> Total: %3 <LINE> Barrels: %4",
