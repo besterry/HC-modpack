@@ -42,11 +42,39 @@ function utils.getItemConditionRatio(item)
     return ratio
 end
 
+--- Real unpatched holes (matches garment inspection).
+--- Vanilla getHolesNumber() can stay > 0 after a patch is applied (ghost hole under patch).
 function utils.getItemHoles(item)
-    if not item or not item.getHolesNumber then
+    if not item then
         return 0
     end
-    return item:getHolesNumber() or 0
+
+    local visual = item.getVisual and item:getVisual() or nil
+    if visual and item.getBloodClothingType and BloodClothingType and BloodClothingType.getCoveredParts then
+        local covered = BloodClothingType.getCoveredParts(item:getBloodClothingType())
+        if covered and covered:size() > 0 then
+            local holes = 0
+            for i = 0, covered:size() - 1 do
+                local part = covered:get(i)
+                local holeVal = visual:getHole(part)
+                if holeVal and holeVal ~= 0 then
+                    local patched = false
+                    if item.getPatchType then
+                        patched = item:getPatchType(part) ~= nil
+                    end
+                    if not patched then
+                        holes = holes + 1
+                    end
+                end
+            end
+            return holes
+        end
+    end
+
+    if item.getHolesNumber then
+        return item:getHolesNumber() or 0
+    end
+    return 0
 end
 
 --- Damaged = holes > 0 or condition below threshold (default 0.5).
