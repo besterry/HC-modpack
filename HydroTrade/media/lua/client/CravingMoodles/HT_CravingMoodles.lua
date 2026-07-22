@@ -7,36 +7,46 @@ local SPACING = 36
 local RIGHT_OFFSET = 46
 local TOP_OFFSET = 100
 local ICON_SIZE = 32
+-- Inventory icons are full-bleed 32x32; inset so they sit inside the amber rim.
+local ICON_PAD = 5
 
 local OSC_RATE = 0.8
 local OSC_SCALAR = 15.6
 local OSC_START = 1.0
 local OSC_DECAY = 0.04
 
-local BKG_BAD = {
-    getTexture("media/ui/Moodles/Moodle_Bkg_Bad_1.png"),
-    getTexture("media/ui/Moodles/Moodle_Bkg_Bad_2.png"),
-    getTexture("media/ui/Moodles/Moodle_Bkg_Bad_3.png"),
-    getTexture("media/ui/Moodles/Moodle_Bkg_Bad_4.png"),
+-- Custom amber circles (thin white rim, no red). Alpha baked into PNG for icon readability.
+local BKG_AMBER = {
+    getTexture("media/ui/Moodles/Moodle_Bkg_HT_Amber_1.png"),
+    getTexture("media/ui/Moodles/Moodle_Bkg_HT_Amber_2.png"),
+    getTexture("media/ui/Moodles/Moodle_Bkg_HT_Amber_3.png"),
+    getTexture("media/ui/Moodles/Moodle_Bkg_HT_Amber_4.png"),
 }
 
+-- Vanilla inventory icons from UI.pack / UI2.pack (same as item scripts Icon=).
 local CRAVINGS = {
     {
         key = "HT_CraveProtein",
-        icon = getTexture("media/ui/Moodles/Moodle_Icon_HT_CraveProtein.png"),
+        icon = getTexture("Item_Steak"),
         getValue = function(nut) return nut:getProteins() end,
     },
     {
         key = "HT_CraveLipids",
-        icon = getTexture("media/ui/Moodles/Moodle_Icon_HT_CraveLipids.png"),
+        icon = getTexture("Item_Butter"),
         getValue = function(nut) return nut:getLipids() end,
     },
     {
         key = "HT_CraveCarbs",
-        icon = getTexture("media/ui/Moodles/Moodle_Icon_HT_CraveCarbs.png"),
+        icon = getTexture("Item_Bread"),
         getValue = function(nut) return nut:getCarbohydrates() end,
     },
 }
+
+local hudEnabled = true
+
+function HT_CravingMoodles_IsHudEnabled()
+    return hudEnabled
+end
 
 -- Nutrition clamp is -500..1000. Show only on deficit.
 function HT_CravingMoodleLevel(value)
@@ -94,11 +104,9 @@ local function isBigMoodlesActive(playerNum)
     if moodleUI and moodleUI:isVisible() then
         return false
     end
-    -- MoodlesUI hidden/removed: BigMoodles (or similar) owns the stack
     return moodleUI == nil or not moodleUI:isVisible()
 end
 
--- Shared state for oscillation when drawing inside BigMoodles stack
 local cravingOsc = { 0, 0, 0 }
 local cravingPrev = { 0, 0, 0 }
 local stackOscillator = 0
@@ -112,10 +120,12 @@ end
 
 --[[
     Draw craving icons into an existing moodle stack renderer.
-    panel: ISUIElement with drawTextureScaledUniform / drawTextRight
     Returns the next free slot index.
 ]]
 function HT_CravingMoodles_AppendToStack(panel, player, slot, scale, fontHgt)
+    if not hudEnabled then
+        return slot
+    end
     if not panel or not player or not nutritionEnabled() then
         return slot
     end
@@ -148,11 +158,13 @@ function HT_CravingMoodles_AppendToStack(panel, player, slot, scale, fontHgt)
         if level > 0 then
             local y = slot * SPACING * scale
             local x = stackOscillator * osc * scale
-            local bkg = BKG_BAD[level] or BKG_BAD[1]
+            local bkg = BKG_AMBER[level] or BKG_AMBER[1]
             local icon = CRAVINGS[i].icon
             if bkg and icon then
                 panel:drawTextureScaledUniform(bkg, x, y, scale, 1, 1, 1, 1)
-                panel:drawTextureScaledUniform(icon, x, y, scale, 1, 1, 1, 1)
+                local pad = ICON_PAD * scale
+                local iconSize = (ICON_SIZE - ICON_PAD * 2) * scale
+                panel:drawTextureScaled(icon, x + pad, y + pad, iconSize, iconSize, 1, 1, 1, 1)
             end
 
             if panel:isMouseOver() then
@@ -206,7 +218,6 @@ function HT_CravingMoodles:updatePosition()
 
     local moodleUI = UIManager.getMoodleUI(playerNum)
     if moodleUI and moodleUI:isVisible() then
-        -- MoodlesUI: setX(screenW-50), setY(~64). Icons draw at local x≈0.
         local okX, ax = pcall(function() return moodleUI:getAbsoluteX() end)
         local okY, ay = pcall(function() return moodleUI:getAbsoluteY() end)
         if moodleUI.MoodleDistY and moodleUI.MoodleDistY > 0 then
@@ -222,7 +233,6 @@ function HT_CravingMoodles:updatePosition()
         end
     end
 
-    -- Fallback (same layout as BigMoodles constants) if MoodlesUI coords unavailable
     self.scale = 1
     self:setX(left + width - RIGHT_OFFSET - ICON_SIZE)
     self:setY(top + TOP_OFFSET + vanillaCount * SPACING)
@@ -231,9 +241,9 @@ function HT_CravingMoodles:updatePosition()
 end
 
 function HT_CravingMoodles:render()
+    if not hudEnabled then return end
     if not self.player or self.player:isDead() then return end
     if not nutritionEnabled() then return end
-    -- When BigMoodles owns the stack, it calls HT_CravingMoodles_AppendToStack
     if isBigMoodlesActive(self.playerNum) then
         return
     end
@@ -258,7 +268,11 @@ local function ensurePanel(playerNum)
         return
     end
 
-    -- BigMoodles draws us; keep no duplicate panel
+    if not hudEnabled then
+        removePanel(playerNum)
+        return
+    end
+
     if isBigMoodlesActive(playerNum) then
         removePanel(playerNum)
         return
@@ -278,12 +292,33 @@ local function ensurePanel(playerNum)
     panel:setVisible(true)
 end
 
+function HT_CravingMoodles_SetHudEnabled(enabled)
+    hudEnabled = enabled == true
+    for i = 0, getNumActivePlayers() - 1 do
+        ensurePanel(i)
+    end
+    if not hudEnabled then
+        for i = 0, 3 do
+            removePanel(i)
+        end
+    end
+end
+
 local function onCreatePlayer(playerIndex, player)
     if player ~= getSpecificPlayer(playerIndex) then return end
     ensurePanel(playerIndex)
 end
 
+local function syncHudFromClientOptions()
+    local enabled = true
+    if ClientTweaker and ClientTweaker.Options and ClientTweaker.Options.GetBool then
+        enabled = ClientTweaker.Options.GetBool("show_craving_moodles")
+    end
+    HT_CravingMoodles_SetHudEnabled(enabled)
+end
+
 local function onGameStart()
+    syncHudFromClientOptions()
     for i = 0, getNumActivePlayers() - 1 do
         ensurePanel(i)
     end

@@ -294,6 +294,17 @@ function PM_ISMenu:initialise()
     self.showTutorialQuests.backgroundColor = {r=0.12, g=0.15, b=0.2, a=0.95};
     self.showTutorialQuests.borderColor = {r=0.4, g=0.6, b=0.8, a=0.9};
     self:addChild(self.showTutorialQuests);
+    y_checkboxes = y_checkboxes + btnHgt;
+
+    self.showCravingMoodles = ISTickBox:new(x + btnWid + 15, y_checkboxes, 70, btnHgt, getText("IGUI_UserPanel_ShowCravingMoodles"), self, PM_ISMenu.onShowCravingMoodles);
+    self.showCravingMoodles:initialise();
+    self.showCravingMoodles:instantiate();
+    self.showCravingMoodles.selected[1] = ClientTweaker.Options.GetBool("show_craving_moodles");
+    self.showCravingMoodles:addOption(getText("IGUI_UserPanel_ShowCravingMoodles"));
+    self.showCravingMoodles.tooltip = getText("IGUI_UserPanel_ShowCravingMoodles_tooltip");
+    self.showCravingMoodles.backgroundColor = {r=0.12, g=0.15, b=0.2, a=0.95};
+    self.showCravingMoodles.borderColor = {r=0.4, g=0.6, b=0.8, a=0.9};
+    self:addChild(self.showCravingMoodles);
 
 
     --кнопка обновить баланс (ВОЗВРАЩАЕМ!)
@@ -491,6 +502,20 @@ function PM_ISMenu:onShowTutorialQuests(option, enabled)
                 TutorialQuestNavigation.clear()
             end
         end
+    end
+end
+
+function PM_ISMenu:onShowCravingMoodles(option, enabled)
+    if SandboxVars.ServerTweaker.SaveClientOptions then
+        ClientTweaker.Options.SetBool("show_craving_moodles", enabled);
+    else
+        -- still apply for this session
+        if ClientTweaker and ClientTweaker.Options then
+            ClientTweaker.Options.SetBool("show_craving_moodles", enabled);
+        end
+    end
+    if HT_CravingMoodles_SetHudEnabled then
+        HT_CravingMoodles_SetHudEnabled(enabled)
     end
 end
 

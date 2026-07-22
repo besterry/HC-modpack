@@ -478,6 +478,8 @@ IGUI_RU =
 	IGUI_VehicleNameSemiTruckLite          = "Semi Truck Lite",
 
 	IGUI_UserPanel_ShowTutorialQuests = "Панель заданий",
+	IGUI_UserPanel_ShowCravingMoodles = "Система питания",
+	IGUI_UserPanel_ShowCravingMoodles_tooltip = "Показывать иконки, когда персонажу не хватает мясного, жирного или мучного. Подсказки по рациону, не дебафы и не урон. По умолчанию включено.",
 
 	IGUI_TutorialQuest_Title = "Задания",
 	IGUI_TutorialQuest_Prompt = "Новое начало",
