@@ -1523,4 +1523,6 @@ UI_RU = {
 	UI_SeePlayerModData = "Моддата игрока",
 	UI_BigMoodles_Enable = "Крупные иконки moodles",
 	UI_BigMoodles_Enable_tooltip = "Увеличивает иконки moodles на широких и высоких экранах. По умолчанию выключено.",
+	UI_optionscreen_binding_HT_BuildCatalog = "Строительство",
+	UI_optionscreen_binding_HT_BuildCatalog_Open = "Открыть каталог строительства",
 }

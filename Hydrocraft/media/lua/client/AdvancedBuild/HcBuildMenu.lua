@@ -427,12 +427,15 @@ end
 
 
 
+-- Context menu registration disabled when HydroTrade is present (unified HT_BuildCatalog).
+-- Keep onBuild* available for other mods / fallback.
 local function func_Init()
+	if getActivatedMods():contains("HydroTrade_h") then
+		return
+	end
 	Events.OnFillWorldObjectContextMenu.Add(Hydrocraft.doBuildMenus)
 end
 
 Events.OnGameStart.Add(func_Init)
-
-
 
 

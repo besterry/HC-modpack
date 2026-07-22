@@ -425,15 +425,4 @@ Hydrocraft.toolTipcheck = function(option)
 	return _tooltip
 end
 
-
-
-
-local function func_Init()
-	Events.OnFillWorldObjectContextMenu.Add(Hydrocraft.doBuildMenus)
-end
-
-Events.OnGameStart.Add(func_Init)
-
-
-
-
+Events.OnFillWorldObjectContextMenu.Add(Hydrocraft.doBuildMenus)

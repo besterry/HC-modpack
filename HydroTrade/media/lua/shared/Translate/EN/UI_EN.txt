@@ -15,4 +15,6 @@ UI_EN = {
 	UI_StackToSelected = "Stack",
 	UI_BigMoodles_Enable = "Large moodle icons",
 	UI_BigMoodles_Enable_tooltip = "Makes moodle icons larger on wide/high-resolution screens. Off by default.",
+	UI_optionscreen_binding_HT_BuildCatalog = "Construction",
+	UI_optionscreen_binding_HT_BuildCatalog_Open = "Open Construction Catalog",
 }
