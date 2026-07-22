@@ -5,10 +5,19 @@
 Garage_Panel = ISPanel:derive("Garage_Panel")
 Garage_Panel.instance = nil
 
+Garage_PreviewScene = ISUI3DScene:derive("Garage_PreviewScene")
+
+function Garage_PreviewScene:new(x, y, width, height)
+    local o = ISUI3DScene.new(self, x, y, width, height)
+    return o
+end
+
 local FONT_HGT_SMALL = getTextManager():getFontHeight(UIFont.Small)
 local FONT_HGT_MEDIUM = getTextManager():getFontHeight(UIFont.Medium)
 
 local MAX_SIZE_KB = 700
+local PREVIEW_H = 150
+local PREVIEW_VEH = "garagePreviewVeh"
 
 -- Палитра бокса
 local C = {
@@ -58,6 +67,54 @@ local function hsvToRgb(h, s, v)
     if i == 3 then return p, q, v end
     if i == 4 then return t, p, v end
     return v, p, q
+end
+
+-- У модовых/улучшенных авто цвет часто в skin-текстуре, а HSV = белый/дефолт.
+-- VehicleScript.Skin.texture в Kahlua недоступен как поле, поэтому путь кладём в data.skinTexture при загоне.
+local function getSkinVisual(data)
+    if not data then
+        return nil
+    end
+    local texName = data.skinTexture
+    if not texName or texName == "" or texName == "BOGUS" then
+        return nil
+    end
+    local tex = getTexture("media/textures/" .. texName .. ".png")
+    if not tex then
+        tex = getTexture(texName)
+    end
+    local short = texName
+    local slash = string.find(short, "/[^/]*$")
+    if slash then
+        short = string.sub(short, slash + 1)
+    end
+    short = string.gsub(short, "^[Vv]ehicles_", "")
+    short = string.gsub(short, "^vehicle_", "")
+    local colorTail = string.match(short, "_([%a]+%d*)$")
+    if colorTail then
+        short = colorTail
+    end
+    return {
+        texture = tex,
+        label = short,
+        idx = data.skinIdx,
+    }
+end
+
+local function drawColorSwatch(ui, x, y, size, data)
+    local skin = getSkinVisual(data)
+    if skin and skin.texture then
+        ui:drawTextureScaledAspect(skin.texture, x, y, size, size, 1, 1, 1, 1)
+        ui:drawRectBorder(x, y, size, size, 1, 0.15, 0.16, 0.18)
+        return skin
+    end
+    local r, g, b = 0.4, 0.4, 0.4
+    if data and data.HSV then
+        r, g, b = hsvToRgb(data.HSV[1], data.HSV[2], data.HSV[3])
+    end
+    ui:drawRect(x, y, size, size, 1, r, g, b)
+    ui:drawRectBorder(x, y, size, size, 1, 0.15, 0.16, 0.18)
+    return skin
 end
 
 local function condColor(cond)
@@ -236,6 +293,8 @@ function Garage_Panel:createChildren()
     self.detailY = y
     self.detailW = self.width - self.detailX - pad
     self.detailH = listH
+    self.previewH = PREVIEW_H
+    self.detailTextY = self.detailY + self.previewH + 6
 
     self.vehicleList = ISScrollingListBox:new(pad, y, listW, listH)
     self.vehicleList:initialise()
@@ -250,6 +309,20 @@ function Garage_Panel:createChildren()
     self.vehicleList.doDrawItem = Garage_Panel.drawVehicleItem
     self.vehicleList.onmousedown = Garage_Panel.onListMouseDown
     self:addChild(self.vehicleList)
+
+    self.previewScene = Garage_PreviewScene:new(self.detailX + 4, self.detailY + 4, self.detailW - 8, self.previewH - 4)
+    self.previewScene:initialise()
+    self.previewScene:instantiate()
+    self.previewScene:setAnchorTop(false)
+    self.previewScene:setAnchorRight(false)
+    self.previewScene:setAnchorBottom(false)
+    self.previewScene:setView("Right")
+    self.previewScene.javaObject:fromLua1("setZoom", 4)
+    self.previewScene.javaObject:fromLua1("setDrawGrid", false)
+    self.previewScene.javaObject:fromLua1("createVehicle", PREVIEW_VEH)
+    self.previewScene:setVisible(false)
+    self:addChild(self.previewScene)
+    self.previewVehicleId = nil
 
     local btnY = self.height - pad - btnHgt
     local btnW = 110
@@ -347,12 +420,7 @@ function Garage_Panel:drawVehicleItem(y, item, alt)
     local sw = 14
     local sx = 8
     local sy = y + (h - sw) / 2
-    local r, g, b = 0.4, 0.4, 0.4
-    if data.HSV then
-        r, g, b = hsvToRgb(data.HSV[1], data.HSV[2], data.HSV[3])
-    end
-    self:drawRect(sx, sy, sw, sw, 1, r, g, b)
-    self:drawRectBorder(sx, sy, sw, sw, 1, 0.15, 0.16, 0.18)
+    drawColorSwatch(self, sx, sy, sw, data)
 
     local textX = sx + sw + 6
     local name = item.item.name or "?"
@@ -517,7 +585,37 @@ function Garage_Panel:refreshList()
         self.selectedData = self.vehicleList.items[1].item.data
     end
     self.vehicleList.selected = selectIndex
+    self:setPreviewVehicle(self.selectedData)
     self:updateButtons()
+end
+
+function Garage_Panel:setPreviewVehicle(data)
+    if not self.previewScene or not self.previewScene.javaObject then
+        return
+    end
+    if not data or not data.vehicleFullName then
+        self.previewScene:setVisible(false)
+        self.previewVehicleId = nil
+        return
+    end
+
+    local scriptId = data.vehicleFullName
+    -- UI3DScene умеет только setVehicleScript (скин/цвет через fromLua нет, см. UI3DScene.java)
+    if self.previewVehicleId ~= scriptId then
+        local script = nil
+        if getScriptManager then
+            script = getScriptManager():getVehicle(scriptId)
+        end
+        if not script then
+            self.previewScene:setVisible(false)
+            self.previewVehicleId = nil
+            return
+        end
+        self.previewVehicleId = scriptId
+        self.previewScene.javaObject:fromLua2("setVehicleScript", PREVIEW_VEH, scriptId)
+    end
+
+    self.previewScene:setVisible(true)
 end
 
 function Garage_Panel:prerender()
@@ -529,23 +627,29 @@ function Garage_Panel:prerender()
     self:drawRect(self.detailX, self.detailY, self.detailW, self.detailH, C.inset.a, C.inset.r, C.inset.g, C.inset.b)
     self:drawRectBorder(self.detailX, self.detailY, self.detailW, self.detailH, 1, C.border.r, C.border.g, C.border.b)
     self:drawRect(self.detailX, self.detailY, 3, self.detailH, 0.7, C.sodiumDim.r, C.sodiumDim.g, C.sodiumDim.b)
+    if self.previewVehicleId then
+        self:drawRectBorder(self.detailX + 4, self.detailY + 4, self.detailW - 8, self.previewH - 4, 0.7, C.border.r, C.border.g, C.border.b)
+    end
     self:drawDetails()
 end
 
 function Garage_Panel:drawDetails()
     local x = self.detailX + 12
-    local y = self.detailY + 8
+    local y = self.detailTextY or (self.detailY + 8)
     local maxW = self.detailW - 22
     local data = self.selectedData
 
     if not data then
-        self:drawText(getText("IGUI_GaragePanel_NoSelection"), x, y, C.textDim.r, C.textDim.g, C.textDim.b, 1, UIFont.Small)
+        self:drawText(getText("IGUI_GaragePanel_NoSelection"), x, self.detailY + 8, C.textDim.r, C.textDim.g, C.textDim.b, 1, UIFont.Small)
         return
     end
 
     local name = vehicleDisplayName(data)
     self:drawText(name, x, y, C.sodium.r, C.sodium.g, C.sodium.b, 1, UIFont.Medium)
-    y = y + FONT_HGT_MEDIUM + 6
+    y = y + FONT_HGT_MEDIUM + 4
+
+    self:drawText(getText("IGUI_GaragePanel_PreviewHint"), x, y, C.textDim.r, C.textDim.g, C.textDim.b, 1, UIFont.Small)
+    y = y + FONT_HGT_SMALL + 4
 
     self:drawText(getText("IGUI_GaragePanel_Plate", tostring(data.oldSqlid or "?")), x, y, C.text.r, C.text.g, C.text.b, 1, UIFont.Small)
     y = y + FONT_HGT_SMALL + 2
@@ -554,21 +658,19 @@ function Garage_Panel:drawDetails()
 
     local sizeKB = Garage.getModDataSizeKB and Garage.getModDataSizeKB(data) or 0
     self:drawText(getText("IGUI_GaragePanel_Size", tostring(sizeKB)), x, y, C.textDim.r, C.textDim.g, C.textDim.b, 1, UIFont.Small)
-    y = y + FONT_HGT_SMALL + 6
+    y = y + FONT_HGT_SMALL + 4
 
     local sw = 28
-    local r, g, b = 0.4, 0.4, 0.4
-    if data.HSV then
-        r, g, b = hsvToRgb(data.HSV[1], data.HSV[2], data.HSV[3])
+    local skin = drawColorSwatch(self, x, y, sw, data)
+    local labelX = x + sw + 8
+    self:drawText(getText("IGUI_GaragePanel_Color"), labelX, y + 2, C.text.r, C.text.g, C.text.b, 1, UIFont.Small)
+    local ly = y + 2 + FONT_HGT_SMALL
+    if skin and skin.label then
+        self:drawText(getText("IGUI_GaragePanel_SkinName", skin.label), labelX, ly, C.textDim.r, C.textDim.g, C.textDim.b, 1, UIFont.Small)
+    elseif data.skinIdx ~= nil then
+        self:drawText(getText("IGUI_GaragePanel_Skin", tostring(data.skinIdx)), labelX, ly, C.textDim.r, C.textDim.g, C.textDim.b, 1, UIFont.Small)
     end
-    self:drawText(getText("IGUI_GaragePanel_Color"), x, y + 6, C.text.r, C.text.g, C.text.b, 1, UIFont.Small)
-    local cx = x + getTextManager():MeasureStringX(UIFont.Small, getText("IGUI_GaragePanel_Color")) + 8
-    self:drawRect(cx, y, sw, sw, 1, r, g, b)
-    self:drawRectBorder(cx, y, sw, sw, 1, C.border.r, C.border.g, C.border.b)
-    if data.skinIdx ~= nil then
-        self:drawText(getText("IGUI_GaragePanel_Skin", tostring(data.skinIdx)), cx + sw + 8, y + 6, C.textDim.r, C.textDim.g, C.textDim.b, 1, UIFont.Small)
-    end
-    y = y + sw + 8
+    y = y + math.max(sw, FONT_HGT_SMALL * 2) + 6
 
     local rust = math.floor(((tonumber(data.rust) or 0) * 100) + 0.5)
     local rustR, rustG, rustB = condColor(100 - rust)
@@ -607,10 +709,10 @@ function Garage_Panel:drawDetails()
     y = y + FONT_HGT_SMALL + 2
 
     self:drawText(getText("IGUI_GaragePanel_ParkedDays", tostring(parkedDays(data))), x, y, C.textDim.r, C.textDim.g, C.textDim.b, 1, UIFont.Small)
-    y = y + FONT_HGT_SMALL + 8
+    y = y + FONT_HGT_SMALL + 6
 
     self:drawText(getText("IGUI_GaragePanel_Parts"), x, y, C.sodium.r, C.sodium.g, C.sodium.b, 1, UIFont.Small)
-    y = y + FONT_HGT_SMALL + 4
+    y = y + FONT_HGT_SMALL + 3
 
     for _, part in ipairs(KEY_PARTS) do
         if y > self.detailY + self.detailH - FONT_HGT_SMALL - 4 then
@@ -648,10 +750,21 @@ end
 function Garage_Panel:update()
     ISPanel.update(self)
     local sel = self.vehicleList and self.vehicleList.selected or 0
+    local prevData = self.selectedData
     if sel > 0 and self.vehicleList.items and self.vehicleList.items[sel] then
         self.selectedData = self.vehicleList.items[sel].item.data
     elseif not self.vehicleList or #self.vehicleList.items == 0 then
         self.selectedData = nil
+    end
+    if self.selectedData ~= prevData then
+        self:setPreviewVehicle(self.selectedData)
+    elseif self.selectedData then
+        -- первый кадр после открытия
+        if not self.previewVehicleId then
+            self:setPreviewVehicle(self.selectedData)
+        end
+    else
+        self:setPreviewVehicle(nil)
     end
     self:updateButtons()
 end
@@ -734,7 +847,7 @@ function Garage_Panel.open(worldobjects, playerNum, spawnX, spawnY, vehicleOnSpo
     if Garage_Panel.instance then
         Garage_Panel.instance:close()
     end
-    local width, height = 740, 520
+    local width, height = 760, 580
     local x = (getCore():getScreenWidth() - width) / 2
     local y = (getCore():getScreenHeight() - height) / 2
     local ui = Garage_Panel:new(x, y, width, height, worldobjects, playerNum, spawnX, spawnY, vehicleOnSpot)

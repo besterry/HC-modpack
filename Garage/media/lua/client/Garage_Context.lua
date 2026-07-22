@@ -110,33 +110,50 @@ local function putCar(worldobjecs, playerNum, vehicle) --NOTE: Сохранен�
 end
 Garage.storeCar = putCar
 
-local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE: Восстановление ТС (получение из гаража)
+local function getCar(worldobjecs, playerNum, v, vehicle, spawnX, geoY) -- NOTE: запрос выдачи (удаление из гаража только на сервере)
     local vehicleZone = CheckCar(spawnX, geoY)
-    if not vehicle and not vehicleZone then
-        local player = getPlayer()
-        local modDataGarage = worldobjecs[1]:getModData()["Garage"]
-        local owner = worldobjecs[1]:getModData()["GarageOwner"]
-        local car = {}
-        local checkCarInGarage = false --Чек на наличие авто в гараже (чтобы второй игрок не смог дублировать авто)
-        for i, vehicleData in ipairs(modDataGarage) do
-            if vehicleData.oldSqlid == v.oldSqlid and vehicleData.vehicleFullName == v.vehicleFullName then
-                car = vehicleData
-                table.remove(modDataGarage, i) -- Удаление подтаблицы автомобиля из гаража
-                worldobjecs[1]:transmitModData()
-                checkCarInGarage = true
-                break
-            else
-                checkCarInGarage = false
-            end
-        end
-        if checkCarInGarage then
-            sendClientCommand(player, "Garage", "getCar", { car, spawnX, geoY, owner})
-        end
-    else
+    if vehicle or vehicleZone then
         getPlayer():Say(getText("IGUI_PlaceForCarBusy"))
+        return
     end
+    if not v or not worldobjecs or not worldobjecs[1] then
+        return
+    end
+    local player = getPlayer()
+    local garageObj = worldobjecs[1]
+    -- Не трогаем modData на клиенте: иначе гонка 2 игроков = дюп. Сервер атомарно забирает запись и спавнит.
+    sendClientCommand(player, "Garage", "getCar", {
+        oldSqlid = v.oldSqlid,
+        vehicleFullName = v.vehicleFullName,
+        spawnX = spawnX,
+        spawnY = geoY,
+        garageX = garageObj:getX(),
+        garageY = garageObj:getY(),
+    })
 end
 Garage.retrieveCar = getCar
+
+Garage.onGetCarResult = function(module, command, args)
+    if module ~= "Garage" or command ~= "getCarResult" then
+        return
+    end
+    if not args or args.ok then
+        return
+    end
+    local player = getPlayer()
+    if not player then
+        return
+    end
+    local reason = args.reason
+    if reason == "busy" then
+        player:Say(getText("IGUI_PlaceForCarBusy"))
+    elseif reason == "missing" then
+        player:Say(getText("IGUI_GaragePanel_AlreadyTaken"))
+    else
+        player:Say(getText("IGUI_Car_not_found"))
+    end
+end
+Events.OnServerCommand.Add(Garage.onGetCarResult)
 
 local function hasGarageSpriteInSafehouse(player, spriteName) --Проверка есть ли тайл гаража в убежище (сколько гаражей существует)
     local safehouse = SafeHouse.getSafeHouse(player:getCurrentSquare())
@@ -420,63 +437,87 @@ local function GarageContextMenu(playerNum, context, worldobjects)
             local modDataGarage = worldobjects[1]:getModData()["Garage"]
             local currentSizeKB = getModDataSizeKB(modDataGarage)
             local maxSizeKB = 700
-            local Garage_text = getText("IGUI_Garage")
             if not modDataGarage then modDataGarage = {} end
             local vehucleCount = #modDataGarage
-            if isAdmin() then Garage_text = getText("IGUI_Admin_Garage") .. " (" .. vehucleCount .. ")" end
-            local garageOption = context:addOption(Garage_text, worldobjects, nil) --Гараж
-
-            local subMenu = context:getNew(context)
-            context:addSubMenu(garageOption, subMenu)
-            
-
-            if PM.ChangeSideGarage then --Кнопка изменения стороны
-                if not checkSafeHouse() then return end
-                local changeCM = subMenu:addOption(getText("IGUI_ChangeGarageSide"), worldobjects, change, playerNum, vehicle)
-                local tooltip = toolTipcheck(changeCM)
-                tooltip:setName(getText('ContextMenu_ChangeGarageSideTooltip'))
-                tooltip.description = getText('Tooltip_ChangeGarageSideTooltip')
+            local Garage_text = getText("IGUI_Garage")
+            if isAdmin() then
+                Garage_text = getText("IGUI_Admin_Garage") .. " (" .. vehucleCount .. ")"
+            elseif vehucleCount > 0 then
+                Garage_text = getText("IGUI_Garage") .. " (" .. currentSizeKB .. "/" .. maxSizeKB .. "m2)"
             end
 
-            if checkBuilding(worldobjects[1]) then --Проверка что гараж нахожится вне ванильного строения
+            if checkBuilding(worldobjects[1]) then
+                local garageOption = context:addOption(Garage_text, worldobjects, nil)
                 local garageOption1 = toolTipcheck(garageOption)
                 garageOption1:setName(getText('ContextMenu_UseGarage'))
                 garageOption1.description = getText('Tooltip_Inside_building')
                 return
             end
 
-            if worldobjects[1]:getModData()["Garage"] and #worldobjects[1]:getModData()["Garage"] > 0 then
-                local myGarageOption = subMenu:addOption(
-                    getText("IGUI_MyGarage") .. " (" .. currentSizeKB .. "/" .. maxSizeKB .. "m2)",
-                    worldobjects, openGaragePanel, playerNum, vehicle, spawnCoordX, spawnCoordY)
-                local tooltip = toolTipcheck(myGarageOption)
-                tooltip:setName(getText("IGUI_GaragePanel_Title"))
-                tooltip.description = getText("IGUI_GaragePanel_OpenHint")
-            else
-                local myGarageOption = subMenu:addOption(
-                    getText("IGUI_MyGarage_empty") .. " (0/" .. maxSizeKB .. "m2)",
-                    worldobjects, openGaragePanel, playerNum, vehicle, spawnCoordX, spawnCoordY)
-                local tooltip = toolTipcheck(myGarageOption)
-                tooltip:setName(getText('ContextMenu_UseGarage'))
-                tooltip.description = getText('Tooltip_Need_Car')
-            end
-
-            if vehicle then --Опции для отправки авто в гараж
-                if not vehicle:getModData().sqlId then player:Say(getText("IGUI_Check_sqlId")) return end
-                local vehicleData = Garage.getVehicleData(vehicle, player, vehicle:getSkinIndex())
-                local carSizeKB = getModDataSizeKB(vehicleData)
-                local NameCar = getText("IGUI_Put_in_garage") ..
-                    getText("IGUI_VehicleName" .. getText(vehicle:getScript():getName())) ..
-                    " (H " .. vehicle:getModData().sqlId .. " KT) [~" .. carSizeKB .. "m2]"
-                if maxSizeKB - currentSizeKB - carSizeKB <= 0 then
-                    subMenu:addOption(getText("IGUI_Garage_full"), worldobjects, nil, playerNum, vehicle)
+            local canPut = false
+            local putLabel = nil
+            if vehicle then
+                if not vehicle:getModData().sqlId then
+                    player:Say(getText("IGUI_Check_sqlId"))
                 else
-                    subMenu:addOption(NameCar, worldobjects, putCar, playerNum, vehicle)
+                    local vehicleData = Garage.getVehicleData(vehicle, player, vehicle:getSkinIndex())
+                    local carSizeKB = getModDataSizeKB(vehicleData)
+                    putLabel = getText("IGUI_Put_in_garage") ..
+                        getText("IGUI_VehicleName" .. getText(vehicle:getScript():getName())) ..
+                        " (H " .. vehicle:getModData().sqlId .. " KT) [~" .. carSizeKB .. "m2]"
+                    if maxSizeKB - currentSizeKB - carSizeKB <= 0 then
+                        putLabel = getText("IGUI_Garage_full")
+                        canPut = false
+                    else
+                        canPut = true
+                    end
                 end
             end
-            -- ДЕБАГ: Добавляем опцию для проверки размера (только для админа)
-            if isAdmin() then
-                subMenu:addOption("DEBUG: Check ModData Size", worldobjects, debugGarageModData)
+
+            if canPut or (putLabel and putLabel == getText("IGUI_Garage_full")) then
+                -- Есть авто на маркере: Гараж -> подменю (список + загнать)
+                local garageOption = context:addOption(Garage_text, worldobjects, nil)
+                local subMenu = context:getNew(context)
+                context:addSubMenu(garageOption, subMenu)
+
+                local openOpt = subMenu:addOption(getText("IGUI_GaragePanel_OpenList"), worldobjects, openGaragePanel, playerNum, vehicle, spawnCoordX, spawnCoordY)
+                local tip = toolTipcheck(openOpt)
+                tip:setName(getText("IGUI_GaragePanel_Title"))
+                tip.description = getText("IGUI_GaragePanel_OpenHint")
+
+                if canPut then
+                    subMenu:addOption(putLabel, worldobjects, putCar, playerNum, vehicle)
+                else
+                    subMenu:addOption(putLabel, worldobjects, nil, playerNum, vehicle)
+                end
+
+                if PM.ChangeSideGarage then
+                    if not checkSafeHouse() then return end
+                    local changeCM = subMenu:addOption(getText("IGUI_ChangeGarageSide"), worldobjects, change, playerNum, vehicle)
+                    local tooltip = toolTipcheck(changeCM)
+                    tooltip:setName(getText('ContextMenu_ChangeGarageSideTooltip'))
+                    tooltip.description = getText('Tooltip_ChangeGarageSideTooltip')
+                end
+                if isAdmin() then
+                    subMenu:addOption("DEBUG: Check ModData Size", worldobjects, debugGarageModData)
+                end
+            else
+                -- Нет авто под постановку: один клик открывает список
+                local garageOption = context:addOption(Garage_text, worldobjects, openGaragePanel, playerNum, vehicle, spawnCoordX, spawnCoordY)
+                local tip = toolTipcheck(garageOption)
+                tip:setName(getText("IGUI_GaragePanel_Title"))
+                tip.description = getText("IGUI_GaragePanel_OpenHint")
+
+                if PM.ChangeSideGarage then
+                    if not checkSafeHouse() then return end
+                    local changeCM = context:addOption(getText("IGUI_ChangeGarageSide"), worldobjects, change, playerNum, vehicle)
+                    local tooltip = toolTipcheck(changeCM)
+                    tooltip:setName(getText('ContextMenu_ChangeGarageSideTooltip'))
+                    tooltip.description = getText('Tooltip_ChangeGarageSideTooltip')
+                end
+                if isAdmin() then
+                    context:addOption("DEBUG: Check ModData Size", worldobjects, debugGarageModData)
+                end
             end
         end
     end

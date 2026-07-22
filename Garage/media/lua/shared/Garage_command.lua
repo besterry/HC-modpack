@@ -121,6 +121,8 @@ end
 Events.OnServerCommand.Add(Garage.onGetSkinIdx)
 
 Garage.getVehicleData = function (vehicle,player,index) --Сохранение ТС (отправка на парковку)
+    local skinTex = vehicle:getSkin()
+    if skinTex == "BOGUS" then skinTex = nil end
     local result = {
         owner = player:getUsername(),
         startDay = getWorld():getWorldAgeDays(), --День постановки на парковку
@@ -131,6 +133,7 @@ Garage.getVehicleData = function (vehicle,player,index) --Сохранение �
         scriptName = vehicle:getScript():getName(), --Display Name
         dir = vehicle:getDir(), --угол направления ТС
         skinIdx = index, --Номер скина
+        skinTexture = skinTex, -- путь текстуры скина (HSV у скин-авто часто белый)
         coords = { vehicle:getX(), vehicle:getY(), vehicle:getZ() }, --Координаты
         angles = { vehicle:getAngleX(), vehicle:getAngleY(), vehicle:getAngleZ() }, --Угол поворота
         rust = vehicle:getRust(), --Ржавчина

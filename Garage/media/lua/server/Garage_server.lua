@@ -69,30 +69,119 @@ commands.putCar = function(player, args) --Добавление авто в га
     end
 end
 
-commands.getCar = function(player, args) --Получение автомобиля из гаража
-    if args then
-        local car = args[1]
-        local spawnX = args[2]
-        local geoY = args[3]
-        local owner = args[4] or "unknown" -- unknown Если нет владельца гаража
-        local cell = getCell()
-        local x, y = tonumber(spawnX + 1), tonumber(geoY)
-        local sq = cell:getGridSquare(x, y, 0)
-        local newVehicle = addVehicleDebug(car.vehicleFullName, car.dir, car.skinIdx, sq) --используется vehicleFullName вместо scriptName (в scriptName запист car, а в vehicleFullName Base.car)
-        local oldKeyID = newVehicle:getKeyId() --запоминаем id заспавненой авто для поиска ключей и удаления
-        newVehicle:removeKeyFromIgnition()
-        Garage.setVehicleData(newVehicle, car, sq, player) --Применение всех переменных к новому авто
-        sendServerCommand(player, "Garage", "findKeyCarEvent", { keyId = oldKeyID, x=newVehicle:getX(), y=newVehicle:getY() }) --Удаление ключей возле машины
-        local newSqlID = newVehicle:getSqlId()
-        local msg = player:getUsername() .. " GET car " .. car.scriptName ..
-            " from Garage: [" .. args[2] - 2 .. "," .. args[3] .. ",0 ->" ..
-            " Owner:" .. owner .. "] " ..
-            " (oldsqlid:" .. car.oldSqlid ..
-            ", newsqlid:" .. newSqlID .. ")" ..
-            " startDay:" .. string.format("%.2f", car.startDay) ..
-            ", currentDay:" .. string.format("%.2f", getWorld():getWorldAgeDays()) .. " (" .. string.format("%.2f",(getWorld():getWorldAgeDays()-car.startDay)) .. " game days)"
-        writeLog("Garage-server", msg)
+local function findGarageTileObject(x, y)
+    local cell = getCell()
+    local sq = cell and cell:getGridSquare(tonumber(x), tonumber(y), 0)
+    if not sq then
+        return nil
     end
+    local objects = sq:getObjects()
+    for i = 0, objects:size() - 1 do
+        local object = objects:get(i)
+        if object and object:getSprite() and object:getSprite():getName() == "garage_0" then
+            return object
+        end
+    end
+    return nil
+end
+
+local function claimCarFromGarage(garageObj, oldSqlid, vehicleFullName)
+    if not garageObj then
+        return nil
+    end
+    local md = garageObj:getModData()
+    local list = md and md["Garage"]
+    if not list then
+        return nil
+    end
+    for i, vehicleData in ipairs(list) do
+        if vehicleData.oldSqlid == oldSqlid and vehicleData.vehicleFullName == vehicleFullName then
+            local car = vehicleData
+            table.remove(list, i)
+            garageObj:transmitModData()
+            return car
+        end
+    end
+    return nil
+end
+
+commands.getCar = function(player, args) --Выдача авто: атомарный claim на сервере (анти-дюп при 2+ игроках)
+    if not args or not player then
+        return
+    end
+
+    local oldSqlid = args.oldSqlid
+    local vehicleFullName = args.vehicleFullName
+    local spawnX = args.spawnX
+    local spawnY = args.spawnY
+    local garageX = args.garageX
+    local garageY = args.garageY
+    local username = player:getUsername()
+
+    if oldSqlid == nil or not vehicleFullName or spawnX == nil or spawnY == nil or garageX == nil or garageY == nil then
+        writeLog("Garage-server", username .. " GET car REJECTED bad args")
+        sendServerCommand(player, "Garage", "getCarResult", { ok = false, reason = "bad_args" })
+        return
+    end
+
+    local cell = getCell()
+    local x, y = tonumber(spawnX + 1), tonumber(spawnY)
+    local sq = cell and cell:getGridSquare(x, y, 0)
+    if not sq then
+        writeLog("Garage-server", username .. " GET car REJECTED no square oldsqlid:" .. tostring(oldSqlid))
+        sendServerCommand(player, "Garage", "getCarResult", { ok = false, reason = "no_square" })
+        return
+    end
+    if sq:getVehicleContainer() then
+        writeLog("Garage-server", username .. " GET car REJECTED spot busy oldsqlid:" .. tostring(oldSqlid))
+        sendServerCommand(player, "Garage", "getCarResult", { ok = false, reason = "busy" })
+        return
+    end
+
+    local garageObj = findGarageTileObject(garageX, garageY)
+    if not garageObj then
+        writeLog("Garage-server", username .. " GET car REJECTED no garage tile [" .. tostring(garageX) .. "," .. tostring(garageY) .. "]")
+        sendServerCommand(player, "Garage", "getCarResult", { ok = false, reason = "no_garage" })
+        return
+    end
+
+    local owner = garageObj:getModData().GarageOwner or "unknown"
+    local car = claimCarFromGarage(garageObj, oldSqlid, vehicleFullName)
+    if not car then
+        -- Уже забрали другой игрок / запись отсутствует
+        writeLog("Garage-server", username .. " GET car REJECTED not in garage (oldsqlid:" .. tostring(oldSqlid) .. " " .. tostring(vehicleFullName) .. ")")
+        sendServerCommand(player, "Garage", "getCarResult", { ok = false, reason = "missing" })
+        return
+    end
+
+    local newVehicle = addVehicleDebug(car.vehicleFullName, car.dir, car.skinIdx, sq)
+    if not newVehicle then
+        -- Откат: вернуть авто в гараж
+        local md = garageObj:getModData()
+        md["Garage"] = md["Garage"] or {}
+        table.insert(md["Garage"], car)
+        garageObj:transmitModData()
+        writeLog("Garage-server", username .. " GET car REJECTED spawn failed, restored oldsqlid:" .. tostring(oldSqlid))
+        sendServerCommand(player, "Garage", "getCarResult", { ok = false, reason = "spawn_fail" })
+        return
+    end
+
+    local oldKeyID = newVehicle:getKeyId()
+    newVehicle:removeKeyFromIgnition()
+    Garage.setVehicleData(newVehicle, car, sq, player)
+    sendServerCommand(player, "Garage", "findKeyCarEvent", { keyId = oldKeyID, x = newVehicle:getX(), y = newVehicle:getY() })
+    sendServerCommand(player, "Garage", "getCarResult", { ok = true })
+
+    local newSqlID = newVehicle:getSqlId()
+    local msg = username .. " GET car " .. tostring(car.scriptName) ..
+        " from Garage: [" .. tostring(garageX) .. "," .. tostring(garageY) .. ",0 ->" ..
+        " Owner:" .. tostring(owner) .. "] " ..
+        " (oldsqlid:" .. tostring(car.oldSqlid) ..
+        ", newsqlid:" .. tostring(newSqlID) .. ")" ..
+        " startDay:" .. string.format("%.2f", car.startDay or 0) ..
+        ", currentDay:" .. string.format("%.2f", getWorld():getWorldAgeDays()) ..
+        " (" .. string.format("%.2f", (getWorld():getWorldAgeDays() - (car.startDay or 0))) .. " game days)"
+    writeLog("Garage-server", msg)
 end
 
 local function CargetSqlId_OnClientCommand(module, command, player, args)
