@@ -250,7 +250,7 @@ function IST15KKillboardUI:doPlayerListContextMenu(player, x, y)
         local context = ISContextMenu.get(playerNum, x + self:getAbsoluteX(), y + self:getAbsoluteY())
         context:addOption(getText("IGUI_T15KKillboard_Delete"), self, IST15KKillboardUI.onCommand, player, "DELETE")
         if self.mode == T15KKillboard.MODE_MONTHLY and player.kills ~= nil then
-            context:addOption(getText("IGUI_T15KKillboard_SubtractMonth"), self, IST15KKillboardUI.onCommand, player, "SUBTRACT_MONTH")
+            context:addOption(getText("IGUI_T15KKillboard_AdjustMonth"), self, IST15KKillboardUI.onCommand, player, "ADJUST_MONTH")
         end
     end
 end
@@ -265,25 +265,25 @@ function IST15KKillboardUI:onCommand(player, command)
         end)
         modal:initialise()
         modal:addToUIManager()
-    elseif command == "SUBTRACT_MONTH" then
-        local prompt = getText("IGUI_T15KKillboard_SubtractMonth_Prompt", tostring(player.user), tostring(player.kills or 0))
-        local modal = ISTextBox:new(0, 0, 320, 180, prompt, "14000", nil, IST15KKillboardUI.onSubtractMonthConfirm, nil, player)
+    elseif command == "ADJUST_MONTH" then
+        local prompt = getText("IGUI_T15KKillboard_AdjustMonth_Prompt", tostring(player.user), tostring(player.kills or 0))
+        local modal = ISTextBox:new(0, 0, 340, 180, prompt, "-14000", nil, IST15KKillboardUI.onAdjustMonthConfirm, nil, player)
         modal:initialise()
         modal:addToUIManager()
     end
 end
 
-function IST15KKillboardUI.onSubtractMonthConfirm(_, button, player)
+function IST15KKillboardUI.onAdjustMonthConfirm(_, button, player)
     if button.internal ~= "OK" or not player or not player.user then
         return
     end
     local text = button.parent.entry:getText()
     local amount = tonumber(text)
-    if not amount or amount <= 0 then
+    if not amount or amount == 0 then
         return
     end
     amount = math.floor(amount)
-    print("[T15KKillboard] subtract monthly " .. tostring(amount) .. " from " .. player.user)
+    print("[T15KKillboard] adjust monthly " .. tostring(amount) .. " for " .. player.user)
     sendClientCommand("T15KKillboardModule", "adjustMonthly", { player.user, amount })
 end
 

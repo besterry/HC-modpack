@@ -600,28 +600,31 @@ local function OnClientCommandT15KRank(module, command, player, args)
         end
         local user = args and args[1]
         local amount = tonumber(args and args[2]) or 0
-        if not user or user == "" or amount <= 0 then
+        if not user or user == "" or amount == 0 then
             return
         end
         amount = math.floor(amount)
         local entry = store.monthly[user]
-        if not entry then
-            print("[T15KKillboard] adjustMonthly: no monthly entry for " .. tostring(user))
-            return
+        local before = 0
+        if entry then
+            before = entry[1] or 0
         end
-        local before = entry[1] or 0
-        local after = before - amount
+        local after = before + amount
         if after <= 0 then
             store.monthly[user] = nil
             after = 0
         else
-            entry[1] = after
-            entry[3] = getTimestamp()
+            if entry then
+                entry[1] = after
+                entry[3] = getTimestamp()
+            else
+                store.monthly[user] = { after, 0, getTimestamp() }
+            end
         end
         print("[T15KKillboard] adjustMonthly " .. tostring(user) .. ": " .. tostring(before) .. " -> " .. tostring(after)
-            .. " (-" .. tostring(amount) .. ") by " .. tostring(player:getUsername()))
+            .. " (" .. tostring(amount) .. ") by " .. tostring(player:getUsername()))
         if writeLog then
-            writeLog("T15KKillboard", player:getUsername() .. " adjustMonthly " .. user .. " " .. before .. "->" .. after)
+            writeLog("T15KKillboard", player:getUsername() .. " adjustMonthly " .. user .. " " .. before .. "->" .. after .. " (" .. amount .. ")")
         end
         serverUpdateT15KRankTable()
     elseif command == "clearKillboard" then
