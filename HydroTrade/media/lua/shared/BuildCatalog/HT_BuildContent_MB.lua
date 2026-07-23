@@ -803,6 +803,7 @@ HT_BuildContent_MB._regContainers = function()
 			add({
 				id = "mb_dresser_" .. di, section = "Build", group = "Containers", kind = "item", sort = sortCont + di,
 				name = entry[5], sprite = entry[1], showHp = true, hp = 200,
+				containerType = "wardrobe",
 				needs = need("Base.Plank", 4, "Base.Nails", 4, "Base.Drawer", 1),
 				skills = { Woodwork = sk("advancedContainer", 7) }, tools = H,
 				create = function(p)
@@ -822,6 +823,7 @@ HT_BuildContent_MB._regContainers = function()
 			add({
 				id = "mb_ofurn_" .. oi, section = "Build", group = "Containers", kind = "item", sort = sortCont + 20 + oi,
 				name = entry[5], sprite = entry[1], showHp = true, hp = 200,
+				containerType = "wardrobe",
 				needs = need("Base.Plank", 4, "Base.Nails", 4, "Base.Drawer", 1),
 				skills = { Woodwork = sk("advancedContainer", 7) }, tools = H,
 				create = function(p)
@@ -845,6 +847,7 @@ HT_BuildContent_MB._regContainers = function()
 				add({
 					id = "mb_bar_" .. localBi, section = "Build", group = "Containers", kind = "item", sort = sortCont + 40 + localBi,
 					name = entry[5], sprite = entry[1], showHp = true, hp = 200,
+					containerType = "counter",
 					needs = need("Base.Plank", 4, "Base.Nails", 4),
 					skills = { Woodwork = sk("advancedContainer", 7) }, tools = H,
 					create = function(p)
@@ -869,6 +872,7 @@ HT_BuildContent_MB._regContainers = function()
 		add({
 			id = "mb_shelf_" .. si, section = "Build", group = "Containers", kind = "item", sort = sortCont + 80 + si,
 			name = disp(entry[1], entry[1]), sprite = entry[1],
+			containerType = "shelves",
 			needs = need("Base.Plank", 6, "Base.Nails", 6),
 			skills = { Woodwork = sk("complexFurniture", 4) }, tools = H,
 			create = function(p)
@@ -900,6 +904,7 @@ HT_BuildContent_MB._regContainers = function()
 		add({
 			id = "mb_crate_" .. ci, section = "Build", group = "Containers", kind = "item", sort = sortCont + 100 + ci,
 			nameKey = entry[1], sprite = entry[2], showHp = true, hp = 200,
+			containerType = icon,
 			needs = need("Base.Plank", 2, "Base.Nails", 2),
 			skills = { Woodwork = skillLvl }, tools = H,
 			create = function(p)
@@ -920,6 +925,7 @@ HT_BuildContent_MB._regContainers = function()
 			add({
 				id = "mb_cardboard_" .. ci, section = "Build", group = "Containers", kind = "item", sort = sortCont + 120 + ci,
 				name = entry[3], sprite = entry[1], showHp = true, hp = 200,
+				containerType = entry[4],
 				needs = need("Base.Plank", 2, "Base.Nails", 2),
 				skills = { Woodwork = sk("simpleContainer", 3) }, tools = H,
 				create = function(p)
@@ -948,6 +954,7 @@ HT_BuildContent_MB._regContainers = function()
 		add({
 			id = "mb_locker_" .. li, section = "Build", group = "Containers", kind = "item", sort = sortCont + 140 + li,
 			nameKey = entry[1], sprite = entry[2], showHp = true, hp = 350,
+			containerType = entry[6] == "hang" and "filingcabinet" or "vendingsnack",
 			needs = lockerNeeds, skills = { Woodwork = sk("complexFurniture", 4) }, tools = SD,
 			create = function(p)
 				local name = getText(entry[1])
@@ -966,6 +973,7 @@ HT_BuildContent_MB._regContainers = function()
 		add({
 			id = "mb_laundry", section = "Build", group = "Containers", kind = "item", sort = sortCont + 160,
 			nameKey = "ContextMenu_Laundry_Cart", sprite = laundrySpr.sprite, showHp = true, hp = 200,
+			containerType = "officedrawers",
 			needs = need("Base.Sheet", 1, "Base.Screws", 2, "Base.SheetMetal", 1),
 			skills = { Woodwork = sk("simpleContainer", 3) }, tools = SD,
 			create = function(p)
@@ -976,6 +984,7 @@ HT_BuildContent_MB._regContainers = function()
 		add({
 			id = "mb_brick_pallet", section = "Build", group = "Containers", kind = "item", sort = sortCont + 161,
 			nameKey = "ContextMenu_Pallet_of_Bricks", sprite = brickSpr.sprite, showHp = true, hp = 250,
+			containerType = "fireplace",
 			needs = need("Base.Plank", 4, "Base.Nails", 2),
 			skills = { Woodwork = sk("complexContainer", 5) }, tools = H,
 			create = function(p)
@@ -986,6 +995,7 @@ HT_BuildContent_MB._regContainers = function()
 		add({
 			id = "mb_metal_barrel", section = "Build", group = "Containers", kind = "item", sort = sortCont + 162,
 			nameKey = "ContextMenu_Metal_Barrel", sprite = barrelSpr.sprite, showHp = true, hp = 350,
+			containerType = "bin",
 			needs = need("Base.SheetMetal", 2, "Base.Screws", 2),
 			skills = { Woodwork = sk("advancedContainer", 7) }, tools = SD,
 			create = function(p)
@@ -999,6 +1009,7 @@ HT_BuildContent_MB._regContainers = function()
 		add({
 			id = "mb_post_box", section = "Build", group = "Containers", kind = "item", sort = sortCont + 163,
 			nameKey = "ContextMenu_Post_Box", sprite = postSpr.sprite, showHp = true, hp = 350,
+			containerType = "vendingpop",
 			needs = need("Base.SheetMetal", 2, "Base.Screws", 2),
 			skills = { Woodwork = sk("advancedContainer", 7) }, tools = SD,
 			create = function(p)
@@ -1012,6 +1023,7 @@ HT_BuildContent_MB._regContainers = function()
 		add({
 			id = "mb_recycle_bin", section = "Build", group = "Containers", kind = "item", sort = sortCont + 164,
 			nameKey = "ContextMenu_Recycling_Bin", sprite = recycleSpr.sprite, showHp = true, hp = 200,
+			containerType = "bin",
 			needs = need("Base.Plank", 2, "Base.Nails", 2),
 			skills = { Woodwork = sk("simpleContainer", 3) }, tools = H,
 			create = function(p)
@@ -1289,6 +1301,7 @@ HT_BuildContent_MB._regDecorSurvival = function()
 			id = "mb_fridge", section = "Survival", group = "Survival", kind = "item", sort = sortSurv + 2,
 			name = disp(fridgeSpr.sprite, "Fridge"), sprite = fridgeSpr.sprite,
 			showHp = true, hp = 350,
+			containerType = "fridge",
 			needs = need("Base.SheetMetal", 4, "Base.Screws", 5, "Radio.ElectricWire", 2, "Base.ElectronicsScrap", 10),
 			skills = {
 				Woodwork = sk("advancedContainer", 7),

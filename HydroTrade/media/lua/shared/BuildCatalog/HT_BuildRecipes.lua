@@ -93,6 +93,61 @@ HT_BuildRecipes.getDisplayName = function(entry)
 	return entry.id or "?"
 end
 
+-- Capacity from tile sprite property ContainerCapacity (ItemContainer.setType keeps default 50).
+HT_BuildRecipes._capSpriteCache = HT_BuildRecipes._capSpriteCache or {}
+
+HT_BuildRecipes.getCapacityFromSprite = function(spriteName)
+	if not spriteName or spriteName == "" then
+		return nil
+	end
+	local cached = HT_BuildRecipes._capSpriteCache[spriteName]
+	if cached ~= nil then
+		if cached == false then
+			return nil
+		end
+		return cached
+	end
+	local cap = nil
+	local spr = getSprite and getSprite(spriteName) or nil
+	if spr and spr.getProperties then
+		local props = spr:getProperties()
+		if props and props:Is("ContainerCapacity") then
+			cap = tonumber(props:Val("ContainerCapacity"))
+		end
+	end
+	if type(cap) == "number" and cap > 0 then
+		HT_BuildRecipes._capSpriteCache[spriteName] = cap
+		return cap
+	end
+	HT_BuildRecipes._capSpriteCache[spriteName] = false
+	return nil
+end
+
+HT_BuildRecipes.getCapacity = function(recipe)
+	if not recipe then
+		return nil
+	end
+	if type(recipe.capacity) == "number" and recipe.capacity > 0 then
+		return recipe.capacity
+	end
+	local cap = HT_BuildRecipes.getCapacityFromSprite(recipe.sprite)
+	if cap then
+		return cap
+	end
+	if recipe.variants then
+		for _, variant in ipairs(recipe.variants) do
+			if type(variant.capacity) == "number" and variant.capacity > 0 then
+				return variant.capacity
+			end
+			cap = HT_BuildRecipes.getCapacityFromSprite(variant.sprite)
+			if cap then
+				return cap
+			end
+		end
+	end
+	return nil
+end
+
 HT_BuildRecipes.getActive = function(recipe, variantIndex)
 	if recipe and recipe.variants and #recipe.variants > 0 then
 		return recipe.variants[variantIndex or 1] or recipe.variants[1]

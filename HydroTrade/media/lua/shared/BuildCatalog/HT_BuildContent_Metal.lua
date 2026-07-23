@@ -20,6 +20,7 @@ local function metal(def)
 		noteKey = def.noteKey,
 		showHp = def.showHp,
 		hp = def.hp,
+		containerType = def.containerType,
 		needs = def.needs,
 		skills = def.skills,
 		tools = TW,
@@ -44,6 +45,7 @@ HT_BuildContent_Metal.register = function()
 	metal({
 		id = "mw_shelves", group = "Containers", sort = 1,
 		nameKey = "ContextMenu_MetalShelves", sprite = "furniture_shelving_01_28",
+		containerType = "shelves",
 		needs = { { item = "Base.MetalPipe", count = 2 }, { item = "Base.SmallSheetMetal", count = 1 }, { item = "Base.ScrapMetal", count = 1 } },
 		skills = { MetalWelding = 2 },
 		create = function(p) ISBlacksmithMenu.onMetalShelves(nil, p, "2") end,
@@ -51,6 +53,7 @@ HT_BuildContent_Metal.register = function()
 	metal({
 		id = "mw_crate", group = "Containers", sort = 2, showHp = true, hp = 350,
 		nameKey = "ContextMenu_MetalCrate", sprite = "constructedobjects_01_44",
+		containerType = "crate",
 		needs = {
 			{ item = "Base.MetalPipe", count = 2 }, { item = "Base.SmallSheetMetal", count = 2 },
 			{ item = "Base.SheetMetal", count = 2 }, { item = "Base.ScrapMetal", count = 1 },
@@ -61,6 +64,7 @@ HT_BuildContent_Metal.register = function()
 	metal({
 		id = "mw_counter", group = "Containers", sort = 3,
 		nameKey = "ContextMenu_MetalCounter", sprite = "fixtures_counters_01_35",
+		containerType = "counter",
 		needs = { { item = "Base.MetalPipe", count = 2 }, { item = "Base.SmallSheetMetal", count = 4 }, { item = "Base.Hinge", count = 2 } },
 		skills = { MetalWelding = 5 },
 		create = function(p) ISBlacksmithMenu.onMetalCounter(nil, p, "2") end,
@@ -68,6 +72,7 @@ HT_BuildContent_Metal.register = function()
 	metal({
 		id = "mw_counter_c", group = "Containers", sort = 4,
 		nameKey = "ContextMenu_MetalCounterCorner", sprite = "fixtures_counters_01_36",
+		containerType = "counter",
 		needs = { { item = "Base.MetalPipe", count = 2 }, { item = "Base.SmallSheetMetal", count = 4 }, { item = "Base.Hinge", count = 2 } },
 		skills = { MetalWelding = 5 },
 		create = function(p) ISBlacksmithMenu.onMetalCounterCorner(nil, p, "2") end,
@@ -75,6 +80,7 @@ HT_BuildContent_Metal.register = function()
 	metal({
 		id = "mw_locker_s", group = "Containers", sort = 5, showHp = true, hp = 300,
 		nameKey = "ContextMenu_SmallLocker", sprite = "furniture_storage_02_8",
+		containerType = "locker",
 		needs = { { item = "Base.MetalPipe", count = 3 }, { item = "Base.SmallSheetMetal", count = 4 }, { item = "Base.Hinge", count = 2 } },
 		skills = { MetalWelding = 6 },
 		create = function(p) ISBlacksmithMenu.onSmallLocker(nil, p, "2") end,
@@ -82,6 +88,7 @@ HT_BuildContent_Metal.register = function()
 	metal({
 		id = "mw_locker_b", group = "Containers", sort = 6, showHp = true, hp = 400,
 		nameKey = "ContextMenu_BigLocker", sprite = "furniture_storage_02_12",
+		containerType = "locker",
 		needs = { { item = "Base.MetalPipe", count = 8 }, { item = "Base.SmallSheetMetal", count = 4 }, { item = "Base.Hinge", count = 2 } },
 		skills = { MetalWelding = 9 },
 		create = function(p) ISBlacksmithMenu.onBigLocker(nil, p, "3") end,

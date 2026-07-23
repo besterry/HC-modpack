@@ -141,6 +141,7 @@ HT_BuildContent_Vanilla.register = function()
 	add({
 		id = "v_crate", section = "Build", group = "Containers", kind = "item", sort = 1,
 		nameKey = "ContextMenu_Wooden_Crate", sprite = "carpentry_01_16", showHp = true, hp = 150,
+		containerType = "crate",
 		needs = { { item = "Base.Plank", count = 3 }, { item = "Base.Nails", count = 3 } },
 		skills = { Woodwork = 3 }, tools = H,
 		create = function(p) ISBuildMenu.onWoodenCrate(nil, nil, ISBuildMenu.getWoodenCrateSprites(p), p) end,

@@ -100,24 +100,27 @@ HT_BuildContent_HC.register = function()
 		{ id = "hc_kiln", nameKey = "ContextMenu_Kiln", sprite = "hcBuildingKiln_01_0", item = "Hydrocraft.HCKiln", fn = "onBuildKiln" },
 		{ id = "hc_tarkiln", nameKey = "ContextMenu_Tar_Kiln", sprite = "hcBuildingTarkiln_01_0", item = "Hydrocraft.HCTarkiln", fn = "onBuildTarkiln" },
 		{ id = "hc_grind", nameKey = "ContextMenu_Grindstone", sprite = "hcBuildingGrindstone_01_0", item = "Hydrocraft.HCGrindstone", fn = "onBuildGrindstone" },
-		{ id = "hc_carp", nameKey = "ContextMenu_Carpenters_Workbench", sprite = "hcBuildingCarpybench_01_0", item = "Hydrocraft.HCCarpenterbench", fn = "onBuildCarpybench" },
+		{ id = "hc_carp", nameKey = "ContextMenu_Carpenters_Workbench", sprite = "hcBuildingCarpBench_01_0", item = "Hydrocraft.HCCarpenterbench", fn = "onBuildCarpybench" },
 		{ id = "hc_herb", nameKey = "ContextMenu_Herbal_Table", sprite = "hcBuildingHerbtable_01_0", item = "Hydrocraft.HCHerbtable", fn = "onBuildHerbaltable" },
-		{ id = "hc_cellar", nameKey = "ContextMenu_Cellar", sprite = "hcBuildingCellar_01_0", item = "Hydrocraft.HCCellar", fn = "onBuildCellar", group = "Containers" },
+		{ id = "hc_cellar", nameKey = "ContextMenu_Cellar", sprite = "hcBuildingCellar_01_0", item = "Hydrocraft.HCCellar", fn = "onBuildCellar", section = "Build", group = "Containers" },
 	}
+	-- Stations use ISSimpleFurniture: hammer required unless noNeedHammer=true.
+	local H = { "Hammer" }
 	for i, s in ipairs(stations) do
 		local entry = s
 		if Hydrocraft[entry.fn] then
 			add({
 				id = entry.id,
-				section = "Stations",
+				section = entry.section or "Stations",
 				group = entry.group or "Stations",
 				kind = "item",
 				sort = i,
 				nameKey = entry.nameKey,
 				sprite = entry.sprite,
+				containerType = entry.id == "hc_cellar" and "crate" or nil,
 				needs = { { item = entry.item, count = 1 } },
 				skills = {},
-				tools = {},
+				tools = H,
 				create = function(p) Hydrocraft[entry.fn](p) end,
 			})
 		end
@@ -128,6 +131,7 @@ HT_BuildContent_HC.register = function()
 			id = "hc_ibc", section = "Survival", group = "Survival", kind = "item", sort = 10,
 			nameKey = "ContextMenu_IBC_Tower", sprite = "hcBuildingIBCTower_01_0",
 			needs = { { item = "Hydrocraft.HCIBCtower", count = 1 } },
+			tools = H,
 			create = function(p) Hydrocraft.onBuildIBCTower(p) end,
 		})
 	end
@@ -136,6 +140,7 @@ HT_BuildContent_HC.register = function()
 			id = "hc_pump", section = "Survival", group = "Survival", kind = "item", sort = 11,
 			nameKey = "ContextMenu_Water_Pump", sprite = "hcBuildingWaterPump_01_0",
 			needs = { { item = "Hydrocraft.HCWaterpump", count = 1 } },
+			tools = H,
 			create = function(p) Hydrocraft.onBuildWaterPump(p) end,
 		})
 	end
@@ -144,6 +149,8 @@ HT_BuildContent_HC.register = function()
 			id = "hc_bee", section = "Survival", group = "Survival", kind = "item", sort = 12,
 			nameKey = "ContextMenu_Beehive", sprite = "hcBuildingBeehive_00_0",
 			needs = { { item = "Hydrocraft.HCBeehive3", count = 1 } },
+			-- HC sets noNeedHammer = true
+			tools = {},
 			create = function(p) Hydrocraft.onBuildBeehive(p) end,
 		})
 	end

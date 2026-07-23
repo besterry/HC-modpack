@@ -4,6 +4,7 @@ require "ISUI/ISTickBox"
 require "ISUI/ISPanel"
 require "ISUI/ISButton"
 require "ISUI/ISScrollingListBox"
+require "ISUI/ISToolTip"
 
 -- Hierarchical mockup:
 -- Section rail -> Group tiles -> Entry grid -> Detail (variants / build)
@@ -130,15 +131,43 @@ local function getSpriteTex(spriteName)
 	if not spriteName then
 		return nil
 	end
+	if HT_BuildCatalogUI._texCache and HT_BuildCatalogUI._texCache[spriteName] ~= nil then
+		local cached = HT_BuildCatalogUI._texCache[spriteName]
+		if cached == false then
+			return nil
+		end
+		return cached
+	end
+	HT_BuildCatalogUI._texCache = HT_BuildCatalogUI._texCache or {}
 	local tex = getTexture(spriteName)
-	if tex then
-		return tex
+	if not tex then
+		local spr = getSprite(spriteName)
+		if spr then
+			tex = spr:getTextureForCurrentFrame(IsoDirections.E)
+		end
 	end
-	local spr = getSprite(spriteName)
-	if spr then
-		return spr:getTextureForCurrentFrame(IsoDirections.E)
+	HT_BuildCatalogUI._texCache[spriteName] = tex or false
+	return tex
+end
+
+local truncCache = {}
+local function truncateToWidthCached(text, font, maxW)
+	if not text or text == "" then
+		return ""
 	end
-	return nil
+	local key = tostring(maxW) .. "|" .. text
+	local cached = truncCache[key]
+	if cached then
+		return cached
+	end
+	local out = truncateToWidth(text, font, maxW)
+	-- Bound cache size roughly
+	if truncCache._n and truncCache._n > 800 then
+		truncCache = {}
+	end
+	truncCache[key] = out
+	truncCache._n = (truncCache._n or 0) + 1
+	return out
 end
 
 local function getItemTex(fullType)
@@ -159,37 +188,76 @@ function HT_BuildGridPanel:new(x, y, w, h, parentUI)
 	setmetatable(o, self)
 	self.__index = self
 	o.parentUI = parentUI
-	o.backgroundColor = COL.bg
-	o.borderColor = COL.border
+	o.backgroundColor = { r = COL.bg.r, g = COL.bg.g, b = COL.bg.b, a = COL.bg.a }
+	o.borderColor = { r = COL.border.r, g = COL.border.g, b = COL.border.b, a = 1 }
 	o.items = {}
 	o.selectedId = nil
 	o.mode = "groups" -- groups | entries
-	o:setScrollChildren(true)
+	-- Engine already offsets draw*() by getYScroll; do not add scroll again in draw coords.
+	o:setScrollChildren(false)
+	o:setScrollWithParent(false)
 	return o
 end
 
 function HT_BuildGridPanel:columns()
-	local inner = self.width - 16
+	local scrollW = 0
+	if self.vscroll and self:isVScrollBarVisible() then
+		scrollW = self.vscroll:getWidth() + 2
+	end
+	local inner = math.max(1, self.width - 16 - scrollW)
 	return math.max(1, math.floor((inner + CELL_GAP) / (CELL + CELL_GAP)))
+end
+
+function HT_BuildGridPanel:contentHeight()
+	local cols = self:columns()
+	local rows = math.max(1, math.ceil(math.max(#(self.items or {}), 1) / cols))
+	return rows * (CELL + CELL_GAP) + 16
+end
+
+function HT_BuildGridPanel:clampScroll()
+	local minScroll = math.min(0, self.height - self:getScrollHeight())
+	local y = self:getYScroll()
+	if y > 0 then
+		self:setYScroll(0)
+	elseif y < minScroll then
+		self:setYScroll(minScroll)
+	end
 end
 
 function HT_BuildGridPanel:setItems(items, selectedId, mode)
 	self.items = items or {}
 	self.selectedId = selectedId
 	self.mode = mode or "entries"
-	local cols = self:columns()
-	local rows = math.max(1, math.ceil(math.max(#self.items, 1) / cols))
-	self:setScrollHeight(math.max(self.height, rows * (CELL + CELL_GAP) + 16))
-	if self:getYScroll() > 0 then
-		self:setYScroll(0)
+	for _, entry in ipairs(self.items) do
+		if self.mode == "groups" then
+			entry._gridLabel = getTextOrNull("IGUI_HT_BuildCatalog_Cat_" .. entry.id) or entry.id
+		else
+			entry._gridLabel = HT_BuildRecipes.getDisplayName(entry)
+			entry._gridCap = HT_BuildRecipes.getCapacity(entry)
+		end
 	end
+	self:relayoutScroll()
+	self:setYScroll(0)
+end
+
+function HT_BuildGridPanel:relayoutScroll()
+	local contentH = self:contentHeight()
+	self:setScrollHeight(math.max(contentH, self.height))
+	self:clampScroll()
+end
+
+function HT_BuildGridPanel:createChildren()
+	ISPanel.createChildren(self)
+	-- No addScrollBars: custom-drawn tiles + engine scrollbars fight hit-testing.
+	-- Mouse wheel still scrolls; clamp keeps the list reachable.
 end
 
 function HT_BuildGridPanel:indexAt(x, y)
 	local cols = self:columns()
-	local contentY = y - self:getYScroll()
+	-- Mouse x/y are already in scrolled content space (same as draw* after engine scroll).
+	-- Do not subtract getYScroll() again or hits drift downward while scrolling.
 	local col = math.floor((x - 8) / (CELL + CELL_GAP))
-	local row = math.floor((contentY - 8) / (CELL + CELL_GAP))
+	local row = math.floor((y - 8) / (CELL + CELL_GAP))
 	if col < 0 or col >= cols or row < 0 then
 		return 0
 	end
@@ -201,20 +269,28 @@ function HT_BuildGridPanel:indexAt(x, y)
 end
 
 function HT_BuildGridPanel:prerender()
-	ISPanel.prerender(self)
+	-- Do not leave stencil open here: sibling panels (detail) prerender next
+	-- and would get clipped to this grid's rect (blank right pane).
+end
+
+function HT_BuildGridPanel:render()
+	local sx = -self:getXScroll()
+	local sy = -self:getYScroll()
 	self:setStencilRect(0, 0, self.width, self.height)
-	self:drawRect(0, 0, self.width, self.height, COL.bg.a, COL.bg.r, COL.bg.g, COL.bg.b)
-	self:drawRectBorder(0, 0, self.width, self.height, COL.border.a, COL.border.r, COL.border.g, COL.border.b)
+	self:drawRect(sx, sy, self.width, self.height, 1, COL.bg.r, COL.bg.g, COL.bg.b)
 
 	local cols = self:columns()
+	local yScroll = self:getYScroll()
 	local viewH = self.height
+
 	for i, entry in ipairs(self.items) do
 		local col = (i - 1) % cols
 		local row = math.floor((i - 1) / cols)
+		-- Content coordinates (engine applies yScroll to draw calls).
 		local x = 8 + col * (CELL + CELL_GAP)
-		local y = 8 + row * (CELL + CELL_GAP) + self:getYScroll()
-		-- Skip tiles fully outside the panel (keeps scroll clipped to the window).
-		if y + CELL >= 0 and y <= viewH then
+		local y = 8 + row * (CELL + CELL_GAP)
+		local yView = y + yScroll
+		if yView + CELL >= 0 and yView <= viewH then
 			local selected = entry.id == self.selectedId
 
 			self:drawRect(x, y, CELL, CELL, 0.95, COL.panelSoft.r, COL.panelSoft.g, COL.panelSoft.b)
@@ -234,8 +310,8 @@ function HT_BuildGridPanel:prerender()
 				if tex then
 					drawSpriteInBox(self, tex, x + 10, y + 8, CELL - 20, iconBottom - (y + 8))
 				end
-				local label = getTextOrNull("IGUI_HT_BuildCatalog_Cat_" .. entry.id) or entry.id
-				self:drawTextCentre(truncateToWidth(label, UIFont.Small, labelMaxW), x + CELL / 2, labelY, COL.text.r, COL.text.g, COL.text.b, 1, UIFont.Small)
+				local label = entry._gridLabel or entry.id
+				self:drawTextCentre(truncateToWidthCached(label, UIFont.Small, labelMaxW), x + CELL / 2, labelY, COL.text.r, COL.text.g, COL.text.b, 1, UIFont.Small)
 			else
 				local tex = getSpriteTex(entry.sprite)
 				if tex then
@@ -248,11 +324,15 @@ function HT_BuildGridPanel:prerender()
 					self:drawRect(x + 4, y + 4, 40, 14, 0.85, COL.style.r * 0.35, COL.style.g * 0.35, COL.style.b * 0.35)
 					self:drawText(getText("IGUI_HT_BuildCatalog_Badge_StyleShort"), x + 7, y + 4, COL.style.r, COL.style.g, COL.style.b, 1, UIFont.Small)
 				end
+				local metaY = labelY - 14
+				if entry._gridCap then
+					self:drawText(getText("IGUI_HT_BuildCatalog_CapacityShort", tostring(entry._gridCap)), x + 5, metaY, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
+				end
 				if entry.showHp and entry.hp then
-					self:drawTextRight(tostring(entry.hp), x + CELL - 5, labelY - 14, COL.hp.r, COL.hp.g, COL.hp.b, 1, UIFont.Small)
+					self:drawTextRight(tostring(entry.hp), x + CELL - 5, metaY, COL.hp.r, COL.hp.g, COL.hp.b, 1, UIFont.Small)
 				end
 				self:drawTextCentre(
-					truncateToWidth(HT_BuildRecipes.getDisplayName(entry), UIFont.Small, labelMaxW),
+					truncateToWidthCached(entry._gridLabel or HT_BuildRecipes.getDisplayName(entry), UIFont.Small, labelMaxW),
 					x + CELL / 2, labelY, COL.text.r, COL.text.g, COL.text.b, 1, UIFont.Small
 				)
 			end
@@ -266,8 +346,10 @@ function HT_BuildGridPanel:prerender()
 		elseif self.parentUI and self.parentUI.navLevel == "entries" then
 			msg = getText("IGUI_HT_BuildCatalog_EmptyGroup")
 		end
-		self:drawTextCentre(msg, self.width / 2, self.height / 2 - 8, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Medium)
+		self:drawTextCentre(msg, sx + self.width / 2, sy + self.height / 2 - 8, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Medium)
 	end
+
+	self:drawRectBorder(sx, sy, self.width, self.height, COL.border.a, COL.border.r, COL.border.g, COL.border.b)
 	self:clearStencilRect()
 end
 
@@ -291,7 +373,11 @@ function HT_BuildGridPanel:onMouseDoubleClick(x, y)
 end
 
 function HT_BuildGridPanel:onMouseWheel(del)
-	self:setYScroll(self:getYScroll() - (del * 36))
+	if self:getScrollHeight() <= self.height then
+		return false
+	end
+	self:setYScroll(self:getYScroll() - (del * 56))
+	self:clampScroll()
 	return true
 end
 
@@ -333,6 +419,8 @@ function HT_BuildCatalogUI:new(x, y, width, height, playerNum)
 	o.resizable = true
 	o.minimumWidth = 800
 	o.minimumHeight = 500
+	o.backgroundColor = { r = COL.bg.r, g = COL.bg.g, b = COL.bg.b, a = 1 }
+	o.borderColor = { r = COL.border.r, g = COL.border.g, b = COL.border.b, a = 1 }
 	local prefs = HT_BuildPrefs and HT_BuildPrefs.get() or {}
 	o.sectionId = prefs.lastSection or "Build"
 	o.groupId = prefs.lastCategory or nil
@@ -359,6 +447,7 @@ function HT_BuildCatalogUI:new(x, y, width, height, playerNum)
 	o.selectedEntry = nil
 	o.variantIndex = 1
 	o.variantHits = {}
+	o.helpHits = {}
 	o.crumbHits = {}
 	return o
 end
@@ -435,11 +524,20 @@ function HT_BuildCatalogUI:createChildren()
 	self.detail.backgroundColor = COL.panel
 	self.detail.borderColor = COL.border
 	self.detail.prerender = function(panel)
+		if panel.clearStencilRect then
+			panel:clearStencilRect()
+		end
 		ISPanel.prerender(panel)
 		self:renderDetails(panel)
 	end
 	self.detail.onMouseDown = function(panel, x, y)
 		return self:onDetailMouseDown(x, y)
+	end
+	self.detail.onMouseMove = function(panel, dx, dy)
+		return self:onDetailMouseMove(panel)
+	end
+	self.detail.onMouseMoveOutside = function(panel, dx, dy)
+		self:setHelpTooltipVisible(panel, false)
 	end
 	self:addChild(self.detail)
 
@@ -564,11 +662,16 @@ function HT_BuildCatalogUI:layoutChildren()
 	self.detail:setWidth(DETAIL_W)
 	self.detail:setHeight(bodyH)
 
-	self:refreshAll()
+	if self.grid.relayoutScroll then
+		self.grid:relayoutScroll()
+	end
 end
 
 function HT_BuildCatalogUI:prerender()
 	ISCollapsableWindow.prerender(self)
+	-- Solid body fill so tiled window chrome does not overlap when resizing.
+	local th = self:titleBarHeight()
+	self:drawRect(0, th, self.width, self.height - th, 1, COL.bg.r, COL.bg.g, COL.bg.b)
 	if self.grid and (self.lastW ~= self.width or self.lastH ~= self.height) then
 		self.lastW = self.width
 		self.lastH = self.height
@@ -577,6 +680,15 @@ function HT_BuildCatalogUI:prerender()
 	if self.backBtn then
 		self.backBtn:setEnable(self.navLevel == "entries")
 	end
+end
+
+function HT_BuildCatalogUI:onResize()
+	if ISCollapsableWindow.onResize then
+		ISCollapsableWindow.onResize(self)
+	end
+	self.lastW = nil
+	self.lastH = nil
+	self:layoutChildren()
 end
 
 function HT_BuildCatalogUI:onAvailToggle(index, selected)
@@ -691,16 +803,54 @@ function HT_BuildCatalogUI:renderDetails(panel)
 	panel:drawRect(0, 0, panel.width, panel.height, COL.panel.a, COL.panel.r, COL.panel.g, COL.panel.b)
 	panel:drawRectBorder(0, 0, panel.width, panel.height, COL.border.a, COL.border.r, COL.border.g, COL.border.b)
 	self.variantHits = {}
+	self.helpHits = {}
 	self.buildHit.w = 0
 
 	local pad = 12
+	local helpBtnW = 18
+	local helpGap = 4
+	local function canHelp(fullType)
+		if not fullType or not CHC_menu or not CHC_main or not CHC_main.items then
+			return false
+		end
+		if not CHC_main.items[fullType] then
+			return false
+		end
+		return type(CHC_main.recipesByItem[fullType]) == "table"
+			or type(CHC_main.recipesForItem[fullType]) == "table"
+	end
+	local function addHelpHit(fullType, hx, hy)
+		if not canHelp(fullType) then
+			return false
+		end
+		panel:drawRect(hx, hy, helpBtnW, 16, 0.85, COL.bg.r, COL.bg.g, COL.bg.b)
+		panel:drawRectBorder(hx, hy, helpBtnW, 16, 0.75, COL.border.r, COL.border.g, COL.border.b)
+		panel:drawTextCentre("?", hx + helpBtnW / 2, hy + 1, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
+		table.insert(self.helpHits, { x = hx, y = hy, w = helpBtnW, h = 16, fullType = fullType })
+		return true
+	end
+	local function drawItemRow(fullType, iconTex, label, ir, ig, ib, yRow)
+		local x = pad
+		if addHelpHit(fullType, x, yRow) then
+			x = x + helpBtnW + helpGap
+		end
+		if iconTex then
+			panel:drawTextureScaledAspect(iconTex, x, yRow, 16, 16, 1, 1, 1, 1)
+		end
+		local textX = x + 22
+		local textMax = panel.width - textX - pad
+		panel:drawText(truncateToWidthCached(label, UIFont.Small, textMax), textX, yRow + 1, ir, ig, ib, 1, UIFont.Small)
+	end
+
 	if self.navLevel == "groups" then
+		self:setHelpTooltipVisible(panel, false)
 		panel:drawTextCentre(getText("IGUI_HT_BuildCatalog_PickGroup"), panel.width / 2, panel.height / 2 - 10, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
 		return
 	end
 
 	local recipe = self.selectedEntry
 	if not recipe then
+		self:setHelpTooltipVisible(panel, false)
 		panel:drawTextCentre(getText("IGUI_HT_BuildCatalog_EmptyGroup"), panel.width / 2, panel.height / 2 - 10, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
 		return
 	end
@@ -727,6 +877,11 @@ function HT_BuildCatalogUI:renderDetails(panel)
 
 	if (active.showHp or recipe.showHp) and (active.hp or recipe.hp) then
 		panel:drawText(getText("IGUI_HT_BuildCatalog_HP", tostring(active.hp or recipe.hp)), pad, y, COL.hp.r, COL.hp.g, COL.hp.b, 1, UIFont.Small)
+		y = y + 16
+	end
+	local cap = HT_BuildRecipes.getCapacity(active) or HT_BuildRecipes.getCapacity(recipe)
+	if cap then
+		panel:drawText(getText("IGUI_HT_BuildCatalog_Capacity", tostring(cap)), pad, y, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
 		y = y + 16
 	end
 
@@ -803,12 +958,8 @@ function HT_BuildCatalogUI:renderDetails(panel)
 			local have = HT_BuildRecipes.countItem(self.character, need.item)
 			local good = have >= need.count or (ISBuildMenu and ISBuildMenu.cheat)
 			local ir, ig, ib = good and COL.ok.r or COL.bad.r, good and COL.ok.g or COL.bad.g, good and COL.ok.b or COL.bad.b
-			local itex = getItemTex(need.item)
-			if itex then
-				panel:drawTextureScaledAspect(itex, pad, y, 16, 16, 1, 1, 1, 1)
-			end
 			local itemName = getItemNameFromFullType(need.item) or need.item
-			panel:drawText(truncate(itemName, 22) .. "  " .. have .. "/" .. need.count, pad + 22, y + 1, ir, ig, ib, 1, UIFont.Small)
+			drawItemRow(need.item, getItemTex(need.item), itemName .. "  " .. have .. "/" .. need.count, ir, ig, ib, y)
 			y = y + 18
 		end
 	end
@@ -822,12 +973,8 @@ function HT_BuildCatalogUI:renderDetails(panel)
 			local have = HT_BuildRecipes.countUses(self.character, use.item)
 			local good = have >= use.count or (ISBuildMenu and ISBuildMenu.cheat)
 			local ir, ig, ib = good and COL.ok.r or COL.bad.r, good and COL.ok.g or COL.bad.g, good and COL.ok.b or COL.bad.b
-			local itex = getItemTex(use.item)
-			if itex then
-				panel:drawTextureScaledAspect(itex, pad, y, 16, 16, 1, 1, 1, 1)
-			end
 			local itemName = getItemNameFromFullType(use.item) or use.item
-			panel:drawText(truncate(itemName, 22) .. "  " .. have .. "/" .. use.count, pad + 22, y + 1, ir, ig, ib, 1, UIFont.Small)
+			drawItemRow(use.item, getItemTex(use.item), itemName .. "  " .. have .. "/" .. use.count, ir, ig, ib, y)
 			y = y + 18
 		end
 	end
@@ -856,12 +1003,7 @@ function HT_BuildCatalogUI:renderDetails(panel)
 			local good = HT_BuildRecipes.hasTool(self.character, tool) or (ISBuildMenu and ISBuildMenu.cheat)
 			local ir, ig, ib = good and COL.ok.r or COL.bad.r, good and COL.ok.g or COL.bad.g, good and COL.ok.b or COL.bad.b
 			local toolType = HT_BuildRecipes.getToolFullType and HT_BuildRecipes.getToolFullType(tool) or tool
-			local itex = getItemTex(toolType)
-			if itex then
-				panel:drawTextureScaledAspect(itex, pad, y, 16, 16, 1, 1, 1, 1)
-			end
-			local label = HT_BuildRecipes.getToolLabel(tool)
-			panel:drawText(label, pad + 22, y + 1, ir, ig, ib, 1, UIFont.Small)
+			drawItemRow(toolType, getItemTex(toolType), HT_BuildRecipes.getToolLabel(tool), ir, ig, ib, y)
 			y = y + 18
 		end
 	end
@@ -879,9 +1021,82 @@ function HT_BuildCatalogUI:renderDetails(panel)
 		panel:drawRectBorder(pad, btnY, btnW, btnH, 0.6, COL.border.r, COL.border.g, COL.border.b)
 		panel:drawTextCentre(getText("IGUI_HT_BuildCatalog_Build"), pad + btnW / 2, btnY + 8, 0.55, 0.55, 0.55, 1, UIFont.Small)
 	end
+
+	-- Hit-zones are custom-drawn; refresh tooltip every frame while mouse is over detail.
+	if panel:isMouseOver() then
+		self:onDetailMouseMove(panel)
+	else
+		self:setHelpTooltipVisible(panel, false)
+	end
+end
+
+function HT_BuildCatalogUI:setHelpTooltipVisible(panel, visible)
+	if not panel then
+		return
+	end
+	if visible then
+		if not panel.helpTooltipUI then
+			panel.helpTooltipUI = ISToolTip:new()
+			panel.helpTooltipUI:setOwner(panel)
+			panel.helpTooltipUI:setVisible(false)
+			panel.helpTooltipUI:setAlwaysOnTop(true)
+			panel.helpTooltipUI.maxLineWidth = 320
+		end
+		local tip = panel.helpTooltipUI
+		tip.description = getText("IGUI_HT_BuildCatalog_CraftHelper")
+		if not tip:getIsVisible() then
+			tip:addToUIManager()
+			tip:setVisible(true)
+		end
+		tip:setX(panel:getAbsoluteX() + panel:getMouseX() + 18)
+		tip:setY(panel:getAbsoluteY() + panel:getMouseY() + 18)
+	elseif panel.helpTooltipUI and panel.helpTooltipUI:getIsVisible() then
+		panel.helpTooltipUI:setVisible(false)
+		panel.helpTooltipUI:removeFromUIManager()
+	end
+end
+
+function HT_BuildCatalogUI:onDetailMouseMove(panel)
+	local x = panel:getMouseX()
+	local y = panel:getMouseY()
+	for _, hit in ipairs(self.helpHits or {}) do
+		if x >= hit.x and x <= hit.x + hit.w and y >= hit.y and y <= hit.y + hit.h then
+			self:setHelpTooltipVisible(panel, true)
+			return true
+		end
+	end
+	self:setHelpTooltipVisible(panel, false)
+	return false
+end
+
+function HT_BuildCatalogUI:openCraftHelperFor(fullType)
+	if not fullType or fullType == "" then
+		return false
+	end
+	if not CHC_menu or not CHC_menu.onCraftHelper then
+		return false
+	end
+	local item = nil
+	if ISBuildMenu and ISBuildMenu.GetItemInstance then
+		item = ISBuildMenu.GetItemInstance(fullType)
+	end
+	if (not item) and instanceItem then
+		item = instanceItem(fullType)
+	end
+	if not item then
+		return false
+	end
+	CHC_menu.onCraftHelper({ item }, self.playerNum)
+	return true
 end
 
 function HT_BuildCatalogUI:onDetailMouseDown(x, y)
+	for _, hit in ipairs(self.helpHits or {}) do
+		if x >= hit.x and x <= hit.x + hit.w and y >= hit.y and y <= hit.y + hit.h then
+			self:openCraftHelperFor(hit.fullType)
+			return true
+		end
+	end
 	for _, hit in ipairs(self.variantHits or {}) do
 		if x >= hit.x and x <= hit.x + hit.w and y >= hit.y and y <= hit.y + hit.h then
 			self.variantIndex = hit.index
@@ -913,6 +1128,9 @@ function HT_BuildCatalogUI:onBuildClicked()
 end
 
 function HT_BuildCatalogUI:close()
+	if self.detail then
+		self:setHelpTooltipVisible(self.detail, false)
+	end
 	if HT_BuildPrefs then
 		if self.sectionId then
 			HT_BuildPrefs.setLastSection(self.sectionId)
