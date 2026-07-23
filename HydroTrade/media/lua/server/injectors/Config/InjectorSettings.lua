@@ -1,7 +1,13 @@
+-- Duration units ~= real seconds (see TickInflictions).
+-- Balance target (day = 3 real hours): city trip 1-1.5h, Louisville exit ~10-15 min.
+-- Escape / medical: ~6-10 min so 1-3 syringes cover the run out.
+-- Combat: ~5-6 min fight window.
+-- March / carry: ~20 min per syringe (loot sector, not the whole trip).
+
 Adrenaline_S = {
     Painkill = {
         delay = 0,
-        duration = 65,
+        duration = 300,
         func = Painkill,
         args = {2}
     },
@@ -10,7 +16,7 @@ Adrenaline_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Strength:getName(), 60, true
+            Perks.Strength:getName(), 300, true
         }
     },
     Fitness = {
@@ -18,30 +24,30 @@ Adrenaline_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Fitness:getName(), 60, true
+            Perks.Fitness:getName(), 300, true
         }
     },
     Health = {
         delay = 1,
-        duration = 15,
+        duration = 45,
         func = AlterHealth,
         args = {2}
     },
     Stress = {
         delay = 1,
-        duration = 60,
+        duration = 300,
         func = AlterStress,
         args = {1}
     },
     Hunger = {
-        delay = 50,
-        duration = 30,
+        delay = 220,
+        duration = 80,
         func = AlterHunger,
         args = {0.5}
     },
     Thirst = {
-        delay = 50,
-        duration = 30,
+        delay = 220,
+        duration = 80,
         func = AlterThirst,
         args = {0.3}
     }
@@ -50,19 +56,19 @@ Adrenaline_S = {
 AHF1_S = {
     Mend = {
         delay = 1,
-        duration = 60,
+        duration = 360,
         func = MendWounds,
         args = {0.1}
     },
     Health = {
         delay = 1,
-        duration = 60,
+        duration = 360,
         func = AlterHealth,
         args = {1}
     },
     Thirst = {
         delay = 1,
-        duration = 120,
+        duration = 420,
         func = AlterThirst,
         args = {0.3}
     }
@@ -74,7 +80,7 @@ BTG2A2_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Nimble:getName(), 900, true
+            Perks.Nimble:getName(), 1200, true
         }
     },
     Aiming = {
@@ -82,7 +88,7 @@ BTG2A2_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Aiming:getName(), 900, true
+            Perks.Aiming:getName(), 1200, true
         }
     },
     WeightCapA = {
@@ -92,14 +98,14 @@ BTG2A2_S = {
         args = {15}
     },
     WeightCapB = {
-        delay = 900,
+        delay = 1200,
         duration = 1,
         func = AlterWeightCap,
         args = {-15}
     },
     Thirst = {
         delay = 1,
-        duration = 900,
+        duration = 1200,
         func = AlterThirst,
         args = {0.2}
     }
@@ -111,7 +117,7 @@ BTG3_S = {
         duration = 3,
         func = AlterSkill,
         args = {
-            Perks.Nimble:getName(), 240, true
+            Perks.Nimble:getName(), 360, true
         }
     },
     Aiming = {
@@ -119,7 +125,7 @@ BTG3_S = {
         duration = 3,
         func = AlterSkill,
         args = {
-            Perks.Aiming:getName(), 240, true
+            Perks.Aiming:getName(), 360, true
         }
     },
     Strength = {
@@ -127,18 +133,18 @@ BTG3_S = {
         duration = 1,
         func = AlterSkill,
         args = {
-            Perks.Strength:getName(), 240, true
+            Perks.Strength:getName(), 360, true
         }
     },
     Stamina = {
         delay = 1,
-        duration = 240,
+        duration = 360,
         func = AlterEndurance,
         args = {0.4}
     },
     Hunger = {
-        delay = 120,
-        duration = 120,
+        delay = 180,
+        duration = 180,
         func = AlterHunger,
         args = {0.25}
     }
@@ -147,46 +153,46 @@ BTG3_S = {
 ETG_S = {
     Metabolism = {
         delay = 1,
-        duration = 90,
+        duration = 180,
         func = AlterCalories,
         args = {10}
     },
     Immunity = {
         delay = 1,
-        duration = 90,
+        duration = 180,
         func = AlterCold,
         args = {0.5}
     },
     Limbs = {
         delay = 1,
-        duration = 60,
+        duration = 150,
         func = AlterLimbHealth,
         args = {1}
     },
     Satiety = {
         delay = 1,
-        duration = 60,
+        duration = 150,
         func = AlterHunger,
         args = {-0.25}
     },
     Hunger = {
-        delay = 65,
-        duration = 20,
+        delay = 150,
+        duration = 40,
         func = AlterHunger,
         args = {1.5}
     },
     Health = {
-        delay = 65,
-        duration = 60,
+        delay = 150,
+        duration = 90,
         func = AlterHealth,
         args = {-0.5}
     },
     Fitness = {
-        delay = 65,
+        delay = 150,
         duration = 3,
         func = AlterSkill,
         args = {
-            Perks.Fitness:getName(), 60, false
+            Perks.Fitness:getName(), 120, false
         }
     }
 }
@@ -197,7 +203,7 @@ Meldonin_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Strength:getName(), 900, true
+            Perks.Strength:getName(), 1200, true
         }
     },
     Fitness = {
@@ -205,24 +211,24 @@ Meldonin_S = {
         duration = 4,
         func = AlterSkill,
         args = {
-            Perks.Fitness:getName(), 900, true
+            Perks.Fitness:getName(), 1200, true
         }
     },
-        Stamina = {
-            delay = 1,
-            duration = 900,
-            func = AlterEndurance,
-            args = {0.5}
-        },
+    Stamina = {
+        delay = 1,
+        duration = 1200,
+        func = AlterEndurance,
+        args = {0.5}
+    },
     Thirst = {
         delay = 30,
-        duration = 900,
+        duration = 1200,
         func = AlterThirst,
         args = {0.1}
     },
     Hunger = {
         delay = 30,
-        duration = 900,
+        duration = 1200,
         func = AlterHunger,
         args = {0.1}
     }
@@ -231,7 +237,7 @@ Meldonin_S = {
 Morphine_S = {
     Painkill = {
         delay = 1,
-        duration = 305,
+        duration = 420,
         func = Painkill,
         args = {0.8}
     },
@@ -257,23 +263,24 @@ MULE_S = {
         args = {50}
     },
     WeightCapB = {
-        delay = 900,
+        delay = 1200,
         duration = 1,
         func = AlterWeightCap,
         args = {-50}
     },
     Health = {
         delay = 1,
-        duration = 900,
+        duration = 1200,
         func = AlterHealth,
-        args = {-0.09}
+        -- Was -0.09 over 900s; scaled so total drain stays similar.
+        args = {-0.07}
     }
 }
 
 Norepinephrine_S = {
     Painkill = {
         delay = 1,
-        duration = 120,
+        duration = 300,
         func = Painkill,
         args = {0.8}
     },
@@ -282,7 +289,7 @@ Norepinephrine_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Strength:getName(), 120, true
+            Perks.Strength:getName(), 300, true
         }
     },
     Fitness = {
@@ -290,7 +297,7 @@ Norepinephrine_S = {
         duration = 1,
         func = AlterSkill,
         args = {
-            Perks.Fitness:getName(), 120, true
+            Perks.Fitness:getName(), 300, true
         }
     },
     Stamina = {
@@ -301,13 +308,13 @@ Norepinephrine_S = {
     },
     Hungry = {
         delay = 1,
-        duration = 60,
+        duration = 180,
         func = AlterHunger,
         args = {0.2}
     },
     Thirst = {
         delay = 1,
-        duration = 60,
+        duration = 180,
         func = AlterThirst,
         args = {0.2}
     }
@@ -319,7 +326,7 @@ Obdolbos2_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Strength:getName(), 1800, true
+            Perks.Strength:getName(), 1500, true
         }
     },
     Fitness = {
@@ -327,7 +334,7 @@ Obdolbos2_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Fitness:getName(), 1800, true
+            Perks.Fitness:getName(), 1500, true
         }
     },
     Nimble = {
@@ -335,7 +342,7 @@ Obdolbos2_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Nimble:getName(), 1800, true
+            Perks.Nimble:getName(), 1500, true
         }
     },
     Aiming = {
@@ -343,7 +350,7 @@ Obdolbos2_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Aiming:getName(), 1800, true
+            Perks.Aiming:getName(), 1500, true
         }
     },
     WeightCapA = {
@@ -353,20 +360,20 @@ Obdolbos2_S = {
         args = {45}
     },
     WeightCapB = {
-        delay = 1800,
+        delay = 1500,
         duration = 1,
         func = AlterWeightCap,
         args = {-45}
     },
     Health = {
         delay = 1,
-        duration = 1800,
+        duration = 1500,
         func = AlterHealth,
         args = {-0.2}
     },
     Endurance = {
         delay = 1,
-        duration = 1800,
+        duration = 1500,
         func = AlterEndurance,
         args = {-0.2}
     },
@@ -381,19 +388,19 @@ Obdolbos2_S = {
 P22_S = {
     Stress = {
         delay = 1,
-        duration = 60,
+        duration = 300,
         func = AlterStress,
         args = {-0.5}
     },
     Health = {
         delay = 1,
-        duration = 60,
+        duration = 300,
         func = AlterHealth,
         args = {0.5}
     },
     Damage = {
-        delay = 60,
-        duration = 60,
+        delay = 300,
+        duration = 180,
         func = AlterHealth,
         args = {-0.5}
     },
@@ -402,20 +409,20 @@ P22_S = {
         duration = 3,
         func = AlterSkill,
         args = {
-            Perks.Doctor:getName(), 60, true
+            Perks.Doctor:getName(), 300, true
         }
     },
     Aiming = {
-        delay = 65,
+        delay = 305,
         duration = 1,
         func = AlterSkill,
         args = {
-            Perks.Aiming:getName(), 60, false
+            Perks.Aiming:getName(), 180, false
         }
     },
     Hunger = {
-        delay = 65,
-        duration = 60,
+        delay = 305,
+        duration = 180,
         func = AlterHunger,
         args = {0.5}
     }
@@ -424,43 +431,43 @@ P22_S = {
 Perfotoran_S = {
     Metabolism = {
         delay = 1,
-        duration = 60,
+        duration = 480,
         func = AlterCalories,
         args = {5}
     },
     Health = {
         delay = 1,
-        duration = 60,
+        duration = 480,
         func = AlterHealth,
         args = {0.45}
     },
     Antidote = {
         delay = 1,
-        duration = 60,
+        duration = 480,
         func = FreezeInfection,
         args = {}
     },
     Mend = {
         delay = 1,
-        duration = 60,
+        duration = 480,
         func = MendWounds,
         args = {0.1}
     },
     Damage = {
-        delay = 60,
+        delay = 480,
         duration = 1,
         func = AlterHealth,
         args = {-15}
     },
     Heal = {
-        delay = 120,
+        delay = 540,
         duration = 1,
         func = AlterHealth,
         args = {15}
     },
     Hunger = {
-        delay = 60,
-        duration = 60,
+        delay = 480,
+        duration = 120,
         func = AlterHunger,
         args = {0.5}
     }
@@ -472,17 +479,17 @@ PNB_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Strength:getName(), 40, true
+            Perks.Strength:getName(), 90, true
         }
     },
     Health = {
         delay = 1,
-        duration = 40,
+        duration = 90,
         func = AlterHealth,
         args = {0.6}
     },
     Doctor = {
-        delay = 41,
+        delay = 91,
         duration = 2,
         func = AlterSkill,
         args = {
@@ -490,20 +497,20 @@ PNB_S = {
         }
     },
     Damage = {
-        delay = 41,
+        delay = 91,
         duration = 1,
         func = AlterHealth,
         args = {-20}
     },
     Heal = {
-        delay = 82,
+        delay = 150,
         duration = 1,
         func = AlterHealth,
         args = {20}
     },
     Tremor = {
-        delay = 41,
-        duration = 20,
+        delay = 91,
+        duration = 30,
         func = Tremor,
         args = {10}
     }
@@ -512,13 +519,13 @@ PNB_S = {
 Propital_S = {
     Painkill = {
         delay = 1,
-        duration = 245,
+        duration = 360,
         func = Painkill,
         args = {0.8}
     },
     Metabolism = {
         delay = 1,
-        duration = 300,
+        duration = 420,
         func = AlterCalories,
         args = {5}
     },
@@ -529,7 +536,7 @@ Propital_S = {
         args = {20}
     },
     Damage = {
-        delay = 300,
+        delay = 420,
         duration = 1,
         func = AlterHealth,
         args = {-20}
@@ -539,7 +546,7 @@ Propital_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Doctor:getName(), 300, true
+            Perks.Doctor:getName(), 420, true
         }
     },
 }
@@ -550,7 +557,7 @@ SJ1_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Strength:getName(), 180, true
+            Perks.Strength:getName(), 360, true
         }
     },
     Fitness = {
@@ -558,23 +565,23 @@ SJ1_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Fitness:getName(), 180, true
+            Perks.Fitness:getName(), 360, true
         }
     },
     Stress = {
         delay = 1,
-        duration = 180,
+        duration = 360,
         func = AlterStress,
         args = {-0.3}
     },
     Hunger = {
-        delay = 100,
+        delay = 200,
         duration = 200,
         func = AlterHunger,
         args = {0.15}
     },
     Thirst = {
-        delay = 100,
+        delay = 200,
         duration = 200,
         func = AlterThirst,
         args = {0.2}
@@ -590,13 +597,13 @@ SJ6_S = {
     },
     Stamina = {
         delay = 1,
-        duration = 240,
+        duration = 360,
         func = AlterEndurance,
         args = {0.1}
     },
     Tremor = {
-        delay = 200,
-        duration = 40,
+        delay = 300,
+        duration = 60,
         func = Tremor,
         args = {20}
     }
@@ -608,7 +615,7 @@ SJ9_S = {
         duration = 3,
         func = AlterSkill,
         args = {
-            Perks.Sprinting:getName(), 300, true
+            Perks.Sprinting:getName(), 480, true
         }
     },
     Lightfoot = {
@@ -616,7 +623,7 @@ SJ9_S = {
         duration = 3,
         func = AlterSkill,
         args = {
-            Perks.Lightfoot:getName(), 300, true
+            Perks.Lightfoot:getName(), 480, true
         }
     },
     Nimble = {
@@ -624,7 +631,7 @@ SJ9_S = {
         duration = 3,
         func = AlterSkill,
         args = {
-            Perks.Nimble:getName(), 300, true
+            Perks.Nimble:getName(), 480, true
         }
     },
     Sneak = {
@@ -632,30 +639,30 @@ SJ9_S = {
         duration = 3,
         func = AlterSkill,
         args = {
-            Perks.Sneak:getName(), 300, true
+            Perks.Sneak:getName(), 480, true
         }
     },
     Metabolism = {
         delay = 6,
-        duration = 300,
+        duration = 480,
         func = AlterCalories,
         args = {-4}
     },
     Health = {
         delay = 6,
-        duration = 420,
+        duration = 540,
         func = AlterHealth,
-        args = {-0.08}
+        args = {-0.06}
     },
     Tremor = {
-        delay = 41,
-        duration = 20,
+        delay = 60,
+        duration = 40,
         func = Tremor,
         args = {20}
     },
     Pain = {
         delay = 1,
-        duration = 120,
+        duration = 180,
         func = AddPain,
         args = {1, 8}
     }
@@ -751,7 +758,7 @@ SJ12_S = {
 Trimadol_S = {
     Painkill = {
         delay = 1,
-        duration = 185,
+        duration = 360,
         func = Painkill,
         args = {0.8}
     },
@@ -760,7 +767,7 @@ Trimadol_S = {
         duration = 1,
         func = AlterSkill,
         args = {
-            Perks.Strength:getName(), 180, true
+            Perks.Strength:getName(), 360, true
         }
     },
     Fitness = {
@@ -768,7 +775,7 @@ Trimadol_S = {
         duration = 1,
         func = AlterSkill,
         args = {
-            Perks.Fitness:getName(), 180, true
+            Perks.Fitness:getName(), 360, true
         }
     },
     Nimble = {
@@ -776,12 +783,12 @@ Trimadol_S = {
         duration = 1,
         func = AlterSkill,
         args = {
-            Perks.Nimble:getName(), 180, true
+            Perks.Nimble:getName(), 360, true
         }
     },
     Stress = {
         delay = 1,
-        duration = 180,
+        duration = 360,
         func = AlterStress,
         args = {-0.2}
     },
@@ -793,19 +800,19 @@ Trimadol_S = {
     },
     Stamina = {
         delay = 1,
-        duration = 180,
+        duration = 360,
         func = AlterEndurance,
         args = {0.2}
     },
     Hunger = {
         delay = 1,
-        duration = 180,
+        duration = 360,
         func = AlterHunger,
         args = {0.25}
     },
     Thirst = {
         delay = 1,
-        duration = 180,
+        duration = 360,
         func = AlterThirst,
         args = {0.25}
     }
@@ -814,7 +821,7 @@ Trimadol_S = {
 XTG_S = {
     Antidote = {
         delay = 6,
-        duration = 60,
+        duration = 600,
         func = FreezeInfection,
         args = {}
     },
@@ -825,7 +832,7 @@ XTG_S = {
         args = {-15}
     },
     Heal = {
-        delay = 66,
+        delay = 610,
         duration = 1,
         func = AlterHealth,
         args = {15}
@@ -835,7 +842,7 @@ XTG_S = {
 Zagustin_S = {
     Mend = {
         delay = 1,
-        duration = 180,
+        duration = 360,
         func = MendWounds,
         args = {0.1}
     },
@@ -844,24 +851,24 @@ Zagustin_S = {
         duration = 2,
         func = AlterSkill,
         args = {
-            Perks.Doctor:getName(), 180, true
+            Perks.Doctor:getName(), 360, true
         }
     },
     Metabolism = {
         delay = 1,
-        duration = 180,
+        duration = 360,
         func = AlterCalories,
         args = {-7}
     },
     Thirst = {
-        delay = 170,
-        duration = 40,
+        delay = 320,
+        duration = 60,
         func = AlterThirst,
         args = {0.85}
     },
     Tremor = {
-        delay = 170,
-        duration = 40,
+        delay = 320,
+        duration = 60,
         func = Tremor,
         args = {20}
     }
