@@ -177,3 +177,34 @@ ZipContainer.sprites = {
 		"ZipContainer_01_61",
 	},
 }
+
+ZipContainer.spriteCategories = {
+	{ id = "Auto", keys = {
+		"Brakes", "Suspension", "Doors", "Windows", "Battery", "Components",
+		"Wire", "Seat", "Lid", "GasTank", "Mufler", "Windshield", "Engine", "Gas",
+	}},
+	{ id = "Weapon", keys = {
+		"Ammo", "Melee", "Weaponkits", "Pistol", "rifle", "armor",
+	}},
+	{ id = "Food", keys = {
+		"Conserve", "flour", "alcohol",
+	}},
+	{ id = "Medicine", keys = {
+		"Tablets", "medicine", "Herbs", "Bandage", "Rags",
+	}},
+	{ id = "Clothes", keys = {
+		"cloth", "jewelry", "wristwatch",
+	}},
+	{ id = "Craft", keys = {
+		"Tools", "Glue", "Boxes", "craft", "colors", "cement", "pipes", "sheet", "pallets",
+	}},
+	{ id = "Electronics", keys = {
+		"Radio", "Bulb", "Electronics", "Batteries", "wire",
+	}},
+	{ id = "Farm", keys = {
+		"gardening", "Fertilizers", "grass", "bee",
+	}},
+	{ id = "Resources", keys = {
+		"Books", "magazine", "ingots", "ore", "Coal", "trash", "sandstone", "clay",
+	}},
+}
