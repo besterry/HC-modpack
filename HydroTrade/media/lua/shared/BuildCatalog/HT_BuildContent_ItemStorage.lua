@@ -14,6 +14,17 @@ local function zipLoaded()
 	return sm and sm:FindItem("ZipContainer.ZipContainer") ~= nil
 end
 
+local function bindContainerType(buildObj, containerType)
+	-- Force Zip container type after place (ISWoodenContainer defaults to crate).
+	local oldCreate = buildObj.create
+	function buildObj:create(x, y, z, north, sprite)
+		oldCreate(self, x, y, z, north, sprite)
+		if self.javaObject and self.javaObject:getContainer() then
+			self.javaObject:getContainer():setType(containerType)
+		end
+	end
+end
+
 local function onBuildZipBasement(player)
 	local o = ISSimpleFurniture:new("Basement", "ZipContainer_01_3", "ZipContainer_01_4")
 	o.player = player
@@ -24,19 +35,24 @@ local function onBuildZipBasement(player)
 	o:setEastSprite("ZipContainer_01_3")
 	o:setSouthSprite("ZipContainer_01_4")
 	o:setNorthSprite("ZipContainer_01_4")
+	bindContainerType(o, "ZipContainer")
 	getCell():setDrag(o, player)
 end
 
 local function onBuildZipBox(player)
-	local o = ISSimpleFurniture:new("Box", "ZipContainer_01_0", "ZipContainer_01_0")
+	-- Same stack path as vanilla/MB crates: ISWoodenContainer + canBeAlwaysPlaced.
+	-- ISSimpleFurniture blocks the square, so a 2nd catalog build on a fresh box stayed red.
+	local o = ISWoodenContainer:new("ZipContainer_01_0", "ZipContainer_01_0")
 	o.player = player
 	o.name = "Box"
-	o.isContainer = true
-	o.containerType = "ZipContainerBox"
+	o.renderFloorHelper = true
+	o.canBeAlwaysPlaced = true
 	o.canBeLockedByPadlock = true
+	o.containerType = "ZipContainerBox"
 	o:setEastSprite("ZipContainer_01_0")
 	o:setSouthSprite("ZipContainer_01_0")
 	o:setNorthSprite("ZipContainer_01_0")
+	bindContainerType(o, "ZipContainerBox")
 	getCell():setDrag(o, player)
 end
 
