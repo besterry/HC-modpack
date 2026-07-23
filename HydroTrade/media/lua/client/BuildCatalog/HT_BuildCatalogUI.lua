@@ -118,6 +118,42 @@ local function truncateToWidth(text, font, maxW)
 	return best
 end
 
+-- Word-wrap by pixel width (ASCII spaces). Avoids mid-word / mid-UTF-8 cuts.
+local function wrapWordsToWidth(text, font, maxW, maxLines)
+	local out = {}
+	if not text or text == "" or maxW < 8 then
+		return out
+	end
+	local tm = getTextManager()
+	local cur = ""
+	for w in string.gmatch(text, "%S+") do
+		local trial = (cur == "") and w or (cur .. " " .. w)
+		if tm:MeasureStringX(font, trial) <= maxW then
+			cur = trial
+		else
+			if cur ~= "" then
+				table.insert(out, cur)
+				if #out >= maxLines then
+					return out
+				end
+			end
+			if tm:MeasureStringX(font, w) <= maxW then
+				cur = w
+			else
+				table.insert(out, truncateToWidth(w, font, maxW))
+				cur = ""
+				if #out >= maxLines then
+					return out
+				end
+			end
+		end
+	end
+	if cur ~= "" and #out < maxLines then
+		table.insert(out, cur)
+	end
+	return out
+end
+
 local function drawSpriteInBox(panel, tex, boxX, boxY, boxW, boxH)
 	if not tex or boxW < 8 or boxH < 8 then
 		return
@@ -973,7 +1009,8 @@ function HT_BuildCatalogUI:renderDetails(panel)
 		y = y + 16
 	end
 
-	do
+	-- Roof trim only: cover is default; do not label floors/furniture via solidfloor.
+	if recipe.group == "Roofs" then
 		local mode = active.roofMode
 		if not mode and active.sprite and getSprite then
 			local sp = getSprite(active.sprite)
@@ -984,10 +1021,7 @@ function HT_BuildCatalogUI:renderDetails(panel)
 				mode = "trim"
 			end
 		end
-		if mode == "cover" then
-			panel:drawText(getText("IGUI_HT_BuildCatalog_RoofMode_Cover"), pad, y, COL.ok.r, COL.ok.g, COL.ok.b, 1, UIFont.Small)
-			y = y + 16
-		elseif mode == "trim" then
+		if mode == "trim" then
 			panel:drawText(getText("IGUI_HT_BuildCatalog_RoofMode_Trim"), pad, y, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
 			y = y + 16
 		end
@@ -1051,21 +1085,14 @@ function HT_BuildCatalogUI:renderDetails(panel)
 	if noteKey then
 		local note = getTextOrNull(noteKey)
 		if note then
-			local rest = note
-			local lines = 0
-			while #rest > 0 and lines < 4 do
-				local chunk
-				if #rest <= 36 then
-					chunk = rest
-					rest = ""
-				else
-					chunk = string.sub(rest, 1, 36)
-					rest = string.sub(rest, 37)
+			local maxW = panel.width - pad * 2
+			local lines = wrapWordsToWidth(note, UIFont.Small, maxW, 4)
+			for _, line in ipairs(lines) do
+				if y + 14 > contentBottom then
+					break
 				end
-				if y + 14 > contentBottom then break end
-				panel:drawText(chunk, pad, y, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
+				panel:drawText(line, pad, y, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
 				y = y + 14
-				lines = lines + 1
 			end
 			y = y + 4
 		end

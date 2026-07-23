@@ -33,7 +33,51 @@ local function isSolidFloorName(spriteName)
 	return false
 end
 
-local function buildCoverFloor(sprite, northSprite, eastSprite, southSprite, name, player)
+local function applySpriteCycle(obj, cycle)
+	if not obj or not cycle or #cycle < 2 then
+		return
+	end
+	obj._htCycle = cycle
+	obj.nSprite = 1
+	obj.sprite = cycle[1]
+	obj.northSprite = cycle[2] or cycle[1]
+	obj.eastSprite = cycle[3] or cycle[1]
+	obj.southSprite = cycle[4] or cycle[2] or cycle[1]
+
+	function obj:getSprite()
+		local list = self._htCycle
+		if not list then
+			return ISBuildingObject.getSprite(self)
+		end
+		local max = #list
+		local i = self.nSprite or 1
+		if i < 1 then
+			i = 1
+		elseif i > max then
+			i = ((i - 1) % max) + 1
+		end
+		self.nSprite = i
+		local face = ((i - 1) % 4) + 1
+		self.west = face == 1
+		self.north = face == 2
+		self.east = face == 3
+		self.south = face == 4
+		self.choosenSprite = list[i]
+		return self.choosenSprite
+	end
+
+	function obj:rotateKey(key)
+		if key == getCore():getKey("Rotate building") then
+			local max = #self._htCycle
+			self.nSprite = (self.nSprite or 1) + 1
+			if self.nSprite > max then
+				self.nSprite = 1
+			end
+		end
+	end
+end
+
+local function buildCoverFloor(sprite, northSprite, eastSprite, southSprite, name, player, cycle)
 	local floor = ISWoodenFloor:new(sprite, northSprite)
 	floor.player = player
 	floor.name = name
@@ -43,6 +87,7 @@ local function buildCoverFloor(sprite, northSprite, eastSprite, southSprite, nam
 	if southSprite then
 		floor.southSprite = southSprite
 	end
+	applySpriteCycle(floor, cycle)
 	floor.create = function(self, x, y, z, north, sprName)
 		self.sq = getWorld():getCell():getGridSquare(x, y, z)
 		self.javaObject = self.sq:addFloor(sprName)
@@ -54,7 +99,7 @@ local function buildCoverFloor(sprite, northSprite, eastSprite, southSprite, nam
 	getCell():setDrag(floor, player)
 end
 
-local function buildTrimObject(sprite, northSprite, eastSprite, southSprite, name, player)
+local function buildTrimObject(sprite, northSprite, eastSprite, southSprite, name, player, cycle)
 	local furn = ISSimpleFurniture:new(name, sprite, northSprite)
 	furn.player = player
 	furn.canBeAlwaysPlaced = true
@@ -70,7 +115,7 @@ local function buildTrimObject(sprite, northSprite, eastSprite, southSprite, nam
 	if southSprite then
 		furn.southSprite = southSprite
 	end
-	-- Allow place on existing floor / roof cover without fighting walls.
+	applySpriteCycle(furn, cycle)
 	furn.isValid = function(self, square)
 		if not square then
 			return false
@@ -100,20 +145,21 @@ end
 
 -- solidfloor -> addFloor (seals room). Else furniture object (visual trim).
 -- Checked at place time: tile defs may be missing during recipe register.
-local function placeRoof(s, n, e, so, name, player)
-	local asFloor = isSolidFloorName(s) == true
+local function placeRoof(s, n, e, so, name, player, cycle)
+	local check = (cycle and cycle[1]) or s
+	local asFloor = isSolidFloorName(check) == true
 	local east, south = e, so
 	if asFloor and not (isSolidFloorName(e) == true and isSolidFloorName(so) == true) then
 		east, south = s, n
 	end
 	if asFloor then
-		buildCoverFloor(s, n, east, south, name, player)
+		buildCoverFloor(s, n, east, south, name, player, cycle)
 	else
-		buildTrimObject(s, n, east, south, name, player)
+		buildTrimObject(s, n, east, south, name, player, cycle)
 	end
 end
 
-local function pushVariant(variants, roleKey, dir, name)
+local function pushVariant(variants, roleKey, dir, name, cycle)
 	if not dir then
 		return
 	end
@@ -133,7 +179,7 @@ local function pushVariant(variants, roleKey, dir, name)
 		skills = { Woodwork = 2 },
 		tools = { "Hammer" },
 		create = function(player)
-			placeRoof(s, n, e, so, name, player)
+			placeRoof(s, n, e, so, name, player, cycle)
 		end,
 	})
 end
@@ -141,17 +187,19 @@ end
 local function makeVariants(sheet, base, name, opts)
 	opts = opts or {}
 	local variants = {}
-	-- Full set; solid ones seal rooms, others are visual trim objects.
 	pushVariant(variants, "IGUI_HT_BuildCatalog_Role_RoofSlope",
 		dirSet(sheet, base + 22, base + 23, base + 26, base + 27), name)
 	pushVariant(variants, "IGUI_HT_BuildCatalog_Role_RoofSlope2",
 		dirSet(sheet, base + 20, base + 21, base + 24, base + 25), name)
 	pushVariant(variants, "IGUI_HT_BuildCatalog_Role_RoofEdge",
 		dirSet(sheet, base + 0, base + 1, base + 4, base + 5), name)
-	pushVariant(variants, "IGUI_HT_BuildCatalog_Role_RoofCorner",
-		dirSet(sheet, base + 8, base + 9, base + 12, base + 13), name)
-	pushVariant(variants, "IGUI_HT_BuildCatalog_Role_RoofCorner2",
-		dirSet(sheet, base + 10, base + 11, base + 14, base + 15), name)
+	-- Corner + Corner2 (two seat heights): one role, R cycles 8 sprites.
+	local cornerDir = dirSet(sheet, base + 8, base + 9, base + 12, base + 13)
+	local cornerCycle = {
+		spr(sheet, base + 8), spr(sheet, base + 9), spr(sheet, base + 12), spr(sheet, base + 13),
+		spr(sheet, base + 10), spr(sheet, base + 11), spr(sheet, base + 14), spr(sheet, base + 15),
+	}
+	pushVariant(variants, "IGUI_HT_BuildCatalog_Role_RoofCorner", cornerDir, name, cornerCycle)
 	if not opts.skipFlat then
 		local flatA = opts.flatA or (base + 80)
 		local flatB = opts.flatB or (base + 81)
