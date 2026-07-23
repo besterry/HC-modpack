@@ -25,4 +25,10 @@ Moodles_EN = {
 	Moodles_HT_CraveCarbs_desc_lvl2 = "A bit of chocolate... or biscuits with honey...",
 	Moodles_HT_CraveCarbs_desc_lvl3 = "I'd trade half my pack for a loaf",
 	Moodles_HT_CraveCarbs_desc_lvl4 = "Nothing but bread on my mind... porridge, sweets, dough",
+
+	Moodles_HT_Injector_lvl1 = "Effect almost gone",
+	Moodles_HT_Injector_lvl2 = "Effect fading",
+	Moodles_HT_Injector_lvl3 = "Effect active",
+	Moodles_HT_Injector_lvl4 = "Full effect",
+	Moodles_HT_Injector_fallback = "Combat stimulant active.",
 }

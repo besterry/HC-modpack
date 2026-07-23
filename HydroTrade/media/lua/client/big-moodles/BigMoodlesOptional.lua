@@ -219,9 +219,12 @@ function ISScaledMoodles:render()
         end
     end
 
-    -- Append HydroTrade craving moodles into the same stack
+    -- Append HydroTrade craving + injector moodles into the same stack
     if HT_CravingMoodles_AppendToStack then
-        HT_CravingMoodles_AppendToStack(self, self.player, slot, self.scale, fontHgt)
+        slot = HT_CravingMoodles_AppendToStack(self, self.player, slot, self.scale, fontHgt) or slot
+    end
+    if HT_InjectorMoodles_AppendToStack then
+        HT_InjectorMoodles_AppendToStack(self, self.player, slot, self.scale, fontHgt)
     end
 end
 

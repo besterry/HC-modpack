@@ -85,4 +85,9 @@ function Obdolbos_OnInject(_, player, _)
     for _, effect in ipairs(negativeEffects) do
         rollInfliction(effect.chance, player, unpack(effect.inflictions))
     end
+
+    -- Random cocktail: show moodle for typical buff window (~600s).
+    if HT_InjectorStatus and HT_InjectorStatus.Register then
+        HT_InjectorStatus.Register(player, "obdolbos", nil, 600)
+    end
 end

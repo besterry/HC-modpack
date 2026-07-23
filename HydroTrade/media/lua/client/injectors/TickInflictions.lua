@@ -1,4 +1,5 @@
 local ticks = 0
+require "injectors/HT_InjectorStatus"
 
 local function TickInflictions(player)
     local modData = player:getModData()
@@ -30,6 +31,12 @@ local function TickInflictions(player)
     end
 
     modData.inflictions = inflictions
+
+    -- Same cadence as one infliction "second": once every 60 OnPlayerUpdate.
+    if spreadTick == 0 and HT_InjectorStatus and HT_InjectorStatus.Tick then
+        HT_InjectorStatus.Tick(player)
+    end
+
     ticks = ticks + 1
 end
 

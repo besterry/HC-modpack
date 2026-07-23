@@ -1,4 +1,4 @@
 --- @param player IsoPlayer
 function Zagustin_OnInject(_, player, _)
-    BuildInjector(player, Zagustin_S)
+    BuildInjector(player, Zagustin_S, "zagustin")
 end

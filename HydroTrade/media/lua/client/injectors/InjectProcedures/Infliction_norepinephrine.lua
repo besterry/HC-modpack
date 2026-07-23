@@ -1,4 +1,4 @@
 --- @param player IsoPlayer
 function Norepinephrine_OnInject(_, player, _)
-    BuildInjector(player, Norepinephrine_S)
+    BuildInjector(player, Norepinephrine_S, "norepinephrine")
 end

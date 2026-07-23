@@ -1,4 +1,4 @@
 --- @param player IsoPlayer
 function Obdolbos2_OnInject(_, player, _)
-    BuildInjector(player, Obdolbos2_S)
+    BuildInjector(player, Obdolbos2_S, "obdolbos2")
 end

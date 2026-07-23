@@ -99,6 +99,20 @@ local function getCravingLevels(player)
     return levels
 end
 
+function HT_CravingMoodles_CountActive(player)
+    if not hudEnabled or not player then
+        return 0
+    end
+    local levels = getCravingLevels(player)
+    local n = 0
+    for i = 1, #levels do
+        if (levels[i] or 0) > 0 then
+            n = n + 1
+        end
+    end
+    return n
+end
+
 local function isBigMoodlesActive(playerNum)
     local moodleUI = UIManager.getMoodleUI(playerNum or 0)
     if moodleUI and moodleUI:isVisible() then

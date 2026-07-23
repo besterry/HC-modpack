@@ -1,4 +1,4 @@
 --- @param player IsoPlayer
 function Sj9_OnInject(_, player, _)
-    BuildInjector(player, SJ9_S)
+    BuildInjector(player, SJ9_S, "sj9")
 end

@@ -1,4 +1,4 @@
 --- @param player IsoPlayer
 function Adrenaline_OnInject(_, player, _)
-    BuildInjector(player, Adrenaline_S)
+    BuildInjector(player, Adrenaline_S, "adrenaline")
 end

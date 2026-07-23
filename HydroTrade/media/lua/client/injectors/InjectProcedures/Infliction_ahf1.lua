@@ -1,4 +1,4 @@
 --- @param player IsoPlayer
 function Ahf1_OnInject(_, player, _)
-    BuildInjector(player, AHF1_S)
+    BuildInjector(player, AHF1_S, "ahf1")
 end

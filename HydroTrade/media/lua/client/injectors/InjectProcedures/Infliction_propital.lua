@@ -1,4 +1,4 @@
 --- @param player IsoPlayer
 function Propital_OnInject(_, player, _)
-    BuildInjector(player, Propital_S)
+    BuildInjector(player, Propital_S, "propital")
 end

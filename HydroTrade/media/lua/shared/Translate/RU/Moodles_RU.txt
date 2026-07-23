@@ -25,4 +25,10 @@ Moodles_RU = {
 	Moodles_HT_CraveCarbs_desc_lvl2 = "Шоколадку бы или печенье с медом...",
 	Moodles_HT_CraveCarbs_desc_lvl3 = "Полрюкзака бы отдать за буханку",
 	Moodles_HT_CraveCarbs_desc_lvl4 = "В голове только хлеб... каша, сладости, мучное",
+
+	Moodles_HT_Injector_lvl1 = "Эффект почти спал",
+	Moodles_HT_Injector_lvl2 = "Эффект слабеет",
+	Moodles_HT_Injector_lvl3 = "Эффект действует",
+	Moodles_HT_Injector_lvl4 = "Полный эффект",
+	Moodles_HT_Injector_fallback = "Боевой стимулятор активен",
 }
