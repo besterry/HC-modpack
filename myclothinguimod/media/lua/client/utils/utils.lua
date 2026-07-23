@@ -42,33 +42,120 @@ function utils.getItemConditionRatio(item)
     return ratio
 end
 
+--- Collect BloodBodyPartType entries for clothing (B41-safe). Returns Lua array.
+--- Prefer BloodClothingType.getCoveredParts (same source as garment inspection).
+--- Clothing:getCoveredParts() can include extra parts (e.g. Back) that inspection never shows,
+--- which creates fake unpatched holes that cannot be fixed in the inspect UI.
+local function getClothingCoveredPartsList(item)
+    local list = {}
+    local seen = {}
+
+    local function addParts(parts)
+        if not parts or not parts.size then
+            return
+        end
+        for i = 0, parts:size() - 1 do
+            local part = parts:get(i)
+            local key = tostring(part)
+            if part and not seen[key] then
+                seen[key] = true
+                table.insert(list, part)
+            end
+        end
+    end
+
+    if not item then
+        return list
+    end
+
+    if BloodClothingType and BloodClothingType.getCoveredParts and item.getBloodClothingType then
+        local bct = item:getBloodClothingType()
+        if bct then
+            -- Pass full getBloodClothingType() result (ArrayList or enum).
+            -- Per-element getCoveredParts(bct:get(i)) throws "No implementation found".
+            local ok, parts = pcall(function()
+                return BloodClothingType.getCoveredParts(bct)
+            end)
+            if ok then
+                addParts(parts)
+            end
+        end
+    end
+
+    if #list > 0 then
+        return list
+    end
+
+    if item.getCoveredParts then
+        local ok, parts = pcall(function()
+            return item:getCoveredParts()
+        end)
+        if ok then
+            addParts(parts)
+        end
+    end
+
+    return list
+end
+
+local function partHasPatch(item, part)
+    if not item or not item.getPatchType then
+        return false
+    end
+    local ok, patch = pcall(function()
+        return item:getPatchType(part)
+    end)
+    return ok and patch ~= nil
+end
+
+local function partHasHole(visual, part)
+    if not visual or not visual.getHole then
+        return false
+    end
+    local ok, holeVal = pcall(function()
+        return visual:getHole(part)
+    end)
+    if not ok or holeVal == nil then
+        return false
+    end
+    return holeVal > 0
+end
+
+--- Unpatched Back is a common ghost hole: present in visual/getHolesNumber and in
+--- Clothing.getCoveredParts, but garment inspect UI often does not list/repair it
+--- (shirts, jackets, and many other items after the visible zones were patched).
+local function isInspectHiddenHolePart(item, part)
+    if not item or not part or not BloodBodyPartType then
+        return false
+    end
+    if part ~= BloodBodyPartType.Back then
+        return false
+    end
+    -- Patched Back is not an open hole.
+    if partHasPatch(item, part) then
+        return false
+    end
+    return true
+end
+
 --- Real unpatched holes (matches garment inspection).
---- Vanilla getHolesNumber() can stay > 0 after a patch is applied (ghost hole under patch).
+--- Vanilla getHolesNumber() often counts ghost holes under patches / hidden Back.
 function utils.getItemHoles(item)
     if not item then
         return 0
     end
 
     local visual = item.getVisual and item:getVisual() or nil
-    if visual and item.getBloodClothingType and BloodClothingType and BloodClothingType.getCoveredParts then
-        local covered = BloodClothingType.getCoveredParts(item:getBloodClothingType())
-        if covered and covered:size() > 0 then
-            local holes = 0
-            for i = 0, covered:size() - 1 do
-                local part = covered:get(i)
-                local holeVal = visual:getHole(part)
-                if holeVal and holeVal ~= 0 then
-                    local patched = false
-                    if item.getPatchType then
-                        patched = item:getPatchType(part) ~= nil
-                    end
-                    if not patched then
-                        holes = holes + 1
-                    end
-                end
+    local covered = getClothingCoveredPartsList(item)
+    if visual and #covered > 0 then
+        local holes = 0
+        for i = 1, #covered do
+            local part = covered[i]
+            if partHasHole(visual, part) and not partHasPatch(item, part) and not isInspectHiddenHolePart(item, part) then
+                holes = holes + 1
             end
-            return holes
         end
+        return holes
     end
 
     if item.getHolesNumber then
