@@ -137,4 +137,12 @@ ContextMenu_RU = {
 	ContextMenu_HT_GFL_TransferNow = "Залить топливо с бочек сейчас",
 	ContextMenu_HT_GFL_TransferToGen = "Перекачать вручную топливо из бочки в генератор (%1 л)",
 	ContextMenu_HT_GFL_UnlinkAll = "Отключить все бочки",
+
+	ContextMenu_BlackShingle_Roofing = "Чёрная черепица",
+	ContextMenu_BrownWood_Roofing = "Коричневая деревянная кровля",
+	ContextMenu_LightBrown_WoodRoofing = "Светло-коричневая кровля",
+	ContextMenu_GreenWood_Roofing = "Зелёная ровная кровля",
+	ContextMenu_RedWood_Roofing = "Красная деревянная кровля",
+	ContextMenu_White_Roofing = "Белая кровля",
+	ContextMenu_Burnt_Roofing = "Обгоревшая кровля",
 }

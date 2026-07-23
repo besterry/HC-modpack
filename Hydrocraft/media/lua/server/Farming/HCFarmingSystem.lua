@@ -345,15 +345,48 @@ function SFarmingSystem:checkRoof(sq)	-- проверка на наличие п
 	sq = getCell():getGridSquare(sq:getX(),sq:getY(),sq:getZ()+1) -- +1 этаж выше
 	if sq == nil then return 0 end
 
-	local objs = sq:getObjects() -- получаем объекты на квадрате
-	if objs:size() > 0 then
-		if objs:get(0):getSprite() then -- получаем спрайт объекта
-			local id = objs:get(0):getSprite():getID() -- получаем ID спрайта
-			if id >= 220032 and id <= 220079 then --220055 is the HC glass roof
-				if id >= 220032 and id <= 220047 then return 2 --slopes probably exist twice, but the 2nd one is hidden because of iso perspective -- возвращаем 2 если это крыша
-				elseif id >= 220050 and id <= 220061 then return 1 -- возвращаем 1 если это крыша
-				elseif id == 220078 or id == 220079 then return 1 -- возвращаем 1 если это крыша
+	local objs = sq:getObjects()
+	if not objs or objs:size() < 1 then
+		return 0
+	end
+
+	-- roofs_02: indices 0-31 = dark shingles (opaque); 32+ glass half = greenhouse.
+	local function isGreenhouseGlassSprite(sprite)
+		if not sprite then
+			return false, 0
+		end
+		local name = sprite:getName()
+		if name then
+			local idx = tonumber(string.match(name, "^roofs_02_(%d+)$"))
+			if idx ~= nil then
+				if (idx >= 32 and idx <= 47) or (idx >= 50 and idx <= 61) or idx == 78 or idx == 79 then
+					if idx >= 32 and idx <= 47 then
+						return true, 2
+					end
+					return true, 1
 				end
+				return false, 0
+			end
+		end
+		local id = sprite:getID()
+		if id >= 220032 and id <= 220079 then
+			if id >= 220032 and id <= 220047 then
+				return true, 2
+			elseif id >= 220050 and id <= 220061 then
+				return true, 1
+			elseif id == 220078 or id == 220079 then
+				return true, 1
+			end
+		end
+		return false, 0
+	end
+
+	for i = 0, objs:size() - 1 do
+		local obj = objs:get(i)
+		if obj then
+			local ok, kind = isGreenhouseGlassSprite(obj:getSprite())
+			if ok then
+				return kind
 			end
 		end
 	end

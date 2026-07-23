@@ -325,6 +325,9 @@ function HT_BuildGridPanel:render()
 				if entry.kind == "frame" then
 					self:drawRect(x + 4, y + 4, 34, 14, 0.85, COL.frame.r * 0.35, COL.frame.g * 0.35, COL.frame.b * 0.35)
 					self:drawText(getText("IGUI_HT_BuildCatalog_Badge_FrameShort"), x + 7, y + 4, COL.frame.r, COL.frame.g, COL.frame.b, 1, UIFont.Small)
+				elseif entry.greenhouse then
+					self:drawRect(x + 4, y + 4, 52, 14, 0.85, COL.ok.r * 0.35, COL.ok.g * 0.35, COL.ok.b * 0.35)
+					self:drawText(getText("IGUI_HT_BuildCatalog_Badge_GreenhouseShort"), x + 7, y + 4, COL.ok.r, COL.ok.g, COL.ok.b, 1, UIFont.Small)
 				elseif entry.kind == "style" then
 					self:drawRect(x + 4, y + 4, 40, 14, 0.85, COL.style.r * 0.35, COL.style.g * 0.35, COL.style.b * 0.35)
 					self:drawText(getText("IGUI_HT_BuildCatalog_Badge_StyleShort"), x + 7, y + 4, COL.style.r, COL.style.g, COL.style.b, 1, UIFont.Small)
@@ -962,9 +965,32 @@ function HT_BuildCatalogUI:renderDetails(panel)
 	if recipe.kind == "frame" then
 		panel:drawText(getText("IGUI_HT_BuildCatalog_Badge_Frame"), pad, y, COL.frame.r, COL.frame.g, COL.frame.b, 1, UIFont.Small)
 		y = y + 16
+	elseif recipe.greenhouse then
+		panel:drawText(getText("IGUI_HT_BuildCatalog_Badge_Greenhouse"), pad, y, COL.ok.r, COL.ok.g, COL.ok.b, 1, UIFont.Small)
+		y = y + 16
 	elseif recipe.kind == "style" then
 		panel:drawText(getText("IGUI_HT_BuildCatalog_Badge_Style"), pad, y, COL.style.r, COL.style.g, COL.style.b, 1, UIFont.Small)
 		y = y + 16
+	end
+
+	do
+		local mode = active.roofMode
+		if not mode and active.sprite and getSprite then
+			local sp = getSprite(active.sprite)
+			local props = sp and sp:getProperties()
+			if props and ((IsoFlagType and IsoFlagType.solidfloor and props:Is(IsoFlagType.solidfloor)) or props:Is("solidfloor") == true) then
+				mode = "cover"
+			elseif sp then
+				mode = "trim"
+			end
+		end
+		if mode == "cover" then
+			panel:drawText(getText("IGUI_HT_BuildCatalog_RoofMode_Cover"), pad, y, COL.ok.r, COL.ok.g, COL.ok.b, 1, UIFont.Small)
+			y = y + 16
+		elseif mode == "trim" then
+			panel:drawText(getText("IGUI_HT_BuildCatalog_RoofMode_Trim"), pad, y, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
+			y = y + 16
+		end
 	end
 
 	if (active.showHp or recipe.showHp) and (active.hp or recipe.hp) then

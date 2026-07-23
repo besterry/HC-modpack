@@ -117,7 +117,25 @@ HT_BuildBalance.Tiers = {
 		tools = H,
 	},
 	wood_floor = { needs = pn(1, 1), skills = { Woodwork = 1 }, tools = H },
+	-- Brown natural wood: cheapest roof (2 planks). Shingles craft 1 plank -> 3 pcs.
 	wood_roof = { needs = pn(2, 2), skills = { Woodwork = 2 }, tools = H },
+	-- >= 2 planks craft-equiv (6 shingles) so not cheaper than brown wood roof.
+	shingle_roof = {
+		needs = needs("Hydrocraft.HCWoodshingles", 6, "Base.Nails", 3),
+		skills = { Woodwork = 3 },
+		tools = H,
+	},
+	shingle_roof_paint = {
+		needs = needs("Hydrocraft.HCWoodshingles", 6, "Base.Nails", 3),
+		skills = { Woodwork = 3 },
+		tools = HP,
+	},
+	-- Scrap look: 1 plank craft-equiv.
+	burnt_roof = {
+		needs = needs("Hydrocraft.HCWoodshingles", 3, "Base.Nails", 2),
+		skills = { Woodwork = 1 },
+		tools = H,
+	},
 	wood_fence = { needs = pn(2, 3), skills = { Woodwork = 2 }, tools = H },
 	wood_stairs = { needs = pn(12, 12), skills = { Woodwork = 6 }, tools = H },
 	wood_furn_s = { needs = pn(4, 3), skills = { Woodwork = 3 }, tools = H },
@@ -437,25 +455,6 @@ end
 -- Direct overrides by recipe id (highest priority; skips economy if needs/hidden set).
 HT_BuildBalance.byRecipe = {
 	["hc_steel_stairs"] = { hidden = true },
-	["hc_brick_wall"] = {
-		needs = {
-			n("Hydrocraft.HCGreybrick", 15),
-			n("Hydrocraft.HCRedbrick", 20),
-			n("Hydrocraft.HCMortar", 4),
-		},
-		skills = { Woodwork = 6 },
-		tools = TROWEL,
-	},
-	["hc_brick_win"] = {
-		needs = {
-			n("Hydrocraft.HCGreybrick", 12),
-			n("Hydrocraft.HCRedbrick", 16),
-			n("Hydrocraft.HCGlasspane", 1),
-			n("Hydrocraft.HCMortar", 4),
-		},
-		skills = { Woodwork = 6 },
-		tools = TROWEL,
-	},
 	["hc_glass_wall"] = {
 		section = "Metal",
 		group = "Walls",
@@ -465,15 +464,7 @@ HT_BuildBalance.byRecipe = {
 		uses = weldUses(2, 5),
 		xp = { MetalWelding = 10 },
 	},
-	["hc_glass_roof"] = {
-		section = "Metal",
-		group = "Roofs",
-		needs = needs("Base.MetalPipe", 2, "Base.SmallSheetMetal", 1, "Hydrocraft.HCGlasspane", 1),
-		tools = TW,
-		skills = { MetalWelding = 3 },
-		uses = weldUses(2, 4),
-		xp = { MetalWelding = 8 },
-	},
+	["hc_glass_roof"] = { hidden = true },
 	-- Vanilla wood anchors (close to ISBuildMenu)
 	["v_wall_frame"] = { needs = pn(2, 2), skills = { Woodwork = 2 }, tools = H },
 	["v_pillar"] = { needs = pn(2, 3), skills = { Woodwork = 2 }, tools = H },
@@ -561,6 +552,27 @@ HT_BuildBalance.rules = {
 		end,
 	},
 	{
+		-- HC brick style: wall + window opening (no glass; opening has no pane).
+		match = function(r)
+			return r.id == "hc_style_brick"
+		end,
+		apply = function(r)
+			local wallN = needs("Hydrocraft.HCGreybrick", 15, "Hydrocraft.HCRedbrick", 20, "Hydrocraft.HCMortar", 4)
+			local frameN = needs("Hydrocraft.HCGreybrick", 12, "Hydrocraft.HCRedbrick", 16, "Hydrocraft.HCMortar", 4)
+			r.tools = TROWEL
+			r.skills = { Woodwork = 6 }
+			r.needs = wallN
+			setVariantNeeds(r, wallN, frameN, frameN)
+			if r.variants then
+				for _, v in ipairs(r.variants) do
+					v.skills = { Woodwork = 6 }
+					v.tools = TROWEL
+				end
+			end
+			r._done = true
+		end,
+	},
+	{
 		match = function(r)
 			return r.id and string.find(r.id, "mb_glass_wall_", 1, true)
 		end,
@@ -643,6 +655,68 @@ HT_BuildBalance.rules = {
 			end
 			r.tools = TROWEL
 			r.skills = { Woodwork = 5 }
+			r._done = true
+		end,
+	},
+	{
+		match = function(r)
+			return r.id and string.find(r.id, "mb_roof_", 1, true)
+		end,
+		apply = function(r)
+			r.hidden = true
+			r._done = true
+		end,
+	},
+	{
+		match = function(r)
+			return r.id and string.find(r.id, "ht_roof_", 1, true) and r.kind == "style"
+		end,
+		apply = function(r)
+			local T = HT_BuildBalance.Tiers
+			local mat = r.material or "wood"
+			local paint = r.paint
+			local tier = T.wood_roof
+			if mat == "glass" then
+				r.section = "Metal"
+				r.group = "Roofs"
+				tier = {
+					needs = needs("Base.MetalPipe", 2, "Base.SmallSheetMetal", 1, "Hydrocraft.HCGlasspane", 1),
+					tools = TW,
+					skills = { MetalWelding = 3 },
+					uses = weldUses(2, 4),
+					xp = { MetalWelding = 8 },
+				}
+			elseif mat == "wood" then
+				tier = T.wood_roof
+			elseif mat == "burnt" then
+				tier = T.burnt_roof
+			elseif paint then
+				tier = T.shingle_roof_paint
+			else
+				tier = T.shingle_roof
+			end
+			applyTier(r, tier)
+			if mat == "glass" then
+				-- uses/xp already from tier
+			elseif paint then
+				r.uses = { n(paint, 1) }
+				r.tools = HP
+			else
+				r.uses = nil
+			end
+			if r.variants then
+				for _, v in ipairs(r.variants) do
+					applyTier(v, tier)
+					if mat == "glass" then
+						-- keep tier uses
+					elseif paint then
+						v.uses = { n(paint, 1) }
+						v.tools = HP
+					else
+						v.uses = nil
+					end
+				end
+			end
 			r._done = true
 		end,
 	},

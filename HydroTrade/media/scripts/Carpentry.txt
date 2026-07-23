@@ -391,7 +391,7 @@ item HCWoodenwheelbarrow
 
 item HCWoodshingles
     {
-        Weight          = 1,
+        Weight          = 0.25,
         Type            = Normal,
         DisplayName     = Wood Shingles,
         icon            = HCWoodshingles,

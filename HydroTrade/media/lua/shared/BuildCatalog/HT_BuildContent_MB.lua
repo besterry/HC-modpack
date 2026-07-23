@@ -417,29 +417,16 @@ HT_BuildContent_MB._regFloorsRoofs = function()
 	local sortLight = 20
 	local sortDeco = 20
 
-	-- E) Floors / roofs (no cap)
+	-- E) Floors only (roofs are style packs in HT_BuildContent_Roofs)
 	if M.getFloorsData then
 		local roofKey = getText("ContextMenu_Roofing_Styles")
-		local fi, ri = 0, 0
+		local fi = 0
 		for subName, subData in pairs(M.getFloorsData()) do
-			local isRoof = (subName == roofKey)
-			for _, list in pairs(subData) do
-				local entry = list
-				local spr = { sprite = entry[1], northSprite = entry[2] }
-				local name = disp(entry[1], entry[3])
-				if isRoof then
-					ri = ri + 1
-					local localRi = ri
-					add({
-						id = "mb_roof_" .. localRi, section = "Build", group = "Roofs", kind = "item", sort = sortRoof + localRi,
-						name = name, sprite = entry[1],
-						needs = need("Base.Plank", 1, "Base.Nails", 1),
-						skills = { Woodwork = sk("floorObject", 1) }, tools = H,
-						create = function(p)
-							mb().onBuildTwoSpriteFloor(nil, spr, p, name)
-						end,
-					})
-				else
+			if subName ~= roofKey then
+				for _, list in pairs(subData) do
+					local entry = list
+					local spr = { sprite = entry[1], northSprite = entry[2] }
+					local name = disp(entry[1], entry[3])
 					fi = fi + 1
 					local localFi = fi
 					add({

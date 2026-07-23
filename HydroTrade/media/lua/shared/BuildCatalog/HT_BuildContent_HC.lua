@@ -11,37 +11,50 @@ HT_BuildContent_HC.register = function()
 		return
 	end
 
-	if Hydrocraft.onBuildWallBrick then
-		add({
-			id = "hc_brick_wall", section = "Build", group = "Walls", kind = "item", sort = 90,
-			nameKey = "ContextMenu_Brick_wall", sprite = "walls_exterior_house_02_64",
-			showHp = true, hp = 2000,
-			needs = {
-				{ item = "Hydrocraft.HCGreybrick", count = 25 },
-				{ item = "Hydrocraft.HCRedbrick", count = 30 },
-				{ item = "Base.Stone", count = 50 },
-				{ item = "Hydrocraft.HCMortar", count = 5 },
-			},
-			skills = {},
-			tools = { "Hydrocraft.HCMasontrowel" },
-			create = function(p) Hydrocraft.onBuildWallBrick(p) end,
-		})
-	end
-	if Hydrocraft.onBuildWallBrickWin then
-		add({
-			id = "hc_brick_win", section = "Build", group = "Walls", kind = "item", sort = 91,
-			nameKey = "ContextMenu_Brick_wall_with_window", sprite = "walls_exterior_house_02_72",
-			showHp = true, hp = 2000,
-			needs = {
-				{ item = "Hydrocraft.HCGreybrick", count = 20 },
-				{ item = "Hydrocraft.HCRedbrick", count = 25 },
-				{ item = "Base.Stone", count = 40 },
-				{ item = "Hydrocraft.HCMortar", count = 5 },
-			},
-			skills = {},
-			tools = { "Hydrocraft.HCMasontrowel" },
-			create = function(p) Hydrocraft.onBuildWallBrickWin(p) end,
-		})
+	-- HC house_02 brick: style pack (wall + window opening). Door frame tile not in HC.
+	-- Not merged into mb_style_rbrick (that uses house_01 sprites).
+	if Hydrocraft.onBuildWallBrick or Hydrocraft.onBuildWallBrickWin then
+		local variants = {}
+		if Hydrocraft.onBuildWallBrick then
+			table.insert(variants, {
+				roleKey = "IGUI_HT_BuildCatalog_Role_Wall",
+				sprite = "walls_exterior_house_02_64",
+				needs = {
+					{ item = "Hydrocraft.HCGreybrick", count = 25 },
+					{ item = "Hydrocraft.HCRedbrick", count = 30 },
+					{ item = "Base.Stone", count = 50 },
+					{ item = "Hydrocraft.HCMortar", count = 5 },
+				},
+				skills = {},
+				tools = { "Hydrocraft.HCMasontrowel" },
+				create = function(p) Hydrocraft.onBuildWallBrick(p) end,
+			})
+		end
+		if Hydrocraft.onBuildWallBrickWin then
+			-- Opening only (no glass in sprite / HC builder).
+			table.insert(variants, {
+				roleKey = "IGUI_HT_BuildCatalog_Role_WindowFrame",
+				sprite = "walls_exterior_house_02_72",
+				needs = {
+					{ item = "Hydrocraft.HCGreybrick", count = 20 },
+					{ item = "Hydrocraft.HCRedbrick", count = 25 },
+					{ item = "Base.Stone", count = 40 },
+					{ item = "Hydrocraft.HCMortar", count = 5 },
+				},
+				skills = {},
+				tools = { "Hydrocraft.HCMasontrowel" },
+				create = function(p) Hydrocraft.onBuildWallBrickWin(p) end,
+			})
+		end
+		if #variants > 0 then
+			add({
+				id = "hc_style_brick", section = "Build", group = "Walls", kind = "style", sort = 90,
+				nameKey = "ContextMenu_Brick_wall",
+				sprite = variants[1].sprite,
+				showHp = true, hp = 2000,
+				variants = variants,
+			})
+		end
 	end
 	if Hydrocraft.onBuildGlassWall then
 		add({
