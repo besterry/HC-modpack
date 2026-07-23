@@ -15,4 +15,8 @@ HT_BuildContent.register = function()
 	if HT_BuildContent_HC and HT_BuildContent_HC.register then
 		HT_BuildContent_HC.register()
 	end
+	if HT_BuildContent_ItemStorage and HT_BuildContent_ItemStorage.register then
+		HT_BuildContent_ItemStorage.register()
+	end
 end
+

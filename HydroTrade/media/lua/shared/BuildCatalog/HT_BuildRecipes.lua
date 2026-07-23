@@ -93,8 +93,45 @@ HT_BuildRecipes.getDisplayName = function(entry)
 	return entry.id or "?"
 end
 
--- Capacity from tile sprite property ContainerCapacity (ItemContainer.setType keeps default 50).
+-- Capacity: sprite ContainerCapacity first; else recipe.containerType / sprite "container".
+-- Do not use ItemContainer.setType (always default 50).
 HT_BuildRecipes._capSpriteCache = HT_BuildRecipes._capSpriteCache or {}
+HT_BuildRecipes.TypeCapacity = {
+	crate = 50,
+	wardrobe = 130,
+	counter = 50,
+	shelves = 50,
+	locker = 40,
+	militarylocker = 40,
+	filingcabinet = 50,
+	vendingsnack = 50,
+	vendingpop = 15,
+	fridge = 40,
+	freezer = 20,
+	bin = 50,
+	officedrawers = 20,
+	fireplace = 50,
+	smallcrate = 40,
+	smallbox = 25,
+	militarycrate = 100,
+	clothingrack = 25,
+	medicine = 5,
+	sidetable = 10,
+	cashregister = 5,
+	microwave = 5,
+	toaster = 5,
+}
+
+HT_BuildRecipes.getCapacityForType = function(containerType)
+	if not containerType or containerType == "" then
+		return nil
+	end
+	local cap = HT_BuildRecipes.TypeCapacity[containerType]
+	if type(cap) == "number" and cap > 0 then
+		return cap
+	end
+	return nil
+end
 
 HT_BuildRecipes.getCapacityFromSprite = function(spriteName)
 	if not spriteName or spriteName == "" then
@@ -111,8 +148,13 @@ HT_BuildRecipes.getCapacityFromSprite = function(spriteName)
 	local spr = getSprite and getSprite(spriteName) or nil
 	if spr and spr.getProperties then
 		local props = spr:getProperties()
-		if props and props:Is("ContainerCapacity") then
-			cap = tonumber(props:Val("ContainerCapacity"))
+		if props then
+			if props:Is("ContainerCapacity") then
+				cap = tonumber(props:Val("ContainerCapacity"))
+			end
+			if (not cap or cap <= 0) and props:Is("container") then
+				cap = HT_BuildRecipes.getCapacityForType(props:Val("container"))
+			end
 		end
 	end
 	if type(cap) == "number" and cap > 0 then
@@ -134,6 +176,10 @@ HT_BuildRecipes.getCapacity = function(recipe)
 	if cap then
 		return cap
 	end
+	cap = HT_BuildRecipes.getCapacityForType(recipe.containerType)
+	if cap then
+		return cap
+	end
 	if recipe.variants then
 		for _, variant in ipairs(recipe.variants) do
 			if type(variant.capacity) == "number" and variant.capacity > 0 then
@@ -143,6 +189,26 @@ HT_BuildRecipes.getCapacity = function(recipe)
 			if cap then
 				return cap
 			end
+			cap = HT_BuildRecipes.getCapacityForType(variant.containerType)
+			if cap then
+				return cap
+			end
+		end
+	end
+	return nil
+end
+
+HT_BuildRecipes.getWaterMax = function(recipe)
+	if not recipe then
+		return nil
+	end
+	if type(recipe.waterMax) == "number" and recipe.waterMax > 0 then
+		return recipe.waterMax
+	end
+	if type(recipe.getWaterMax) == "function" then
+		local ok, value = pcall(recipe.getWaterMax)
+		if ok and type(value) == "number" and value > 0 then
+			return value
 		end
 	end
 	return nil
@@ -251,6 +317,7 @@ HT_BuildRecipes.getToolFullType = function(toolName)
 		return toolName
 	end
 	local map = {
+		Paintbrush = "Base.Paintbrush",
 		Hammer = "Base.Hammer",
 		Screwdriver = "Base.Screwdriver",
 		Saw = "Base.Saw",

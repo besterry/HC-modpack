@@ -298,8 +298,10 @@ end
 
 
 
+Hydrocraft.IBCTowerWaterMax = 2000
+
 Hydrocraft.onBuildIBCTower = function(player)
-local barrel = RainCollectorBarrel:new(player, "hcBuildingIBCTower_01_0", 2000);
+local barrel = RainCollectorBarrel:new(player, "hcBuildingIBCTower_01_0", Hydrocraft.IBCTowerWaterMax);
 	barrel.modData["need:Hydrocraft.HCIBCtower"] = "1";
 	barrel.player = player
 	getCell():setDrag(barrel, player);

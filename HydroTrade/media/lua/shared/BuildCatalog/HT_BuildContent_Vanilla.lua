@@ -147,15 +147,17 @@ HT_BuildContent_Vanilla.register = function()
 		create = function(p) ISBuildMenu.onWoodenCrate(nil, nil, ISBuildMenu.getWoodenCrateSprites(p), p) end,
 	})
 	add({
-		id = "v_barrel_s", section = "Build", group = "Containers", kind = "item", sort = 2,
+		id = "v_barrel_s", section = "Survival", group = "Survival", kind = "item", sort = 2,
 		nameKey = "ContextMenu_Rain_Collector_Barrel", sprite = "carpentry_02_54",
+		waterMax = (RainCollectorBarrel and RainCollectorBarrel.smallWaterMax) or 40,
 		needs = { { item = "Base.Plank", count = 4 }, { item = "Base.Nails", count = 4 }, { item = "Base.Garbagebag", count = 4 } },
 		skills = { Woodwork = 4 }, tools = H,
 		create = function(p) ISBuildMenu.onCreateBarrel(nil, p, "carpentry_02_54", RainCollectorBarrel and RainCollectorBarrel.smallWaterMax or 40) end,
 	})
 	add({
-		id = "v_barrel_l", section = "Build", group = "Containers", kind = "item", sort = 3,
+		id = "v_barrel_l", section = "Survival", group = "Survival", kind = "item", sort = 3,
 		name = getText("ContextMenu_Rain_Collector_Barrel") .. " (L)", sprite = "carpentry_02_52",
+		waterMax = (RainCollectorBarrel and RainCollectorBarrel.largeWaterMax) or 100,
 		needs = { { item = "Base.Plank", count = 4 }, { item = "Base.Nails", count = 4 }, { item = "Base.Garbagebag", count = 4 } },
 		skills = { Woodwork = 7 }, tools = H,
 		create = function(p) ISBuildMenu.onCreateBarrel(nil, p, "carpentry_02_52", RainCollectorBarrel and RainCollectorBarrel.largeWaterMax or 100) end,

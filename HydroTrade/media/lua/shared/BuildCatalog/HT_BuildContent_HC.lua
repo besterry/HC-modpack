@@ -45,7 +45,7 @@ HT_BuildContent_HC.register = function()
 	end
 	if Hydrocraft.onBuildGlassWall then
 		add({
-			id = "hc_glass_wall", section = "Build", group = "Walls", kind = "item", sort = 92,
+			id = "hc_glass_wall", section = "Metal", group = "Walls", kind = "item", sort = 92,
 			nameKey = "ContextMenu_Glass_Wall", sprite = "walls_commercial_01_96",
 			showHp = true, hp = 150,
 			needs = {
@@ -59,7 +59,7 @@ HT_BuildContent_HC.register = function()
 	end
 	if Hydrocraft.onBuildGlassRoof then
 		add({
-			id = "hc_glass_roof", section = "Build", group = "Roofs", kind = "item", sort = 90,
+			id = "hc_glass_roof", section = "Metal", group = "Roofs", kind = "item", sort = 90,
 			nameKey = "ContextMenu_Glass_roof", sprite = "roofs_02_55",
 			needs = {
 				{ item = "Hydrocraft.HCSteelrod", count = 2 },
@@ -132,6 +132,12 @@ HT_BuildContent_HC.register = function()
 			nameKey = "ContextMenu_IBC_Tower", sprite = "hcBuildingIBCTower_01_0",
 			needs = { { item = "Hydrocraft.HCIBCtower", count = 1 } },
 			tools = H,
+			getWaterMax = function()
+				if Hydrocraft and type(Hydrocraft.IBCTowerWaterMax) == "number" then
+					return Hydrocraft.IBCTowerWaterMax
+				end
+				return nil
+			end,
 			create = function(p) Hydrocraft.onBuildIBCTower(p) end,
 		})
 	end
@@ -141,12 +147,18 @@ HT_BuildContent_HC.register = function()
 			nameKey = "ContextMenu_Water_Pump", sprite = "hcBuildingWaterPump_01_0",
 			needs = { { item = "Hydrocraft.HCWaterpump", count = 1 } },
 			tools = H,
+			getWaterMax = function()
+				if WaterPump and type(WaterPump.waterMax) == "number" then
+					return WaterPump.waterMax
+				end
+				return nil
+			end,
 			create = function(p) Hydrocraft.onBuildWaterPump(p) end,
 		})
 	end
 	if Hydrocraft.onBuildBeehive then
 		add({
-			id = "hc_bee", section = "Survival", group = "Survival", kind = "item", sort = 12,
+			id = "hc_bee", section = "Stations", group = "Stations", kind = "item", sort = 12,
 			nameKey = "ContextMenu_Beehive", sprite = "hcBuildingBeehive_00_0",
 			needs = { { item = "Hydrocraft.HCBeehive3", count = 1 } },
 			-- HC sets noNeedHammer = true

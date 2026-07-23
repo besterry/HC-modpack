@@ -8,7 +8,56 @@ local TW = { "BlowTorch", "WeldingMask" }
 local TWH = { "BlowTorch", "WeldingMask", "Hammer" }
 local HS = { "Hammer", "Screwdriver" }
 local H = { "Hammer" }
+local HP = { "Hammer", "Paintbrush" }
+local HSP = { "Hammer", "Screwdriver", "Paintbrush" }
 local TROWEL = { "Hydrocraft.HCMasontrowel" }
+
+-- Instant MB wood looks: paint tax (drainable uses). Multistage L3 stays the high-HP path.
+local STYLE_PAINT = {
+	mb_style_lbrown = "Base.PaintLightBrown",
+	mb_style_dbrown = "Base.PaintBrown",
+	mb_style_gwood = "Base.PaintGrey",
+	mb_style_rbarn = "Base.PaintRed",
+	mb_style_wwood = "Base.PaintWhite",
+}
+
+-- Colored MB doors (nameKey -> paint). Natural / metal entries omitted.
+local DOOR_PAINT = {
+	ContextMenu_Blue_WoodenDoor = "Base.PaintBlue",
+	ContextMenu_Brown_WoodenDoor = "Base.PaintBrown",
+	ContextMenu_DarkBrown_WoodenDoor = "Base.PaintBrown",
+	ContextMenu_FancyBrown_Door = "Base.PaintBrown",
+	ContextMenu_White_WoodenDoor = "Base.PaintWhite",
+	ContextMenu_Brown_PanelDoor = "Base.PaintBrown",
+	ContextMenu_Gray_PanelDoor = "Base.PaintGrey",
+	ContextMenu_White_PanelDoor = "Base.PaintWhite",
+	ContextMenu_Black_IndustrialDoor = "Base.PaintBlack",
+	ContextMenu_Blue_IndustrialDoor = "Base.PaintBlue",
+	ContextMenu_Green_IndustrialDoor = "Base.PaintGreen",
+	ContextMenu_Orange_IndustrialDoor = "Base.PaintOrange",
+	ContextMenu_Red_IndustrialDoor = "Base.PaintRed",
+	ContextMenu_White_IndustrialDoor = "Base.PaintWhite",
+	ContextMenu_Beige_ExteriorDoor = "Base.PaintLightBrown",
+	ContextMenu_Gray_ExteriorDoor = "Base.PaintGrey",
+	ContextMenu_Orange_ExteriorDoor = "Base.PaintOrange",
+	ContextMenu_Spiffos_Door = "Base.PaintRed",
+	ContextMenu_Safety_Door = "Base.PaintRed",
+	ContextMenu_White_Low_WoodenDoor = "Base.PaintWhite",
+}
+
+-- Garage paint / which ids have windows (see HT_BuildContent_MB garages list order).
+local GARAGE_PAINT = {
+	mb_garage_1 = "Base.PaintWhite",
+	mb_garage_2 = "Base.PaintGreen",
+	mb_garage_3 = "Base.PaintGrey",
+	mb_garage_4 = "Base.PaintBlack",
+	mb_garage_5 = "Base.PaintRed",
+	mb_garage_6 = "Base.PaintGrey",
+}
+local GARAGE_WINDOW = {
+	mb_garage_5 = true,
+	mb_garage_6 = true,
+}
 
 local function n(item, count)
 	return { item = item, count = count }
@@ -45,10 +94,18 @@ end
 
 -- Tunable economy tiers (edit numbers here).
 HT_BuildBalance.Tiers = {
-	wood_frame = { needs = pn(2, 2), skills = { Woodwork = 2 }, tools = H },
-	wood_wall = { needs = pn(3, 3), skills = { Woodwork = 2 }, tools = H },
-	wood_door_frame = { needs = pn(4, 4), skills = { Woodwork = 2 }, tools = H },
-	wood_window_frame = { needs = pn(3, 3), skills = { Woodwork = 2 }, tools = H },
+	wood_frame = { needs = pn(2, 2), skills = { Woodwork = 2 }, tools = H, hp = 50, showHp = true },
+	-- Instant style: cheaper HP than Multistage L3 (~700); paint is the tax for skipping stages.
+	wood_wall = { needs = pn(3, 3), skills = { Woodwork = 3 }, tools = HP, hp = 250, showHp = true },
+	wood_plaster = {
+		needs = needs("Base.Plank", 3, "Base.Nails", 3, "Base.BucketPlasterFull", 1),
+		skills = { Woodwork = 5 },
+		tools = H,
+		hp = 250,
+		showHp = true,
+	},
+	wood_door_frame = { needs = pn(4, 4), skills = { Woodwork = 3 }, tools = HP },
+	wood_window_frame = { needs = pn(3, 3), skills = { Woodwork = 3 }, tools = HP },
 	wood_door = {
 		needs = needs("Base.Plank", 4, "Base.Nails", 4, "Base.Doorknob", 1, "Base.Hinge", 2),
 		skills = { Woodwork = 3 },
@@ -89,6 +146,15 @@ HT_BuildBalance.Tiers = {
 		needs = needs(
 			"Base.Plank", 8, "Base.Nails", 8, "Base.Doorknob", 2,
 			"Base.Hinge", 4, "Base.Screws", 8, "Base.SmallSheetMetal", 2
+		),
+		skills = { Woodwork = 6 },
+		tools = HS,
+	},
+	garage_window = {
+		needs = needs(
+			"Base.Plank", 8, "Base.Nails", 8, "Base.Doorknob", 2,
+			"Base.Hinge", 4, "Base.Screws", 8, "Base.SmallSheetMetal", 2,
+			"Hydrocraft.HCGlasspane", 2
 		),
 		skills = { Woodwork = 6 },
 		tools = HS,
@@ -154,6 +220,51 @@ HT_BuildBalance.Tiers = {
 		uses = weldUses(1, 3),
 		xp = { MetalWelding = 5 },
 	},
+	-- Military crates (MB): +20 cap vs vanilla mw_crate (80), so cost must be higher.
+	metal_mil_crate = {
+		needs = needs(
+			"Base.MetalPipe", 3,
+			"Base.SheetMetal", 3,
+			"Base.SmallSheetMetal", 3,
+			"Base.ScrapMetal", 2,
+			"Base.Screws", 8
+		),
+		skills = { MetalWelding = 6 },
+		tools = { "Screwdriver", "BlowTorch", "WeldingMask" },
+		uses = weldUses(3, 8),
+		xp = { MetalWelding = 15 },
+		hp = 400,
+		showHp = true,
+		capacity = 100,
+	},
+	metal_glass_wall = {
+		needs = needs("Base.MetalPipe", 2, "Base.SmallSheetMetal", 2, "Hydrocraft.HCGlasspanelarge", 1),
+		skills = { MetalWelding = 4 },
+		tools = TW,
+		uses = weldUses(2, 5),
+		xp = { MetalWelding = 10 },
+		hp = 150,
+		showHp = true,
+	},
+	metal_glass_door = {
+		needs = needs(
+			"Base.MetalPipe", 2, "Base.SmallSheetMetal", 1,
+			"Base.Doorknob", 1, "Base.Hinge", 2, "Hydrocraft.HCGlasspane", 1
+		),
+		skills = { MetalWelding = 3 },
+		tools = TW,
+		uses = weldUses(2, 4),
+		xp = { MetalWelding = 8 },
+		hp = 200,
+		showHp = true,
+	},
+	metal_glass_win = {
+		needs = needs("Base.MetalPipe", 1, "Base.SmallSheetMetal", 1, "Hydrocraft.HCGlasspane", 1),
+		skills = { MetalWelding = 3 },
+		tools = TW,
+		uses = weldUses(1, 3),
+		xp = { MetalWelding = 6 },
+	},
 	-- MetalWelding (ISBlacksmith) soft scrap + torch uses
 	mw_light = { uses = weldUses(1, 3), xp = { MetalWelding = 5 } },
 	mw_mid = { uses = weldUses(2, 5), xp = { MetalWelding = 10 } },
@@ -179,6 +290,15 @@ local function applyTier(recipe, tier)
 	if tier.xp then
 		recipe.xp = tier.xp
 	end
+	if tier.hp then
+		recipe.hp = tier.hp
+		recipe.showHp = true
+	elseif tier.showHp then
+		recipe.showHp = true
+	end
+	if type(tier.capacity) == "number" and tier.capacity > 0 then
+		recipe.capacity = tier.capacity
+	end
 end
 
 local function setWoodStyleVariants(recipe, T)
@@ -193,6 +313,57 @@ local function setWoodStyleVariants(recipe, T)
 			applyTier(v, T.wood_door_frame)
 		else
 			applyTier(v, T.wood_wall)
+		end
+	end
+end
+
+-- Paint on wall + openings (uses = drainable paint charges).
+local function setPaintedWoodStyle(recipe, T, paintType)
+	local wallUses = { n(paintType, 2) }
+	local openUses = { n(paintType, 1) }
+	applyTier(recipe, T.wood_wall)
+	recipe.uses = wallUses
+	recipe.tools = HP
+	if not recipe.variants then
+		return
+	end
+	for _, v in ipairs(recipe.variants) do
+		local rk = v.roleKey or ""
+		if string.find(rk, "WindowFrame", 1, true) then
+			applyTier(v, T.wood_window_frame)
+			v.uses = openUses
+			v.tools = HP
+		elseif string.find(rk, "DoorFrame", 1, true) then
+			applyTier(v, T.wood_door_frame)
+			v.uses = openUses
+			v.tools = HP
+		else
+			applyTier(v, T.wood_wall)
+			v.uses = wallUses
+			v.tools = HP
+		end
+	end
+end
+
+-- Plaster sprite styles: bucket plaster on wall only; openings stay plank/nails at skill 5.
+local function setPlasterStyleVariants(recipe, T)
+	if not recipe.variants then
+		return
+	end
+	for _, v in ipairs(recipe.variants) do
+		local rk = v.roleKey or ""
+		if string.find(rk, "WindowFrame", 1, true) then
+			applyTier(v, T.wood_window_frame)
+			v.skills = { Woodwork = 5 }
+			v.tools = H
+			v.uses = nil
+		elseif string.find(rk, "DoorFrame", 1, true) then
+			applyTier(v, T.wood_door_frame)
+			v.skills = { Woodwork = 5 }
+			v.tools = H
+			v.uses = nil
+		else
+			applyTier(v, T.wood_plaster)
 		end
 	end
 end
@@ -288,18 +459,20 @@ HT_BuildBalance.byRecipe = {
 	["hc_glass_wall"] = {
 		section = "Metal",
 		group = "Walls",
+		needs = needs("Base.MetalPipe", 2, "Base.SmallSheetMetal", 2, "Hydrocraft.HCGlasspanelarge", 1),
 		tools = TW,
-		skills = { MetalWelding = 3 },
-		uses = { n("Base.BlowTorch", 5) },
+		skills = { MetalWelding = 4 },
+		uses = weldUses(2, 5),
 		xp = { MetalWelding = 10 },
 	},
 	["hc_glass_roof"] = {
 		section = "Metal",
 		group = "Roofs",
+		needs = needs("Base.MetalPipe", 2, "Base.SmallSheetMetal", 1, "Hydrocraft.HCGlasspane", 1),
 		tools = TW,
 		skills = { MetalWelding = 3 },
-		uses = { n("Base.BlowTorch", 5) },
-		xp = { MetalWelding = 10 },
+		uses = weldUses(2, 4),
+		xp = { MetalWelding = 8 },
 	},
 	-- Vanilla wood anchors (close to ISBuildMenu)
 	["v_wall_frame"] = { needs = pn(2, 2), skills = { Woodwork = 2 }, tools = H },
@@ -319,6 +492,8 @@ HT_BuildBalance.byRecipe = {
 		uses = weldUses(4, 10),
 		xp = { MetalWelding = 18 },
 	},
+	-- Same sprite as mw_locker_b (furniture_storage_02_12)
+	["mb_locker_5"] = { hidden = true },
 	["mw_fence_big"] = {
 		needs = needs("Base.MetalPipe", 4, "Base.ScrapMetal", 2, "Base.SmallSheetMetal", 2),
 		skills = { MetalWelding = 6 },
@@ -390,9 +565,9 @@ HT_BuildBalance.rules = {
 			return r.id and string.find(r.id, "mb_glass_wall_", 1, true)
 		end,
 		apply = function(r)
-			r.needs = needs("Base.Plank", 2, "Base.Screws", 4, "Hydrocraft.HCGlasspanelarge", 1)
-			r.tools = HS
-			r.skills = { Woodwork = 4 }
+			r.section = "Metal"
+			r.group = "Walls"
+			applyTier(r, HT_BuildBalance.Tiers.metal_glass_wall)
 			r._done = true
 		end,
 	},
@@ -404,9 +579,16 @@ HT_BuildBalance.rules = {
 			)
 		end,
 		apply = function(r)
-			r.needs = needs("Base.Plank", 2, "Base.Screws", 4, "Hydrocraft.HCGlasspane", 1)
-			r.tools = HS
-			r.skills = { Woodwork = 3 }
+			if string.find(r.id, "mb_door_gwin_", 1, true) then
+				r.section = "Metal"
+				r.group = "Doors"
+				applyTier(r, HT_BuildBalance.Tiers.metal_glass_win)
+			else
+				-- plain windows stay carpentry-ish but with glass pane (already set below for non-metal)
+				r.needs = needs("Base.Plank", 2, "Base.Screws", 4, "Hydrocraft.HCGlasspane", 1)
+				r.tools = HS
+				r.skills = { Woodwork = 3 }
+			end
 			r._done = true
 		end,
 	},
@@ -417,15 +599,9 @@ HT_BuildBalance.rules = {
 				or string.find(k, "Glass_Door", 1, true)
 		end,
 		apply = function(r)
-			r.needs = needs(
-				"Base.Plank", 2,
-				"Base.Screws", 4,
-				"Base.Doorknob", 1,
-				"Base.Hinge", 2,
-				"Hydrocraft.HCGlasspane", 1
-			)
-			r.tools = HS
-			r.skills = { Woodwork = 4 }
+			r.section = "Metal"
+			r.group = "Doors"
+			applyTier(r, HT_BuildBalance.Tiers.metal_glass_door)
 			r._done = true
 		end,
 	},
@@ -511,7 +687,17 @@ HT_BuildBalance.applyEconomy = function(recipe)
 	local id = recipe.id or ""
 	local k = recipe.nameKey or ""
 
-	-- Wood wall styles
+	-- Wood / plaster wall styles (masonry styles are handled earlier in rules)
+	if id == "mb_style_gplaster" or id == "mb_style_wplaster" then
+		applyTier(recipe, T.wood_plaster)
+		setPlasterStyleVariants(recipe, T)
+		return
+	end
+	local paintType = STYLE_PAINT[id]
+	if paintType then
+		setPaintedWoodStyle(recipe, T, paintType)
+		return
+	end
 	if string.find(id, "mb_style_", 1, true) then
 		applyTier(recipe, T.wood_wall)
 		setWoodStyleVariants(recipe, T)
@@ -554,10 +740,10 @@ HT_BuildBalance.applyEconomy = function(recipe)
 		return
 	end
 
-	-- Metal signs / lockers / barrel / trash metal
+	-- Metal road signs (stop / parking meter): welding cost, keep in Decoration
 	if string.find(id, "mb_msign_", 1, true) then
-		recipe.section = "Metal"
-		recipe.group = "Fences"
+		recipe.section = "Survival"
+		recipe.group = "Decoration"
 		applyTier(recipe, T.metal_sign)
 		return
 	end
@@ -580,7 +766,16 @@ HT_BuildBalance.applyEconomy = function(recipe)
 		return
 	end
 	if string.find(id, "mb_garage_", 1, true) then
-		applyTier(recipe, T.garage)
+		if GARAGE_WINDOW[id] then
+			applyTier(recipe, T.garage_window)
+		else
+			applyTier(recipe, T.garage)
+		end
+		local gPaint = GARAGE_PAINT[id]
+		if gPaint then
+			recipe.uses = { n(gPaint, 2) }
+			recipe.tools = HSP
+		end
 		return
 	end
 	if string.find(id, "mb_door_", 1, true) then
@@ -588,6 +783,11 @@ HT_BuildBalance.applyEconomy = function(recipe)
 			applyTier(recipe, T.wood_double_door)
 		else
 			applyTier(recipe, T.wood_door)
+		end
+		local dPaint = DOOR_PAINT[k]
+		if dPaint then
+			recipe.uses = { n(dPaint, 2) }
+			recipe.tools = HP
 		end
 		return
 	end
@@ -623,8 +823,17 @@ HT_BuildBalance.applyEconomy = function(recipe)
 		applyTier(recipe, T.wood_bar)
 		return
 	end
-	if string.find(id, "mb_crate_", 1, true)
-		or string.find(id, "mb_cardboard_", 1, true)
+	if string.find(id, "mb_crate_", 1, true) then
+		if recipe.containerType == "militarycrate" then
+			recipe.section = "Metal"
+			recipe.group = "Containers"
+			applyTier(recipe, T.metal_mil_crate)
+			return
+		end
+		applyTier(recipe, T.wood_crate)
+		return
+	end
+	if string.find(id, "mb_cardboard_", 1, true)
 		or string.find(id, "mb_trash_w_", 1, true)
 		or id == "mb_recycle_bin"
 	then
@@ -665,10 +874,8 @@ HT_BuildBalance.applyEconomy = function(recipe)
 			end
 			return
 		end
-		if g == "Containers" and (id == "v_crate" or string.find(id, "barrel", 1, true)) then
-			if id == "v_crate" then
-				applyTier(recipe, T.wood_crate)
-			end
+		if g == "Containers" and id == "v_crate" then
+			applyTier(recipe, T.wood_crate)
 			return
 		end
 		if g == "Fences" and hasNeed(recipe, "Base.Plank") then

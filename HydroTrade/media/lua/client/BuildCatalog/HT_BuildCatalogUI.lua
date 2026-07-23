@@ -234,6 +234,7 @@ function HT_BuildGridPanel:setItems(items, selectedId, mode)
 		else
 			entry._gridLabel = HT_BuildRecipes.getDisplayName(entry)
 			entry._gridCap = HT_BuildRecipes.getCapacity(entry)
+			entry._gridWater = HT_BuildRecipes.getWaterMax(entry)
 		end
 	end
 	self:relayoutScroll()
@@ -325,7 +326,9 @@ function HT_BuildGridPanel:render()
 					self:drawText(getText("IGUI_HT_BuildCatalog_Badge_StyleShort"), x + 7, y + 4, COL.style.r, COL.style.g, COL.style.b, 1, UIFont.Small)
 				end
 				local metaY = labelY - 14
-				if entry._gridCap then
+				if entry._gridWater then
+					self:drawText(getText("IGUI_HT_BuildCatalog_WaterShort", tostring(entry._gridWater)), x + 5, metaY, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
+				elseif entry._gridCap then
 					self:drawText(getText("IGUI_HT_BuildCatalog_CapacityShort", tostring(entry._gridCap)), x + 5, metaY, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
 				end
 				if entry.showHp and entry.hp then
@@ -884,6 +887,11 @@ function HT_BuildCatalogUI:renderDetails(panel)
 		panel:drawText(getText("IGUI_HT_BuildCatalog_Capacity", tostring(cap)), pad, y, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
 		y = y + 16
 	end
+	local waterMax = HT_BuildRecipes.getWaterMax(active) or HT_BuildRecipes.getWaterMax(recipe)
+	if waterMax then
+		panel:drawText(getText("IGUI_HT_BuildCatalog_Water", tostring(waterMax)), pad, y, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
+		y = y + 16
+	end
 
 	local previewH = 120
 	panel:drawRect(pad, y, panel.width - pad * 2, previewH, 0.75, COL.bg.r, COL.bg.g, COL.bg.b)
@@ -940,6 +948,30 @@ function HT_BuildCatalogUI:renderDetails(panel)
 			end
 			y = y + 4
 		end
+	end
+
+	-- Vanilla wood frame: show MultiStage L1/L2/L3 costs and HP so players are not guessing.
+	if recipe.id == "v_wall_frame" then
+		local upgradeKeys = {
+			"IGUI_HT_BuildCatalog_UpgradeHeader",
+			"IGUI_HT_BuildCatalog_Upgrade_L1",
+			"IGUI_HT_BuildCatalog_Upgrade_L2",
+			"IGUI_HT_BuildCatalog_Upgrade_L3",
+			"IGUI_HT_BuildCatalog_Upgrade_Total",
+			"IGUI_HT_BuildCatalog_Upgrade_PlasterNote",
+		}
+		for _, key in ipairs(upgradeKeys) do
+			if y > panel.height - 120 then
+				break
+			end
+			local line = getTextOrNull(key) or getText(key)
+			if line and line ~= "" then
+				local maxW = panel.width - pad * 2
+				panel:drawText(truncateToWidthCached(line, UIFont.Small, maxW), pad, y, COL.muted.r, COL.muted.g, COL.muted.b, 1, UIFont.Small)
+				y = y + 14
+			end
+		end
+		y = y + 4
 	end
 
 	panel:drawText(getText("Tooltip_craft_Needs"), pad, y, COL.text.r, COL.text.g, COL.text.b, 1, UIFont.Small)

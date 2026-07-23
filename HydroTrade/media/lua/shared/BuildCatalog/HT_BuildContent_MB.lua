@@ -148,7 +148,7 @@ HT_BuildContent_MB._regStyles = function()
 		local dfSpr = st.doorFrame
 		add({
 			id = st.id, section = "Build", group = "Walls", kind = "style", sort = sortWall + si,
-			nameKey = st.nameKey, sprite = wSpr.sprite, showHp = true, hp = st.masonry and 600 or 100,
+			nameKey = st.nameKey, sprite = wSpr.sprite, showHp = true, hp = st.masonry and 600 or 250,
 			variants = {
 				{
 					roleKey = "IGUI_HT_BuildCatalog_Role_Wall", sprite = wSpr.sprite,
@@ -225,11 +225,11 @@ HT_BuildContent_MB._regDoors = function()
 		{ "fixtures_doors_fences_01_4", "fixtures_doors_fences_01_5", "fixtures_doors_fences_01_6", "fixtures_doors_fences_01_7", "ContextMenu_Low_WoodenDoor", "onBuildWoodenDoor" },
 		{ "fixtures_doors_fences_01_8", "fixtures_doors_fences_01_9", "fixtures_doors_fences_01_10", "fixtures_doors_fences_01_11", "ContextMenu_White_Low_WoodenDoor", "onBuildWoodenDoor" },
 		{ "fixtures_doors_fences_01_16", "fixtures_doors_fences_01_17", "fixtures_doors_fences_01_18", "fixtures_doors_fences_01_19", "ContextMenu_Metal_LowDoor", "onBuildLowdoorframe" },
-		{ "fixtures_doors_01_36", "fixtures_doors_01_37", "fixtures_doors_01_38", "fixtures_doors_01_39", "ContextMenu_Red_Frame_Glass", "onBuildWoodenDoor" },
-		{ "fixtures_doors_01_40", "fixtures_doors_01_41", "fixtures_doors_01_42", "fixtures_doors_01_43", "ContextMenu_Black_Frame_Glass", "onBuildWoodenDoor" },
-		{ "fixtures_doors_01_48", "fixtures_doors_01_49", "fixtures_doors_01_50", "fixtures_doors_01_51", "ContextMenu_Black_Frame_Glass2", "onBuildWoodenDoor" },
-		{ "fixtures_doors_01_116", "fixtures_doors_01_117", "fixtures_doors_01_118", "fixtures_doors_01_119", "ContextMenu_White_Frame_Glass_Door", "onBuildGlassDoor" },
-		{ "fixtures_doors_01_108", "fixtures_doors_01_109", "fixtures_doors_01_110", "fixtures_doors_01_111", "ContextMenu_Brown_Frame_Glass_Door", "onBuildGlassDoor" },
+		{ "fixtures_doors_01_36", "fixtures_doors_01_37", "fixtures_doors_01_38", "fixtures_doors_01_39", "ContextMenu_Red_Frame_Glass", "onBuildWoodenDoor", metal = true },
+		{ "fixtures_doors_01_40", "fixtures_doors_01_41", "fixtures_doors_01_42", "fixtures_doors_01_43", "ContextMenu_Black_Frame_Glass", "onBuildWoodenDoor", metal = true },
+		{ "fixtures_doors_01_48", "fixtures_doors_01_49", "fixtures_doors_01_50", "fixtures_doors_01_51", "ContextMenu_Black_Frame_Glass2", "onBuildWoodenDoor", metal = true },
+		{ "fixtures_doors_01_116", "fixtures_doors_01_117", "fixtures_doors_01_118", "fixtures_doors_01_119", "ContextMenu_White_Frame_Glass_Door", "onBuildGlassDoor", metal = true },
+		{ "fixtures_doors_01_108", "fixtures_doors_01_109", "fixtures_doors_01_110", "fixtures_doors_01_111", "ContextMenu_Brown_Frame_Glass_Door", "onBuildGlassDoor", metal = true },
 	}
 
 	local doorNeeds = need("Base.Plank", 4, "Base.Nails", 4, "Base.Doorknob", 1, "Base.Hinge", 2)
@@ -244,8 +244,9 @@ HT_BuildContent_MB._regDoors = function()
 		}
 		local fn = entry[6]
 		local isMetalLow = (fn == "onBuildLowdoorframe")
+		local toMetal = entry.metal or isMetalLow
 		add({
-			id = "mb_door_" .. di, section = "Build", group = "Doors", kind = "item", sort = sortDoor + di,
+			id = "mb_door_" .. di, section = toMetal and "Metal" or "Build", group = "Doors", kind = "item", sort = sortDoor + di,
 			nameKey = entry[5], sprite = entry[1], showHp = true, hp = isMetalLow and 1000 or 200,
 			needs = isMetalLow and metalLowNeeds or doorNeeds,
 			skills = { Woodwork = doorSkill }, tools = H,
@@ -265,7 +266,7 @@ HT_BuildContent_MB._regDoors = function()
 		local entry = gw
 		local spr = { sprite = entry[1], northSprite = entry[2] }
 		add({
-			id = "mb_door_gwin_" .. gi, section = "Build", group = "Doors", kind = "item", sort = sortDoor + 80 + gi,
+			id = "mb_door_gwin_" .. gi, section = "Metal", group = "Doors", kind = "item", sort = sortDoor + 80 + gi,
 			nameKey = entry[3], sprite = entry[1],
 			needs = need("Base.Plank", 4, "Base.Screws", 4),
 			skills = { Woodwork = doorSkill }, tools = H,
@@ -344,7 +345,7 @@ HT_BuildContent_MB._regGlassWalls = function()
 			local idx = k
 			local spr = { sprite = list[1], northSprite = list[2], corner = list[3] }
 			add({
-				id = "mb_glass_wall_" .. tostring(idx), section = "Build", group = "Walls", kind = "item",
+				id = "mb_glass_wall_" .. tostring(idx), section = "Metal", group = "Walls", kind = "item",
 				sort = sortWall + 100 + (tonumber(idx) or 0),
 				name = getText("ContextMenu_Glass_Wall") .. tostring(idx), sprite = list[1],
 				showHp = true, hp = 150,
@@ -937,12 +938,12 @@ HT_BuildContent_MB._regContainers = function()
 
 	-- Metal lockers
 	local lockers = {
-		{ "ContextMenu_Gun_Locker", "furniture_storage_02_9", "furniture_storage_02_8", "furniture_storage_02_11", "furniture_storage_02_10", "locker" },
-		{ "ContextMenu_MetalLocker_Menu", "furniture_storage_02_1", "furniture_storage_02_0", "furniture_storage_02_3", "furniture_storage_02_2", "locker" },
-		{ "ContextMenu_Lock_Boxes", "location_business_bank_01_43", "location_business_bank_01_42", "location_business_bank_01_45", "location_business_bank_01_44", "locker" },
-		{ "ContextMenu_Blue_Lockers", "furniture_storage_02_4", "furniture_storage_02_5", "furniture_storage_02_6", "furniture_storage_02_7", "hang" },
-		{ "ContextMenu_Yellow_Lockers", "furniture_storage_02_12", "furniture_storage_02_13", "furniture_storage_02_14", "furniture_storage_02_15", "hang" },
-		{ "ContextMenu_Military_Lockers", "location_military_generic_01_23", "location_military_generic_01_22", "location_military_generic_01_30", "location_military_generic_01_31", "hang" },
+		{ "ContextMenu_Gun_Locker", "furniture_storage_02_9", "furniture_storage_02_8", "furniture_storage_02_11", "furniture_storage_02_10", "vendingsnack" },
+		{ "ContextMenu_MetalLocker_Menu", "furniture_storage_02_1", "furniture_storage_02_0", "furniture_storage_02_3", "furniture_storage_02_2", "vendingsnack" },
+		{ "ContextMenu_Lock_Boxes", "location_business_bank_01_43", "location_business_bank_01_42", "location_business_bank_01_45", "location_business_bank_01_44", "vendingsnack" },
+		{ "ContextMenu_Blue_Lockers", "furniture_storage_02_4", "furniture_storage_02_5", "furniture_storage_02_6", "furniture_storage_02_7", "filingcabinet" },
+		{ "ContextMenu_Yellow_Lockers", "furniture_storage_02_12", "furniture_storage_02_13", "furniture_storage_02_14", "furniture_storage_02_15", "filingcabinet" },
+		{ "ContextMenu_Military_Lockers", "location_military_generic_01_23", "location_military_generic_01_22", "location_military_generic_01_30", "location_military_generic_01_31", "filingcabinet" },
 	}
 	local lockerNeeds = need("Base.SheetMetal", 2, "Base.Screws", 6, "Base.Hinge", 2)
 	for li, L in ipairs(lockers) do
@@ -951,14 +952,15 @@ HT_BuildContent_MB._regContainers = function()
 			sprite = entry[2], northSprite = entry[3],
 			eastSprite = entry[4], southSprite = entry[5],
 		}
+		local hang = entry[6] == "filingcabinet"
 		add({
 			id = "mb_locker_" .. li, section = "Build", group = "Containers", kind = "item", sort = sortCont + 140 + li,
 			nameKey = entry[1], sprite = entry[2], showHp = true, hp = 350,
-			containerType = entry[6] == "hang" and "filingcabinet" or "vendingsnack",
+			containerType = entry[6],
 			needs = lockerNeeds, skills = { Woodwork = sk("complexFurniture", 4) }, tools = SD,
 			create = function(p)
 				local name = getText(entry[1])
-				if entry[6] == "hang" then
+				if hang then
 					mb().onBuildHangingMetalLocker(nil, spr, p, name)
 				else
 					mb().onBuildMetalLocker(nil, spr, p, name)
