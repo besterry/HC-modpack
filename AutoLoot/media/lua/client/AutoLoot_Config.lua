@@ -38,6 +38,10 @@ function AutoLoot_GetItemDisplayName(fullType)
 	return fullType
 end
 
+function AutoLoot_IsShopSellItem(fullType)
+	return fullType and PM.desiredItemsSet and PM.desiredItemsSet[fullType] == true
+end
+
 function AutoLoot_AddCustomItem(fullType)
 	if not fullType or fullType == "" then
 		return false, "bad"

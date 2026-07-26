@@ -53,4 +53,5 @@ IGUI_EN = {
 	IGUI_AutoLoot_Search = "Search",
 	IGUI_AutoLoot_SearchMin2 = "Type at least 2 characters",
 	IGUI_AutoLoot_SearchNone = "Nothing found",
+	IGUI_AutoLoot_InShop = "shop",
 }

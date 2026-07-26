@@ -53,4 +53,5 @@ IGUI_RU = {
 	IGUI_AutoLoot_Search = "Поиск",
 	IGUI_AutoLoot_SearchMin2 = "Введите минимум 2 символа",
 	IGUI_AutoLoot_SearchNone = "Ничего не найдено",
+	IGUI_AutoLoot_InShop = "скупка",
 }

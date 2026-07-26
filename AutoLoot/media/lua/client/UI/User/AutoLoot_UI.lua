@@ -50,6 +50,52 @@ local CATEGORY_DEFS = {
 	{ label = "IGUI_Food",        check = "Food",   keys = { "Food", "FoodN" } },
 }
 
+-- DisplayCategory → текст кнопки автосбора
+local DISPLAY_CAT_LABEL = {}
+for _, def in ipairs(CATEGORY_DEFS) do
+	for _, key in ipairs(def.keys) do
+		DISPLAY_CAT_LABEL[key] = def.label
+	end
+end
+
+local function getDisplayCategoryLabel(displayCategory)
+	if not displayCategory or displayCategory == "" then
+		return nil
+	end
+	local igui = DISPLAY_CAT_LABEL[displayCategory]
+	if igui then
+		return getText(igui)
+	end
+	return displayCategory
+end
+
+local function getItemDisplayCategory(fullType)
+	if not fullType then return nil end
+	local sm = getScriptManager()
+	if not sm then return nil end
+	local si = sm:getItem(fullType) or sm:FindItem(fullType)
+	if si and si.getDisplayCategory then
+		return si:getDisplayCategory()
+	end
+	return nil
+end
+
+-- суффикс в списке: (скупка, Еда) / (Еда) / (скупка)
+local function formatItemMetaSuffix(fullType, displayCategory)
+	local parts = {}
+	if AutoLoot_IsShopSellItem and AutoLoot_IsShopSellItem(fullType) then
+		table.insert(parts, getText("IGUI_AutoLoot_InShop"))
+	end
+	local catLabel = getDisplayCategoryLabel(displayCategory or getItemDisplayCategory(fullType))
+	if catLabel then
+		table.insert(parts, catLabel)
+	end
+	if #parts == 0 then
+		return ""
+	end
+	return " (" .. table.concat(parts, ", ") .. ")"
+end
+
 local function refreshSandbox()
 	if not SandboxVars or not SandboxVars.AutoLoot then return end
 	price = SandboxVars.AutoLoot.PriceAutoLoot
@@ -474,11 +520,13 @@ local function ensureAutoLootItemIndex()
 					or string.find(typeName, "Wallet", 1, true) == 1
 				if not isWallet then
 					local displayName = si:getDisplayName() or fullType
+					local displayCategory = (si.getDisplayCategory and si:getDisplayCategory()) or nil
 					table.insert(UI_AutoLoot.itemsIndex, {
 						fullType = fullType,
 						name = displayName,
 						nameLower = string.lower(displayName),
 						typeLower = string.lower(fullType),
+						displayCategory = displayCategory,
 					})
 				end
 			end
@@ -510,7 +558,8 @@ function UI_AutoLoot:refreshCustomList()
 		else
 			for _, fullType in ipairs(list) do
 				local name = AutoLoot_GetItemDisplayName(fullType)
-				self.customList:addItem("× " .. name, { fullType = fullType, mode = "remove" })
+				local suffix = formatItemMetaSuffix(fullType, getItemDisplayCategory(fullType))
+				self.customList:addItem("× " .. name .. suffix, { fullType = fullType, mode = "remove" })
 			end
 		end
 		return
@@ -531,8 +580,10 @@ function UI_AutoLoot:refreshCustomList()
 	local added = 0
 	for _, it in ipairs(UI_AutoLoot.itemsIndex or {}) do
 		if string.contains(it.nameLower, filter) or string.contains(it.typeLower, filter) then
-			local prefix = (PM.AutolootCustomItems and PM.AutolootCustomItems[it.fullType]) and "✓ " or "+ "
-			self.customList:addItem(prefix .. it.name, { fullType = it.fullType, mode = "add" })
+			local inCustom = PM.AutolootCustomItems and PM.AutolootCustomItems[it.fullType]
+			local prefix = inCustom and "✓ " or "+ "
+			local suffix = formatItemMetaSuffix(it.fullType, it.displayCategory)
+			self.customList:addItem(prefix .. it.name .. suffix, { fullType = it.fullType, mode = "add" })
 			added = added + 1
 			if added >= 80 then break end
 		end
