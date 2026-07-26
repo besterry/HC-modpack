@@ -50,9 +50,9 @@ SurvivalGuideEntries.addSurvivalGuideEntry(8);
 
 SurvivalGuideEntries.addSurvivalGuideEntry(9);
 
---SurvivalGuideEntries.addSurvivalGuideEntry(10);
+SurvivalGuideEntries.addSurvivalGuideEntry(10);
 
---SurvivalGuideEntries.addSurvivalGuideEntry(11);
+SurvivalGuideEntries.addSurvivalGuideEntry(11);
 
 
 

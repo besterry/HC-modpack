@@ -2,7 +2,7 @@ SurvivalGuide_EN = {
 	SurvivalGuide_WindowTitle = "Server Information",
 
 	SurvivalGuide_entrie1title = "#1 - Server Rules",
-	SurvivalGuide_entrie1txt = "<CENTRE> "<SIZE:large> #2 - Rules <LINE> <IMAGECENTRE:media/ui/spiffoJudge.png> <LINE>" ..
+	SurvivalGuide_entrie1txt = "<CENTRE> "<SIZE:large> #1 - Rules <LINE> <IMAGECENTRE:media/ui/spiffoJudge.png> <LINE>" ..
 	"<SIZE:medium> Not knowing the rules, <LINE> does not relieve you of responsibility!",
 	SurvivalGuide_entrie1moreinfo = "<H1> Server Rules <BR> " ..
 	"<TEXT><RGB:1.0,0.01,0.24><SIZE:large> 1. General rules <BR><RGB:1.0,1.0,1.0><SIZE:medium>"..
@@ -159,7 +159,7 @@ SurvivalGuide_entrie7moreinfo = "<TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings,
 "<LINE><LINE><IMAGECENTRE:media/ui/SGaddsh.png>"..
 " <LINE> To occupy the <RGB:0.0,0.5,1.0><SPACE> vanilla building <RGB:1.0,1.0,1.0><SPACE> you don’t need anything, go into the house, press RMB and occupy the house as a shelter <LINE> <RGB:1.0,0.01,0.24><SPACE> Prohibited: living in public places <RGB:1.0,1.0,1.0><SPACE> (shops, gas stations, police stations, fire stations, etc.) <LINE>< LINE><RGB:1.0,1.0,1.0><SPACE> But the project administration does not recommend moving into such buildings for a long time, since the server is positioned 'Without wipes' - point restoration takes place <RGB:1.0,1.0,1.0> ..
 " <RGB:1.0,1.0,1.0> When performing a spot restoration (all cities are cleared), there is a chance that your shelter will be affected. Try <RGB:0.0,0.5,1.0><SPACE> to settle outside of cities. <RGB:1.0, 1.0,1.0><LINE> " ..
-" <RGB:1.0,1.0,1.0> Each player is provided with <RGB:0.0,0.5,1.0><SPACE> private 25x25 cells. <RGB:1.0,1.0,1.0><SPACE> to create such a private you must select a place in <RGB:0.0,0.5,1.0><SPACE> рClient -> Create a shelter <RGB:1.0,1.0,1.0><SPACE>, select the desired area with the character and create a shelter <LINE> In winter, the green highlight is not visible due to snow. <LINE> "..
+" <RGB:1.0,1.0,1.0> Each player is provided with <RGB:0.0,0.5,1.0><SPACE> private 25x25 cells. <RGB:1.0,1.0,1.0><SPACE> to create such a private you must select a place in <RGB:0.0,0.5,1.0><SPACE> Client -> Create a shelter <RGB:1.0,1.0,1.0><SPACE>, select the desired area with the character and create a shelter <LINE> In winter, the green highlight is not visible due to snow. <LINE> "..
 "<LINE><IMAGECENTRE:media/ui/SGSelectSH.png>"..
 " <LINE><TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Available to expand the size of the created private in <RGB:0.0,0.75,0.0><SPACE> Player menu <RGB:1.0,1.0,1.0> , the maximum private size is 35x35 cells. <LINE> The extension can also be received as a reward for participating in events."
 "<LINE><IMAGECENTRE:media/ui/SGTimeSH.png>"..
@@ -169,15 +169,29 @@ SurvivalGuide_entrie7moreinfo = "<TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings,
 SurvivalGuide_entrie8title = "#8 - Player Menu",
 SurvivalGuide_entrie8txt = "<CENTRE> <SIZE:large> #8 Player Menu"..
 " <LINE><LINE><LINE> <IMAGECENTRE:media/ui/SGPlayerMenuSpiffo.png>"..
-" <LINE> <SIZE:medium> Player menu - a menu for controlling many functions.",
+" <LINE> <SIZE:medium> Balance, shop stall, garage, car market, quests and settings.",
 SurvivalGuide_entrie8moreinfo = "<H1> Player Menu <BR>"..
 " <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
-"The player menu is accessed via <SPACE><RGB:0.0,0.75,0.0> Client -> Player Menu <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+"Access: <SPACE><RGB:0.0,0.75,0.0> Client -> Player Menu <RGB:1.0,1.0,1.0><SPACE> (Client button on the left). Opens a single panel, no nested submenu.<LINE>" ..
 " <LINE> <IMAGECENTRE:media/ui/SGPM.png>"..
-" <LINE> Balance: <RGB:0.0,0.5,1.0><SPACE> coins and votes <RGB:1.0,1.0,1.0><SPACE>, replenishment via the website <RGB:0.0,0.5,1.0><SPACE> wargm .ru/server/60709 <RGB:1.0,1.0,1.0><SPACE>, coins are credited automatically within 1 minute (replenishment is a voluntary donation to the server) <LINE>" ..
+" <LINE><RGB:0.0,0.5,1.0><SPACE> Balance <RGB:1.0,1.0,1.0><SPACE>: coins (project support) and votes/diamonds (voting). Top up: <RGB:0.0,0.5,1.0><SPACE> wargm.ru/server/60709 <RGB:1.0,1.0,1.0><SPACE>. Coins arrive automatically within ~1 minute (voluntary donation).<LINE>" ..
 " <LINE> <IMAGECENTRE:media/ui/SGSupport.png>"..
-"<TEXT><SIZE:medium><RGB:1.0,1.0,1.0> The functionality is being expanded and supplemented",
-
+" <LINE><RGB:0.0,0.75,0.0><SPACE><SIZE:medium> Panel buttons: <RGB:1.0,1.0,1.0><SIZE:medium><LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Faction <RGB:1.0,1.0,1.0><SPACE> manage or create a faction <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Safehouse <RGB:1.0,1.0,1.0><SPACE> / <RGB:0.0,0.5,1.0><SPACE> Create safehouse <RGB:1.0,1.0,1.0><SPACE> <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Expand safehouse <RGB:1.0,1.0,1.0><SPACE> for coins, max 35x35 tiles <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> My counter <RGB:1.0,1.0,1.0><SPACE> shops in the trade zone, slot limit, install mode <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> My garage <RGB:1.0,1.0,1.0><SPACE> place on your claim and store vehicles (section #11) <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Autoloot <RGB:1.0,1.0,1.0><SPACE> zombie loot settings (section #9) <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Car Market <RGB:1.0,1.0,1.0><SPACE> buy and sell vehicles <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Market status <RGB:1.0,1.0,1.0><SPACE> current car market state <LINE>" ..
+" <LINE><RGB:0.0,0.75,0.0><SPACE> Checkboxes: <RGB:1.0,1.0,1.0><LINE>" ..
+" Show ping info <LINE>" ..
+" Show kills <LINE>" ..
+" Highlight safehouse <LINE>" ..
+" Quest panel <LINE>" ..
+" Nutrition system (diet hints, not debuffs) <LINE>" ..
+" <LINE> The <RGB:0.0,0.5,1.0><SPACE> Refresh <RGB:1.0,1.0,1.0><SPACE> button at the bottom reloads balance and safehouse data.",
 SurvivalGuide_entrie9title = "#9 - Auto Collection",
 SurvivalGuide_entrie9txt = "<CENTRE> <SIZE:large> #9 Auto Collection"..
 " <LINE><LINE><LINE> <IMAGECENTRE:media/ui/Spiffo_Foil-badge.png>"..
@@ -191,4 +205,38 @@ SurvivalGuide_entrie9moreinfo = "<H1> Automatic loot collection from zombies <BR
 " <LINE><LINE> After acquisition, the player can activate or disable auto-collection and notification of collected items <RGB:0.0,0.5,1.0><LINE> (Activation - turns on auto-collection, turning off does not stop the activation time) <RGB:1.0,1.0 ,1.0><LINE>" ..
 "<LINE><IMAGECENTRE:media/ui/SGAutolootDemonstration.png>" ..
 " <LINE> The list of collected items can be changed by the <LINE> administration",
+
+SurvivalGuide_entrie10title = "#10 - Quests",
+SurvivalGuide_entrie10txt = "<CENTRE> <SIZE:large> #10 Quests"..
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/Spiffo_Foil-badge.png>"..
+" <LINE> <SIZE:medium> Tutorial, daily and repeatable quests with rewards.",
+SurvivalGuide_entrie10moreinfo = "<H1> Quests <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+" The server has a quest system: starter chain, daily, repeatable and special quests.<LINE>" ..
+" <LINE><RGB:0.0,0.75,0.0><SPACE> Enable the panel: <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+" Client -> Player Menu -> checkbox <RGB:0.0,0.5,1.0><SPACE> Quest panel <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+" <LINE><RGB:0.0,0.75,0.0><SPACE> Quest HUD <RGB:1.0,1.0,1.0><SPACE> shows the current goal, reward and buttons (find zone, claim reward, open board).<LINE>" ..
+" <LINE><RGB:0.0,0.75,0.0><SPACE> Quest board <RGB:1.0,1.0,1.0><SPACE> (button on HUD): <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Main <RGB:1.0,1.0,1.0><SPACE> story / side quests <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Daily <RGB:1.0,1.0,1.0><SPACE> refresh each game day <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Repeatable <RGB:1.0,1.0,1.0><SPACE> can be taken again after claiming <LINE>" ..
+" <RGB:0.0,0.5,1.0><SPACE> Special <RGB:1.0,1.0,1.0><SPACE> rare quests <LINE>" ..
+" <LINE> Rewards: balance money, XP, items. ATM sales require items in main inventory (not favorite, not equipped, not in a bag).<LINE>",
+
+SurvivalGuide_entrie11title = "#11 - Garage",
+SurvivalGuide_entrie11txt = "<CENTRE> <SIZE:large> #11 Garage"..
+" <LINE><LINE><LINE> <IMAGECENTRE:media/ui/CarpenterSpiffo.png>"..
+" <LINE> <SIZE:medium> Vehicle storage on your safehouse.",
+SurvivalGuide_entrie11moreinfo = "<H1> Garage <BR>"..
+" <TEXT><SIZE:medium><RGB:1.0,1.0,1.0> Greetings, survivor! <BR>" ..
+" The garage can only be placed on <RGB:0.0,0.75,0.0><SPACE> your safehouse <RGB:1.0,1.0,1.0><SPACE> by the owner.<LINE>" ..
+" <LINE><RGB:0.0,0.75,0.0><SPACE> Install: <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+" 1. Client -> Player Menu -> <RGB:0.0,0.5,1.0><SPACE> My garage <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+" 2. Enable <RGB:0.0,0.5,1.0><SPACE> install mode <RGB:1.0,1.0,1.0><SPACE><LINE>" ..
+" 3. RMB on the ground inside the claim -> place garage <LINE>" ..
+" You can rotate or delete the garage with the modes in the same window.<LINE>" ..
+" <LINE><RGB:1.0,0.01,0.24><SPACE> Important: <RGB:1.0,1.0,1.0><SPACE> deleting a garage also deletes all vehicles stored in it.<LINE>" ..
+" <LINE><RGB:0.0,0.75,0.0><SPACE> Parking: <RGB:1.0,1.0,1.0><SPACE> drive onto the marker, open garage -> Park. Retrieve uses the list button.<LINE>" ..
+" Capacity is tracked in m2 and car count. The panel has search, owner/condition/type filters and favorites.<LINE>" ..
+" <LINE> Extra garage slots are bought with <RGB:0.0,0.5,1.0><SPACE> Expand <RGB:1.0,1.0,1.0><SPACE> for coins (server limit).<LINE>",
 }
