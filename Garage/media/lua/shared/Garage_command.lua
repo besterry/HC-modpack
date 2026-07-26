@@ -154,7 +154,8 @@ Garage.getVehicleData = function (vehicle,player,index) --Сохранение �
             vehicle:getEngineQuality(),
             vehicle:getEngineLoudness(),
             vehicle:getEnginePower(),
-        }
+        },
+        mechanicType = vehicle:getScript():getMechanicType(), -- 1 стандарт, 2 тяжёлый, 3 элитка (как CarMarket)
     }
     local partData = {}
     for i = 0, vehicle:getPartCount() - 1 do

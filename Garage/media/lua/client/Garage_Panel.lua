@@ -187,6 +187,75 @@ local function parkedDays(data)
     return days
 end
 
+local function favKey(data)
+    if not data then
+        return ""
+    end
+    return tostring(data.oldSqlid or "") .. "|" .. tostring(data.vehicleFullName or "")
+end
+
+local function getMechanicType(data)
+    if not data then
+        return nil
+    end
+    if data.mechanicType ~= nil then
+        return tonumber(data.mechanicType)
+    end
+    if data.vehicleFullName and getScriptManager then
+        local script = getScriptManager():getVehicle(data.vehicleFullName)
+        if script then
+            return script:getMechanicType()
+        end
+    end
+    return nil
+end
+
+local function loadUiPrefs()
+    local player = getPlayer()
+    local prefs = {
+        ownerFilter = "all",
+        condFilter = "all",
+        typeFilter = "all",
+        sortMode = "days",
+        search = "",
+        favorites = {},
+    }
+    if not player then
+        return prefs
+    end
+    local md = player:getModData()
+    local saved = md.GarageUIPrefs
+    if type(saved) ~= "table" then
+        return prefs
+    end
+    if saved.ownerFilter then prefs.ownerFilter = saved.ownerFilter end
+    if saved.condFilter then prefs.condFilter = saved.condFilter end
+    if saved.typeFilter then prefs.typeFilter = saved.typeFilter end
+    if saved.sortMode then prefs.sortMode = saved.sortMode end
+    if type(saved.search) == "string" then prefs.search = saved.search end
+    if type(saved.favorites) == "table" then prefs.favorites = saved.favorites end
+    return prefs
+end
+
+local function saveUiPrefs(panel)
+    local player = getPlayer()
+    if not player or not panel then
+        return
+    end
+    local md = player:getModData()
+    md.GarageUIPrefs = {
+        ownerFilter = panel.ownerFilter or "all",
+        condFilter = panel.condFilter or "all",
+        typeFilter = panel.typeFilter or "all",
+        sortMode = panel.sortMode or "days",
+        search = "",
+        favorites = panel.favorites or {},
+    }
+    if panel.filterEntry then
+        md.GarageUIPrefs.search = panel.filterEntry:getText() or ""
+    end
+end
+
 local function styleButton(btn, accent)
     btn.backgroundColor = accent and {
         r = C.btnAccent.r, g = C.btnAccent.g, b = C.btnAccent.b, a = C.btnAccent.a
@@ -217,9 +286,12 @@ function Garage_Panel:createChildren()
     local comboH = math.max(22, FONT_HGT_SMALL + 4)
     local y = pad
 
-    self.ownerFilter = "all"
-    self.condFilter = "all"
-    self.sortMode = "name"
+    local prefs = loadUiPrefs()
+    self.ownerFilter = prefs.ownerFilter
+    self.condFilter = prefs.condFilter
+    self.typeFilter = prefs.typeFilter
+    self.sortMode = prefs.sortMode
+    self.favorites = prefs.favorites or {}
 
     self.titleLabel = ISLabel:new(pad, y, FONT_HGT_MEDIUM, getText("IGUI_GaragePanel_Title"), C.sodium.r, C.sodium.g, C.sodium.b, 1, UIFont.Medium, true)
     self.titleLabel:initialise()
@@ -240,7 +312,8 @@ function Garage_Panel:createChildren()
     self:addChild(self.filterLabel)
 
     local filterX = pad + getTextManager():MeasureStringX(UIFont.Small, getText("IGUI_GaragePanel_Search")) + 8
-    self.filterEntry = ISTextEntryBox:new("", filterX, y, self.width - filterX - pad, entryHgt)
+    local resetW = 90
+    self.filterEntry = ISTextEntryBox:new(prefs.search or "", filterX, y, self.width - filterX - pad - resetW - 8, entryHgt)
     self.filterEntry:initialise()
     self.filterEntry:instantiate()
     self.filterEntry:setClearButton(true)
@@ -249,13 +322,21 @@ function Garage_Panel:createChildren()
     self.filterEntry.onTextChange = function()
         if Garage_Panel.instance then
             Garage_Panel.instance:refreshList()
+            saveUiPrefs(Garage_Panel.instance)
         end
     end
     self:addChild(self.filterEntry)
 
+    self.resetBtn = ISButton:new(self.width - pad - resetW, y, resetW, entryHgt, getText("IGUI_GaragePanel_ResetFilters"), self, Garage_Panel.onClick)
+    self.resetBtn.internal = "RESET_FILTERS"
+    self.resetBtn:initialise()
+    self.resetBtn:instantiate()
+    styleButton(self.resetBtn, false)
+    self:addChild(self.resetBtn)
+
     y = y + entryHgt + 6
 
-    local comboW = math.floor((self.width - pad * 2 - 16) / 3)
+    local comboW = math.floor((self.width - pad * 2 - 24) / 4)
     self.ownerCombo = ISComboBox:new(pad, y, comboW, comboH, self, self.onFilterCombo)
     self.ownerCombo:initialise()
     self.ownerCombo:instantiate()
@@ -274,15 +355,26 @@ function Garage_Panel:createChildren()
     self.condCombo:addOption(getText("IGUI_GaragePanel_CondMissing"))
     self:addChild(self.condCombo)
 
-    self.sortCombo = ISComboBox:new(pad + (comboW + 8) * 2, y, comboW, comboH, self, self.onFilterCombo)
+    self.typeCombo = ISComboBox:new(pad + (comboW + 8) * 2, y, comboW, comboH, self, self.onFilterCombo)
+    self.typeCombo:initialise()
+    self.typeCombo:instantiate()
+    self.typeCombo:addOption(getText("IGUI_GaragePanel_TypeAll"))
+    self.typeCombo:addOption(getText("IGUI_GaragePanel_TypeStandard"))
+    self.typeCombo:addOption(getText("IGUI_GaragePanel_TypeHeavy"))
+    self.typeCombo:addOption(getText("IGUI_GaragePanel_TypeElite"))
+    self:addChild(self.typeCombo)
+
+    self.sortCombo = ISComboBox:new(pad + (comboW + 8) * 3, y, comboW, comboH, self, self.onFilterCombo)
     self.sortCombo:initialise()
     self.sortCombo:instantiate()
+    self.sortCombo:addOption(getText("IGUI_GaragePanel_SortDays"))
     self.sortCombo:addOption(getText("IGUI_GaragePanel_SortName"))
     self.sortCombo:addOption(getText("IGUI_GaragePanel_SortCond"))
     self.sortCombo:addOption(getText("IGUI_GaragePanel_SortPlate"))
     self.sortCombo:addOption(getText("IGUI_GaragePanel_SortSize"))
-    self.sortCombo:addOption(getText("IGUI_GaragePanel_SortDays"))
     self:addChild(self.sortCombo)
+
+    self:applyPrefsToCombos()
 
     y = y + comboH + 8
     self.listY = y
@@ -308,6 +400,7 @@ function Garage_Panel:createChildren()
     self.vehicleList.borderColor = { r = C.border.r, g = C.border.g, b = C.border.b, a = 1 }
     self.vehicleList.doDrawItem = Garage_Panel.drawVehicleItem
     self.vehicleList.onmousedown = Garage_Panel.onListMouseDown
+    self.vehicleList.onRightMouseUp = Garage_Panel.onListRightMouseUp
     self:addChild(self.vehicleList)
 
     self.previewScene = Garage_PreviewScene:new(self.detailX + 4, self.detailY + 4, self.detailW - 8, self.previewH - 4)
@@ -325,23 +418,37 @@ function Garage_Panel:createChildren()
     self.previewVehicleId = nil
 
     local btnY = self.height - pad - btnHgt
-    local btnW = 110
+    local gap = 6
+    local closeW = 80
+    local closeX = self.width - pad - closeW
+    local leftAreaW = closeX - gap - self.detailX
+    local btnW = math.floor((leftAreaW - gap * 2) / 3)
+    local bx = self.detailX
 
-    self.retrieveBtn = ISButton:new(self.detailX, btnY, btnW, btnHgt, getText("IGUI_GaragePanel_Retrieve"), self, Garage_Panel.onClick)
+    self.retrieveBtn = ISButton:new(bx, btnY, btnW, btnHgt, getText("IGUI_GaragePanel_Retrieve"), self, Garage_Panel.onClick)
     self.retrieveBtn.internal = "RETRIEVE"
     self.retrieveBtn:initialise()
     self.retrieveBtn:instantiate()
     styleButton(self.retrieveBtn, true)
     self:addChild(self.retrieveBtn)
 
-    self.putBtn = ISButton:new(self.detailX + btnW + 8, btnY, btnW + 40, btnHgt, getText("IGUI_GaragePanel_Put"), self, Garage_Panel.onClick)
+    bx = bx + btnW + gap
+    self.favBtn = ISButton:new(bx, btnY, btnW, btnHgt, getText("IGUI_GaragePanel_FavAdd"), self, Garage_Panel.onClick)
+    self.favBtn.internal = "FAVORITE"
+    self.favBtn:initialise()
+    self.favBtn:instantiate()
+    styleButton(self.favBtn, false)
+    self:addChild(self.favBtn)
+
+    bx = bx + btnW + gap
+    self.putBtn = ISButton:new(bx, btnY, btnW, btnHgt, getText("IGUI_GaragePanel_Put"), self, Garage_Panel.onClick)
     self.putBtn.internal = "PUT"
     self.putBtn:initialise()
     self.putBtn:instantiate()
     styleButton(self.putBtn, false)
     self:addChild(self.putBtn)
 
-    self.closeBtn = ISButton:new(self.width - pad - 80, btnY, 80, btnHgt, getText("UI_Close"), self, Garage_Panel.onClick)
+    self.closeBtn = ISButton:new(closeX, btnY, closeW, btnHgt, getText("UI_Close"), self, Garage_Panel.onClick)
     self.closeBtn.internal = "CLOSE"
     self.closeBtn:initialise()
     self.closeBtn:instantiate()
@@ -351,6 +458,51 @@ function Garage_Panel:createChildren()
     self.selectedData = nil
     self:refreshList()
     self:updateButtons()
+end
+
+function Garage_Panel:applyPrefsToCombos()
+    if self.ownerFilter == "mine" then
+        self.ownerCombo.selected = 2
+    elseif self.ownerFilter == "others" then
+        self.ownerCombo.selected = 3
+    else
+        self.ownerCombo.selected = 1
+    end
+
+    if self.condFilter == "good" then
+        self.condCombo.selected = 2
+    elseif self.condFilter == "mid" then
+        self.condCombo.selected = 3
+    elseif self.condFilter == "bad" then
+        self.condCombo.selected = 4
+    elseif self.condFilter == "missing" then
+        self.condCombo.selected = 5
+    else
+        self.condCombo.selected = 1
+    end
+
+    if self.typeFilter == "1" or self.typeFilter == 1 then
+        self.typeCombo.selected = 2
+    elseif self.typeFilter == "2" or self.typeFilter == 2 then
+        self.typeCombo.selected = 3
+    elseif self.typeFilter == "3" or self.typeFilter == 3 then
+        self.typeCombo.selected = 4
+    else
+        self.typeCombo.selected = 1
+    end
+
+    if self.sortMode == "name" then
+        self.sortCombo.selected = 2
+    elseif self.sortMode == "cond" then
+        self.sortCombo.selected = 3
+    elseif self.sortMode == "plate" then
+        self.sortCombo.selected = 4
+    elseif self.sortMode == "size" then
+        self.sortCombo.selected = 5
+    else
+        self.sortMode = "days"
+        self.sortCombo.selected = 1
+    end
 end
 
 function Garage_Panel:onFilterCombo()
@@ -376,20 +528,55 @@ function Garage_Panel:onFilterCombo()
         self.condFilter = "all"
     end
 
+    local typeIdx = self.typeCombo.selected
+    if typeIdx == 2 then
+        self.typeFilter = 1
+    elseif typeIdx == 3 then
+        self.typeFilter = 2
+    elseif typeIdx == 4 then
+        self.typeFilter = 3
+    else
+        self.typeFilter = "all"
+    end
+
     local sortIdx = self.sortCombo.selected
     if sortIdx == 2 then
-        self.sortMode = "cond"
-    elseif sortIdx == 3 then
-        self.sortMode = "plate"
-    elseif sortIdx == 4 then
-        self.sortMode = "size"
-    elseif sortIdx == 5 then
-        self.sortMode = "days"
-    else
         self.sortMode = "name"
+    elseif sortIdx == 3 then
+        self.sortMode = "cond"
+    elseif sortIdx == 4 then
+        self.sortMode = "plate"
+    elseif sortIdx == 5 then
+        self.sortMode = "size"
+    else
+        self.sortMode = "days"
     end
 
     self:refreshList()
+    saveUiPrefs(self)
+end
+
+function Garage_Panel:isFavorite(data)
+    if not data or not self.favorites then
+        return false
+    end
+    return self.favorites[favKey(data)] == true
+end
+
+function Garage_Panel:toggleFavorite(data)
+    if not data then
+        return
+    end
+    self.favorites = self.favorites or {}
+    local key = favKey(data)
+    if self.favorites[key] then
+        self.favorites[key] = nil
+    else
+        self.favorites[key] = true
+    end
+    saveUiPrefs(self)
+    self:refreshList()
+    self:updateButtons()
 end
 
 function Garage_Panel.onListMouseDown(item)
@@ -405,6 +592,23 @@ function Garage_Panel.onListMouseDown(item)
     panel:updateButtons()
 end
 
+function Garage_Panel.onListRightMouseUp(list, x, y)
+    local panel = Garage_Panel.instance
+    if not panel or not list or not list.rowAt then
+        return
+    end
+    local row = list:rowAt(x, y)
+    if not row or row < 1 or not list.items or not list.items[row] then
+        return
+    end
+    list.selected = row
+    local data = list.items[row].item and list.items[row].item.data
+    if data then
+        panel.selectedData = data
+        panel:toggleFavorite(data)
+    end
+end
+
 function Garage_Panel:drawVehicleItem(y, item, alt)
     local a = 0.95
     local h = self.itemheight - 1
@@ -417,6 +621,8 @@ function Garage_Panel:drawVehicleItem(y, item, alt)
     end
 
     local data = item.item.data
+    local panel = Garage_Panel.instance
+    local isFav = panel and panel:isFavorite(data)
     local sw = 14
     local sx = 8
     local sy = y + (h - sw) / 2
@@ -424,6 +630,9 @@ function Garage_Panel:drawVehicleItem(y, item, alt)
 
     local textX = sx + sw + 6
     local name = item.item.name or "?"
+    if isFav then
+        name = "* " .. name
+    end
     local plate = item.item.plate or ""
     local avg = item.item.avg
     local line2 = plate
@@ -434,7 +643,11 @@ function Garage_Panel:drawVehicleItem(y, item, alt)
         line2 = line2 .. "  " .. getText("IGUI_GaragePanel_AvgShort", tostring(avg))
     end
 
-    self:drawText(name, textX, y + 2, C.text.r, C.text.g, C.text.b, a, self.font)
+    local nr, ng, nb = C.text.r, C.text.g, C.text.b
+    if isFav then
+        nr, ng, nb = C.sodium.r, C.sodium.g, C.sodium.b
+    end
+    self:drawText(name, textX, y + 2, nr, ng, nb, a, self.font)
     local cr, cg, cb = condColor(avg)
     self:drawText(line2, textX, y + FONT_HGT_SMALL + 2, cr, cg, cb, a, self.font)
     return y + self.itemheight
@@ -489,10 +702,29 @@ function Garage_Panel:matchesCondition(data)
     return true
 end
 
+function Garage_Panel:matchesType(data)
+    local want = self.typeFilter
+    if want == nil or want == "all" then
+        return true
+    end
+    want = tonumber(want)
+    if not want then
+        return true
+    end
+    local mt = getMechanicType(data)
+    return mt == want
+end
+
 function Garage_Panel:sortRows(rows)
-    local mode = self.sortMode or "name"
+    local mode = self.sortMode or "days"
+    local panel = self
     table.sort(rows, function(a, b)
         local da, db = a.data, b.data
+        local fa = panel:isFavorite(da)
+        local fb = panel:isFavorite(db)
+        if fa ~= fb then
+            return fa
+        end
         if mode == "cond" then
             local ca = avgCondition(da) or -1
             local cb = avgCondition(db) or -1
@@ -512,11 +744,14 @@ function Garage_Panel:sortRows(rows)
                 return sa > sb
             end
         elseif mode == "days" then
-            local daY = parkedDays(da)
-            local dbY = parkedDays(db)
-            if daY ~= dbY then
-                return daY > dbY
+            -- новые сверху: больший startDay = загнали позже
+            local sa = tonumber(da.startDay) or 0
+            local sb = tonumber(db.startDay) or 0
+            if sa ~= sb then
+                return sa > sb
             end
+        elseif mode == "name" then
+            -- ниже общий fallback по имени
         end
         local na = vehicleDisplayName(da)
         local nb = vehicleDisplayName(db)
@@ -547,7 +782,10 @@ function Garage_Panel:refreshList()
 
     local rows = {}
     for idx, data in ipairs(garage) do
-        if self:matchesSearch(data, filter) and self:matchesOwner(data) and self:matchesCondition(data) then
+        if self:matchesSearch(data, filter)
+            and self:matchesOwner(data)
+            and self:matchesCondition(data)
+            and self:matchesType(data) then
             table.insert(rows, { idx = idx, data = data })
         end
     end
@@ -784,6 +1022,16 @@ function Garage_Panel:updateButtons()
         self.retrieveBtn.tooltip = nil
     end
 
+    if self.favBtn then
+        self.favBtn:setEnable(hasSel)
+        if hasSel and self:isFavorite(self.selectedData) then
+            self.favBtn:setTitle(getText("IGUI_GaragePanel_FavRemove"))
+        else
+            self.favBtn:setTitle(getText("IGUI_GaragePanel_FavAdd"))
+        end
+        self.favBtn.tooltip = getText("IGUI_GaragePanel_FavHint")
+    end
+
     if self.vehicleOnSpot then
         self.putBtn:setEnable(true)
         self.putBtn.tooltip = nil
@@ -796,6 +1044,25 @@ end
 function Garage_Panel:onClick(button)
     if button.internal == "CLOSE" then
         self:close()
+        return
+    end
+    if button.internal == "RESET_FILTERS" then
+        self.ownerFilter = "all"
+        self.condFilter = "all"
+        self.typeFilter = "all"
+        self.sortMode = "days"
+        if self.filterEntry then
+            self.filterEntry:setText("")
+        end
+        self:applyPrefsToCombos()
+        self:refreshList()
+        saveUiPrefs(self)
+        return
+    end
+    if button.internal == "FAVORITE" then
+        if self.selectedData then
+            self:toggleFavorite(self.selectedData)
+        end
         return
     end
     if button.internal == "RETRIEVE" then
@@ -818,6 +1085,7 @@ function Garage_Panel:onClick(button)
 end
 
 function Garage_Panel:close()
+    saveUiPrefs(self)
     self:setVisible(false)
     self:removeFromUIManager()
     if Garage_Panel.instance == self then
@@ -847,7 +1115,7 @@ function Garage_Panel.open(worldobjects, playerNum, spawnX, spawnY, vehicleOnSpo
     if Garage_Panel.instance then
         Garage_Panel.instance:close()
     end
-    local width, height = 760, 580
+    local width, height = 860, 580
     local x = (getCore():getScreenWidth() - width) / 2
     local y = (getCore():getScreenHeight() - height) / 2
     local ui = Garage_Panel:new(x, y, width, height, worldobjects, playerNum, spawnX, spawnY, vehicleOnSpot)
