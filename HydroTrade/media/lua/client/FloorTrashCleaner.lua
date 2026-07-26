@@ -1,6 +1,7 @@
 -- Очистка мусора на полу вне убежищ (клиент MP).
--- LoadGridsquare: только постановка клетки в очередь (без перебора предметов).
+-- LoadGridsquare: в очередь только клетки с предметами на полу.
 -- OnTick: обработка по бюджету. В транспорте очередь не растёт и не чистится.
+-- player_near: клетка уходит в deferred и перепроверяется, когда игрок отойдёт.
 -- Sandbox: FloorTrashCleaner.Enabled, MaxAgeGameDays, ContainerAgeMultiplier
 
 if not isClient() then return end
@@ -15,18 +16,20 @@ FloorTrashCleaner.MAX_REMOVES_PER_TICK = 8
 FloorTrashCleaner.MAX_REMOVES_PER_SQUARE = 40
 FloorTrashCleaner.TICK_INTERVAL = 4
 FloorTrashCleaner.MAX_QUEUE = 512
+FloorTrashCleaner.MAX_DEFERRED = 256
 FloorTrashCleaner.RESCAN_RADIUS = 40
-
--- OnExitVehicle: догоняет клетки, пропущенные при проезде на транспорте.
+FloorTrashCleaner.DEFERRED_CHECK_TICKS = 120
 
 -- true: не ставить в очередь и не чистить, пока игрок в машине/транспорте
 FloorTrashCleaner.SKIP_WHILE_IN_VEHICLE = true
 
-FloorTrashCleaner.DEBUG = true
+FloorTrashCleaner.DEBUG = false
 FloorTrashCleaner.DEBUG_LOG_LIMIT = 80
 
 local pendingQueue = {}
 local pendingKeys = {}
+local deferredList = {}
+local deferredKeys = {}
 
 local cachedWorldAgeDays = 0
 local cachedWorldAgeHours = 0
@@ -87,6 +90,12 @@ local function isSquareInSafehouse(square)
     return SafeHouse.getSafeHouse(square) ~= nil
 end
 
+local function squareHasFloorItems(square)
+    if not square then return false end
+    local wos = square:getWorldObjects()
+    return wos and not wos:isEmpty()
+end
+
 local function isPlayerInVehicle()
     if not FloorTrashCleaner.SKIP_WHILE_IN_VEHICLE then return false end
     local me = cachedMe or getPlayer()
@@ -132,9 +141,44 @@ end
 local function enqueueSquare(x, y, z)
     local key = squareKey(x, y, z)
     if pendingKeys[key] then return end
+    if deferredKeys[key] then return end
     if #pendingQueue >= FloorTrashCleaner.MAX_QUEUE then return end
     pendingKeys[key] = true
     pendingQueue[#pendingQueue + 1] = { x = x, y = y, z = z }
+end
+
+local function deferSquare(x, y, z)
+    local key = squareKey(x, y, z)
+    if deferredKeys[key] then return end
+    if pendingKeys[key] then return end
+    if #deferredList >= FloorTrashCleaner.MAX_DEFERRED then return end
+    deferredKeys[key] = true
+    deferredList[#deferredList + 1] = { x = x, y = y, z = z }
+end
+
+local function promoteDeferred()
+    if #deferredList == 0 then return end
+
+    local kept = {}
+    local keptKeys = {}
+
+    for i = 1, #deferredList do
+        local entry = deferredList[i]
+        local key = squareKey(entry.x, entry.y, entry.z)
+        deferredKeys[key] = nil
+
+        if getSquareSkipReason(entry.x, entry.y, entry.z) then
+            if #kept < FloorTrashCleaner.MAX_DEFERRED then
+                kept[#kept + 1] = entry
+                keptKeys[key] = true
+            end
+        else
+            enqueueSquare(entry.x, entry.y, entry.z)
+        end
+    end
+
+    deferredList = kept
+    deferredKeys = keptKeys
 end
 
 local function getWorldObjectDropTime(wo)
@@ -225,24 +269,27 @@ local function removeWorldObject(square, wo)
 end
 
 local function processFloorSquare(square, tag, removeBudget)
-    if not square then return 0 end
+    if not square then return 0, false end
 
     if isSquareInSafehouse(square) then
-        return 0
+        return 0, false
+    end
+
+    if not squareHasFloorItems(square) then
+        return 0, false
     end
 
     local x, y, z = square:getX(), square:getY(), square:getZ()
     local squareReason = getSquareSkipReason(x, y, z)
     if squareReason then
         if FloorTrashCleaner.DEBUG then
-            debugLog(string.format("SKIP square @%d,%d,%d reason=%s", x, y, z, squareReason))
+            debugLog(string.format("DEFER square @%d,%d,%d reason=%s", x, y, z, squareReason))
         end
-        return 0
+        deferSquare(x, y, z)
+        return 0, true
     end
 
     local wos = square:getWorldObjects()
-    if not wos or wos:isEmpty() then return 0 end
-
     local removed = 0
     local needRequeue = false
 
@@ -284,7 +331,7 @@ local function processFloorSquare(square, tag, removeBudget)
         debugLog(string.format("DONE %s @%d,%d,%d removed=%d", tag or "tick", x, y, z, removed), true)
     end
 
-    return removed
+    return removed, false
 end
 
 local function drainQueue(maxSquares, maxRemoves)
@@ -321,20 +368,30 @@ local function scheduleRescanAroundPlayer(radius)
     if not cell then return end
 
     local px, py, pz = me:getX(), me:getY(), me:getZ()
+    local queued = 0
 
     for dx = -radius, radius do
         for dy = -radius, radius do
             local square = cell:getGridSquare(px + dx, py + dy, pz)
-            if square and not isSquareInSafehouse(square) then
-                enqueueSquare(square:getX(), square:getY(), square:getZ())
+            if square and not isSquareInSafehouse(square) and squareHasFloorItems(square) then
+                local x, y, z = square:getX(), square:getY(), square:getZ()
+                if getSquareSkipReason(x, y, z) then
+                    deferSquare(x, y, z)
+                else
+                    enqueueSquare(x, y, z)
+                    queued = queued + 1
+                end
             end
         end
     end
+
+    return queued
 end
 
 local function onLoadGridsquare(square)
     if not isModuleEnabled() or not square then return end
     if isSquareInSafehouse(square) then return end
+    if not squareHasFloorItems(square) then return end
 
     if not cachedMe then
         refreshPlayerCache()
@@ -344,12 +401,17 @@ local function onLoadGridsquare(square)
         return
     end
 
-    enqueueSquare(square:getX(), square:getY(), square:getZ())
+    local x, y, z = square:getX(), square:getY(), square:getZ()
+    if getSquareSkipReason(x, y, z) then
+        deferSquare(x, y, z)
+    else
+        enqueueSquare(x, y, z)
+    end
 end
 
 local function onTick()
     if not isModuleEnabled() then return end
-    if #pendingQueue == 0 then return end
+    if #pendingQueue == 0 and #deferredList == 0 then return end
 
     tickCounter = tickCounter + 1
     if tickCounter % FloorTrashCleaner.TICK_INTERVAL ~= 0 then
@@ -366,6 +428,10 @@ local function onTick()
 
     if tickCounter % 60 == 0 then
         refreshPlayerCache()
+    end
+
+    if tickCounter % FloorTrashCleaner.DEFERRED_CHECK_TICKS == 0 then
+        promoteDeferred()
     end
 
     drainQueue(FloorTrashCleaner.SQUARES_PER_TICK, FloorTrashCleaner.MAX_REMOVES_PER_TICK)
@@ -388,8 +454,14 @@ FloorTrashCleaner.RunDebugScan = function()
     if not isModuleEnabled() then return end
     refreshPlayerCache()
     resetDebugBudget()
-    scheduleRescanAroundPlayer(45)
-    debugLog("SCAN queued=" .. #pendingQueue, true)
+    local queued = scheduleRescanAroundPlayer(45)
+    debugLog(string.format(
+        "SCAN queued=%d deferred=%d pending=%d maxAge=%d",
+        queued or 0,
+        #deferredList,
+        #pendingQueue,
+        cachedMaxAgeGameDays
+    ), true)
 end
 
 local function onExitVehicle(player)
