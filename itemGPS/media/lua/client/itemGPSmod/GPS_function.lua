@@ -10,6 +10,19 @@ itemGPSmod.gps = nil
 itemGPSmod.PlugedGps = nil
 itemGPSmod.gpsChargeCounter = 0
 itemGPSmod.chargeOn = false
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+function itemGPSmod.findGPScable(player, vehicle)
+	if not player then return nil end
+	local cable = player:getInventory():getItemFromType("GPScable")
+	if cable then return cable end
+	vehicle = vehicle or player:getVehicle()
+	if not vehicle then return nil end
+	local glove = vehicle:getPartById("GloveBox")
+	if not glove then return nil end
+	local container = glove:getItemContainer()
+	if not container then return nil end
+	return container:getItemFromType("GPScable")
+end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------		
 function itemGPSmod.playSoundGPS(player, name)
 	if not player or not name then return end
@@ -60,12 +73,12 @@ function itemGPSmod.GPS_charge()
 	if not player then return end
 	local vehicleInside = player:getVehicle()
 	local gpsINV = player:getInventory():contains(itemGPSmod.PlugedGps)
-	local cable = player:getInventory():getItemFromType("GPScable")
+	local cable = itemGPSmod.findGPScable(player, vehicleInside)
 
 	if not vehicleInside or vehicleInside:getSeat(player) > 1 or not cable or not gpsINV then 
 		Events.OnPlayerUpdate.Remove(itemGPSmod.GPS_charge) ; 
 		itemGPSmod.restartCounter = false ;  
-		getSoundManager():PlayWorldSound("GPS_UNPLUG", square, 1, 20, 2, true)
+		getSoundManager():PlayWorldSound("GPS_UNPLUG", player:getCurrentSquare(), 1, 20, 2, true)
 
 		if itemGPSmod.chargeOn == true then itemGPSmod.chargeOn = false ; itemGPSmod.playSoundGPS(player, itemGPSmod.PlugedGps:getType().."_Beep_chargeUNPLUG") end 
 		itemGPSmod.PlugedGps = nil ;
@@ -115,7 +128,7 @@ function itemGPSmod.confirmGPS(player,gps)
 		local vehicleInside = player:getVehicle()
 		if vehicleInside and vehicleInside:getBatteryCharge() > 0 and (vehicleInside:isKeysInIgnition() or vehicleInside:isHotwired()) and vehicleInside:getSeat(player) < 2 then
 			local testPart = vehicleInside:getPartById("GloveBox");
-			if testPart and testPart:getItemContainer():contains(gps) and testPart:getItemContainer():containsType("GPScable") then return true end
+			if testPart and testPart:getItemContainer():contains(gps) and itemGPSmod.findGPScable(player, vehicleInside) then return true end
 		end
 	end
 	return false
@@ -146,7 +159,7 @@ function itemGPSmod.findGPS(player)
 	if vehicleInside and vehicleInside:getBatteryCharge() > 0 and vehicleInside:getSeat(player) < 2 and (vehicleInside:isKeysInIgnition() or vehicleInside:isHotwired()) then
 		local testPart = vehicleInside:getPartById("GloveBox");
 	
-		if testPart:getItemContainer():containsTag("GPSmodCar") and testPart:getItemContainer():containsType("GPScable") then
+		if testPart and testPart:getItemContainer():containsTag("GPSmodCar") and itemGPSmod.findGPScable(player, vehicleInside) then
 			local gps = testPart:getItemContainer():getFirstTagRecurse("GPSmodCar")
 			return gps
 		end

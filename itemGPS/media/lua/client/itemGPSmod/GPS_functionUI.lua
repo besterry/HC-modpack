@@ -678,7 +678,7 @@ function ISMiniMapInner:onRightMouseUp(x, y)
 	if self.gps:hasTag("GPSmod") then
 		local vehicleInside = self.player:getVehicle()
 		if vehicleInside and vehicleInside:getSeat(self.player) < 2  then
-			local cable = self.player:getInventory():getItemFromType("GPScable") 
+			local cable = itemGPSmod.findGPScable(self.player, vehicleInside)
 			if vehicleInside and (self.gps ~= itemGPSmod.PlugedGps or not itemGPSmod.PlugedGps) then
 				local option = context:addOption(getText("IGUI_Plug"), self.player, itemGPSmod.GPS_plug, self.gps, vehicleInside);
 				if self.gps:getUsedDelta() == 0 then 

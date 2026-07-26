@@ -12,9 +12,11 @@ IGUI_autoUnplugInfo = "<br>GPS will be unplugged automatically when battery will
 IGUI_Info = "Info",
 
 
-IGUI_Item_GpsCable = "<br>This cable will be used to charge GPS on the car lighter, in a car and on one of the front seat.<br><br>It will also be used to plug-in car specific GPS (non-portable), simply put this GPS inside the glove box with his related cable. ",
+IGUI_Item_GpsCable = "<br>This cable will be used to charge GPS on the car lighter, in a car and on one of the front seats.<br>It can be in your inventory or in the glove box.<br><br>It will also be used to plug-in car specific GPS (non-portable): put this GPS inside the glove box with its cable. ",
 
 IGUI_noBattery = "Not enough battery !",
+IGUI_itemGPS_radialNeedCable = "GPS cable required",
+IGUI_itemGPS_radialFull = "GPS fully charged",
 
 IGUI_Item_itemGps_GPSdayz = "<br>This GPS is frenquently used by the army, less often by the police, still accessible to cilivians.<br><br>If this GPS is uncharged (below 1%), it will automatically shut off due to insufficient battery, you will need to charge it in a vehicle with his related cable. <br>If GPS reaches 0%, you won't be able to charge it anymore, you will need to replace the battery.<br><br>GPS charging will consume vehicle battery.<br><br>Settings available by right clicking on the screen (be careful to click on the background of the screen and not on the displayed data).<br><br>A keyboard shortcut is configurable via options (if mod options is installed), Default Vanilla keyboard is K : <br>- Press two times to equip/unequip the GPS.<br>- Press one time to turn on/off the GPS if it's equipped in your hand.<br>- Hold to check GPS if it's attached to your belt.",
 

@@ -8,7 +8,7 @@ function GPS_TimedAction_ON_OFF:isValid()
 		if self.vehicleInside and self.vehicleInside:getBatteryCharge() > 0 and (self.vehicleInside:isKeysInIgnition() or self.vehicleInside:isHotwired()) then
 			local testPart = self.vehicleInside:getPartById("GloveBox");
 		
-			if testPart and testPart:getItemContainer():contains(self.item) and testPart:getItemContainer():containsType("GPScable") then
+			if testPart and testPart:getItemContainer():contains(self.item) and itemGPSmod.findGPScable(self.character, self.vehicleInside) then
 				return true
 			end
 		end
