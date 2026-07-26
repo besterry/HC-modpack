@@ -4238,4 +4238,34 @@ module PinkSlip {
         HasKey = true,
         Tags = PinkSlip,
     }
+
+    item Roller
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: Roller,
+        VehicleID = Base.Roller,
+        WorldStaticModel = CW.AutoTitle,
+        Condition = 70,
+        Tooltip = Tooltip_ClaimOutSide,
+        HasKey = true,
+        Tags = PinkSlip,
+    }
+
+    item Sweeper
+    {
+        DisplayCategory = CarWanna,
+        Weight  = 0.1,
+        Type    = Normal,
+        Icon    = AutoTitle,
+        DisplayName = PinkSlip: Sweeper,
+        VehicleID = Base.Sweeper,
+        WorldStaticModel = CW.AutoTitle,
+        Condition = 70,
+        Tooltip = Tooltip_ClaimOutSide,
+        HasKey = true,
+        Tags = PinkSlip,
+    }
 }
