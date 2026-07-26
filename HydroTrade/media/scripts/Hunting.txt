@@ -84,6 +84,11 @@ item HCSparrowdead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Sparrow,
 	Icon				=	HCSparrowdead,
+	Carbohydrates 		= 	0,
+	Proteins 			= 	36,
+	Lipids 				= 	15,
+	Calories 			= 	284,
+	HungerChange		= 	-15,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -97,6 +102,11 @@ item HCCardinaldead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Cardinal,
 	Icon				=	HCCardinaldead,
+	Carbohydrates 		= 	0,
+	Proteins 			= 	36,
+	Lipids 				= 	15,
+	Calories 			= 	284,
+	HungerChange		= 	-15,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -110,6 +120,11 @@ item HCBluejaydead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Bluejay,
 	Icon				=	HCBluejaydead,
+	Carbohydrates 		= 	0,
+	Proteins 			= 	36,
+	Lipids 				= 	15,
+	Calories 			= 	284,
+	HungerChange		= 	-15,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -123,6 +138,11 @@ item HCMagpiedead
 	FoodType			=	Game,
 	DisplayName			= 	Dead Magpie,
 	Icon				=	HCMagpiedead,
+	Carbohydrates 		= 	0,
+	Proteins 			= 	36,
+	Lipids 				= 	15,
+	Calories 			= 	284,
+	HungerChange		= 	-15,
 	DisplayCategory		=	AnimalDead,
 	}
 
@@ -136,6 +156,11 @@ item HCCrowdead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Crow,
 	Icon				=	HCCrowdead,
+	Carbohydrates 		= 	0,
+	Proteins 			= 	36,
+	Lipids 				= 	15,
+	Calories 			= 	284,
+	HungerChange		= 	-15,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -167,6 +192,11 @@ item HCCootdead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Coot,
 	Icon				=	HCCootdead,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -199,15 +229,29 @@ item HCBlackduckdead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Black Duck,
 	Icon				=	HCBlackduckdead,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
 item HCBlackduckdead2
 	{
 	Weight 				= 	0.2,
-	Type 				= 	Normal,
+	Type				=	Food,
+	DangerousUncooked	=	TRUE,
+	DaysTotallyRotten	=	4,
+	DaysFresh			=	2,
+	FoodType			=	Game,
 	DisplayName 			= 	Dead Black Duck,
 	Icon				=	HCBlackduckdead2,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -239,6 +283,11 @@ item HCCanvasbackduckdead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Canvasback Duck,
 	Icon				=	HCCanvasbackduckdead,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -252,6 +301,11 @@ item HCCanvasbackduckdead2
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Canvasback Duck,
 	Icon				=	HCCanvasbackduckdead2,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -283,6 +337,11 @@ item HCMallarddead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Mallard,
 	Icon				=	HCMallarddead,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -314,6 +373,11 @@ item HCPintailduckdead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Pintail Duck,
 	Icon				=	HCPintailduckdead,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -327,6 +391,11 @@ item HCPintailduckdead2
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Pintail Duck,
 	Icon				=	HCPintailduckdead2,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -358,6 +427,11 @@ item HCRedheadduckdead
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Redhead Duck,
 	Icon				=	HCRedheadduckdead,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -371,6 +445,11 @@ item HCRedheadduckdead2
         FoodType    			=   	Game,
 	DisplayName 			= 	Dead Redhead Duck,
 	Icon				=	HCRedheadduckdead2,
+	Carbohydrates 		= 	10,
+	Proteins 			= 	69,
+	Lipids 				= 	33,
+	Calories 			= 	603,
+	HungerChange		= 	-30,
 	DisplayCategory          =   AnimalDead,
 	}
 
@@ -548,7 +627,6 @@ item HCCanadiangoosedead
     DaysTotallyRotten	=	4,
     DaysFresh			=	2,
     FoodType    		=   	Game,
-	Type 				= 	Normal,
 	DisplayName 		= 	Dead Canadian Goose,
 	Icon				=	HCCanadiangoosedead,
 	Carbohydrates		= 	10,

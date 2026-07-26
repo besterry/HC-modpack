@@ -372,7 +372,7 @@ function HCHuntWaterfowl(items, result, player)
 			if animal == 0 then
 				player:getInventory():AddItem("Hydrocraft.HCDuckdead");
 			elseif animal == 1 then
-				player:getInventory():AddItem("Hydrocraft.HCDMallarddead");
+				player:getInventory():AddItem("Hydrocraft.HCMallarddead");
 			elseif animal == 2 then
 				player:getInventory():AddItem("Hydrocraft.HCCanadiangoosedead");
 			elseif animal == 3 then

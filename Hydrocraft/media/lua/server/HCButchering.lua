@@ -346,22 +346,27 @@ local function HydrocraftButchering_GenericButcherMeat(animal, meatFullType)
 	if(meat == nil) then
 		print("Exception: Unknown type: " .. meatFullType)
 	end
-	
-	local new_hunger = animal:getBaseHunger() * 1.05
-	if(new_hunger < -100) then
-		new_hunger = -100
+
+	-- Keep script defaults when carcass has no nutrition (avoids zero-calorie meat).
+	local animalHunger = animal:getBaseHunger()
+	local animalCalories = animal:getCalories()
+	if animalHunger ~= 0 or animalCalories ~= 0 then
+		local new_hunger = animalHunger * 1.05
+		if(new_hunger < -100) then
+			new_hunger = -100
+		end
+		meat:setBaseHunger(new_hunger)
+		meat:setHungChange(new_hunger)
+
+		meat:setLipids(animal:getLipids() * 0.75)
+		meat:setProteins(animal:getProteins() * 0.75)
+		meat:setCalories(animalCalories * 0.75)
+		meat:setCarbohydrates(animal:getCarbohydrates() * 0.75)
 	end
-	meat:setBaseHunger(new_hunger)
-	meat:setHungChange(new_hunger)
-	
+
 	meat:setCustomWeight(true)
 	meat:setWeight(animal:getWeight() * 0.7)
 	meat:setActualWeight(animal:getActualWeight() * 0.7)
-
-	meat:setLipids(animal:getLipids() * 0.75)
-	meat:setProteins(animal:getProteins() * 0.75)
-	meat:setCalories(animal:getCalories() * 0.75)
-	meat:setCarbohydrates(animal:getCarbohydrates() * 0.75)
 
 	--meat:setAge(animal:getAge())
 	meat:setRotten(animal:isRotten())
