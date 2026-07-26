@@ -214,6 +214,7 @@ end
 local function getItemSkipReason(item, wo)
     if not item then return "no_item" end
     if item:isFavorite() then return "favorite" end
+    if item:getFullType() == "Base.CarKey" then return "carkey" end
 
     local ageDays, ageSource = getItemAgeDays(item, wo)
     if not ageDays then
