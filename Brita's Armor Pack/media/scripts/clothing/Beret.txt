@@ -8,7 +8,7 @@ module Base
 	BodyLocation = Hat,
 	Icon = Hat_Beret_Tactical,
         CanHaveHoles = false,
-        ChanceToFall = 50
+        ChanceToFall = 50,
         Insulation = 0.3,
         BloodLocation = Head,
         Weight = 0.8,
