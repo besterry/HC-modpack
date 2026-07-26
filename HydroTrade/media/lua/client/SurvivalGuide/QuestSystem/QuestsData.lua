@@ -480,7 +480,7 @@ QuestsData.REGISTRY = {
 		completeKey = "IGUI_StoryQuest_Survive24h_Complete",
 		hoursRequired = 24, -- общее getHoursSurvived(); ~3 ч реального времени
 		hintKey = "IGUI_StoryQuest_Survive24h_Hint",
-		rewards = { "Base.GPSdayz" , "Base.Crowbar", "Base.Bag_NormalHikingBag" },
+		rewards = { "Base.GPS_315" , "Base.Bag_NormalHikingBag" },
 	},
 	{
 		id = "story_first_safehouse",
@@ -571,7 +571,7 @@ QuestsData.REGISTRY = {
 			{ item = "Base.Thread", count = 1 },
 			{ item = "Base.Needle", count = 1 },
 		},
-		rewards = { "Base.Scissors", "Base.Thread" },
+		rewards = { "Base.Scissors" },
 	},
 	{
 		id = "side_kill_25",
@@ -603,7 +603,7 @@ QuestsData.REGISTRY = {
 		completeKey = "IGUI_SideQuest_Kill100_Complete",
 		killCount = 100,
 		requiresQuestId = "side_kill_25",
-		rewards = { "Base.Axe" },
+		rewards = { "Hydrocraft.HCSurvivalaxe" },
 	},
 	-- cyclic: фоновые (повторяемые, до 2 одновременно)
 	{
@@ -1655,4 +1655,4 @@ QuestsData.QUESTS = QuestsData.getTutorialChain()
 QuestsData.QUEST1_KILL_COUNT = 10
 QuestsData.QUEST1_JEWELRY_COUNT = 5
 QuestsData.QUEST2_BALANCE_MIN = 1
-QuestsData.QUEST3_BALANCE_REWARD = 20000
+QuestsData.QUEST3_BALANCE_REWARD = 15000
