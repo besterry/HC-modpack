@@ -220,6 +220,15 @@ function ISSafehouseUI:initialise()
     self.addPlayer.borderColor = {r=0.2, g=0.6, b=0.2, a=1};
     self:addChild(self.addPlayer);
 
+    self.regionsMap = ISButton:new(self.addPlayer:getRight() + 10, self.addPlayer.y, 70, btnHgt2, getText("IGUI_SafehouseRegions_Button"), self, ISSafehouseUI.onClick);
+    self.regionsMap.internal = "REGIONSMAP";
+    self.regionsMap:initialise();
+    self.regionsMap:instantiate();
+    self.regionsMap.borderColor = {r=0.3, g=0.7, b=0.8, a=1};
+    self.regionsMap:setWidthToTitle(70);
+    self.regionsMap.tooltip = getText("IGUI_SafehouseRegions_ButtonTooltip");
+    self:addChild(self.regionsMap);
+
     self.respawn = ISTickBox:new(10, self.addPlayer:getBottom() + 10, getTextManager():MeasureStringX(UIFont.Small, getText("IGUI_SafehouseUI_Respawn")) + 20, 18, "", self, ISSafehouseUI.onClickRespawn);
     self.respawn:initialise();
     self.respawn:instantiate();
@@ -497,6 +506,10 @@ function ISSafehouseUI:onClick(button)
             ui:initialise();
             ui:addToUIManager();
         end
+    end;
+    if button.internal == "REGIONSMAP" then
+        require "ISUI/UserPanel/SafehouseRegionsUI"
+        SafehouseRegionsUI.OnOpenPanel(self.safehouse, self.player)
     end;
 end
 

@@ -313,6 +313,21 @@ IGUI_RU =
 	IGUI_SafehouseUI_Size = "Текущий размер:",
 	IGUI_SafehouseUI_MaxSize = "Максимальный размер:",
 
+	IGUI_SafehouseRegions_Button = "Схема комнат",
+	IGUI_SafehouseRegions_ButtonTooltip = "Стены и дыры в комнатах только внутри вашего убежища",
+	IGUI_SafehouseRegions_Title = "Комнаты убежища",
+	IGUI_SafehouseRegions_ModeRegions = "Режим: комнаты / дыры",
+	IGUI_SafehouseRegions_ModeBlueprint = "Режим: чертёж",
+	IGUI_SafehouseRegions_ZLevel = "Этаж: %1",
+	IGUI_SafehouseRegions_Loaded = "Данные: %1/%2",
+	IGUI_SafehouseRegions_NeedChunks = "Подойдите ближе к убежищу, чтобы подгрузились чанки",
+	IGUI_SafehouseRegions_Hint = "Красный = дыра. Белые линии = стены. Колёсико = этаж",
+	IGUI_SafehouseRegions_Enclosed = "закрыта",
+	IGUI_SafehouseRegions_Hole = "ДЫРА",
+	IGUI_SafehouseRegions_Roofed = "крыша есть",
+	IGUI_SafehouseRegions_NoRoof = "нет крыши",
+	IGUI_SafehouseRegions_NoData = "нет данных региона",
+
 	--Транспорт
 	IGUI_VehicleName1979rastrojero       = "1979 Rastrojero",
 	IGUI_VehicleName1979rastrojeroCarni = "1979 Rastrojero Carnicero",
