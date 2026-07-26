@@ -58,17 +58,6 @@ for _, def in ipairs(CATEGORY_DEFS) do
 	end
 end
 
-local function getDisplayCategoryLabel(displayCategory)
-	if not displayCategory or displayCategory == "" then
-		return nil
-	end
-	local igui = DISPLAY_CAT_LABEL[displayCategory]
-	if igui then
-		return getText(igui)
-	end
-	return displayCategory
-end
-
 local function getItemDisplayCategory(fullType)
 	if not fullType then return nil end
 	local sm = getScriptManager()
@@ -80,18 +69,16 @@ local function getItemDisplayCategory(fullType)
 	return nil
 end
 
--- суффикс в списке: (скупка, Еда) / (Еда) / (скупка)
+-- суффикс только для скупки: (скупка) или (скупка, Аксессуары)
 local function formatItemMetaSuffix(fullType, displayCategory)
-	local parts = {}
-	if AutoLoot_IsShopSellItem and AutoLoot_IsShopSellItem(fullType) then
-		table.insert(parts, getText("IGUI_AutoLoot_InShop"))
-	end
-	local catLabel = getDisplayCategoryLabel(displayCategory or getItemDisplayCategory(fullType))
-	if catLabel then
-		table.insert(parts, catLabel)
-	end
-	if #parts == 0 then
+	if not (AutoLoot_IsShopSellItem and AutoLoot_IsShopSellItem(fullType)) then
 		return ""
+	end
+	local parts = { getText("IGUI_AutoLoot_InShop") }
+	local catKey = displayCategory or getItemDisplayCategory(fullType)
+	local igui = catKey and DISPLAY_CAT_LABEL[catKey]
+	if igui then
+		table.insert(parts, getText(igui))
 	end
 	return " (" .. table.concat(parts, ", ") .. ")"
 end
