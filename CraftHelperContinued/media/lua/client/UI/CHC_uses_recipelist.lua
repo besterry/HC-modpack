@@ -95,6 +95,23 @@ function CHC_uses_recipelist:doDrawItem(y, item, alt)
 
 	--region favorite handler
 	local favYPos = self.width - 30
+	-- station badge (Hydrocraft nearby equipment)
+	local stationX = favYPos - 22
+	local hf = recipe.recipeData and recipe.recipeData.hydroFurniture
+	if hf and hf.obj and hf.obj.texture then
+		local iconSz = math.min(curFontData.icon, 16)
+		local nearOk = true
+		if hf.luaTest then
+			nearOk = hf.luaTest(self.player) == true
+		end
+		local aIcon = nearOk and 0.95 or 0.55
+		local rIcon, gIcon, bIcon = 1, 1, 1
+		if not nearOk then
+			gIcon, bIcon = 0.35, 0.35
+		end
+		self:drawTextureScaledAspect(hf.obj.texture, stationX, y + (item.height - iconSz) / 2, iconSz, iconSz, aIcon, rIcon, gIcon, bIcon)
+	end
+
 	if item.index == self.mouseoverselected and not self:isMouseOverScrollBar() then
 		if self:getMouseX() >= favYPos - 20 then
 			favoriteStar = item.item.favorite and self.favCheckedTex or self.favNotCheckedTex

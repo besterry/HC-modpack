@@ -324,18 +324,77 @@ CHC_main.getFavoriteRecipeModDataString = function(recipe)
 	return text
 end
 
+CHC_main.isHydrocraftActive = function()
+	local ids = CHC_settings.integrations.Hydrocraft.modIds
+	if not ids then
+		return getActivatedMods():contains("Hydrocraft")
+			or getActivatedMods():contains("Hydrocraft_h")
+	end
+	for i = 1, #ids do
+		if getActivatedMods():contains(ids[i]) then
+			return true
+		end
+	end
+	return false
+end
+
+-- Category selector label -> OnTest name (built once)
+CHC_main.getStationCategoryMap = function()
+	if CHC_main._stationCatMap then return CHC_main._stationCatMap end
+	local map = {}
+	local hc = CHC_settings.integrations.Hydrocraft
+	if not hc or not hc.stationOrder then
+		CHC_main._stationCatMap = map
+		return map
+	end
+	for i = 1, #hc.stationOrder do
+		local luaTest = hc.stationOrder[i]
+		local labelKey = hc.luaOnTestLabels[luaTest]
+		local label = labelKey and getText(labelKey) or luaTest
+		local catName = "@ " .. label
+		map[catName] = {
+			luaTest = luaTest,
+			fullType = hc.luaOnTestReference[luaTest],
+			label = label
+		}
+	end
+	CHC_main._stationCatMap = map
+	return map
+end
+
+CHC_main.getStationCategoryName = function(luaTest)
+	local hc = CHC_settings.integrations.Hydrocraft
+	if not hc then return nil end
+	local labelKey = hc.luaOnTestLabels[luaTest]
+	local label = labelKey and getText(labelKey) or luaTest
+	return "@ " .. label
+end
+
 CHC_main.processHydrocraft = function(recipe)
-	if not getActivatedMods():contains("Hydrocraft") then return end
+	if not CHC_main.isHydrocraftActive() then return end
 
 	local luaTest = recipe:getLuaTest()
 	if not luaTest then return end
-	local integration = CHC_settings.integrations.Hydrocraft.luaOnTestReference
-	local itemName = integration[luaTest]
+	local hc = CHC_settings.integrations.Hydrocraft
+	local itemName = hc.luaOnTestReference[luaTest]
 	if not itemName then return end
+
 	local furniItem = {}
 	local furniItemObj = CHC_main.items[itemName]
+	if not furniItemObj then
+		-- Item may be obsolete/hidden; still show station requirement
+		local labelKey = hc.luaOnTestLabels and hc.luaOnTestLabels[luaTest]
+		local displayName = labelKey and getText(labelKey) or luaTest
+		furniItemObj = {
+			fullType = itemName,
+			name = displayName,
+			displayName = displayName,
+			texture = nil
+		}
+	end
 	furniItem.obj = furniItemObj
-	furniItem.luaTest = _G[luaTest] -- calling global registry to get function obj
+	furniItem.luaTest = _G[luaTest]
+	furniItem.luaTestName = luaTest
 	return furniItem
 end
 

@@ -139,6 +139,8 @@ function CHC_uses:updateRecipes(sl)
     local categoryAll = self.categorySelectorDefaultOption
     local searchBar = self.searchRow.searchBar
     local recipes = self.ui_type == 'fav_recipes' and self.favrec or self.recipeSource
+    local stationMap = CHC_main.getStationCategoryMap()
+    local stationFilter = stationMap[sl]
 
     if sl == categoryAll and self.typeFilter == "all" and searchBar:getInternalText() == "" then
         self:refreshObjList(recipes)
@@ -163,7 +165,12 @@ function CHC_uses:updateRecipes(sl)
             fav_cat_state = true
         end
 
-        if (rc_tr == sl or sl == categoryAll) then
+        if stationFilter then
+            local hf = recipes[i].recipeData.hydroFurniture
+            if hf and hf.luaTestName == stationFilter.luaTest then
+                type_filter_state = self:recipeTypeFilter(recipes[i])
+            end
+        elseif (rc_tr == sl or sl == categoryAll) then
             type_filter_state = self:recipeTypeFilter(recipes[i])
         end
         search_state = self:searchTypeFilter(recipes[i])
@@ -246,6 +253,26 @@ function CHC_uses:updateCategories(current)
 
     if self.favRecNum > 0 and self.ui_type ~= 'fav_recipes' then
         selector:addOptionWithData(self.favCatName, { count = self.favRecNum })
+    end
+
+    -- Hydrocraft station filters (@ Стол травника, ...)
+    if CHC_main.isHydrocraftActive() then
+        local stationCounts = {}
+        for i = 1, #allrec do
+            local hf = allrec[i].recipeData.hydroFurniture
+            if hf and hf.luaTestName then
+                stationCounts[hf.luaTestName] = (stationCounts[hf.luaTestName] or 0) + 1
+            end
+        end
+        local hc = CHC_settings.integrations.Hydrocraft
+        for i = 1, #hc.stationOrder do
+            local luaTest = hc.stationOrder[i]
+            local count = stationCounts[luaTest]
+            if count and count > 0 then
+                local catName = CHC_main.getStationCategoryName(luaTest)
+                selector:addOptionWithData(catName, { count = count, station = luaTest })
+            end
+        end
     end
 
     sort(uniqueCategories)
@@ -517,8 +544,9 @@ function CHC_uses:searchProcessToken(token, recipe)
                 end
             end
 
-            if recipe.recipeData.hydroFurniture then
-                insert(items, recipe.recipeData.hydroFurniture.obj.displayName)
+            if recipe.recipeData.hydroFurniture and recipe.recipeData.hydroFurniture.obj then
+                local hf = recipe.recipeData.hydroFurniture.obj
+                insert(items, hf.displayName or hf.name)
             end
 
             if recipe.recipeData.nearItem then

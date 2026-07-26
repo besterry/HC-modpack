@@ -28,6 +28,16 @@ function CHC_uses_recipepanel:createChildren()
 
     self:addChild(self.mainInfoImg)
 
+    self.stationBtn = ISButton:new(1, 1, 200, 24, "", self, self.onStationClick)
+    self.stationBtn.backgroundColorMouseOver.a = 0.15
+    self.stationBtn.backgroundColor.a = 0
+    self.stationBtn.borderColor.a = 0
+    self.stationBtn.onRightMouseDown = self.onStationRMB
+    self.stationBtn:initialise()
+    self.stationBtn:setVisible(false)
+    self.stationBtn:setTooltip(getText("UI_CHC_station_click_tip"))
+    self:addChild(self.stationBtn)
+
     self.ingredientPanel = ISScrollingListBox:new(1, 30, self.width, self.height - 40);
     self.ingredientPanel:initialise()
     self.ingredientPanel:instantiate()
@@ -176,10 +186,24 @@ function CHC_uses_recipepanel:setObj(recipe)
     newItem.isKnown = self.player:isRecipeKnown(recipe.recipe)
     newItem.nearItem = recipe.recipeData.nearItem
     newItem.timeToMake = recipe.recipe:getTimeToMake()
+    newItem.heat = recipe.recipe:getHeat()
     newItem.howManyCanCraft = RecipeManager.getNumberOfTimesRecipeCanBeDone(newItem.recipe, self.player, self.containerList, nil)
+
+    local notes = CHC_settings.integrations.Hydrocraft.recipeNotes
+    if notes then
+        local noteKey = notes[recipe.recipe:getOriginalname()]
+        if noteKey then
+            newItem.recipeNote = getText(noteKey)
+        end
+    end
 
     self.recipe = recipe.recipe;
     self.newItem = newItem;
+
+    if self.stationBtn and not newItem.hydrocraftEquipment then
+        self.stationBtn:setVisible(false)
+        self.stationBtn.stationItem = nil
+    end
 
     self.manualsEntries = CHC_main.itemsManuals[newItem.recipe:getOriginalname()]
     if self.manualsEntries ~= nil then
@@ -244,10 +268,10 @@ function CHC_uses_recipepanel:refreshIngredientPanel()
             data.available = #available > 0
             local txt = getText("IGUI_CraftUI_OneOf")
             if data.isDestroy then
-                txt = txt .. " (D) "
+                txt = txt .. " [" .. getText("UI_CHC_item_destroy") .. "]"
             end
             if data.isKeep then
-                txt = txt .. " (K) "
+                txt = txt .. " [" .. getText("UI_CHC_item_keep") .. "]"
             end
             self.ingredientPanel:addItem(txt, data)
         end
@@ -273,16 +297,31 @@ function CHC_uses_recipepanel:refreshIngredientPanel()
         --]]
 
         for k, item in ipairs(available) do
-            self.ingredientPanel:addItem(item.name, item)
+            self.ingredientPanel:addItem(self:formatIngredientLabel(item), item)
         end
         for k, item in ipairs(unavailable) do
-            self.ingredientPanel:addItem(item.name, item)
+            self.ingredientPanel:addItem(self:formatIngredientLabel(item), item)
         end
     end
 
     self.refreshTypesAvailableMS = getTimestampMs()
 
     self.ingredientPanel.doDrawItem = CHC_uses_recipepanel.drawIngredient
+end
+
+function CHC_uses_recipepanel:formatIngredientLabel(item)
+    local name = item.name
+    -- For multi-option groups the header already has keep/destroy; skip per-row tags
+    if item.multiple then
+        return name
+    end
+    if item.isKeep then
+        name = name .. " [" .. getText("UI_CHC_item_keep") .. "]"
+    end
+    if item.isDestroy then
+        name = name .. " [" .. getText("UI_CHC_item_destroy") .. "]"
+    end
+    return name
 end
 
 function CHC_uses_recipepanel:getAvailableItemsType()
@@ -349,16 +388,6 @@ function CHC_uses_recipepanel:drawIngredient(y, item, alt)
         local imgW = 20
         local imgH = 20
         local dx = 6 + 10 --(item.item.multiple and 10 or 0)
-        local txt = ""
-        if item.item.isKeep then
-            txt = txt .. "K"
-        end
-        if item.item.isDestroy then
-            txt = txt .. "D"
-        end
-        if txt and not item.item.multiple then
-            self:drawText(txt, 5, y + (item.height - fhSmall) / 2, r, g, b, 1, self.font)
-        end
 
         self:drawText(item.text, dx + imgW + 4, y + (item.height - fhSmall) / 2, r, g, b, 1, self.font)
 
@@ -439,6 +468,9 @@ function CHC_uses_recipepanel:render()
 
     y = y + self:drawMainInfo(x, y, selectedItem) + 5
 
+    -- Station / NearItem before ingredients (visible without scrolling past list)
+    y = y + self:drawNearItem(x, y, selectedItem)
+
     -- region required items
     self:drawText(getText("IGUI_CraftUI_RequiredItems"), x, y, 1, 1, 1, 1, UIFont.Small);
     y = y + fhSmall + 5
@@ -456,7 +488,8 @@ function CHC_uses_recipepanel:render()
     y = y + self:drawCraftButtons(x, y, selectedItem)
     y = y + self:drawRequiredSkills(x, y, selectedItem)
     y = y + self:drawRequiredBooks(x, y, selectedItem)
-    y = y + self:drawNearItem(x, y, selectedItem)
+    y = y + self:drawHeatRequirement(x, y, selectedItem)
+    y = y + self:drawRecipeNote(x, y, selectedItem)
     local reqTime = getText("IGUI_CraftUI_RequiredTime", selectedItem.timeToMake)
     self:drawText(reqTime, x, y, 1, 1, 1, 1, UIFont.Medium)
 end
@@ -478,20 +511,16 @@ function CHC_uses_recipepanel:getBottomHeight(item)
     -- books
     if self.manualsEntries then
         bh = bh + (self.manualsSize + 1) * fhSmall + 4
-        -- print(self.manualsSize)
     end
 
-    -- near item
-    local hydroFurniture = item.hydrocraftEquipment
-    local nearItem = item.nearItem
-    if hydroFurniture or nearItem then
-        bh = bh + fhMedium
-        if hydroFurniture then
-            bh = bh + 25
-        end
-        if nearItem then
-            bh = bh + fhSmall
-        end
+    -- heat
+    if item.heat and item.heat ~= 0 then
+        bh = bh + fhMedium + fhSmall + 4
+    end
+
+    -- note (rough wrap estimate)
+    if item.recipeNote then
+        bh = bh + fhMedium + fhSmall * 3 + 4
     end
 
     bh = bh + fhMedium
@@ -634,35 +663,120 @@ end
 function CHC_uses_recipepanel:drawNearItem(x, y, item)
     local hydroFurniture = item.hydrocraftEquipment
     local nearItem = item.nearItem
-    if not nearItem and not hydroFurniture then return 0 end
+    if not nearItem and not hydroFurniture then
+        if self.stationBtn then
+            self.stationBtn:setVisible(false)
+        end
+        return 0
+    end
     local sy = y
 
-    self:drawText(getText("UI_recipe_panel_near_item") .. ": ", x, y, 1, 1, 1, 1, UIFont.Medium);
+    self:drawText(getText("UI_recipe_panel_near_item") .. ":", x, y, 1, 1, 1, 1, UIFont.Medium);
     y = y + fhMedium
 
-    if hydroFurniture then
-        local hydroX = x + 15
+    if hydroFurniture and hydroFurniture.obj then
+        local rowStartX = x + 15
+        local hydroX = rowStartX
+        local rowY = y
         local r, g, b = 1, 1, 1
         local a = 1
-        if not hydroFurniture.luaTest(self.player) then
+        local nearOk = true
+        if hydroFurniture.luaTest then
+            nearOk = hydroFurniture.luaTest(self.player) == true
+        end
+        if not nearOk then
             g, b = 0, 0
             a = 0.75
         end
         self:drawText(" - ", hydroX, y, r, g, b, a, UIFont.Small)
+        hydroX = hydroX + 12
         if hydroFurniture.obj.texture then
-            hydroX = hydroX + 15
             self:drawTextureScaledAspect(hydroFurniture.obj.texture, hydroX, y, 20, 20, a, 1, 1, 1)
             hydroX = hydroX + 25
         end
-        self:drawText(hydroFurniture.obj.name, hydroX, y, r, g, b, a, UIFont.Small)
+        local stationName = hydroFurniture.obj.displayName or hydroFurniture.obj.name or "?"
+        self:drawText(stationName, hydroX, y, r, g, b, a, UIFont.Small)
+        local nameW = getTextManager():MeasureStringX(UIFont.Small, stationName)
+        if self.stationBtn then
+            self.stationBtn:setX(rowStartX)
+            self.stationBtn:setY(rowY)
+            self.stationBtn:setWidth(math.max(120, hydroX - rowStartX + nameW + 8))
+            self.stationBtn:setHeight(22)
+            self.stationBtn:setVisible(true)
+            self.stationBtn.stationItem = hydroFurniture.obj
+            self.stationBtn.title = ""
+        end
         y = y + 25
+    elseif self.stationBtn then
+        self.stationBtn:setVisible(false)
     end
 
     if nearItem then
-        self:drawText(" - " .. item.nearItem, x + 15, y, 1, 1, 1, 1, UIFont.Small);
+        local nearObj = CHC_main.items[nearItem]
+        local label = nearObj and (nearObj.displayName or nearObj.name) or nearItem
+        self:drawText(" - " .. label, x + 15, y, 1, 1, 1, 1, UIFont.Small);
         y = y + fhSmall
     end
+    y = y + 4
     return y - sy
+end
+
+function CHC_uses_recipepanel:drawHeatRequirement(x, y, item)
+    local heat = item.heat
+    if not heat or heat == 0 then return 0 end
+    local sy = y
+    self:drawText(getText("UI_recipe_panel_heat") .. ":", x, y, 1, 1, 1, 1, UIFont.Medium)
+    y = y + fhMedium
+    local label
+    if heat < 0 then
+        label = getText("UI_CHC_heat_hot")
+    else
+        label = getText("UI_CHC_heat_cold")
+    end
+    self:drawText(" - " .. label, x + 15, y, 1, 1, 1, 1, UIFont.Small)
+    y = y + fhSmall + 4
+    return y - sy
+end
+
+function CHC_uses_recipepanel:drawRecipeNote(x, y, item)
+    if not item.recipeNote then return 0 end
+    local sy = y
+    self:drawText(getText("UI_recipe_panel_note") .. ":", x, y, 1, 0.85, 0.55, 1, UIFont.Medium)
+    y = y + fhMedium
+    local maxW = self.width - x - 30
+    local lines = CHC_uses_recipepanel.wrapText(item.recipeNote, maxW, UIFont.Small)
+    for i = 1, #lines do
+        self:drawText(lines[i], x + 15, y, 0.9, 0.85, 0.6, 1, UIFont.Small)
+        y = y + fhSmall
+    end
+    y = y + 4
+    return y - sy
+end
+
+function CHC_uses_recipepanel.wrapText(text, maxWidth, font)
+    local words = {}
+    for w in string.gmatch(text, "%S+") do
+        table.insert(words, w)
+    end
+    local lines = {}
+    local cur = ""
+    local tm = getTextManager()
+    for i = 1, #words do
+        local candidate = cur == "" and words[i] or (cur .. " " .. words[i])
+        if tm:MeasureStringX(font, candidate) > maxWidth and cur ~= "" then
+            table.insert(lines, cur)
+            cur = words[i]
+        else
+            cur = candidate
+        end
+    end
+    if cur ~= "" then
+        table.insert(lines, cur)
+    end
+    if #lines == 0 then
+        table.insert(lines, text)
+    end
+    return lines
 end
 
 -- endregion
@@ -743,6 +857,99 @@ end
 function CHC_uses_recipepanel:onRMBDownItemIcon(x, y)
     if not self.item then return end
     self.parent.onRMBDownIngrPanel(self, nil, nil, self.item)
+end
+
+function CHC_uses_recipepanel:openStationContext(stationItem)
+    if not stationItem or not stationItem.fullType then return end
+    local item = CHC_main.items[stationItem.fullType] or stationItem
+    local backref = self.parent.backRef
+    local cX = getMouseX()
+    local cY = getMouseY()
+    local context = ISContextMenu.get(0, cX + 10, cY)
+
+    local function findItem()
+        local viewName = getText("UI_search_tab_name")
+        backref:refresh(viewName)
+        backref:refresh(backref.uiTypeToView['search_items'].name, backref.panel.activeView.view)
+        local view = backref:getActiveSubView()
+        local txt = string.format("#%s,%s", item.displayCategory or "", item.displayName or item.name or "")
+        txt = string.lower(txt)
+        view.searchRow.searchBar:setText(txt)
+        view:updateItems(view.selectedCategory)
+        if #view.objList.items ~= 0 then
+            local it = view.objList.items
+            local c = 1
+            for i = 1, #it do
+                if string.lower(it[i].text) == string.lower(item.displayName or item.name or "") then
+                    c = i
+                    break
+                end
+            end
+            view.objList.selected = c
+            view.objList:ensureVisible(c)
+            if view.objPanel then
+                view.objPanel:setObj(it[c].item)
+            end
+        end
+    end
+
+    local function openCraftTab()
+        local inv = item.item
+        if not inv and item.fullType then
+            inv = InventoryItemFactory.CreateItem(item.fullType)
+        end
+        if inv then
+            backref:addItemView(inv, true, 2)
+        end
+    end
+
+    local function filterByStation()
+        local entry = backref.uiTypeToView and backref.uiTypeToView['search_recipes']
+        if not entry then return end
+        local hc = CHC_settings.integrations.Hydrocraft
+        local luaTest = nil
+        for k, v in pairs(hc.luaOnTestReference) do
+            if v == item.fullType then
+                luaTest = k
+                break
+            end
+        end
+        if not luaTest then return end
+        local catName = CHC_main.getStationCategoryName(luaTest)
+        backref:refresh(getText("UI_search_tab_name"))
+        backref:refresh(entry.name, backref.panel.activeView.view)
+        local view = entry.view
+        if view and view.filterRow then
+            view.selectedCategory = catName
+            view.filterRow.categorySelector:select(catName)
+            view:updateRecipes(catName)
+        end
+    end
+
+    context:addOption(getText("IGUI_find_item"), backref, findItem)
+    local craftRecipes = CHC_main.recipesForItem[item.fullType]
+    local craftOpt = context:addOption(getText("UI_CHC_station_how_to_craft"), backref, openCraftTab)
+    if type(craftRecipes) ~= 'table' or #craftRecipes == 0 then
+        craftOpt.notAvailable = true
+        local tooltip = ISToolTip:new()
+        tooltip:initialise()
+        tooltip:setVisible(false)
+        tooltip.description = getText("IGUI_no_recipes")
+        craftOpt.toolTip = tooltip
+    end
+    context:addOption(getText("UI_CHC_station_filter_recipes"), backref, filterByStation)
+end
+
+function CHC_uses_recipepanel:onStationClick()
+    local item = self.stationBtn and self.stationBtn.stationItem
+    if not item then return end
+    self:openStationContext(item)
+end
+
+function CHC_uses_recipepanel:onStationRMB(x, y)
+    -- self is stationBtn
+    if not self.stationItem or not self.parent then return end
+    self.parent:openStationContext(self.stationItem)
 end
 
 function CHC_uses_recipepanel:onIngredientMouseDown(item)

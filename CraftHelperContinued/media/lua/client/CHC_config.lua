@@ -23,13 +23,36 @@ CHC_settings = {
     integrations = {
         Hydrocraft = {
             url = "https://steamcommunity.com/sharedfiles/filedetails/?id=2778991696",
-            modId = "Hydrocraft",
+            -- Workshop id and HydroServer (_h) fork
+            modIds = { "Hydrocraft", "Hydrocraft_h" },
+            modId = "Hydrocraft_h",
             luaOnTestReference = {
                 ['HCNearCarpybench'] = 'Hydrocraft.HCCarpenterbench',
                 ['HCNearHerbatable'] = 'Hydrocraft.HCHerbtable',
                 ['HCNearTarkiln'] = 'Hydrocraft.HCTarkiln',
                 ['HCNearKiln'] = 'Hydrocraft.HCKiln',
-                ['HCNearGrindstone'] = 'Hydrocraft.HCGrindstone' }
+                ['HCNearGrindstone'] = 'Hydrocraft.HCGrindstone' },
+            -- Fallback labels if item cache miss (RU via Translate)
+            luaOnTestLabels = {
+                ['HCNearCarpybench'] = 'UI_CHC_HCNearCarpybench',
+                ['HCNearHerbatable'] = 'UI_CHC_HCNearHerbatable',
+                ['HCNearTarkiln'] = 'UI_CHC_HCNearTarkiln',
+                ['HCNearKiln'] = 'UI_CHC_HCNearKiln',
+                ['HCNearGrindstone'] = 'UI_CHC_HCNearGrindstone'
+            },
+            -- Order for category selector filter
+            stationOrder = {
+                'HCNearHerbatable',
+                'HCNearCarpybench',
+                'HCNearGrindstone',
+                'HCNearKiln',
+                'HCNearTarkiln'
+            },
+            -- Notes for recipes with misleading Result / OnCreate (key = Originalname)
+            recipeNotes = {
+                ['Find Seeds'] = 'UI_CHC_note_Find_Seeds',
+                ['Identify Unknown Seeds'] = 'UI_CHC_note_Identify_Seeds'
+            }
         }
     }
 }

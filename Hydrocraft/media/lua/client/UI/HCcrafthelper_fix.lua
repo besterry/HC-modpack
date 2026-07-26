@@ -19,6 +19,7 @@ HCOntest_furni_references = {
     ['HCNearKiln'] = 'Hydrocraft.HCKiln',
     ['HCNearGrindstone'] = 'Hydrocraft.HCGrindstone'}
 
+-- Legacy CraftHelper41 only (CraftHelperContinued_h has its own Hydrocraft_h integration)
 if getActivatedMods():contains("CraftHelper41") then
     require "UI/craftHelper41RecipePanel"
     local old_set_recipe = craftHelper41RecipePanel.setRecipe;
