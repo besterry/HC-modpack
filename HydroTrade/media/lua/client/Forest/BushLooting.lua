@@ -250,6 +250,7 @@ local function isBush(spriteName)
 end
 
 ISWorldObjectContextMenu.onLootBush = function(worldobjects, square, player) -- player - iso
+    if not HT_EnsureLootPlantCursor or not HT_EnsureLootPlantCursor() then return end
     local playerObj = player:getPlayerNum()
     local bo = ISLootPlantCursor:new(player, "grass")
 	getCell():setDrag(bo, playerObj)

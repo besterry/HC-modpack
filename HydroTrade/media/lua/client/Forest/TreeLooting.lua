@@ -134,6 +134,7 @@ local defaultLoot = { --Лут который будет падать со вс�
 }
 
 ISWorldObjectContextMenu.onLootTree = function(worldobjects, playerObj, tree) --Создание элемента выделения дерева для лута
+    if not HT_EnsureLootTreeCursor or not HT_EnsureLootTreeCursor() then return end
     local bo = ISLootTreeCursor:new(nil, nil, playerObj)
 	-- local bo = ISTreeLootAction:new(playerObj, worldobjects, 200)
 	getCell():setDrag(bo, playerObj:getPlayerNum())
