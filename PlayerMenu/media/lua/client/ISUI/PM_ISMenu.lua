@@ -664,7 +664,7 @@ function PM_ISMenu:onClick(button)
         else
             local x = self:getX() + self:getWidth() + 10
             local y = self:getY()
-            local ui = UI_AutoLoot:new(x, y, 400, 260, getPlayer());
+            local ui = UI_AutoLoot:new(x, y, 460, 580, getPlayer());
             ui:initialise();
             ui:addToUIManager();
         end

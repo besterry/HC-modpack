@@ -1,10 +1,11 @@
 PM = PM or {}
 PM.desiredItemsSet = PM.desiredItemsSet or {} --Список собираемых предметов, формируется из Shop.Sell
-PM.AutolootDisplayCategory = PM.AutolootDisplayCategory or {} --Категории собираемоего лута (["Ammo"]: boolean = true, ["Junk"]: boolean = false и т.д.)
+PM.AutolootDisplayCategory = PM.AutolootDisplayCategory or {} --Категории собираемоего лута
+PM.AutolootCustomItems = PM.AutolootCustomItems or {} -- Свои предметы (вне скупки), до AUTOLOOT_CUSTOM_MAX
 PM.InventorySelected = PM.InventorySelected or {} --Выбранный инвентарь для автолута
-PM.AutolootDurationAction = PM.AutolootDurationAction or {} --Время действия автолута в днях (настройка песочницы SandboxVars.AutoLoot.DurabilityAutoLoot)
+PM.AutolootDurationAction = PM.AutolootDurationAction or {} --Время действия автолута в днях
 PM.TimeActivateAutoLoot = PM.TimeActivateAutoLoot or {} --Когда был куплен автолут
-PM.AutoLootMessage = PM.AutoLootMessage or {} --True/false включено ли "оповещение о собираемых предметах над головой игрока"
+PM.AutoLootMessage = PM.AutoLootMessage or {} --Оповещение о собираемых предметах
 
 
 local function GetSellItems(callback)
@@ -74,145 +75,190 @@ end
 Events.OnTick.Add(GetTimeActivateAutoLootForcalculateTime)
 
 
-local function AutoLoot(zombie) --автолут
-    if PM.Autoloot and checkTimeActivate then
-        local player = getPlayer()
-        -- local zombieInventory = zombie:getInventory()
-        local zombieInventory = zombie
-        local inv
-        --Если не задана сумка в UI        
-        if type(PM.InventorySelected) == "table" then
-            PM.InventorySelected = player
-        end
-        --Если сумка не одета переключение на основной инвентарь
-        if PM.InventorySelected:getInventory() == player:getInventory() then
-        elseif not PM.InventorySelected:isEquipped() then
+-- Тики: ~3 после трупа (Hydrocraft OnZombieDead), ~60 на ответ fill (~1–2 с)
+local AUTOLOOT_HC_DELAY_TICKS = 3
+local AUTOLOOT_FILL_TIMEOUT_TICKS = 60
+local AUTOLOOT_CORPSE_WAIT_TICKS = 300
+
+local function isWalletContainer(item)
+    if not item then return false end
+    if item.getBodyLocation and item:getBodyLocation() == "Wallet" then
+        return true
+    end
+    if item.canBeEquipped and item:canBeEquipped() == "Wallet" then
+        return true
+    end
+    local itemType = item.getType and item:getType()
+    if itemType and string.find(itemType, "Wallet", 1, true) == 1 then
+        return true
+    end
+    return false
+end
+
+local function isDesiredItem(item)
+    if not item then return false end
+    -- Кошельки не забираем (внутри свои ограничения)
+    if isWalletContainer(item) then
+        return false
+    end
+    local fullType = item:getFullType()
+    -- Свои предметы: вне скупки и без фильтра категорий
+    if PM.AutolootCustomItems and PM.AutolootCustomItems[fullType] then
+        return true
+    end
+    local itemDisplayCategory = item:getDisplayCategory()
+    if not (PM.AutolootDisplayCategory[itemDisplayCategory] or itemDisplayCategory == nil) then
+        return false
+    end
+    return PM.desiredItemsSet[fullType] == true
+end
+
+local function disableAutoLootOverflow(player)
+    if not PM.Autoloot then return end
+    PM.Autoloot = false
+    if AutoLoot_SaveConfig then
+        AutoLoot_SaveConfig()
+    end
+    local msg = getText("IGUI_AutoLoot_DisabledFull")
+    if player.setHaloNote then
+        player:setHaloNote(msg, 255, 160, 80, 400)
+    end
+    player:Say(msg)
+    if UI_AutoLoot and UI_AutoLoot.instance and UI_AutoLoot.instance.refreshPowerVisual then
+        UI_AutoLoot.instance:refreshPowerVisual()
+    end
+end
+
+-- Перенос как ISInventoryTransferAction: серверное удаление с трупа + локальный AddItem
+local function transferLootItem(player, srcContainer, destInv, item)
+    if instanceof(item, "AlarmClockClothing") and item:isAlarmSet() then
+        item:setAlarmSet(false)
+    end
+    if isClient() then
+        srcContainer:removeItemOnServer(item)
+    end
+    srcContainer:DoRemoveItem(item)
+    srcContainer:setHasBeenLooted(true)
+    srcContainer:setDrawDirty(true)
+    destInv:AddItem(item)
+    destInv:setDrawDirty(true)
+    if PM.AutoLootMessage then
+        player:Say("+" .. item:getDisplayName())
+    end
+end
+
+local function AutoLoot(srcContainer)
+    if not PM.Autoloot or not checkTimeActivate then return end
+    if not srcContainer or not instanceof(srcContainer, "ItemContainer") then return end
+
+    local player = getPlayer()
+    if not player then return end
+
+    if type(PM.InventorySelected) == "table" then
+        PM.InventorySelected = player
+    end
+    -- Бумажник / снятая сумка → основной инвентарь
+    if PM.InventorySelected ~= player then
+        local badBag = false
+        if not PM.InventorySelected:isEquipped() then
+            badBag = true
             player:Say(getText("IGUI_Bag_UnEquipped"))
+        elseif (PM.InventorySelected.getBodyLocation and PM.InventorySelected:getBodyLocation() == "Wallet")
+            or (PM.InventorySelected.canBeEquipped and PM.InventorySelected:canBeEquipped() == "Wallet") then
+            badBag = true
+        end
+        if badBag then
             PM.InventorySelected = player
         end
-        inv=PM.InventorySelected:getInventory()
-        --Проверка есть ли перк организованного, рассчет вместимости
-        local capacitybag
-        if inv ~= nil then
-            local character = inv:getCharacter()
-            local charactertrait = character:getCharacterTraits()
-            if charactertrait:contains("Organized") and PM.InventorySelected ~= player then
-                capacitybag = inv:getCapacity()*1.27
-            else 
-                capacitybag = inv:getCapacity()
-            end
-        end
+    end
 
-        --Проверка категории предмета с выбранными в опциях
-        local function isDesiredItem(item)
-            local itemDisplayCategory = item:getDisplayCategory()
-            -- print("FIND ITEM:",item:getFullType()," Category:",itemDisplayCategory)
-            if PM.AutolootDisplayCategory[itemDisplayCategory] or itemDisplayCategory == nil then                
-                local itemType = item:getFullType()
-                -- print("FIND ITEM:",item:getFullType()," Category:",itemDisplayCategory)
-                return PM.desiredItemsSet[itemType] == true
-            end
-        end
+    local inv = PM.InventorySelected:getInventory()
+    if not inv then return end
 
-        --Автолут, если есть место
-        local lootCount = zombieInventory:getItems():size()
-        -- print("========== LOOT SIZE:",lootCount)
-        for i = lootCount, 1, -1 do
-            local item = zombieInventory:getItems():get(i - 1)
-            -- print("+ LOL ITEM:",i," - ",item:getFullType())
-            if isDesiredItem(item) then               
-                if inv ~= nil then
-                    if (inv:getCapacityWeight() + item:getWeight()) <= capacitybag then
-                        local itemName = item:getDisplayName()
-                        if PM.AutoLootMessage then
-                            player:Say("+" .. itemName)
-                        end
-                        if instanceof(item, "AlarmClockClothing") and item:isAlarmSet() then
-                            item:setAlarmSet(false)
-                        end
-                        inv:AddItem(item)
-                    else
-                        player:Say(getText("IGUI_Bag_is_full"))
-                        break
-                    end
-                end
+    local items = srcContainer:getItems()
+    if not items then return end
+    for i = items:size() - 1, 0, -1 do
+        if not PM.Autoloot then return end
+        local item = items:get(i)
+        if isDesiredItem(item) then
+            if inv:hasRoomFor(player, item) then
+                transferLootItem(player, srcContainer, inv, item)
+            else
+                disableAutoLootOverflow(player)
+                return
             end
         end
     end
 end
 
--- local function requestServerFill(corpse)
---     if not isClient() then return end
---     if not corpse then return end
---     local inv = corpse:getContainer()
---     print("requestServerFill", inv)
--- 	inv:requestServerItemsForContainer() -- ванильный запрос, как при осмотре
--- end
--- --Events.OnZombieDead.Add(onZombieKill)
--- local function AutoLoot_OnZombieDead(zombie)
---     local zombieInventory = zombie:getInventory()
---     local parent = zombieInventory:getParent()
---     if parent and instanceof(parent, "IsoDeadBody") then
---         requestServerFill(parent)
---     end
-
---     local tries = 20 -- ~1 секунды задержки
---     local function waitAndLoot()
---         if tries <= 1 then
---             Events.OnTick.Remove(waitAndLoot)
---             AutoLoot(zombie)
---             return
---         end
---         tries = tries - 1
---     end
---     Events.OnTick.Add(waitAndLoot)
--- end
--- Events.OnZombieDead.Add(AutoLoot_OnZombieDead)
 local function requestVanillaFill(corpse)
-	if not corpse then return end
-	local inv = corpse:getContainer()
-	if not inv or inv:isExplored() then return end
-	inv:requestServerItemsForContainer() -- ванильный запрос, как при осмотре
+    if not corpse then return end
+    local inv = corpse:getContainer()
+    if not inv or inv:isExplored() then return end
+    if isClient() then
+        inv:requestServerItemsForContainer()
+    elseif ItemPicker and ItemPicker.fillContainer then
+        ItemPicker.fillContainer(inv, getPlayer())
+    end
+end
+
+-- Проход 1: HC/уже лежащий лут. Проход 2: после ванильного fill (тихий «осмотр»).
+local function runAutoLootPasses(corpse)
+    local container = corpse:getContainer()
+    if not container then return end
+
+    local delay = AUTOLOOT_HC_DELAY_TICKS
+    local function afterHcDelay()
+        delay = delay - 1
+        if delay > 0 then return end
+        Events.OnTick.Remove(afterHcDelay)
+
+        container = corpse:getContainer()
+        if container then
+            AutoLoot(container)
+        end
+
+        requestVanillaFill(corpse)
+
+        local waitFill = AUTOLOOT_FILL_TIMEOUT_TICKS
+        local function waitFillTick()
+            local c = corpse:getContainer()
+            if not c then
+                Events.OnTick.Remove(waitFillTick)
+                return
+            end
+            if c:isExplored() or waitFill <= 0 then
+                Events.OnTick.Remove(waitFillTick)
+                AutoLoot(c)
+                return
+            end
+            waitFill = waitFill - 1
+        end
+        Events.OnTick.Add(waitFillTick)
+    end
+    Events.OnTick.Add(afterHcDelay)
 end
 
 local function AutoLoot_OnZombieDead(zombie)
     if not PM.Autoloot or not checkTimeActivate then return end
-	if not zombie then return end
-	local inv = zombie:getInventory()
-	if not inv then return end
+    if not zombie then return end
+    local inv = zombie:getInventory()
+    if not inv then return end
 
-    local waitCorpseCount = 0
-	local function waitCorpse() -- Ожидание появления тела
-		local parent = inv:getParent()
-		if parent and instanceof(parent, "IsoDeadBody") then
-            waitCorpseCount = waitCorpseCount + 1
+    local ticks = 0
+    local function waitCorpse()
+        ticks = ticks + 1
+        local parent = inv:getParent()
+        if parent and instanceof(parent, "IsoDeadBody") then
             Events.OnTick.Remove(waitCorpse)
-			-- триггерим ванильный «осмотр»/запрос спавна
-			requestVanillaFill(parent)
-			-- ждём, пока контейнер отметится explored/придут предметы
-			local waitItemsTries = 30 -- На 60 рработает, на 30 тест
-			local function waitItems()
-                local container = parent:getContainer()
-				if waitItemsTries <= 0 then -- Если нет предметов, то завершаем ожидание
-					Events.OnTick.Remove(waitItems)
-					AutoLoot(container)
-					return
-				end
-				waitItemsTries = waitItemsTries - 1
-                -- local c = container
-                -- if c and (c:isExplored() or (c:getItems() and c:getItems():size() > 0)) then
-                --     Events.OnTick.Remove(waitItems)
-                --     print("AutoLoot(c)",c)
-                --     AutoLoot(c)
-                -- end
-			end
-			Events.OnTick.Add(waitItems)
-		end
-        if waitCorpseCount > 1000 then -- На всякий случай, если что-то пошло не так отпишемся, чтоб не повисло
+            runAutoLootPasses(parent)
+            return
+        end
+        if ticks >= AUTOLOOT_CORPSE_WAIT_TICKS then
             Events.OnTick.Remove(waitCorpse)
         end
-	end
-	Events.OnTick.Add(waitCorpse)
+    end
+    Events.OnTick.Add(waitCorpse)
 end
 
 Events.OnZombieDead.Add(AutoLoot_OnZombieDead)
