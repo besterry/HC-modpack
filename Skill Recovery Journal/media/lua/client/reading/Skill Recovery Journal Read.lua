@@ -69,19 +69,25 @@ function ISReadABook:update()
 
 			if not delayedStop then
 
+				JMD["learnedRecipesRead"] = JMD["learnedRecipesRead"] or {}
+				local recipesReadLog = JMD["learnedRecipesRead"]
+
 				if (#self.learnedRecipes > 0) then
 					self.recipeIntervals = self.recipeIntervals+1
-					self.changesMade = true
+					changesMade = true
 					if self.recipeIntervals > 5 then
 						local recipeChunk = math.min(#self.learnedRecipes, math.floor(1.09^math.sqrt(#self.learnedRecipes)))
-						
+						recipeChunk = math.max(1, recipeChunk)
+
 						local properPlural = getText("IGUI_Tooltip_Recipe")
 						if recipeChunk>1 then properPlural = getText("IGUI_Tooltip_Recipes") end
 						table.insert(changesBeingMade, recipeChunk.." "..properPlural)
 
-						for i=0, recipeChunk do
+						for i=1, recipeChunk do
 							local recipeID = self.learnedRecipes[#self.learnedRecipes]
-							if recipeID then player:learnRecipe(recipeID) end
+							if not recipeID then break end
+							player:learnRecipe(recipeID)
+							recipesReadLog[recipeID] = true
 							table.remove(self.learnedRecipes,#self.learnedRecipes)
 						end
 						self.recipeIntervals = 0
@@ -175,6 +181,7 @@ function ISReadABook:update()
 
 					HaloTextHelper:update()
 					HaloTextHelper.addText(self.character, changesBeingMadeText, HaloTextHelper.getColorWhite())
+					self:resetJobDelta()
 					self:setCurrentTime(1)
 				end
 			end
@@ -211,10 +218,14 @@ function ISReadABook:new(player, item, time)
 
 			if SandboxVars.SkillRecoveryJournal.RecoverRecipes == true then
 				local learnedRecipes = JMD["learnedRecipes"]
+				local recipesReadLog = JMD["learnedRecipesRead"] or {}
+				local oneTimeUse = (SandboxVars.SkillRecoveryJournal.RecoveryJournalUsed == true)
 				if learnedRecipes then
 					for recipeID,_ in pairs(learnedRecipes) do
-						if not player:isRecipeKnown(recipeID) then
-							table.insert(o.learnedRecipes, recipeID)
+						if recipeID and (not player:isRecipeKnown(recipeID)) then
+							if (not oneTimeUse) or (not recipesReadLog[recipeID]) then
+								table.insert(o.learnedRecipes, recipeID)
+							end
 						end
 					end
 				end

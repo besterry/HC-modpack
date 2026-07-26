@@ -61,6 +61,7 @@ local function SRJ_generateTooltip(journal, player)
 
 	local skillsRecord = ""
 	local oneTimeUse = (SandboxVars.SkillRecoveryJournal.RecoveryJournalUsed == true)
+	local roundXP = function(n) return math.floor((n or 0)*100)/100 end
 
 	for perkID,xp in pairs(storedJournalXP) do
 		local perk = Perks[perkID]
@@ -73,10 +74,10 @@ local function SRJ_generateTooltip(journal, player)
 			end
 
 			local perkName = perk:getName()
-			local xpBasedOnPlayer = math.floor(journalXP*100)/100
+			local xpBasedOnPlayer = roundXP(journalXP)
 
 			skillsRecord = skillsRecord..perkName.." ("..xpBasedOnPlayer
-			if oneTimeUse then skillsRecord = skillsRecord.."/"..xp end
+			if oneTimeUse then skillsRecord = skillsRecord.."/"..roundXP(xp) end
 			skillsRecord = skillsRecord.." xp)".."\n"
 		end
 	end
@@ -85,7 +86,11 @@ local function SRJ_generateTooltip(journal, player)
 	if learnedRecipes then
 		local recipeNum = 0
 
-		if SandboxVars.SkillRecoveryJournal.RecoverRecipes == true then for k,v in pairs(learnedRecipes) do recipeNum = recipeNum+1 end end
+		if SandboxVars.SkillRecoveryJournal.RecoverRecipes == true then
+			for k,v in pairs(learnedRecipes) do
+				if k then recipeNum = recipeNum+1 end
+			end
+		end
 
 		if recipeNum>0 then
 			local properPlural = getText("IGUI_Tooltip_Recipe")

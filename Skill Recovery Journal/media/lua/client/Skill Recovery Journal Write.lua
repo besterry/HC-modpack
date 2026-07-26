@@ -47,6 +47,7 @@ function ISCraftAction:update()
 
 				if self.recipeIntervals > 5 then
 					local recipeChunk = math.min(#self.gainedRecipes, math.floor(1.09^math.sqrt(#self.gainedRecipes)))
+					recipeChunk = math.max(1, recipeChunk)
 
 					local properPlural = getText("IGUI_Tooltip_Recipe")
 					if recipeChunk>1 then
@@ -54,8 +55,9 @@ function ISCraftAction:update()
 					end
 					table.insert(changesBeingMade, recipeChunk.." "..properPlural)
 
-					for i=0, recipeChunk do
+					for i=1, recipeChunk do
 						local recipeID = self.gainedRecipes[#self.gainedRecipes]
+						if not recipeID then break end
 						JMD["learnedRecipes"][recipeID] = true
 						table.remove(self.gainedRecipes,#self.gainedRecipes)
 					end
@@ -149,7 +151,7 @@ function ISCraftAction:new(character, item, time, recipe, container, containers)
 		o.gainedRecipes = {}
 		if SandboxVars.SkillRecoveryJournal.RecoverRecipes == true then
 			for _,recipeID in pairs(gainedRecipes) do
-				if learnedRecipes[recipeID] ~= true then
+				if recipeID and learnedRecipes[recipeID] ~= true then
 					table.insert(o.gainedRecipes,recipeID)
 				end
 			end
