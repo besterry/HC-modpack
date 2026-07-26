@@ -120,5 +120,81 @@ CHC_menu.onPressKey = function(key)
 	end
 end
 
+-- region replace side-panel Crafting button / Crafting UI key with Craft Helper
+require "ISUI/ISEquippedItem"
+require "ISUI/ISCraftingUI"
+
+local _CHC_vanillaToggleCraftingUI = ISCraftingUI.toggleCraftingUI
+
+CHC_menu.isCraftHelperVisible = function()
+	local ui = CHC_menu.CHC_window
+	return ui ~= nil and ui:getIsVisible()
+end
+
+CHC_menu.openVanillaCraftingUI = function()
+	_CHC_vanillaToggleCraftingUI()
+end
+
+--- Side button + "Crafting UI" key open Craft Helper. Shift+click keeps vanilla crafting.
+ISCraftingUI.toggleCraftingUI = function()
+	if isShiftKeyDown() then
+		-- close helper if open, then toggle vanilla
+		if CHC_menu.isCraftHelperVisible() then
+			CHC_menu.toggleUI()
+		end
+		_CHC_vanillaToggleCraftingUI()
+		return
+	end
+	-- close vanilla crafting if it was open
+	local vanilla = getPlayerCraftingUI(0)
+	if vanilla and vanilla:getIsVisible() then
+		vanilla:setVisible(false)
+		vanilla:removeFromUIManager()
+	end
+	if CHC_menu.CHC_window == nil then
+		CHC_menu.createCraftHelper()
+	end
+	CHC_menu.toggleUI()
+end
+
+local _CHC_ISEquippedItem_prerender = ISEquippedItem.prerender
+function ISEquippedItem:prerender()
+	_CHC_ISEquippedItem_prerender(self)
+	if not self.craftingBtn then return end
+	if CHC_menu.isCraftHelperVisible() then
+		self.craftingBtn:setImage(self.craftingIconOn)
+	elseif not (getPlayerCraftingUI(0) and getPlayerCraftingUI(0):getIsVisible()) then
+		self.craftingBtn:setImage(self.craftingIcon)
+	end
+end
+
+CHC_menu.patchCraftingButtonTooltip = function()
+	local eq = ISEquippedItem.instance
+	if not eq or not eq.mouseOverList then return end
+	local tip = getText("IGUI_chc_crafting_btn_tooltip")
+	for i = 1, #eq.mouseOverList do
+		local entry = eq.mouseOverList[i]
+		if entry.object == eq.craftingBtn then
+			entry.displayString = tip
+			return
+		end
+	end
+end
+
+Events.OnGameStart.Add(function()
+	-- delay one tick so ISEquippedItem.instance exists
+	local done = false
+	local function tryPatch()
+		if done then return end
+		if ISEquippedItem.instance then
+			CHC_menu.patchCraftingButtonTooltip()
+			done = true
+			Events.OnTick.Remove(tryPatch)
+		end
+	end
+	Events.OnTick.Add(tryPatch)
+end)
+-- endregion
+
 Events.OnFillInventoryObjectContextMenu.Add(CHC_menu.doCraftHelperMenu)
 Events.OnCustomUIKey.Add(CHC_menu.onPressKey)

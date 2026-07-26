@@ -1,5 +1,6 @@
 IGUI_RU = {
     IGUI_chc_context_onclick = "Помощник создания"
+    IGUI_chc_crafting_btn_tooltip = "Помощник создания <LINE> <SIZE:small> (Shift = обычный крафт)"
     IGUI_AllowSpecialSearch = "Спецкоманды поиска"
     IGUI_AllowSpecialSearchTooltip = "Команды в строке поиска (лупа слева от поиска)"
     IGUI_ShowIcons = "Иконки предметов"
