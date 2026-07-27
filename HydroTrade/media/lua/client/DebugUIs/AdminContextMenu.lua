@@ -47,6 +47,9 @@ AdminContextMenu.doMenu = function(player, context, worldobjects, test)
     subMenu:addOption(getText("ContextMenu_Horde_Manager"), square, AdminContextMenu.onHordeManager, playerObj);
     subMenu:addOption(getText("ContextMenu_Trigger_Thunder"), playerObj, AdminContextMenu.onTriggerThunderUI)
     subMenu:addOption(getText("ContextMenu_ForTestCM"), playerObj, AdminContextMenu.onCarMagazineUI)
+    if AdminPermanentLight and AdminPermanentLight.addToSubMenu then
+        AdminPermanentLight.addToSubMenu(subMenu, playerObj)
+    end
 
     local noiseOption = subMenu:addOption(getText("ContextMenu_Make_noise"), worldobjects, nil);
     local noiseSubMenu = subMenu:getNew(subMenu);

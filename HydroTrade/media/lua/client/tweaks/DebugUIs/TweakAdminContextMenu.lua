@@ -41,6 +41,9 @@ TweakAdminContextMenu.doMenu = function(player, context, worldobjects, test)
     subMenu:addOption("Spawn Vehicle", playerObj, AdminContextMenu.onSpawnVehicle);
     --subMenu:addOption("Horde Manager", square, AdminContextMenu.onHordeManager, playerObj);
     subMenu:addOption("Trigger Thunder", playerObj, AdminContextMenu.onTriggerThunderUI)
+    if AdminPermanentLight and AdminPermanentLight.addToSubMenu then
+        AdminPermanentLight.addToSubMenu(subMenu, playerObj)
+    end
 
     local noiseOption = subMenu:addOption("Make noise", worldobjects, nil);
     local noiseSubMenu = subMenu:getNew(subMenu);
