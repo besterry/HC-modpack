@@ -32,4 +32,7 @@ IGUI_RU = {
   IGUI_T15KKillboard_Reward_Balance_Amount = "%1 монет",
   IGUI_T15KKillboard_AdjustMonth = "»зменить мес€ц...",
   IGUI_T15KKillboard_AdjustMonth_Prompt = "%1 мес€ц (сейчас %2). +добавить / -вычесть:",
+  IGUI_T15KKillboard_SetLastWinners = "«адать топ-3 прошлого мес€ца...",
+  IGUI_T15KKillboard_SetLastWinners_Prompt = "‘ормат: 2026-07;admin:39176;fd:24355;nick:13826",
+  IGUI_T15KKillboard_SetLastWinners_Enqueue = "“акже поставить награды этим победител€м в очередь?",
 }

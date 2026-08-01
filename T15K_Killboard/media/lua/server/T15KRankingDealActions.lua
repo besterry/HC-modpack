@@ -219,19 +219,49 @@ local function enqueueMonthRewards(store)
     }
 end
 
+local function tableHasAny(t)
+    if type(t) ~= "table" then
+        return false
+    end
+    -- в PZ глобальный next часто nil, нельзя вызывать next(t)
+    for _ in pairs(t) do
+        return true
+    end
+    return false
+end
+
 local function rolloverMonthIfNeeded(store)
     local currentKey = T15KKillboard.getMonthKey()
+    if not currentKey then
+        return false
+    end
     if store.monthKey == currentKey then
         return false
     end
 
-    if store.monthly and next(store.monthly) ~= nil then
-        enqueueMonthRewards(store)
+    local oldKey = store.monthKey
+    print("[T15KKillboard] month rollover: " .. tostring(oldKey) .. " -> " .. tostring(currentKey))
+
+    local ok, err = pcall(function()
+        if tableHasAny(store.monthly) then
+            enqueueMonthRewards(store)
+        else
+            print("[T15KKillboard] month rollover with empty monthly, skip rewards")
+        end
+    end)
+    if not ok then
+        print("[T15KKillboard] enqueueMonthRewards failed: " .. tostring(err))
     end
 
     store.monthly = {}
     store.monthKey = currentKey
-    T15KKillboard.applyNextRewardsToSandbox()
+
+    ok, err = pcall(function()
+        T15KKillboard.applyNextRewardsToSandbox()
+    end)
+    if not ok then
+        print("[T15KKillboard] applyNextRewardsToSandbox failed: " .. tostring(err))
+    end
     return true
 end
 
@@ -626,6 +656,74 @@ local function OnClientCommandT15KRank(module, command, player, args)
         if writeLog then
             writeLog("T15KKillboard", player:getUsername() .. " adjustMonthly " .. user .. " " .. before .. "->" .. after .. " (" .. amount .. ")")
         end
+        serverUpdateT15KRankTable()
+    elseif command == "setLastMonthWinners" then
+        if not playerIsAdmin(player) and not (getCore and getCore():getDebug()) then
+            return
+        end
+        local monthKey = args and args.monthKey
+        local winnersIn = args and args.winners
+        local enqueue = args and args.enqueueRewards
+        if type(monthKey) ~= "string" or monthKey == "" or type(winnersIn) ~= "table" then
+            print("[T15KKillboard] setLastMonthWinners: bad args")
+            return
+        end
+        local rewards = T15KKillboard.copyRewardConfig(T15KKillboard.getRewardConfig())
+        local winners = {}
+        for place = 1, 3 do
+            local w = winnersIn[place]
+            if w and w.user and tostring(w.user) ~= "" then
+                local conf = rewards[place]
+                winners[place] = {
+                    user = tostring(w.user),
+                    kills = tonumber(w.kills) or 0,
+                    item = (conf and conf.item) or "",
+                    count = (conf and conf.count) or 1,
+                }
+            end
+        end
+        if not tableHasAny(winners) then
+            print("[T15KKillboard] setLastMonthWinners: empty winners")
+            return
+        end
+        store.lastMonthResults = {
+            monthKey = monthKey,
+            winners = winners,
+        }
+        store.pendingAnnounce = {
+            monthKey = monthKey,
+            winners = winners,
+            announced = false,
+        }
+        if enqueue then
+            store.unclaimedRewards = store.unclaimedRewards or {}
+            local remain = {}
+            for i = 1, #store.unclaimedRewards do
+                local r = store.unclaimedRewards[i]
+                if not (r and r.monthKey == monthKey) then
+                    table.insert(remain, r)
+                end
+            end
+            store.unclaimedRewards = remain
+            for place = 1, 3 do
+                local w = winners[place]
+                if w and w.item and w.item ~= "" then
+                    table.insert(store.unclaimedRewards, {
+                        monthKey = monthKey,
+                        place = place,
+                        user = w.user,
+                        item = w.item,
+                        count = w.count or 1,
+                    })
+                end
+            end
+        end
+        print("[T15KKillboard] setLastMonthWinners by " .. tostring(player:getUsername())
+            .. " month=" .. monthKey .. " enqueue=" .. tostring(enqueue and true or false))
+        if writeLog then
+            writeLog("T15KKillboard", player:getUsername() .. " setLastMonthWinners " .. monthKey)
+        end
+        tryAnnouncePending(store)
         serverUpdateT15KRankTable()
     elseif command == "clearKillboard" then
         if not playerIsAdmin(player) and not (getCore and getCore():getDebug()) then

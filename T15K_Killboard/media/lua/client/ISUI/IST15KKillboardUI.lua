@@ -249,10 +249,48 @@ function IST15KKillboardUI:doPlayerListContextMenu(player, x, y)
         local playerNum = self.admin:getPlayerNum()
         local context = ISContextMenu.get(playerNum, x + self:getAbsoluteX(), y + self:getAbsoluteY())
         context:addOption(getText("IGUI_T15KKillboard_Delete"), self, IST15KKillboardUI.onCommand, player, "DELETE")
-        if self.mode == T15KKillboard.MODE_MONTHLY and player.kills ~= nil then
-            context:addOption(getText("IGUI_T15KKillboard_AdjustMonth"), self, IST15KKillboardUI.onCommand, player, "ADJUST_MONTH")
+        if self.mode == T15KKillboard.MODE_MONTHLY then
+            context:addOption(getText("IGUI_T15KKillboard_SetLastWinners"), self, IST15KKillboardUI.onCommand, player, "SET_LAST_WINNERS")
+            if player.kills ~= nil then
+                context:addOption(getText("IGUI_T15KKillboard_AdjustMonth"), self, IST15KKillboardUI.onCommand, player, "ADJUST_MONTH")
+            end
         end
     end
+end
+
+function IST15KKillboardUI:buildLastWinnersDefaultText()
+    local monthKey = (self.rankData and self.rankData.monthKey) or ""
+    local parts = {}
+    if monthKey ~= "" then
+        table.insert(parts, monthKey)
+    end
+    local monthly = self.rankData and self.rankData.monthly
+    if monthly then
+        for i = 1, math.min(3, #monthly) do
+            local row = monthly[i]
+            if row and row[1] then
+                table.insert(parts, tostring(row[1]) .. ":" .. tostring(row[2] or 0))
+            end
+        end
+    end
+    if #parts <= 1 then
+        local results = self.rankData and self.rankData.lastMonthResults
+        if results and results.monthKey and #parts == 0 then
+            table.insert(parts, tostring(results.monthKey))
+        end
+        if results and results.winners then
+            for place = 1, 3 do
+                local w = results.winners[place]
+                if w and w.user then
+                    table.insert(parts, tostring(w.user) .. ":" .. tostring(w.kills or 0))
+                end
+            end
+        end
+    end
+    if #parts == 0 then
+        return "2026-07;Nick1:0;Nick2:0;Nick3:0"
+    end
+    return table.concat(parts, ";")
 end
 
 function IST15KKillboardUI:onCommand(player, command)
@@ -270,6 +308,11 @@ function IST15KKillboardUI:onCommand(player, command)
         local modal = ISTextBox:new(0, 0, 340, 180, prompt, "-14000", nil, IST15KKillboardUI.onAdjustMonthConfirm, nil, player)
         modal:initialise()
         modal:addToUIManager()
+    elseif command == "SET_LAST_WINNERS" then
+        local prompt = getText("IGUI_T15KKillboard_SetLastWinners_Prompt")
+        local modal = ISTextBox:new(0, 0, 420, 200, prompt, self:buildLastWinnersDefaultText(), nil, IST15KKillboardUI.onSetLastWinnersConfirm, nil, self)
+        modal:initialise()
+        modal:addToUIManager()
     end
 end
 
@@ -285,6 +328,60 @@ function IST15KKillboardUI.onAdjustMonthConfirm(_, button, player)
     amount = math.floor(amount)
     print("[T15KKillboard] adjust monthly " .. tostring(amount) .. " for " .. player.user)
     sendClientCommand("T15KKillboardModule", "adjustMonthly", { player.user, amount })
+end
+
+function IST15KKillboardUI.parseLastWinnersText(text)
+    if not text or text == "" then
+        return nil, nil
+    end
+    local monthKey = nil
+    local winners = {}
+    for token in string.gmatch(text, "[^;]+") do
+        token = string.gsub(token, "^%s+", "")
+        token = string.gsub(token, "%s+$", "")
+        if token ~= "" then
+            if not monthKey and string.match(token, "^%d%d%d%d%-%d%d$") then
+                monthKey = token
+            else
+                local user, kills = string.match(token, "^([^:]+):(%-?%d+)$")
+                if not user then
+                    user = token
+                    kills = "0"
+                end
+                user = string.gsub(user, "^%s+", "")
+                user = string.gsub(user, "%s+$", "")
+                if user ~= "" and #winners < 3 then
+                    table.insert(winners, { user = user, kills = tonumber(kills) or 0 })
+                end
+            end
+        end
+    end
+    if #winners < 1 then
+        return nil, nil
+    end
+    return monthKey, winners
+end
+
+function IST15KKillboardUI.onSetLastWinnersConfirm(target, button, ui)
+    if button.internal ~= "OK" then
+        return
+    end
+    local text = button.parent.entry:getText()
+    local monthKey, winners = IST15KKillboardUI.parseLastWinnersText(text)
+    if not winners then
+        return
+    end
+    if not monthKey or monthKey == "" then
+        monthKey = (ui and ui.rankData and ui.rankData.monthKey) or T15KKillboard.getMonthKey()
+    end
+    local payload = { monthKey = monthKey, winners = winners, enqueueRewards = false }
+    local confirm = ISModalDialog:new(0, 0, 380, 160, getText("IGUI_T15KKillboard_SetLastWinners_Enqueue"), true, nil, function(_, btn)
+        payload.enqueueRewards = (btn.internal == "YES")
+        print("[T15KKillboard] setLastMonthWinners " .. tostring(monthKey) .. " enqueue=" .. tostring(payload.enqueueRewards))
+        sendClientCommand("T15KKillboardModule", "setLastMonthWinners", payload)
+    end)
+    confirm:initialise()
+    confirm:addToUIManager()
 end
 
 function IST15KKillboardUI:updateList(tableData)
