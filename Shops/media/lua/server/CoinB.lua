@@ -6,7 +6,12 @@ function SaveCoinBalancefd(username) --запись в файл
     local coinBalance = ModData.get("CoinBalance")
     if not coinBalance then return end
     local fileWriterObj = getFileWriter("file_CoinBalance.json", true, false)
+    if not fileWriterObj then
+        print("SaveCoinBalancefd: getFileWriter returned nil (file locked or I/O error)")
+        return
+    end
     local coinBalanceJson = Json.Encode(coinBalance)
+    if not coinBalanceJson then return end
     -- Добавляем символ переноса строки после каждой записи
     local formattedJson = coinBalanceJson:gsub("},","},\n")
     fileWriterObj:write(formattedJson)
