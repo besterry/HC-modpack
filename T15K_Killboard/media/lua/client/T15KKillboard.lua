@@ -280,6 +280,12 @@ local function clientRank(module, command, arguments)
                 local msg = getText("IGUI_T15KKillboard_Reward_Received", tostring(r.place), name)
                 player:setHaloNote(msg, 255, 215, 0, 500)
                 print("[T15KKillboard] " .. msg)
+                if r.item and string.find(r.item, "PinkSlip.", 1, true) == 1 then
+                    local tip = getText("IGUI_T15KKillboard_Reward_PinkSlip_Tip")
+                    if tip and tip ~= "" and tip ~= "IGUI_T15KKillboard_Reward_PinkSlip_Tip" then
+                        player:setHaloNote(tip, 200, 220, 255, 600)
+                    end
+                end
             end
             pcall(function()
                 player:playSoundLocal("Notification")
@@ -288,6 +294,20 @@ local function clientRank(module, command, arguments)
         if window then
             window:setPendingRewards({})
         end
+        return
+    end
+
+    if command == "claimEmpty" then
+        local player = getPlayer()
+        if player then
+            local tip = getText("IGUI_T15KKillboard_Claim_Empty")
+            player:setHaloNote(tip, 220, 180, 80, 400)
+        end
+        return
+    end
+
+    if command == "claimLog" then
+        IST15KKillboardUI.showClaimLog(arguments)
         return
     end
 

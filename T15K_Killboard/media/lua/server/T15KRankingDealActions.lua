@@ -47,6 +47,7 @@ local function newStore()
         allTime = {},
         liveCurrentKills = true,
         unclaimedRewards = {},
+        claimedRewards = {},
         pendingAnnounce = nil,
     }
 end
@@ -89,6 +90,7 @@ local function ensureStore()
     raw.monthly = raw.monthly or {}
     raw.allTime = raw.allTime or {}
     raw.unclaimedRewards = raw.unclaimedRewards or {}
+    raw.claimedRewards = raw.claimedRewards or {}
     raw.monthKey = raw.monthKey or T15KKillboard.getMonthKey()
     -- переход с накопленного all-time на текущие getZombieKills
     if not raw.liveCurrentKills then
@@ -135,12 +137,35 @@ local function formatWinnerDetail(place, winner)
     end
     local detail = "#" .. tostring(place) .. " " .. tostring(winner.user) .. " (" .. tostring(winner.kills) .. ")"
     if winner.item and winner.item ~= "" then
-        detail = detail .. " | " .. tostring(winner.item)
-        if winner.count and winner.count > 1 then
-            detail = detail .. " x" .. tostring(winner.count)
+        local rewardLine = T15KKillboard.formatRewardLine(winner.item, winner.count)
+        if rewardLine and rewardLine ~= "" then
+            detail = detail .. " | " .. rewardLine
         end
     end
     return detail
+end
+
+local function safeGetOnlinePlayers()
+    -- на OnInitGlobalModData udpEngine ещё nil → getOnlinePlayers кидает NPE
+    if not getOnlinePlayers then
+        return nil
+    end
+    local ok, online = pcall(getOnlinePlayers)
+    if not ok or not online then
+        return nil
+    end
+    return online
+end
+
+local function hasOnlinePlayers()
+    local online = safeGetOnlinePlayers()
+    if not online then
+        return false
+    end
+    local ok, size = pcall(function()
+        return online:size()
+    end)
+    return ok and size and size > 0
 end
 
 -- объявление только когда есть онлайн (рестарт в 00:00 обычно без игроков)
@@ -149,31 +174,41 @@ local function tryAnnouncePending(store)
     if not pa or pa.announced then
         return
     end
-    local online = getOnlinePlayers and getOnlinePlayers() or nil
-    if not online or online:size() < 1 then
+    if not hasOnlinePlayers() then
         return
     end
 
     if Notify and Notify.broadcast then
-        Notify.broadcast("IGUI_T15KKillboard_News_Header", {
-            color = { 255, 215, 0 },
-            params = { v = tostring(pa.monthKey or "") },
-        })
-        for place = 1, 3 do
-            local detail = formatWinnerDetail(place, pa.winners and pa.winners[place])
-            if detail then
-                Notify.broadcast("IGUI_T15KKillboard_News_Place", {
-                    color = { 255, 215, 0 },
-                    params = { v = detail },
-                })
+        local okNotify, errNotify = pcall(function()
+            Notify.broadcast("IGUI_T15KKillboard_News_Header", {
+                color = { 255, 215, 0 },
+                params = { v = tostring(pa.monthKey or "") },
+            })
+            for place = 1, 3 do
+                local detail = formatWinnerDetail(place, pa.winners and pa.winners[place])
+                if detail then
+                    Notify.broadcast("IGUI_T15KKillboard_News_Place", {
+                        color = { 255, 215, 0 },
+                        params = { v = detail },
+                    })
+                end
             end
+        end)
+        if not okNotify then
+            print("[T15KKillboard] Notify.broadcast failed: " .. tostring(errNotify))
         end
     end
 
-    if T15KKillboard.isSinglePlayer() then
-        triggerEvent("OnServerCommand", "T15K_Rank_From_Server", "monthAnnounce", { monthKey = pa.monthKey })
-    else
-        sendServerCommand("T15K_Rank_From_Server", "monthAnnounce", { monthKey = pa.monthKey })
+    local okSend, errSend = pcall(function()
+        if T15KKillboard.isSinglePlayer() then
+            triggerEvent("OnServerCommand", "T15K_Rank_From_Server", "monthAnnounce", { monthKey = pa.monthKey })
+        else
+            sendServerCommand("T15K_Rank_From_Server", "monthAnnounce", { monthKey = pa.monthKey })
+        end
+    end)
+    if not okSend then
+        print("[T15KKillboard] monthAnnounce send failed: " .. tostring(errSend))
+        return
     end
 
     pa.announced = true
@@ -459,6 +494,38 @@ local function givePMBalance(player, amount)
     return true
 end
 
+local function copyPinkSlipScriptData(item, fullType)
+    if not item or not fullType then
+        return
+    end
+    local md = item:getModData()
+    if md.VehicleID and md.VehicleID ~= "" then
+        return
+    end
+    -- эталонный instanceItem уже содержит VehicleID/HasKey/Condition в ModData (как в CarWanna)
+    local ok, sample = pcall(function()
+        if InventoryItemFactory and InventoryItemFactory.CreateItem then
+            return InventoryItemFactory.CreateItem(fullType)
+        end
+        if instanceItem then
+            return instanceItem(fullType)
+        end
+        return nil
+    end)
+    if not ok or not sample or not sample.getModData then
+        return
+    end
+    local smd = sample:getModData()
+    if not smd then
+        return
+    end
+    if smd.VehicleID then md.VehicleID = smd.VehicleID end
+    if smd.HasKey ~= nil then md.HasKey = smd.HasKey end
+    if smd.Condition ~= nil then md.Condition = smd.Condition end
+    if smd.GasTank ~= nil then md.GasTank = smd.GasTank end
+    if smd.Upgraded ~= nil then md.Upgraded = smd.Upgraded end
+end
+
 local function giveItemStack(player, fullType, count)
     if not player or not fullType or fullType == "" or count < 1 then
         return false
@@ -467,12 +534,54 @@ local function giveItemStack(player, fullType, count)
     if not inv then
         return false
     end
-    if inv.AddItems then
-        inv:AddItems(fullType, count)
-    else
-        for _ = 1, count do
-            inv:AddItem(fullType)
+
+    local scriptItem = getScriptManager() and getScriptManager():getItem(fullType) or nil
+    if not scriptItem then
+        print("[T15KKillboard] unknown item type: " .. tostring(fullType))
+        return false
+    end
+
+    local isPink = string.find(fullType, "PinkSlip.", 1, true) == 1
+    local added = 0
+
+    for _ = 1, count do
+        local item = nil
+        if InventoryItemFactory and InventoryItemFactory.CreateItem then
+            item = InventoryItemFactory.CreateItem(fullType)
+        elseif instanceItem then
+            item = instanceItem(fullType)
         end
+        if not item then
+            print("[T15KKillboard] CreateItem failed: " .. tostring(fullType))
+            break
+        end
+        if isPink then
+            copyPinkSlipScriptData(item, fullType)
+            if not item:getModData().VehicleID then
+                print("[T15KKillboard] WARN: PinkSlip without VehicleID: " .. fullType)
+            end
+        end
+
+        -- серверный инвентарь
+        inv:AddItem(item)
+
+        -- синк на клиент (иначе halo "received", а в инвентаре пусто)
+        if player.sendObjectChange then
+            local okSync, errSync = pcall(function()
+                player:sendObjectChange("addItem", { item = item })
+            end)
+            if not okSync then
+                print("[T15KKillboard] sendObjectChange addItem failed: " .. tostring(errSync))
+            end
+        end
+        added = added + 1
+    end
+
+    if added < 1 then
+        return false
+    end
+    if added < count then
+        print("[T15KKillboard] partial grant " .. tostring(fullType) .. ": " .. tostring(added) .. "/" .. tostring(count))
     end
     return true
 end
@@ -514,26 +623,62 @@ local function tryClaimRewards(player)
     end
     local store = ensureStore()
     local queue = store.unclaimedRewards
+    local username = player:getUsername()
+
+    local function sendClaimEmpty()
+        if T15KKillboard.isSinglePlayer() then
+            triggerEvent("OnServerCommand", "T15K_Rank_From_Server", "claimEmpty", {})
+        else
+            sendServerCommand(player, "T15K_Rank_From_Server", "claimEmpty", {})
+        end
+    end
+
     if not queue or #queue == 0 then
+        sendClaimEmpty()
         sendPendingToPlayer(player)
         return
     end
 
-    local username = player:getUsername()
     local remain = {}
     local granted = {}
+    local hadOwn = false
+    store.claimedRewards = store.claimedRewards or {}
 
     for i = 1, #queue do
         local r = queue[i]
         if r.user == username then
+            hadOwn = true
             if giveReward(player, r.item, r.count or 1) then
                 table.insert(granted, r)
+                local claimRecord = {
+                    user = username,
+                    place = r.place,
+                    item = r.item,
+                    count = r.count or 1,
+                    monthKey = r.monthKey,
+                    ts = getTimestamp(),
+                }
+                table.insert(store.claimedRewards, claimRecord)
+                local msg = username .. " CLAIMED place#" .. tostring(r.place)
+                    .. " item=" .. tostring(r.item)
+                    .. " x" .. tostring(r.count or 1)
+                    .. " month=" .. tostring(r.monthKey or "")
+                print("[T15KKillboard] " .. msg)
+                if writeLog then
+                    writeLog("T15KKillboard", msg)
+                end
             else
                 table.insert(remain, r)
+                print("[T15KKillboard] CLAIM FAILED for " .. username
+                    .. " item=" .. tostring(r.item) .. " (kept in queue)")
             end
         else
             table.insert(remain, r)
         end
+    end
+
+    while #store.claimedRewards > 200 do
+        table.remove(store.claimedRewards, 1)
     end
 
     store.unclaimedRewards = remain
@@ -544,6 +689,8 @@ local function tryClaimRewards(player)
         else
             sendServerCommand(player, "T15K_Rank_From_Server", "rewardsGranted", granted)
         end
+    elseif not hadOwn then
+        sendClaimEmpty()
     end
     sendPendingToPlayer(player)
 end
@@ -587,8 +734,7 @@ local function broadcastRankTable(payload)
         triggerEvent("OnServerCommand", "T15K_Rank_From_Server", "true", payload)
         return
     end
-    local online = getOnlinePlayers and getOnlinePlayers() or nil
-    if not online or online:size() < 1 then
+    if not hasOnlinePlayers() then
         return
     end
     local ok, err = pcall(function()
@@ -769,19 +915,59 @@ local function OnClientCommandT15KRank(module, command, player, args)
                 end)
             end
         end
+    elseif command == "requestClaimLog" then
+        if not playerIsAdmin(player) and not (getCore and getCore():getDebug()) then
+            return
+        end
+        local claimed = store.claimedRewards or {}
+        local unclaimed = store.unclaimedRewards or {}
+        -- шлём копии, чтобы не раздувать payload лишним
+        local claimedOut = {}
+        local from = math.max(1, #claimed - 49)
+        for i = from, #claimed do
+            local r = claimed[i]
+            if r then
+                table.insert(claimedOut, {
+                    user = r.user,
+                    place = r.place,
+                    item = r.item,
+                    count = r.count,
+                    monthKey = r.monthKey,
+                    ts = r.ts,
+                })
+            end
+        end
+        local unclaimedOut = {}
+        for i = 1, #unclaimed do
+            local r = unclaimed[i]
+            if r then
+                table.insert(unclaimedOut, {
+                    user = r.user,
+                    place = r.place,
+                    item = r.item,
+                    count = r.count,
+                    monthKey = r.monthKey,
+                })
+            end
+        end
+        local payload = { claimed = claimedOut, unclaimed = unclaimedOut }
+        if T15KKillboard.isSinglePlayer() then
+            triggerEvent("OnServerCommand", "T15K_Rank_From_Server", "claimLog", payload)
+        else
+            sendServerCommand(player, "T15K_Rank_From_Server", "claimLog", payload)
+        end
     end
 end
 
 Events.OnClientCommand.Add(OnClientCommandT15KRank)
 
--- только rollover/announce; broadcast на старте без клиентов роняет MultiLuaJavaInvoker
+-- на boot только rollover; announce/getOnlinePlayers нельзя до готовности udpEngine
 local function onServerBootCheckMonth()
     if isClient() then
         return
     end
     local store = ensureStore()
     rolloverMonthIfNeeded(store)
-    tryAnnouncePending(store)
 end
 
 if Events.OnServerStarted then

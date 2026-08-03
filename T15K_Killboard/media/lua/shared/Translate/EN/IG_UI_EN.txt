@@ -35,4 +35,10 @@ IGUI_EN = {
   IGUI_T15KKillboard_News_Place = "",
   IGUI_T15KKillboard_Reward_Balance = "PM coins",
   IGUI_T15KKillboard_Reward_Balance_Amount = "%1 PM coins",
+  IGUI_T15KKillboard_Reward_PinkSlip_Tip = "PinkSlip is in inventory. Craft 'Claim Vehicle' outside on the ground.",
+  IGUI_T15KKillboard_Claim_Empty = "No pending killboard rewards",
+  IGUI_T15KKillboard_ViewClaims = "Reward claim log...",
+  IGUI_T15KKillboard_ViewClaims_Title = "Killboard claims",
+  IGUI_T15KKillboard_Claims_Unclaimed = "UNCLAIMED (still in queue)",
+  IGUI_T15KKillboard_Claims_Claimed = "CLAIMED (recent)",
 }

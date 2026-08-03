@@ -248,6 +248,7 @@ function IST15KKillboardUI:doPlayerListContextMenu(player, x, y)
     if getCore():getDebug() or isAdmin() then
         local playerNum = self.admin:getPlayerNum()
         local context = ISContextMenu.get(playerNum, x + self:getAbsoluteX(), y + self:getAbsoluteY())
+        context:addOption(getText("IGUI_T15KKillboard_ViewClaims"), self, IST15KKillboardUI.onCommand, player, "VIEW_CLAIMS")
         context:addOption(getText("IGUI_T15KKillboard_Delete"), self, IST15KKillboardUI.onCommand, player, "DELETE")
         if self.mode == T15KKillboard.MODE_MONTHLY then
             context:addOption(getText("IGUI_T15KKillboard_SetLastWinners"), self, IST15KKillboardUI.onCommand, player, "SET_LAST_WINNERS")
@@ -313,7 +314,93 @@ function IST15KKillboardUI:onCommand(player, command)
         local modal = ISTextBox:new(0, 0, 420, 200, prompt, self:buildLastWinnersDefaultText(), nil, IST15KKillboardUI.onSetLastWinnersConfirm, nil, self)
         modal:initialise()
         modal:addToUIManager()
+    elseif command == "VIEW_CLAIMS" then
+        sendClientCommand("T15KKillboardModule", "requestClaimLog", {})
     end
+end
+
+function IST15KKillboardUI.showClaimLog(data)
+    data = data or {}
+    if IST15KKillboardUI.claimLogUI then
+        IST15KKillboardUI.claimLogUI:close()
+    end
+
+    local w, h = 460, 360
+    local x = (getCore():getScreenWidth() - w) / 2
+    local y = (getCore():getScreenHeight() - h) / 2
+    local ui = ISCollapsableWindow:new(x, y, w, h)
+    ui:initialise()
+    ui.title = getText("IGUI_T15KKillboard_ViewClaims_Title")
+    ui.resizable = false
+    ui:addToUIManager()
+    ui:setVisible(true)
+    if ui.pinButton then ui.pinButton:setVisible(false) end
+    if ui.collapseButton then ui.collapseButton:setVisible(false) end
+
+    local list = ISScrollingListBox:new(8, 24, w - 16, h - 36)
+    list:initialise()
+    list:instantiate()
+    list.itemheight = 18
+    list.font = UIFont.Small
+    list.drawBorder = true
+    list.doDrawItem = function(self, yy, item, alt)
+        self:drawRectBorder(0, yy, self:getWidth(), self.itemheight - 1, 0.5, 0.4, 0.4, 0.4)
+        local c = item.item or {}
+        local r, g, b = 0.9, 0.9, 0.9
+        if c.kind == "header" then
+            r, g, b = 1.0, 0.85, 0.4
+        elseif c.kind == "unclaimed" then
+            r, g, b = 1.0, 0.55, 0.35
+        elseif c.kind == "claimed" then
+            r, g, b = 0.55, 0.9, 0.55
+        end
+        self:drawText(tostring(c.text or ""), 4, yy + 1, r, g, b, 1, self.font)
+        return yy + self.itemheight
+    end
+    ui:addChild(list)
+
+    local function addLine(kind, text)
+        list:addItem(text, { kind = kind, text = text })
+    end
+
+    addLine("header", getText("IGUI_T15KKillboard_Claims_Unclaimed"))
+    local unclaimed = data.unclaimed or {}
+    if #unclaimed == 0 then
+        addLine("unclaimed", "  (" .. getText("IGUI_T15KKillboard_Empty") .. ")")
+    else
+        for i = 1, #unclaimed do
+            local r = unclaimed[i]
+            local name = T15KKillboard.formatRewardLine(r.item, r.count)
+            addLine("unclaimed", string.format("  #%s %s | %s | %s",
+                tostring(r.place or "?"), tostring(r.user or "?"), name, tostring(r.monthKey or "")))
+        end
+    end
+
+    addLine("header", getText("IGUI_T15KKillboard_Claims_Claimed"))
+    local claimed = data.claimed or {}
+    if #claimed == 0 then
+        addLine("claimed", "  (" .. getText("IGUI_T15KKillboard_Empty") .. ")")
+    else
+        for i = #claimed, 1, -1 do
+            local r = claimed[i]
+            local name = T15KKillboard.formatRewardLine(r.item, r.count)
+            local when = ""
+            if r.ts and T15KKillboard.timeDiffInString then
+                when = " | " .. T15KKillboard.timeDiffInString(r.ts)
+            end
+            addLine("claimed", string.format("  #%s %s | %s | %s%s",
+                tostring(r.place or "?"), tostring(r.user or "?"), name, tostring(r.monthKey or ""), when))
+        end
+    end
+
+    ui.close = function(self)
+        ISCollapsableWindow.close(self)
+        self:removeFromUIManager()
+        if IST15KKillboardUI.claimLogUI == self then
+            IST15KKillboardUI.claimLogUI = nil
+        end
+    end
+    IST15KKillboardUI.claimLogUI = ui
 end
 
 function IST15KKillboardUI.onAdjustMonthConfirm(_, button, player)

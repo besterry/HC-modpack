@@ -35,4 +35,10 @@ IGUI_RU = {
   IGUI_T15KKillboard_SetLastWinners = "Задать топ-3 прошлого месяца...",
   IGUI_T15KKillboard_SetLastWinners_Prompt = "Формат: 2026-07;admin:39176;fd:24355;nick:13826",
   IGUI_T15KKillboard_SetLastWinners_Enqueue = "Также поставить награды этим победителям в очередь?",
+  IGUI_T15KKillboard_Reward_PinkSlip_Tip = "PinkSlip в инвентаре. Скрафтите 'Claim Vehicle' снаружи на земле.",
+  IGUI_T15KKillboard_Claim_Empty = "Нет невостребованных наград killboard",
+  IGUI_T15KKillboard_ViewClaims = "Лог выдач наград...",
+  IGUI_T15KKillboard_ViewClaims_Title = "Выдачи killboard",
+  IGUI_T15KKillboard_Claims_Unclaimed = "НЕ ЗАБРАЛИ (в очереди)",
+  IGUI_T15KKillboard_Claims_Claimed = "ЗАБРАЛИ (недавние)",
 }

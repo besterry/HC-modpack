@@ -202,10 +202,23 @@ T15KKillboard.getItemDisplayName = function(fullType)
     if T15KKillboard.isPMBalanceReward(fullType) then
         return getText("IGUI_T15KKillboard_Reward_Balance")
     end
+    if Translator and Translator.getItemNameFromFullType then
+        local ok, name = pcall(function()
+            return Translator.getItemNameFromFullType(fullType)
+        end)
+        if ok and name and name ~= "" and name ~= fullType then
+            return name
+        end
+    end
     if getScriptManager then
         local scriptItem = getScriptManager():getItem(fullType)
         if scriptItem then
-            return scriptItem:getDisplayName()
+            if scriptItem.getDisplayName then
+                local name = scriptItem:getDisplayName()
+                if name and name ~= "" then
+                    return name
+                end
+            end
         end
     end
     return fullType
