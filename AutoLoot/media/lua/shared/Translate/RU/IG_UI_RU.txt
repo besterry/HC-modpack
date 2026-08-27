@@ -54,4 +54,6 @@ IGUI_RU = {
 	IGUI_AutoLoot_SearchMin2 = "Введите минимум 2 символа",
 	IGUI_AutoLoot_SearchNone = "Ничего не найдено",
 	IGUI_AutoLoot_InShop = "скупка",
+	IGUI_AutoLoot_Bought = "Подписка автосбора активирована",
+	IGUI_AutoLoot_BuyFail = "Не удалось купить автосбор, попробуйте ещё раз",
 }

@@ -97,7 +97,7 @@ local function onModOptionsApply(values)
     if CHC_settings.config.main_window == nil then
         CHC_settings.Load()
     end
-    CHC_settings.Save()
+    pcall(CHC_settings.Save)
 end
 
 if ModOptions and ModOptions.getInstance then
@@ -205,58 +205,119 @@ if ModOptions and ModOptions.getInstance then
 
 else
     -- defaults in case "Mod Options" not installed
-    CHC_settings.config.show_recipe_module = true
-    CHC_settings.config.show_fav_items_inventory = false
-    CHC_settings.config.editable_category_selector = false
-    CHC_settings.config.recipe_selector_modifier = 1
-    CHC_settings.config.category_selector_modifier = 1
-    CHC_settings.config.tab_selector_modifier = 1
-    CHC_settings.config.list_font_size = 3
-    CHC_settings.config.allow_special_search = true
-    CHC_settings.config.show_icons = true
-    CHC_settings.config.show_hidden = false
-    CHC_settings.config.close_all_on_exit = false
+    CHC_settings.config = {
+        show_recipe_module = true,
+        show_fav_items_inventory = false,
+        editable_category_selector = false,
+        recipe_selector_modifier = 1,
+        category_selector_modifier = 1,
+        tab_selector_modifier = 1,
+        list_font_size = 3,
+        allow_special_search = true,
+        show_icons = true,
+        show_hidden = false,
+        close_all_on_exit = false
+    }
 end
 
 local Json = require("CHC_json")
 local cfg_name = "craft_helper_config.json"
 
+local function deepCopy(tbl)
+    if type(tbl) ~= "table" then return tbl end
+    local out = {}
+    for k, v in pairs(tbl) do
+        out[k] = deepCopy(v)
+    end
+    return out
+end
+
+local function getDefaultConfig()
+    return deepCopy(init_cfg)
+end
+
 CHC_settings.Save = function()
+    if type(CHC_settings.config) ~= "table" then
+        CHC_settings.config = getDefaultConfig()
+    end
+    local ok, jsonOrErr = pcall(Json.Encode, CHC_settings.config)
+    if not ok then
+        print("[CHC] config encode failed: " .. tostring(jsonOrErr))
+        return false
+    end
     local fileWriterObj = getFileWriter(cfg_name, true, false)
-    local json = Json.Encode(CHC_settings.config)
-    fileWriterObj:write(json)
-    fileWriterObj:close()
+    if not fileWriterObj then
+        print("[CHC] getFileWriter failed for " .. cfg_name)
+        return false
+    end
+    local writeOk, writeErr = pcall(function()
+        fileWriterObj:write(jsonOrErr)
+        fileWriterObj:close()
+    end)
+    if not writeOk then
+        print("[CHC] config write failed: " .. tostring(writeErr))
+        return false
+    end
+    return true
 end
 
 CHC_settings.Load = function()
+    local loaded = nil
     local fileReaderObj = getFileReader(cfg_name, true)
-    local json = ""
-    local line = fileReaderObj:readLine()
-    while line ~= nil do
-        json = json .. line
-        line = fileReaderObj:readLine()
-    end
-    fileReaderObj:close()
-
-    if json and json ~= "" then
-        CHC_settings.config = Json.Decode(json)
+    if fileReaderObj then
+        local json = ""
+        local okRead, readErr = pcall(function()
+            local line = fileReaderObj:readLine()
+            while line ~= nil do
+                json = json .. line
+                line = fileReaderObj:readLine()
+            end
+            fileReaderObj:close()
+        end)
+        if not okRead then
+            print("[CHC] config read failed: " .. tostring(readErr))
+        elseif json and json ~= "" then
+            local okDecode, decoded = pcall(Json.Decode, json)
+            if okDecode and type(decoded) == "table" then
+                loaded = decoded
+            else
+                print("[CHC] config decode failed, resetting: " .. tostring(decoded))
+            end
+        end
     else
-        CHC_settings.config = init_cfg
-        CHC_settings.Save()
+        print("[CHC] getFileReader failed for " .. cfg_name)
+    end
+
+    if loaded then
+        CHC_settings.config = loaded
+    else
+        CHC_settings.config = getDefaultConfig()
+        CHC_settings.Save() -- best-effort; window must open even if save fails
     end
     CHC_settings.checkConfig()
 end
 
 
 CHC_settings.checkConfig = function()
+    if type(CHC_settings.config) ~= "table" then
+        CHC_settings.config = getDefaultConfig()
+        CHC_settings.Save()
+        return
+    end
     local shouldReSave = false
-    for name, _ in pairs(init_cfg) do
+    for name, defaultVal in pairs(init_cfg) do
         if CHC_settings.config[name] == nil then
-            CHC_settings.config[name] = init_cfg[name]
+            CHC_settings.config[name] = deepCopy(defaultVal)
             shouldReSave = true
         end
     end
-    if shouldReSave == true then
+    -- Nested window size must be a table with x/y/w/h
+    local mw = CHC_settings.config.main_window
+    if type(mw) ~= "table" or mw.x == nil or mw.y == nil or mw.w == nil or mw.h == nil then
+        CHC_settings.config.main_window = deepCopy(init_cfg.main_window)
+        shouldReSave = true
+    end
+    if shouldReSave then
         CHC_settings.Save()
     end
 end

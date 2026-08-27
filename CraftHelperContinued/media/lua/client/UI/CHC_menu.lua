@@ -5,21 +5,38 @@ CHC_menu = {}
 --- called just after CHC_main.loadDatas
 --- loads config and creates window instance
 CHC_menu.createCraftHelper = function()
-	CHC_settings.Load()
-	local options = CHC_settings.config
+	local okLoad, errLoad = pcall(CHC_settings.Load)
+	if not okLoad then
+		print("[CHC] Load failed: " .. tostring(errLoad))
+		CHC_settings.config = CHC_settings.config or {}
+	end
+
+	local options = CHC_settings.config or {}
+	local mw = options.main_window
+	if type(mw) ~= "table" then
+		mw = { x = 100, y = 100, w = 1000, h = 600 }
+		options.main_window = mw
+	end
 
 	local args = {
-		x = options.main_window.x,
-		y = options.main_window.y,
-		width = options.main_window.w,
-		height = options.main_window.h,
+		x = tonumber(mw.x) or 100,
+		y = tonumber(mw.y) or 100,
+		width = tonumber(mw.w) or 1000,
+		height = tonumber(mw.h) or 600,
 		backgroundColor = { r = 0, g = 0, b = 0, a = 1 },
 		minimumWidth = 400,
 		minimumHeight = 350
 	}
-	CHC_menu.CHC_window = CHC_window:new(args)
-	CHC_menu.CHC_window:initialise()
-	CHC_menu.CHC_window:setVisible(false)
+
+	local okWin, errWin = pcall(function()
+		CHC_menu.CHC_window = CHC_window:new(args)
+		CHC_menu.CHC_window:initialise()
+		CHC_menu.CHC_window:setVisible(false)
+	end)
+	if not okWin then
+		print("[CHC] window create failed: " .. tostring(errWin))
+		CHC_menu.CHC_window = nil
+	end
 end
 
 --- called on right-clicking item in inventory/hotbar
@@ -59,8 +76,10 @@ end
 CHC_menu.onCraftHelper = function(items, player)
 	local inst = CHC_menu.CHC_window
 	if inst == nil then
-		inst = CHC_menu.createCraftHelper()
+		CHC_menu.createCraftHelper()
+		inst = CHC_menu.CHC_window
 	end
+	if inst == nil then return end
 
 	-- Show craft helper window
 	for i = 1, #items do
@@ -153,6 +172,12 @@ ISCraftingUI.toggleCraftingUI = function()
 	end
 	if CHC_menu.CHC_window == nil then
 		CHC_menu.createCraftHelper()
+	end
+	if CHC_menu.CHC_window == nil then
+		-- last resort: vanilla crafting so player is not stuck
+		print("[CHC] helper unavailable, opening vanilla crafting")
+		_CHC_vanillaToggleCraftingUI()
+		return
 	end
 	CHC_menu.toggleUI()
 end

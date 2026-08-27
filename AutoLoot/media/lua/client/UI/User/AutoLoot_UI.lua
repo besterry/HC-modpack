@@ -143,12 +143,16 @@ end
 local function calculateTime()
 	local durationDays = tonumber(PM.AutolootDurationAction) or 0
 	local subscriptionDuration = durationDays * 24 * 60 * 60
-	local activate = PM.TimeActivateAutoLoot
-	if type(activate) == "table" or activate == nil then
+	local activate = tonumber(PM.TimeActivateAutoLoot)
+	if not activate or activate <= 0 then
 		remainingTime = 0
 		return 0, 0, 0
 	end
-	remainingTime = activate + subscriptionDuration - os.time()
+	local now = os.time()
+	if PM.AutoLootLastServerTime and PM.AutoLootLastServerTimeLocal then
+		now = PM.AutoLootLastServerTime + (os.time() - PM.AutoLootLastServerTimeLocal)
+	end
+	remainingTime = activate + subscriptionDuration - now
 	if remainingTime <= 0 then
 		remainingTime = 0
 		return 0, 0, 0
@@ -171,24 +175,47 @@ local function styleBtn(btn, fill, border)
 end
 
 local function Purchase()
+	if PM.AutoLootPurchasePending then return end
+	if price == nil or PM.Balance == nil or PM.Balance < price then
+		getPlayer():Say(getText("IGUI_NoMoney"))
+		return
+	end
+
+	PM.AutoLootPurchasePending = true
 	sendClientCommand(getPlayer(), "BalanceAndSH", "getServerTime", {})
 	local receiveServerCommand
 	receiveServerCommand = function(module, command, args)
 		if module ~= "BalanceAndSH" then return end
-		if command == "onGetServerTime1" then
-			PM.TimeActivateAutoLoot = args.time
-			local saveData = {
-				delta = price,
-				balance = PM.Balance,
-				autoloot = PM.TimeActivateAutoLoot,
-				action = "buy autoloot",
-			}
-			sendClientCommand(getPlayer(), "BalanceAndSH", "saveUserData", saveData)
-			sendClientCommand(getPlayer(), "AdminAutoLoot", "purchaseAutoLoot", saveData)
-			LoadBalanceAndSafeHousePlayer()
-			Events.OnServerCommand.Remove(receiveServerCommand)
-			GetTimeActivateAutoLootForcalculateTime()
+		if command ~= "onGetServerTime1" then return end
+		if not PM.AutoLootPurchasePending then return end
+
+		PM.AutoLootPurchasePending = false
+		Events.OnServerCommand.Remove(receiveServerCommand)
+
+		local serverTime = tonumber(args.time) or args.time
+		if not serverTime then
+			getPlayer():Say(getText("IGUI_AutoLoot_BuyFail"))
+			return
 		end
+
+		PM.AutoLootLastServerTime = serverTime
+		PM.TimeActivateAutoLoot = serverTime
+		if AutoLoot_SetSubscriptionActive then
+			AutoLoot_SetSubscriptionActive(true, serverTime)
+		else
+			PM.AutoLootLastServerTimeLocal = os.time()
+		end
+
+		local saveData = {
+			delta = price,
+			balance = PM.Balance,
+			autoloot = serverTime,
+			action = "buy autoloot",
+		}
+		sendClientCommand(getPlayer(), "BalanceAndSH", "saveUserData", saveData)
+		sendClientCommand(getPlayer(), "AdminAutoLoot", "purchaseAutoLoot", saveData)
+		LoadBalanceAndSafeHousePlayer()
+		getPlayer():setHaloNote(getText("IGUI_AutoLoot_Bought"), 180, 220, 120, 350)
 	end
 	Events.OnServerCommand.Add(receiveServerCommand)
 end
@@ -714,11 +741,7 @@ function UI_AutoLoot:onClick(button)
 		return
 	end
 	if button.internal == "Buy" then
-		if price ~= nil and PM.Balance ~= nil and PM.Balance >= price then
-			Purchase()
-		else
-			getPlayer():Say(getText("IGUI_NoMoney"))
-		end
+		Purchase()
 	end
 end
 
@@ -747,7 +770,7 @@ function UI_AutoLoot:render()
 
 	local d, h, m = calculateTime()
 
-	if remainingTime > 0 or not PM.AutoLootSandBoxBuy then
+	if remainingTime > 0 or not PM.AutoLootSandBoxBuy or PM.AutoLootPurchasePending then
 		self.Buy:setEnable(false)
 	else
 		self.Buy:setEnable(true)

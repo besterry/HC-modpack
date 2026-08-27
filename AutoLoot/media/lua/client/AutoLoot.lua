@@ -32,19 +32,36 @@ end
 Events.EveryHours.Add(reloadSell)
 
 local checkTimeActivate = false
+
+function AutoLoot_SetSubscriptionActive(active, serverTime)
+    if serverTime ~= nil then
+        local t = tonumber(serverTime) or serverTime
+        PM.TimeActivateAutoLoot = t
+        PM.AutoLootLastServerTime = t
+        PM.AutoLootLastServerTimeLocal = os.time()
+    end
+    checkTimeActivate = active and true or false
+end
+
 local function calculateTime() --Рассчет оставшегося времени активации
     sendClientCommand(getPlayer(), 'BalanceAndSH', 'getServerTime', {})
     local receiveServerCommand
     receiveServerCommand = function(module, command, args)
-        if module ~= 'BalanceAndSH' then return; end
-        if command == 'onGetServerTime1' then
-            if type(PM.TimeActivateAutoLoot) ~= "table" then
-                --print("PM.AutolootDurationAction:",PM.AutolootDurationAction," + PM.TimeActivateAutoLoot:",PM.TimeActivateAutoLoot)
-                local subscriptionDuration = PM.AutolootDurationAction * 24 * 60 * 60  -- дней подписки в секундах   
-                local remainingTime = PM.TimeActivateAutoLoot + subscriptionDuration - string.format("%.3f", args.time)-- Оставшееся время в секундах
-                if remainingTime <=0 then checkTimeActivate=false else checkTimeActivate=true end
-            end
-            Events.OnServerCommand.Remove(receiveServerCommand)
+        if module ~= 'BalanceAndSH' then return end
+        if command ~= 'onGetServerTime1' then return end
+        Events.OnServerCommand.Remove(receiveServerCommand)
+        -- не трогаем подписку, пока идёт покупка (этот же ответ обработает Purchase)
+        if PM.AutoLootPurchasePending then return end
+        local activate = tonumber(PM.TimeActivateAutoLoot)
+        local durationDays = tonumber(PM.AutolootDurationAction) or 0
+        local serverTime = tonumber(args.time) or 0
+        PM.AutoLootLastServerTime = serverTime
+        PM.AutoLootLastServerTimeLocal = os.time()
+        if activate and activate > 0 then
+            local remaining = activate + durationDays * 24 * 60 * 60 - serverTime
+            checkTimeActivate = remaining > 0
+        else
+            checkTimeActivate = false
         end
     end
     Events.OnServerCommand.Add(receiveServerCommand)
@@ -54,17 +71,22 @@ Events.EveryTenMinutes.Add(calculateTime)
 function GetTimeActivateAutoLootForcalculateTime() --Получение времени покупки при заходе игрока
     local player = getPlayer()
     if not player then return end
-    --print("GETPLAYER:",player)
-    sendClientCommand(player, 'BalanceAndSH', 'getDataAutoLoot', nil)    
+    sendClientCommand(player, 'BalanceAndSH', 'getDataAutoLoot', nil)
     local function receiveServerCommand(module, command, args)
-        if module ~= 'BalanceAndSH' then return; end
-        if command ~='onGetDataAutoLoot' then return; end
-        if args['UserData'].autoloot and args['UserData'].autoloot ~= nil and args['UserData'].autoloot>0 then
-            PM.TimeActivateAutoLoot = args['UserData'].autoloot
-            --print("PM.TimeActivateAutoLoot on DB:",PM.TimeActivateAutoLoot)
+        if module ~= 'BalanceAndSH' then return end
+        if command ~= 'onGetDataAutoLoot' then return end
+        -- во время покупки не затираем только что выставленное время
+        if PM.AutoLootPurchasePending then
+            Events.OnServerCommand.Remove(receiveServerCommand)
+            return
+        end
+        local autoloot = args['UserData'] and args['UserData'].autoloot
+        autoloot = tonumber(autoloot) or 0
+        if autoloot > 0 then
+            PM.TimeActivateAutoLoot = autoloot
         else
-            PM.TimeActivateAutoLoot = 0 --Test FIX
-        end          
+            PM.TimeActivateAutoLoot = 0
+        end
         calculateTime()
         reloadSell()
         Events.OnServerCommand.Remove(receiveServerCommand)

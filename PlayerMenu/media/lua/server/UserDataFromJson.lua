@@ -10,6 +10,7 @@ local function checkUserdata() --проверка на существовани�
     if not UserData.ShopCount then  UserData.ShopCount = 0 end        
     if not UserData.MaxShopCount then  UserData.MaxShopCount = 5 end
     if not UserData.GarageMaxCount then  UserData.GarageMaxCount = 1 end
+    if UserData.autoloot == nil then UserData.autoloot = 0 end
 end
 
 local function SaveJsonItems(theTable,filename) --Сохранение в файл
@@ -182,7 +183,7 @@ end
 commands.getServerTime = function(player, args) --Получение серверного времени
     args = {}
     args.time = os.time()
-    sendServerCommand('BalanceAndSH', 'onGetServerTime1', args)
+    sendServerCommand(player, 'BalanceAndSH', 'onGetServerTime1', args)
 end
 
 --Подписка на команды с клиента
